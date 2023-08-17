@@ -90,14 +90,12 @@ applies_to=self
 view_hview[0]+=4*(keyboard_check(ord("1"))-keyboard_check(ord("2")))
 view_wview[0]+=8*(keyboard_check(ord("1"))-keyboard_check(ord("2")))
 
-if keyboard_check(ord("3"))
-{
+if keyboard_check(ord("3")) {
 view_hview[0]=viewh
 view_wview[0]=vieww
 }
 
-if y > room_height+16
-{
+if y > room_height+16 {
 x=xstart
 y=ystart
 }
@@ -109,22 +107,18 @@ image_speed = 0;
 windowscale = clamp(windowscale,2,4)
 
 
-if keyboard_check_pressed(107) || keyboard_check_pressed(187)
-{
-windowscale+=1
-window_set_size(480*windowscale,270*windowscale)
-window_center();
+if keyboard_check_pressed(107) || keyboard_check_pressed(187) {
+    windowscale+=1
+    window_set_size(480*windowscale,270*windowscale)
+    window_center();
 }
 
-if keyboard_check_pressed(189)
-{
-windowscale-=1
-window_set_size(480*windowscale,270*windowscale)
-window_center();
+if keyboard_check_pressed(189) {
+    windowscale-=1
+    window_set_size(480*windowscale,270*windowscale)
+    window_center();
 }
-
-
-//Also, I'm going to avooid looking at this code for as long as possible until i rewrite it all - -S-
+// ^^ this is just random ass debug shit -cubie
 
 input_get(-1)//we don't have the p2 shit yet
 //please do not use p2 for it this time its so confusing on what the hell that means -cubie
@@ -137,19 +131,19 @@ if global.lemonpause {
     if !paused {
         paused=1
     }
-if left && !right x-=2
-if right && !left x+=2
-if up && !down y-=2
-if down && !up y+=2
-exit}
+    if left && !right x-=2
+    if right && !left x+=2
+    if up && !down y-=2
+    if down && !up y+=2
 
-else if paused && !global.lemonpause{ //Upon removing lemonpause (entering live editor)
+    exit
+} else if paused && !global.lemonpause { //Upon removing lemonpause (entering live editor)
     inactive=0
     paused=0
     move=0
     hsp=0
     vsp=0
-} //im just gonna like, leave this here for now - -S- 
+} //im just gonna like, leave this here for now - -S-
 
 com_piping();
 
@@ -157,53 +151,43 @@ if piped exit;
 
 maxspd = 2+(bkey)+(5*is_grinding);
 
-
+//uuh this resets grav back to default. this is leftover from diegotc LOL, just add more checks here.
 if (!antigrav) {
-grav = defaultgrav
+    grav = defaultgrav
 }
 
 if (!move_lock && !piped && !hurt) {
     move = -left + right
 }
 
-if (apress) && grounded == false
-{
-alarm[1] = 10; //ammount of frames for jump buffering
-alarm[2] = 10; //Walljump buffering
+if (apress) && grounded == false {
+    alarm[1] = 10; //ammount of frames for jump buffering
+    alarm[2] = 10; //Walljump buffering
 }
-else if grounded == true
-{
-alarm[2] = 0;
-wallbuffer = 0;
+else if grounded == true {
+    alarm[2] = 0;
+    wallbuffer = 0;
 }
 
-if (alarm[1] > 0) && grounded == true
-{
+if (alarm[1] > 0) && grounded == true {
 bufferjump = 1;
 alarm[1] = 0;
 }
 
-if move != 0
-{
-hsp += move*accel
-
-hsp = clamp(hsp,-maxspd,maxspd)
-}
-else
-{
-if grounded && !is_grinding
-hsp = lerp(hsp,0,fric)
+if move != 0 {
+    hsp += move*accel
+    hsp = clamp(hsp,-maxspd,maxspd)
+} else {
+    if grounded && !is_grinding
+    hsp = lerp(hsp,0,fric)
 }
 
 //Fall off platform
-if !grounded
-{
-vsp=min(4,vsp+grav)
-canjump -= 1 //Count down coyote time
-}
-else
-{
-canjump = 7 //Coyote frames
+if !grounded {
+    vsp=min(4,vsp+grav)
+    canjump -= 1 //Count down coyote time
+} else {
+    canjump = 7 //Coyote frames
 }
 
 if !(akey) {
@@ -216,20 +200,20 @@ if !(akey) {
 grounded=false
 
 //Jumping
-if (canjump > 0 && (apress)) || (bufferjump)
-{
-fr=1
-bufferjump = 0;
-vsp = -6;
-jump=1
-canjump = 0;
-canstopjump=1;
+if (canjump > 0 && (apress)) || (bufferjump) {
+    fr=1
+    bufferjump = 0;
+    vsp = -6;
+    jump=1
+    canjump = 0;
+    canstopjump=1;
 }
 
 collision();
 
 com_grinding();
 
+//this isj ust ... funny rotato
 if place_meeting(x,y+1,slopel) && !place_meeting(x,y+1,groundblock)
 rot=approach_val(rot,45,5);
 else
