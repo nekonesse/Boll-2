@@ -6,17 +6,23 @@
 
 
 if (LDTK_LIVE) {
-	// live reload config
 	LDtkConfig({
+		// this will load the bundled version (live updating won't work)
+		//file: "LDtkTest.ldtk",
+		// so we need to load directly from the project folder
+		
 		// change this to your project directory
-		file: "F:\\Boll-Deluxe\\Boll Deluxe\\mods\\level\\Stage.ldtk",
+		//file: "D:\\Projects\\GameMaker Projects\\LDtkParser\\datafiles\\LDtkTest.ldtk",
+		//file: working_directory+"\LDtkTest.ldtk",
+		file: working_directory+"\mods\\level\\Stage.ldtk",
 		level_name: "Levelloader"
 	})
 }
 else {
-	// release config
 	LDtkConfig({
-		file: "F:\\Boll-Deluxe\\Boll Deluxe\\mods\\level\\Stage.ldtk",
+		//file: "D:\\Projects\\GameMaker Projects\\LDtkParser\\datafiles\\LDtkTest.ldtk",
+		//file: "LDtkTest.ldtk",
+		file: working_directory+"\mods\\level\\Stage.ldtk",
 		level_name: "Levelloader"
 	})
 }
@@ -25,8 +31,7 @@ else {
 
 LDtkMappings({
 	layers: {
-        Entities: "Entities",
-        CollisionTiles: "CollisionTiles",
+		Entities: "Entities" // now "Tiles" layer in LDtk = "PlaceholderTiles" layer in GM
 	},
 	enums: {
 		TestEnum: {

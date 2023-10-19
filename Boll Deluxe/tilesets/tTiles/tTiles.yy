@@ -12,8 +12,8 @@
   "out_tilehborder": 2,
   "out_tilevborder": 2,
   "parent": {
-    "name": "Tilesets",
-    "path": "folders/LDtkParser/LDtkParser Demo/Tilesets.yy",
+    "name": "Boll Deluxe",
+    "path": "Boll Deluxe.yyp",
   },
   "spriteId": {
     "name": "sTiles",
