@@ -10,10 +10,7 @@ global.__ldtk_config = {
 	// prefixes to add to LDtk names to get GM names (by default/if there is no mapping specified)
 	// (also note that LDtk defaults to the first letter being uppercase, this can be changed in the LDtk settings)
 	room_prefix: "r",
-	layer_prefix: "",
-	tileset_prefix: "",
 	object_prefix: "o",
-	field_prefix: "",
 	
 	ignore_intgrids: false,
 	

@@ -8,7 +8,7 @@
 		"appVersion": "1.4.1",
 		"url": "https://ldtk.io"
 	},
-	"identifier": "Level_0",
+	"identifier": "Levelloader",
 	"iid": "86729cc2-6280-11ee-a7f2-e17155b20514",
 	"uid": 0,
 	"worldX": -80,
@@ -18,7 +18,7 @@
 	"pxHei": 400,
 	"__bgColor": "#696A79",
 	"bgColor": null,
-	"useAutoIdentifier": true,
+	"useAutoIdentifier": false,
 	"bgRelPath": null,
 	"bgPos": null,
 	"bgPivotX": 0.5,

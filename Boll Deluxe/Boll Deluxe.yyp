@@ -602,7 +602,7 @@
     {"id":{"name":"__VinylClassVoiceAsset","path":"scripts/__VinylClassVoiceAsset/__VinylClassVoiceAsset.yy",},},
     {"id":{"name":"oLDtk","path":"objects/oLDtk/oLDtk.yy",},},
     {"id":{"name":"__scribble_gen_3_devanagari","path":"scripts/__scribble_gen_3_devanagari/__scribble_gen_3_devanagari.yy",},},
-    {"id":{"name":"rLevel_0","path":"rooms/rLevel_0/rLevel_0.yy",},},
+    {"id":{"name":"rLDKTload","path":"rooms/rLDKTload/rLDKTload.yy",},},
     {"id":{"name":"VinylFadeOutAllNonPersistent","path":"scripts/VinylFadeOutAllNonPersistent/VinylFadeOutAllNonPersistent.yy",},},
     {"id":{"name":"input_vibrate_get_pause","path":"scripts/input_vibrate_get_pause/input_vibrate_get_pause.yy",},},
     {"id":{"name":"VinylMultiGainSet","path":"scripts/VinylMultiGainSet/VinylMultiGainSet.yy",},},
@@ -855,7 +855,7 @@
     {"id":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
   "RoomOrderNodes": [
-    {"roomId":{"name":"rLevel_0","path":"rooms/rLevel_0/rLevel_0.yy",},},
+    {"roomId":{"name":"rLDKTload","path":"rooms/rLDKTload/rLDKTload.yy",},},
     {"roomId":{"name":"Room1","path":"rooms/Room1/Room1.yy",},},
   ],
   "templateType": "game",

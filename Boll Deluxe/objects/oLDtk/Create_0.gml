@@ -10,14 +10,14 @@ if (LDTK_LIVE) {
 	LDtkConfig({
 		// change this to your project directory
 		file: "F:\\Boll-Deluxe\\Boll Deluxe\\mods\\level\\Stage.ldtk",
-		level_name: "Level_0"
+		level_name: "Levelloader"
 	})
 }
 else {
 	// release config
 	LDtkConfig({
 		file: "F:\\Boll-Deluxe\\Boll Deluxe\\mods\\level\\Stage.ldtk",
-		level_name: "Level_0"
+		level_name: "Levelloader"
 	})
 }
 
@@ -25,7 +25,8 @@ else {
 
 LDtkMappings({
 	layers: {
-		Tiles: "PlaceholderTiles" // now "Tiles" layer in LDtk = "PlaceholderTiles" layer in GM
+        Entities: "Entities",
+        CollisionTiles: "CollisionTiles",
 	},
 	enums: {
 		TestEnum: {
