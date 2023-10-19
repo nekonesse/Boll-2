@@ -1,2 +1,0 @@
-COMPILATION ERROR in string to be executedError in code at line 559:   
- if global.rings[p2]>0 {droprings(0) hurting_rn=0 flash=30}                           ^at position 26: Unknown function or script: droprings

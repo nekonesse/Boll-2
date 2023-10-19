@@ -1,2 +1,0 @@
-COMPILATION ERROR in string to be executedError in code at line 893:   
-if (stonebump || owner.size=0 && insted!=1 && !owner.tempkill && (biggie || cracked=0) {                                                                                          ^at position 89: Symbol ) expected.

@@ -1,5 +1,0 @@
-///listobj(obj, palette index, grid x offset, grid y offset)
-ds_list_add(lemonobjlist,argument[0])
-ds_list_add(lemonindexlist,argument[1])
-ds_list_add(lemonoffsetxlist,argument[2])
-ds_list_add(lemonoffsetylist,argument[3])

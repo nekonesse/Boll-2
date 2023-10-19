@@ -1,2 +1,0 @@
-COMPILATION ERROR in string to be executedError in code at line 755:   
-} else if (stonebump || (owner.size=0 && biggie && !owner.slipnslide && insted!=1 && !owner.tempkill) {                                                                                                         ^at position 104: Symbol ) expected.

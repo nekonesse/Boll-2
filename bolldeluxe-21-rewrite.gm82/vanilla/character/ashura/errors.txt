@@ -1,2 +1,0 @@
-COMPILATION ERROR in string to be executedError in code at line 839:   
-    jump=1 hurt=1+starhit if (!starhit) if (shielded) {shielded=0} else if global.rings[p2]>0 {droprings(0)} else {if size=3 size=1 else size-=1} hsp=xsc*-2*wf vsp=-3*wf                                                                                                  ^at position 97: Unknown function or script: droprings

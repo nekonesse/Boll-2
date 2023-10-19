@@ -1,2 +1,0 @@
-COMPILATION ERROR in string to be executedError in code at line 855:   
-        if (shielded) {shielded=0} else if global.rings[p2]>0 {droprings(0)} else {if size>=3 size=2 size-=1}                                                                  ^at position 65: Unknown function or script: droprings

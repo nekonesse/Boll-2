@@ -1,0 +1,1 @@
+levels=directory_list(working_directory+"\mods\levels")

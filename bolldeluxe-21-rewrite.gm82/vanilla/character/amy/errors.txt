@@ -1,2 +1,0 @@
-COMPILATION ERROR in string to be executedError in code at line 2:   
-mask_set(12,12)   ^at position 2: Unknown function or script: mask_set
