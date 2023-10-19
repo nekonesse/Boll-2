@@ -1,13 +1,13 @@
 {
   "resourceType": "GMRoom",
   "resourceVersion": "1.0",
-  "name": "rm_levelloader",
+  "name": "rLevel_0",
   "creationCodeFile": "",
   "inheritCode": false,
   "inheritCreationOrder": false,
   "inheritLayers": false,
   "instanceCreationOrder": [
-    {"name":"inst_37F99E91","path":"rooms/rm_levelloader/rm_levelloader.yy",},
+    {"name":"inst_37F99E91","path":"rooms/rLevel_0/rLevel_0.yy",},
   ],
   "isDnd": false,
   "layers": [

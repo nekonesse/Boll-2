@@ -8,7 +8,7 @@
 		"appVersion": "1.4.1",
 		"url": "https://ldtk.io"
 	},
-	"identifier": "level_0",
+	"identifier": "Level_0",
 	"iid": "86729cc2-6280-11ee-a7f2-e17155b20514",
 	"uid": 0,
 	"worldX": -80,
@@ -29,7 +29,7 @@
 	"fieldInstances": [],
 	"layerInstances": [
 		{
-			"__identifier": "entities",
+			"__identifier": "Entities",
 			"__type": "Entities",
 			"__cWid": 37,
 			"__cHei": 25,
@@ -53,7 +53,7 @@
 			"gridTiles": [],
 			"entityInstances": [
 				{
-					"__identifier": "player",
+					"__identifier": "Player",
 					"__grid": [4,16],
 					"__pivot": [0.5,1],
 					"__tags": [],
@@ -69,7 +69,7 @@
 					"fieldInstances": []
 				},
 				{
-					"__identifier": "collider",
+					"__identifier": "Collider",
 					"__grid": [2,17],
 					"__pivot": [0,0],
 					"__tags": [],
@@ -85,7 +85,7 @@
 					"fieldInstances": []
 				},
 				{
-					"__identifier": "semilider",
+					"__identifier": "Semilider",
 					"__grid": [7,14],
 					"__pivot": [0,0],
 					"__tags": [],
@@ -101,7 +101,7 @@
 					"fieldInstances": []
 				},
 				{
-					"__identifier": "collider",
+					"__identifier": "Collider",
 					"__grid": [35,0],
 					"__pivot": [0,0],
 					"__tags": [],
@@ -117,7 +117,7 @@
 					"fieldInstances": []
 				},
 				{
-					"__identifier": "semilider",
+					"__identifier": "Semilider",
 					"__grid": [25,17],
 					"__pivot": [0,0],
 					"__tags": [],
@@ -133,7 +133,7 @@
 					"fieldInstances": []
 				},
 				{
-					"__identifier": "collider",
+					"__identifier": "Collider",
 					"__grid": [0,24],
 					"__pivot": [0,0],
 					"__tags": [],
@@ -149,7 +149,7 @@
 					"fieldInstances": []
 				},
 				{
-					"__identifier": "collider",
+					"__identifier": "Collider",
 					"__grid": [0,0],
 					"__pivot": [0,0],
 					"__tags": [],
@@ -165,7 +165,7 @@
 					"fieldInstances": []
 				},
 				{
-					"__identifier": "collider",
+					"__identifier": "Collider",
 					"__grid": [0,2],
 					"__pivot": [0,0],
 					"__tags": [],

@@ -1,7 +1,7 @@
 {
   "resourceType": "GMObject",
   "resourceVersion": "1.0",
-  "name": "obj_semilider",
+  "name": "oCollider",
   "eventList": [],
   "managed": true,
   "overriddenProperties": [],
@@ -26,8 +26,8 @@
   "properties": [],
   "solid": false,
   "spriteId": {
-    "name": "spr_semilider",
-    "path": "sprites/spr_semilider/spr_semilider.yy",
+    "name": "spr_collider",
+    "path": "sprites/spr_collider/spr_collider.yy",
   },
   "spriteMaskId": null,
   "visible": true,

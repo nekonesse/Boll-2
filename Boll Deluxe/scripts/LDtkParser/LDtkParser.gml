@@ -12,7 +12,7 @@ global.__ldtk_config = {
 	room_prefix: "r",
 	layer_prefix: "",
 	tileset_prefix: "",
-	object_prefix: "obj_",
+	object_prefix: "o",
 	field_prefix: "",
 	
 	ignore_intgrids: false,
@@ -24,7 +24,7 @@ global.__ldtk_config = {
 			
 		},
 		layers: { // ldtk_layer_name -> gm_room_layer_name
-			entities: "Instances"
+			Entities: "Instances"
 		},
 		enums: { // ldtk_enum_name -> { ldtk_enum_value -> gml_value }
 			

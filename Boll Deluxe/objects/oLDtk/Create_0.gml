@@ -10,14 +10,14 @@ if (LDTK_LIVE) {
 	LDtkConfig({
 		// change this to your project directory
 		file: "F:\\Boll-Deluxe\\Boll Deluxe\\mods\\level\\Stage.ldtk",
-		level_name: "level_0"
+		level_name: "Level_0"
 	})
 }
 else {
 	// release config
 	LDtkConfig({
-		file: "Stage.ldtk",
-		level_name: "level_0"
+		file: "F:\\Boll-Deluxe\\Boll Deluxe\\mods\\level\\Stage.ldtk",
+		level_name: "Level_0"
 	})
 }
 

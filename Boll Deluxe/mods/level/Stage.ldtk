@@ -12,7 +12,7 @@
 	"jsonVersion": "1.4.1",
 	"appBuildId": 471015,
 	"nextUid": 9,
-	"identifierStyle": "Lowercase",
+	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
 	"worldGridWidth": 256,
@@ -43,7 +43,7 @@
 	"defs": { "layers": [
 		{
 			"__type": "Entities",
-			"identifier": "entities",
+			"identifier": "Entities",
 			"type": "Entities",
 			"uid": 2,
 			"doc": "Place your collision parts here!!!",
@@ -74,7 +74,7 @@
 		}
 	], "entities": [
 		{
-			"identifier": "player",
+			"identifier": "Player",
 			"uid": 5,
 			"tags": [],
 			"exportToToc": false,
@@ -108,7 +108,7 @@
 			"fieldDefs": []
 		},
 		{
-			"identifier": "collider",
+			"identifier": "Collider",
 			"uid": 3,
 			"tags": [],
 			"exportToToc": false,
@@ -142,7 +142,7 @@
 			"fieldDefs": []
 		},
 		{
-			"identifier": "semilider",
+			"identifier": "Semilider",
 			"uid": 4,
 			"tags": [],
 			"exportToToc": false,
@@ -179,7 +179,7 @@
 		{
 			"__cWid": 32,
 			"__cHei": 64,
-			"identifier": "internal_icons",
+			"identifier": "Internal_icons",
 			"uid": 6,
 			"relPath": null,
 			"embedAtlas": "LdtkIcons",
@@ -201,7 +201,7 @@
 		{
 			"__cWid": 40,
 			"__cHei": 22,
-			"identifier": "ldtkicons2",
+			"identifier": "Ldtkicons2",
 			"uid": 7,
 			"relPath": "LDTKIcons.png",
 			"embedAtlas": null,
@@ -223,7 +223,7 @@
 	], "enums": [], "externalEnums": [], "levelFields": [] },
 	"levels": [
 		{
-			"identifier": "level_0",
+			"identifier": "Level_0",
 			"iid": "86729cc2-6280-11ee-a7f2-e17155b20514",
 			"uid": 0,
 			"worldX": -80,
@@ -240,7 +240,7 @@
 			"bgPivotY": 0.5,
 			"__smartColor": "#ADADB5",
 			"__bgPos": null,
-			"externalRelPath": "Stage/level_0.ldtkl",
+			"externalRelPath": "Stage/Level_0.ldtkl",
 			"fieldInstances": [],
 			"layerInstances": null,
 			"__neighbours": []
