@@ -3,7 +3,7 @@ image_angle=wrap_val(image_angle,0,360)
 player=instance_nearest(x,y,oPlayer)
 if distance_to_point(player.x,player.y) < 96 {
 	start_going=1
-	lookdir=(player.x > x) ? -1 : 1;
+	lookdir=(player.x > x) ? 1 : -1;
 }
 else
 {
@@ -15,6 +15,10 @@ lookdir=0
 
 if (start_going)
 {
-	image_angle = lerp(image_angle, image_angle+90*lookdir, 0.05)
-	
+	image_angle+=-lookdir*2
+	r=degtorad(image_angle)*2.5
+	sr=sin(r)
+	yy=(-sr)*lookdir
+	y+=yy
+	x+=lookdir*2
 }
