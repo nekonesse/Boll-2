@@ -4,7 +4,6 @@
 // ...and to set this macro to 0 when building the game!
 #macro LDTK_LIVE 1
 
-
 if (LDTK_LIVE) {
 	LDtkConfig({
 		// this will load the bundled version (live updating won't work)
@@ -31,26 +30,18 @@ else {
 
 LDtkMappings({
 	layers: {
-		Foreground_Tiles_2: "Foreground_Tiles_2",
-		Foreground_Tiles: "Foreground_Tiles",
-		FG_Decor_Tiles: "FG_Decor_Tiles",
 		Misc_Entities: "Misc_Entities",
-		Ground_Tiles: "Ground_Tiles",
 		Entities: "Entities",
-		Tiles: "Misc_Tiles",
-		BG_Decor_Tiles: "BG Decor_Tiles",
-		Background_Tiles: "Background_Tiles",
-		Background_Tiles_2: "Background_Tiles 2",
 		Collision_Tiles: "CollisionLayer"
 	},
 	tilesets: {
-		Tileset_Main: "TilesetMain",
-		Tileset_Extra: "TilesetExtra",
-		Tileset_Animated4: "TilesetAnimated4",
-		Tileset_Animated8: "TilesetAnimated8",
-		Assets_Main: "AssetsMain",
-		Assets_Extra:"AssetsExtra",
-		Assets_Animated4: "AssetsAnimated4",
-		Assets_Animated8: "AssetsAnimated8"
+		Tileset_Main: "tTilesetMain",
+		Tileset_Extra: "tTilesetExtra",
+		Tileset_Animated4: "tTilesetAnimated4",
+		Tileset_Animated8: "tTilesetAnimated8",
+		Assets_Main: "tAssetsMain",
+		Assets_Extra:"tAssetsExtra",
+		Assets_Animated4: "tAssetsAnimated4",
+		Assets_Animated8: "tAssetsAnimated8"
 	}
 })

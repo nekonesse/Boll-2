@@ -18,6 +18,7 @@ if (akey) {
 		room_goto(rMainMenu)
 	} else {
 		global.nextlevel=global.levellist[selectedlevel-1]
+		event_user(0)
 		room_goto(rLDTKload)
 	}
 }

@@ -23,8 +23,10 @@ global.__ldtk_config = {
 		levels: { // ldtk_level_name -> gm_room_name
 			
 		},
-		layers: { // ldtk_layer_name -> gm_room_layer_name
-			Entities: "Instances"
+		layers: {
+			Misc_Entities: "Misc_Entities",
+			Entities: "Entities",
+			Collision_Tiles: "CollisionLayer"
 		},
 		enums: { // ldtk_enum_name -> { ldtk_enum_value -> gml_value }
 			
@@ -35,8 +37,15 @@ global.__ldtk_config = {
 		fields: { // ldtk_entity_name -> { ldtk_entity_field_name -> gm_instance_variable_name }
 			
 		},
-		tilesets: { // ldtk_tileset_name -> gm_tileset_name
-			
+		tilesets: {
+			Tileset_Main: "tTilesetMain",
+			Tileset_Extra: "tTilesetExtra",
+			Tileset_Animated4: "tTilesetAnimated4",
+			Tileset_Animated8: "tTilesetAnimated8",
+			Assets_Main: "tAssetsMain",
+			Assets_Extra:"tAssetsExtra",
+			Assets_Animated4: "tAssetsAnimated4",
+			Assets_Animated8: "tAssetsAnimated8"	
 		},
 		intgrids: { // ldtk_intgrid_layer_name -> global.ldtk_intgrids' key
 			
@@ -405,6 +414,7 @@ function LDtkLoad(level_name) {
 				
 				if !found_tileset_def
 					break
+				
 				
 				tile_size = this_layer.__gridSize
 				
