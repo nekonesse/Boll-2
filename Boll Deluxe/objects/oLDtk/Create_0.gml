@@ -13,17 +13,17 @@ if (LDTK_LIVE) {
 		
 		// change this to your project directory
 		//file: working_directory+"\mods\\level\\TEST.ldtk",
-		file: working_directory+"\mods\\level\\TEST.ldtk",
+		file: working_directory+"\mods\\level\\"+global.nextlevel+"\\level.ldtk",
 		
-		level_name: "Levelloader"
+		level_name: "Level"
 	})
 }
 else {
 	LDtkConfig({
 		//file: "D:\\Projects\\GameMaker Projects\\LDtkParser\\datafiles\\LDtkTest.ldtk",
 		//file: "LDtkTest.ldtk",
-		file: working_directory+"\mods\\level\\TEST.ldtk",
-		level_name: "Levelloader"
+		file: working_directory+"\mods\\level\\"+global.nextlevel+"\\level.ldtk",
+		level_name: "Level"
 	})
 }
 
@@ -31,16 +31,17 @@ else {
 
 LDtkMappings({
 	layers: {
-		Foreground_Tiles_2: "Foreground Tiles 2",
-		Foreground_Tiles: "Foreground Tiles",
-		FG_Decor_Tiles: "FG Decor Tiles",
-		Misc_Entities: "Misc Entities",
-		Ground_Tiles: "Ground Tiles",
+		Foreground_Tiles_2: "Foreground_Tiles_2",
+		Foreground_Tiles: "Foreground_Tiles",
+		FG_Decor_Tiles: "FG_Decor_Tiles",
+		Misc_Entities: "Misc_Entities",
+		Ground_Tiles: "Ground_Tiles",
 		Entities: "Entities",
-		Tiles: "Misc Tiles",
-		BG_Decor_Tiles: "BG Decor Tiles",
-		Background_Tiles: "Background Tiles",
-		Background_Tiles_2: "Background Tiles 2"
+		Tiles: "Misc_Tiles",
+		BG_Decor_Tiles: "BG Decor_Tiles",
+		Background_Tiles: "Background_Tiles",
+		Background_Tiles_2: "Background_Tiles 2",
+		Collision_Tiles: "CollisionLayer"
 	},
 	tilesets: {
 		Tileset_Main: "TilesetMain",

@@ -23,6 +23,8 @@ return {
 		action: input_binding_key("Z"),
 		special: input_binding_key("C"),
         
+		enter: input_binding_key(vk_enter),
+		
         pause: input_binding_key(vk_escape),
     },
     

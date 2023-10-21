@@ -1,0 +1,1 @@
+SaveStringToFile("keybinds.ini",input_player_export())
