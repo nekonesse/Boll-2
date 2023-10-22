@@ -30,6 +30,7 @@ else {
 
 LDtkMappings({
 	layers: {
+		Ground_Tiles: "Ground_Tiles",
 		Misc_Entities: "Misc_Entities",
 		Entities: "Entities",
 		Collision_Tiles: "CollisionLayer"

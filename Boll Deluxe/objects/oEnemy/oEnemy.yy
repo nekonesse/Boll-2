@@ -38,6 +38,7 @@
     {"resourceType":"GMObjectProperty","resourceVersion":"1.0","name":"defaultgrav","filters":[],"listItems":[],"multiselect":false,"rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"value":"0.25","varType":0,},
     {"resourceType":"GMObjectProperty","resourceVersion":"1.0","name":"hp","filters":[],"listItems":[],"multiselect":false,"rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"value":"4","varType":0,},
     {"resourceType":"GMObjectProperty","resourceVersion":"1.0","name":"kidhp","filters":[],"listItems":[],"multiselect":false,"rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"value":"4","varType":0,},
+    {"resourceType":"GMObjectProperty","resourceVersion":"1.0","name":"mask_index","filters":[],"listItems":[],"multiselect":false,"rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"value":"spr_16x16hitbox","varType":5,},
   ],
   "solid": false,
   "spriteId": {

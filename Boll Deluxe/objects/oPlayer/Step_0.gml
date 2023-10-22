@@ -65,6 +65,7 @@ if !(akey) {
 //Jumping
 if (canjump > 0 && (apress)) || (bufferjump)
 {
+jump=1
 fr=1
 bufferjump = 0;
 vsp = -6;
@@ -85,7 +86,8 @@ if (_Platform && bbox_bottom <= _Platform.bbox_top) {
 	}
 }
 	
-if (place_meeting(x+hsp,y,oCollider)){
+coll=instance_place(x+hsp,y,oCollider)
+if (place_meeting(x+hsp,y,oCollider) && (coll.object_index!=oFlipblock || (coll.object_index==oFlipblock && coll.hit==0 && !place_meeting(x,y,coll)))){
     yPlus = 0;
     while(place_meeting(x+hsp,y-yPlus,oCollider) && yPlus <= abs(2*hsp)){
         yPlus +=1;
@@ -115,7 +117,8 @@ else{
 }
 x += hsp;
 
-if (place_meeting(x,y+vsp,oCollider)){
+coll=instance_place(x,y+vsp,oCollider)
+if (place_meeting(x,y+vsp,oCollider) && (coll.object_index!=oFlipblock || (coll.object_index==oFlipblock && coll.hit==0 && !place_meeting(x,y,coll)))){
     while(!place_meeting(x,round(y+sign(vsp)),oCollider)){
         y += sign(vsp);
     }
@@ -129,7 +132,7 @@ if !place_meeting(x,round(y),oCollider){
     y=round(y);
 }
 
-
+if (grounded) jump=0
 
 
 //Switch direction

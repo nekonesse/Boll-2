@@ -9,11 +9,11 @@
     "TileSerialiseData": [],
   },
   "out_columns": 36,
-  "out_tilehborder": 2,
-  "out_tilevborder": 2,
+  "out_tilehborder": 0,
+  "out_tilevborder": 0,
   "parent": {
-    "name": "Controller Objects",
-    "path": "folders/Objects/Control/Controller Objects.yy",
+    "name": "Tile Sets",
+    "path": "folders/Tile Sets.yy",
   },
   "spriteId": {
     "name": "spr_TilesetMain",

@@ -3,7 +3,7 @@
 /// @param  to
 /// @param  duration
 /// @param  offset
-function wave_val(argument0, argument1, argument2, argument3) {
+function wave_val(argument0, argument1, argument2, argument3=0) {
  
 	// Returns a value that will wave back and forth between [from-to] over [duration] seconds
 	// Examples
