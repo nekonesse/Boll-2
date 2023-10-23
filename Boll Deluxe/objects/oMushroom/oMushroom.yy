@@ -27,7 +27,10 @@
   "physicsStartAwake": true,
   "properties": [],
   "solid": false,
-  "spriteId": null,
+  "spriteId": {
+    "name": "spr_mushroom",
+    "path": "sprites/spr_mushroom/spr_mushroom.yy",
+  },
   "spriteMaskId": null,
   "visible": true,
 }
