@@ -1,1 +1,1 @@
-if (content) == "mushroom"
+//if (content) == "mushroom"
