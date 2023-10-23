@@ -139,6 +139,7 @@
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Stacks","folderPath":"folders/Vinyl/Stacks.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Stopping Audio","folderPath":"folders/Vinyl/Stopping Audio.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Transposition","folderPath":"folders/Vinyl/Transposition.yy",},
+    {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Collision","folderPath":"folders/Sprites/Collision.yy",},
   ],
   "IncludedFiles": [
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"controllerblacklist.csv","CopyToMask":-1,"filePath":"datafiles",},
