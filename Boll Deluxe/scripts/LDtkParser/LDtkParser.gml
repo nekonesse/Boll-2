@@ -392,6 +392,7 @@ function LDtkLoad(level_name) {
 				break
 			#endregion
 			#region Tile Layers
+			
 			case "Tiles": // tile map!
 				var tilemap = layer_tilemap_get_id(gm_layer_id)
 				
@@ -414,7 +415,6 @@ function LDtkLoad(level_name) {
 				
 				if !found_tileset_def
 					break
-				
 				
 				tile_size = this_layer.__gridSize
 				

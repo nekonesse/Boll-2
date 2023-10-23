@@ -1,0 +1,1 @@
+if (content) == "mushroom"

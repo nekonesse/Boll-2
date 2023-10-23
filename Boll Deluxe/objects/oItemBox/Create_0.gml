@@ -6,3 +6,4 @@ hit=0;
 hitted=0;
 spd=1
 going=0
+content=""

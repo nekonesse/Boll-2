@@ -19,6 +19,7 @@ if (hitted)
 			hit=0
 		}
 	}
+	event_user(1)
 }
 else
 {

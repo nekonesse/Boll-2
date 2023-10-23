@@ -6,23 +6,18 @@
 
 if (LDTK_LIVE) {
 	LDtkConfig({
-		// this will load the bundled version (live updating won't work)
-		//file: "LDtkTest.ldtk",
-		// so we need to load directly from the project folder
-		
-		// change this to your project directory
-		//file: working_directory+"\mods\\level\\TEST.ldtk",
 		file: working_directory+"\mods\\level\\"+global.nextlevel+"\\level.ldtk",
 		
-		level_name: "Level"
+		level_name: "Level",
+		escape_fields: true
 	})
 }
 else {
 	LDtkConfig({
-		//file: "D:\\Projects\\GameMaker Projects\\LDtkParser\\datafiles\\LDtkTest.ldtk",
-		//file: "LDtkTest.ldtk",
 		file: working_directory+"\mods\\level\\"+global.nextlevel+"\\level.ldtk",
-		level_name: "Level"
+		
+		level_name: "Level",
+		escape_fields: true
 	})
 }
 

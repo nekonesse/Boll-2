@@ -142,7 +142,7 @@ if (grounded) jump=0
 
 //Pipes ???
 if (grounded && down && place_meeting(x,y+4,oPipeUp)) { //im not sure if this'll work but i trust it
-	with place_meeting(x,y+4,oPipeUp) {
+	with instance_place(x,y+4,oPipeUp) {
 		if canenter {
 			with other { //god i am so sorry for the amount of { and } here
 				alarm[3] = 80

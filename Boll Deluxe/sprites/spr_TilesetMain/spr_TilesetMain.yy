@@ -2,9 +2,9 @@
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
   "name": "spr_TilesetMain",
-  "bbox_bottom": 511,
+  "bbox_bottom": 79,
   "bbox_left": 0,
-  "bbox_right": 639,
+  "bbox_right": 79,
   "bbox_top": 0,
   "bboxMode": 1,
   "collisionKind": 1,
@@ -13,14 +13,14 @@
   "edgeFiltering": false,
   "For3D": false,
   "frames": [
-    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"52b14854-649b-486f-86d5-497a6fe5b6a6",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"566ad6e1-d50f-446e-a77b-6758c8366395",},
   ],
   "gridX": 0,
   "gridY": 0,
-  "height": 512,
+  "height": 80,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"186185d3-f402-4089-9507-5741f823be26","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"0f4af575-6a16-4fe1-9de1-501384a59499","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 0,
@@ -54,7 +54,7 @@
     "timeUnits": 1,
     "tracks": [
       {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"52b14854-649b-486f-86d5-497a6fe5b6a6","path":"sprites/spr_TilesetMain/spr_TilesetMain.yy",},},},"Disabled":false,"id":"888feed7-c450-4921-ab51-7e9eb2d6873a","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"566ad6e1-d50f-446e-a77b-6758c8366395","path":"sprites/spr_TilesetMain/spr_TilesetMain.yy",},},},"Disabled":false,"id":"13587cfe-23ea-4b8a-af4a-379f8946b54d","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange": null,
@@ -70,5 +70,5 @@
   },
   "type": 0,
   "VTile": false,
-  "width": 640,
+  "width": 80,
 }
