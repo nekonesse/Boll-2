@@ -16,10 +16,19 @@ global.__ldtk_config = {
 			
 		},
 		layers: { // ldtk_layer_name -> gm_room_layer_name
-			Ground_Tiles: "Ground_Tiles",
+			Foreground_Tiles_2: "Foreground_Tiles_2",
+			Foreground_Tiles: "Foreground_Tiles",
+			FG_Decor_Tiles: "FG_Decor_Tiles",
 			Misc_Entities: "Misc_Entities",
+			Ground_Tiles: "Ground_Tiles",
 			Entities: "Entities",
-			Collision_Tiles: "CollisionLayer"
+			Tiles: "Misc_Tiles",
+			BG_Decor_Tiles: "BG_Decor_Tiles",
+			Semisolid_Tiles: "Semisolid Tiles",
+			Semisolid_Tiles_2: "Semisolid Tiles_2",
+			Background_Tiles: "Background_Tiles",
+			Background_Tiles_2: "Background_Tiles_2",
+			Collision_Layer: "CollisionLayer"
 		},
 		enums: { // ldtk_enum_name -> { ldtk_enum_value -> gml_value }
 			

@@ -529,6 +529,7 @@
     {"id":{"name":"input_accessibility_global_toggle_set","path":"scripts/input_accessibility_global_toggle_set/input_accessibility_global_toggle_set.yy",},},
     {"id":{"name":"__input_load_sdl2_from_buffer_legacy","path":"scripts/__input_load_sdl2_from_buffer_legacy/__input_load_sdl2_from_buffer_legacy.yy",},},
     {"id":{"name":"oHittable","path":"objects/oHittable/oHittable.yy",},},
+    {"id":{"name":"scr_nearestplayer","path":"scripts/scr_nearestplayer/scr_nearestplayer.yy",},},
     {"id":{"name":"input_cursor_inverted_set","path":"scripts/input_cursor_inverted_set/input_cursor_inverted_set.yy",},},
     {"id":{"name":"VinylKnobSet","path":"scripts/VinylKnobSet/VinylKnobSet.yy",},},
     {"id":{"name":"__input_class_virtual","path":"scripts/__input_class_virtual/__input_class_virtual.yy",},},

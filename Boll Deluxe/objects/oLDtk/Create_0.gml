@@ -32,9 +32,9 @@ LDtkMappings({
 		Ground_Tiles: "Ground_Tiles",
 		Entities: "Entities",
 		Tiles: "Misc_Tiles",
-		BG_Decor_Tiles: "BG_Decor_Tiles"
-		Semisolid_Tiles: "Semisolid Tiles"
-		Semisolid_Tiles_2: "Semisolid Tiles_2"
+		BG_Decor_Tiles: "BG_Decor_Tiles",
+		Semisolid_Tiles: "Semisolid Tiles",
+		Semisolid_Tiles_2: "Semisolid Tiles_2",
 		Background_Tiles: "Background_Tiles",
 		Background_Tiles_2: "Background_Tiles_2",
 		Collision_Layer: "CollisionLayer"

@@ -444,6 +444,7 @@
     {"name":"input_accessibility_global_toggle_set","order":3,"path":"scripts/input_accessibility_global_toggle_set/input_accessibility_global_toggle_set.yy",},
     {"name":"__input_load_sdl2_from_buffer_legacy","order":6,"path":"scripts/__input_load_sdl2_from_buffer_legacy/__input_load_sdl2_from_buffer_legacy.yy",},
     {"name":"oHittable","order":1,"path":"objects/oHittable/oHittable.yy",},
+    {"name":"scr_nearestplayer","order":13,"path":"scripts/scr_nearestplayer/scr_nearestplayer.yy",},
     {"name":"input_cursor_inverted_set","order":5,"path":"scripts/input_cursor_inverted_set/input_cursor_inverted_set.yy",},
     {"name":"VinylKnobSet","order":5,"path":"scripts/VinylKnobSet/VinylKnobSet.yy",},
     {"name":"__input_class_virtual","order":21,"path":"scripts/__input_class_virtual/__input_class_virtual.yy",},

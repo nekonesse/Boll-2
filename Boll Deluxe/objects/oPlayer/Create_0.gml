@@ -24,8 +24,10 @@ carrying = 0;
 run=0;
 
 canstopjump=1;
-jump=0
+jump=0;
 
 hurt=0;
+size=0;
+oldsize=0;
 image_speed=0
 global.paused=0

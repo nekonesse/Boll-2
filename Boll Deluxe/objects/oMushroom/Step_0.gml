@@ -1,25 +1,16 @@
-if global.paused || inactive exit
+if (going!=0) {
+	y+=0.33*(going)
+	if !place_meeting(x,y,parentblock) {
+		going=0
+		hsp = 0.75*((nearestplayer().x > x) ? -1 : 1);
+	}
+}
+
+if (going!=0) exit;
 
 if !place_meeting(x,y+1,oCollider) && !place_meeting(x,y+1,oSemilider)
 {
 vsp += grav;
-}
-	
-grounded=false
-
-if (edgeturn) && !(turned) && !collision_rectangle(floor(x)+8*sign(hsp),floor(y)+8,floor(x)+9*sign(hsp),floor(y)+9,oCollider,true,true) && !collision_rectangle(floor(x)+8*sign(hsp),floor(y)+8,floor(x)+9*sign(hsp),floor(y)+9,oSemilider,true,true)
-{
-	turned=1
-	hsp=-hsp
-}
-
-if collision_rectangle(floor(x)-9,floor(y)+8,floor(x)+9,floor(y)+9,oCollider,true,true) || collision_rectangle(floor(x)-9,floor(y)+8,floor(x)+9,floor(y)+9,oSemilider,true,true) turned=0
-
-coll = instance_place(x+hsp, y-yPlus,oEnemy)
-
-if(coll) && !(coll.inactive){
-        coll.hsp = hsp;
-		hsp = -hsp;
 }
 
 var _Platform = instance_place(x, y + vsp, oSemilider);

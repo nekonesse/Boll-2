@@ -1,1 +1,0 @@
-instance_create_depth(x,y,16001,input_controller_object)
