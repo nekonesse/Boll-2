@@ -7,6 +7,7 @@ draw_sprite_ext(sprite_index,image_index,x,y,xsc,ysc,rot,c_white,1)
 		case 1: draw_sprite_ext(spr_playerbig,image_index,x,y,xsc,ysc,rot,c_white,1) break;
 	}
 }
-draw_set_alpha(0.5)
+/*draw_set_alpha(0.5)
 draw_rectangle_color(bbox_left,bbox_top,bbox_right,bbox_bottom,c_red,c_red,c_red,c_red,false)
 draw_set_alpha(1)
+*/

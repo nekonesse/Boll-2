@@ -39,5 +39,8 @@
     "path": "sprites/spr_goombratwalk/spr_goombratwalk.yy",
   },
   "spriteMaskId": null,
+  "tags": [
+    "Catspeak",
+  ],
   "visible": true,
 }

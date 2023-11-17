@@ -38,5 +38,8 @@
     "path": "sprites/spr_goombawalk/spr_goombawalk.yy",
   },
   "spriteMaskId": null,
+  "tags": [
+    "Catspeak",
+  ],
   "visible": true,
 }

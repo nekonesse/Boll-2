@@ -46,5 +46,8 @@
     "path": "sprites/spr_Samba/spr_Samba.yy",
   },
   "spriteMaskId": null,
+  "tags": [
+    "Catspeak",
+  ],
   "visible": true,
 }
