@@ -1,0 +1,10 @@
+instance_create_depth(x,y,0,pSmoke)
+image_index=2
+randomize();
+newvalues=array_shuffle(values);
+oBoardController.finalvalue[0]=newvalues[0];
+oBoardController.draw_x=x-view_get_xport(view_current);
+oBoardController.draw_y=y-view_get_yport(view_current);;
+oBoardController.popup_text=1;
+oBoardController.timer=60;
+alarm[1]=60;

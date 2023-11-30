@@ -19,7 +19,7 @@
     "name": "spr_TilesetMain",
     "path": "sprites/spr_TilesetMain/spr_TilesetMain.yy",
   },
-  "spriteNoExport": false,
+  "spriteNoExport": true,
   "textureGroupId": {
     "name": "Default",
     "path": "texturegroups/Default",

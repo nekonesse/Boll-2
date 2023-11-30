@@ -37,7 +37,10 @@
     "name": "spr_goombawalk",
     "path": "sprites/spr_goombawalk/spr_goombawalk.yy",
   },
-  "spriteMaskId": null,
+  "spriteMaskId": {
+    "name": "spr_goombahitbox",
+    "path": "sprites/spr_goombahitbox/spr_goombahitbox.yy",
+  },
   "tags": [
     "Catspeak",
   ],

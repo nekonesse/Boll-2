@@ -4,7 +4,7 @@
   "name": "oEnemy",
   "eventList": [
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,},
-    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":2,"eventType":3,"isDnD":false,},
+    {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,},
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,},
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":1,"eventType":3,"isDnD":false,},
     {"resourceType":"GMEvent","resourceVersion":"1.0","name":"","collisionObjectId":null,"eventNum":0,"eventType":1,"isDnD":false,},
@@ -45,7 +45,10 @@
     "name": "spr_Samba",
     "path": "sprites/spr_Samba/spr_Samba.yy",
   },
-  "spriteMaskId": null,
+  "spriteMaskId": {
+    "name": "spr_goombahitbox",
+    "path": "sprites/spr_goombahitbox/spr_goombahitbox.yy",
+  },
   "tags": [
     "Catspeak",
   ],

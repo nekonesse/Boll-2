@@ -1,1 +1,1 @@
-instance_create_depth(x,y,0,pStompedEnemy,{sprite_index : spr_goombastomped});
+instance_create_depth(x,y+2,0,pStompedEnemy,{sprite_index : spr_goombastomped});

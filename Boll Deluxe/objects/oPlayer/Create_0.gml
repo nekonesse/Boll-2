@@ -1,4 +1,4 @@
-grav=0.25 //we're having an actual grav var now because changing gravity should be EASIER!!
+grav=0.25; //we're having an actual grav var now because changing gravity should be EASIER!!
 defaultgrav = grav; //for resetting gravity back to default
 vsp=0
 hsp=0
@@ -31,4 +31,4 @@ size=0;
 oldsize=0;
 image_speed=0
 global.paused=0
-instance_change(oPlayerTest,true)
+//instance_change(oPlayerTest,true)
