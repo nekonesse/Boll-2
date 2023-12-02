@@ -70,6 +70,7 @@ grounded = false;
 // chearii: standard collision stuff below
 //nekonesse: rewrite this i beg of you this sucks ass to manage but i dont know a better way
 
+// chearii: standard collision stuff below
 var _Platform = instance_place(x, y + vsp, oSemilider);
 if (_Platform && bbox_bottom <= _Platform.bbox_top)
 {
