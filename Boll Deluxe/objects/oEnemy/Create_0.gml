@@ -16,3 +16,6 @@ yPlus=0;
 inactive=0;
 phaseid=0;
 turned=0;
+
+image_xscale=1;
+image_yscale=1;
