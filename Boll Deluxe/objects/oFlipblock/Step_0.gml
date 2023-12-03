@@ -14,11 +14,13 @@ image_speed = hit;
 
 if (hit != 0)
 {
-    mask_index = spr_empty;
+    //mask_index = spr_empty;
+	no_collide = true;
 }
 else if ((hit == 0) && (!place_meeting(x, y, oPlayer)))
 {
-    mask_index = sprite_index;
+    //mask_index = sprite_index;
+	no_collide = false;
     image_index = 0;
 }
 

@@ -1,4 +1,6 @@
 // chearii: previous x and y positions for movement
+no_collide = false;
+
 x_prev = x;
 y_prev = y;
 x_diff = 0;

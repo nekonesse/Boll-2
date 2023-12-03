@@ -1,3 +1,4 @@
+no_collide = false;
 dy = 0;
 hit = false;
 image_speed = 0;

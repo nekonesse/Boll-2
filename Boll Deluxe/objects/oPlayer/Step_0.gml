@@ -194,10 +194,7 @@ if (_Platform && bbox_bottom <= _Platform.bbox_top)
 }
 
 coll = instance_place(x + hsp, y, oCollider);
-if (place_meeting(x + hsp, y, oCollider) &&
-                                                 (coll.object_index != oFlipblock ||
-                                                  (coll.object_index == oFlipblock &&
-                                                   coll.hit == 0 && !place_meeting(x, y, coll))))
+if ((coll) && (!coll.no_collide))
 {
 	
 	yPlus = 0;
@@ -318,10 +315,8 @@ if ((wall))
 //x += chsp;
 //x += hsp;
 
-coll = instance_place(x, y + vsp, oCollider) if (place_meeting(x, y + vsp, oCollider) &&
-                                                 (coll.object_index != oFlipblock ||
-                                                  (coll.object_index == oFlipblock &&
-                                                   coll.hit == 0 && !place_meeting(x, y, coll))))
+coll = instance_place(x, y + vsp, oCollider); 
+if ((coll) && (!coll.no_collide))
 {
     while (!place_meeting(x, round(y + sign(vsp)), oCollider))
     {
