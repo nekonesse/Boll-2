@@ -270,7 +270,6 @@ wall = instance_place(x, y, oCollider);
 // time complexity is O(n)
 if ((wall) && (wall.object_index == oMovingPlatform))
 {
-	show_debug_message("wall clip");
 	if(x >= wall.x + ((wall.bbox_right - wall.bbox_left) / 2))
 	{
 		while(wall)
