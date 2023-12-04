@@ -1,10 +1,5 @@
+event_inherited();
 no_collide = false;
-dy = 0;
-hit = false;
-image_speed = 0;
-spd = 0;
-hit = 0;
-going = 0;
 flip_time = 0;
 stop_bump = 0;
 
