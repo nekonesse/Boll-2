@@ -8,18 +8,38 @@ if ((hit == 0) && (player) && ((!player.grounded && player.vsp > 0) || (player.j
     event_user(0);
     flip_time = 300;
     player.vsp = 2;
+	going = true
 }
 
 image_speed = abs(hit);
 
 if (hit != 0)
 {
-	if !(stop_bump) {
-		dy = abs(wave_val(0,16,0.25))
-		if (round(dy)>=2) going = 1;
-		if (round(dy)==0) && (going) {
-			going = 0;
-			stop_bump = 1;
+	if !(stop_bump)
+	{
+		if going {
+			if dummyTimer > 0 {
+				dy = approach_val(dy, bumpMax * -hit, 1.5);
+				var doneCheck = (hit == -1 ? (round(dy) >= bumpMax) : (round(dy) <= -bumpMax))
+				if doneCheck {
+					dummyTimer--;
+					if dummyTimer <= 0 {
+						going = false;
+					}
+				}
+			}
+		} else {
+			if !hitNegative {
+				dy = approach_val(dy, -1 * -hit, 2);
+				var doneCheck = (hit == -1 ? round(dy) <= -1 : round(dy) >= 1)
+				if doneCheck
+					hitNegative = true;
+			} else {
+				dy = 0;
+				stop_bump = 1;
+				hitNegative = false;
+				dummyTimer = dummyTimerReset;
+			}
 		}
 	}
 	no_collide = true;
