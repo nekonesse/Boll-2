@@ -64,16 +64,46 @@ function CreateBoxFromBounding(sprindex, xscale = 1, yscale = 1)
 	return vertices;
 }
 
+function obj_update_poly_from_bounding(obj, xscale = 1, yscale = 1)
+{
+	var width = ((sprite_get_bbox_left(obj.sprite_index) - sprite_get_bbox_right(obj.sprite_index)) * xscale) div 1;
+	var height = ((sprite_get_bbox_top(obj.sprite_index) - sprite_get_bbox_bottom(obj.sprite_index)) * yscale) div 1;
+	//var xoffset = (sprite_get_xoffset(obj.sprite_index) * xscale) div 1;
+	//var yoffset = (sprite_get_yoffset(obj.sprite_index) * yscale) div 1;
+	
+
+	var left = (-width / 2);
+	var right = left + width;
+	var bottom = (-height / 2);
+	var top = bottom + height;
+	
+	obj.vertices[0].X = left;
+	obj.vertices[0].Y = top;
+	
+	obj.vertices[1].X = right;
+	obj.vertices[1].Y = top;
+	
+	obj.vertices[2].X = right;
+	obj.vertices[2].Y = bottom;
+	
+	obj.vertices[3].X = left;
+	obj.vertices[3].Y = bottom;
+}
+
 
 // transformUpdateRequired should be set to true
 
-function GetTransformedVertices(doOffset, xoff, yoff)
+function GetTransformedVertices(doOffset, xoff, yoff, forceCenter = false)
 {
 	if (doOffset == undefined)
 		doOffset = true;
 		
 	xoff = ((xoff == undefined) ? 0 : xoff);
 	yoff = ((yoff == undefined) ? 0 : yoff);
+	
+	var vdist = vertices[2].Y - vertices[0].Y;
+	
+	
 	
 	
 	if (transformUpdateRequired)
@@ -82,8 +112,16 @@ function GetTransformedVertices(doOffset, xoff, yoff)
 		var yo = ((doOffset) ? (-sprite_yoffset) : 0);
 		
 		var newy = y + yo + yoff;
+		var newx = x + xo + xoff;
 		
-		var transform = new GMTransform(x + xo + xoff, newy, polyangle);
+		// the centering issues are driving me up the wall, so it's PAIN TIME
+		if (forceCenter)
+		{
+			newx = x;
+			newy = bbox_bottom - (vdist div 2);
+		}
+		
+		var transform = new GMTransform(newx, newy, polyangle);
 		
 		for (var i = 0; i < array_length(vertices); i++)
 		{
@@ -135,7 +173,7 @@ function move_obj_by_poly(obj, amount, avoidtileclip = false, tileobj = o_tile)
 		obj.transformUpdateRequired = true;
 	}
 	
-	return ((avoidtileclip) ? clipping : false);
+	return [((avoidtileclip) ? clipping : false), (newx - obj.x), (newy - obj.y)];
 }
 
 function vector_get_length(value)
@@ -342,6 +380,9 @@ function setup_box_poly(obj,override = undefined)
 		w = override;
 	
 	obj.vertices = CreateBoxVertices(w, h);
+	
+	obj.poly_width = abs(w);
+	obj.poly_height = abs(h);
 	
 	if (abs(obj.image_angle))
 		obj.polyangle = -obj.image_angle div 1;
