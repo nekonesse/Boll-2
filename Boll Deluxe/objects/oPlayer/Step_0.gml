@@ -80,12 +80,23 @@ grounded = false;
 // polygons!!!!!
 //nekonesse: i beg of you turn this into a basic script/function for charm users....
 
+// check to see if we need to update the polybox
+if (sprindex_prev != sprite_index)
+{
+	obj_update_poly_from_bounding(self);
+	sprindex_prev = sprite_index;
+}
+
+var bbb = max(0, sprite_yoffset - 16);
+
+var topbox = (bbox_top - y) div 1;
+
 // manage boxpoly
 P_PolygonManager(self,false,0,-8);
 var this = self;
 
 // get our polygon vertices
-var verticesA = GetTransformedVertices(true,sprite_xoffset div 1,(sprite_yoffset - 7) div 1);
+var verticesA = GetTransformedVertices(false,0,0,true);
 
 var clipcheck, clipdiff, clipsave, ynormal, polycos, polyacos, acos_check, docollide;
 
@@ -123,9 +134,10 @@ with(oPolyCollider)
 		{
 			clipcheck = move_obj_by_poly(this, vector_mul(vector_mul(nrm, -1), dpt/2), true, oCollider);
 
-            if (clipcheck) // if we're clipping...
+            if (clipcheck[0]) // if we're clipping...
 			{
-				if (ynormal == polycos) // ...and our normals and cosine match up...
+				
+				if (!((abs((clipcheck[2] * 100) div 1)))) && (ynormal == polycos) // ...and our normals and cosine match up...
 				{
 					// ...check just how severe the clipping is
                     clipdiff = (this.x - x) div 1;
@@ -140,6 +152,11 @@ with(oPolyCollider)
                         clipsave = ((this.x div 1) & -16) + 16 * sign(clipdiff);
 						this.x = clipsave + (sprite_xoffset div 1);
 					}
+				}
+				else if ((abs((clipcheck[2] * 100) div 1)))
+				{
+					// do damage stuff (crushing)
+					//show_debug_message("[oPlayer] vertical clip");
 				}
 			}
 			

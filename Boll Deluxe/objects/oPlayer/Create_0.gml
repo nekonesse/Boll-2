@@ -28,6 +28,8 @@ dead = 0;
 carrying = 0;
 run=0;
 
+sprindex_prev = sprite_index;
+
 canstopjump=1;
 jump=0;
 
