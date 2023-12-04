@@ -249,34 +249,38 @@ speedhtotal = ((chsp + hsp) * 16) div 1;
 // chearii: ME WHEN GAMEMAKER COLLISION
 // heads up: this means there's currently TWO wall collision routines
 // this just iterates through all potential movements until a collision happens ("future sense")
-var wall, hitTurning;
+var wall, walls, wnum, no_walls, hsign;
+
+no_walls = true;
 
 repeat(abs(speedhtotal))
 {
-	wall = instance_place(x + (sign(speedhtotal)/16), y, oCollider);
-	isFlipBlock = false;
+	hsign = (sign(speedhtotal)/16);
 	
-	if (!wall)
-		x += sign(speedhtotal)/16;
-	else
+	walls = ds_list_create();
+	wnum  = instance_place_list(x + hsign,y,oCollider,walls,false);
+	
+	if (wnum > 0)
 	{
-		show_debug_message(wall);
-		
-		// chearii: ME QWHEN TURN BLOKCS
-		if ((wall.object_index == oFlipblock) || (wall.object_index == oFlipblockLong))
-			isFlipBlock = true;
+	    for (var i = 0; i < wnum; ++i;)
+	    {
+	        wall = (walls[| i]);
 			
-		if (isFlipBlock)
-			show_debug_message("EJFHAKGHJSKDFJSD");
-		
-		if ((isFlipBlock) && (wall.hit))
-		{
-			x += sign(speedhtotal)/16;
-			continue;
+			if (wall.no_collide)
+				continue;
+				
+			no_walls = false;
+			break;
 		}
-		
-		hsp = 0;
 	}
+	
+	// avoid memleaks
+	ds_list_destroy(walls);
+	
+	if (no_walls)
+		x += sign(speedhtotal)/16;
+	else	
+		hsp = 0;
 }
 
 wall = instance_place(x, y, oCollider);
@@ -311,28 +315,70 @@ if ((wall))
 	}
 }
 
+var collhit, vsptotal, semicoll, vsign;
 
-//x += chsp;
-//x += hsp;
+semicoll = false;
 
-coll = instance_place(x, y + vsp, oCollider); 
-if ((coll) && (!coll.no_collide))
+vsptotal = ((cvsp + vsp) * 16) div 1;
+
+// vertical collision overhaul with BLEHHHHH nested loops...
+// time complexity is O(n^2) (can be VERY slow given circumstances)
+no_walls = true;
+
+repeat(abs(vsptotal)) 
 {
-    while (!place_meeting(x, round(y + sign(vsp)), oCollider))
-    {
-        y += sign(vsp);
-    }
-    vsp = 0;
-    fr = 0;
+		
+	collhit = undefined;
+	
+	//collhit = instance_place(x, y + (sign(vsptotal)/16), oCollider);
+	
+	vsign = (sign(vsptotal)/16);
+	
+	collhit = obj_get_coll(self,x,y + vsign);
+	
+	// no collision, let's try a semisolid
+	if (!collhit) && ((vsp * 16) >= 0)
+	{
+		collhit = instance_place(x, y + (sign(vsptotal)/16), oSemilider);
+			
+		if (collhit) 
+		{
+			if ( ((bbox_bottom - collhit.bbox_top) div 1) > 1)
+				collhit = noone;
+			else
+			{
+				y = (collhit.bbox_top) div 1;
+				semicoll = true;
+			}
+		}
+	}
+	
+	if (!collhit)
+	{
+		y += sign(vsptotal)/16; 
+	}
+	else 
+	{	
+		var dist = 0;
+			
+		if (collhit)
+			dist = ((y div 1) - ((collhit.y + 8) div 1));
+			
+		vsptotal = 0;
+			
+		vsp = ((dist <= -4) ? (2/16) : 0);
+	    break;
+	}
+}
+
+collhit = obj_get_coll(self,x,y + 1);
+
+if ((collhit)||(semicoll))
+{
+	fr = 0;
     grounded = true;
 	
 	chsp = 0;
-}
-y += vsp;
-
-if (!place_meeting(x, round(y), oCollider))
-{
-    y = round(y);
 }
 
 if (grounded)
