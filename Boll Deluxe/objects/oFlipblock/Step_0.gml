@@ -37,7 +37,6 @@ if (hit != 0)
 			} else {
 				dy = 0;
 				stop_bump = 1;
-				image_index = 1;
 				hitNegative = false;
 				dummyTimer = dummyTimerReset;
 			}
