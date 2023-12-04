@@ -78,6 +78,7 @@ grounded = false;
 
 
 // polygons!!!!!
+//nekonesse: i beg of you turn this into a basic script/function for charm users....
 
 // manage boxpoly
 P_PolygonManager(self,false,0,-8);
@@ -88,7 +89,7 @@ var verticesA = GetTransformedVertices(true,sprite_xoffset div 1,(sprite_yoffset
 
 var clipcheck, clipdiff, clipsave, ynormal, polycos, polyacos, acos_check, docollide;
 
-// polygon collision handler
+// polygon collision handle
 with(oPolyCollider)
 {
 	if (IntersectPolygons(verticesA,GetTransformedVertices(true,sprite_xoffset div 1,sprite_yoffset div 1)))
@@ -294,7 +295,7 @@ if ((wall))
 	if ((wall.object_index == oFlipblock) || (wall.object_index == oFlipblockLong))
 		isFlipBlock = true;
 		
-	if (!((isFlipBlock) && (wall.hit)))
+	if (!((isFlipBlock) && abs(wall.hit)))
 	{
 		if(x >= wall.x + ((wall.bbox_right - wall.bbox_left) / 2))
 		{

@@ -4,9 +4,10 @@ event_user(0)
 oPlayer.vsp = 2
 }
 
+///HIT IS DIRECTION OF BUMP, -1 IS UP, 1 IS DOWN
 if (hit != 0)
 {
-	dy=abs(wave_val(0,16,0.2))
+	dy=abs(wave_val(0,16,0.25))
 	if round(dy)>=2 going=1
 	if round(dy)==0 && (going) {
 		going=0
