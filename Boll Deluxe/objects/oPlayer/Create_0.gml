@@ -1,3 +1,7 @@
+pal_swap_init_system(shd_pal_swapper)
+palette=0
+palette_index=0
+
 grav=0.25; //we're having an actual grav var now because changing gravity should be EASIER!!
 defaultgrav = grav; //for resetting gravity back to default
 vsp=0;

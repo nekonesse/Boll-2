@@ -1,3 +1,4 @@
+if palette pal_swap_set(palette,palette_index,0)
 var _interval=8;
 if ((alarm[11] % 8) <= _interval/2){
 draw_sprite_ext(sprite_index,image_index,floor(x),floor(y),xsc,ysc,rot,c_white,1)
@@ -7,6 +8,8 @@ draw_sprite_ext(sprite_index,image_index,floor(x),floor(y),xsc,ysc,rot,c_white,1
 		case 1: draw_sprite_ext(spr_playerbig,image_index,floor(x),floor(y),xsc,ysc,rot,c_white,1) break;
 	}
 }
+
+pal_swap_reset();
 
 // chearii: uncomment for fuckin polygon debug
 
