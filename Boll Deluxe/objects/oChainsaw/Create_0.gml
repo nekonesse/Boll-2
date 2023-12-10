@@ -1,6 +1,6 @@
 dir="right";
 spd=0.75;
-depth=4;
+depth=-1;
 
 LDtkReloadFields()
 

@@ -20,3 +20,5 @@ LDtkReloadFields()
 
 targetx=x;
 targety=y;
+
+depth=50;

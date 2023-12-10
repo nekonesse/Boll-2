@@ -43,6 +43,7 @@ size=0;
 oldsize=0;
 image_speed=0
 global.paused=0
+depth=0;
 //instance_change(oPlayerTest,true)
 
 // boxpoly setup
