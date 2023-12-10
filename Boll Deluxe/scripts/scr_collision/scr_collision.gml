@@ -184,16 +184,6 @@ else
     }
 }
 
-mplat = instance_place(x, y + 1, oMovingPlatform)
-
-if (mplat)
-{
-	x += mplat.x_diff;
-	y += mplat.y_diff;
-	
-	//for reasons i cannot fully understand, this causes a while loop freeze?? 
-	//might be a good idea to move this to move outside player script -chopp
-}
 
 //var speedhtotal, isFlipBlock;
 
@@ -358,6 +348,9 @@ y += (vsp)/steps;
 if(!place_meeting(x,round(y),oCollider)){
     y=round(y);
 }
+
+
+
 
 
 }

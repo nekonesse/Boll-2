@@ -24,3 +24,11 @@ switch (dir) {
 
 x_diff = (x - xprevious);
 y_diff = (y - yprevious);
+
+var player = instance_place(x, y -1, oPlayer)
+if (player && player.grounded)
+{
+	player.x += x_diff;
+	player.y += y_diff;
+	
+}
