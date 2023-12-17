@@ -1,4 +1,5 @@
 function my_collision() {
+//nekonesse: what the fuck did you guys do here its so messy and theres so many redundant collision checks that do nothing
 
 var bbb = max(0, sprite_yoffset - 16);
 
@@ -137,60 +138,16 @@ if (_Platform && bbox_bottom <= _Platform.bbox_top)
         {
             y += sign(vsp);
         }
-        grounded = true;
         vsp = 0;
     }
 }
 
-coll = instance_place(x + hsp, y, oCollider);
-if ((coll) && (!coll.no_collide))
-{
-	
-	yPlus = 0;
-    while (place_meeting(x + hsp, y - yPlus, oCollider) && yPlus <= abs(2 * hsp))
-    {
-        yPlus += 1;
-    }
-    if (place_meeting(x + hsp, y - yPlus, oCollider))
-    {
-        while (!place_meeting(x + sign(hsp), y, oCollider))
-        {
-            x += sign(hsp);
-        }
-        hsp = 0;
-    }
-    else
-    {
-        y -= yPlus;
-    }
-}
-else
-{
-    yMinus = 0;
-    while ((!place_meeting(x + hsp, y + yMinus, oCollider)) && (yMinus <= abs(1 * hsp)))
-    {
-        yMinus += 1;
-    }
-    // still not sure why exactly this needs to be here, but it does for math reasons.
-    yMinus -= 1;
+var speedhtotal, isFlipBlock;
 
-    // if there is a place of meeting at yMinus (speed+1) but not at yMinus (speed) AND we're
-    // already on the ground, move down
-    if ((place_meeting(x + hsp, round(y + yMinus) + 1, oCollider)) &&
-        (!place_meeting(x + hsp, round(y + yMinus), oCollider)) && 
-        (place_meeting(x, y + 1, oCollider)))
-    {
-        y = round(y + yMinus);
-    }
-}
-
-
-//var speedhtotal, isFlipBlock;
-
-//speedhtotal = ((chsp + hsp) * 16) div 1;
+speedhtotal = ((chsp + hsp) * 16) div 1;
 
 //y += sign(((cvsp + vsp) * 16) div 1)/16;
-/*
+
 // chearii: ME WHEN GAMEMAKER COLLISION
 // heads up: this means there's currently TWO wall collision routines
 // this just iterates through all potential movements until a collision happens ("future sense")
@@ -325,7 +282,7 @@ if ((collhit)||(semicoll))
 	
 	chsp = 0;
 }
-*/
+
 
 // making collision a "litle worse" here to make sure it actually works -chopp
 // btw this one done before you pointed out the issue you did so umm
@@ -333,9 +290,9 @@ if ((collhit)||(semicoll))
 // still theres something up with the collision loop because the moving platforms should NOT be doing that
 
 
-x += hsp/steps;
+//x += hsp/steps;
 
-coll = instance_place(x, y + vsp, oCollider);
+/*coll = instance_place(x, y + vsp, oCollider);
 if ((coll) && (!coll.no_collide)){
     while(!place_meeting(x,round(y+sign(vsp)),oCollider)){
         y += sign(vsp);
@@ -343,7 +300,7 @@ if ((coll) && (!coll.no_collide)){
     vsp = 0;
 	grounded=true
 }
-y += vsp/steps;
+y += vsp/steps;*/
 
 
 }
