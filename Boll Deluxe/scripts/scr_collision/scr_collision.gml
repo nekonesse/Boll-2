@@ -1,5 +1,5 @@
 /// \file  scr_collision.gml
-/// \brief Setup and handling of collision with colloders.
+/// \brief Setup and handling of collision with colliders.
 
 // TODO: use the SMW system for moving platforms, god knows they need a redo too
 // also slopes eventually
