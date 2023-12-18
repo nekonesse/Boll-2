@@ -1,4 +1,4 @@
-if (shell_time) mask_index=spr_shellhitbox
+if (in_shell) mask_index=spr_shellhitbox
 else mask_index=spr_koopahitbox
 
 if hp <= 0{
@@ -14,13 +14,19 @@ if (!damage_on_contact) {
     {
 		if (no_stomping) {
 			if (in_shell) {
-				if (hsp=0) hsp = sign(phaseid.image_xscale) * 2.2;
-				else hsp = 0;
+				if (hsp=0) { 
+					enemycoll=false;
+					hsp = sign(phaseid.image_xscale) * 2.2;
+				}
+				else {
+					hsp = 0;
+					enemycoll=true;
+				}
 			} else {
 				hsp = 0;
+				enemycoll=true;
 			}
 			in_shell = shell_time;
-			show_debug_message(in_shell)
 		}
 
         phaseid=instance_place(x,y-1,oPlayer)

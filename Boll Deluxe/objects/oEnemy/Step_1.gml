@@ -1,5 +1,3 @@
-mask_index=spr_goombahitbox
-
 if hp <= 0{
     instance_destroy();
 }

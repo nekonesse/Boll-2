@@ -717,7 +717,7 @@
 			"limitScope": "PerLevel",
 			"limitBehavior": "MoveLastOne",
 			"pivotX": 0.5,
-			"pivotY": 0.5,
+			"pivotY": 0,
 			"fieldDefs": []
 		},
 		{
@@ -2512,38 +2512,6 @@
 							"fieldInstances": [{ "__identifier": "is_semisolid", "__type": "Bool", "__value": false, "__tile": null, "defUid": 46, "realEditorValues": [] }]
 						},
 						{
-							"__identifier": "Koopa",
-							"__grid": [15,11],
-							"__pivot": [0.5,0.5],
-							"__tags": [],
-							"__tile": { "tilesetUid": 2, "x": 432, "y": 352, "w": 16, "h": 16 },
-							"__smartColor": "#53A940",
-							"__worldX": 248,
-							"__worldY": 176,
-							"iid": "e76145c0-8990-11ee-ade6-9318e722998e",
-							"width": 16,
-							"height": 32,
-							"defUid": 47,
-							"px": [248,176],
-							"fieldInstances": []
-						},
-						{
-							"__identifier": "Koopa",
-							"__grid": [18,7],
-							"__pivot": [0.5,0.5],
-							"__tags": [],
-							"__tile": { "tilesetUid": 2, "x": 432, "y": 352, "w": 16, "h": 16 },
-							"__smartColor": "#53A940",
-							"__worldX": 296,
-							"__worldY": 112,
-							"iid": "f8b28fa0-8990-11ee-ade6-a7f63cade08b",
-							"width": 16,
-							"height": 32,
-							"defUid": 47,
-							"px": [296,112],
-							"fieldInstances": []
-						},
-						{
 							"__identifier": "SlopeCollider",
 							"__grid": [21,23],
 							"__pivot": [0,0],
@@ -2593,6 +2561,38 @@
 							"defUid": 48,
 							"px": [576,240],
 							"fieldInstances": [{ "__identifier": "hflip", "__type": "Bool", "__value": false, "__tile": null, "defUid": 50, "realEditorValues": [] }]
+						},
+						{
+							"__identifier": "Koopa",
+							"__grid": [18,6],
+							"__pivot": [0.5,0],
+							"__tags": [],
+							"__tile": { "tilesetUid": 2, "x": 432, "y": 352, "w": 16, "h": 16 },
+							"__smartColor": "#53A940",
+							"__worldX": 296,
+							"__worldY": 96,
+							"iid": "c552a430-8990-11ee-9a10-913689f5e356",
+							"width": 16,
+							"height": 32,
+							"defUid": 47,
+							"px": [296,96],
+							"fieldInstances": []
+						},
+						{
+							"__identifier": "Koopa",
+							"__grid": [15,10],
+							"__pivot": [0.5,0],
+							"__tags": [],
+							"__tile": { "tilesetUid": 2, "x": 432, "y": 352, "w": 16, "h": 16 },
+							"__smartColor": "#53A940",
+							"__worldX": 248,
+							"__worldY": 160,
+							"iid": "c74f3780-8990-11ee-9a10-ef43539e480e",
+							"width": 16,
+							"height": 32,
+							"defUid": 47,
+							"px": [248,160],
+							"fieldInstances": []
 						}
 					]
 				},

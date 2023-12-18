@@ -8,9 +8,15 @@ if (edgeturn) && !(turned) && !collision_rectangle(floor(x)+8*sign(hsp),floor(y)
 	hsp=-hsp
 }
 
-if collision_rectangle(floor(x)-9,floor(y)+8,floor(x)+9,floor(y)+9,oCollider,true,true) || collision_rectangle(floor(x)-9,floor(y)+8,floor(x)+9,floor(y)+9,oSemilider,true,true) turned=0
+if collision_rectangle(bbox_right,bbox_bottom,floor(x)+9,floor(y)+9,oCollider,true,true) || 
+   collision_rectangle(bbox_right,floor(y)+8,floor(x)+9,floor(y)+9,oSemilider,true,true) 
+{
+   turned=0
+}
 
-coll = instance_place(x+hsp, y-yPlus,oEnemy)
+if (enemycoll) {
+	coll = instance_place(x+hsp, y-yPlus,oEnemy)
+}
 
 if(coll) && !(coll.inactive){
         coll.hsp = coll.hsp * sign(hsp);
