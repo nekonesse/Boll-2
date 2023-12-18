@@ -28,7 +28,6 @@ wallbuffer = 0;
 move_lock = false;
 piped = false; //tell me if you want this gone ok thanks
 grounded = false;
-groundtime = 0;
 dead = 0;
 carrying = 0;
 run=0;
