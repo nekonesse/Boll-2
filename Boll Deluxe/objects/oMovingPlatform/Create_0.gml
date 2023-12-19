@@ -1,6 +1,8 @@
 // chearii: previous x and y positions for movement
 no_collide = false;
 
+cflags = CF_SOLID;
+
 x_diff = 0;
 y_diff = 0;
 

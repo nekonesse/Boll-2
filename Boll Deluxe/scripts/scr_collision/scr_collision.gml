@@ -18,6 +18,13 @@
 #macro WALL_HORIZ 3
 #macro WALL_VERTI 12
 
+// collider flags
+#macro CF_FLOOR   1
+#macro CF_CEILING 2
+#macro CF_LEFT    4
+#macro CF_RIGHT   8
+#macro CF_SOLID   15
+
 function setup_frac(obj)
 {
 	obj.x_frac = intlib_make_fixedpoint(obj.x) >> FRACBITS;
@@ -173,9 +180,9 @@ function collision_routine_do_xcoll(obj = self)
 	{
 		hitx = (hface ? (hitme.bbox_left) : (hitme.bbox_right));
 		
-		if (hface)
+		if (hface && (hitme.cflags & CF_LEFT))
 			hsensor_dist |= intlib_make_u8((obj.x + xdiff) - hitx);
-		else
+		else if (hitme.cflags & CF_RIGHT)
 			hsensor_dist |= intlib_make_u8(hitx - (obj.x + xdiff));
 	}
 		
@@ -186,9 +193,9 @@ function collision_routine_do_xcoll(obj = self)
 	{
 		hitx = (hface ? (hitme.bbox_left) : (hitme.bbox_right));
 		
-		if (hface)
+		if (hface && (hitme.cflags & CF_LEFT))
 			hsensor_dist |= (intlib_make_u8((obj.x + xdiff) - hitx) << 8);
-		else
+		else if (hitme.cflags & CF_RIGHT)
 			hsensor_dist |= (intlib_make_u8(hitx - (obj.x + xdiff)) << 8);
 	}
 		
@@ -199,9 +206,9 @@ function collision_routine_do_xcoll(obj = self)
 	{
 		hitx = (hface ? (hitme.bbox_left) : (hitme.bbox_right));
 		
-		if (hface)
+		if (hface && (hitme.cflags & CF_LEFT))
 			hsensor_dist |= (intlib_make_u8((obj.x + xdiff) - hitx) << 16);
-		else
+		else if (hitme.cflags & CF_RIGHT)
 			hsensor_dist |= (intlib_make_u8(hitx - (obj.x + xdiff)) << 16);
 	}
 		
@@ -260,14 +267,22 @@ function collision_routine_do_ycoll(obj = self)
 	
 	if (hitme)
 	{
-		hity = (vface ? hitme.bbox_top : hitme.bbox_bottom);
+		hity = (vface ? hitme.bbox_top : hitme.bbox_bottom);		
+		hit_dist = ((vface) ? (intlib_make_u8((obj.y + ydiff) - hity)) : (intlib_make_u8(hity - (obj.y + ydiff))));
 		
-		collhit = ((vface) ? WALL_FLOOR : WALL_CEIL);
-		
-		if (vface)
-			vsensor_dist |= intlib_make_u8((obj.y + ydiff) - hity);
-		else
-			vsensor_dist |= intlib_make_u8(hity - (obj.y + ydiff));
+		if (vface && (hitme.cflags & CF_FLOOR))
+		{
+			if (hit_dist <= 4)
+			{
+				collhit = WALL_FLOOR;
+				vsensor_dist |= hit_dist;
+			}
+		}
+		else if (hitme.cflags & CF_CEILING)
+		{
+			collhit = WALL_CEIL;
+			vsensor_dist |= hit_dist;
+		}
 	}
 		
 	// sensor B
@@ -276,13 +291,21 @@ function collision_routine_do_ycoll(obj = self)
 	if (hitme)
 	{
 		hity = (vface ? hitme.bbox_top : hitme.bbox_bottom);
+		hit_dist = ((vface) ? (intlib_make_u8((obj.y + ydiff) - hity) << 8) : (intlib_make_u8(hity - (obj.y + ydiff)) << 8));
 		
-		collhit = ((vface) ? WALL_FLOOR : WALL_CEIL);
-		
-		if (vface)
-			vsensor_dist |= (intlib_make_u8((obj.y + ydiff) - hity) << 8);
-		else
-			vsensor_dist |= (intlib_make_u8(hity - (obj.y + ydiff)) << 8);
+		if (vface && (hitme.cflags & CF_FLOOR))
+		{
+			if ((hit_dist >> 8) <= 4)
+			{
+				collhit = WALL_FLOOR;
+				vsensor_dist |= hit_dist;
+			}
+		}
+		else if (hitme.cflags & CF_CEILING)
+		{
+			collhit = WALL_CEIL;
+			vsensor_dist |= hit_dist;
+		}
 	}
 		
 	// sensor C
@@ -291,13 +314,21 @@ function collision_routine_do_ycoll(obj = self)
 	if (hitme)
 	{
 		hity = (vface ? hitme.bbox_top : hitme.bbox_bottom);
+		hit_dist = ((vface) ? (intlib_make_u8((obj.y + ydiff) - hity) << 16) : (intlib_make_u8(hity - (obj.y + ydiff)) << 16));
 		
-		collhit = ((vface) ? WALL_FLOOR : WALL_CEIL);
-		
-		if (vface)
-			vsensor_dist |= (intlib_make_u8((obj.y + ydiff) - hity) << 16);
-		else
-			vsensor_dist |= (intlib_make_u8(hity - (obj.y + ydiff)) << 16);
+		if (vface && (hitme.cflags & CF_FLOOR))
+		{
+			if ((hit_dist >> 16) <= 4)
+			{
+				collhit = WALL_FLOOR;
+				vsensor_dist |= hit_dist;
+			}
+		}
+		else if (hitme.cflags & CF_CEILING)
+		{
+			collhit = WALL_CEIL;
+			vsensor_dist |= hit_dist;
+		}
 	}
 		
 	if (vsensor_dist != 0) // if this has any value, we've collided with something
@@ -335,50 +366,6 @@ function collision_routine_do_ycoll(obj = self)
 	}	
 	
 	return collhit;
-}
-
-// yspeed should be in subpixels!!!
-function collision_routine_do_semisolid(obj = self, yspeed = 0)
-{
-	var y_future = obj.y_frac;
-	var y_future_pixel = 0;
-	var diff_to_bbottom = (obj.bbox_bottom - obj.y) div 1;
-	var semihit;
-
-	if (abs(yspeed) && (obj.vsp >= 0))
-	{
-		for (var i = 0; i < max(1, abs(yspeed) >> (FRACBITS / 2)); i++)
-		{
-			y_future += (FRACUNIT >> (FRACBITS / 2));
-
-			y_future_pixel = (y_future >> FRACBITS);
-
-			semihit = instance_place(obj.x,y_future_pixel + 1,oSemilider);
-
-			if (semihit)
-			{
-				show_debug_message("hit semi");
-
-				var pixeldist = intlib_make_s32(obj.bbox_bottom - semihit.bbox_top);
-
-				show_debug_message(pixeldist);
-
-				if (pixeldist <= 5)
-				{
-					obj.y = (semihit.bbox_top + 1) - diff_to_bbottom;
-
-					obj.y_frac = intlib_make_fixedpoint(obj.y) >> FRACBITS;
-
-					obj.vsp = 0;
-
-					obj.collflags |= WALL_FLOOR;
-					obj.grounded = true;
-
-					break;
-				}
-			}
-		}
-	}
 }
 
 // neko's bane
@@ -446,7 +433,7 @@ function collision_routine_do_slope(obj = self, yspeed = 0)
 	}
 	
 	// sensor comparisons
-	show_debug_message(string(sensor));
+	//show_debug_message(string(sensor));
 	
 	if ((sensor[0] >= 0) || (sensor[1] >= 0) || (sensor[2] >= 0))
 	{
@@ -494,9 +481,7 @@ function my_collision(obj = self)
 	fracvsp = intlib_make_fixedpoint(obj.vsp) >> FRACBITS;
 	
 	// before we do anything, do future sense for the y coordinate so that we can check if we 
-	// hit a semisolid
-	collision_routine_do_semisolid(obj, fracvsp);
-	
+	// hit a slope
 	collision_routine_do_slope(obj, fracvsp);
 
 	// now, add the speeds to the SUBPIXEL VERSIONS of our coordinates

@@ -8,3 +8,4 @@ dummyTimerReset = 6; //time (in frames) to hold on final "up" pos
 dummyTimer = dummyTimerReset;
 bumpMax = 6; //highest "up" pos for bumping
 hitNegative = false; //used for the bumping "overshoot" anim end-bounce
+cflags = CF_SOLID;
