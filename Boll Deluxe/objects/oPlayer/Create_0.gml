@@ -48,6 +48,7 @@ oldsize=0;
 image_speed=0
 global.paused=0
 depth=0;
+drawStar=false  //feel free to delete this along with it's mentions and uses in the draw event
 //instance_change(oPlayerTest,true)
 
 // fracval setup
