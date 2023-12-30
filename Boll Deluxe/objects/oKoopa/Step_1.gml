@@ -25,11 +25,12 @@ if (!damage_on_contact) {
 			} else {
 				hsp = 0;
 				enemycoll=true;
+				y += 6; //Pulling the shell to the ground
 			}
 			in_shell = shell_time;
 		}
 
-        phaseid=instance_place(x,y-1,oPlayer)
+        phaseid=instance_place(x,y-7,oPlayer) //Be sure to have the y value here be y -1 -whatever the koopa is being pulled down
         phaseid.vsp=-4-phaseid.akey*1.5
 
         exit
