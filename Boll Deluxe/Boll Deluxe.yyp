@@ -367,6 +367,7 @@
     {"id":{"name":"__input_virtual_player_set","path":"scripts/__input_virtual_player_set/__input_virtual_player_set.yy",},},
     {"id":{"name":"CollageImageExists","path":"scripts/CollageImageExists/CollageImageExists.yy",},},
     {"id":{"name":"__scribble_system","path":"scripts/__scribble_system/__scribble_system.yy",},},
+    {"id":{"name":"scr_slope","path":"scripts/scr_slope/scr_slope.yy",},},
     {"id":{"name":"input_trigger_effect_feedback","path":"scripts/input_trigger_effect_feedback/input_trigger_effect_feedback.yy",},},
     {"id":{"name":"input_icon_not_a_binding","path":"scripts/input_icon_not_a_binding/input_icon_not_a_binding.yy",},},
     {"id":{"name":"VinylSystemGetPoolInactiveCount","path":"scripts/VinylSystemGetPoolInactiveCount/VinylSystemGetPoolInactiveCount.yy",},},
