@@ -56,3 +56,6 @@ setup_frac(self);
 
 // boxpoly setup
 setup_box_poly(self);
+
+// slope setup
+instance_make_slopevars(self);
