@@ -160,7 +160,7 @@ function collision_routine_do_xcoll(obj = self)
 	// sensor distances stored into one value
 	// 0x00CCBBAA
 	var hsensor_dist = 0;
-	var bttm = obj.bbox_bottom - 2;
+	var bttm = obj.bbox_bottom - 4;
 	var top = obj.bbox_top + 2;
 	
 	hsensor_A = (intlib_make_fixedpoint(top) >> FRACBITS);
@@ -482,14 +482,21 @@ function my_collision(obj = self)
 	
 	// before we do anything, do future sense for the y coordinate so that we can check if we 
 	// hit a slope
-	collision_routine_do_slope(obj, fracvsp);
+	//collision_routine_do_slope(obj, fracvsp);
 
 	// now, add the speeds to the SUBPIXEL VERSIONS of our coordinates
 	obj.x_frac += frachsp;
 	obj.y_frac += fracvsp;
 	
+	// do slope collision before we actually change our real x/y values
+	var hitslope = instance_handle_slope_collision(obj);
+	
 	obj.x = obj.x_frac >> FRACBITS;
 	obj.y = obj.y_frac >> FRACBITS;
+	
+	
+	if (hitslope)
+	    obj.vsp = 0;
 	
 	// sonic-style "sensor" collision
 	// https://info.sonicretro.org/SPG:Solid_Tiles#Sensors

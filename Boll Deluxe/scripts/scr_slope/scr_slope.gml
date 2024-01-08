@@ -9,9 +9,14 @@
 #macro SLOPESENSOR_B 1
 #macro SLOPESENSOR_C 2
 
+#macro BOTTOMCOLLOFFSET 2
+#macro BBOXBTTMOFFSET 0
+
 function instance_make_slopevars(obj)
 {
 	obj.slope_sensors = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+	obj.slope_colval = 1;
+	obj.slope_ydist = 1;
 }
 
 function slope_set_rise_run(obj)
@@ -62,16 +67,18 @@ function instance_handle_slope_collision(obj)
 	var colslope;
 	var sensorfound = 0;
 	var xdist = 0;
-	var bbox_height = (bbox_bottom - bbox_top) div 1;
+	var bbox_height = (obj.bbox_bottom - obj.bbox_top) div 1;
+	var bbottom = (obj.bbox_bottom div 1) - BBOXBTTMOFFSET;
+	var bbottom_check = (obj.bbox_bottom div 1) - BOTTOMCOLLOFFSET;
 
 	// this is incredibly messy code but is UNIRONICALLY faster than doing a for loop
 
 	// get data for sensor A
-	colslope = instance_position(bbox_left,bbox_bottom,o_slope);
+	colslope = instance_position(obj.bbox_left,bbottom_check,oSlopeCollider);
 	if (colslope)
 	{
-		xdist = min(colslope.sprite_width div 1, max(0, bbox_left - colslope.bbox_left));
-		obj.slope_sensors[SLOPESENSOR_A][0] = intlib_make_u16(min(0, -(colslope.slope_factor * xdist) div 1));
+		xdist = min(colslope.sprite_width div 1, max(0, obj.bbox_left - colslope.bbox_left));
+		obj.slope_sensors[SLOPESENSOR_A][0] = intlib_make_u16(min(0, -((colslope.slope_factor * xdist) + 2) div 1));
 	
 		// get top and height
 		obj.slope_sensors[SLOPESENSOR_A][1] = (intlib_make_u16(colslope.bbox_top) << 16);
@@ -84,11 +91,11 @@ function instance_handle_slope_collision(obj)
 		obj.slope_sensors[SLOPESENSOR_A][0] = 0x00FF0003; // set "notile" flag
 	
 	// get data for sensor B
-	colslope = instance_position(x,bbox_bottom,o_slope);
+	colslope = instance_position(obj.x,bbottom_check,oSlopeCollider);
 	if (colslope)
 	{
-		xdist = min(colslope.sprite_width div 1, max(0, x - colslope.bbox_left));
-		obj.slope_sensors[SLOPESENSOR_B][0] = intlib_make_u16(min(0, -(colslope.slope_factor * xdist) div 1));
+		xdist = min(colslope.sprite_width div 1, max(0, obj.x - colslope.bbox_left));
+		obj.slope_sensors[SLOPESENSOR_B][0] = intlib_make_u16(min(0, -((colslope.slope_factor * xdist) + 2) div 1));
 	
 		// get top and height
 		obj.slope_sensors[SLOPESENSOR_B][1] = (intlib_make_u16(colslope.bbox_top) << 16);
@@ -101,11 +108,12 @@ function instance_handle_slope_collision(obj)
 		obj.slope_sensors[SLOPESENSOR_B][0] = 0x00FF0003; // set "notile" flag
 	
 	// get data for sensor C
-	colslope = instance_position(bbox_right,bbox_bottom,o_slope);
+	colslope = instance_position(obj.bbox_right - 3,bbottom_check,oSlopeCollider);
+	
 	if (colslope)
 	{
-		xdist = min(colslope.sprite_width div 1, max(0, bbox_right - colslope.bbox_left));
-		obj.slope_sensors[SLOPESENSOR_C][0] = intlib_make_u16(min(0, -(colslope.slope_factor * xdist) div 1));
+		xdist = min(colslope.sprite_width div 1, max(0, (obj.bbox_right - 3) - colslope.bbox_left));
+		obj.slope_sensors[SLOPESENSOR_C][0] = intlib_make_u16(min(0, -((colslope.slope_factor * xdist) + 2) div 1));
 	
 		// get top and height
 		obj.slope_sensors[SLOPESENSOR_C][1] = (intlib_make_u16(colslope.bbox_top) << 16);
@@ -133,7 +141,7 @@ function instance_handle_slope_collision(obj)
 		// make colval the TALLEST of the 3 sensors
 		var sensor_a, sensor_b, sensor_c;
 		var bottom_a, bottom_b, bottom_c;
-		var slopetop, slopeheight;
+		var slopetop = 0, slopeheight = 0;
 
 		sensor_a = intlib_make_s16(obj.slope_sensors[SLOPESENSOR_A][0]);
 		sensor_b = intlib_make_s16(obj.slope_sensors[SLOPESENSOR_B][0]);
@@ -161,7 +169,7 @@ function instance_handle_slope_collision(obj)
 		        if (((sensor_a + bottom_a) <= (sensor_c + bottom_c)))
 		        {
 		            slopeheight = (obj.slope_sensors[SLOPESENSOR_A][1] & 0xFFFF);
-					obj.slope_ydist = min(0, bbox_bottom - obj.slope_sensors[SLOPESENSOR_A][2]);
+					obj.slope_ydist = min(0, bbottom - obj.slope_sensors[SLOPESENSOR_A][2]);
 				
 					// if you go above the height limit, please do NOT clip up
 		            if (sensor_a >= (-slopeheight))
@@ -170,10 +178,10 @@ function instance_handle_slope_collision(obj)
 						slopetop = obj.slope_sensors[SLOPESENSOR_A][1] >> 16;
 					}
 		        }
-		        else
+		        else if (sensor_c <= 0)
 		        {
 		            slopeheight = (obj.slope_sensors[SLOPESENSOR_C][1] & 0xFFFF);
-					obj.slope_ydist = min(0, bbox_bottom - obj.slope_sensors[SLOPESENSOR_C][2]);
+					obj.slope_ydist = min(0, bbottom - obj.slope_sensors[SLOPESENSOR_C][2]);
 				
 					if (sensor_c >= (-slopeheight))
 					{
@@ -181,11 +189,13 @@ function instance_handle_slope_collision(obj)
 						slopetop = obj.slope_sensors[SLOPESENSOR_C][1] >> 16;
 					}
 		        }
+				else
+					return false;
 		    }
 		    else if (((sensor_b + bottom_b) <= (sensor_c + bottom_c))) // sensor B is higher
 		    {   
 		        slopeheight = (obj.slope_sensors[SLOPESENSOR_B][1] & 0xFFFF);
-				obj.slope_ydist = min(0, bbox_bottom - obj.slope_sensors[SLOPESENSOR_B][2]);
+				obj.slope_ydist = min(0, bbottom - obj.slope_sensors[SLOPESENSOR_B][2]);
 			
 				if (sensor_b >= (-slopeheight))
 				{
@@ -193,20 +203,43 @@ function instance_handle_slope_collision(obj)
 					slopetop = obj.slope_sensors[SLOPESENSOR_B][1] >> 16;
 				}
 		    }
-		    else // sensor C is higher
+		    else if (sensor_c <= 0) // sensor C is higher
 			{
 				slopeheight = (obj.slope_sensors[SLOPESENSOR_C][1] & 0xFFFF);
-				obj.slope_ydist = min(0, bbox_bottom - obj.slope_sensors[SLOPESENSOR_C][2]);
+				obj.slope_ydist = min(0, bbottom - obj.slope_sensors[SLOPESENSOR_C][2]);
 			
 				if (sensor_c >= (-slopeheight))
 				{
-			        obj.slope_colval = sensor_c;
+					obj.slope_colval = sensor_c;
 					slopetop = obj.slope_sensors[SLOPESENSOR_C][1] >> 16;
 				}
 			}
+			else
+				return false;
 			
 			if (obj.slope_ydist >= obj.slope_colval)
-			    obj.y_frac = (((slopetop + slopeheight + obj.slope_colval) - (bbox_height - (sprite_yoffset + 1))) * 256) div 1;
+			{
+			    var clipdist = 0;
+				
+				var bboxvsheight = abs(obj.sprite_height - (abs(obj.bbox_bottom - obj.bbox_top) div 1));
+				
+				var newy = (( (slopetop - bboxvsheight) + slopeheight + obj.slope_colval) - (bbox_height - (obj.sprite_yoffset + 1)));
+				var cliptile = instance_place(obj.x,newy div 1,oCollider);
+				
+				if (cliptile && (cliptile.cflags & CF_SOLID))
+				{
+					clipdist = (obj.bbox_bottom - cliptile.bbox_top);
+					
+					if (clipdist >= 0)
+						return false;
+				}
+				
+				
+				obj.y_frac = (newy * 256) div 1;
+				return true;
+			}
 		}
-	}	
+	}
+	
+	return false;
 }

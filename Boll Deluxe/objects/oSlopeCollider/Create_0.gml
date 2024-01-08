@@ -6,8 +6,5 @@
 hflip = false;
 LDtkReloadFields();
 
-rise = (sprite_get_height(sprite_index) * image_yscale) div 1;
-run = (sprite_get_width(sprite_index) * image_xscale) div 1;
-
-slopediv = (rise/run);
+slope_set_rise_run(self);
 no_collide = false;
