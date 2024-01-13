@@ -337,15 +337,15 @@ function collision_routine_do_ycoll(obj = self)
 		vsensor_Chit = hity
 	}
 	
-	hitme = instance_position(obj.x, obj.bbox_bottom-2, oSlopeCollider);
-	if (hitme)
-	{
-		show_debug_message("wawa")
-		return false
-	}else
-	{
-		show_debug_message("wewre")
-	}
+	//hitme = instance_position(obj.x, obj.bbox_bottom-2, oSlopeCollider);
+	//if (hitme)
+	//{
+	//	show_debug_message("wawa")
+	//	return false
+	//}else
+	//{
+	//	show_debug_message("wewre")
+	//}
 	
 	if (vsensor_dist != 0) // if this has any value, we've collided with something
 	{
