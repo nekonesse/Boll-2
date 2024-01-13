@@ -63,6 +63,45 @@ function instance_handle_slope_collision(obj)
 	obj.slope_ydist = obj.slope_colval;
 
 	slope_reset_sensors(self);
+	
+	var colslope;
+	var sensorfound = 0;
+	var xdist = 0;
+	var bbox_height = (obj.bbox_bottom - obj.bbox_top) div 1;
+	var bbottom = (obj.bbox_bottom div 1) - BBOXBTTMOFFSET;
+	var bbottom_check = (obj.bbox_bottom div 1) - BOTTOMCOLLOFFSET;
+	
+	colslope = collision_rectangle(obj.x-2, obj.y,obj.x+2,obj.bbox_bottom+16,oSlopeCollider,true,true);
+	if (colslope)
+	{
+		xdist = min(colslope.sprite_width div 1, max(0, obj.x - colslope.bbox_left));
+		obj.slope_sensors[SLOPESENSOR_B][0] = intlib_make_u16(min(0, -((colslope.slope_factor * xdist) + 2) div 1));
+	
+		// get top and height
+		obj.slope_sensors[SLOPESENSOR_B][1] = (intlib_make_u16(colslope.bbox_top) << 16);
+		obj.slope_sensors[SLOPESENSOR_B][1] |= intlib_make_u16(colslope.sprite_height);
+	
+		// get bottom
+		obj.slope_sensors[SLOPESENSOR_B][2] = colslope.bbox_bottom;
+		
+		var sensor_b = intlib_make_s16(obj.slope_sensors[SLOPESENSOR_B][0]);
+		
+		var slopeheight = intlib_make_s16(obj.slope_sensors[SLOPESENSOR_B][1] & 0xFFFF);
+		
+		//show_debug_message((slopetop - bboxvsheight) + slopeheight)
+		//var newy = (( (slopetop - bboxvsheight) + slopeheight + obj.slope_colval) - (bbox_height - (obj.sprite_yoffset + 1)));
+		var newy = colslope.bbox_top + (sensor_b + slopeheight)
+		
+		obj.grounded = true;
+		obj.y_frac = (newy * 256) div 1;
+		return true;
+	}
+	
+	/*
+	obj.slope_colval = -1;
+	obj.slope_ydist = obj.slope_colval;
+
+	slope_reset_sensors(self);
 
 	var colslope;
 	var sensorfound = 0;
@@ -74,7 +113,7 @@ function instance_handle_slope_collision(obj)
 	// this is incredibly messy code but is UNIRONICALLY faster than doing a for loop
 
 	// get data for sensor A
-	colslope = instance_position(obj.bbox_left,bbottom_check,oSlopeCollider);
+	colslope = collision_line(obj.bbox_left, obj.y,obj.bbox_left,bbottom_check,oSlopeCollider,true,true);
 	if (colslope)
 	{
 		xdist = min(colslope.sprite_width div 1, max(0, obj.bbox_left - colslope.bbox_left));
@@ -91,7 +130,7 @@ function instance_handle_slope_collision(obj)
 		obj.slope_sensors[SLOPESENSOR_A][0] = 0x00FF0003; // set "notile" flag
 	
 	// get data for sensor B
-	colslope = instance_position(obj.x,bbottom_check,oSlopeCollider);
+	colslope = collision_line(obj.x, obj.y,obj.x,bbottom_check,oSlopeCollider,true,true);
 	if (colslope)
 	{
 		xdist = min(colslope.sprite_width div 1, max(0, obj.x - colslope.bbox_left));
@@ -108,7 +147,7 @@ function instance_handle_slope_collision(obj)
 		obj.slope_sensors[SLOPESENSOR_B][0] = 0x00FF0003; // set "notile" flag
 	
 	// get data for sensor C
-	colslope = instance_position(obj.bbox_right - 3,bbottom_check,oSlopeCollider);
+	colslope = collision_line(obj.bbox_right, obj.y,obj.bbox_right,bbottom_check,oSlopeCollider,true,true)
 	
 	if (colslope)
 	{
@@ -151,7 +190,7 @@ function instance_handle_slope_collision(obj)
 		bottom_b = obj.slope_sensors[SLOPESENSOR_B][2];
 		bottom_c = obj.slope_sensors[SLOPESENSOR_C][2];
 
-		if ((sensor_a <= 0) || (sensor_b <= 0) || (sensor_c <= 0))
+		if ((sensor_a <= 16) || (sensor_b <= 16) || (sensor_c <= 16))
 		{
 			if (GAME_DEBUG_NAGGY)
 			{
@@ -236,10 +275,11 @@ function instance_handle_slope_collision(obj)
 				
 				
 				obj.y_frac = (newy * 256) div 1;
+				obj.grounded = true;
 				return true;
 			}
 		}
 	}
-	
+	*/
 	return false;
 }

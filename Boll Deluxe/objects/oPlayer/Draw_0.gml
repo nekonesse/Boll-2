@@ -34,3 +34,5 @@ draw_line(bbox_right div 1,bbox_bottom div 1, (bbox_right div 1) + 1, bbox_botto
 var bboxvsheight = abs(sprite_height - (abs(bbox_bottom - bbox_top) div 1));
 
 draw_line_color(x div 1, (y - sprite_yoffset) div 1, x div 1, ((y - sprite_yoffset) div 1) + bboxvsheight, c_red, c_red);
+
+draw_line_color(x div 1, (y - sprite_yoffset) div 1, x div 1, ((bbox_bottom + 8 )div 1), c_green, c_green);
