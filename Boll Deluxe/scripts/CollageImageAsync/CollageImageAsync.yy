@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "CollageImageAsync",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "General",
-    "path": "folders/Collage/General.yy",
+  "$GMScript":"",
+  "%Name":"CollageImageAsync",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"CollageImageAsync",
+  "parent":{
+    "name":"General",
+    "path":"folders/Collage/General.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

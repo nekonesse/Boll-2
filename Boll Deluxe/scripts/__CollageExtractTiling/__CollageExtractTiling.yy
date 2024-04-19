@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__CollageExtractTiling",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "System",
-    "path": "folders/Collage/System.yy",
+  "$GMScript":"",
+  "%Name":"__CollageExtractTiling",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__CollageExtractTiling",
+  "parent":{
+    "name":"System",
+    "path":"folders/Collage/System.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

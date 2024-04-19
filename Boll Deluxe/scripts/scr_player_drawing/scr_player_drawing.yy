@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "scr_player_drawing",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Drawing",
-    "path": "folders/Scripts/Player/Drawing.yy",
+  "$GMScript":"",
+  "%Name":"scr_player_drawing",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_player_drawing",
+  "parent":{
+    "name":"Drawing",
+    "path":"folders/Scripts/Player/Drawing.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

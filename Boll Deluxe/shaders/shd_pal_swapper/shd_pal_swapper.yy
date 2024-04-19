@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "shd_pal_swapper",
-  "parent": {
-    "name": "Shaders",
-    "path": "folders/Retro Palette Swap/Shaders.yy",
+  "$GMShader":"",
+  "%Name":"shd_pal_swapper",
+  "name":"shd_pal_swapper",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Retro Palette Swap/Shaders.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

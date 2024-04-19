@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__CollageGPUStateSingleton",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "System",
-    "path": "folders/Collage/System.yy",
+  "$GMScript":"",
+  "%Name":"__CollageGPUStateSingleton",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__CollageGPUStateSingleton",
+  "parent":{
+    "name":"System",
+    "path":"folders/Collage/System.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

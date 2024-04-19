@@ -1,10 +1,12 @@
 {
-  "resourceType": "GMShader",
-  "resourceVersion": "1.0",
-  "name": "__ShdCollagePremultiply",
-  "parent": {
-    "name": "Shaders",
-    "path": "folders/Collage/System/Shaders.yy",
+  "$GMShader":"",
+  "%Name":"__ShdCollagePremultiply",
+  "name":"__ShdCollagePremultiply",
+  "parent":{
+    "name":"Shaders",
+    "path":"folders/Collage/System/Shaders.yy",
   },
-  "type": 1,
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
 }

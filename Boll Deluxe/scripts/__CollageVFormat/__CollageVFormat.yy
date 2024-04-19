@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__CollageVFormat",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Vertex Buffer",
-    "path": "folders/Collage/System/Vertex Buffer.yy",
+  "$GMScript":"",
+  "%Name":"__CollageVFormat",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__CollageVFormat",
+  "parent":{
+    "name":"Vertex Buffer",
+    "path":"folders/Collage/System/Vertex Buffer.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

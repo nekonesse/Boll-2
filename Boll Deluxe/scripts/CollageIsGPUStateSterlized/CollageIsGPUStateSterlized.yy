@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "CollageIsGPUStateSterlized",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "General",
-    "path": "folders/Collage/General.yy",
+  "$GMScript":"",
+  "%Name":"CollageIsGPUStateSterlized",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"CollageIsGPUStateSterlized",
+  "parent":{
+    "name":"General",
+    "path":"folders/Collage/General.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

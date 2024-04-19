@@ -1,5 +1,5 @@
 {
-  "FolderOrderSettings": [
+  "FolderOrderSettings":[
     {"name":"Animation Curves","order":25,"path":"folders/Animation Curves.yy",},
     {"name":"Catspeak","order":34,"path":"folders/Catspeak.yy",},
     {"name":"common","order":1,"path":"folders/Catspeak/common.yy",},
@@ -126,7 +126,7 @@
     {"name":"Stopping Audio","order":15,"path":"folders/Vinyl/Stopping Audio.yy",},
     {"name":"Transposition","order":16,"path":"folders/Vinyl/Transposition.yy",},
   ],
-  "ResourceOrderSettings": [
+  "ResourceOrderSettings":[
     {"name":"VinylEmitterDestroy","order":2,"path":"scripts/VinylEmitterDestroy/VinylEmitterDestroy.yy",},
     {"name":"input_gamepad_get_description","order":5,"path":"scripts/input_gamepad_get_description/input_gamepad_get_description.yy",},
     {"name":"input_binding_remove","order":7,"path":"scripts/input_binding_remove/input_binding_remove.yy",},
