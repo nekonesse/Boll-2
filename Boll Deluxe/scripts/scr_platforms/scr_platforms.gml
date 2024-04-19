@@ -31,11 +31,13 @@ function P_BrownSpinningPlatform(obj)
     }
 
     // draw the platform
+	// (this was, like everything in SMW--and by extension SMA2--a draw thinker)
+	// not anymore though! :sunjob:
     //DrawBrownPlatform(obj);
 	
     // chearii: let me tell you a story about a generic, **65536-number long** sine/cosine LUT nintendo used for sine/cosine stuff constantly
-    // this port does away with ALL of that and instead uses a fast 4th-order approximation; this 
-	// both keeps the behavior accurate, and the code (relatively) sane
+    // this port does away with ALL of that and instead uses an approximation with gamemaker sines
+	// this both keeps the behavior accurate, and the code (relatively) sane
     sin_prev = floor(sin(intlib_make_u16(obj.var2) / RADFRACDIV) * 65536);
 
     UpdatePlatformAngle(obj);
