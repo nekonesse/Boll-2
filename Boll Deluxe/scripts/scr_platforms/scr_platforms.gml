@@ -13,7 +13,6 @@ DAT_081069be = [0, 86, 336, 512, 16, 86];
 
 function P_BrownSpinningPlatform(obj)
 {
-    var sVar1; // short/int16
     var cVar1;
 	var sin_prev, sin_new;
 
@@ -29,11 +28,6 @@ function P_BrownSpinningPlatform(obj)
             obj.timer = cVar1;
         }
     }
-
-    // draw the platform
-	// (this was, like everything in SMW--and by extension SMA2--a draw thinker)
-	// not anymore though! :sunjob:
-    //DrawBrownPlatform(obj);
 	
     // chearii: let me tell you a story about a generic, **65536-number long** sine/cosine LUT nintendo used for sine/cosine stuff constantly
     // this port does away with ALL of that and instead uses an approximation with gamemaker sines
@@ -72,16 +66,14 @@ function UpdatePlatformAngle(obj)
 function DrawBrownPlatform(obj)
 {
     var platdist; // short
-    var platsine; // short
     var drawy; // short
     var drawx; // short
-	var sVar2;
+
     var iVar7;
     var iVar10;
-	var prevcolor = draw_get_color();
-	var peek_y;
+
     var coord_sine, coord_cosine;
-	
+
 	var camx = camera_get_view_x(view_camera[0]) div 1;
 	var camy = camera_get_view_y(view_camera[0]) div 1;
 
@@ -97,13 +89,11 @@ function DrawBrownPlatform(obj)
     while (iVar10 >= 0)
     {
         platdist = DAT_08106a17[iVar10];
-
-        //(iVar7 + 0xeb6) = OAM Y?
-
-        // NO MORE TABLES, YIPPEE!!!!
-        coord_sine = floor(sin(intlib_make_u16(obj.var2) / RADFRACDIV) * 65536);
+		
+		
+        coord_sine = (sin(intlib_make_u16(obj.var2) / RADFRACDIV) * 65536) div 1;
         coord_cosine = intlib_make_s16(intlib_make_s32(platdist) * (coord_sine >> 8) >> 8);
-        coord_sine = floor(sin((intlib_make_u16(obj.var2) - 0x4000) / RADFRACDIV) * 65536);
+        coord_sine = (sin((intlib_make_u16(obj.var2) - 0x4000) / RADFRACDIV) * 65536) div 1;
 
         // set the X coordinate
         obj.coord1 = (intlib_make_s16(coord_cosine + drawx + DAT_081069be[0]) - 0x78) + 32;
@@ -125,4 +115,34 @@ function DrawBrownPlatform(obj)
 	
 	if ((obj.platsprite != undefined) && (sprite_exists(obj.platsprite)))
 		draw_sprite_ext(obj.platsprite,0,obj.var8-(obj.mwidth div 2)+8,obj.var4,image_xscale,image_yscale,0,image_blend,image_alpha);
+}
+
+function P_BrownPlatInteractWithObjects(obj)
+{
+    var real_siny;
+    var sin_x, sin_y;
+
+    sin_x = (sin(intlib_make_u16(obj.var2) / RADFRACDIV) * 65536) div 1;
+    sin_x = (sin_x >> 8) * 5;
+
+    sin_y = (sin((intlib_make_u16(obj.var2) - 0x4000) / RADFRACDIV) * 65536) div 1;
+    sin_x = (sin_x >> 4) + intlib_make_u32(obj.x div 1) - 0x78;
+
+    real_siny = intlib_make_s16((sin_y >> 8) * 5 >> 4) + (obj.y div 1) - 10;
+	
+	var port = 480 + 31;
+
+    obj.collideactive =
+        (((global.freezeframe) ? 1 : 0) |
+        (port < ( (((sin_x * 0x10000 >> 0x10) - make_uint32(global.camera_x)) + 0x10) div 1) ));
+    
+    if (obj.collideactive == 0) // if we're active...
+    {
+        // ...check for player collision first
+
+		obj.var5 = obj.mem2 - real_siny;
+        obj.mem2 = real_siny;
+
+        // TODO: collision check
+    }
 }
