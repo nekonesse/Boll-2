@@ -1,12 +1,11 @@
 // chearii: previous x and y positions for movement
-no_collide = false;
+event_inherited()
 
-cflags = CF_SOLID;
+//cflags = CF_SOLID;
 
 x_diff = 0;
 y_diff = 0;
 
-is_semisolid=false;
 dir="right";
 spd=0.5;
 image_speed=0;

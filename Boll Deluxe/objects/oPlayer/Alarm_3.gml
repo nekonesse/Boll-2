@@ -6,9 +6,6 @@ if global.exittype==warptypes.pipe {
 				x = (other.x + (other.sprite_width / 2))
 				y = (other.y + 120)
 				
-				y_frac = intlib_make_fixedpoint(y) >> FRACBITS;
-				x_frac = intlib_make_fixedpoint(x) >> FRACBITS;
-				
 				hsp=0
 				vsp=-1.5
 				global.exittype="none"

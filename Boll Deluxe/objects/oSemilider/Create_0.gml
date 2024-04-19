@@ -4,4 +4,5 @@
 event_inherited();
 
 // set collision flag to floor only
-cflags = CF_FLOOR;
+//cflags = CF_FLOOR;
+semi = true

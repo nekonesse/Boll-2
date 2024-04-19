@@ -2,9 +2,7 @@
 player = instance_place(x, y + 1, oPlayer);
 
 // temp state check
-if ((hit == 0) && (player) && ((!player.grounded && player.vsp > 0) || (player.jump)) &&
-    (!place_meeting(x + 1, y, player)) && (!place_meeting(x - 1, y, player)))
-{
+if ((hit == 0) && (player) && ((!player.grounded && player.vsp > 0) || (player.jump))){
     event_user(0);
     flip_time = 300;
     player.vsp = 2;

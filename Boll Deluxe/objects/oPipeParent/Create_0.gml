@@ -1,5 +1,4 @@
-no_collide = false;
-cflags = CF_SOLID;
+event_inherited()
 name=""
 target=""
 warp=0 //Level warping for stuff like warp zones.

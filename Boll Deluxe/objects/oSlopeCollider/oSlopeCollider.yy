@@ -12,7 +12,10 @@
     "name": "Collision",
     "path": "folders/Objects/Objects/Collision.yy",
   },
-  "parentObjectId": null,
+  "parentObjectId": {
+    "name": "oCollider",
+    "path": "objects/oCollider/oCollider.yy",
+  },
   "persistent": false,
   "physicsAngularDamping": 0.1,
   "physicsDensity": 0.5,

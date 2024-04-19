@@ -41,21 +41,23 @@ sprindex_prev = sprite_index;
 canstopjump=1;
 jump=0;
 steps = 0
-
+colslope = 0
 hurt=0;
 size=0;
 oldsize=0;
 image_speed=0
 global.paused=0
 depth=0;
-drawStar=false  //feel free to delete this along with it's mentions and uses in the draw event
+drawStar=false 
+//mycollisions = ds_list_create()
+//feel free to delete this along with it's mentions and uses in the draw event
 //instance_change(oPlayerTest,true)
 
 // fracval setup
-setup_frac(self);
+//setup_frac(self);
 
 // boxpoly setup
-setup_box_poly(self);
+//setup_box_poly(self);
 
 // slope setup
-instance_make_slopevars(self);
+//instance_make_slopevars(self);
