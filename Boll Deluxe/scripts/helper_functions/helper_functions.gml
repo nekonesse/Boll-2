@@ -125,12 +125,12 @@ function instance_valid_at_place(_x,_y,obj,src = self)
 function isin_S4(u)
 {
     var c, v;
-    var qN = 14, qA = 16, B = 39800, C = 1758; // static const int
+    var qN = 14, qA = 16, B = 39800, C = 1758;
 
-    c = make_s32(u << (30 - qN));// Semi-circle info into carry.
+    c = make_s32(u << (30 - qN));    // Semi-circle info into carry.
     u -= 1 << qN;                    // sine -> cosine calc
 
-    u = make_s32(u << (31 - qN));// Mask with PI
+    u = make_s32(u << (31 - qN));    // Mask with PI
     u = u >> (31 - qN);              // Note: SIGNED shift! (to qN)
     u = u * u >> (2 * qN - 14);      // u=u^2 To Q14
 
@@ -147,7 +147,7 @@ function icos_S4(u)
 }
 
 // sin_S4
-// replicates the standard gamemaker sine function with isin_S4
+// fourth-order sine
 function sin_S4(radian_angle)
 {
 	var irad = round(radian_angle * 10430.378);
@@ -157,6 +157,8 @@ function sin_S4(radian_angle)
 	return _isin / 65536;
 }
 
+// cos_S4
+// fourth-order cosine
 function cos_S4(radian_angle)
 {
 	var irad = round(radian_angle * 10430.378);
