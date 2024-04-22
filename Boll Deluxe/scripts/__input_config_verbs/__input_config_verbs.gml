@@ -19,9 +19,9 @@ return {
         left:  input_binding_key(vk_left),
         right: input_binding_key(vk_right),
 		
-		jump: input_binding_key("X"),
-		action: input_binding_key("Z"),
-		special: input_binding_key("C"),
+		a: input_binding_key("X"),
+		b: input_binding_key("Z"),
+		c: input_binding_key("C"),
         
 		enter: input_binding_key(vk_enter),
 		
@@ -35,10 +35,10 @@ return {
         left:  [input_binding_gamepad_axis(gp_axislh, true),  input_binding_gamepad_button(gp_padl)],
         right: [input_binding_gamepad_axis(gp_axislh, false), input_binding_gamepad_button(gp_padr)],
         
-        accept:  input_binding_gamepad_button(gp_face1),
+        a:  input_binding_gamepad_button(gp_face1),
         cancel:  input_binding_gamepad_button(gp_face2),
-        action:  input_binding_gamepad_button(gp_face3),
-        special: input_binding_gamepad_button(gp_face4),
+        b:  input_binding_gamepad_button(gp_face3),
+        c: input_binding_gamepad_button(gp_face4),
         
         aim_up:    input_binding_gamepad_axis(gp_axisrv, true),
         aim_down:  input_binding_gamepad_axis(gp_axisrv, false),

@@ -409,7 +409,7 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 		txr_function_add("randomize", randomize, -1);
 	    txr_function_add("random_range", random_range, -1);
 	    txr_function_add("irandom", irandom, -1);
-	    txr_function_add("irandom_range", irandom_range -1);
+	    txr_function_add("irandom_range", irandom_range, -1);
 
 	// Unsafe
 	if (debug_mode) {
@@ -532,3 +532,27 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 
 
 #endregion
+
+//// Charm Loading ////
+#region Charm Loading
+	_charmList = []; //Names of all charms
+	var _chCharm = file_find_first($"{working_directory}\\_vanilla\\character\\*", fa_directory);
+	var _chIndex = 0;
+
+	// Find/load all the charms
+	if (_chCharm != "" && _chCharm != "<null>")
+	{
+		while(_chCharm != "" && _chCharm != "<null>")
+		{
+			array_push(_charmList,_chCharm);
+			_chCharm  = file_find_next();
+			_chIndex++;
+		}
+	}
+#endregion
+
+show_debug_message($"The {_charmList}: WE AGREE!");
+
+//// Level Loading ////
+global.levellist=0;
+load_levels();

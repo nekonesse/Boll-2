@@ -1,5 +1,5 @@
 function load_animdat(){
-	AnimationData			=["Idle","Run","Jump","Fall","Drill","DrillLand","Styling","Squish","Dead","Partic","StyleFlash"];
+	AnimationData			=["Idle","Run","a","Fall","Drill","DrillLand","Styling","Squish","Dead","Partic","StyleFlash"];
 
 //MODDED (all below)
 MOD_PlayerSkins			=[];

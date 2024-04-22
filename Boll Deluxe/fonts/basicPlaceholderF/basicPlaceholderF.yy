@@ -1,6 +1,6 @@
 {
   "$GMFont":"",
-  "%Name":"Font3",
+  "%Name":"basicPlaceholderF",
   "AntiAlias":0,
   "applyKerning":0,
   "ascender":14,
@@ -189,7 +189,7 @@
   "last":0,
   "lineHeight":18,
   "maintainGms1Font":false,
-  "name":"Font3",
+  "name":"basicPlaceholderF",
   "parent":{
     "name":"Fonts",
     "path":"folders/Fonts.yy",
