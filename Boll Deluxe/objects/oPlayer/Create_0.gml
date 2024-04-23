@@ -1,7 +1,13 @@
-pal_swap_init_system(shd_pal_swapper)
+// Palette
+pal_swap_init_system(shd_pal_swapper);
 palette=0
 palette_index=0
 
+///// GENERAL /////
+pNum = 0; //player number (P1, P2, etc.)
+charmName = "testcharm"; //what charm this player character is using
+
+///// PHYSICS /////
 grav=0.25; //we're having an actual grav var now because changing gravity should be EASIER!!
 defaultgrav = grav; //for resetting gravity back to default
 vsp=0;
@@ -49,6 +55,7 @@ image_speed=0
 global.paused=0
 depth=0;
 drawStar=false 
+
 //mycollisions = ds_list_create()
 //feel free to delete this along with it's mentions and uses in the draw event
 //instance_change(oPlayerTest,true)
@@ -61,3 +68,38 @@ drawStar=false
 
 // slope setup
 //instance_make_slopevars(self);
+
+///// EVENT SETUP /////
+_loopThrough = function(_lookfor) { //Function to go through and collect string from specific parts of the GML file
+	var _code	=file_text_open_read($"{working_directory}\\_vanilla\\character\\{charmName}\\{charmName}.gml");
+	var _str	="",
+		_cur	=file_text_read_string(_code);
+	
+	//Looking for our section
+	while (_cur!=$"#define {_lookfor}") {
+		file_text_readln(_code);
+		_cur	=file_text_read_string(_code);
+		show_debug_message(_cur);
+	}
+	//Getting the code from our section
+	while (!file_text_eof(_code) and !string_starts_with(_str,"#define")) {
+	    file_text_readln(_code);
+	    _str += file_text_read_string(_code);
+		show_debug_message(_str);
+	}
+	file_text_close(_code);
+	
+	//Returning it to the caller
+	return _str;
+}
+
+_createEvent = txr_compile(_loopThrough("create"));
+if (_createEvent == undefined) {
+    show_debug_message(txr_error);
+} 
+txr_exec(_createEvent);
+
+_stepEvent = txr_compile(_loopThrough("step"));
+if (_stepEvent == undefined) {
+    show_debug_message(txr_error);
+} 

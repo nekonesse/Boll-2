@@ -7,7 +7,7 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 #region TXR
 	txr_init(); //TXR starting
 	
-	// Type
+	#region Type
 	    txr_function_add("is_string", is_string, -1);
 	    txr_function_add("is_real", is_real, -1);
 	    txr_function_add("is_numeric", is_numeric, -1);
@@ -28,8 +28,9 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    txr_function_add("int64", int64, -1);
 	    txr_function_add("string", string, -1);
 	    txr_function_add("real", real, -1);
-
-	// Array
+	#endregion
+	
+	#region Array
 	    txr_function_add("array_create", array_create, -1);
 	    txr_function_add("array_copy", array_copy, -1);
 	    txr_function_add("array_equals", array_equals, -1);
@@ -68,8 +69,9 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    txr_function_add("array_unique_ext", array_unique_ext, -1);
 	    txr_function_add("array_reverse_ext", array_reverse_ext, -1);
 	    txr_function_add("array_shuffle_ext", array_shuffle_ext, -1);
-
-	// Struct
+	#endregion
+	
+	#region Struct
 	    txr_function_add("struct_exists", variable_struct_exists, -1);
 	    txr_function_add("struct_get", variable_struct_get, -1);
 	    txr_function_add("struct_set", variable_struct_set, -1);
@@ -79,8 +81,9 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    txr_function_add("is_instanceof", is_instanceof, -1);
 	    txr_function_add("instanceof", instanceof, -1);
 	    txr_function_add("struct_foreach", struct_foreach, -1);
-
-	// String
+	#endregion
+	
+	#region String
 	    txr_function_add("ansi_char", ansi_char, -1);
 	    txr_function_add("chr", chr, -1);
 	    txr_function_add("ord", ord, -1);
@@ -127,8 +130,9 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 		txr_function_add("string_width_scribble", string_width_scribble, -1);
 		txr_function_add("string_height_scribble", string_height_scribble, -1);
 		txr_function_add("scribble_typist", scribble_typist, -1);
-		
-	// Math
+	#endregion
+	
+	#region Math
 	    txr_function_add("round", round, -1);
 	    txr_function_add("frac", frac, -1);
 	    txr_function_add("abs", abs, -1);
@@ -175,10 +179,11 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    txr_function_add("lengthdir_x", lengthdir_x, -1);
 	    txr_function_add("lengthdir_y", lengthdir_y, -1);
 		
-	// CONSTANT ADD!!
-	//ffi.exposeConstant("pi", pi);
-
-	// Math 3D
+		// CONSTANT ADD!!
+		//ffi.exposeConstant("pi", pi);
+	#endregion
+	
+	#region Math 3D
 	    txr_function_add("point_distance_3d", point_distance_3d, -1);
 	    txr_function_add("dot_product_3d", dot_product_3d, -1);
 	    txr_function_add("dot_product_3d_normalised", dot_product_3d_normalised, -1);
@@ -190,8 +195,9 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    txr_function_add("matrix_build_projection_perspective", matrix_build_projection_perspective, -1);
 	    txr_function_add("matrix_build_projection_perspective_fov", matrix_build_projection_perspective_fov, -1);
 	    txr_function_add("matrix_transform_vertex", matrix_transform_vertex, -1);
-
-	// Colour
+	#endregion
+	
+	#region Colour
 	    txr_function_add("colour_get_blue", colour_get_blue, -1);
 	    txr_function_add("colour_get_green", colour_get_green, -1);
 	    txr_function_add("colour_get_red", colour_get_red, -1);
@@ -203,28 +209,29 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    txr_function_add("merge_colour", merge_colour, -1);
 		
 	
-	// CONSTANT ADD!!
-	//    "c_aqua", c_aqua,
-	//    "c_black", c_black,
-	//    "c_blue", c_blue,
-	//    "c_dkgray", c_dkgray,
-	//    "c_fuchsia", c_fuchsia,
-	//    "c_grey", c_grey,
-	//    "c_green", c_green,
-	//    "c_lime", c_lime,
-	//    "c_ltgrey", c_ltgrey,
-	//    "c_maroon", c_maroon,
-	//    "c_navy", c_navy,
-	//    "c_olive", c_olive,
-	//    "c_orange", c_orange,
-	//    "c_purple", c_purple,
-	//    "c_red", c_red,
-	//    "c_silver", c_silver,
-	//    "c_teal", c_teal,
-	//    "c_white", c_white,
-	//    "c_yellow", c_yellow
-
-	// Draw
+		// CONSTANT ADD!!
+		//    "c_aqua", c_aqua,
+		//    "c_black", c_black,
+		//    "c_blue", c_blue,
+		//    "c_dkgray", c_dkgray,
+		//    "c_fuchsia", c_fuchsia,
+		//    "c_grey", c_grey,
+		//    "c_green", c_green,
+		//    "c_lime", c_lime,
+		//    "c_ltgrey", c_ltgrey,
+		//    "c_maroon", c_maroon,
+		//    "c_navy", c_navy,
+		//    "c_olive", c_olive,
+		//    "c_orange", c_orange,
+		//    "c_purple", c_purple,
+		//    "c_red", c_red,
+		//    "c_silver", c_silver,
+		//    "c_teal", c_teal,
+		//    "c_white", c_white,
+		//    "c_yellow", c_yellow
+	#endregion
+	
+	#region Draw
 		txr_function_add("gpu_set_blendmode_add", function() {gpu_set_blendmode(bm_add);}, -1);
 		txr_function_add("gpu_set_blendmode_normal", function() {gpu_set_blendmode(bm_normal);}, -1);
 		txr_function_add("CollageImageExists", CollageImageExists, -1);
@@ -344,8 +351,9 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    txr_function_add("draw_get_lighting", draw_get_lighting, -1);
 	    txr_function_add("draw_tilemap", draw_tilemap, -1);
 	    txr_function_add("draw_tile", draw_tile, -1);
-		
-	    // Vertex Buffers
+	#endregion
+	
+	#region Vertex Buffers
 	    txr_function_add("vertex_format_begin", vertex_format_begin, -1);
 	    txr_function_add("vertex_format_end", vertex_format_end, -1);
 	    txr_function_add("vertex_format_delete", vertex_format_delete, -1);
@@ -401,8 +409,9 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    //"vertex_type_colour", vertex_type_colour,
 	    //"vertex_type_color", vertex_type_color,
 	    //"vertex_type_ubyte4", vertex_type_ubyte4,
-
-	// Random
+	#endregion
+	
+	#region Random
 	    txr_function_add("choose", choose, -1);
 	    txr_function_add("random", random, -1);
 		txr_function_add("randomise", randomise, -1);
@@ -410,25 +419,28 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    txr_function_add("random_range", random_range, -1);
 	    txr_function_add("irandom", irandom, -1);
 	    txr_function_add("irandom_range", irandom_range, -1);
+	#endregion
+	
+	#region Unsafe
+		if (debug_mode) {
+		    txr_function_add("asset_get_index", asset_get_index, -1);
+		    txr_function_add("asset_get_type", asset_get_type, -1);
+		    txr_function_add("tag_get_asset_ids", tag_get_asset_ids, -1);
+		    txr_function_add("tag_get_assets", tag_get_assets, -1);
+		    txr_function_add("asset_get_tags", asset_get_tags, -1);
+		    txr_function_add("asset_add_tags", asset_add_tags, -1);
+		    txr_function_add("asset_remove_tags", asset_remove_tags, -1);
+		    txr_function_add("asset_has_tags", asset_has_tags, -1);
+		    txr_function_add("asset_has_any_tag", asset_has_any_tag, -1);
+		    txr_function_add("asset_clear_tags", asset_clear_tags, -1);
+		}
+	#endregion
 
-	// Unsafe
-	if (debug_mode) {
-	    txr_function_add("asset_get_index", asset_get_index, -1);
-	    txr_function_add("asset_get_type", asset_get_type, -1);
-	    txr_function_add("tag_get_asset_ids", tag_get_asset_ids, -1);
-	    txr_function_add("tag_get_assets", tag_get_assets, -1);
-	    txr_function_add("asset_get_tags", asset_get_tags, -1);
-	    txr_function_add("asset_add_tags", asset_add_tags, -1);
-	    txr_function_add("asset_remove_tags", asset_remove_tags, -1);
-	    txr_function_add("asset_has_tags", asset_has_tags, -1);
-	    txr_function_add("asset_has_any_tag", asset_has_any_tag, -1);
-	    txr_function_add("asset_clear_tags", asset_clear_tags, -1);
-	}
-
-	// Camera
+	#region Camera
 		txr_function_add("camera_set_view_pos", camera_set_view_pos, -1);
-
-	// Misc
+	#endregion
+	
+	#region Misc
 		txr_function_add("show_debug_message", show_debug_message, -1);
 		txr_function_add("show_message", show_message, -1);
 		txr_function_add("wave_val", wave_val, -1);
@@ -439,8 +451,14 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 		txr_function_add("event_inherited", event_inherited, -1);
 		txr_function_add("room_get_width", function() { return room_width; }, -1);
 		txr_function_add("room_get_height", function() { return room_height; }, -1);
+	#endregion
 	
-	// Audio
+	#region Player Functions
+		txr_function_add("player_movement", player_movement, -1);
+		txr_function_add("player_collision", player_collision, -1);
+	#endregion
+	
+	#region Audio
 		txr_function_add("audio_play_sound", audio_play_sound, -1);
 		txr_function_add("audio_stop_all", audio_stop_all, -1);
 		txr_function_add("audio_stop_sound", audio_stop_sound, -1);
@@ -451,13 +469,15 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 		txr_function_add("audio_sound_loop_start", audio_sound_loop_start, -1);
 		txr_function_add("audio_sound_loop_end", audio_sound_loop_end, -1);
 		txr_function_add("time_bpm_to_seconds", time_bpm_to_seconds, -1);
-		
-	// Input
+	#endregion
+	
+	#region Input
 		txr_function_add("input_check_pressed", input_check_pressed, -1);
 		txr_function_add("input_check", input_check, -1);
 		txr_function_add("input_check_released", input_check_released, -1);
-
-	// Collision
+	#endregion
+	
+	#region Collision
 		txr_function_add("place_empty", place_empty, -1);
 		txr_function_add("place_free", place_free, -1);
 		txr_function_add("place_meeting", place_meeting, -1);
@@ -487,8 +507,9 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 		txr_function_add("rectangle_in_rectangle", rectangle_in_rectangle, -1);
 		txr_function_add("rectangle_in_triangle", rectangle_in_triangle, -1);
 		txr_function_add("rectangle_in_circle", rectangle_in_circle, -1);
-
-	// DS Lists
+	#endregion
+	
+	#region DS Lists
 		txr_function_add("ds_list_create", ds_list_create, -1);
 		txr_function_add("ds_list_destroy", ds_list_destroy, -1);
 		txr_function_add("ds_list_clear", ds_list_clear, -1);
@@ -511,8 +532,9 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 		txr_function_add("ds_list_mark_as_map", ds_list_mark_as_map, -1);
 		txr_function_add("ds_list_is_list", ds_list_is_list, -1);
 		txr_function_add("ds_list_is_map", ds_list_is_map, -1);
+	#endregion
 
-	// Instances
+	#region Instances
 		txr_function_add("instance_create_depth", instance_create_depth, -1);
 		txr_function_add("instance_destroy", instance_destroy, -1);
 		txr_function_add("instance_exists", instance_exists, -1);
@@ -529,7 +551,7 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 		txr_function_add("variable_instance_set", variable_instance_set, -1);
 		txr_function_add("instance_id_get", instance_id_get, -1);
 		txr_function_add("object_get_name", object_get_name, -1);
-
+	#endregion
 
 #endregion
 

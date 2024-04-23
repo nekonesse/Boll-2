@@ -1,0 +1,35 @@
+[testcharm]
+name=Thomas Lightfoot III
+
+icon speed=0.2
+icon loop=yes
+animation speed=1.0
+center x=24
+center y=27
+box width=48
+box height=48
+pole center offset=0
+
+carry offset x=0
+carry offset y=0
+fire duration=8
+victory duration=50
+time until wait=300
+pipe squish=20
+
+stand frames=1
+walk frames=4
+
+stand speed=0.2
+walk speed=0.2
+
+[lang]
+winspecial=NAME got a Chaos Emerald
+allspecial=NAME got all Chaos Emeralds
+princess=our Princess
+savetext1=Peace is Paved
+savetext2=With Kingdom Saved
+savetext3=Hurrah to NAME
+savetext4=Our Only Hero 
+savetext5=This Ends Your Trip
+savetext6=Of a Long Friendship

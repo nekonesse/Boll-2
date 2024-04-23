@@ -1,6 +1,6 @@
 {
   "$GMObject":"",
-  "%Name":"oGlobalController",
+  "%Name":"oGlobals",
   "eventList":[
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":2,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":3,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
@@ -9,7 +9,7 @@
     {"$GMEvent":"","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"oGlobalController",
+  "name":"oGlobals",
   "overriddenProperties":[],
   "parent":{
     "name":"Controller Objects",
