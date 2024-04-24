@@ -5,12 +5,12 @@
 		"doc": "https://ldtk.io/json",
 		"schema": "https://ldtk.io/files/JSON_SCHEMA.json",
 		"appAuthor": "Sebastien 'deepnight' Benard",
-		"appVersion": "1.5.2",
+		"appVersion": "1.5.3",
 		"url": "https://ldtk.io"
 	},
 	"iid": "89e20cd0-6280-11ee-9ff1-11df5747d5f3",
-	"jsonVersion": "1.5.2",
-	"appBuildId": 473624,
+	"jsonVersion": "1.5.3",
+	"appBuildId": 473703,
 	"nextUid": 51,
 	"identifierStyle": "Capitalize",
 	"toc": [],
@@ -249,7 +249,7 @@
 			"limitScope": "PerLevel",
 			"limitBehavior": "PreventAdding",
 			"pivotX": 0.5,
-			"pivotY": 1,
+			"pivotY": 0.5,
 			"fieldDefs": []
 		},
 		{
@@ -2045,22 +2045,6 @@
 					"gridTiles": [],
 					"entityInstances": [
 						{
-							"__identifier": "Player",
-							"__grid": [5,11],
-							"__pivot": [0.5,1],
-							"__tags": [],
-							"__tile": { "tilesetUid": 5, "x": 0, "y": 240, "w": 16, "h": 16 },
-							"__smartColor": "#D77643",
-							"iid": "5525eb40-6280-11ee-9989-b3da4a24ecbf",
-							"width": 16,
-							"height": 16,
-							"defUid": 4,
-							"px": [88,192],
-							"fieldInstances": [],
-							"__worldX": 88,
-							"__worldY": 192
-						},
-						{
 							"__identifier": "Flipblock",
 							"__grid": [16,8],
 							"__pivot": [0,0],
@@ -2575,6 +2559,22 @@
 							"fieldInstances": [{ "__identifier": "hflip", "__type": "Bool", "__value": false, "__tile": null, "defUid": 50, "realEditorValues": [] }],
 							"__worldX": 560,
 							"__worldY": 256
+						},
+						{
+							"__identifier": "Player",
+							"__grid": [5,10],
+							"__pivot": [0.5,0.5],
+							"__tags": [],
+							"__tile": { "tilesetUid": 5, "x": 0, "y": 240, "w": 16, "h": 16 },
+							"__smartColor": "#D77643",
+							"iid": "b789df30-fec0-11ee-be15-615620e8ec1e",
+							"width": 16,
+							"height": 16,
+							"defUid": 4,
+							"px": [88,168],
+							"fieldInstances": [],
+							"__worldX": 88,
+							"__worldY": 168
 						}
 					]
 				},
