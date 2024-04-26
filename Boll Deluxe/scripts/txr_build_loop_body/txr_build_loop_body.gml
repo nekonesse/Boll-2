@@ -7,6 +7,4 @@ function txr_build_loop_body() {
 	txr_build_can_break = could_break;
 	txr_build_can_continue = could_continue;
 	return trouble;
-
-
 }

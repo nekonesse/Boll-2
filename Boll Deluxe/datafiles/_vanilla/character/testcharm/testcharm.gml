@@ -1,9 +1,10 @@
 #define create
-test = 0;
+test = [0,1,2,"apple"];
 
 #define step
 player_movement();
 player_collision();
+//show_debug_message(test[3]);
 
 // polygons!!!!!
 // nekonesse: i beg of you turn this into a basic script/function for charm users....
