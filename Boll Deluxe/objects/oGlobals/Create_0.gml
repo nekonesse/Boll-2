@@ -179,8 +179,7 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    txr_function_add("lengthdir_x", lengthdir_x, -1);
 	    txr_function_add("lengthdir_y", lengthdir_y, -1);
 		
-		// CONSTANT ADD!!
-		//ffi.exposeConstant("pi", pi);
+		txr_constant_add("pi", pi);
 	#endregion
 	
 	#region Math 3D
@@ -209,26 +208,26 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    txr_function_add("merge_colour", merge_colour, -1);
 		
 	
-		// CONSTANT ADD!!
-		//    "c_aqua", c_aqua,
-		//    "c_black", c_black,
-		//    "c_blue", c_blue,
-		//    "c_dkgray", c_dkgray,
-		//    "c_fuchsia", c_fuchsia,
-		//    "c_grey", c_grey,
-		//    "c_green", c_green,
-		//    "c_lime", c_lime,
-		//    "c_ltgrey", c_ltgrey,
-		//    "c_maroon", c_maroon,
-		//    "c_navy", c_navy,
-		//    "c_olive", c_olive,
-		//    "c_orange", c_orange,
-		//    "c_purple", c_purple,
-		//    "c_red", c_red,
-		//    "c_silver", c_silver,
-		//    "c_teal", c_teal,
-		//    "c_white", c_white,
-		//    "c_yellow", c_yellow
+		// CONSTANT
+		txr_constant_add("c_aqua", c_aqua);
+		txr_constant_add("c_black", c_black);
+		txr_constant_add("c_blue", c_blue);
+		txr_constant_add("c_dkgray", c_dkgray);
+		txr_constant_add("c_fuchsia", c_fuchsia);
+		txr_constant_add("c_grey", c_grey);
+		txr_constant_add("c_green", c_green);
+		txr_constant_add("c_lime", c_lime);
+		txr_constant_add("c_ltgrey", c_ltgrey);
+		txr_constant_add("c_maroon", c_maroon);
+		txr_constant_add("c_navy", c_navy);
+		txr_constant_add("c_olive", c_olive);
+		txr_constant_add("c_orange", c_orange);
+		txr_constant_add("c_purple", c_purple);
+		txr_constant_add("c_red", c_red);
+		txr_constant_add("c_silver", c_silver);
+		txr_constant_add("c_teal", c_teal);
+		txr_constant_add("c_white", c_white);
+		txr_constant_add("c_yellow", c_yellow);
 	#endregion
 	
 	#region Draw
