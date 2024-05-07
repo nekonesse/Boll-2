@@ -1,5 +1,6 @@
 // Palette
 pal_swap_init_system(shd_pal_swapper);
+init_player();
 palette=0
 palette_index=0
 
@@ -30,6 +31,11 @@ ysc=1
 rot=0
 fr=0
 
+cantslowanim=0
+water=0
+animf=0
+frspd=1
+sid=0
 realjump = 0;
 canjump = 0;
 bufferjump = 0;
@@ -105,4 +111,9 @@ txr_exec(_createEvent);
 _stepEvent = txr_compile(_loopThrough("step"));
 if (_stepEvent == undefined) {
     show_message(txr_error);
-} 
+}
+
+_spriteManagerEvent = txr_compile(_loopThrough("sprmanager"));
+if (_stepEvent == undefined) {
+    show_message(txr_error);
+}

@@ -86,7 +86,6 @@ function player_movement(){
 	    || (bufferjump))
 	{
 		jump = 1;
-	    fr = 1;
 	    bufferjump = 0;
 		groundtime = 0;
 		grounded = false
@@ -97,11 +96,7 @@ function player_movement(){
 
 	// Switch direction
 	if (left)
-	{
 	    xsc = -1;
-	}
 	else if (right)
-	{
 	    xsc = 1;
-	}
 }

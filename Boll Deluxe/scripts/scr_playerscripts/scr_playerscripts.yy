@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"scr_animdat",
+  "%Name":"scr_playerscripts",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_animdat",
+  "name":"scr_playerscripts",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Player",
+    "path":"folders/Scripts/Player.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

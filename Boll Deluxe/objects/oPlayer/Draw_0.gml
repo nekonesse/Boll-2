@@ -1,4 +1,4 @@
-if palette pal_swap_set(palette,palette_index,0)
+/*if palette pal_swap_set(palette,palette_index,0)
 var _interval=8;
 if ((alarm[11] % 8) <= _interval/2) {
 draw_sprite_ext(sprite_index,image_index,floor(x),floor(y),xsc,ysc,rot,c_white,1)
@@ -24,9 +24,13 @@ draw_set_color(c_red);
 draw_box_poly();
 draw_set_color(_drawcolor);*/
 
+draw_player()
+
 draw_set_alpha(0.5)
-draw_rectangle_color(bbox_left,bbox_top,bbox_right,bbox_bottom,c_red,c_red,c_red,c_red,false)
+draw_rectangle_color(bbox_left,bbox_top,bbox_right-1,bbox_bottom-1,c_red,c_red,c_red,c_red,false)
 draw_set_alpha(1)
+
+//draw_text(x,y,AnimationData)
 
 //draw_line(x div 1,bbox_bottom div 1, (x div 1) + 1, bbox_bottom div 1);
 //draw_line(bbox_right div 1,bbox_bottom div 1, (bbox_right div 1) + 1, bbox_bottom div 1);

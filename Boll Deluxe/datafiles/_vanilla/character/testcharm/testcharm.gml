@@ -1,5 +1,5 @@
 #define create
-test = [0,1,2,"apple"];
+sprite_list=["stand"];
 
 #define step
 player_movement();
@@ -51,13 +51,6 @@ if (coll) {
     instance_destroy(coll);
 }
 
-// switch for sheets or whatever
-switch (size) {
-	default:
-	case 0:
-		sprite_index = spr_player;
-	break;
-	case 1:
-		sprite_index = spr_playerbig;
-	break;
-}
+#define sprmanager
+
+sprite="stand"

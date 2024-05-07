@@ -420,7 +420,7 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	    txr_function_add("irandom_range", irandom_range, -1);
 	#endregion
 	
-	#region Unsafe
+	#region Unsafe (nekonesse: these are actually pretty good to have tbh)
 		if (debug_mode) {
 		    txr_function_add("asset_get_index", asset_get_index, -1);
 		    txr_function_add("asset_get_type", asset_get_type, -1);

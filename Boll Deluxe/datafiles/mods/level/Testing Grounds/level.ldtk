@@ -1249,41 +1249,6 @@
 					"tilesetUid": null
 				}
 			]
-		},
-		{
-			"identifier": "Entity2",
-			"uid": 49,
-			"tags": [],
-			"exportToToc": false,
-			"allowOutOfBounds": false,
-			"doc": null,
-			"width": 16,
-			"height": 16,
-			"resizableX": false,
-			"resizableY": false,
-			"minWidth": null,
-			"maxWidth": null,
-			"minHeight": null,
-			"maxHeight": null,
-			"keepAspectRatio": false,
-			"tileOpacity": 1,
-			"fillOpacity": 1,
-			"lineOpacity": 1,
-			"hollow": false,
-			"color": "#FFFFFF",
-			"renderMode": "Rectangle",
-			"showName": true,
-			"tilesetId": null,
-			"tileRenderMode": "FitInside",
-			"tileRect": null,
-			"uiTileRect": null,
-			"nineSliceBorders": [],
-			"maxCount": 0,
-			"limitScope": "PerLevel",
-			"limitBehavior": "MoveLastOne",
-			"pivotX": 0,
-			"pivotY": 0,
-			"fieldDefs": []
 		}
 	], "tilesets": [
 		{
