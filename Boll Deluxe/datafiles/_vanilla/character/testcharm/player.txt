@@ -4,10 +4,12 @@ name=Thomas Lightfoot III
 icon speed=0.2
 icon loop=yes
 animation speed=1.0
-center x=24
-center y=27
-box width=48
-box height=48
+center x=0
+center y=0
+basic testcharm box width=47
+basic testcharm box height=47
+box width=47
+box height=47
 pole center offset=0
 
 carry offset x=0

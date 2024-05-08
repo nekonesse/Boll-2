@@ -1,12 +1,13 @@
 // Palette
 pal_swap_init_system(shd_pal_swapper);
-init_player();
 palette=0
 palette_index=0
 
 ///// GENERAL /////
 pNum = 0; //player number (P1, P2, etc.)
 charmName = "testcharm"; //what charm this player character is using
+size=0;
+oldsize=0;
 
 ///// PHYSICS /////
 grav=0.25; //we're having an actual grav var now because changing gravity should be EASIER!!
@@ -30,8 +31,10 @@ xsc=1
 ysc=1
 rot=0
 fr=0
+frame=0
 
 cantslowanim=0
+flash=0
 water=0
 animf=0
 frspd=1
@@ -56,8 +59,6 @@ steps = 0
 colslope = 0
 steep_slope = 0
 hurt=0;
-size=0;
-oldsize=0;
 image_speed=0
 global.paused=0
 depth=0;
@@ -115,6 +116,14 @@ if (_stepEvent == undefined) {
 }
 
 _spriteManagerEvent = txr_compile(_loopThrough("sprmanager"));
-if (_stepEvent == undefined) {
+if (_spriteManagerEvent == undefined) {
     show_message(txr_error);
 }
+
+_spriteListEvent = txr_compile(_loopThrough("spritelist"));
+if (_spriteListEvent == undefined) {
+    show_message(txr_error);
+}
+
+replace_animdat($"{working_directory}\\_vanilla\\character\\{charmName}\\{charmName}.player.txt");
+init_player();

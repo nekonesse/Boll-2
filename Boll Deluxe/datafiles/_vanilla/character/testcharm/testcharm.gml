@@ -1,5 +1,7 @@
-#define create
+#define spritelist
 sprite_list=["stand"];
+
+#define create
 
 #define step
 player_movement();

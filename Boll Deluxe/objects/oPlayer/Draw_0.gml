@@ -23,8 +23,8 @@ pal_swap_reset();
 draw_set_color(c_red);
 draw_box_poly();
 draw_set_color(_drawcolor);*/
-
-draw_player()
+animate_player();
+draw_player();
 
 draw_set_alpha(0.5)
 draw_rectangle_color(bbox_left,bbox_top,bbox_right-1,bbox_bottom-1,c_red,c_red,c_red,c_red,false)

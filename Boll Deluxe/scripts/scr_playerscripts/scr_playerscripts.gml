@@ -1,95 +1,142 @@
-function load_animdat(){
-//MODDED (all below)
-MOD_PlayerSkins			=[];
-MOD_SkinAnimSpeed		=[];
-MOD_SkinAnimLoopPoint	=[];
-MOD_SkinFrameCount		=[];
-MOD_SkinDesc			=[];
-MOD_SkinGSetts			=[];
+function skin_data(key, value=undefined) {
+	//skin data registry. passing a value writes to it.
 
-var Frames		=0;
-var OrgX		=0;
-var OrgY		=0;
-var AnimSpd		=0;
-var LoopPnt		=0;
-var StrArr		=[];
-var SpdArr		=[];
-var LoopArr		=[];
-var FramesArr	=[];
+	var map;
+	map=oGameManager.skinmap
 
-//Make sure all directorys exist else make them
-if (!directory_exists($"{working_directory}/_vanilla/character/")) directory_create($"{working_directory}/_vanilla/character/")
-
-
-// Find first skin
-var Skin_name  = file_find_first($"{working_directory}/_vanilla/character/*", fa_directory)
-var Skin_index = 0
-
-// Load all skins
-if (Skin_name != "" && Skin_name != "<null>")
-{
-	while(Skin_name != "" && Skin_name != "<null>")
-	{
-		if !file_exists($"{working_directory}/_vanilla/character/{Skin_name}/player.txt") show_debug_message("NOT THERE")
-		var File = file_text_open_read($"{working_directory}/_vanilla/character/{Skin_name}/player.txt");
-		var Desc = SplitString(file_text_read_string(File),",");
-		array_push(MOD_SkinDesc,Desc)
-		file_text_readln(File); file_text_readln(File);
-		var XYscale = SplitString(file_text_read_string(File),",");
-		array_push(MOD_SkinGSetts,XYscale);
-		file_text_readln(File); file_text_readln(File); file_text_readln(File);
-
-		SpdArr		=[];
-		LoopArr		=[];
-		FramesArr	=[];
-		var LengthOfAnims		=array_length(AnimationData);
-		var OrgXarr	=[];
-		var OrgYarr	=[];
-
-		for (var i = 0; i < LengthOfAnims; ++i;)
-		{
-			var StrArr = SplitString(file_text_read_string(File),",");
-			Frames=real(StrArr[0]); OrgX=StrArr[1]; OrgY=StrArr[2]; AnimSpd=real(StrArr[3])*0.01; LoopPnt=real(StrArr[4]);
-			array_push(SpdArr,AnimSpd); array_push(LoopArr,LoopPnt); array_push(FramesArr,Frames);
-			array_push(OrgXarr,StrArr[1]); array_push(OrgYarr,StrArr[2]);
-			//show_debug_message(AnimationData[i]);
-			//show_debug_message(Skin_name);
-			//show_debug_message("s" + Skin_name + AnimationData[i]);
-			//global.texPage.AddFile($"{working_directory}\\SEdata\\Skins\\{Skin_name}\\{AnimationData[i]}.png",$"s{Skin_name}{AnimationData[i]}",Frames,,,OrgX,OrgY);
-			file_text_readln(File); file_text_readln(File);
-		}
-
-		array_push(MOD_SkinAnimSpeed,SpdArr);
-		array_push(MOD_SkinAnimLoopPoint,LoopArr);
-		array_push(MOD_SkinFrameCount,FramesArr);
-		file_text_close(File);
-
-		array_push(MOD_PlayerSkins,Skin_name);
-		Skin_name  = file_find_next();
-		Skin_index ++;
+	if (value==undefined) {
+	    if (ds_map_exists(map,key)) {return ds_map_find_value(map,key)}
+	    else return false
+	} else {
+	    if (ds_map_exists(map,key)) ds_map_replace(map,key,value)
+	    else ds_map_add(map,key,value)
 	}
 }
+
+function replace_animdat(file) {
+	var str,f,section,p;
+
+	if (file_exists(file)) {
+	    f=file_text_open_read(file)
+	    section=""
+	    do {
+	        str=file_text_read_string(f)
+	        file_text_readln(f)
+	        if (str!="") {
+	            if (string_pos("[",str) && string_pos("]",str) && !string_pos("=",str))
+	                section=string_replace(string_replace(str,"[",""),"]","")
+	            else {
+	                p=string_pos("=",str)
+	                skin_data(section+" "+string_copy(str,1,p-1),string_delete(str,1,p))
+	            }
+	        }
+	    } until (file_text_eof(f))
+	    file_text_close(f)
+	    return true
+	} return false
 }
 
-function init_player(){ //make this load animation data later
+function skin_animationdata(slot,name,list,size) {
+	var i,j,k,p,t,spr,tokens,c,tokens2,c2,sizename;
+
+	switch (size){
+	    case 0: sizename="basic" break;
+	    case 1: sizename="big" break;
+	    case 2: sizename="fire" break;
+	    case 3: sizename="feather" break;
+	    case 4: sizename="extra" break;
+	    default: sizename=string(size) break;
+	}
+
+	for (i=0;i<array_length(list);i+=1) {
+	    //k=16+128*i //1d array :P
+
+	    /*
+	        k value table
+	        k+0 animation name
+	        k+1 frames
+	        k+2 speed
+	        k+3 loop
+	        k+4... frame times
+	    */
+
+	    spr=list[i]
+	    //read frame count list
+	    //the below code was mega simplified since we don't have to deal with the commas for different sizes.
+	    //I'm utilizing the defaults of nozerounreal here so that in the case that it doesn't actually find the tag it just goes for a non size specific version. i.e, one without a tag.s
+		frames_list[i]=nozerounreal(skin_data(sizename+ " " + name+" "+string(spr)+" frames"),unreal(skin_data(name+" "+string(spr)+" frames"),1))
+	    
+		//read animation speed
+	    t=nozerounreal(skin_data(sizename+ " " +name+" "+string(spr)+" speed"),unreal(skin_data(name+" "+string(spr)+" speed"),1) ) 
+	    if (t=0) t=1 
+	    
+		speed_list[i]=t
+		
+	    //read animation loop
+	    loops_list[i]=max(1,nozerounreal(skin_data(sizename+ " " +name+" "+string(spr)+" loop"),unreal(skin_data(name+" "+string(spr)+" loop"),1)) )
+      
+   
+    
+    
+	    list=string(skin_data(sizename+ " " +name+" "+string(spr)+" frametimes"))
+	    if list=""  list=string(skin_data(name+" "+string(spr)+" frametimes"))
+    
+
+	    c2=0
+	    do {
+	        p=string_pos(",",list)
+	        if (p=0) {if (list!="") tokens2[c2]=list c2+=1}
+	        else {
+	            tokens2[c2]=string_copy(list,1,p-1) c2+=1
+	            list=string_delete(list,1,p)
+	        }
+	    } until (p=0)
+		
+		var _f = function(_element, _index)
+		{
+			return (sprite_list[_index] == _element);
+		}
+		var spri=array_find_index(sprite_list,_f) //sprite list index
+	    if (list="0") {
+	        for (j=0;j<frames_list[i];j+=1) {
+	            times_list[spri,j]=1 //if frame time is not found, set to default
+	        }
+	    } else {
+	        for (j=0;j<frames_list[i];j+=1) {
+	            times_list[spri,j]=max(1,unreal(tokens2[j],1)) //else if found, set frametime array map of sprite index to frame time value
+	        }
+	    }
+	}
+	box_width=max(1,nozerounreal(skin_data(sizename+ " " +name+" box width"),unreal(skin_data(name+" box width"),48)))
+	box_height=max(1,nozerounreal(skin_data(sizename+ " " +name+" box height"),unreal(skin_data(name+" box height"),48)))
+	offset_x=nozerounreal(skin_data(sizename+ " " +name+" offset x"),unreal(skin_data(name+" offset x"),0))
+	offset_y=nozerounreal(skin_data(sizename+ " " +name+" offset y"),unreal(skin_data(name+" offset y"),0))
+	animf=median(0,nozerounreal(skin_data(sizename+ " " +name+" animation speed"),unreal(skin_data(name+" animation speed"),1.0)),10)
+	poleoffx=nozerounreal(skin_data(sizename+ " " +name+" pole center offset"),unreal(skin_data(name+" pole center offset"),8))
+}
+
+function init_player() { //make this load animation data later
 	sheet=[];
-	sprite_list=[];
+	txr_exec(_spriteListEvent); //sprite list
+	frames_list=[1];
+	loops_list=[1];
+	times_list=["stand",1];
+	speed_list=[1];
 	fr=0;
 	sprite="stand";
-	offset_x=0;
-	offset_y=0;
 	xsc=1;
 	ysc=1;
 	sprite_angle=0;
 	col=c_white;
 	alpha=1;
-	box_width=47;
-	box_height=47;
 	top_margin=120;
 	dy=0;
+	
+	skin_animationdata(pNum,charmName,sprite_list,0);
 }
 
 function draw_player() {
+	//if (flash) exit
 	var margin=1/256;
 	var _f = function(_element, _index)
 	{
@@ -111,48 +158,48 @@ function draw_player() {
 	)			
 }
 
-/*
-function draw_player(step) {
+
+function animate_player() {
 	///draw_player(step)
 	//sprite/animation manager specifically for player characters, if you want one for enemies make a different script.
 	//if step is true, animation is executed, otherwise it just draws
-	var mem;
+	
+	oldspr=sprite
+	//This makes the spr manager not run under certain circumstances.
+	// if (!piped && !codeblock_stopsprmanager)
 
+	txr_exec(_spriteManagerEvent);
 
-
-	if (step) {
-	    oldspr=sprite
-	    //This makes the spr manager not run under certain circumstances.
-	   // if (!piped && !codeblock_stopsprmanager)
-
-	    txr_exec(_spriteManagerEvent);
-
-	    //this one handles drawing order inside multiplayer, or rather, the way it switches so that both are flashing when on top of one another.
-	    //if ((depth=0 || depth=1) && player_id=gamemanager.plrsort) depth=!depth
-	}
-	if (flash) exit
+	//this one handles drawing order inside multiplayer, or rather, the way it switches so that both are flashing when on top of one another.
+	//if ((depth=0 || depth=1) && pNum=gamemanager.plrsort) depth=!depth
+	 
 	//Growing and hurting size changes.
 	//mem=size
 	//if (((hurt || fall=6) && hk<4) || (grow && gk mod 6<3)) size=oldsize
-	sheet=sheets[size]
-
 
 	//if (global.tpose) {sprite="stand" frame=0}
 
-	if (step) {
-	    //reset frame on sprite change
-	    if (sprite!=oldspr) frame=0
-	    //find sprite position in list
-	    sid=0
-	    for (i=0;i<global.animdat[player_id,0];i+=1) {
-	        if (string(global.animdat[player_id,16+128*i])==sprite) {sid=i break}
-	    }
+	if (sprite!=oldspr) frame=0
+	
+	var _f = function(_element, _index)
+	{
+		return (sprite_list[_index] == _element);
 	}
-	draw_playercore(step)
+	var spri=array_find_index(sprite_list,_f)
+	//This is mostly the same as the original boll's, except the global variable now has size as one of the dimensions.
+	frn=frames_list[spri] //frame number
+	frs=(frspd*animf*1)/max(1,1) //(game speed * percent * sprite speed) / frame time
+	frl=loops_list[spri]-1 //loop point  
+	//if (water && !cantslowanim) frs*=wf                       
+	if (piped!=2) frame+=frs
+	if (frame<0) frame+=frn
+	if (frame>=frn) {frame=frame-frn if (frl<frn) frame+=frl}
+	frame=modulo(frame,0,frn)  
+
 	//below is the code that deals with taking damage, as well as growing, commented out just in case rn
 	//if (!super) if (((hurt || fall=6) && hk<4) || (grow && gk mod 6<3)) size=mem
 }
-
+/*
 function draw_playercore(step) {
 	///draw_playercore(1=step,0=draw)
 	//automatically handles sprite drawing for 2.0 sheet format
@@ -164,15 +211,15 @@ function draw_playercore(step) {
 	if (step) {//animate
 	    k=16+128*sid
 	    //This is mostly the same as the original boll's, except the global variable now has size as one of the dimensions.
-	    frn=global.animdat[player_id+size*10,k+1] //frame number
-	    frs=(frspd*animf*global.animdat[player_id+size*10,k+2])/max(1,global.animdat[player_id+size*10,k+4+floor(frame)]) //(game speed * percent * sprite speed) / frame time
-	    frl=global.animdat[player_id+size*10,k+3]-1 //loop point  
+	    frn=global.animdat[pNum+size*10,k+1] //frame number
+	    frs=(frspd*animf*global.animdat[pNum+size*10,k+2])/max(1,global.animdat[pNum+size*10,k+4+floor(frame)]) //(game speed * percent * sprite speed) / frame time
+	    frl=global.animdat[pNum+size*10,k+3]-1 //loop point  
 	    if (water && !cantslowanim) frs*=wf                       
 	    if (piped!=2) frame+=frs
 	    if (frame<0) frame+=frn
 	    if (frame>=frn) {frame=frame-frn if (frl<frn) frame+=frl}
-	    sprw=global.animdat[player_id+size*10,1]
-	    sprh=global.animdat[player_id+size*10,2]
+	    sprw=global.animdat[pNum+size*10,1]
+	    sprh=global.animdat[pNum+size*10,2]
 	    frame=modulo(precise(frame),0,frn)   
 	} else {//draw
 	    c=tint
