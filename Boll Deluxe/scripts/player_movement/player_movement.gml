@@ -48,7 +48,7 @@ function player_movement(){
 			hsp = lerp(hsp, 0, fric);
 	}
 	
-	if (grounded) {
+	if (grounded) && (down || steep_slope) {
 		hsp += 0.1 * colslope
 	}
 

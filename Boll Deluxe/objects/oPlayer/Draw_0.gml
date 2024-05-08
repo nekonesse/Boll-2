@@ -30,6 +30,8 @@ draw_set_alpha(0.5)
 draw_rectangle_color(bbox_left,bbox_top,bbox_right-1,bbox_bottom-1,c_red,c_red,c_red,c_red,false)
 draw_set_alpha(1)
 
+draw_text(x,y,string(hsp)+"\n"+string(vsp))
+
 //draw_text(x,y,AnimationData)
 
 //draw_line(x div 1,bbox_bottom div 1, (x div 1) + 1, bbox_bottom div 1);
