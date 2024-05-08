@@ -143,3 +143,41 @@ function nozerounreal(str, defaultval) {
 	if (valid && (real(res)!=0)) return real(res)
 	return defaultval
 }
+
+function split_string(str, divider){
+	var len = string_length(str);
+	
+	var subStr = "";
+	var arrIndex = 0;
+	var arr=[];
+	for (var i = 1; i <= len; i++)
+	{
+		var char = string_char_at(str, i);
+		if (char != divider)
+		{
+			//add char to substring
+			subStr += char;
+		}
+		else
+		{
+			//ensure substring is not empty. 
+			if(string_length(subStr) > 0)
+			{
+				//add substring to array
+				arr[arrIndex] = subStr;
+				arrIndex++;
+				//clear substring
+				subStr = "";
+			}
+		}
+	}
+		//Add final substring to array
+		if(string_length(subStr) > 0)
+		{
+			arr[arrIndex] = subStr;
+		}
+	if arr == undefined
+	return 1
+	else
+	return arr;
+}

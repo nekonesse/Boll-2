@@ -124,6 +124,6 @@ _spriteListEvent = txr_compile(_loopThrough("spritelist"));
 if (_spriteListEvent == undefined) {
     show_message(txr_error);
 }
+txr_exec(_spriteListEvent);
 
-replace_animdat($"{working_directory}\\_vanilla\\character\\{charmName}\\{charmName}.player.txt");
 init_player();

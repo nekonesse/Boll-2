@@ -1,5 +1,5 @@
 #define spritelist
-sprite_list=["stand"];
+sprite_list=["stand","walk"];
 
 #define create
 
@@ -55,4 +55,6 @@ if (coll) {
 
 #define sprmanager
 
+if hsp!=0 sprite="walk"
+else
 sprite="stand"
