@@ -23,11 +23,8 @@ function skin_getarray(_sett) {
 	}
 	if (!file_text_eof(File)) {
 		file_text_readln(File);
-		file_text_close(File);
 		var _string = string_delete(Line, 1, string_length(_sett+"="));
-		if _string = "" || _string = undefined
-		return 1
-		else
+		file_text_close(File);
 		return split_string(_string,",");
 	}
 }
@@ -80,35 +77,11 @@ function skin_animationdata(slot,name,list,size) {
 	    //read animation loop
 	    loops_list[i]=max(1,nozerounreal(skin_setting(sizename+" "+string(spr)+" loop"),skin_setting(string(spr)+" loop")))
       
-		
-		times_list[get_spriteindex()]=skin_getarray(string(spr)+" frametimes")
-		show_message(times_list)
-    
-    
-	    /*list=string(skin_setting(sizename+" "+string(spr)+" frametimes"))
-	    if list="" || list="0"  list=string(skin_setting(string(spr)+" frametimes"))
-
-	    c2=0
-	    do {
-	        p=string_pos(",",list)
-	        if (p=0) {if (list!="") tokens2[c2]=list c2+=1}
-	        else {
-	            tokens2[c2]=string_copy(list,1,p-1) c2+=1
-				show_message(tokens2[c2])
-	            list=string_delete(list,1,p)
-	        }
-	    } until (p=0)
-		
-		var spri=get_spriteindex() //sprite list index
-	    if (list="" || list="0") {
-	        for (j=0;j<frames_list[i];j+=1) {
-	            times_list[spri,j]=1 //if frame time is not found, set to default
-	        }
-	    } else {
-	        for (j=0;j<frames_list[i];j+=1) {
-	            times_list[spri,j]=max(1,unreal(tokens2[j],1)) //else if found, set frametime array map of sprite index to frame time value
-	        }
-	    }*/
+		//read frametimes
+		if is_array(skin_getarray(string(spr)+" frametimes"))
+		times_list[i]=skin_getarray(string(spr)+" frametimes")
+		else
+		times_list[i]=array_create(frames_list[i])
 	}
 	box_width=max(2,nozerounreal(skin_setting(sizename+" box width"),skin_setting("box width")))-1
 	box_height=max(2,nozerounreal(skin_setting(sizename+" box height"),skin_setting("box height")))-1
@@ -123,7 +96,7 @@ function init_player() { //make this load animation data later
 	txr_exec(_spriteListEvent); //sprite list
 	frames_list=[1];
 	loops_list=[1];
-	times_list[0][0]=1;
+	times_list[0]=1;
 	speed_list=[1];
 	fr=0;
 	sprite="stand";
@@ -145,7 +118,7 @@ function draw_player() {
 	draw_sprite_general(
 		sheet[0],0,
 		8+floor(frame)*(box_width+1)+margin,
-		top_margin+8+fry*(box_height+margin),
+		top_margin+8+fry*(box_height+1)+margin,
 		box_width-margin*2,
 		box_height-margin*2, //might need to add some lengthdir bullshit to make it rotate on offset properly
 		floor(x)+lengthdir_x((margin)*xsc,sprite_angle)+lengthdir_x((margin+dy)*ysc,sprite_angle-90)-offset_x+(box_width/2)*-xsc,

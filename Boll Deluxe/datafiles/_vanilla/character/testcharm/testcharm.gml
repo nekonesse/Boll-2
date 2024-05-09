@@ -1,7 +1,9 @@
 #define spritelist
-sprite_list=["stand","walk"];
+sprite_list=[];
+array_push(sprite_list,"stand","wait","lookup","pose","crouch","hurt","dead","walk","run","brake","jump","bonk","fall","runjump","longjump")
 
 #define create
+jump = 0;
 
 #define step
 player_movement();
@@ -16,10 +18,6 @@ if (sprindex_prev != sprite_index) {
 	//obj_update_poly_from_bounding(self);
 	sprindex_prev = sprite_index;
 }
-
-// if (grounded) {
-    // jump = 0;
-// }
 
 // Pipes ??? (works now)
 // if (grounded && down && place_meeting(x, y + 4, oPipeUp)) {  
@@ -55,6 +53,7 @@ if (coll) {
 
 #define sprmanager
 
-if hsp!=0 sprite="walk"
-else
-sprite="stand"
+if (vsp>0) sprite="fall"
+else if (jump) sprite="jump"
+else if (left || right) sprite="walk"
+else sprite="stand"

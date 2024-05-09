@@ -70,6 +70,7 @@ function player_movement(){
 	else
 	{
 	    canjump = 5;  // Coyote frames
+		jump = 0;
 	}
 	
 	
@@ -93,6 +94,7 @@ function player_movement(){
 	    canjump = 0;
 	    canstopjump = 1;
 	}
+	
 
 	// Switch direction
 	if (left)

@@ -211,6 +211,7 @@ function txr_parse(str) {
 					var name = string_copy(str, start, pos - start);
 					switch (name) {
 						case "oPipeUp": ds_list_add(out, [txr_token.number, inf,oPipeUp]); break;
+						case "oMushroom": ds_list_add(out, [txr_token.number, inf,oMushroom]); break;
 						
 						case "true": ds_list_add(out, [txr_token.number, inf,true]); break;
 						case "false": ds_list_add(out, [txr_token.number, inf,false]); break;
@@ -227,7 +228,7 @@ function txr_parse(str) {
 						case "var": ds_list_add(out, [txr_token._var, inf]); break;
 						case "argument_count": ds_list_add(out, [txr_token._argument_count, inf]); break;
 						case "label": ds_list_add(out, [txr_token.label, inf]); break;
-						case "jump": ds_list_add(out, [txr_token.jump, inf]); break;
+						case "jumpto": ds_list_add(out, [txr_token.jump, inf]); break;
 						case "call": ds_list_add(out, [txr_token.jump_push, inf]); break;
 						case "back": ds_list_add(out, [txr_token.jump_pop, inf]); break;
 						case "select": ds_list_add(out, [txr_token._select, inf]); break;
