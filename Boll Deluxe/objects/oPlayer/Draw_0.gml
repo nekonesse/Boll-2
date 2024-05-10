@@ -27,6 +27,7 @@ animate_player();
 draw_player();
 
 if (global.debug) {
+	draw_set_font(smallF)
 	draw_set_alpha(0.5)
 	draw_rectangle_color(bbox_left,bbox_top,bbox_right-1,bbox_bottom-1,c_red,c_red,c_red,c_red,false)
 	draw_set_alpha(1)

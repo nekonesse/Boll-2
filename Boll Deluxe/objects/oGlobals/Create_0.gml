@@ -466,6 +466,8 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 		txr_function_add("nearestplayer", nearestplayer, -1);
 		txr_function_add("split_string", split_string, -1);
 		txr_function_add("ternary", ternary, -1);
+		txr_function_add("alarm_get", alarm_get, -1);
+		txr_function_add("alarm_set", alarm_set, -1);
 	#endregion
 	
 	#region Player Functions

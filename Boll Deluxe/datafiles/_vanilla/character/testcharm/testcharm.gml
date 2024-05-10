@@ -7,7 +7,74 @@ jump = 0;
 
 
 #define step
-player_movement();
+
+maxspd = 2;	
+	
+if (grounded) && (down || steep_slope) {
+	hsp += 0.1 * colslope
+}
+
+if ((apress) && !(grounded))
+{
+	
+	alarm_set(0,5);  // ammount of frames for jump buffering
+	alarm_set(1,3);  // Walljump buffering
+}
+else if (grounded == true)
+{
+	alarm_set(1,0)
+	wallbuffer = 0;
+}
+
+if ((alarm_get(0) > 0) && (grounded))
+{
+	bufferjump = 1;
+	alarm_set(0,0)
+}
+
+// Fall off platform
+if (!grounded)
+{
+	vsp = min(4, vsp + grav);
+	canjump -= 1;
+	
+	// chearii: coneyor speed management
+	if (abs(chsp * 100))
+	{
+		chsp *= 0.95;
+		
+		if (((chsp * 100) / 1) == 0)
+		chsp = 0;
+	}
+}
+else
+{
+	canjump = 5;  // Coyote frames
+	jump = 0;
+}	
+	
+// Jumping
+if (!akey)
+{
+	if ((canstopjump == 1) && (vsp < -2))
+	{
+	    vsp *= 0.6;
+	}
+}
+
+if ((canjump > 0) && (apress))
+{
+	jump = 1;
+	bufferjump = 0;
+	groundtime = 0;
+	grounded = false
+	vsp = -6;
+	canjump = 0;
+	canstopjump = 1;
+	//sig.Emit("jumped")
+}
+
+player_movement();	
 player_collision();
 //show_debug_message(test[3]);
 
@@ -54,6 +121,10 @@ if (coll) {
     //alarm[11] = 60;
     instance_destroy(coll);
 }
+
+// Switch direction
+if (left || right)
+xsc = esign(move, 1)
 
 #define sprmanager
 
