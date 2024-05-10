@@ -1,20 +1,20 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function player_movement(){
+function player_movement_sonic(){
 	
 	x += hsp
 	y += vsp
 	
 	move = (right - left);
 	
-	if (move != 0) 
+	if (move != 0) && !(steep_slope || no_move || move_lock)
 	{	
-		//dont walk up a slope if its too steep to walk on!
-		var signmatch = check_signs_matching(hsp, move);
-		var accel_real = ((signmatch) ? accel : fastaccel);
+		if !(steep_slope || no_move || move_lock) { //dont walk up a slope if its too steep to walk on!
+			var signmatch = check_signs_matching(hsp, move);
+			var accel_real = ((signmatch) ? accel : fastaccel);
 
-		hsp += (move * accel_real);
-		
+			hsp += (move * accel_real);
+		}
 	}
 	else
 	{

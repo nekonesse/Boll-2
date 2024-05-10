@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"player_movement_sonic",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"player_movement_sonic",
+  "parent":{
+    "name":"Player",
+    "path":"folders/Scripts/Player.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

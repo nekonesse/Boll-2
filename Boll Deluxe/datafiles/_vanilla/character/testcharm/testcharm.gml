@@ -7,7 +7,9 @@ jump = 0;
 
 #define step
 
-maxspd = 2;	
+maxspd = 2;
+
+//no_move = 0;	
 
 if ((apress) && !(grounded))
 {
@@ -46,25 +48,10 @@ else
 {
 	canjump = 5;  // Coyote frames
 	jump = 0;
-	
-	if (steep_slope) {
-		hsp += 0.1 * colslope
-		slopesliding = 1;
-	} else if (down && ceil(abs(colslope))) {
-		slopesliding = 1;
-	}
-	
-	if (slopesliding) {
-		hsp += 0.075*esign(colslope, 1) + (0.075 * colslope)
-		crouch=1
-		move=0
-	}
-}
 
-
-if ((!abs(sign(colslope)) && (!round(abs(hsp)) || ((left || right) && !down))) || jump) {
-	slopesliding = 0
-	crouch=0
+	//player_slide();
+	//im not sure what happend but please dont re add it yet im gonna redo it with proper trig at least
+	
 }
 	
 // Jumping
@@ -85,11 +72,7 @@ if ((canjump > 0) && (apress))
 	vsp = -6;
 	canjump = 0;
 	canstopjump = 1;
-	//sig.Emit("jumped")
 }
-
-//add checks here to override player movement
-no_move=(slopesliding)
 
 player_movement();	
 player_collision();
@@ -127,18 +110,6 @@ if (sprindex_prev != sprite_index) {
     // }
 // }
 
-coll = instance_place(x, y, oMushroom);
-
-if (coll) {
-    oldsize = size;
-
-    if (size < 1)
-        size = 1;
-
-    //alarm[11] = 60;
-    instance_destroy(coll);
-}
-
 // Switch direction
 //add more checks here to prevent left/right changing direction
 if (left || right) && !(slopesliding)
@@ -162,4 +133,9 @@ else {
 #define jumped
 
 show_debug_message("Situation becomes worse....");
+
+#define mushroom
+
+show_debug_message("eatted it :)");
+
 

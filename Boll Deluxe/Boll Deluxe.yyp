@@ -209,7 +209,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.2.0.132",
+    "IDEVersion":"2024.4.0.137",
   },
   "name":"Boll Deluxe",
   "resources":[
@@ -758,7 +758,9 @@
     {"id":{"name":"LDtkParser","path":"scripts/LDtkParser/LDtkParser.yy",},},
     {"id":{"name":"p_polygon","path":"scripts/p_polygon/p_polygon.yy",},},
     {"id":{"name":"player_collision","path":"scripts/player_collision/player_collision.yy",},},
+    {"id":{"name":"player_movement_sonic","path":"scripts/player_movement_sonic/player_movement_sonic.yy",},},
     {"id":{"name":"player_movement","path":"scripts/player_movement/player_movement.yy",},},
+    {"id":{"name":"player_slide","path":"scripts/player_slide/player_slide.yy",},},
     {"id":{"name":"scr_catspeak_alloc","path":"scripts/scr_catspeak_alloc/scr_catspeak_alloc.yy",},},
     {"id":{"name":"scr_catspeak_codegen","path":"scripts/scr_catspeak_codegen/scr_catspeak_codegen.yy",},},
     {"id":{"name":"scr_catspeak_compatibility_v2","path":"scripts/scr_catspeak_compatibility_v2/scr_catspeak_compatibility_v2.yy",},},

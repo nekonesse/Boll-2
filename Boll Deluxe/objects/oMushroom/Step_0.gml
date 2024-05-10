@@ -69,3 +69,8 @@ if(!place_meeting(x,round(y),oCollider)){
 }
 
 if hsp != 0 xsc=-esign(hsp,-1)
+
+if (place_meeting(x,y,oPlayer)) {
+oPlayer.sig.Emit("mushroom")
+instance_destroy();
+}

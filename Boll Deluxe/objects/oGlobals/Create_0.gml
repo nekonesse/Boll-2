@@ -471,8 +471,10 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	#endregion
 	
 	#region Player Functions
+		txr_function_add("player_movement_sonic", player_movement_sonic, -1);
 		txr_function_add("player_movement", player_movement, -1);
 		txr_function_add("player_collision", player_collision, -1);
+		txr_function_add("player_slide", player_slide, -1);
 	#endregion
 	
 	#region Audio

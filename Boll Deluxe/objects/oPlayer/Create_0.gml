@@ -1,15 +1,18 @@
 //PLAYER SIGNALS
+
+sig_names = ["jumped", "mushroom"]
+// MAKE SURE THE NAME ACTUALLY EXISTS IN THE CHARM OR THE PROGRAM WILL FREEZE!! - chopp
 sig = new Signal();
 
 sig.Connect( self, function(str_var) {
     
 	//show_debug_message("Situation becomes worse....");
 	
-	var Event = txr_compile(_loopThrough(str_var));
-	if (Event == undefined) {
-	  show_message(txr_error);
-	} 
-	txr_exec(Event);
+for(i = 0; i < array_length(sig_names); ++i) {
+	if Event[i] = str_var {
+		txr_exec(Event[i]);
+	}
+}
 	
     //return true;
 });
@@ -122,25 +125,33 @@ _loopThrough = function(_lookfor) { //Function to go through and collect string 
 	return _str;
 }
 
+for(i = 0; i < array_length(sig_names); ++i) {
+    Event[i] = txr_compile(_loopThrough(sig_names[i]));
+	if (Event[i] == undefined) {
+	  show_message("INSIDE " + sig_names[i] + ": " + txr_error);
+	} 
+  }
+
+
 _createEvent = txr_compile(_loopThrough("create"));
 if (_createEvent == undefined) {
-    show_message(txr_error);
+    show_message("INSIDE create event: " + txr_error);
 } 
 txr_exec(_createEvent);
 
 _stepEvent = txr_compile(_loopThrough("step"));
 if (_stepEvent == undefined) {
-    show_message(txr_error);
+    show_message("INSIDE step event: " + txr_error);
 }
 
 _spriteManagerEvent = txr_compile(_loopThrough("sprmanager"));
 if (_spriteManagerEvent == undefined) {
-    show_message(txr_error);
+    show_message("INSIDE sprite manager: " +  txr_error);
 }
 
 _spriteListEvent = txr_compile(_loopThrough("spritelist"));
 if (_spriteListEvent == undefined) {
-    show_message(txr_error);
+    show_message("INSIDE sprite list: " + txr_error);
 }
 txr_exec(_spriteListEvent);
 

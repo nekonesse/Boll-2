@@ -26,7 +26,7 @@ x_diff = (x - xprevious);
 y_diff = (y - yprevious);
 
 var player = oPlayer
-if (player && place_meeting(x, y-4, oPlayer))
+if (player.grounded && place_meeting(x, y-3, oPlayer))
 {
 	player.x += x_diff;
 	player.y += y_diff;
