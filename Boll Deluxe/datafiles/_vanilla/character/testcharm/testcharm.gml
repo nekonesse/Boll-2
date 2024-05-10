@@ -1,6 +1,5 @@
 #define spritelist
-sprite_list=[];
-array_push(sprite_list,"stand","wait","lookup","pose","crouch","hurt","dead","walk","run","brake","jump","bonk","fall","runjump","longjump")
+sprite_list=split_string("stand,wait,lookup,pose,crouch,hurt,dead,walk,run,brake,jump,bonk,fall,runjump,longjump,sideflip,doublejump,doublejumpbonk,doublejumpfall,wallslide,groundpound,slide,standcarry,lookupcarry,crouchcarry,walkcarry,jumpcarry,bonkcarry,fallcarry,doublejumpcarry,throw,airthrow,roll,poundfall,swim,paddle,swimcarry,spinjump,fire,push,balancing,bellyslide,dive,capeflight,climbing,flagslide,hanging,hangmove,grind,piping,pipingup,sidepiping,doorenter,doorexit",",");
 
 #define create
 jump = 0;
@@ -9,10 +8,6 @@ jump = 0;
 #define step
 
 maxspd = 2;	
-	
-if (grounded) && (down || steep_slope) {
-	hsp += 0.1 * colslope
-}
 
 if ((apress) && !(grounded))
 {
@@ -20,7 +15,7 @@ if ((apress) && !(grounded))
 	alarm_set(0,5);  // ammount of frames for jump buffering
 	alarm_set(1,3);  // Walljump buffering
 }
-else if (grounded == true)
+else if (grounded)
 {
 	alarm_set(1,0)
 	wallbuffer = 0;
@@ -51,7 +46,26 @@ else
 {
 	canjump = 5;  // Coyote frames
 	jump = 0;
-}	
+	
+	if (steep_slope) {
+		hsp += 0.1 * colslope
+		slopesliding = 1;
+	} else if (down && ceil(abs(colslope))) {
+		slopesliding = 1;
+	}
+	
+	if (slopesliding) {
+		hsp += 0.075*esign(colslope, 1) + (0.075 * colslope)
+		crouch=1
+		move=0
+	}
+}
+
+
+if ((!abs(sign(colslope)) && (!round(abs(hsp)) || ((left || right) && !down))) || jump) {
+	slopesliding = 0
+	crouch=0
+}
 	
 // Jumping
 if (!akey)
@@ -73,6 +87,9 @@ if ((canjump > 0) && (apress))
 	canstopjump = 1;
 	//sig.Emit("jumped")
 }
+
+//add checks here to override player movement
+no_move=(slopesliding)
 
 player_movement();	
 player_collision();
@@ -123,7 +140,8 @@ if (coll) {
 }
 
 // Switch direction
-if (left || right)
+//add more checks here to prevent left/right changing direction
+if (left || right) && !(slopesliding)
 xsc = esign(move, 1)
 
 #define sprmanager
@@ -131,7 +149,9 @@ xsc = esign(move, 1)
 frspd=1
 if (vsp>0) sprite="fall"
 else if (jump) sprite="jump"
-else if !(round(abs(hsp))) sprite="stand"
+else if (slopesliding) {sprite="slide"}
+else if (crouch) {sprite="crouch"}
+else if !(abs(hsp)) sprite="stand"
 else {
 	frspd=abs(hsp)/4
 	sprite="walk"

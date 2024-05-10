@@ -5,26 +5,20 @@ function player_movement(){
 	x += hsp
 	y += vsp
 	
-	
-	
 	move = (right - left);
 	
-	if (move != 0)
-	{
-		image_speed = 1;
+	if (move != 0) && !(steep_slope || no_move || move_lock)
+	{	
+		if !(steep_slope || no_move || move_lock) { //dont walk up a slope if its too steep to walk on!
+			var signmatch = check_signs_matching(hsp, move);
+			var accel_real = ((signmatch) ? accel : fastaccel);
 
-	    var signmatch = check_signs_matching(hsp, move);
-	    var accel_real = ((signmatch) ? accel : fastaccel);
-
-	    hsp += (move * accel_real);
-
-	    if (abs(hsp) > maxspd) hsp=approach_val(hsp,maxspd,0.5)
+			hsp += (move * accel_real);
+		}
 	}
 	else
 	{
-	    image_speed = 0;
-	    image_index = 0;
-
+		move=0 //just in case
 		// chearii: mhomentunmnm
 		if (grounded)
 		
@@ -34,4 +28,6 @@ function player_movement(){
 			hsp = max(0, hsp - fric)
 		}
 	}
+	
+	if (abs(hsp) > maxspd) hsp=approach_val(hsp,maxspd,0.5)
 }

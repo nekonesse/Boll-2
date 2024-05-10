@@ -60,6 +60,7 @@ realjump = 0;
 canjump = 0;
 bufferjump = 0;
 wallbuffer = 0;
+no_move = false;
 move_lock = false;
 piped = false; //tell me if you want this gone ok thanks
 grounded = false;
