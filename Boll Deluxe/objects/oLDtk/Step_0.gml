@@ -1,3 +1,3 @@
 /// @desc Live update!
 
-LDtkLive()
+//LDtkLive()

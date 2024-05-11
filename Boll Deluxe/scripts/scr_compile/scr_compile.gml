@@ -16,13 +16,10 @@ function scr_compile(){
 		if string_starts_with(_folder, "!") {
 			show_debug_message("WARNING: Terminate symbol found in `" + _folder + "`. Ignoring...");
 			_folder = file_find_next();
-			//aparently already ignores folders with exclimation points so ummm...... fail???????
-			return;
+		}else {
+			found_folders[index++] = _folder
+			_folder = file_find_next();
 		}
-		
-		found_folders[index++] = _folder
-		
-		_folder = file_find_next();
 	}
 	show_debug_message("END SCRIPT FOLDER SEARCH");
 	

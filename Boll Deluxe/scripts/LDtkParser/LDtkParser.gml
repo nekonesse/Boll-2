@@ -487,8 +487,9 @@ function LDtkLive(level_name) {
 }
 
 function __LDtkClear() {
-	// yes
-	room_restart()
+	// SLOW DOWN YOU GLUTONUS FUCK GOD
+	
+	alarm[0] = 1
 }
 
 ///@function	LDtkReloadFields()

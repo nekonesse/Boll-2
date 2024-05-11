@@ -188,7 +188,7 @@
     {"$GMIncludedFile":"","%Name":"mariostomp.wav","CopyToMask":-1,"filePath":"datafiles/_vanilla/mario/sfx","name":"mariostomp.wav","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"marioswim.wav","CopyToMask":-1,"filePath":"datafiles/_vanilla/mario/sfx","name":"marioswim.wav","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"mariowallkick.wav","CopyToMask":-1,"filePath":"datafiles/_vanilla/mario/sfx","name":"mariowallkick.wav","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"testcharm.gml","CopyToMask":-1,"filePath":"datafiles/_vanilla/scripts/nottestcharm","name":"testcharm.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"testcharm.gml","CopyToMask":-1,"filePath":"datafiles/_vanilla/scripts/!nottestcharm","name":"testcharm.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"testcharm.gml","CopyToMask":-1,"filePath":"datafiles/_vanilla/scripts/testcharm","name":"testcharm.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"controllerblacklist.csv","CopyToMask":-1,"filePath":"datafiles","name":"controllerblacklist.csv","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"controllertypes.csv","CopyToMask":-1,"filePath":"datafiles","name":"controllertypes.csv","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

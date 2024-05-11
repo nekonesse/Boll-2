@@ -85,6 +85,11 @@ global.paused=0
 depth=0;
 drawStar=false 
 
+var dir=$"{working_directory}\\_vanilla\\character\\{charmName}\\{charmName}";
+sheet=sprite_add($"{dir}-basic.png",0,1,0,0,0);
+
+
+
 //mycollisions = ds_list_create()
 //feel free to delete this along with it's mentions and uses in the draw event
 //instance_change(oPlayerTest,true)

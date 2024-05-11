@@ -93,7 +93,6 @@ function skin_animationdata(slot,name,list,size) {
 }
 
 function init_player() { //make this load animation data later
-	sheet=[];
 	txr_exec(global.scripts[? $"{charmName}_spritelist"]); //sprite list
 	frames_list=[1];
 	loops_list=[1];
@@ -117,7 +116,7 @@ function draw_player() {
 	var margin=1/256;
 	var fry=get_spriteindex()
 	draw_sprite_general(
-		sheet[0],0,
+		sheet,0,
 		8+floor(frame)*(box_width+1)+margin,
 		top_margin+8+fry*(box_height+1)+margin,
 		box_width-margin*2,
