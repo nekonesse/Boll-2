@@ -21,8 +21,15 @@ function check_collision_dot(x1, y1, type = 0, object = oCollider){
 	if found != noone{
 		if found.no_collide { 
 			found = noone
-			return found
+			return false
 		}
+		
+		//if found.semi && !found.slope {
+		//	if found.bbox_top + 2 < y1 {
+		//		found = noone
+		//		return false
+		//	}
+		//}
 	}
 	
 	if found != noone{
@@ -65,7 +72,7 @@ function check_collision_line(x1, y1, x2, y2, type = 0, object = oCollider){
 	if found != noone{
 		if found.no_collide { 
 			found = noone
-			return found
+			return false
 		}
 	}
 	

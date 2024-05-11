@@ -1,9 +1,20 @@
 /// @description Insert description here
 // You can write your code in this editor
-var player = oPlayer
-if (player.grounded && place_meeting(x, y-3, oPlayer))
+
+no_collide = false
+
+with (oPlayer)
 {
-	player.x += x_diff;
-	player.y = y-(player.bbox_bottom - player.bbox_top) -4
+	var diff = y - yprevious
+	if !grounded && (diff < 0 ) {
+		other.no_collide = true
+	}
 	
+	if (grounded && 
+	collision_line(bbox_left, bbox_bottom + 2, bbox_right, bbox_bottom + 2, other, false, true) )
+	{
+		x += other.x_diff;
+		y = other.y-(bbox_bottom - bbox_top) -4;
+	
+	}
 }

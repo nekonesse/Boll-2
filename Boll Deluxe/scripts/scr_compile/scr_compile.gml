@@ -17,7 +17,26 @@ function scr_compile(){
 			show_debug_message("WARNING: Terminate symbol found in `" + _folder + "`. Ignoring...");
 			_folder = file_find_next();
 		}else {
-			found_folders[index++] = _folder
+			found_folders[index++] = "scripts\\" + _folder
+			_folder = file_find_next();
+		}
+	}
+	show_debug_message("END SCRIPT FOLDER SEARCH");
+	
+	_folder = file_find_close();
+	
+	show_debug_message("LETS DO IT AGAIN!!")
+	
+	var _folder = file_find_first($"{working_directory}\\_vanilla\\character\\*", fa_directory)
+	while(_folder != "") {
+		
+		show_debug_message("SCRIPT FOLDER FOUND! `" + _folder + "`");
+		
+		if string_starts_with(_folder, "!") {
+			show_debug_message("WARNING: Terminate symbol found in `" + _folder + "`. Ignoring...");
+			_folder = file_find_next();
+		}else {
+			found_folders[index++] = "character\\" + _folder
 			_folder = file_find_next();
 		}
 	}
@@ -28,13 +47,13 @@ function scr_compile(){
 	
 	for(j = 0; j < array_length(found_folders); ++j) {
 		
-	var _file = file_find_first($"{working_directory}\\_vanilla\\scripts\\" + found_folders[j] + "\\*.gml",0)
+	var _file = file_find_first($"{working_directory}\\_vanilla\\" + found_folders[j] + "\\*.gml",0)
 	show_debug_message("BEGIN SCRIPT COMPILE IN `" + found_folders[j] + "`");
 	
 	while(_file != "") {
 		show_debug_message("SCRIPT FILE FOUND! `" + _file + "`");
 			
-		var _filepath = $"{working_directory}\\_vanilla\\scripts\\" + found_folders[j] + "\\" + _file
+		var _filepath = $"{working_directory}\\_vanilla\\" + found_folders[j] + "\\" + _file
 		//var _filepath2 = $"{working_directory}\\_vanilla\\scripts\\" + _folder 
 		show_debug_message(_filepath)
 		//show_debug_message(_filepath2)

@@ -156,6 +156,7 @@
   "IncludedFiles":[
     {"$GMIncludedFile":"","%Name":"player.txt","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/testcharm","name":"player.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"testcharm-basic.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/testcharm","name":"testcharm-basic.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"testcharm.gml","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/testcharm","name":"testcharm.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"create.meow","CopyToMask":-1,"filePath":"datafiles/_vanilla/mario/code","name":"create.meow","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"draw.meow","CopyToMask":-1,"filePath":"datafiles/_vanilla/mario/code","name":"draw.meow","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"step.meow","CopyToMask":-1,"filePath":"datafiles/_vanilla/mario/code","name":"step.meow","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -189,7 +190,7 @@
     {"$GMIncludedFile":"","%Name":"marioswim.wav","CopyToMask":-1,"filePath":"datafiles/_vanilla/mario/sfx","name":"marioswim.wav","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"mariowallkick.wav","CopyToMask":-1,"filePath":"datafiles/_vanilla/mario/sfx","name":"mariowallkick.wav","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"testcharm.gml","CopyToMask":-1,"filePath":"datafiles/_vanilla/scripts/!nottestcharm","name":"testcharm.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"testcharm.gml","CopyToMask":-1,"filePath":"datafiles/_vanilla/scripts/testcharm","name":"testcharm.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"afreshcoconut.gml","CopyToMask":-1,"filePath":"datafiles/_vanilla/scripts/testcharm","name":"afreshcoconut.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"controllerblacklist.csv","CopyToMask":-1,"filePath":"datafiles","name":"controllerblacklist.csv","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"controllertypes.csv","CopyToMask":-1,"filePath":"datafiles","name":"controllertypes.csv","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"INTLIB_README.txt","CopyToMask":-1,"filePath":"datafiles","name":"INTLIB_README.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

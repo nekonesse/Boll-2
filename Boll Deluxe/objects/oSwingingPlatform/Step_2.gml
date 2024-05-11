@@ -1,9 +1,16 @@
 /// @description Insert description here
 // You can write your code in this editor
 
-if (oPlayer.grounded && place_meeting(x, y-4, oPlayer))
+
+
+
+with (oPlayer)
 {
-	oPlayer.x += x_diff;
-	oPlayer.y = y-15
+	if (grounded && 
+	collision_line(bbox_left, bbox_bottom + 3, bbox_right, bbox_bottom + 3, other, false, true) )
+	{
+		x += other.x_diff;
+		y += other.y_diff;
 	
+	}
 }

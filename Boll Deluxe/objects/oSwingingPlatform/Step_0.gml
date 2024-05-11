@@ -4,7 +4,7 @@ orbit_angle = -(wave_val(0,180,orbit_speed));
 var oldx, oldy
 
 oldx = floor(newx)
-oldy = floor(newx)
+oldy = floor(newy)
 
 newx = (targetx) + (orbit_length * dcos(orbit_angle));
 newy = (targety)- (orbit_length * dsin(orbit_angle));

@@ -22,8 +22,8 @@ switch (dir) {
 	}
 }
 
-x_diff = floor(x - xprevious);
-y_diff = floor(y - yprevious);
+x_diff = x - xprevious;
+y_diff = y - yprevious;
 
 
 

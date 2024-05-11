@@ -6,15 +6,8 @@ sig = new Signal();
 
 sig.Connect( self, function(str_var) {
     
-	//show_debug_message("Situation becomes worse....");
-	
-//for(i = 0; i < array_length(sig_names); ++i) {
-//	if Event[i] = str_var {
-//		txr_exec(Event[i]);
-//	}
-//}
-	
-    //return true;
+	txr_exec(global.scripts[? $"{charmName}_{str_var}"]);
+
 });
 
 // Palette
