@@ -94,7 +94,7 @@ function skin_animationdata(slot,name,list,size) {
 
 function init_player() { //make this load animation data later
 	sheet=[];
-	txr_exec(_spriteListEvent); //sprite list
+	txr_exec(global.scripts[? $"{charmName}_spritelist"]); //sprite list
 	frames_list=[1];
 	loops_list=[1];
 	times_list[0]=1;
@@ -137,7 +137,7 @@ function animate_player() {
 	oldspr=sprite
 	//This makes the spr manager not run under certain circumstances.
 	// if (!piped && !codeblock_stopsprmanager)
-	txr_exec(_spriteManagerEvent);
+	txr_exec(global.scripts[? $"{charmName}_sprmanager"]);
 	
 	//this one handles drawing order inside multiplayer, or rather, the way it switches so that both are flashing when on top of one another.
 	//if ((depth=0 || depth=1) && pNum=gamemanager.plrsort) depth=!depth

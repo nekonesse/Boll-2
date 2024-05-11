@@ -22,16 +22,9 @@ switch (dir) {
 	}
 }
 
-x_diff = (x - xprevious);
-y_diff = (y - yprevious);
+x_diff = floor(x - xprevious);
+y_diff = floor(y - yprevious);
 
-var player = oPlayer
-if (player.grounded && place_meeting(x, y-3, oPlayer))
-{
-	player.x += x_diff;
-	player.y += y_diff;
-	
-}
 
 
 if (place_meeting(x, y-4, oEnemy))

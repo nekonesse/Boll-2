@@ -8,11 +8,11 @@ sig.Connect( self, function(str_var) {
     
 	//show_debug_message("Situation becomes worse....");
 	
-for(i = 0; i < array_length(sig_names); ++i) {
-	if Event[i] = str_var {
-		txr_exec(Event[i]);
-	}
-}
+//for(i = 0; i < array_length(sig_names); ++i) {
+//	if Event[i] = str_var {
+//		txr_exec(Event[i]);
+//	}
+//}
 	
     //return true;
 });
@@ -99,60 +99,36 @@ drawStar=false
 //instance_make_slopevars(self);
 
 ///// EVENT SETUP /////
-_loopThrough = function(_lookfor) { //Function to go through and collect string from specific parts of the GML file
-	var _code		=file_text_open_read($"{working_directory}\\_vanilla\\character\\{charmName}\\{charmName}.gml");
-	var _str		="",
-		_cur		=file_text_read_string(_code),
-		_NLstr		="",
-		_fileSTR	="";
-	
-	//Looking for our section
-	while (_cur!=$"#define {_lookfor}") {
-		file_text_readln(_code);
-		_cur	=file_text_read_string(_code);
-	}
-	//Getting the code from our section
-	while (!file_text_eof(_code) and !string_starts_with(_NLstr,"#define")) {
-	    file_text_readln(_code);
-		_fileSTR	=file_text_read_string(_code);
-		_NLstr		=_fileSTR;
-		if (!string_starts_with(_NLstr,"#define"))
-			_str +=$"{_fileSTR}\n";
-	}
-	file_text_close(_code);
-	
-	//Returning it to the caller
-	return _str;
-}
-
-for(i = 0; i < array_length(sig_names); ++i) {
-    Event[i] = txr_compile(_loopThrough(sig_names[i]));
-	if (Event[i] == undefined) {
-	  show_message("INSIDE " + sig_names[i] + ": " + txr_error);
-	} 
-  }
 
 
-_createEvent = txr_compile(_loopThrough("create"));
-if (_createEvent == undefined) {
-    show_message("INSIDE create event: " + txr_error);
-} 
-txr_exec(_createEvent);
+//for(i = 0; i < array_length(sig_names); ++i) {
+//    Event[i] = txr_compile(global._loopThrough(sig_names[i]));
+//	if (Event[i] == undefined) {
+//	  show_message("INSIDE " + sig_names[i] + ": " + txr_error);
+//	} 
+//  }
 
-_stepEvent = txr_compile(_loopThrough("step"));
-if (_stepEvent == undefined) {
-    show_message("INSIDE step event: " + txr_error);
-}
 
-_spriteManagerEvent = txr_compile(_loopThrough("sprmanager"));
-if (_spriteManagerEvent == undefined) {
-    show_message("INSIDE sprite manager: " +  txr_error);
-}
+//_createEvent = txr_compile(global._loopThrough("create"));
+//if (_createEvent == undefined) {
+//    show_message("INSIDE create event: " + txr_error);
+//} 
+txr_exec(global.scripts[? $"{charmName}_create"]);
 
-_spriteListEvent = txr_compile(_loopThrough("spritelist"));
-if (_spriteListEvent == undefined) {
-    show_message("INSIDE sprite list: " + txr_error);
-}
-txr_exec(_spriteListEvent);
+//_stepEvent = txr_compile(global._loopThrough("step"));
+//if (_stepEvent == undefined) {
+//    show_message("INSIDE step event: " + txr_error);
+//}
+
+//_spriteManagerEvent = txr_compile(global._loopThrough("sprmanager"));
+//if (_spriteManagerEvent == undefined) {
+//    show_message("INSIDE sprite manager: " +  txr_error);
+//}
+
+//_spriteListEvent = txr_compile(global._loopThrough("spritelist"));
+//if (_spriteListEvent == undefined) {
+//    show_message("INSIDE sprite list: " + txr_error);
+//}
+txr_exec(global.scripts[? $"{charmName}_spritelist"]);
 
 init_player();

@@ -1,7 +1,9 @@
 #macro gametitle "Boll Deluxe"
-#macro version "2.1"
+#macro version "2.2"
 
 global.debug=0
+//scr = NaN
+
 
 if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 

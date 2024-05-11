@@ -21,4 +21,4 @@ bpress = input_check_pressed("b");
 ckey = input_check("c");
 cpress = input_check_pressed("c");
 
-txr_exec(_stepEvent);
+txr_exec(global.scripts[? $"{charmName}_step"]);

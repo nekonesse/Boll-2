@@ -2408,7 +2408,7 @@
 						},
 						{
 							"__identifier": "SwingingPlatform",
-							"__grid": [14,20],
+							"__grid": [62,10],
 							"__pivot": [0.5,0.5],
 							"__tags": [],
 							"__tile": { "tilesetUid": 15, "x": 0, "y": 144, "w": 48, "h": 16 },
@@ -2417,10 +2417,10 @@
 							"width": 48,
 							"height": 16,
 							"defUid": 44,
-							"px": [232,328],
+							"px": [1000,168],
 							"fieldInstances": [{ "__identifier": "is_semisolid", "__type": "Bool", "__value": false, "__tile": null, "defUid": 46, "realEditorValues": [] }],
-							"__worldX": 232,
-							"__worldY": 328
+							"__worldX": 1000,
+							"__worldY": 168
 						},
 						{
 							"__identifier": "Player",

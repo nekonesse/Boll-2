@@ -1,10 +1,16 @@
 orbit_angle = -(wave_val(0,180,orbit_speed));
 
-x = ((targetx) + lengthdir_x(orbit_length, orbit_angle));
-y = ((targety) + lengthdir_y(orbit_length, orbit_angle));
 
-x_diff = (x - xprevious);
-y_diff = (y - yprevious);
+var oldx, oldy
+
+oldx = floor(newx)
+oldy = floor(newx)
+
+newx = (targetx) + (orbit_length * dcos(orbit_angle));
+newy = (targety)- (orbit_length * dsin(orbit_angle));
+
+x = floor(newx)
+y = floor(newy)
 
 if x>xprevious
 dir=1;
@@ -16,13 +22,9 @@ ydir=1;
 else if y<xprevious
 ydir=-1;
 
-var player = oPlayer
-if (player && place_meeting(x, y-4, oPlayer))
-{
-	player.x += x_diff;
-	player.y += y_diff;
-	
-}
+
+x_diff = (x - oldx);
+y_diff = (y - oldy);
 
 if (place_meeting(x, y-4, oEnemy))
 {
