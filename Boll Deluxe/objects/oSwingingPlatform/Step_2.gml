@@ -3,14 +3,9 @@
 
 
 
+pl=instance_place(x,y-2-abs(y_diff),oPlayer);
 
-with (oPlayer)
-{
-	if (grounded && 
-	collision_line(bbox_left, bbox_bottom + 3, bbox_right, bbox_bottom + 3, other, false, true) )
-	{
-		x += other.x_diff;
-		y += other.y_diff;
-	
-	}
+if (pl) && (pl.grounded) {
+	pl.x += x_diff;
+	pl.y += y_diff;
 }

@@ -3,13 +3,14 @@ sprite_list=split_string("stand,wait,lookup,pose,crouch,hurt,dead,walk,run,brake
 
 #define create
 jump = 0;
-
+slopesliding = 0;
+no_move = 0;
 
 #define step
 
 maxspd = 2;
 
-//no_move = 0;	
+no_move = (slopesliding) //add more checks here
 
 if ((apress) && !(grounded))
 {
@@ -49,9 +50,15 @@ else
 	canjump = 5;  // Coyote frames
 	jump = 0;
 
-	//player_slide();
+	player_slide();
 	//im not sure what happend but please dont re add it yet im gonna redo it with proper trig at least
 	
+}
+
+//End slope sliding (THIS CANNOT BE IN THE PLAYER_SLIDE FUNCTION WITHOUT REWORKING IT !!!!)
+if ((!abs(sign(colslope)) && (!round(abs(hsp)) || ((left || right) && !down))) || jump) {
+	slopesliding = 0
+	crouch = 0
 }
 	
 // Jumping
@@ -76,7 +83,7 @@ if ((canjump > 0) && (apress))
 
 player_movement();	
 player_collision();
-//show_debug_message(test[3]);
+show_debug_message(slopesliding);
 
 
 
