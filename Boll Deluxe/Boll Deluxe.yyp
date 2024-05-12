@@ -225,6 +225,7 @@
     {"id":{"name":"INTLIB_README","path":"notes/INTLIB_README/INTLIB_README.yy",},},
     {"id":{"name":"input_controller_object","path":"objects/input_controller_object/input_controller_object.yy",},},
     {"id":{"name":"oBackgroundManager","path":"objects/oBackgroundManager/oBackgroundManager.yy",},},
+    {"id":{"name":"oBossParent","path":"objects/oBossParent/oBossParent.yy",},},
     {"id":{"name":"oChainsaw","path":"objects/oChainsaw/oChainsaw.yy",},},
     {"id":{"name":"oCollider","path":"objects/oCollider/oCollider.yy",},},
     {"id":{"name":"oDirectionChanger","path":"objects/oDirectionChanger/oDirectionChanger.yy",},},

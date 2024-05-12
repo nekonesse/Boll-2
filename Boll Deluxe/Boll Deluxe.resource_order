@@ -142,6 +142,7 @@
     {"name":"__VinylConfig","order":18,"path":"notes/__VinylConfig/__VinylConfig.yy",},
     {"name":"input_controller_object","order":30,"path":"objects/input_controller_object/input_controller_object.yy",},
     {"name":"oBackgroundManager","order":3,"path":"objects/oBackgroundManager/oBackgroundManager.yy",},
+    {"name":"oBossParent","order":75,"path":"objects/oBossParent/oBossParent.yy",},
     {"name":"oChainsaw","order":9,"path":"objects/oChainsaw/oChainsaw.yy",},
     {"name":"oCollider","order":1,"path":"objects/oCollider/oCollider.yy",},
     {"name":"oDirectionChanger","order":10,"path":"objects/oDirectionChanger/oDirectionChanger.yy",},
