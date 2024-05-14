@@ -10,8 +10,8 @@
   "name":"oLargeSamba",
   "overriddenProperties":[],
   "parent":{
-    "name":"Enemies",
-    "path":"folders/Objects/Enemies.yy",
+    "name":"Sambas",
+    "path":"folders/Objects/Enemies/Sambas.yy",
   },
   "parentObjectId":null,
   "persistent":false,
