@@ -5,24 +5,18 @@
 
 function player_collision(){
 	
-	for (var i = 0; i < 16; ++i) {
-		//left wall
-	    if check_collision_dot(bbox_left, y, COL_WALL){
-			x++
-		}else{
-			break;
-		}
-		
-	}
 	
-	for (var i = 0; i < 16; ++i) {	
+		//left wall
+		if sign(hsp) = -1 {
+		    while check_collision_dot(bbox_left, y, COL_WALL){
+				x++
+			}
+		} else {
 		//right wall
-		if check_collision_dot(bbox_right, y, COL_WALL){
-			x--
-		}else{
-			break;
+			while check_collision_dot(bbox_right, y, COL_WALL){
+				x--
+			}
 		}
-	}
 	
 	
 	//landing on solid ground
@@ -40,18 +34,16 @@ function player_collision(){
 		if (check_collision_dot(bbox_right, bbox_top, COL_TOP)
 			or check_collision_dot(bbox_left, bbox_top, COL_TOP)){
 				//push out
-				for (var i = 0; i < 16; ++i) {
-			    if (check_collision_dot(bbox_right, bbox_top, COL_TOP) 
+				
+			    while (check_collision_dot(bbox_right, bbox_top, COL_TOP) 
 					or check_collision_dot(bbox_left, bbox_top, COL_TOP)) {
 					y++
-				}else{
-					break;
 				}
 				
 				vsp = 0
 			}
 		}
-	}
+	
 	
 	//normal ground loop (for a variety of slopes
 	if grounded {
@@ -65,24 +57,19 @@ function player_collision(){
 		
 		
 		//move down
-		for (var i = 0; i < 16; ++i) {
-		    if (!check_collision_dot(bbox_right,bbox_bottom, COL_BOTTOM)
+		
+		    while (!check_collision_dot(bbox_right,bbox_bottom, COL_BOTTOM)
 				&& !check_collision_dot(bbox_left,bbox_bottom, COL_BOTTOM)) {
 				y++
-			}else{
-				break;	
 			}
-		}
+		
 		
 		//move up
-		for (var i = 0; i < 16; ++i) {
-		    if (check_collision_dot(bbox_right,bbox_bottom, COL_BOTTOM)
+	
+		    while (check_collision_dot(bbox_right,bbox_bottom, COL_BOTTOM)
 				|| check_collision_dot(bbox_left,bbox_bottom, COL_BOTTOM)) {
 				y--
-			}else{
-				break;	
 			}
-		}
 		
 	}
 	

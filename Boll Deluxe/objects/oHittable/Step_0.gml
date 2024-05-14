@@ -1,8 +1,6 @@
 player=instance_place(x,y+2,oPlayer)
-if player && ((!player.grounded && player.vsp < 0) || (player.jump))  { //temp state check
-	event_user(0);
-	player.vsp = 2;
-	going = true;
+if player && ((!player.grounded && player.vsp < 0) || (player.jump)) && !no_hit { //temp state check
+	blockHit.Emit(-1, player)
 }
 
 ///HIT IS DIRECTION OF BUMP, -1 IS UP, 1 IS DOWN
@@ -26,6 +24,7 @@ if (hit != 0)
 			if doneCheck
 				hitNegative = true;
 		} else {
+			blockFinished.Emit()
 			dy = 0;
 			hit = 0;
 			image_index = 1;
