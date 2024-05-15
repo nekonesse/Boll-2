@@ -22,8 +22,7 @@ if distance_to_point(player.x,player.y) < 96 {
 
 if (start_going)
 {
-	var freq=60;
-	t += freq / game_get_speed(gamespeed_fps) //room_speed 
+	t += 1 //room_speed 
 	//change speed based on t, not in the function. you don't have to always add 1
 
 	image_angle = t;
