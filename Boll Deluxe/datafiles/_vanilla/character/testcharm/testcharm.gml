@@ -5,12 +5,13 @@ sprite_list=split_string("stand,wait,lookup,pose,crouch,hurt,dead,walk,run,brake
 jump = 0;
 slopesliding = 0;
 no_move = 0;
+fric = 0.0625;
 
 #define step
 
 maxspd = 2;
-
-no_move = (slopesliding) //add more checks here
+no_move = 0;
+//add more checks here
 
 if ((apress) && !(grounded))
 {
@@ -49,14 +50,14 @@ else
 {
 	canjump = 5;  // Coyote frames
 	jump = 0;
-
-	player_slide();
-	//im not sure what happend but please dont re add it yet im gonna redo it with proper trig at least
+	
+	//maximum speed when sliding, infulence when sliding, influence on steep slopes, add steep influence while sliding?
+	player_slide(5.5, 0.225, 0.32, false);
 	
 }
 
 //End slope sliding (THIS CANNOT BE IN THE PLAYER_SLIDE FUNCTION WITHOUT REWORKING IT !!!!)
-if ((!abs(sign(colslope)) && (!round(abs(hsp)) || ((left || right) && !down))) || jump) {
+if ((!abs(sign(colslope)) && (abs(hsp) < 0.25)) || jump) {
 	slopesliding = 0
 	crouch = 0
 }
@@ -79,6 +80,13 @@ if ((canjump > 0) && (apress))
 	vsp = -6;
 	canjump = 0;
 	canstopjump = 1;
+}
+
+if (colangle != 0 && slopesliding) {
+	fric = 0.024; //limit friction for more slideee
+	// weeeeee
+} else {
+	fric = 0.0625;
 }
 
 player_movement();	

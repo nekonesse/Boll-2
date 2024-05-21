@@ -40,10 +40,13 @@ function check_collision_dot(x1, y1, type = 0, object = oCollider){
 			case COL_BOTTOM:
 				if found.slope { 
 					colslope = found.slope_factor * (-1 + (found.hflip* 2))
+					//show_debug_message(found.angle)
+					colangle = found.angle
 					steep_slope = abs(found.image_yscale) > abs(found.image_xscale) //probably replace this with a factor check?
 				}else{
 					colslope = 0
 					steep_slope = 0
+					colangle = 0
 				}
 			break;
 			case COL_WALL:

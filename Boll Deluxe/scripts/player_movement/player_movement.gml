@@ -5,7 +5,9 @@ function player_movement(){
 	x += hsp
 	y += vsp
 	
-	move = (right - left);
+	if (!no_move) {
+		move = (right - left);
+	}
 	
 	if (move != 0) 
 	{	
