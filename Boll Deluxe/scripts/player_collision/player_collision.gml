@@ -10,11 +10,13 @@ function player_collision(){
 		if sign(hsp) = -1 {
 		    while check_collision_dot(bbox_left, y, COL_WALL){
 				x++
+				updateBox.Emit()
 			}
 		} else {
 		//right wall
 			while check_collision_dot(bbox_right, y, COL_WALL){
 				x--
+				updateBox.Emit()
 			}
 		}
 	
@@ -23,7 +25,8 @@ function player_collision(){
 	if !grounded && vsp >= 0 {
 		if check_collision_line(bbox_left,bbox_bottom,bbox_right,bbox_bottom, COL_BOTTOM){
 			grounded = true
-			vsp = 0
+			gsp = hsp
+			//vsp = 0
 		}
 
 	}
@@ -37,6 +40,7 @@ function player_collision(){
 			    while (check_collision_dot(bbox_right, bbox_top, COL_TOP) 
 					or check_collision_dot(bbox_left, bbox_top, COL_TOP)) {
 					y++
+					updateBox.Emit()
 				}
 				
 				vsp = 0
@@ -53,10 +57,10 @@ function player_collision(){
 		offsety = yprevious - y
 		
 		//fall
-		if (!check_collision_line(bbox_left,bbox_bottom,bbox_left,bbox_bottom + 12 + offsety, COL_BOTTOM) 
-			and !check_collision_line(bbox_right,bbox_bottom,bbox_right,bbox_bottom + 12 + offsety, COL_BOTTOM) ){
-				vsp = hsp * -dsin(colangle)
-				hsp = hsp * dcos(colangle)
+		if (!check_collision_line(bbox_left,bbox_bottom,bbox_left,bbox_bottom + 16 , COL_BOTTOM) 
+			and !check_collision_line(bbox_right,bbox_bottom,bbox_right,bbox_bottom + 16, COL_BOTTOM) ){
+				vsp = gsp * -dsin(colangle)
+				hsp = gsp * dcos(colangle)
 				grounded = false
 				return;
 			}
@@ -71,6 +75,7 @@ function player_collision(){
 				//&& !check_collision_dot(bbox_left,bbox_bottom, COL_BOTTOM)) 
 				
 				y++
+				updateBox.Emit()
 			}
 		
 		
@@ -79,6 +84,7 @@ function player_collision(){
 		    while (check_collision_line(bbox_left,bbox_bottom,bbox_right,bbox_bottom, COL_BOTTOM)){
 				//|| check_collision_dot(bbox_left,bbox_bottom, COL_BOTTOM)) 
 				y--
+				updateBox.Emit()
 			}
 		
 	}

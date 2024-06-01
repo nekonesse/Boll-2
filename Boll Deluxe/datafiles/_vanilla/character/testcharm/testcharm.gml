@@ -89,8 +89,8 @@ if (colangle != 0 && slopesliding) {
 	fric = 0.0625;
 }
 
-player_movement();	
-player_collision();
+player_movement();
+player_collision();	
 
 
 // polygons!!!!!
@@ -130,8 +130,8 @@ xsc = esign(move, 1)
 #define sprmanager
 
 frspd=1
-if (vsp>0) sprite="fall"
-else if (jump) sprite="jump"
+if (vsp>0 && !grounded) sprite="fall"
+else if (jump && !grounded) sprite="jump"
 else if (slopesliding) {sprite="slide"}
 else if (crouch) {sprite="crouch"}
 else if !(abs(hsp)) sprite="stand"

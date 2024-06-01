@@ -3,10 +3,20 @@
 sig_names = ["jumped", "mushroom"]
 // MAKE SURE THE NAME ACTUALLY EXISTS IN THE CHARM OR THE PROGRAM WILL FREEZE!! - chopp
 sig = new Signal();
+updateBox = new Signal();
 
 sig.Connect( self, function(str_var) {
     
 	txr_exec(global.scripts[? $"{charmName}_{str_var}"]);
+
+});
+
+updateBox.Connect( self, function() {
+    
+	p_bbox_left = x - hit_sizex
+	p_bbox_right = x + hit_sizex
+	p_bbox_top = y - hit_sizey
+	p_bbox_bottom = y + hit_sizey
 
 });
 
@@ -21,11 +31,25 @@ charmName = "testcharm"; //what charm this player character is using
 size=0;
 oldsize=0;
 
+hit_sizex = 6
+hit_sizey = 6
+
+updateBox.Connect( self, function() {
+    
+	p_bbox_left = x - hit_sizex
+	p_bbox_right = x + hit_sizex
+	p_bbox_top = y - hit_sizey
+	p_bbox_bottom = y + hit_sizey
+
+});
+
+
 ///// PHYSICS /////
 grav=0.25; //we're having an actual grav var now because changing gravity should be EASIER!!
 defaultgrav = grav; //for resetting gravity back to default
 vsp=0;
 hsp=0;
+gsp=0;
 
 
 // chearii: we SRB2 in this house (conveyor speeds for moving platforms)

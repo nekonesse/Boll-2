@@ -9,6 +9,9 @@ if (piped)
     exit
 }
 
+
+updateBox.Emit()
+
 // chearii: guessing these are a buncha quickvars
 right = input_check("right");
 left = input_check("left");
