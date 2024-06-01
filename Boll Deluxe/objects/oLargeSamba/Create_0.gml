@@ -12,7 +12,7 @@ yy=0
 
 //Create
 half_side_length = 32 //side length is 30
-y_start = y-half_side_length-12 //starting y, or else it'll constantly float upwards
+y_start = ystart+half_side_length //starting y, or else it'll constantly float upwards
 offsetchange=0;
 cooldown=0
 t=0

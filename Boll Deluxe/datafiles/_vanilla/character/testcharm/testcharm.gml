@@ -83,7 +83,7 @@ if ((canjump > 0) && (apress))
 }
 
 if (colangle != 0 && slopesliding) {
-	fric = 0.024; //limit friction for more slideee
+	fric = 0.048; //limit friction for more slideee
 	// weeeeee
 } else {
 	fric = 0.0625;

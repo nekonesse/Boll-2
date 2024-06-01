@@ -15,8 +15,8 @@
   "name":"oBossParent",
   "overriddenProperties":[],
   "parent":{
-    "name":"Boll Deluxe",
-    "path":"Boll Deluxe.yyp",
+    "name":"Enemies",
+    "path":"folders/Objects/Enemies.yy",
   },
   "parentObjectId":null,
   "persistent":false,
