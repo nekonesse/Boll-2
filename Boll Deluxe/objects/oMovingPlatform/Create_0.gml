@@ -6,6 +6,10 @@ semi = true
 
 x_diff = 0;
 y_diff = 0;
+reverse = 0; //should the platform read regular dir or reverse dir
+fallen = 0; //whether or not the
+vsp = 0; //fallin vsp
+grav = 0.15;
 
 dir="right";
 spd=0.5;
