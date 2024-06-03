@@ -7,10 +7,10 @@ if coll > 0
     {
 		with(_list[| i]) {
 			instance_destroy();
-			var j=instance_create(x+4,y+12,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-2}
-			var j=instance_create(x+12,y+12,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-2}
-			var j=instance_create(x+4,y+4,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-4}
-			var j=instance_create(x+12,y+4,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-4}
+			var j=instance_create(x+4,y+12,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-2} //bottom left
+			var j=instance_create(x+12,y+12,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-2} //bottom right
+			var j=instance_create(x+4,y+4,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-4} //top left
+		var j=instance_create(x+12,y+4,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-4} //top right
 		}
     }
 }
@@ -21,6 +21,8 @@ var coll=instance_place(x,y,oCollider)
 if (coll) && !(coll.no_collide) && !(coll.semi) && (coll != spawn_object) {
 	instance_destroy();
 }
+
+xsc=esign(-hsp,1)
 
 x += hsp;
 y += vsp;

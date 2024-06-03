@@ -10,7 +10,7 @@ if (piped)
 }
 
 
-updateBox.Emit()
+//updateBox.Emit()
 
 // chearii: guessing these are a buncha quickvars
 right = input_check("right");

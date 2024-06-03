@@ -10,13 +10,13 @@ function player_collision(){
 		if sign(hsp) = -1 {
 		    while check_collision_dot(bbox_left, y, COL_WALL){
 				x++
-				updateBox.Emit()
+				//updateBox.Emit()
 			}
 		} else {
 		//right wall
 			while check_collision_dot(bbox_right, y, COL_WALL){
 				x--
-				updateBox.Emit()
+				//updateBox.Emit()
 			}
 		}
 	
@@ -40,7 +40,7 @@ function player_collision(){
 			    while (check_collision_dot(bbox_right, bbox_top, COL_TOP) 
 					or check_collision_dot(bbox_left, bbox_top, COL_TOP)) {
 					y++
-					updateBox.Emit()
+					//updateBox.Emit()
 				}
 				
 				vsp = 0
@@ -75,7 +75,7 @@ function player_collision(){
 				//&& !check_collision_dot(bbox_left,bbox_bottom, COL_BOTTOM)) 
 				
 				y++
-				updateBox.Emit()
+				//updateBox.Emit()
 			}
 		
 		
@@ -84,7 +84,7 @@ function player_collision(){
 		    while (check_collision_line(bbox_left,bbox_bottom,bbox_right,bbox_bottom, COL_BOTTOM)){
 				//|| check_collision_dot(bbox_left,bbox_bottom, COL_BOTTOM)) 
 				y--
-				updateBox.Emit()
+				//updateBox.Emit()
 			}
 		
 	}
