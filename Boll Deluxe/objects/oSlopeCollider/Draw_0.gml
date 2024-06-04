@@ -2,3 +2,4 @@
 //draw_slope(self);
 //draw_line(x,y+(hflip ? 0 : rise),x+run,y+(hflip ? rise : 0));
 draw_self()
+if (global.debug) {draw_text(x-(sprite_width*sign(image_xscale)),y-16,angle)}

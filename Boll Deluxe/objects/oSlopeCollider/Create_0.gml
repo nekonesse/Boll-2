@@ -17,3 +17,5 @@ if hflip = true {
 slope_set_rise_run(self);
 //no_collide = false;
 
+angle = floor(point_direction(x,y+sprite_height,x+(sprite_width*sign(image_xscale)),y))*sign(image_xscale)
+jagged = (image_yscale * sign(image_yscale) > 1 && image_xscale * sign(image_xscale) > 1)
