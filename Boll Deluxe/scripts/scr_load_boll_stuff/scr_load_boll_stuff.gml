@@ -6,6 +6,13 @@ enum warptypes {
 	fade //maybe???
 }
 
+enum directions {
+	up,
+	down,
+	left,
+	right
+}
+
 enum Contents {
 	Coin,
 	MultiCoins,
@@ -13,6 +20,7 @@ enum Contents {
 	Flower,
 	Feather,
 	MiniMush,
+	PoisonMush,
 	Ring,
 	Shield,
 	Starman,

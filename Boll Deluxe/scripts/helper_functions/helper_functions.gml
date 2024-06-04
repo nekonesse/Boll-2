@@ -262,8 +262,16 @@ function esign(val,_default){
 	return sign(val)
 }
 
-function inview(obj = id){
-	return 1
+function inview() {
+	var cam = view_camera[0];
+	var x1 = camera_get_view_x(cam);
+	var y1 = camera_get_view_y(cam);
+	var x2 = x1 + camera_get_view_width(cam);
+	var y2 = y1 + camera_get_view_height(cam);
+	if(point_in_rectangle(x,y, x1-64, y1-64, x2+48, y2+48)) {
+		return true
+	}
+	return false
 }
 
 function chance(percent){

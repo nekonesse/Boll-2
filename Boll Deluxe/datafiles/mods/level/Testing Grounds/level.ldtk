@@ -612,14 +612,14 @@
 			]
 		},
 		{
-			"identifier": "PipeUp",
+			"identifier": "Pipe",
 			"uid": 19,
 			"tags": [],
 			"exportToToc": false,
 			"allowOutOfBounds": false,
 			"doc": null,
 			"width": 32,
-			"height": 16,
+			"height": 32,
 			"resizableX": false,
 			"resizableY": false,
 			"minWidth": null,
@@ -636,7 +636,7 @@
 			"showName": true,
 			"tilesetId": 15,
 			"tileRenderMode": "FitInside",
-			"tileRect": { "tilesetUid": 15, "x": 528, "y": 0, "w": 32, "h": 16 },
+			"tileRect": { "tilesetUid": 15, "x": 528, "y": 0, "w": 32, "h": 32 },
 			"uiTileRect": null,
 			"nineSliceBorders": [],
 			"maxCount": 0,
@@ -2542,36 +2542,6 @@
 							"__worldY": 128
 						},
 						{
-							"__identifier": "PipeUp",
-							"__grid": [23,23],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": { "tilesetUid": 15, "x": 528, "y": 0, "w": 32, "h": 16 },
-							"__smartColor": "#FEE761",
-							"iid": "bbfafc00-6280-11ee-84ef-4bea6f94773c",
-							"width": 32,
-							"height": 16,
-							"defUid": 19,
-							"px": [368,368],
-							"fieldInstances": [
-								{ "__identifier": "name", "__type": "String", "__value": "b", "__tile": null, "defUid": 20, "realEditorValues": [{
-									"id": "V_String",
-									"params": ["b"]
-								}] },
-								{ "__identifier": "target", "__type": "String", "__value": "a", "__tile": null, "defUid": 21, "realEditorValues": [{
-									"id": "V_String",
-									"params": ["a"]
-								}] },
-								{ "__identifier": "warp", "__type": "String", "__value": "", "__tile": null, "defUid": 24, "realEditorValues": [] },
-								{ "__identifier": "canenter", "__type": "Bool", "__value": true, "__tile": null, "defUid": 22, "realEditorValues": [{
-									"id": "V_Bool",
-									"params": [ true ]
-								}] }
-							],
-							"__worldX": 368,
-							"__worldY": 368
-						},
-						{
 							"__identifier": "Collider",
 							"__grid": [7,2],
 							"__pivot": [0,0],
@@ -3188,27 +3158,6 @@
 							"__worldY": 288
 						},
 						{
-							"__identifier": "PipeUp",
-							"__grid": [21,6],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": { "tilesetUid": 15, "x": 528, "y": 0, "w": 32, "h": 16 },
-							"__smartColor": "#FEE761",
-							"iid": "bb476040-fec0-11ee-a1e6-ad7e5ca06298",
-							"width": 32,
-							"height": 16,
-							"defUid": 19,
-							"px": [336,96],
-							"fieldInstances": [
-								{ "__identifier": "name", "__type": "String", "__value": "", "__tile": null, "defUid": 20, "realEditorValues": [] },
-								{ "__identifier": "target", "__type": "String", "__value": "", "__tile": null, "defUid": 21, "realEditorValues": [] },
-								{ "__identifier": "warp", "__type": "String", "__value": "", "__tile": null, "defUid": 24, "realEditorValues": [] },
-								{ "__identifier": "canenter", "__type": "Bool", "__value": false, "__tile": null, "defUid": 22, "realEditorValues": [] }
-							],
-							"__worldX": 336,
-							"__worldY": 96
-						},
-						{
 							"__identifier": "ShootBlock",
 							"__grid": [30,8],
 							"__pivot": [0,0],
@@ -3255,6 +3204,48 @@
 							"fieldInstances": [],
 							"__worldX": 1656,
 							"__worldY": 312
+						},
+						{
+							"__identifier": "Pipe",
+							"__grid": [20,6],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": { "tilesetUid": 15, "x": 528, "y": 0, "w": 32, "h": 32 },
+							"__smartColor": "#FEE761",
+							"iid": "4e94a830-fec0-11ee-9962-e919939bda89",
+							"width": 32,
+							"height": 32,
+							"defUid": 19,
+							"px": [320,96],
+							"fieldInstances": [
+								{ "__identifier": "name", "__type": "String", "__value": "", "__tile": null, "defUid": 20, "realEditorValues": [] },
+								{ "__identifier": "target", "__type": "String", "__value": "", "__tile": null, "defUid": 21, "realEditorValues": [] },
+								{ "__identifier": "warp", "__type": "String", "__value": "", "__tile": null, "defUid": 24, "realEditorValues": [] },
+								{ "__identifier": "canenter", "__type": "Bool", "__value": false, "__tile": null, "defUid": 22, "realEditorValues": [] }
+							],
+							"__worldX": 320,
+							"__worldY": 96
+						},
+						{
+							"__identifier": "Pipe",
+							"__grid": [18,23],
+							"__pivot": [0,0],
+							"__tags": [],
+							"__tile": { "tilesetUid": 15, "x": 528, "y": 0, "w": 32, "h": 32 },
+							"__smartColor": "#FEE761",
+							"iid": "500f8860-fec0-11ee-9962-4763ceb0086e",
+							"width": 32,
+							"height": 32,
+							"defUid": 19,
+							"px": [288,368],
+							"fieldInstances": [
+								{ "__identifier": "name", "__type": "String", "__value": "", "__tile": null, "defUid": 20, "realEditorValues": [] },
+								{ "__identifier": "target", "__type": "String", "__value": "", "__tile": null, "defUid": 21, "realEditorValues": [] },
+								{ "__identifier": "warp", "__type": "String", "__value": "", "__tile": null, "defUid": 24, "realEditorValues": [] },
+								{ "__identifier": "canenter", "__type": "Bool", "__value": false, "__tile": null, "defUid": 22, "realEditorValues": [] }
+							],
+							"__worldX": 288,
+							"__worldY": 368
 						}
 					]
 				},

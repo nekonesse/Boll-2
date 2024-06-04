@@ -47,7 +47,7 @@ function player_collision(){
 			
 			//bonking
 			bonk=12
-			//play sound here later
+			VinylPlay(snd_blockbump)
 		}
 	}
 	

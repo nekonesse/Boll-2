@@ -43,9 +43,10 @@ function player_movement(){
 	if grounded {
 		vsp = gsp * -dsin(colangle)
 		hsp = gsp * dcos(colangle)
-	} 
-		x += hsp 
-		y += vsp
+	}
 	
+	x += hsp 
+	y += vsp
 	
+	player_warping();
 }

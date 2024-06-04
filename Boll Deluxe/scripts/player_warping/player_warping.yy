@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"scr_signals",
+  "%Name":"player_warping",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_signals",
+  "name":"player_warping",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Player",
+    "path":"folders/Scripts/Player.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

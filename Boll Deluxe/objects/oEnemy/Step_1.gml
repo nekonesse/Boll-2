@@ -19,6 +19,8 @@ if (!damage_on_contact) {
     if (phaseid) && !place_meeting(x,y,phaseid) phaseid=0
 }
 
+visible=inview();
+
 /*
 if place_meeting(x+hsp,y,oPlayer) {
 	with(instance_place(x,y,oPlayer)) if !hurt knockoPlayer()

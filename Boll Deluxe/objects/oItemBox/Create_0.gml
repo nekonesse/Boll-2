@@ -13,4 +13,7 @@ blockFinished.Connect( self, function() {
 	sprite_index = image_exausted
 	flash=5;
 	no_hit = true
+	if content != Contents.Coin && content != Contents.MultiCoins {
+		VinylPlay(snd_itemappear);
+	}
 });
