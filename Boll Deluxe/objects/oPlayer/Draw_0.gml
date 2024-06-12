@@ -32,14 +32,7 @@ if (global.debug) {
 	draw_set_alpha(0.5)
 	draw_rectangle_color(bbox_left,bbox_top,bbox_right-1,bbox_bottom-1,c_red,c_red,c_red,c_red,false)
 	draw_set_alpha(1)
-
-	draw_text(x,y,sprite)
 }
-
-draw_text(x,y-32,hsp)
-draw_text(x,y-16,vsp)
-draw_text(x,y-48,gsp)
-draw_text(x,y-64,colangle)
 
 //draw_text(x,y,string(fr)+"\n"+string(frame))
 
