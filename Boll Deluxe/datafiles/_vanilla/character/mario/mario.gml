@@ -159,6 +159,8 @@ if (sprindex_prev != sprite_index) {
 if (left || right) && !(slopesliding)
 xsc = esign(move, 1)
 
+bonk=max(bonk,bonk-1)
+
 runvar = approach_val(runvar,run,0.05)
 
 #define sprmanager
@@ -191,5 +193,13 @@ show_debug_message("Situation becomes worse....");
 #define mushroom
 
 show_debug_message("eatted it :)");
+
+#define ceil_bonk
+
+bonk = 12
+
+#define floor_land
+
+bonk = 0
 
 

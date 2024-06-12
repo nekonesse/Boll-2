@@ -9,13 +9,13 @@ function player_collision(){
 		//left wall
 		while check_collision_dot(x-hit_sizex, y, COL_WALL){
 				x++
-				//updateBox.Emit()
+				
 			}
 		
 		//right wall
 		while check_collision_dot(x+hit_sizex, y, COL_WALL){
 				x--
-				//updateBox.Emit()
+				
 			}
 		
 	
@@ -26,10 +26,9 @@ function player_collision(){
 			grounded = true
 			gsp = hsp
 			vsp = 0
-			if self = oPlayer {
-				bonk = 0
+			if self.object_index = oPlayer{
+				sig.Emit("floor_land")
 			}
-			//vsp = 0
 		}
 	}
 	
@@ -42,14 +41,14 @@ function player_collision(){
 			while (check_collision_dot(x+hit_sizex, y-hit_sizey, COL_TOP) 
 				or check_collision_dot(x-hit_sizex, y-hit_sizey, COL_TOP)) {
 				y++
-				//updateBox.Emit()
+				
 			}
 				
 			vsp = 2
 			
 			//bonking
-			if self = oPlayer {
-				bonk=12
+			if self.object_index = oPlayer{
+				sig.Emit("ceil_bonk")
 			}
 			VinylPlay(snd_blockbump)
 		}
@@ -88,7 +87,7 @@ function player_collision(){
 			    while (!check_collision_dot(x+hit_sizex,y+hit_sizey, COL_BOTTOM)
 				    and !check_collision_dot(x-hit_sizex,y+hit_sizey, COL_BOTTOM)) {
 					y ++  
-					//updateBox.Emit()
+					
 				}
 				
 			}
@@ -97,13 +96,9 @@ function player_collision(){
 		    while (check_collision_dot(x+hit_sizex,y+hit_sizey, COL_BOTTOM, oCollider)
 				or check_collision_dot(x-hit_sizex,y+hit_sizey, COL_BOTTOM, oCollider)) {
 				y -- 
-				//updateBox.Emit()
+				
 			}
 		
 	}
-	
-	//ds_list_destroy(mycollisions)
-	if self = oPlayer {
-		bonk=max(bonk,bonk-1)
-	}
+
 }
