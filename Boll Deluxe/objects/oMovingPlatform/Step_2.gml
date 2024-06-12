@@ -14,7 +14,7 @@ with (oPlayer)
 	collision_line(bbox_left, bbox_bottom + 2, bbox_right, bbox_bottom + 2, other, false, true) )
 	{
 		x += other.x_diff;
-		y = other.y-(bbox_bottom - bbox_top) -4;
+		y = other.y-hit_sizey-(other.sprite_height/2);
 	
 	}
 }
