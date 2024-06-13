@@ -1,37 +1,30 @@
-var dir = reverse ? 1 : -1
+if (is_blue)
+{
+	var onscreen = (is_range_onscreen_horizontal(floor(x - 0x78) - 136, floor(x - 0x78) + 136) || (global.netgame));
 
-if !(continuous) {
-	orbit_angle = -wave_val(start_angle,end_angle,swing_speed * dir);
+	if (!onscreen)
+	{
+		platang_add = 0;
+		orbit_angle = spawn_orbit;
+		plrcollides = 0;
+		playercollidemem = 0;
+	}
+
+	//timer = min(32, abs(timer)) * sign(timer);
+
+	var intslow = intlib_make_fixedpoint(0.5);
+
+	if ((abs(swing_speed)||abs(swing_speed div 1)) && (!plrcollides))
+	{
+		// 32768
+		swing_speed = max(abs(swing_speed) - intslow, 0) * sign(swing_speed);
+		platang_add = (swing_speed div 1) >> 16;
+	}
+	
+	no_collide = true; // always, ALWAYS true; blue platforms have unique collision
+	thinker_blue_spinning_platform(self);	
 }
-else {
-	//continuous movement, no swinging
-	orbit_angle += (swing_speed/2) * dir;
-	orbit_angle = wrap_val(orbit_angle,0,359);
+else
+{
+	thinker_swinging_platform(self);	
 }
-
-orbit_length = (chain_length*16)
-
-var oldx, oldy
-
-oldx = floor(newx)
-oldy = floor(newy)
-
-newx = (targetx) + (orbit_length * dcos(orbit_angle+offset_angle));
-newy = (targety)- (orbit_length * dsin(orbit_angle+offset_angle));
-
-x = floor(newx)
-y = floor(newy)
-
-if x>xprevious
-dir=1;
-else if x<xprevious
-dir=-1;
-
-if y>xprevious
-ydir=1;
-else if y<xprevious
-ydir=-1;
-
-
-x_diff = (x - oldx);
-y_diff = (y - oldy);

@@ -4,7 +4,7 @@ draw_rectangle_color(0,0,64,256,c_black,c_black,c_black,c_black,false)
 draw_set_alpha(1)
 
 draw_set_font(smallF)
-draw_text(2,2,$"FPS: {fps}\n\nUNCAPPED FPS: {fps_real}\n\nROOM SPEED: {room_speed}")
+draw_text(2,2,$"FPS: {fps}\n\nUNCAPPED FPS: {fps_real}\n\nROOM SPEED: {room_speed}\n\nCAMX: {global.camera_x}")
 if instance_exists(oPlayer) {
 	draw_text(2,64,$"Player Stuff:\n\nSprite: {oPlayer.sprite}\n\nHsp: {oPlayer.hsp}\n\nVsp: {oPlayer.vsp}\n\nGsp: {oPlayer.gsp}\n\nSlopeAngle: {oPlayer.colangle}")
 }

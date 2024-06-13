@@ -2,6 +2,8 @@
 #macro version "2.2"
 
 global.debug=0
+global.netgame = false; // top 10 boll deluxe things that will never happen:
+
 //scr = NaN
 
 

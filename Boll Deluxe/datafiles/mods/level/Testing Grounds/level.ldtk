@@ -11,7 +11,7 @@
 	"iid": "89e20cd0-6280-11ee-9ff1-11df5747d5f3",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 67,
+	"nextUid": 68,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -1352,6 +1352,46 @@
 					"allowedRefsEntityUid": null,
 					"allowedRefTags": [],
 					"tilesetUid": null
+				},
+				{
+					"identifier": "is_blue",
+					"doc": "Toggles whether the platform should be blue or yellow.",
+					"__type": "Bool",
+					"uid": 67,
+					"type": "F_Bool",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "NameAndValue",
+					"editorDisplayScale": 1,
+					"editorDisplayPos": "Above",
+					"editorLinkStyle": "StraightArrow",
+					"editorDisplayColor": null,
+					"editorAlwaysShow": false,
+					"editorShowInWorld": true,
+					"editorCutLongValues": true,
+					"editorTextSuffix": null,
+					"editorTextPrefix": null,
+					"useForSmartColor": false,
+					"exportToToc": false,
+					"searchable": false,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": {
+						"id": "V_Bool",
+						"params": [ false ]
+					},
+					"textLanguageMode": null,
+					"symmetricalRef": false,
+					"autoChainRef": true,
+					"allowOutOfLevelRef": true,
+					"allowedRefs": "OnlySame",
+					"allowedRefsEntityUid": null,
+					"allowedRefTags": [],
+					"tilesetUid": null
 				}
 			]
 		},
@@ -1916,6 +1956,7 @@
 						{ "px": [112,48], "src": [16,48], "f": 0, "t": 121, "d": [457], "a": 1 },
 						{ "px": [128,48], "src": [32,48], "f": 0, "t": 122, "d": [458], "a": 1 },
 						{ "px": [144,48], "src": [48,48], "f": 0, "t": 123, "d": [459], "a": 1 },
+						{ "px": [848,48], "src": [0,0], "f": 0, "t": 0, "d": [503], "a": 1 },
 						{ "px": [0,64], "src": [48,32], "f": 0, "t": 83, "d": [600], "a": 1 },
 						{ "px": [16,64], "src": [64,32], "f": 0, "t": 84, "d": [601], "a": 1 },
 						{ "px": [112,64], "src": [16,32], "f": 0, "t": 81, "d": [607], "a": 1 },
@@ -2572,7 +2613,8 @@
 								{ "__identifier": "offset_angle", "__type": "Int", "__value": 0, "__tile": null, "defUid": 54, "realEditorValues": [] },
 								{ "__identifier": "swing_speed", "__type": "Int", "__value": 4, "__tile": null, "defUid": 55, "realEditorValues": [] },
 								{ "__identifier": "reverse", "__type": "Bool", "__value": false, "__tile": null, "defUid": 56, "realEditorValues": [] },
-								{ "__identifier": "continuous", "__type": "Bool", "__value": false, "__tile": null, "defUid": 57, "realEditorValues": [] }
+								{ "__identifier": "continuous", "__type": "Bool", "__value": false, "__tile": null, "defUid": 57, "realEditorValues": [] },
+								{ "__identifier": "is_blue", "__type": "Bool", "__value": false, "__tile": null, "defUid": 67, "realEditorValues": [] }
 							],
 							"__worldX": 1080,
 							"__worldY": 24
@@ -2615,7 +2657,8 @@
 								{ "__identifier": "continuous", "__type": "Bool", "__value": true, "__tile": null, "defUid": 57, "realEditorValues": [{
 									"id": "V_Bool",
 									"params": [ true ]
-								}] }
+								}] },
+								{ "__identifier": "is_blue", "__type": "Bool", "__value": false, "__tile": null, "defUid": 67, "realEditorValues": [] }
 							],
 							"__worldX": 1288,
 							"__worldY": 72
@@ -2642,14 +2685,15 @@
 									"id": "V_Bool",
 									"params": [ true ]
 								}] },
-								{ "__identifier": "continuous", "__type": "Bool", "__value": false, "__tile": null, "defUid": 57, "realEditorValues": [] }
+								{ "__identifier": "continuous", "__type": "Bool", "__value": false, "__tile": null, "defUid": 57, "realEditorValues": [] },
+								{ "__identifier": "is_blue", "__type": "Bool", "__value": false, "__tile": null, "defUid": 67, "realEditorValues": [] }
 							],
 							"__worldX": 856,
 							"__worldY": 56
 						},
 						{
 							"__identifier": "SwingingPlatform",
-							"__grid": [83,12],
+							"__grid": [94,12],
 							"__pivot": [0.5,0.5],
 							"__tags": [],
 							"__tile": { "tilesetUid": 15, "x": 0, "y": 144, "w": 48, "h": 16 },
@@ -2658,7 +2702,7 @@
 							"width": 48,
 							"height": 16,
 							"defUid": 44,
-							"px": [1336,200],
+							"px": [1512,200],
 							"fieldInstances": [
 								{ "__identifier": "chain_length", "__type": "Int", "__value": 4, "__tile": null, "defUid": 51, "realEditorValues": [] },
 								{ "__identifier": "start_angle", "__type": "Int", "__value": 90, "__tile": null, "defUid": 52, "realEditorValues": [{ "id": "V_Int", "params": [90] }] },
@@ -2669,9 +2713,13 @@
 									"id": "V_Bool",
 									"params": [ true ]
 								}] },
-								{ "__identifier": "continuous", "__type": "Bool", "__value": false, "__tile": null, "defUid": 57, "realEditorValues": [] }
+								{ "__identifier": "continuous", "__type": "Bool", "__value": false, "__tile": null, "defUid": 57, "realEditorValues": [] },
+								{ "__identifier": "is_blue", "__type": "Bool", "__value": false, "__tile": null, "defUid": 67, "realEditorValues": [{
+									"id": "V_Bool",
+									"params": [ false ]
+								}] }
 							],
-							"__worldX": 1336,
+							"__worldX": 1512,
 							"__worldY": 200
 						},
 						{
@@ -3200,6 +3248,34 @@
 							],
 							"__worldX": 320,
 							"__worldY": 400
+						},
+						{
+							"__identifier": "SwingingPlatform",
+							"__grid": [101,12],
+							"__pivot": [0.5,0.5],
+							"__tags": [],
+							"__tile": { "tilesetUid": 15, "x": 0, "y": 144, "w": 48, "h": 16 },
+							"__smartColor": "#124E89",
+							"iid": "41894ec0-25d0-11ef-abed-dd48c757d694",
+							"width": 48,
+							"height": 16,
+							"defUid": 44,
+							"px": [1624,200],
+							"fieldInstances": [
+								{ "__identifier": "chain_length", "__type": "Int", "__value": 4, "__tile": null, "defUid": 51, "realEditorValues": [] },
+								{ "__identifier": "start_angle", "__type": "Int", "__value": 0, "__tile": null, "defUid": 52, "realEditorValues": [] },
+								{ "__identifier": "end_angle", "__type": "Int", "__value": 180, "__tile": null, "defUid": 53, "realEditorValues": [] },
+								{ "__identifier": "offset_angle", "__type": "Int", "__value": 0, "__tile": null, "defUid": 54, "realEditorValues": [] },
+								{ "__identifier": "swing_speed", "__type": "Int", "__value": 4, "__tile": null, "defUid": 55, "realEditorValues": [] },
+								{ "__identifier": "reverse", "__type": "Bool", "__value": false, "__tile": null, "defUid": 56, "realEditorValues": [] },
+								{ "__identifier": "continuous", "__type": "Bool", "__value": false, "__tile": null, "defUid": 57, "realEditorValues": [] },
+								{ "__identifier": "is_blue", "__type": "Bool", "__value": true, "__tile": null, "defUid": 67, "realEditorValues": [{
+									"id": "V_Bool",
+									"params": [ true ]
+								}] }
+							],
+							"__worldX": 1624,
+							"__worldY": 200
 						}
 					]
 				},

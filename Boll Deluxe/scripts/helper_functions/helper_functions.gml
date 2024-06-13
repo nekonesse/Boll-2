@@ -262,16 +262,56 @@ function esign(val,_default){
 	return sign(val)
 }
 
-function inview() {
-	var cam = view_camera[0];
-	var x1 = camera_get_view_x(cam);
-	var y1 = camera_get_view_y(cam);
-	var x2 = x1 + camera_get_view_width(cam);
-	var y2 = y1 + camera_get_view_height(cam);
-	if(point_in_rectangle(x,y, x1-32, y1-32, x2+32, y2+32)) {
-		return true
+function inview(obj = undefined) {
+	if (obj != undefined)
+	{
+		with(obj)
+		{
+			var cam = view_camera[0];
+			var x1 = camera_get_view_x(cam);
+			var y1 = camera_get_view_y(cam);
+			var x2 = x1 + camera_get_view_width(cam);
+			var y2 = y1 + camera_get_view_height(cam);
+		
+			if(point_in_rectangle(x,y, x1-32, y1-32, x2+32, y2+32)) {
+				return true
+			}	
+		}
 	}
+	else
+	{
+		var cam = view_camera[0];
+		var x1 = camera_get_view_x(cam);
+		var y1 = camera_get_view_y(cam);
+		var x2 = x1 + camera_get_view_width(cam);
+		var y2 = y1 + camera_get_view_height(cam);
+		
+		if(point_in_rectangle(x,y, x1-32, y1-32, x2+32, y2+32)) {
+			return true
+		}
+	}
+	
 	return false
+}
+
+function is_range_onscreen_horizontal(left, right, wport = undefined)
+{
+	if (view_camera[0] != undefined)
+	{
+		if (wport == undefined)
+			wport = camera_get_view_width(view_camera[0]);
+		
+		// horizontal
+		if ((right < (camera_get_view_x(view_camera[0])) )
+			|| (left > (camera_get_view_x(view_camera[0]) + (wport)) ))
+			return false;
+			
+		// we've passed, return true
+		return true;
+	}
+	
+	// there's not even a camera, return false by default
+	return false;
 }
 
 function chance(percent){

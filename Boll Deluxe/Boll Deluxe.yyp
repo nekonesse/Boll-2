@@ -1081,6 +1081,7 @@
     {"id":{"name":"spr_shellhitbox","path":"sprites/spr_shellhitbox/spr_shellhitbox.yy",},},
     {"id":{"name":"spr_shootblock","path":"sprites/spr_shootblock/spr_shootblock.yy",},},
     {"id":{"name":"spr_slopesolid","path":"sprites/spr_slopesolid/spr_slopesolid.yy",},},
+    {"id":{"name":"spr_swingingplatform","path":"sprites/spr_swingingplatform/spr_swingingplatform.yy",},},
     {"id":{"name":"spr_swingplatchain","path":"sprites/spr_swingplatchain/spr_swingplatchain.yy",},},
     {"id":{"name":"spr_TilesetAnimated4","path":"sprites/spr_TilesetAnimated4/spr_TilesetAnimated4.yy",},},
     {"id":{"name":"spr_TilesetAnimated8","path":"sprites/spr_TilesetAnimated8/spr_TilesetAnimated8.yy",},},

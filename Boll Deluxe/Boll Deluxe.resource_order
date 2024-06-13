@@ -862,6 +862,7 @@
     {"name":"spr_shellhitbox","order":3,"path":"sprites/spr_shellhitbox/spr_shellhitbox.yy",},
     {"name":"spr_shootblock","order":6,"path":"sprites/spr_shootblock/spr_shootblock.yy",},
     {"name":"spr_slopesolid","order":3,"path":"sprites/spr_slopesolid/spr_slopesolid.yy",},
+    {"name":"spr_swingingplatform","order":19,"path":"sprites/spr_swingingplatform/spr_swingingplatform.yy",},
     {"name":"spr_swingplatchain","order":13,"path":"sprites/spr_swingplatchain/spr_swingplatchain.yy",},
     {"name":"spr_TilesetAnimated4","order":2,"path":"sprites/spr_TilesetAnimated4/spr_TilesetAnimated4.yy",},
     {"name":"spr_TilesetAnimated8","order":3,"path":"sprites/spr_TilesetAnimated8/spr_TilesetAnimated8.yy",},
