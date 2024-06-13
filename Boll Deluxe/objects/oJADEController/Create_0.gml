@@ -14,10 +14,6 @@
 #macro COLOR_TOOL 11 //tile, background
 #macro NODE_TOOL 12 //node
 
-for (var i = 0; i < 150000; ++i)
-{
-	test[0][i]="blehblehbleh"
-}
 ///Modes:
 //0: Region
 //1: Objects
