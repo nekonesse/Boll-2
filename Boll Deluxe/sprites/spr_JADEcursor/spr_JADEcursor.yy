@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"FADE",
-    "path":"folders/Sprites/FADE.yy",
+    "name":"JADE",
+    "path":"folders/Sprites/JADE.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

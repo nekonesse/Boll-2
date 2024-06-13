@@ -1,6 +1,6 @@
 ///@description Intialize
 ///Tools:
-#macro EMPTY_SLOT 0
+#macro EMPTY_SLOT -1
 #macro SELECT_TOOL 1 //region, object, background, node
 #macro BRUSH_TOOL 2 //object, tile, background
 #macro FILL_TOOL 3 //object, tile
@@ -14,6 +14,10 @@
 #macro COLOR_TOOL 11 //tile, background
 #macro NODE_TOOL 12 //node
 
+for (var i = 0; i < 150000; ++i)
+{
+	test[0][i]="blehblehbleh"
+}
 ///Modes:
 //0: Region
 //1: Objects
@@ -66,3 +70,13 @@ temp_toolbar=0;
 
 curs_x=mouse_x
 curs_y=mouse_y
+
+function mouse_in_setting_slot(numb) {
+	var guiw=display_get_gui_width();
+	return point_in_rectangle(curs_x,curs_y,(guiw-28)-(32*numb),4,(guiw-28)-(32*numb)+24,28)
+}
+
+function mouse_in_mode_slot(numb) {
+	var guih=display_get_gui_height();
+	return point_in_rectangle(curs_x,curs_y,4,((guih/4)-4)+32*numb,28,(((guih/4)-4)+32*numb)+24)
+}
