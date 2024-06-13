@@ -83,9 +83,10 @@ function player_collision(){
 		
 		//move down
 		if (check_collision_line(x-hit_sizex,y+hit_sizey,x-hit_sizex,y +hit_sizey + 16 , COL_BOTTOM) 
-			and check_collision_line(x+hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey + 16, COL_BOTTOM) ){
-			    while (!check_collision_dot(x+hit_sizex,y+hit_sizey, COL_BOTTOM)
-				    and !check_collision_dot(x-hit_sizex,y+hit_sizey, COL_BOTTOM)) {
+			or check_collision_line(x+hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey + 16, COL_BOTTOM) ){
+			    //while (!check_collision_dot(x+hit_sizex,y+hit_sizey, COL_BOTTOM)
+				//    and !check_collision_dot(x-hit_sizex,y+hit_sizey, COL_BOTTOM)) {
+				while !check_collision_line(x-hit_sizex,y+hit_sizey, x+hit_sizex, y+hit_sizey, COL_BOTTOM){
 					y ++  
 					
 				}
@@ -93,8 +94,9 @@ function player_collision(){
 			}
 		
 		//move up
-		    while (check_collision_dot(x+hit_sizex,y+hit_sizey, COL_BOTTOM, oCollider)
-				or check_collision_dot(x-hit_sizex,y+hit_sizey, COL_BOTTOM, oCollider)) {
+		    //while (check_collision_dot(x+hit_sizex,y+hit_sizey, COL_BOTTOM, oCollider)
+			//	or check_collision_dot(x-hit_sizex,y+hit_sizey, COL_BOTTOM, oCollider)) {
+			while check_collision_line(x-hit_sizex,y+hit_sizey, x+hit_sizex, y+hit_sizey, COL_BOTTOM) {
 				y -- 
 				
 			}
