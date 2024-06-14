@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"scr_registerJADE",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_registerJADE",
+  "parent":{
+    "name":"JADE",
+    "path":"folders/Scripts/JADE.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

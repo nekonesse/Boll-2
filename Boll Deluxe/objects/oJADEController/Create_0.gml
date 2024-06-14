@@ -58,14 +58,19 @@ toolbar[4][2]=NODE_TOOL
 toolbar[4][3]=ERASE_TOOL
 toolbar[4][4]=REFERENCE_TOOL
 
+JADE_intializeobj();
+
 selected_mode=0;
 selected_toolbar=0;
 selected_tool=SELECT_TOOL
+selected_obj="collider";
 temp_mode=0;
 temp_toolbar=0;
 
 curs_x=mouse_x
 curs_y=mouse_y
+
+total_objects=0;
 
 function mouse_in_setting_slot(numb) {
 	var guiw=display_get_gui_width();

@@ -1,0 +1,1 @@
+draw_sprite_ext(sprite,0,x,y,xscale,yscale,rot,c_white,1)
