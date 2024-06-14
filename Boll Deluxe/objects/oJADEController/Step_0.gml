@@ -4,7 +4,7 @@ mbleft=mouse_check_button(mb_left)
 var guiw=display_get_gui_width()
 var guih=display_get_gui_height()
 var tb_length = array_length(toolbar[selected_mode])
-var not_on_gui=!point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)&&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)&&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
+not_on_gui=!point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)&&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)&&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
 
 curs_x=mouse_x
 curs_y=mouse_y
@@ -38,15 +38,44 @@ if (mbleftpress) {
 	if mouse_in_setting_slot(0) { //exit button
 		room_goto(rMainMenu)
 	}
+	if (selected_tool == PICKER_TOOL) {
+		switch(selected_mode) {
+			case OBJECT_MODE:
+				var coll=collision_rectangle(gridx*16,gridy*16,gridx*16+16,gridy*16+16,oJADEobj,false,true)
+				if (coll) {
+					selected_obj = coll.obj;
+					selected_tool = BRUSH_TOOL;
+					for (var i=0; i < tb_length; ++i;) {
+						if toolbar[selected_mode][i]==BRUSH_TOOL {
+							selected_toolbar = i;
+							break;
+						}
+					}
+				}
+			break;
+		}
+	}
 }
 if (mbleft) {
-	if (not_on_gui) && selected_tool == BRUSH_TOOL && is_string(selected_obj) {
-		if !collision_rectangle(gridx*16,gridy*16,gridx*16+16,gridy*16+16,oJADEobj,false,true) {
-			i=instance_create_depth(gridx*16,gridy*16,0,oJADEobj)
-			i.obj=selected_obj
-			with (i) {
-				get_values(other.selected_obj)
+	if (not_on_gui) {
+		switch(selected_tool) {
+		case BRUSH_TOOL:
+			if is_string(selected_obj) {
+				if !collision_rectangle(gridx*16,gridy*16,gridx*16+16,gridy*16+16,oJADEobj,false,true) {
+					i = instance_create_depth(gridx*16,gridy*16,0,oJADEobj)
+					i.obj=selected_obj
+					with (i) {
+						get_values(other.selected_obj)
+					}
+				}
 			}
+		break;
+		case ERASE_TOOL:
+			var coll=collision_rectangle(gridx*16,gridy*16,gridx*16+16,gridy*16+16,oJADEobj,false,true)
+			if (coll) {
+				instance_destroy(coll);
+			}
+		break;
 		}
 	}
 }
