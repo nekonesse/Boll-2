@@ -84,4 +84,4 @@ for (var i = 0; i < tb_length; ++i) //draw Editor icons
 		draw_set_halign(fa_left)
 	
 	}
-	
+#endregion

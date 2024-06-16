@@ -1,8 +1,9 @@
 mbleftpress=mouse_check_button_pressed(mb_left)
 mbleft=mouse_check_button(mb_left)
+mbmiddle=mouse_check_button(mb_middle)
 
-curs_x=mouse_x
-curs_y=mouse_y
+curs_x=mouse_x-camera_get_view_x(view_camera[0])
+curs_y=mouse_y-camera_get_view_y(view_camera[0])
 
 var guiw=display_get_gui_width()
 var guih=display_get_gui_height()
@@ -10,9 +11,27 @@ var tb_length = array_length(toolbar[selected_mode])
 not_on_gui=!point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)&&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)&&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
 
 
+#region Camera Panning
+if (not_on_gui) && (mbmiddle) {
+	if !(view_grab) { //check position
+		view_grab=1 
+		view_grabx=curs_x
+		view_graby=curs_y
+		initial_viewx = camera_get_view_x(view_camera[0])
+		initial_viewy = camera_get_view_y(view_camera[0])
+	}
+} else {
+	view_grab=0
+}
 
-gridx = floor(curs_x/16)
-gridy = floor(curs_y/16)
+if (view_grab) { //update camera position
+    camera_set_view_pos(view_camera[0],initial_viewx+(view_grabx-curs_x),initial_viewy+(view_graby-curs_y))
+	//divide by zoom later
+}
+#endregion
+
+gridx = floor(mouse_x/16)
+gridy = floor(mouse_y/16)
 
 if keyboard_check_pressed(vk_escape) room_goto(rMainMenu)
 

@@ -83,6 +83,12 @@ current_tile_id = 0
 curs_x=mouse_x
 curs_y=mouse_y
 
+view_grab=0 //view panning
+view_grabx=0
+view_graby=0
+initial_viewx=0;
+initial_viewy=0;
+
 total_objects=0;
 
 object_list= ds_list_create()

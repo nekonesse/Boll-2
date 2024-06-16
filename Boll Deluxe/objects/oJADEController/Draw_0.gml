@@ -1,6 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
-
 //draw awesome objects!!! yay!!!!!
 
 for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
@@ -13,6 +10,6 @@ for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 		var pos = 0
 		pos.x = (obj[1]*16) 
 		pos.y = (obj[2]*16)
-		draw_rectangle_color(pos.x, pos.y, pos.x + 16, pos.y + 16, c_white,c_white,c_white,c_white, true)
+		draw_rectangle_color(pos.x, pos.y, pos.x + 15, pos.y + 15, c_white,c_white,c_white,c_white, true)
 	}
 }
