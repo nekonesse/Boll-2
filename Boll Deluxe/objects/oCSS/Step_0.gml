@@ -21,11 +21,28 @@ var _debugMess = function() {
 		_topRowLimit=_charCount % _rowLimit,
 		_beyondTopLimit=(_select+(_rowLimit-_topRowLimit));
 	
-	show_debug_message($"Beyond Top Limit: {_beyondTopLimit}")
-	show_debug_message($"Current Row: {_curRow}");
-	show_debug_message($"Current Pos: {_curPos}");
-	show_debug_message($"Sel: {_select}");
-	show_debug_message($"Count: {_charCount}");
+	//show_debug_message($"Beyond Top Limit: {_beyondTopLimit}")
+	//show_debug_message($"Current Row: {_curRow}");
+	//show_debug_message($"Current Pos: {_curPos}");
+	//show_debug_message($"Sel: {_select}");
+	//show_debug_message($"Count: {_charCount}");
+}
+
+if (akey) {
+	if (instance_exists(oMainMenu))
+		room_goto(rLDTKload);
+		global._playerChars = [oGlobals._charmList[_select]];
+	instance_destroy();
+}
+
+if (bkey) {
+	if (instance_exists(oMainMenu)) {
+		with (oMainMenu) {
+			//backAmenu("levelselectm");
+			optionLock=0;
+		}
+	}
+	instance_destroy();
 }
 
 if (left) {

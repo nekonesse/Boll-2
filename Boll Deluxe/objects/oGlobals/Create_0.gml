@@ -612,3 +612,6 @@ show_debug_message($"The {_charmList}: WE AGREE!");
 global.levellist=0;
 global.sounds=ds_map_create();
 load_levels();
+
+//// General data ////
+global._playerChars = [];

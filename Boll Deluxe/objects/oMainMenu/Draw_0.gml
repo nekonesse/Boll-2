@@ -36,6 +36,10 @@ switch (crMenu) {
 		}
 	break;
 	
+	case "cssm":
+		draw_text_scribble(_rmWid/2,16,$"[basicPlaceholderF][fa_center][fa_middle]CHARACTER SELECT")
+	break;
+	
 	case "keybindsm":
 		draw_text_scribble(_rmWid/2,16,$"{_startStr}KEYBINDS")
 
