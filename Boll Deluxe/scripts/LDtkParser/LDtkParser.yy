@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"LDtkParser",
   "isCompatibility":false,
   "isDnD":false,

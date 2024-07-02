@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"draw_image_part_ext",
   "isCompatibility":false,
   "isDnD":false,

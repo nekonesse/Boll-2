@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"audioExtWavRemove",
   "isCompatibility":false,
   "isDnD":false,

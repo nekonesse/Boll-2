@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"__CollageVBufferClass",
   "isCompatibility":false,
   "isDnD":false,

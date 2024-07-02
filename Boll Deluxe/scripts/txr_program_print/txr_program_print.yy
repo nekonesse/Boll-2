@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"txr_program_print",
   "isCompatibility":false,
   "isDnD":false,

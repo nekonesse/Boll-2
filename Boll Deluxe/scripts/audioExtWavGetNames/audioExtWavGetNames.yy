@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"audioExtWavGetNames",
   "isCompatibility":false,
   "isDnD":false,

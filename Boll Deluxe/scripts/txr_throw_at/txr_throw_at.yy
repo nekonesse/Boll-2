@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"txr_throw_at",
   "isCompatibility":false,
   "isDnD":false,

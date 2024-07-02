@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"image_get_uvs",
   "isCompatibility":false,
   "isDnD":false,

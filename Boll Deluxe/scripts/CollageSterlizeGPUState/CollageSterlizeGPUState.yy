@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"CollageSterlizeGPUState",
   "isCompatibility":false,
   "isDnD":false,

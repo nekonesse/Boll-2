@@ -2,14 +2,14 @@ if global.paused || inactive && (object_index!=oBulletBill && object_index!=oBan
 
 grounded=false
 	
-if (edgeturn) && !(turned) && !collision_rectangle(floor(x)+8*sign(hsp),floor(y)+8,floor(x)+9*sign(hsp),floor(y)+9,oCollider,true,true) && !collision_rectangle(floor(x)+8*sign(hsp),floor(y)+8,floor(x)+9*sign(hsp),floor(y)+9,oSemilider,true,true)
+if (edgeturn) && !(turned) && !collision_rectangle(x-2*xsc,bbox_bottom,floor(x)+9*xsc,floor(y)+9,oCollider,true,true) && !collision_rectangle(x-2*xsc,bbox_bottom,floor(x)+9*xsc,floor(y)+9,oSemilider,true,true) 
 {
 	turned=1
 	hsp=-hsp
 }
 
-if collision_rectangle(bbox_right,bbox_bottom,floor(x)+9,floor(y)+9,oCollider,true,true) || 
-   collision_rectangle(bbox_right,floor(y)+8,floor(x)+9,floor(y)+9,oSemilider,true,true) 
+if collision_rectangle(x-2*xsc,bbox_bottom,floor(x)+9*xsc,floor(y)+9,oCollider,true,true) || 
+   collision_rectangle(x-2*xsc,bbox_bottom,floor(x)+9*xsc,floor(y)+9,oSemilider,true,true) 
 {
    turned=0
 }

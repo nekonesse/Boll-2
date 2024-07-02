@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"__CollageHashGenerator",
   "isCompatibility":false,
   "isDnD":false,

@@ -1,0 +1,1 @@
+surface_free(list_area_surface);

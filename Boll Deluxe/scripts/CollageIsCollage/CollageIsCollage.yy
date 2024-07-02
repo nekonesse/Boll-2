@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"CollageIsCollage",
   "isCompatibility":false,
   "isDnD":false,

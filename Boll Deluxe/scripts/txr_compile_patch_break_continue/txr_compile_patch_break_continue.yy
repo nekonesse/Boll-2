@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"txr_compile_patch_break_continue",
   "isCompatibility":false,
   "isDnD":false,

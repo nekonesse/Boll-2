@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"__CollageImageUVsClass",
   "isCompatibility":false,
   "isDnD":false,

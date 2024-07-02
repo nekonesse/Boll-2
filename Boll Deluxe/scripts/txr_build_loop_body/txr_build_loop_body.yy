@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"txr_build_loop_body",
   "isCompatibility":false,
   "isDnD":false,

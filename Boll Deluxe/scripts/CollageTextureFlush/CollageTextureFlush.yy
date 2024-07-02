@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"CollageTextureFlush",
   "isCompatibility":false,
   "isDnD":false,

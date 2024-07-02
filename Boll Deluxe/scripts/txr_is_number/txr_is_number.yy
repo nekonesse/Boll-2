@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"txr_is_number",
   "isCompatibility":false,
   "isDnD":false,

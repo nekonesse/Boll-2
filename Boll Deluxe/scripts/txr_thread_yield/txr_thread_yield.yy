@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"txr_thread_yield",
   "isCompatibility":false,
   "isDnD":false,

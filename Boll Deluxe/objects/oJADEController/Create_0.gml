@@ -93,7 +93,19 @@ total_objects=0;
 
 object_list= ds_list_create()
 
-//get_par
+#region object list variables
+list_area_width = 64
+list_area_height = 96
+list_area_x = 64
+list_area_y = 96
+list_area_surface = surface_create(list_area_width, list_area_height)
+list_area_color = make_color_hsv(0, 0, 240)
+
+list_text_color = make_color_hsv(0, 0, 40)
+
+list_scroll_pos = 0
+list_scroll_scale = max(0, list_area_height)
+#endregion
 
 function mouse_in_setting_slot(numb) {
 	var guiw=display_get_gui_width();

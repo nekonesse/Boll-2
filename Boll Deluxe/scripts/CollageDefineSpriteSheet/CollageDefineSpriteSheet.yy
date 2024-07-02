@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"CollageDefineSpriteSheet",
   "isCompatibility":false,
   "isDnD":false,

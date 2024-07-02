@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"CollageImageGetSurface",
   "isCompatibility":false,
   "isDnD":false,

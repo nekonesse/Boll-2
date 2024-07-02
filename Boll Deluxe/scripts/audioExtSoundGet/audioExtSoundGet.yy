@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"audioExtSoundGet",
   "isCompatibility":false,
   "isDnD":false,

@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"CollageDrawImageStretchedExt",
   "isCompatibility":false,
   "isDnD":false,

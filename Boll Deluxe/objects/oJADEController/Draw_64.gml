@@ -3,7 +3,6 @@ var guih=display_get_gui_height()
 
 //i am so sorry for this random math its just trial and error honestly
 #region Mode Icons
-draw_sprite_stretched_ext(spr_JADEtab_left,0,0,(guih/4)-8,32,(32*5)+4,c_black,0.1) //shadow
 draw_sprite_stretched(spr_JADEtab_left,0,0,(guih/4)-10,32,(32*5)+4)
 
 for (var i = 0; i < 5; ++i) //draw Mode icons
@@ -21,7 +20,6 @@ for (var i = 0; i < 5; ++i) //draw Mode icons
 #endregion
 
 #region Editor Icons
-draw_sprite_stretched_ext(spr_JADEtab_left,0,(guiw)-(32*5),2,(32*5)+4,32,c_black,0.1) //shadow
 draw_sprite_stretched(spr_JADEtab_top,0,(guiw)-(32*5),0,(32*5)+4,34)
 
 for (var i = 0; i < 5; ++i) //draw Editor icons
@@ -38,7 +36,6 @@ for (var i = 0; i < 5; ++i) //draw Editor icons
 
 #region Toolbar Icons
 var tb_length = array_length(toolbar[selected_mode])
-draw_sprite_stretched_ext(spr_JADEtab_left,0,(guiw-16)-(32*14),2,(32*tb_length)+4,32,c_black,0.1) //shadow
 draw_sprite_stretched(spr_JADEtab_top,0,(guiw-16)-(32*14),0,(32*tb_length)+4,34)
 
 for (var i = 0; i < tb_length; ++i) //draw Editor icons
@@ -61,7 +58,14 @@ for (var i = 0; i < tb_length; ++i) //draw Editor icons
 	if selected_mode = OBJECT_MODE {
 		draw_set_font(smallF)
 		draw_set_halign(fa_right)
-		var _str = "swag"
+		/*draw_sprite_stretched(spr_JADEtab_right,0,guiw-96,56,96,(32*5)+4)
+		if surface_exists(list_area_surface) {
+		surface_set_target(list_area_surface)
+			
+		}
+		surface_reset_target();*/
+	
+		var _str = "null"
 		//first 4 objects before selected 
 		for (var i = 1; i < 4; ++i) {
 			_str = ds_list_find_value(obj_name, current_obj_id - i)
@@ -80,7 +84,7 @@ for (var i = 0; i < tb_length; ++i) //draw Editor icons
 				break;	
 			}
 		    draw_text(guiw - 16, (guih/ 2) + (8* (i)), _str)	
-		}
+		} 
 		draw_set_halign(fa_left)
 	
 	}

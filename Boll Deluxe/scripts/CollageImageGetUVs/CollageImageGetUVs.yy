@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"CollageImageGetUVs",
   "isCompatibility":false,
   "isDnD":false,

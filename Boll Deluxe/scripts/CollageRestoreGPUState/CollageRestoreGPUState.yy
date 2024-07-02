@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"CollageRestoreGPUState",
   "isCompatibility":false,
   "isDnD":false,

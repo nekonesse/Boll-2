@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"__audioExtGetNameFromFilePath",
   "isCompatibility":false,
   "isDnD":false,

@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"audioExtOggAddStream",
   "isCompatibility":false,
   "isDnD":false,

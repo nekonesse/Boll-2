@@ -388,3 +388,7 @@ function wave_val(from, to, duration, offset=0) {
 function ternary(statement,true_val,false_val) {
 	return ((statement) ? true_val : false_val)
 }
+
+function draw_rect(_x, _y, w, h, color, alpha){
+	draw_sprite_stretched_ext(spr_1x1,0,_x,_y,w,h,color,alpha)
+}

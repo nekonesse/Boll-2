@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"scr_load_boll_stuff",
   "isCompatibility":false,
   "isDnD":false,

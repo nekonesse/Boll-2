@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"txr_build_ops",
   "isCompatibility":false,
   "isDnD":false,

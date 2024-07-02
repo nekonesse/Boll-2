@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"txr_compile_setter",
   "isCompatibility":false,
   "isDnD":false,

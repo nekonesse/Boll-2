@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"CollageRenderPipeline",
   "isCompatibility":false,
   "isDnD":false,

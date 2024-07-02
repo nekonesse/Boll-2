@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"audioExtOggRemove",
   "isCompatibility":false,
   "isDnD":false,

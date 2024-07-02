@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"CollageConvertPowerTwo",
   "isCompatibility":false,
   "isDnD":false,

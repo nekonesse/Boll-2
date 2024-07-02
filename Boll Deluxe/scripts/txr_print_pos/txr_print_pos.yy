@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"txr_print_pos",
   "isCompatibility":false,
   "isDnD":false,

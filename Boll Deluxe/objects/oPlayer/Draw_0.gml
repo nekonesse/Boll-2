@@ -24,8 +24,9 @@ draw_set_color(c_red);
 draw_box_poly();
 draw_set_color(_drawcolor);*/
 animate_player();
-draw_player();
-//draw_sprite(sprite_index,image_index,floor(x),floor(y))
+if (sheet != -1) {
+	draw_player();
+}
 
 if (global.debug) {
 	draw_set_font(smallF)
@@ -33,16 +34,3 @@ if (global.debug) {
 	draw_rectangle_color(bbox_left,bbox_top,bbox_right-1,bbox_bottom-1,c_red,c_red,c_red,c_red,false)
 	draw_set_alpha(1)
 }
-
-//draw_text(x,y,string(fr)+"\n"+string(frame))
-
-//draw_text(x,y,AnimationData)
-
-//draw_line(x div 1,bbox_bottom div 1, (x div 1) + 1, bbox_bottom div 1);
-//draw_line(bbox_right div 1,bbox_bottom div 1, (bbox_right div 1) + 1, bbox_bottom div 1);
-
-//var bboxvsheight = abs(sprite_height - (abs(bbox_bottom - bbox_top) div 1));
-
-//draw_line_color(x div 1, (y - sprite_yoffset) div 1, x div 1, ((y - sprite_yoffset) div 1) + bboxvsheight, c_red, c_red);
-
-//draw_line_color(x div 1, (y - sprite_yoffset) div 1, x div 1, ((bbox_bottom + 8 )div 1), c_green, c_green);

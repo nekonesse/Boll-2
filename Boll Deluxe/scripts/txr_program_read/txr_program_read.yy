@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"txr_program_read",
   "isCompatibility":false,
   "isDnD":false,

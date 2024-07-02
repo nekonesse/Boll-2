@@ -90,8 +90,9 @@ image_xscale = 1
 image_yscale = 1
 drawStar=false 
 
+sheet=-1;
 var dir=$"{working_directory}\\_vanilla\\character\\{charmName}\\{charmName}";
-sheet=sprite_add($"{dir}-basic.png",0,1,0,0,0);
+mysprite=sprite_add_ext($"{dir}-basic.png",0,0,0,true);
 
 ///// EVENT SETUP /////
 

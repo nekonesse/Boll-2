@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"post_wall",
   "isCompatibility":false,
   "isDnD":false,

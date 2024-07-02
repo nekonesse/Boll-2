@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"audioExtWavScan",
   "isCompatibility":false,
   "isDnD":false,

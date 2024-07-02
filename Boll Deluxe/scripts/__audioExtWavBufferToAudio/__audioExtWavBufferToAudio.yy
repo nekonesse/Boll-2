@@ -1,5 +1,5 @@
 {
-  "$GMScript":"",
+  "$GMScript":"v1",
   "%Name":"__audioExtWavBufferToAudio",
   "isCompatibility":false,
   "isDnD":false,
