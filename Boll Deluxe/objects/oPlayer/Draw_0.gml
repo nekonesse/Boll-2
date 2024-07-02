@@ -25,7 +25,18 @@ draw_box_poly();
 draw_set_color(_drawcolor);*/
 animate_player();
 if (sheet != -1) {
+	if (greenmode) {
+		shader_set(shd_flatcolor);
+		
+		var uni_r = shader_get_uniform(shd_flatcolor, "red");
+		var uni_g = shader_get_uniform(shd_flatcolor, "green");
+		var uni_b = shader_get_uniform(shd_flatcolor, "blue");
+		shader_set_uniform_f(uni_r,0)
+		shader_set_uniform_f(uni_g,1)
+		shader_set_uniform_f(uni_b,0)
+	}
 	draw_player();
+	shader_reset();
 }
 
 if (global.debug) {

@@ -16,6 +16,8 @@ pal_swap_init_system(shd_pal_swapper);
 palette=0
 palette_index=0
 
+greenmode=0
+
 ///// GENERAL /////
 pNum = 0; //player number (P1, P2, etc.)
 charmName = global._playerChars[pNum]; //what charm this player character is using

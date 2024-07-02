@@ -13,4 +13,3 @@ void main()
     v_vColour = in_Colour;
     v_vTexcoord = in_TextureCoord;
 }
-

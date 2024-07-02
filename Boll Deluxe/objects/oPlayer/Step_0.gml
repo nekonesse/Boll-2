@@ -9,6 +9,7 @@ if (piped)
     exit
 }
 
+if keyboard_check_pressed(vk_f4) greenmode=!greenmode
 
 //updateBox.Emit()
 
