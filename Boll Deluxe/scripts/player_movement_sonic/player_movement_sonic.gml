@@ -5,6 +5,7 @@ function player_movement_sonic(){
 	x += hsp
 	y += vsp
 	
+	if !(no_move)
 	move = (right - left);
 	
 	if (move != 0) && !(steep_slope || no_move || move_lock)

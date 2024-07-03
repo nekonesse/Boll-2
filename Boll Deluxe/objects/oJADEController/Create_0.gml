@@ -62,7 +62,7 @@ JADE_intializeobj();
 
 tile_layer = layer_create(0, "tilemap")
 //tileset = tTilesetMain
-tilemap = layer_tilemap_create(tile_layer, 0, 0, tTilesetMain, 25, 25)
+tilemap = layer_tilemap_create(tile_layer, 0, 0, tTilesetMain, 1000, 1000)
 object_layer_map = ds_list_create()
 
 not_on_gui = false

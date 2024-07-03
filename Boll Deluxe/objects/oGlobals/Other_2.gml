@@ -8,6 +8,8 @@ global.roomTimer = 0;
 global.freezeframe = false;
 global.camera_x = 0;
 
+window_set_size(480*3,270*3);
+window_center();
 
 global._findDefine = function(_filedir){
 	var _code		=file_text_open_read(_filedir);

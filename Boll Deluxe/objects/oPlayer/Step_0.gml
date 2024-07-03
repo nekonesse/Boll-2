@@ -18,6 +18,7 @@ right = input_check("right");
 left = input_check("left");
 up = input_check("up");
 down = input_check("down");
+downpress = input_check_pressed("down");
 akey = input_check("a");
 apress = input_check_pressed("a");
 bkey = input_check("b");

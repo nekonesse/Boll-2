@@ -9,14 +9,16 @@ no_move = 0;
 fric = 0.0625;
 runvar = 0;
 runjump = 0;
-skidding=0;
-skiddir=0;
+skidding = 0;
+skiddir = 0;
+pound_timer = 0;
+pound = 0;
 
 #define step
 
 if (braking) xsc=brakedir
 maxspd = 2+runvar;
-no_move = 0;
+no_move = (pound || pound_timer);
 //add more checks here
 
 if ((apress) && !(grounded))
@@ -50,6 +52,29 @@ if (!grounded)
 		
 		if (((chsp * 100) / 1) == 0)
 		chsp = 0;
+	}
+	
+	if (downpress) && !(pound_timer) && !(pound) {
+		pound_timer=10;
+		hsp=0;
+		grav=0;
+		move=0;
+		playsfx(charmName+"pound")
+	}
+	
+	if (pound_timer) && !(pound) {
+		pound_timer = max(0,pound_timer-1);
+		
+		if !(pound_timer) {
+			pound = 1;
+			grav = defaultgrav;
+		}
+		vsp = 0;
+	}
+	
+	if (pound) {
+		vsp = 7;
+		hsp = 0;
 	}
 }
 else
@@ -101,12 +126,12 @@ if ((canjump > 0) && (apress))
 	bufferjump = 0;
 	groundtime = 0;
 	grounded = false
-	vsp = -(6+min(1,abs(hsp)/10));
+	vsp = -(6+min(1,abs(hsp)/10)); //jump power
 	canjump = 0;
 	canstopjump = 1;
-	//check for if pmeter is maxed out when thats implemented 
+	//check if speed is high enough for visual run jump
 	if (run && abs(hsp)>3) {runjump=1} 
-	playsfx("mariojump")
+	playsfx(charmName+"jump")
 }
 
 if (colangle != 0 && slopesliding){
@@ -168,7 +193,9 @@ runvar = approach_val(runvar,run,0.05)
 frspd=1
 if (slopesliding) sprite="slide"
 else if (!grounded) {
-	if (bonk) sprite="bonk"
+	if (pound_timer) sprite="groundpound"
+	else if (pound) sprite="poundfall"
+	else if (bonk) sprite="bonk"
 	else if (vsp>0 && !runjump) sprite="fall"
 	else if (jump) if (runjump) sprite="runjump" else sprite="jump"
 }
@@ -200,6 +227,11 @@ bonk = 12
 
 #define floor_land
 
-bonk = 0
+if (pound) {
+	playsfx(charmName+"stomp")
+}
 
+bonk = 0;
+pound = 0;
+pound_timer = 0;
 
