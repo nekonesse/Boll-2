@@ -239,6 +239,10 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	#region Draw
 		txr_function_add("gpu_set_blendmode_add", function() {gpu_set_blendmode(bm_add);}, -1);
 		txr_function_add("gpu_set_blendmode_normal", function() {gpu_set_blendmode(bm_normal);}, -1);
+		txr_function_add("gpu_set_blendmode_subtract", function() {gpu_set_blendmode(bm_subtract);}, -1);
+		txr_function_add("gpu_set_blendmode_reverse_subtract", function() {gpu_set_blendmode(bm_reverse_subtract);}, -1);
+		txr_function_add("gpu_set_blendmode_min", function() {gpu_set_blendmode(bm_min);}, -1);
+		txr_function_add("gpu_set_blendmode_max", function() {gpu_set_blendmode(bm_max);}, -1);
 		txr_function_add("CollageImageExists", CollageImageExists, -1);
 	    txr_function_add("draw_self", draw_self, -1);
 	    txr_function_add("draw_sprite", draw_sprite, -1);
@@ -427,21 +431,21 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 	#endregion
 	
 	#region Unsafe (nekonesse: these are actually pretty good to have tbh)
-		if (debug_mode) {
-		    txr_function_add("asset_get_index", asset_get_index, -1);
-		    txr_function_add("asset_get_type", asset_get_type, -1);
-		    txr_function_add("tag_get_asset_ids", tag_get_asset_ids, -1);
-		    txr_function_add("tag_get_assets", tag_get_assets, -1);
-		    txr_function_add("asset_get_tags", asset_get_tags, -1);
-		    txr_function_add("asset_add_tags", asset_add_tags, -1);
-		    txr_function_add("asset_remove_tags", asset_remove_tags, -1);
-		    txr_function_add("asset_has_tags", asset_has_tags, -1);
-		    txr_function_add("asset_has_any_tag", asset_has_any_tag, -1);
-		    txr_function_add("asset_clear_tags", asset_clear_tags, -1);
-		}
+		txr_function_add("asset_get_index", asset_get_index, -1);
+		txr_function_add("asset_get_type", asset_get_type, -1);
+		txr_function_add("tag_get_asset_ids", tag_get_asset_ids, -1);
+		txr_function_add("tag_get_assets", tag_get_assets, -1);
+		txr_function_add("asset_get_tags", asset_get_tags, -1);
+		txr_function_add("asset_add_tags", asset_add_tags, -1);
+		txr_function_add("asset_remove_tags", asset_remove_tags, -1);
+		txr_function_add("asset_has_tags", asset_has_tags, -1);
+		txr_function_add("asset_has_any_tag", asset_has_any_tag, -1);
+		txr_function_add("asset_clear_tags", asset_clear_tags, -1);
 	#endregion
 
 	#region Camera
+		txr_function_add("camera_get_view_x", camera_get_view_x, -1);
+		txr_function_add("camera_get_view_y", camera_get_view_y, -1);
 		txr_function_add("camera_set_view_pos", camera_set_view_pos, -1);
 	#endregion
 	
@@ -452,9 +456,6 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 		txr_function_add("approach_val", approach_val, -1);
 		txr_function_add("chance", chance, -1);
 		txr_function_add("jump_in_direction", jump_in_direction, -1);
-		txr_function_add("camera_get_view_x", camera_get_view_x, -1);
-		txr_function_add("camera_get_view_y", camera_get_view_y, -1);
-		txr_function_add("camera_set_view_pos", camera_set_view_pos, -1);
 		txr_function_add("event_inherited", event_inherited, -1);
 		txr_function_add("room_get_width", function() { return room_width; }, -1);
 		txr_function_add("room_get_height", function() { return room_height; }, -1);
@@ -534,7 +535,7 @@ if !(instance_exists) instance_create_depth(0,0,16001,input_controller_object)
 		txr_function_add("rectangle_in_triangle", rectangle_in_triangle, -1);
 		txr_function_add("rectangle_in_circle", rectangle_in_circle, -1);
 	#endregion
-	
+	 
 	#region DS Lists
 		txr_function_add("ds_list_create", ds_list_create, -1);
 		txr_function_add("ds_list_destroy", ds_list_destroy, -1);

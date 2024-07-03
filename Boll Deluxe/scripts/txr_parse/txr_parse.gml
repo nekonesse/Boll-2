@@ -77,7 +77,7 @@ function txr_parse(str) {
 							char = string_ord_at(str, pos);
 							if (char == ord("\r") || char == ord("\n")) break;
 							pos += 1;
-						}
+						} 
 						break;
 					case ord("*"): // block comment
 						pos += 1;
