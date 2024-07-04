@@ -10,4 +10,4 @@ if inview() {
 		VinylPlay(snd_enemycannon)
 	}
 }
-alarm[0]=120;
+alarm[0]=240;

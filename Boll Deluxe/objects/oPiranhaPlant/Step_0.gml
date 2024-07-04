@@ -3,11 +3,11 @@ if (parent_pipe == -1) exit
 if !(go) {
 	timer=max(0,timer-1)
 
-	if !(timer) {
+	if  !(timer) {
 		if (exposed) {
-			go=-1
-		} else {
-			go=1
+			go=-0.5
+		} else if !(collision_rectangle(x-24,0,x+24,room_height,oPlayer,true,true)) { //turns out i didnt need to do anything fancy here LOL
+			go=0.5
 		}
 	} 
 }
@@ -19,7 +19,7 @@ if (go != 0) {
 	if !place_meeting(x,y,parent_pipe) && !(exposed) {
 		exposed=true;
 		y=parent_pipe.bbox_top;
-		timer=60;
+		timer=90;
 		go=0;
 	} else if y==parent_pipe.bbox_bottom-1 && (exposed) {
 		exposed=false;

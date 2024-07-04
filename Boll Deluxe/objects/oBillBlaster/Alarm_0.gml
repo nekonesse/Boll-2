@@ -10,4 +10,4 @@ if inview() {
 		VinylPlay(snd_enemycannonfast)
 	}
 }
-alarm[0]=120;
+alarm[0]=random_range(120, 120 + timer_offset);

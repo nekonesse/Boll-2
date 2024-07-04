@@ -175,6 +175,7 @@
     {"name":"oShootBlock","order":6,"path":"objects/oShootBlock/oShootBlock.yy",},
     {"name":"oSlopeCollider","order":3,"path":"objects/oSlopeCollider/oSlopeCollider.yy",},
     {"name":"oSwingingPlatform","order":11,"path":"objects/oSwingingPlatform/oSwingingPlatform.yy",},
+    {"name":"oThwomp","order":8,"path":"objects/oThwomp/oThwomp.yy",},
     {"name":"p1UP","order":3,"path":"objects/p1UP/p1UP.yy",},
     {"name":"pDestruction","order":4,"path":"objects/pDestruction/pDestruction.yy",},
     {"name":"pSparkles1UP","order":2,"path":"objects/pSparkles1UP/pSparkles1UP.yy",},
