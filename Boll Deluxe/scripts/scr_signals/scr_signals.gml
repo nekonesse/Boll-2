@@ -104,10 +104,10 @@ function Signal() constructor{
     }
 }
 
-function signal_create(variable, code_id, obj=id) {
+function signal_create(variable, obj=id) {
 	var test_signal = new Signal();
-	test_signal.Connect( self, function(str_var) {
-		txr_exec(global.scripts[? $"{charmName}_{str_var}"]);
+	test_signal.Connect( self, function(str_var, code_id) {
+		txr_exec(global.scripts[? $"{code_id}_{str_var}"]);
 	});
 	variable_instance_set(obj, variable, variable_clone(test_signal))
 }

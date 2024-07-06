@@ -931,7 +931,7 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 	#endregion
 	
 	#region Signals
-		txr_function_add("signal_emit", function(signal, type) { signal.Emit(type) }, -1);
+		txr_function_add("signal_emit", function(signal, type, code_id) { signal.Emit(type, code_id) }, -1);
 		txr_function_add("signal_create", signal_create, -1);
 	#endregion
 
