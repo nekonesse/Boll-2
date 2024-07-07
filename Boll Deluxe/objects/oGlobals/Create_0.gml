@@ -832,6 +832,127 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_function_add("ds_stack_write", ds_stack_write, -1);
 	#endregion
 	
+	#region Buffers
+		txr_function_add("buffer_exists", buffer_exists, -1);
+		txr_function_add("buffer_create", buffer_create, -1);
+		txr_function_add("buffer_create_from_vertex_buffer", buffer_create_from_vertex_buffer, -1);
+		txr_function_add("buffer_create_from_vertex_buffer_ext", buffer_create_from_vertex_buffer_ext, -1);
+		txr_function_add("buffer_delete", buffer_delete, -1);
+		txr_function_add("buffer_read", buffer_read, -1);
+		txr_function_add("buffer_write", buffer_write, -1);
+		txr_function_add("buffer_fill", buffer_fill, -1);
+		txr_function_add("buffer_seek", buffer_seek, -1);
+		txr_function_add("buffer_tell", buffer_tell, -1);
+		txr_function_add("buffer_peek", buffer_peek, -1);
+		txr_function_add("buffer_poke", buffer_poke, -1);
+		txr_function_add("buffer_get_type", buffer_get_type, -1);
+		txr_function_add("buffer_get_alignment", buffer_get_alignment, -1);
+		txr_function_add("buffer_get_address", buffer_get_address, -1);
+		txr_function_add("buffer_get_size", buffer_get_size, -1);
+		txr_function_add("buffer_resize", buffer_resize, -1);
+		txr_function_add("buffer_sizeof", buffer_sizeof, -1);
+		txr_function_add("buffer_set_used_size", buffer_set_used_size, -1);
+		txr_function_add("buffer_copy", buffer_copy, -1);
+		txr_function_add("buffer_copy_stride", buffer_copy_stride, -1);
+		txr_function_add("buffer_copy_from_vertex_buffer", buffer_copy_from_vertex_buffer, -1);
+		txr_function_add("buffer_save", buffer_save, -1);
+		txr_function_add("buffer_save_ext", buffer_save_ext, -1);
+		txr_function_add("buffer_save_async", buffer_save_async, -1);
+		txr_function_add("buffer_load", buffer_load, -1);
+		txr_function_add("buffer_load_ext", buffer_load_ext, -1);
+		txr_function_add("buffer_load_async", buffer_load_async, -1);
+		txr_function_add("buffer_load_partial", buffer_load_partial, -1);
+		txr_function_add("buffer_compress", buffer_compress, -1);
+		txr_function_add("buffer_decompress", buffer_decompress, -1);
+		txr_function_add("buffer_async_group_begin", buffer_async_group_begin, -1);
+		txr_function_add("buffer_async_group_option", buffer_async_group_option, -1);
+		txr_function_add("buffer_async_group_end", buffer_async_group_end, -1);
+		txr_function_add("buffer_get_surface", buffer_get_surface, -1);
+		txr_function_add("buffer_set_surface", buffer_set_surface, -1);
+		txr_function_add("buffer_get_surface_depth", buffer_get_surface_depth, -1);
+		txr_function_add("buffer_set_surface_depth", buffer_set_surface_depth, -1);
+		txr_function_add("buffer_md5", buffer_md5, -1);
+		txr_function_add("buffer_sha1", buffer_sha1, -1);
+		txr_function_add("buffer_crc32", buffer_crc32, -1);
+		txr_function_add("buffer_base64_encode", buffer_base64_encode, -1);
+		txr_function_add("buffer_base64_decode", buffer_base64_decode, -1);
+		txr_function_add("buffer_base64_decode_ext", buffer_base64_decode_ext, -1);
+	#endregion
+	
+	#region Encoding and Hashing
+		txr_function_add("json_stringify", json_stringify, -1);
+		txr_function_add("json_parse", json_parse, -1);
+		txr_function_add("json_encode", json_encode, -1);
+		txr_function_add("json_decode", json_decode, -1);
+		txr_function_add("base64_encode", base64_encode, -1);
+		txr_function_add("base64_decode", base64_decode, -1);
+		txr_function_add("md5_string_utf8", md5_string_utf8, -1);
+		txr_function_add("md5_string_unicode", md5_string_unicode, -1);
+		txr_function_add("md5_file", md5_file, -1);
+		txr_function_add("sha1_string_utf8", sha1_string_utf8, -1);
+		txr_function_add("sha1_string_unicode", sha1_string_unicode, -1);
+		txr_function_add("sha1_file", sha1_file, -1);
+		txr_function_add("load_csv", load_csv, -1);
+	#endregion
+	
+	#region File Handling
+		txr_function_add("ini_open", ini_open, -1);
+		txr_function_add("ini_close", ini_close, -1);
+		txr_function_add("ini_write_real", ini_write_real, -1);
+		txr_function_add("ini_write_string", ini_write_string, -1);
+		txr_function_add("ini_read_real", ini_read_real, -1);
+		txr_function_add("ini_read_string", ini_read_string, -1);
+		txr_function_add("ini_key_exists", ini_key_exists, -1);
+		txr_function_add("ini_section_exists", ini_section_exists, -1);
+		txr_function_add("ini_key_delete", ini_key_delete, -1);
+		txr_function_add("ini_section_delete", ini_section_delete, -1);
+		txr_function_add("ini_open_from_string", ini_open_from_string, -1);
+		
+		txr_function_add("file_text_open_read", file_text_open_read, -1);
+		txr_function_add("file_text_open_write", file_text_open_write, -1);
+		txr_function_add("file_text_open_append", file_text_open_append, -1);
+		txr_function_add("file_text_open_from_string", file_text_open_from_string, -1);
+		txr_function_add("file_text_read_real", file_text_read_real, -1);
+		txr_function_add("file_text_read_string", file_text_read_string, -1);
+		txr_function_add("file_text_readln", file_text_readln, -1);
+		txr_function_add("file_text_write_real", file_text_write_real, -1);
+		txr_function_add("file_text_write_string", file_text_write_string, -1);
+		txr_function_add("file_text_writeln", file_text_writeln, -1);
+		txr_function_add("file_text_eoln", file_text_eoln, -1);
+		txr_function_add("file_text_eof", file_text_eof, -1);
+		txr_function_add("file_text_close", file_text_close, -1);
+		
+		txr_function_add("file_exists", file_exists, -1);
+		txr_function_add("file_copy", file_copy, -1);
+		txr_function_add("file_find_first", file_find_first, -1);
+		txr_function_add("file_find_next", file_find_next, -1);
+		txr_function_add("file_find_close", file_find_close, -1);
+		txr_function_add("file_attributes", file_attributes, -1);
+		txr_function_add("filename_name", filename_name, -1);
+		txr_function_add("file_exists", file_exists, -1);
+		txr_function_add("filename_path", filename_path, -1);
+		txr_function_add("filename_dir", filename_dir, -1);
+		txr_function_add("filename_drive", filename_drive, -1);
+		txr_function_add("filename_ext", filename_ext, -1);
+		txr_function_add("filename_change_ext", filename_change_ext, -1);
+		txr_function_add("get_open_filename", get_open_filename, -1);
+		txr_function_add("get_open_filename_ext", get_open_filename_ext, -1);
+		txr_function_add("get_save_filename", get_save_filename, -1);
+		txr_function_add("get_save_filename_ext", get_save_filename_ext, -1);
+		
+		txr_function_add("directory_exists", directory_exists, -1);
+		
+		txr_constant_add("fa_readonly", fa_readonly);
+		txr_constant_add("fa_hidden", fa_hidden);
+		txr_constant_add("fa_volumeid", fa_volumeid);
+		txr_constant_add("fa_directory", fa_directory);
+		txr_constant_add("fa_archive", fa_archive);
+		txr_constant_add("temp_directory", temp_directory);
+		txr_constant_add("working_directory", working_directory);
+		txr_constant_add("program_directory", program_directory);
+		txr_constant_add("cache_directory", cache_directory);
+	#endregion
+	
 	#region Sprites
 		txr_function_add("sprite_exists", sprite_exists, -1);
 		txr_function_add("sprite_get_name", sprite_get_name, -1);
@@ -877,6 +998,59 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 	
 	#region Date and Time
 		txr_function_add("date_set_timezone", date_set_timezone, -1);
+		txr_function_add("date_get_timezone", date_get_timezone, -1);
+		txr_function_add("date_create_datetime", date_create_datetime, -1);
+		txr_function_add("date_current_datetime", date_current_datetime, -1);
+		txr_function_add("date_compare_date", date_compare_date, -1);
+		txr_function_add("date_compare_datetime", date_compare_datetime, -1);
+		txr_function_add("date_compare_time", date_compare_time, -1);
+		txr_function_add("date_valid_datetime", date_valid_datetime, -1);
+		txr_function_add("date_date_of", date_date_of, -1);
+		txr_function_add("date_time_of", date_time_of, -1);
+		txr_function_add("date_is_today", date_is_today, -1);
+		txr_function_add("date_leap_year", date_leap_year, -1);
+		txr_function_add("date_date_string", date_date_string, -1);
+		txr_function_add("date_datetime_string", date_datetime_string, -1);
+		txr_function_add("date_time_string", date_time_string, -1);
+		txr_function_add("date_second_span", date_second_span, -1);
+		txr_function_add("date_minute_span", date_minute_span, -1);
+		txr_function_add("date_hour_span", date_hour_span, -1);
+		txr_function_add("date_day_span", date_day_span, -1);
+		txr_function_add("date_week_span", date_week_span, -1);
+		txr_function_add("date_month_span", date_month_span, -1);
+		txr_function_add("date_year_span", date_year_span, -1);
+		txr_function_add("date_days_in_month", date_days_in_month, -1);
+		txr_function_add("date_days_in_year", date_days_in_year, -1);
+		txr_function_add("date_get_second", date_get_second, -1);
+		txr_function_add("date_get_minute", date_get_minute, -1);
+		txr_function_add("date_get_hour", date_get_hour, -1);
+		txr_function_add("date_get_day", date_get_day, -1);
+		txr_function_add("date_get_weekday", date_get_weekday, -1);
+		txr_function_add("date_get_week", date_get_week, -1);
+		txr_function_add("date_get_month", date_get_month, -1);
+		txr_function_add("date_get_year", date_get_year, -1);
+		txr_function_add("date_get_second_of_year", date_get_second_of_year, -1);
+		txr_function_add("date_get_minute_of_year", date_get_minute_of_year, -1);
+		txr_function_add("date_get_hour_of_year", date_get_hour_of_year, -1);
+		txr_function_add("date_get_day_of_year", date_get_day_of_year, -1);
+		txr_function_add("date_inc_second", date_inc_second, -1);
+		txr_function_add("date_inc_minute", date_inc_minute, -1);
+		txr_function_add("date_inc_hour", date_inc_hour, -1);
+		txr_function_add("date_inc_day", date_inc_day, -1);
+		txr_function_add("date_inc_week", date_inc_week, -1);
+		txr_function_add("date_inc_month", date_inc_month, -1);
+		txr_function_add("date_inc_year", date_inc_year, -1);
+		txr_function_add("get_current_time", function() { return current_time; }, 0);
+		txr_function_add("get_current_second", function() { return current_second; }, 0);
+		txr_function_add("get_current_minute", function() { return current_minute; }, 0);
+		txr_function_add("get_current_hour", function() { return current_hour; }, 0);
+		txr_function_add("get_current_day", function() { return current_day; }, 0);
+		txr_function_add("get_current_weekday", function() { return current_weekday; }, 0);
+		txr_function_add("get_current_month", function() { return current_month; }, 0);
+		txr_function_add("get_current_year", function() { return current_year; }, 0);
+		
+		txr_constant_add("timezone_utc", timezone_utc)
+		txr_constant_add("timezone_local", timezone_local)
 	#endregion
 	
 	#region Time Sources
@@ -931,7 +1105,7 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 	#endregion
 	
 	#region Signals
-		txr_function_add("signal_emit", function(signal, type, code_id) { signal.Emit(type, code_id) }, -1);
+		txr_function_add("signal_emit", function(signal, type, code_id=charmName) { signal.Emit(type, code_id) }, -1);
 		txr_function_add("signal_create", signal_create, -1);
 	#endregion
 

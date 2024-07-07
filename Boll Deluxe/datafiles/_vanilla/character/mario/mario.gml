@@ -15,7 +15,6 @@ pound_timer = 0;
 pound = 0;
 storedxsc = 1;
 wallsliding = false;
-signal_create("custom_signal", id)
 
 #define step
 
@@ -186,10 +185,6 @@ bonk=max(bonk,bonk-1)
 
 runvar = approach_val(runvar,run,0.05)
 
-if (up) {
-	signal_emit(custom_signal, "do_shit", charmName)
-}
-
 #define sprmanager
 
 frspd=1
@@ -237,7 +232,3 @@ if (pound) {
 bonk = 0;
 pound = 0;
 pound_timer = 0;
-
-#define do_shit
-show_debug_message("YIPEEE!!");
-
