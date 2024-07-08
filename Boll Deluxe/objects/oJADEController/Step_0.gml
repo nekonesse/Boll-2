@@ -1,4 +1,5 @@
 mbleftpress=mouse_check_button_pressed(mb_left)
+mbleftrel=mouse_check_button_released(mb_left)
 mbleft=mouse_check_button(mb_left)
 mbmiddle=mouse_check_button(mb_middle)
 
@@ -133,9 +134,19 @@ if (selected_tool == SELECT_TOOL && not_on_gui) {
 		}
 				
 	}
-	if (mbleft) {
-	
+	/*
+	if point_in_rectangle(xxxx) { //grab the corners, maybe put this in a for loop or something
+		if (mbleftpress) {
+			grab specific corner
+		}
 	}
+	if (grabbed_corner_or_something_lol) { (this should probably be ran even if the mouse is over the gui)
+		//do scaling here
+		if (mbleftrel) {
+			grabbed_corner_or_something_lol=0
+		}
+	}
+	*/
 }
 
 if (mbleft && not_on_gui) {
