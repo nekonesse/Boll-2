@@ -1083,6 +1083,43 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_constant_add("time_source_state_paused", time_source_state_paused)
 		txr_constant_add("time_source_state_stopped", time_source_state_stopped)
 	#endregion
+	
+	#region Particle Systems
+		txr_function_add("part_system_exists", part_system_exists, -1);
+		txr_function_add("part_system_create", part_system_create, -1);
+		txr_function_add("part_system_create_layer", part_system_create_layer, -1);
+		txr_function_add("part_system_get_layer", part_system_get_layer, -1);
+		txr_function_add("part_system_layer", part_system_layer, -1);
+		txr_function_add("part_system_depth", part_system_depth, -1);
+		txr_function_add("part_system_position", part_system_position, -1);
+		txr_function_add("part_system_angle", part_system_angle, -1);
+		txr_function_add("part_system_global_space", part_system_global_space, -1);
+		txr_function_add("part_system_colour", part_system_colour, -1);
+		txr_function_add("part_system_clear", part_system_clear, -1);
+		txr_function_add("part_system_destroy", part_system_destroy, -1);
+		txr_function_add("part_particles_clear", part_particles_clear, -1);
+		txr_function_add("part_particles_count", part_particles_count, -1);
+		txr_function_add("part_system_automatic_update", part_system_automatic_update, -1);
+		txr_function_add("part_system_automatic_draw", part_system_automatic_draw, -1);
+		txr_function_add("part_system_update", part_system_update, -1);
+		txr_function_add("part_system_drawit", part_system_drawit, -1);
+		txr_function_add("part_system_draw_order", part_system_draw_order, -1);
+		txr_function_add("part_particles_create", part_particles_create, -1);
+		txr_function_add("part_particles_create_colour", part_particles_create_colour, -1);
+		txr_function_add("part_particles_burst", part_particles_burst, -1);
+		txr_function_add("part_type_exists", part_type_exists, -1);
+		txr_function_add("part_type_create", part_type_create, -1);
+		txr_function_add("part_type_destroy", part_type_destroy, -1);
+		txr_function_add("part_type_clear", part_type_clear, -1);
+		txr_function_add("part_type_shape", part_type_shape, -1);
+		txr_function_add("part_type_sprite", part_type_sprite, -1);
+		txr_function_add("part_type_subimage", part_type_subimage, -1);
+		txr_function_add("part_type_size", part_type_size, -1);
+		txr_function_add("part_type_size_x", part_type_size_x, -1);
+		txr_function_add("part_type_size_y", part_type_size_y, -1);
+		txr_function_add("part_type_scale", part_type_scale, -1);
+		
+	#endregion
 
 	#region Instances
 		txr_function_add("instance_create_depth", instance_create_depth, -1);

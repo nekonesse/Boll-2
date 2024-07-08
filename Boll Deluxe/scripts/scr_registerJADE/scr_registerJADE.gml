@@ -35,14 +35,12 @@ function JADE_intializeobj(){
 	for (var i = 0; i < array_length(obj_list1); ++i) {
 		var _name = object_get_name(obj_list1[i])
 		var _sprite = object_get_sprite(obj_list1[i])
-	    registerobj(_name, _sprite, 0, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), 1, 1, true, true, OBJECT_MODE)
+	    registerobj(_name, _sprite, 0, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), sprite_get_width(_sprite), sprite_get_height(_sprite), true, true, OBJECT_MODE)
 	}
 	//registerobj("collider", spr_collider, 0, 0, 0, 1, 1, true, true, OBJECT_MODE)
 }
 
 function registerobj(uuid,sprite,index,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode) {
-	
-	
 	if !ds_map_exists(obj_data,uuid) {
 		ds_map_add(obj_data,uuid,[sprite,index,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode])
 		ds_list_add(obj_name,uuid)

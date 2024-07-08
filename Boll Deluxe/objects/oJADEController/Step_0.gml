@@ -108,11 +108,33 @@ if (mbleftpress) {
 						var obj = ds_list_find_value(object_layer_map, i)
 						//var arr =ds_map_find_value(obj_data,selected_obj)
 						show_debug_message("created object: {0}", selected_obj)
-						ds_list_add(object_layer_map, [selected_obj, gridx, gridy, 1, 1]) //add object to list at place
+						ds_list_add(object_layer_map, [selected_obj, gridx, gridy, 1, 1, 0]) //add object to list at place
 					}
 				break;
+			}
 		}
+	}
+}
+
+if (selected_tool == SELECT_TOOL && not_on_gui) {
+	var size = ds_list_size(object_layer_map)
+	for (var i = 0; i < size; ++i) {
+		//is place matching cursor?
+		var obj = ds_list_find_value(object_layer_map, i)
+		var sprite = ds_map_find_value(obj_data,obj[0])
+		if !is_undefined(obj) {
+			if point_in_rectangle(curs_x, curs_y, obj[1]*16, obj[2]*16, obj[1]*16 + sprite[4], obj[2]*16 + sprite[5] ) {
+				obj[5] = 1
+				//ds_list_delete(object_layer_map, i)
+				break;
+			} else {
+				obj[5] = 0
+			}
 		}
+				
+	}
+	if (mbleft) {
+	
 	}
 }
 
