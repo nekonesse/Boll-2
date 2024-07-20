@@ -177,6 +177,7 @@ function animate_player() {
 	if (sprite!=oldspr) frame=0
 	
 	var spri=get_spriteindex()
+	//show_message($"list - {frames_list}\nspriteindex - {sprite}") - debug shit :)
 	frn=frames_list[spri] //frame number
 	frs=(frspd*animf*speed_list[spri])/max(1,times_list[spri,floor(frame)]) //(game speed * percent * sprite speed) / frame time
 	frl=loops_list[spri]-1 //loop point  
