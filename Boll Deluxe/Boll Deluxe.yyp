@@ -125,6 +125,7 @@
     {"$GMFolder":"","%Name":"Pylom","folderPath":"folders/Sprites/Enemies/Pylom.yy","name":"Pylom","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Sambas","folderPath":"folders/Sprites/Enemies/Sambas.yy","name":"Sambas","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Large Samba","folderPath":"folders/Sprites/Enemies/Sambas/Large Samba.yy","name":"Large Samba","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Easter Eggs","folderPath":"folders/Sprites/Easter Eggs.yy","name":"Easter Eggs","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Hitboxes","folderPath":"folders/Sprites/Hitboxes.yy","name":"Hitboxes","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Items","folderPath":"folders/Sprites/Items.yy","name":"Items","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"JADE","folderPath":"folders/Sprites/JADE.yy","name":"JADE","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -227,7 +228,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.6.2.162",
+    "IDEVersion":"2024.6.0.157",
   },
   "name":"Boll Deluxe",
   "resources":[
@@ -995,7 +996,7 @@
     {"id":{"name":"snd_hardblockbreak","path":"sounds/snd_hardblockbreak/snd_hardblockbreak.yy",},},
     {"id":{"name":"snd_itemappear","path":"sounds/snd_itemappear/snd_itemappear.yy",},},
     {"id":{"name":"VinylFallbackSound","path":"sounds/VinylFallbackSound/VinylFallbackSound.yy",},},
-    {"id":{"name":"introBLAST","path":"sprites/introBLAST/introBLAST.yy",},},
+    {"id":{"name":"sBlast1","path":"sprites/sBlast1/sBlast1.yy",},},
     {"id":{"name":"scribble_fallback_bulletpoint","path":"sprites/scribble_fallback_bulletpoint/scribble_fallback_bulletpoint.yy",},},
     {"id":{"name":"spr_16x16hitbox","path":"sprites/spr_16x16hitbox/spr_16x16hitbox.yy",},},
     {"id":{"name":"spr_1x1","path":"sprites/spr_1x1/spr_1x1.yy",},},
