@@ -877,6 +877,7 @@
     {"name":"spr_TilesetAnimated4","order":2,"path":"sprites/spr_TilesetAnimated4/spr_TilesetAnimated4.yy",},
     {"name":"spr_TilesetAnimated8","order":3,"path":"sprites/spr_TilesetAnimated8/spr_TilesetAnimated8.yy",},
     {"name":"spr_TilesetExtra","order":1,"path":"sprites/spr_TilesetExtra/spr_TilesetExtra.yy",},
+    {"name":"spr_titleclouds","order":5,"path":"sprites/spr_titleclouds/spr_titleclouds.yy",},
     {"name":"tTilesetAnimated4","order":2,"path":"tilesets/tTilesetAnimated4/tTilesetAnimated4.yy",},
     {"name":"tTilesetAnimated8","order":3,"path":"tilesets/tTilesetAnimated8/tTilesetAnimated8.yy",},
     {"name":"tTilesetAssetsAnimated4","order":6,"path":"tilesets/tTilesetAssetsAnimated4/tTilesetAssetsAnimated4.yy",},

@@ -229,7 +229,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.6.0.157",
+    "IDEVersion":"2024.6.2.162",
   },
   "name":"Boll Deluxe",
   "resources":[
@@ -1088,6 +1088,7 @@
     {"id":{"name":"spr_TilesetAnimated8","path":"sprites/spr_TilesetAnimated8/spr_TilesetAnimated8.yy",},},
     {"id":{"name":"spr_TilesetExtra","path":"sprites/spr_TilesetExtra/spr_TilesetExtra.yy",},},
     {"id":{"name":"spr_TilesetMain","path":"sprites/spr_TilesetMain/spr_TilesetMain.yy",},},
+    {"id":{"name":"spr_titleclouds","path":"sprites/spr_titleclouds/spr_titleclouds.yy",},},
     {"id":{"name":"tTilesetAnimated4","path":"tilesets/tTilesetAnimated4/tTilesetAnimated4.yy",},},
     {"id":{"name":"tTilesetAnimated8","path":"tilesets/tTilesetAnimated8/tTilesetAnimated8.yy",},},
     {"id":{"name":"tTilesetAssetsAnimated4","path":"tilesets/tTilesetAssetsAnimated4/tTilesetAssetsAnimated4.yy",},},
