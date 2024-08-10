@@ -14,5 +14,5 @@ if (egg == "3") {
 	xsc = sprite_get_width(sprite_index)
 	hsp = sprite_get_info(sprite_index).num_subimages
 }
-boll = makeboll()
+//boll = makeboll()
 bollStruct = {xsc : 1, ysc : 1, x : 250, y : 0, z : -32, xsp : 0, ysp : 0, zsp : 0, biggestZ : -40}

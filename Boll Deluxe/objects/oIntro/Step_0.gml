@@ -3,6 +3,7 @@ if (egg == "3") {
 	if (frame >= hsp) {
 		game_set_speed(60,gamespeed_fps)
 		frame = 1
+		flash = 30
 		egg = ""
 		bollStruct.x = 240
 		bollStruct.y = 135
@@ -12,16 +13,19 @@ if (egg == "3") {
 	if !frame {
 		bollStruct.x += (240 - bollStruct.x) / 10
 		bollStruct.y += (135 - bollStruct.y) / 10
-		bollStruct.z = sin(global.roomTimer * 0.01) * 40
+		bollStruct.z = sin(global.roomTimer * 0.01) * 32
 	
 		if (bollStruct.z > bollStruct.biggestZ) {
 			bollStruct.biggestZ = bollStruct.z
 		} else {
 			bollStruct.z = bollStruct.biggestZ
 			frame = 1
+			flash = 30
 		}
 	}
 }
+
+if flash {flash -= 1}
 
 if (keyboard_check_pressed(vk_anykey)) {
 	game_set_speed(60,gamespeed_fps)

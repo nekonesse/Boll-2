@@ -29,11 +29,17 @@ function draw_sprite_circle(sprite,subimg,xdraw,ydraw,xscale,yscale,radius,quant
 }
 
 function mode_seven(sprite, subimg, x_start, y_start, x_dest, y_dest, scan_offset, scan_times = 255) {
-	var xpos = x_start, ypos = y_start, yprev, md7, spr_width = sprite_get_width(sprite);
-	var multx = (x_dest - x_start) / scan_times, multy = (y_dest - y_start) / scan_times;
+	var xpos = x_start, 
+		ypos = y_start, 
+		yprev, md7, 
+		spr_width = sprite_get_width(sprite);
+		
+	var multx = (x_dest - x_start) / scan_times, 
+		multy = (y_dest - y_start) / scan_times;
 	
 	for (var i = 0;i == clamp(i,-scan_times,scan_times);i += 1) {
-		md7 = tan((i/scan_times)*(pi/2)); 
+		md7 = tan((i / scan_times) * (pi / 2));
+		
 		yprev = ypos; 
 		ypos += multy * md7;
 		xpos += multx * (md7 / 2);
