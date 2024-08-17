@@ -74,6 +74,9 @@ carrying = 0;
 run=0;
 bonk=0;
 collflags = 0; // collision flags
+warp_timer = 0;
+warp_dir = 0;
+warp_coll = 0;
 
 sprindex_prev = sprite_index;
 

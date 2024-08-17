@@ -4,6 +4,7 @@
 //#macro COL oCollider
 
 function player_collision(){
+	if (piped) exit
 	
 	//left wall
 	while check_collision_dot(x-hit_sizex, y, COL_WALL){

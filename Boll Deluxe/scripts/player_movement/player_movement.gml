@@ -1,6 +1,9 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function player_movement(){
+	player_warping();
+	
+	if (piped) exit
 	
 	if !(no_move)
 	move = (right - left);
@@ -46,6 +49,4 @@ function player_movement(){
 	
 	x += hsp 
 	y += vsp
-	
-	player_warping();
 }

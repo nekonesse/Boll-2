@@ -1,13 +1,4 @@
 // this just makes sure that vsp and hsp actually work while in a pipe lol
-if (piped)
-{
-    //y_frac += intlib_make_fixedpoint(vsp) >> FRACBITS;
-    //x_frac += intlib_make_fixedpoint(hsp) >> FRACBITS;
-	
-	//x = x_frac >> FRACBITS;
-	//y = y_frac >> FRACBITS;
-    exit
-}
 
 if keyboard_check_pressed(vk_f4) greenmode=!greenmode
 

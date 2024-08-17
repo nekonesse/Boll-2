@@ -1882,7 +1882,7 @@
 					"layerDefUid": 7,
 					"pxOffsetX": 0,
 					"pxOffsetY": 0,
-					"visible": true,
+					"visible": false,
 					"optionalRules": [],
 					"intGridCsv": [],
 					"autoLayerTiles": [],
@@ -2015,8 +2015,6 @@
 						{ "px": [304,112], "src": [16,0], "f": 0, "t": 1, "d": [1069], "a": 1 },
 						{ "px": [320,112], "src": [32,0], "f": 0, "t": 2, "d": [1070], "a": 1 },
 						{ "px": [336,112], "src": [32,0], "f": 0, "t": 2, "d": [1071], "a": 1 },
-						{ "px": [352,112], "src": [32,0], "f": 0, "t": 2, "d": [1072], "a": 1 },
-						{ "px": [368,112], "src": [64,0], "f": 0, "t": 4, "d": [1073], "a": 1 },
 						{ "px": [0,128], "src": [48,32], "f": 0, "t": 83, "d": [1200], "a": 1 },
 						{ "px": [16,128], "src": [64,32], "f": 0, "t": 84, "d": [1201], "a": 1 },
 						{ "px": [96,128], "src": [0,0], "f": 0, "t": 0, "d": [1206], "a": 1 },
@@ -3253,8 +3251,14 @@
 							"defUid": 19,
 							"px": [368,128],
 							"fieldInstances": [
-								{ "__identifier": "warpname", "__type": "String", "__value": "", "__tile": null, "defUid": 20, "realEditorValues": [] },
-								{ "__identifier": "warptarget", "__type": "String", "__value": "", "__tile": null, "defUid": 21, "realEditorValues": [] },
+								{ "__identifier": "warpname", "__type": "String", "__value": "B", "__tile": null, "defUid": 20, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["B"]
+								}] },
+								{ "__identifier": "warptarget", "__type": "String", "__value": "A", "__tile": null, "defUid": 21, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["A"]
+								}] },
 								{ "__identifier": "warplevel", "__type": "String", "__value": "", "__tile": null, "defUid": 24, "realEditorValues": [] },
 								{ "__identifier": "canenter", "__type": "Bool", "__value": false, "__tile": null, "defUid": 22, "realEditorValues": [] },
 								{ "__identifier": "Directions", "__type": "LocalEnum.Directions", "__value": "Up", "__tile": null, "defUid": 66, "realEditorValues": [] }
@@ -3275,8 +3279,14 @@
 							"defUid": 19,
 							"px": [320,400],
 							"fieldInstances": [
-								{ "__identifier": "warpname", "__type": "String", "__value": "", "__tile": null, "defUid": 20, "realEditorValues": [] },
-								{ "__identifier": "warptarget", "__type": "String", "__value": "", "__tile": null, "defUid": 21, "realEditorValues": [] },
+								{ "__identifier": "warpname", "__type": "String", "__value": "A", "__tile": null, "defUid": 20, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["A"]
+								}] },
+								{ "__identifier": "warptarget", "__type": "String", "__value": "C", "__tile": null, "defUid": 21, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["C"]
+								}] },
 								{ "__identifier": "warplevel", "__type": "String", "__value": "", "__tile": null, "defUid": 24, "realEditorValues": [] },
 								{ "__identifier": "canenter", "__type": "Bool", "__value": false, "__tile": null, "defUid": 22, "realEditorValues": [] },
 								{ "__identifier": "Directions", "__type": "LocalEnum.Directions", "__value": "Up", "__tile": null, "defUid": 66, "realEditorValues": [] }
@@ -3327,6 +3337,31 @@
 							"fieldInstances": [],
 							"__worldX": 344,
 							"__worldY": 96
+						},
+						{
+							"__identifier": "Pipe",
+							"__grid": [24,24],
+							"__pivot": [1,1],
+							"__tags": [],
+							"__tile": { "tilesetUid": 15, "x": 528, "y": 0, "w": 32, "h": 32 },
+							"__smartColor": "#FEE761",
+							"iid": "02f0e540-4ce0-11ef-a2b0-e3571d512cb4",
+							"width": 32,
+							"height": 32,
+							"defUid": 19,
+							"px": [400,400],
+							"fieldInstances": [
+								{ "__identifier": "warpname", "__type": "String", "__value": "C", "__tile": null, "defUid": 20, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["C"]
+								}] },
+								{ "__identifier": "warptarget", "__type": "String", "__value": "", "__tile": null, "defUid": 21, "realEditorValues": [] },
+								{ "__identifier": "warplevel", "__type": "String", "__value": "", "__tile": null, "defUid": 24, "realEditorValues": [] },
+								{ "__identifier": "canenter", "__type": "Bool", "__value": false, "__tile": null, "defUid": 22, "realEditorValues": [] },
+								{ "__identifier": "Directions", "__type": "LocalEnum.Directions", "__value": "Up", "__tile": null, "defUid": 66, "realEditorValues": [] }
+							],
+							"__worldX": 400,
+							"__worldY": 400
 						}
 					]
 				},
