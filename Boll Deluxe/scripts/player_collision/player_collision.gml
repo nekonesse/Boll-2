@@ -72,7 +72,7 @@ function player_collision(){
 		
 		//fall
 		if (!check_collision_line(x-hit_sizex,y+hit_sizey,x-hit_sizey,y +hit_sizey + 16 , COL_BOTTOM) 
-			and !check_collision_line(x+hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey + 16, COL_BOTTOM) ){
+			&& !check_collision_line(x+hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey + 16, COL_BOTTOM) ){
 				vsp = gsp * -dsin(colangle)
 				hsp = gsp * dcos(colangle)
 				grounded = false

@@ -1,3 +1,6 @@
 draw_self()
-draw_text(x,y-16,warpname)
-draw_text(x+32,y-16,warptarget)
+if (global.debug) {
+	draw_set_font(smallF)
+	draw_text(x-16,y-8,$"name: {warpname}")
+	draw_text(x-16,y,$"target:{warptarget}")
+}

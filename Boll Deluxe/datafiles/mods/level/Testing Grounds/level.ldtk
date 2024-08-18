@@ -11,7 +11,7 @@
 	"iid": "89e20cd0-6280-11ee-9ff1-11df5747d5f3",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 69,
+	"nextUid": 70,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -1756,6 +1756,41 @@
 			"pivotX": 0.5,
 			"pivotY": 1,
 			"fieldDefs": []
+		},
+		{
+			"identifier": "SoccerBall",
+			"uid": 69,
+			"tags": [],
+			"exportToToc": false,
+			"allowOutOfBounds": false,
+			"doc": null,
+			"width": 16,
+			"height": 16,
+			"resizableX": false,
+			"resizableY": false,
+			"minWidth": null,
+			"maxWidth": null,
+			"minHeight": null,
+			"maxHeight": null,
+			"keepAspectRatio": false,
+			"tileOpacity": 1,
+			"fillOpacity": 1,
+			"lineOpacity": 1,
+			"hollow": false,
+			"color": "#606060",
+			"renderMode": "Rectangle",
+			"showName": true,
+			"tilesetId": null,
+			"tileRenderMode": "FitInside",
+			"tileRect": null,
+			"uiTileRect": null,
+			"nineSliceBorders": [],
+			"maxCount": 0,
+			"limitScope": "PerLevel",
+			"limitBehavior": "MoveLastOne",
+			"pivotX": 0.5,
+			"pivotY": 0.5,
+			"fieldDefs": []
 		}
 	], "tilesets": [
 		{
@@ -2485,76 +2520,6 @@
 					"gridTiles": [],
 					"entityInstances": [
 						{
-							"__identifier": "DirectionChanger",
-							"__grid": [5,22],
-							"__pivot": [0.5,0.5],
-							"__tags": [],
-							"__tile": { "tilesetUid": 15, "x": 0, "y": 16, "w": 16, "h": 16 },
-							"__smartColor": "#3E8948",
-							"iid": "c70c9510-8990-11ee-ba4b-6d40dfe41382",
-							"width": 16,
-							"height": 16,
-							"defUid": 29,
-							"px": [88,360],
-							"fieldInstances": [{ "__identifier": "dir", "__type": "String", "__value": "right", "__tile": null, "defUid": 30, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["right"]
-							}] }],
-							"__worldX": 88,
-							"__worldY": 360
-						},
-						{
-							"__identifier": "DirectionChanger",
-							"__grid": [14,22],
-							"__pivot": [0.5,0.5],
-							"__tags": [],
-							"__tile": { "tilesetUid": 15, "x": 0, "y": 16, "w": 16, "h": 16 },
-							"__smartColor": "#3E8948",
-							"iid": "dcb970e0-8990-11ee-ba4b-a10cbb3edc46",
-							"width": 16,
-							"height": 16,
-							"defUid": 29,
-							"px": [232,360],
-							"fieldInstances": [{ "__identifier": "dir", "__type": "String", "__value": "left", "__tile": null, "defUid": 30, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["left"]
-							}] }],
-							"__worldX": 232,
-							"__worldY": 360
-						},
-						{
-							"__identifier": "MovingPlatform",
-							"__grid": [9,22],
-							"__pivot": [0.5,0.5],
-							"__tags": [],
-							"__tile": { "tilesetUid": 15, "x": 0, "y": 144, "w": 48, "h": 16 },
-							"__smartColor": "#124E89",
-							"iid": "f1725c60-8990-11ee-9388-2ba88f529522",
-							"width": 48,
-							"height": 16,
-							"defUid": 31,
-							"px": [152,360],
-							"fieldInstances": [{ "__identifier": "dir", "__type": "String", "__value": "right", "__tile": null, "defUid": 32, "realEditorValues": [] }],
-							"__worldX": 152,
-							"__worldY": 360
-						},
-						{
-							"__identifier": "Chainsaw",
-							"__grid": [12,21],
-							"__pivot": [0.5,0.5],
-							"__tags": ["Hazard"],
-							"__tile": { "tilesetUid": 15, "x": 64, "y": 160, "w": 16, "h": 48 },
-							"__smartColor": "#124E89",
-							"iid": "f2422e80-8990-11ee-bf57-f7dd506dbfdd",
-							"width": 16,
-							"height": 48,
-							"defUid": 36,
-							"px": [200,344],
-							"fieldInstances": [{ "__identifier": "dir", "__type": "String", "__value": "right", "__tile": null, "defUid": 37, "realEditorValues": [] }],
-							"__worldX": 200,
-							"__worldY": 344
-						},
-						{
 							"__identifier": "PolyCollider",
 							"__grid": [35,5],
 							"__pivot": [0,0],
@@ -2770,22 +2735,6 @@
 							"fieldInstances": [{ "__identifier": "timer_offset", "__type": "Int", "__value": 0, "__tile": null, "defUid": 59, "realEditorValues": [] }],
 							"__worldX": 2016,
 							"__worldY": 272
-						},
-						{
-							"__identifier": "BillBlaster",
-							"__grid": [2,23],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": { "tilesetUid": 15, "x": 480, "y": 192, "w": 16, "h": 48 },
-							"__smartColor": "#FFFFFF",
-							"iid": "6706fd30-fec0-11ee-8af6-0911f30c7768",
-							"width": 16,
-							"height": 32,
-							"defUid": 58,
-							"px": [32,368],
-							"fieldInstances": [{ "__identifier": "timer_offset", "__type": "Int", "__value": 0, "__tile": null, "defUid": 59, "realEditorValues": [] }],
-							"__worldX": 32,
-							"__worldY": 368
 						},
 						{
 							"__identifier": "BillBlaster",
@@ -3268,7 +3217,7 @@
 						},
 						{
 							"__identifier": "Pipe",
-							"__grid": [19,24],
+							"__grid": [3,24],
 							"__pivot": [1,1],
 							"__tags": [],
 							"__tile": { "tilesetUid": 15, "x": 528, "y": 0, "w": 32, "h": 32 },
@@ -3277,7 +3226,7 @@
 							"width": 32,
 							"height": 32,
 							"defUid": 19,
-							"px": [320,400],
+							"px": [64,400],
 							"fieldInstances": [
 								{ "__identifier": "warpname", "__type": "String", "__value": "A", "__tile": null, "defUid": 20, "realEditorValues": [{
 									"id": "V_String",
@@ -3291,7 +3240,7 @@
 								{ "__identifier": "canenter", "__type": "Bool", "__value": false, "__tile": null, "defUid": 22, "realEditorValues": [] },
 								{ "__identifier": "Directions", "__type": "LocalEnum.Directions", "__value": "Up", "__tile": null, "defUid": 66, "realEditorValues": [] }
 							],
-							"__worldX": 320,
+							"__worldX": 64,
 							"__worldY": 400
 						},
 						{
@@ -3362,6 +3311,38 @@
 							],
 							"__worldX": 400,
 							"__worldY": 400
+						},
+						{
+							"__identifier": "SoccerBall",
+							"__grid": [11,24],
+							"__pivot": [0.5,0.5],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#606060",
+							"iid": "0e423d60-4ce0-11ef-8565-614b233d57ad",
+							"width": 16,
+							"height": 16,
+							"defUid": 69,
+							"px": [184,392],
+							"fieldInstances": [],
+							"__worldX": 184,
+							"__worldY": 392
+						},
+						{
+							"__identifier": "SoccerBall",
+							"__grid": [45,9],
+							"__pivot": [0.5,0.5],
+							"__tags": [],
+							"__tile": null,
+							"__smartColor": "#606060",
+							"iid": "9b1e0430-4ce0-11ef-8565-2367bc7c0946",
+							"width": 16,
+							"height": 16,
+							"defUid": 69,
+							"px": [728,152],
+							"fieldInstances": [],
+							"__worldX": 728,
+							"__worldY": 152
 						}
 					]
 				},
@@ -3471,18 +3452,7 @@
 					"autoLayerTiles": [],
 					"seed": 2559174,
 					"overrideTilesetUid": null,
-					"gridTiles": [
-						{ "px": [80,352], "src": [464,208], "f": 0, "t": 549, "d": [3305], "a": 1 },
-						{ "px": [96,352], "src": [480,192], "f": 0, "t": 510, "d": [3306], "a": 1 },
-						{ "px": [112,352], "src": [480,192], "f": 0, "t": 510, "d": [3307], "a": 1 },
-						{ "px": [128,352], "src": [480,192], "f": 0, "t": 510, "d": [3308], "a": 1 },
-						{ "px": [144,352], "src": [480,192], "f": 0, "t": 510, "d": [3309], "a": 1 },
-						{ "px": [160,352], "src": [480,192], "f": 0, "t": 510, "d": [3310], "a": 1 },
-						{ "px": [176,352], "src": [480,192], "f": 0, "t": 510, "d": [3311], "a": 1 },
-						{ "px": [192,352], "src": [480,192], "f": 0, "t": 510, "d": [3312], "a": 1 },
-						{ "px": [208,352], "src": [480,192], "f": 0, "t": 510, "d": [3313], "a": 1 },
-						{ "px": [224,352], "src": [480,208], "f": 0, "t": 550, "d": [3314], "a": 1 }
-					],
+					"gridTiles": [],
 					"entityInstances": []
 				},
 				{

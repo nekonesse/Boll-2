@@ -74,9 +74,12 @@ carrying = 0;
 run=0;
 bonk=0;
 collflags = 0; // collision flags
+
+//warping stuff
 warp_timer = 0;
 warp_dir = 0;
-warp_coll = 0;
+warp_coll = noone;
+warp_out = false; //if the player is warping out a pipe rather than warping in
 
 sprindex_prev = sprite_index;
 

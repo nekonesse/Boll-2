@@ -44,5 +44,5 @@ if (global.debug) {
 	draw_set_alpha(0.5)
 	draw_rectangle_color(floor(x)-hit_sizex,floor(y)-hit_sizey,floor(x)+hit_sizex,floor(y)+hit_sizey,c_red,c_red,c_red,c_red,false)
 	draw_set_alpha(1)
-	draw_text(x,y,warp_timer)
+	draw_text(x,y,warp_out)
 }
