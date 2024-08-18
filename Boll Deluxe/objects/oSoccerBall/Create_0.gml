@@ -30,7 +30,16 @@ function ball_movement() {
 	if (grounded) gsp=approach_val(gsp,0,0.05) 
 	
 	if grounded {
-		gsp -= (0.25 * dsin(colangle))
+		var coll=check_collision_line(x-hit_sizex,y+hit_sizey+2,x+hit_sizex,y+hit_sizey+2, COL_BOTTOM)
+		show_debug_message(coll)
+		
+		if (coll) && (x > coll.bbox_right) && (y < (coll.bbox_top+2)) {
+			hsp -= 0.05
+		} else if (coll) && (x < coll.bbox_left) && (y < (coll.bbox_top+2)) {
+			hsp += 0.05
+		} else {
+			gsp -= (0.25 * dsin(colangle))
+		}
 		
 		vsp = gsp * -dsin(colangle)
 		hsp = gsp * dcos(colangle)

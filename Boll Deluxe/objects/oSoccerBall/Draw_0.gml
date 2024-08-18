@@ -1,2 +1,15 @@
 draw_self()
-if global.debug draw_point(x+(hit_sizex+1)*xsc, y)
+if global.debug {
+	draw_set_color(c_lime)
+	draw_line(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey)	
+	draw_set_font(smallF)
+	var coll=check_collision_line(x-hit_sizex,y+hit_sizey+2,x+hit_sizex,y+hit_sizey+2,COL_BOTTOM)
+		
+	var left=(coll) && (x > coll.bbox_right) && (y < (coll.bbox_top+2))
+	var right=(coll) && (x < coll.bbox_left) && (y < (coll.bbox_top+2))
+	
+	draw_text_outline(x-4,y,right,1,c_black,4,1,1,0)
+	draw_text_outline(x+4,y,left,1,c_black,4,1,1,0)
+	draw_text_outline(x,y-8,bool(coll),1,c_black,4,1,1,0)
+	draw_set_color(c_white)
+}
