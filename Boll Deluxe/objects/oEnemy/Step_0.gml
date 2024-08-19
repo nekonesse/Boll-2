@@ -30,13 +30,13 @@ if (enemycoll) {
 }
 
 
+if !grounded
+{
+	vsp += grav;
+}
+
 x += hsp
 y += vsp
 player_collision();
 
 if hsp != 0 xsc=-esign(hsp,-1)
-
-if grounded = false
-{
-vsp += grav;
-}
