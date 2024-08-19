@@ -7,6 +7,8 @@
 //defaultgrav, gravity
 //hsp, horizontal speed
 //vsp, vertical speed
+enemyStomped = new Signal();
+enemyCollidePlayer = new Signal();
 grav=defaultgrav
 rot=0
 xsc=1
@@ -15,7 +17,7 @@ spawn_object=noone
 
 yPlus=0;
 inactive=0;
-phaseid=0;
+phaseid=noone;
 turned=0;
 in_shell=false;
 collision_array=[oCollider, oEnemyGround];
@@ -27,6 +29,12 @@ piped = false
 hit_sizex = 6
 hit_sizey = 6
 
-
 image_xscale=1;
 image_yscale=1;
+
+enemyStomped.Connect( self, function(hit_p, obj) {
+	if (!no_stomping) hp-=1
+
+	//phaseid=instance_place(x,y-1,oPlayer)
+	//phaseid.vsp=-4-phaseid.akey*1.5
+});

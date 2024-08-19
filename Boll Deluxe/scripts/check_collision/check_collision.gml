@@ -166,7 +166,7 @@ function get_angle_line(x1, y1, x2, y2){
 	
 	var found = noone
 	
-	var object = oCollider
+	var object = collision_array
 	
 	if collision_line(floor(x1) ,floor(y1),floor(x2), floor(y2), object,true,true)    {
 	    var found_list = ds_list_create()

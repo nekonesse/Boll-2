@@ -1,3 +1,4 @@
+/*
 if (in_shell) mask_index=spr_shellhitbox
 else mask_index=spr_koopahitbox
 
@@ -12,7 +13,6 @@ if (player && player.piped) {
 }
 
 if (!damage_on_contact) {
-    if place_meeting(x,y-1,oPlayer) && !phaseid && round(instance_place(x,y-1,oPlayer).vsp) > 0 && !(instance_place(x,y-1,oPlayer).hurt) && !(place_meeting(x-1,y,oPlayer) && place_meeting(x+1,y,oPlayer) && instance_place(x,y,oPlayer).grounded)
     {
 		if (no_stomping) {
 			if (in_shell) {

@@ -2,7 +2,7 @@ if global.paused || inactive && (object_index!=oBulletBill && object_index!=oBan
 
 grounded=false
 	
-if !(in_shell) && (edgeturn) && !check_collision_dot(x+(hit_sizex*-xsc)+hsp,y+hit_sizey+2,COL_BOTTOM)
+if !(in_shell) && (edgeturn) && !check_collision_line(x+((hit_sizex-6)*-xsc)+hsp,y+hit_sizey+4,x+((hit_sizex-6)*-xsc)+hsp,y+hit_sizey+12,COL_BOTTOM)
 {
 	if !(turned) {
 		turned=1
