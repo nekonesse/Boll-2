@@ -23,7 +23,7 @@ in_shell=false;
 collision_array=[oCollider, oEnemyGround];
 
 killtype="";
-
+grounded = false
 piped = false
 
 hit_sizex = 6

@@ -1,12 +1,14 @@
 if global.paused || inactive && (object_index!=oBulletBill && object_index!=oBanzaiBill) exit
 
-grounded=false
+//grounded=false
 	
-if !(in_shell) && (edgeturn) && !check_collision_line(x+hsp,y,x+hsp,y+hit_sizey+16,COL_BOTTOM)
+if !(in_shell) && (edgeturn) 
 {
-	if !(turned) {
-		turned=1
-		hsp=-hsp
+	if !collision_line(x + (xsc * hit_sizex),y,x + (xsc * hit_sizex),y+hit_sizey+16,collision_array, true, true){
+		if !(turned) {
+			turned=1
+			hsp=-hsp
+		}
 	}
 } else {
 	turned=0
