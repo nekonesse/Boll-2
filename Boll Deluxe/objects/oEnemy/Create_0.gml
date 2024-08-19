@@ -17,12 +17,15 @@ yPlus=0;
 inactive=0;
 phaseid=0;
 turned=0;
-piped=0;
+in_shell=false;
 
 killtype="";
+
+piped = false
+
+hit_sizex = 6
+hit_sizey = 6
 
 
 image_xscale=1;
 image_yscale=1;
-
-//asset_add_tags(object_index, "enemy", asset_object); 

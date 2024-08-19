@@ -235,7 +235,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.6.2.162",
+    "IDEVersion":"2024.6.0.157",
   },
   "name":"Boll Deluxe",
   "resources":[
@@ -263,6 +263,7 @@
     {"id":{"name":"oDirectionChanger","path":"objects/oDirectionChanger/oDirectionChanger.yy",},},
     {"id":{"name":"oEmpty","path":"objects/oEmpty/oEmpty.yy",},},
     {"id":{"name":"oEnemy","path":"objects/oEnemy/oEnemy.yy",},},
+    {"id":{"name":"oEnemyBackup","path":"objects/oEnemyBackup/oEnemyBackup.yy",},},
     {"id":{"name":"oFlipblock","path":"objects/oFlipblock/oFlipblock.yy",},},
     {"id":{"name":"oFlipblockLong","path":"objects/oFlipblockLong/oFlipblockLong.yy",},},
     {"id":{"name":"oGameManager","path":"objects/oGameManager/oGameManager.yy",},},

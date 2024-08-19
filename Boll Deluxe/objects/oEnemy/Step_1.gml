@@ -2,7 +2,7 @@ if hp <= 0{
     instance_destroy();
 }
 
-if (place_meeting(x,y-1,oPlayer)) { //so the player doesnt jump on the damn goombas while warping and shoot into heaven
+/*if (place_meeting(x,y-1,oPlayer)) { //so the player doesnt jump on the damn goombas while warping and shoot into heaven
 	if (instance_place(x,y-1,oPlayer).piped) exit
 }
 
@@ -17,7 +17,7 @@ if (!damage_on_contact) {
         exit
     }
     if (phaseid) && !place_meeting(x,y,phaseid) phaseid=0
-}
+}*/
 
 visible=inview();
 

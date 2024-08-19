@@ -5,8 +5,10 @@ if hp <= 0{
     instance_destroy();
 }
 
-if (place_meeting(x,y-1,oPlayer)) { //so the player doesnt jump on the damn goombas while warping and shoot into heaven
-	if (instance_place(x,y-1,oPlayer).piped) exit
+var player=instance_place(x,y-1,oPlayer)
+if (player && player.piped) { 
+	//so the player doesnt jump on the damn goombas while warping and shoot into heaven
+	exit
 }
 
 if (!damage_on_contact) {

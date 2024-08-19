@@ -18,7 +18,7 @@ grounded = false
 piped = false
 
 hit_sizex = 6
-hit_sizey = 8
+hit_sizey = 6
 flipped=false
 
 function ball_movement() {
@@ -32,7 +32,7 @@ function ball_movement() {
 		vsp += grav
 		
 		//bounce off the ground
-		if (round(vsp) > 0 && check_collision_line(x-hit_sizex,y+hit_sizey+round(vsp),x+hit_sizex,y+hit_sizey+round(vsp), COL_BOTTOM)) || (round(vsp) < 0 && check_collision_line(x-hit_sizex,y-hit_sizey-round(vsp),x+hit_sizex,y-hit_sizey-round(vsp), COL_TOP)) {
+		if (floor(vsp) > 0 && check_collision_line(x-hit_sizex,y+hit_sizey+vsp,x+hit_sizex,y+hit_sizey+vsp, COL_BOTTOM)) || (floor(vsp) < 0 && check_collision_line(x-hit_sizex,y-hit_sizey-vsp,x+hit_sizex,y-hit_sizey-vsp, COL_TOP)) {
 			vsp =-vsp
 			vsp *= 0.5
 			

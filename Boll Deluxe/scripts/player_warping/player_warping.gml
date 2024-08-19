@@ -2,6 +2,7 @@ function warp_in_pipe(obj,spd,dir) {
 	piped=true;
 	x+=lengthdir_x(spd,dir)
 	y+=lengthdir_y(spd,dir)
+	depth=610; //behind all main tiles
 		
 	warp_timer=approach_val(warp_timer,0,1)
 	if !(warp_timer) {
@@ -40,6 +41,7 @@ function warp_out_pipe(obj,spd,dir) {
 		warp_timer=0;
 		warp_coll=noone
 		warp_out=false;
+		depth=0;
 	}
 }
 
@@ -49,6 +51,7 @@ function player_warping(){
 	if (pipecoll && pipecoll.pipe_direction==directions.up && pipecoll.warptarget!="") {
 		if (down) && !(piped) && (grounded) && !(warp_coll) {
 			piped=true
+			warp_type="enter_"
 			warp_timer=60;
 			warp_coll=pipecoll
 			x=pipecoll.x

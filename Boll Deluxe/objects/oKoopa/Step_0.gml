@@ -7,7 +7,7 @@ if (in_shell) && (hsp=0) {
 
 event_inherited();
 
-enemy=instance_place(x,y,oEnemy)
+var enemy=instance_place(x,y,oEnemy)
 
 if (enemy != noone) { //make sure shell is actually colliding with an enemy before trying to kill the enemy it collided with???
 	if (in_shell) && (abs(hsp)) {

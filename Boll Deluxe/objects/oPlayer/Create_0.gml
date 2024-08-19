@@ -80,6 +80,7 @@ warp_timer = 0;
 warp_dir = 0;
 warp_coll = noone;
 warp_out = false; //if the player is warping out a pipe rather than warping in
+warp_type = ""; //type of warping (for sprite managers)
 
 sprindex_prev = sprite_index;
 
