@@ -18,6 +18,7 @@ inactive=0;
 phaseid=0;
 turned=0;
 in_shell=false;
+collision_array=[oCollider, oEnemyGround];
 
 killtype="";
 

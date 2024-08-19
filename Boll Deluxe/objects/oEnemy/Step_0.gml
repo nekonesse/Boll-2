@@ -2,15 +2,19 @@ if global.paused || inactive && (object_index!=oBulletBill && object_index!=oBan
 
 grounded=false
 	
-if (edgeturn) && !(turned) && !collision_rectangle(x-2*xsc,bbox_bottom,floor(x)+9*xsc,floor(y)+9,oCollider,true,true) && !collision_rectangle(x-2*xsc,bbox_bottom,floor(x)+9*xsc,floor(y)+9,oSemilider,true,true) 
+if !(in_shell) && (edgeturn) && !check_collision_dot(x+(hit_sizex*-xsc)+hsp,y+hit_sizey+2,COL_BOTTOM)
 {
-	turned=1
-	hsp=-hsp
+	if !(turned) {
+		turned=1
+		hsp=-hsp
+	}
+} else {
+	turned=0
 }
 
-if (!in_shell && !place_meeting(x+hsp, y+2, oCollider))
-{
-   turned=0
+
+if check_collision_line(x+(hit_sizex+1)*xsc, y+hit_sizey-4,x+(hit_sizex+1)*-xsc, y-hit_sizey+4, COL_WALL, oCollider) {
+	hsp=-hsp
 }
 
 if (enemycoll) {
@@ -25,6 +29,9 @@ if (enemycoll) {
 	}
 }
 
+
+x += hsp
+y += vsp
 player_collision();
 
 if hsp != 0 xsc=-esign(hsp,-1)

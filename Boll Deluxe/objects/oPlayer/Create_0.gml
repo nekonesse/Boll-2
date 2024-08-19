@@ -27,6 +27,7 @@ colangle = 0;
 
 hit_sizex = 6
 hit_sizey = 6
+collision_array=[oCollider, oGrate];
 
 ///// PHYSICS /////
 grav=0.25; //we're having an actual grav var now because changing gravity should be EASIER!!

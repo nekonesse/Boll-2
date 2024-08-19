@@ -19,6 +19,8 @@ piped = false
 
 hit_sizex = 6
 hit_sizey = 6
+collision_array=[oCollider];
+
 flipped=false
 
 function ball_movement() {
