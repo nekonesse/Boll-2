@@ -77,7 +77,10 @@ if (!grounded) {
 	canjump = 5;  // Coyote frames
 	jump = 0;
 	runjump = 0;
-	
+	if (pound) {
+		vsp = 0;
+		pound = false;
+	}
 	//maximum speed when sliding, infulence when sliding, influence on steep slopes, add steep influence while sliding?
 	player_slide(5.5, 0.225, 0.32, false);
 	

@@ -13,9 +13,9 @@ function check_collision_dot(x1, y1, type = 0, object = collision_array){
     
     var found = noone
     
-    if collision_point(floor(x1),floor(y1),object,true,true)    {
+    if collision_point(x1,y1,object,true,true)    {
 	    var found_list = ds_list_create()
-	    var found_size = collision_point_list(floor(x1),floor(y1),object,true,true, found_list, true)
+	    var found_size = collision_point_list(x1,y1,object,true,true, found_list, true)
     
 	    for (var i = 0; i < found_size; ++i) {    
 	        found = found_list[| i];
@@ -64,9 +64,9 @@ function check_collision_line(x1, y1, x2, y2, type = 0, object = collision_array
 	
 	var found = noone
 	
-	if collision_line(floor(x1) ,floor(y1),floor(x2), floor(y2), object,true,true)    {
+	if collision_line(x1 ,y1,x2, y2, object,true,true)    {
 	    var found_list = ds_list_create()
-	    var found_size = collision_line_list(floor(x1) ,floor(y1),floor(x2), floor(y2), object,true,true, found_list, true)
+	    var found_size = collision_line_list(x1 ,y1,x2, y2, object,true,true, found_list, true)
     
 	    for (var i = 0; i < found_size; ++i) {    
 	        found = found_list[| i];
@@ -115,9 +115,9 @@ function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_
 	
 	var found = noone
 	
-	if collision_rectangle(floor(x1) ,floor(y1),floor(x2), floor(y2), object,true,true)    {
+	if collision_rectangle(x1 ,y1,x2, y2, object,true,true)    {
 	    var found_list = ds_list_create()
-	    var found_size = collision_rectangle_list(floor(x1) ,floor(y1),floor(x2), floor(y2), object,true,true, found_list, true)
+	    var found_size = collision_rectangle_list(x1 ,y1,x2, y2, object,true,true, found_list, true)
     
 	    for (var i = 0; i < found_size; ++i) {    
 	        found = found_list[| i];
@@ -168,9 +168,9 @@ function get_angle_line(x1, y1, x2, y2){
 	
 	var object = collision_array
 	
-	if collision_line(floor(x1) ,floor(y1),floor(x2), floor(y2), object,true,true)    {
+	if collision_line(x1 ,y1,x2, y2, object,true,true)    {
 	    var found_list = ds_list_create()
-	    var found_size = collision_line_list(floor(x1) ,floor(y1),floor(x2), floor(y2), object,true,true, found_list, true)
+	    var found_size = collision_line_list(x1 ,y1,x2, y2, object,true,true, found_list, true)
     
 	    for (var i = 0; i < found_size; ++i) {    
 	        found = found_list[| i];

@@ -22,6 +22,8 @@ if (is_blue)
 	}
 	
 	no_collide = true; // always, ALWAYS true; blue platforms have unique collision
+	//ok i get this was based off of SMA2 code but like, man this makes it like 20 times harder to
+	//debug. frown.
 	thinker_blue_spinning_platform(self);	
 }
 else

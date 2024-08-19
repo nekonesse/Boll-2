@@ -7,16 +7,14 @@ function player_collision(){
 	if (piped) exit
 	
 	//left wall
-	while check_collision_dot(x-hit_sizex, y, COL_WALL){
+	while check_collision_dot(x-hit_sizex, y-vsp, COL_WALL){
 		x++		
 	}
 		
 	//right wall
-	while check_collision_dot(x+hit_sizex, y, COL_WALL){
+	while check_collision_dot(x+hit_sizex, y-vsp, COL_WALL){
 		x--
 	}
-		
-	
 	
 	//landing on solid ground
 	if !grounded && vsp >= 0 {

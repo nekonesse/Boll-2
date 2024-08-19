@@ -89,6 +89,7 @@ function blue_plat_check_playercol(obj,param_1,param_2)
 					}
 					
 					p.grounded = true;
+					p.gsp = p.hsp
 					
 					with(p)
 					{
