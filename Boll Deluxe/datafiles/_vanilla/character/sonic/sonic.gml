@@ -152,6 +152,7 @@ if (colangle != 0 && slopesliding){
 }
 	
 player_movement_sonic();
+player_interactions();
 player_collision();
 post_wall();
 
@@ -215,6 +216,12 @@ if (pound) {
 	playsfx(charmName+"stomp")
 }
 
+bonk = 0;
+pound = 0;
+pound_timer = 0;
+
+#define sprung
+canstopjump=0;
 bonk = 0;
 pound = 0;
 pound_timer = 0;
