@@ -501,7 +501,9 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_function_add("player_movement", player_movement, -1);
 		txr_function_add("player_collision", player_collision, -1);
 		txr_function_add("player_slide", player_slide, -1);
+		txr_function_add("player_interactions", player_interactions, -1);
 		txr_function_add("post_wall", post_wall, -1);
+		
 	#endregion
 	
 	#region Audio

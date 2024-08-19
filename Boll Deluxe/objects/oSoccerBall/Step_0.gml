@@ -1,6 +1,6 @@
-player_collision();
-
 ball_movement();
+ball_interactions();
+player_collision();
 
 xsc=esign(hsp,xsc)
 

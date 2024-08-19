@@ -23,7 +23,7 @@ flipped=false
 
 function ball_movement() {
 	//bounce off wall
-	if check_collision_dot(x+(hit_sizex+1)*xsc, y, COL_WALL, oCollider) {
+	if check_collision_line(x+(hit_sizex+1)*xsc, y+hit_sizey-4,x+(hit_sizex+1)*xsc, y-hit_sizey+4, COL_WALL, oCollider) {
 		hsp=-hsp
 		gsp=-gsp
 	}
@@ -32,13 +32,13 @@ function ball_movement() {
 		vsp += grav
 		
 		//bounce off the ground
-		if (floor(vsp) > 0 && check_collision_line(x-hit_sizex,y+hit_sizey+vsp,x+hit_sizex,y+hit_sizey+vsp, COL_BOTTOM)) || (vsp < 0 && check_collision_line(x-hit_sizex,y-hit_sizey-vsp,x+hit_sizex,y-hit_sizey-vsp, COL_TOP)) {
-			vsp=-vsp
-			vsp*= 0.5
+		if (round(vsp) > 0 && check_collision_line(x-hit_sizex,y+hit_sizey+round(vsp),x+hit_sizex,y+hit_sizey+round(vsp), COL_BOTTOM)) || (round(vsp) < 0 && check_collision_line(x-hit_sizex,y-hit_sizey-round(vsp),x+hit_sizex,y-hit_sizey-round(vsp), COL_TOP)) {
+			vsp =-vsp
+			vsp *= 0.5
 			
 			//bounce off a slope at an angle
 			get_angle_line(x-hit_sizex-2,y+hit_sizey+3,x+hit_sizex+2,y+hit_sizey+3)
-			hsp += lengthdir_x(2,colangle+90)
+			hsp += lengthdir_x(2,colangle+90) //the first value in lengthdir_x is the strength of a slope bounce
 		}
 	} else {
 		vsp = 0	
@@ -46,7 +46,7 @@ function ball_movement() {
 	
 	if (grounded) {
 		//apply friction
-		gsp=approach_val(gsp,0,0.05)
+		gsp = approach_val(gsp,0,0.02)
 		
 		var coll=check_collision_line(x-hit_sizex,y+hit_sizey+2,x+hit_sizex,y+hit_sizey+2, COL_BOTTOM)
 		
@@ -65,4 +65,12 @@ function ball_movement() {
 	
 	x += hsp 
 	y += vsp
+}
+	
+function ball_interactions() {
+	var spring=check_collision_line(x-hit_sizex,y+hit_sizey+vsp+1,x+hit_sizex,y+hit_sizey+vsp+1, COL_BOTTOM, oTerrainSpring)
+	if (spring) {
+		vsp=min(-spring.spring_power,vsp) //dont set vsp if it exceeds power
+		spring.image_speed=1
+	}
 }

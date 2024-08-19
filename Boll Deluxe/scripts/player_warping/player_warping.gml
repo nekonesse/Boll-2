@@ -45,8 +45,8 @@ function warp_out_pipe(obj,spd,dir) {
 
 function player_warping(){
 	//THIS SUCKS!!!!!!!!!
-	var pipecoll=instance_place(x,y+1,oPipe)
-	if (pipecoll && pipecoll.pipe_direction==directions.up) {
+	var pipecoll=check_collision_line(x-hit_sizex,y+hit_sizey+1,x+hit_sizex,y+hit_sizey+1,COL_BOTTOM,oPipe)
+	if (pipecoll && pipecoll.pipe_direction==directions.up && pipecoll.warptarget!="") {
 		if (down) && !(piped) && (grounded) && !(warp_coll) {
 			piped=true
 			warp_timer=60;

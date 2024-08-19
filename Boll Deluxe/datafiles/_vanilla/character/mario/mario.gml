@@ -103,7 +103,7 @@ if ((!abs(sign(colslope)) && (abs(hsp) < 0.25)) || jump) {
 #region Jumping
 if (!akey) //Make player jump lower when jump is released
 {
-	if ((canstopjump == 1) && (vsp < -2))
+	if ((canstopjump) && (vsp < -2))
 	{
 	    vsp *= 0.6;
 	}
@@ -167,6 +167,7 @@ if (colangle != 0 && slopesliding){
 }
 	
 player_movement();
+player_interactions();
 player_collision();
 post_wall();
 
@@ -212,23 +213,25 @@ else {
 //chopp: to handle any signals, make sure you define the code here with the same name 
 
 #define jumped
-
 show_debug_message("Situation becomes worse....");
 
 #define mushroom
-
 show_debug_message("eatted it :)");
 
 #define ceil_bonk
-
 bonk = 12
 
 #define floor_land
-
 if (pound) {
 	playsfx(charmName+"stomp")
 }
 
+bonk = 0;
+pound = 0;
+pound_timer = 0;
+
+#define sprung
+canstopjump=0;
 bonk = 0;
 pound = 0;
 pound_timer = 0;
