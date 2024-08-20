@@ -91,6 +91,9 @@ if (!grounded) {
 	}
 	//maximum speed when sliding, infulence when sliding, influence on steep slopes, add steep influence while sliding?
 	player_slide(5.5, 0.225, 0.32, false);
+	if (slopesliding) { //kinda hacky fix to mario becoming god if groundpounding within a semisolid slope
+		grav = defaultgrav;
+	}
 	
 	//temp skidding
 	if (sign(hsp)!=esign(move,xsc)) {
