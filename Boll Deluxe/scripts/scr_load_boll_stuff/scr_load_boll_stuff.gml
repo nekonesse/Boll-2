@@ -12,17 +12,3 @@ enum directions {
 	left,
 	right
 }
-
-enum Contents {
-	Coin,
-	MultiCoins,
-	Mushroom,
-	Flower,
-	Feather,
-	MiniMush,
-	PoisonMush,
-	Ring,
-	Shield,
-	Starman,
-	SpecialShard //maybe???
-}

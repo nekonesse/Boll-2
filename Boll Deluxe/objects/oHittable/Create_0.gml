@@ -11,6 +11,7 @@ bumpMax = 10; //highest "up" pos for bumping
 hitNegative = false; //used for the bumping "overshoot" anim end-bounce
 no_hit = false;
 default_depth = 0;
+amount=1; // the amount of items to hold
 
 image_normal = sprite_index
 image_hit = sprite_index
@@ -27,5 +28,7 @@ blockHit.Connect( self, function(hit_p, obj) {
 	obj.vsp = 2;
 	going = true;
 	
-	sprite_index = image_hit
+	if !(amount) {
+		sprite_index = image_hit
+	}
 });

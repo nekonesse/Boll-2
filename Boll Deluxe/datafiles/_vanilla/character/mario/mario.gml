@@ -15,12 +15,13 @@ pound_timer = 0;
 pound = 0;
 storedxsc = 1;
 wallsliding = false;
+poundjump = 0;
 
 #define step
 
 if (braking) xsc=brakedir
 maxspd = 2+runvar;
-no_move = !(!pound && !pound_timer);
+no_move = !(!pound && !pound_timer && !alarm_get(2));
 //add more checks here
 
 if ((apress) && !(grounded)) {
@@ -72,6 +73,13 @@ if (!grounded) {
 		vsp = 7;
 		hsp = 0;
 	}
+	
+	//cancel groundpound
+	if (up) && (pound) {
+		pound = 0;
+		pound_timer = 0;
+		grav = defaultgrav;
+	}
 	#endregion
 } else {
 	canjump = 5;  // Coyote frames
@@ -113,30 +121,41 @@ if (!akey) //Make player jump lower when jump is released
 }
 
 //Actual Jump
-if ((canjump > 0 || wallsliding) && (apress))
+if (canjump > 0 || wallsliding) && (apress || (wallsliding && alarm_get(1) > 0))
 {
 	jump = 1;
+	bonk = 0;
 	bufferjump = 0;
 	groundtime = 0;
 	grounded = false
-	if (wallsliding) {xsc=-xsc hsp=(4*xsc)}
-	vsp = -(6+min(1,abs(hsp)/10)-(wallsliding*2)); //jump power
+	if (wallsliding) {
+		//walljumping
+		hsp=esign(move,xsc)*-2.5
+		vsp=-5
+		xsc=esign(hsp,xsc)
+		no_move=true;
+		alarm_set(2,12);
+	} else {
+		//regular jumping
+		vsp = -(6+min(1,abs(hsp)/10)+(bool(poundjump)+0.5)); //jump power
+		canstopjump = 1;
+		no_move = false;
+	}
 	canjump = 0;
-	canstopjump = 1;
 	steep_slope = false;
-	no_move = false;
 	//check if speed is high enough for visual run jump
-	if ((run && abs(hsp)>3) || wallsliding) {runjump=1} 
-	playsfx(charmName+"jump")
+	if ((run && abs(hsp)>3) && !wallsliding) {runjump=1} 
+	playsfx(charmName+"jump",1+(bool(poundjump)/4),0,1)
 	wallsliding = false;
 }
 
-if (jump && (!pound && !pound_timer)) {
+if (jump && (!pound && !pound_timer) && !alarm_get(2)) {
 	steep_slope = false;
 	no_move = false;
 }
+#endregion
 
-#region Walljump/slide
+#region Wallsliding
 if (move != 0) {
 	//wall sliding
 	var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
@@ -150,8 +169,6 @@ if (move != 0) {
 } else {
 	wallsliding=false;
 }
-#endregion
-
 #endregion
 
 #region Running
@@ -185,14 +202,14 @@ if (sprindex_prev != sprite_index) {
 // Switch direction
 //add more checks here to prevent left/right changing direction
 if (left || right) && !(slopesliding) && !(pound_timer || pound)
-xsc = esign(move, 1)
+xsc = esign(move, xsc)
 
-bonk=max(bonk,bonk-1)
+bonk=max(0,bonk-1)
+poundjump=max(0,poundjump-1)
 
 runvar = approach_val(runvar,run,0.05)
 
 #define sprmanager
-
 frspd=1
 if (slopesliding) sprite="slide"
 else if (!grounded) {
@@ -229,6 +246,7 @@ bonk = 12
 #define floor_land
 if (pound) {
 	playsfx(charmName+"stomp")
+	poundjump = 16;
 }
 
 bonk = 0;

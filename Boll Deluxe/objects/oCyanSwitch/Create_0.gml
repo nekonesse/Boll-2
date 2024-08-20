@@ -1,6 +1,5 @@
 event_inherited();
 hitted=0;
-content=Contents.Mushroom
 
 image_hit = sprite_index
 image_exausted = sprite_index

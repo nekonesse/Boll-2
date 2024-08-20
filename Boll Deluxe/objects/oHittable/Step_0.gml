@@ -25,7 +25,12 @@ if (hit != 0)
 			if doneCheck
 				hitNegative = true;
 		} else {
-			blockFinished.Emit()
+			amount--;
+			if !(amount) {
+				blockFinished.Emit();
+			} else {
+				sprite_index = image_normal;	
+			}
 			dy = 0;
 			hit = 0;
 			//image_index = 1;
