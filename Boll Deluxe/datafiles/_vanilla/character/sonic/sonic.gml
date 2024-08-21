@@ -53,13 +53,16 @@ if (!grounded) {
 	}
 	// Switch direction
 	//add more checks here to prevent left/right changing direction
-	if (left || right) xsc = esign(move, 1)
-	
+	if (left || right) {
+		xsc = esign(move, xsc)
+	}
 } else {
 	canjump = 5;  // Coyote frames
 	canstopjump = false
-	
-	if (left || right) && !(state == "spindash") xsc = esign(gsp, 1)
+	//add more checks here to prevent left/right changing direction
+	if (left || right) && !(state == "spindash") {
+		xsc = esign(gsp, xsc)
+	}
 	
 	#region Crouch, Spindash
 	if (state == "") && (down) && (abs(gsp) <= 0.5) {
@@ -90,10 +93,8 @@ if (!grounded) {
 		
 		if (!down || !(abs(gsp) <= 0.5)) {
 			state = "roll"
-			gsp = (5.71 + (floor(spindashTotal) / 2.5)) * xsc
-			//these numbers are based off the physics guide but scaled down
-			//arround the regular max speed
-			//so its not like super busted
+			gsp = (4 + (floor(spindashTotal) / 2.5)) * xsc
+			//apply spindash speed based off amount of spindash presses
 			stopsfx(charmName+"spindash")
 			playsfx(charmName+"release")
 		}
@@ -101,9 +102,15 @@ if (!grounded) {
 
 	#endregion
 	control_lock= max(0,control_lock - 1)
-	//handles slope influence  
-	player_slide_sonic(0.125, rolling, 0.078125, 0.3125);
+	//handles slope influence
+	if (state == "roll") {
+		player_slide_sonic(0.125, rolling, 0.078125, 0.3125);
+	}
 	
+	if (steep_slope) && (state == "") { //slide down steep slopes
+		gsp -= (0.225 * dsin(colangle))
+		no_move = 1
+	}
 }
 	
 #region Jumping
@@ -120,7 +127,7 @@ if (state == "" || state == "roll") && (apress) && (canjump > 0) {
 	state = "jump"
 	grounded = false
 	colangle = colangle * 0.9
-	vsp -= (6) * dcos(colangle);
+	vsp -= (6) * dcos(colangle/4);
 	hsp -= (6) * dsin(colangle);
 	playsfx(charmName+"jump",1,0,1)
 	canjump = 0;
@@ -229,8 +236,8 @@ gsp = hsp
 if (colangle < 0) colangle += 360
 show_debug_message(colangle)
 
-if(colangle >= 24 && colangle <= 90)
-	{
+if (colangle >= 24 && colangle <= 90)
+{
     if (colangle >= 45)
 	{
 		if (abs(hsp) <= abs(vsp)) {
@@ -244,7 +251,7 @@ if(colangle >= 24 && colangle <= 90)
 	}
 }
 
-if(colangle <= 336 && colangle >= 270)
+if (colangle <= 336 && colangle >= 270)
 {
 	if (colangle <= 315)
 	{

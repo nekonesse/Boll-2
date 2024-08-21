@@ -6,10 +6,10 @@ function player_movement_sonic(){
 	
 	if (piped) exit
 	
-	if !(no_move) 
+	if !(no_move)
 	move = (right - left);
 	
-	if (move != 0) && !(no_move || move_lock)
+	if (move != 0) && !(steep_slope || no_move || move_lock)
 	{	
 		//dont walk up a slope if its too steep to walk on!
 		
@@ -40,6 +40,7 @@ function player_movement_sonic(){
 	{
 		move=0 //just in case
 		// chearii: mhomentunmnm
+		
 		if (grounded) {
 		
 			if (sign(gsp) = -1){
@@ -53,7 +54,7 @@ function player_movement_sonic(){
 	if (abs(gsp) > maxspd) && (grounded) gsp=approach_val(gsp,maxspd,0.5) 
 	if (abs(hsp) > maxspd) && (!grounded) hsp=approach_val(hsp,maxspd,0.5)
 	
-	if grounded {
+	if (grounded) {
 		vsp = gsp * -dsin(colangle)
 		hsp = gsp * dcos(colangle)
 	}

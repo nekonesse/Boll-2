@@ -77,7 +77,7 @@ if (state == "" || state == "jump") {
 		player_slide(12.5, 0.225, 0.32, false);
 		
 		//temp skidding
-		if (sign(hsp)!=esign(move,xsc)) {
+		if (sign(gsp)!=esign(move,xsc)) {
 			if (abs(hsp)>2 && !carry && !skidding) {
 				skidding=1
 				//playsfx(name+"skid",1)
