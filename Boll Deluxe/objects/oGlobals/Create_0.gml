@@ -19,8 +19,11 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		//Objects
 		txr_constant_add("oCollider",oCollider)
 		txr_constant_add("oSemilider",oSemilider)
+		txr_constant_add("oHittable",oHittable)
 		txr_constant_add("oPipe",oPipe)
 		txr_constant_add("oMushroom",oMushroom)
+		txr_constant_add("oCoin",oCoin)
+		txr_constant_add("pSmoke",pSmoke)
 	#endregion
 	
 	#region Type

@@ -22,6 +22,9 @@ poundjump = 0;
 if (braking) xsc=brakedir
 maxspd = 2+runvar;
 no_move = !(!pound && !pound_timer && !alarm_get(2));
+if (slopesliding) { //prevent mario from defying gravity like god if he magnets onto a semisolid while groundpounding
+	grav = defaultgrav;
+}
 //add more checks here
 
 if ((apress) && !(grounded)) {
@@ -91,9 +94,6 @@ if (!grounded) {
 	}
 	//maximum speed when sliding, infulence when sliding, influence on steep slopes, add steep influence while sliding?
 	player_slide(5.5, 0.225, 0.32, false);
-	if (slopesliding) { //kinda hacky fix to mario becoming god if groundpounding within a semisolid slope
-		grav = defaultgrav;
-	}
 	
 	//temp skidding
 	if (sign(hsp)!=esign(move,xsc)) {
@@ -141,6 +141,15 @@ if (canjump > 0 || wallsliding) && (apress || (wallsliding && alarm_get(1) > 0))
 	} else {
 		//regular jumping
 		vsp = -(6+min(1,abs(hsp)/10)+(bool(poundjump)+0.5)); //jump power
+		//pound jump
+		//create pound smoke
+		if (poundjump) {
+			var i=instance_create_depth(x-10,y-8,0,pSmoke);
+			i.vspeed=-1;
+			var i=instance_create_depth(x+8,y-8,0,pSmoke);
+			i.vspeed=-1;
+		}
+		
 		canstopjump = 1;
 		no_move = false;
 	}
@@ -250,6 +259,13 @@ bonk = 12
 if (pound) {
 	playsfx(charmName+"stomp")
 	poundjump = 16;
+	//create pound smoke
+	var i=instance_create_depth(x-2,y,0,pSmoke);
+	i.hspeed=1.5;
+	i.vspeed=-1;
+	var i=instance_create_depth(x-2,y,0,pSmoke);
+	i.hspeed=-1.5;
+	i.vspeed=-1;
 }
 
 bonk = 0;
