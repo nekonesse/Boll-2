@@ -12,16 +12,18 @@ no_move = 0;
 skidding = 0;
 skiddir = 0;
 storedxsc = 1;
+grav=0.225;
+defaultgrav = grav;
 //spindash = 0;
 spindashTotal = 0;
-topspd = 3.5;
+topspd = 4.5;
 state = "";
 control_lock = 0;
 
 #define step
 
 if (braking) xsc=brakedir
-topspd = 3.5
+topspd = 4.5
 maxspd = 12.5;
 no_move = false
 //add more checks here
@@ -114,7 +116,7 @@ if (state == "jump") {
 	
 }
 
-if (state == "" || state == "roll") && (apress || bpress || cpress) && (canjump > 0) {
+if (state == "" || state == "roll") && (apress) && (canjump > 0) {
 	state = "jump"
 	grounded = false
 	show_debug_message(colangle);
@@ -187,7 +189,8 @@ if (state == "") {
 }
 
 if (state == "roll" || state == "jump") {
-	frspd=0.2+abs(gsp)/3
+	if state!="jump" frspd=0.2+abs(gsp)/3
+	else frspd=1
 	sprite="ball"
 	if (bonk) {
 		frspd=1

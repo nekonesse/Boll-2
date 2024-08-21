@@ -47,11 +47,11 @@ function warp_out_pipe(obj,spd,dir) {
 
 function player_warping(){
 	//THIS SUCKS!!!!!!!!!
-	var pipecoll=check_collision_line(x-hit_sizex,y+hit_sizey+1,x+hit_sizex,y+hit_sizey+1,COL_BOTTOM,oPipe)
-	if (pipecoll && pipecoll.pipe_direction==directions.up && pipecoll.warptarget!="") {
+	var pipecoll=collision_line(x-hit_sizex,y+hit_sizey+1,x+hit_sizex,y+hit_sizey+1,oPipe,false,true)
+	if (pipecoll && real(pipecoll.image_angle)==0 && pipecoll.warptarget!="") {
 		if (down) && !(piped) && (grounded) && !(warp_coll) {
 			piped=true
-			warp_type="enter_"
+			warp_type="enter_pipe"
 			warp_timer=60;
 			warp_coll=pipecoll
 			x=pipecoll.x
@@ -59,9 +59,9 @@ function player_warping(){
 	}
 	if (warp_coll) && (warp_timer) && (piped) {
 		if !(warp_out) {
-			warp_in_pipe(warp_coll,1,270)
+			warp_in_pipe(warp_coll,1,warp_coll.image_angle)
 		} else {
-			warp_out_pipe(warp_coll,1,90)
+			warp_out_pipe(warp_coll,1,-warp_coll.image_angle)
 		}
 	}
 }

@@ -11,7 +11,7 @@
 	"iid": "89e20cd0-6280-11ee-9ff1-11df5747d5f3",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 95,
+	"nextUid": 97,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -725,7 +725,7 @@
 					"uid": 20,
 					"type": "F_String",
 					"isArray": false,
-					"canBeNull": false,
+					"canBeNull": true,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "NameAndValue",
@@ -733,7 +733,7 @@
 					"editorDisplayPos": "Above",
 					"editorLinkStyle": "StraightArrow",
 					"editorDisplayColor": null,
-					"editorAlwaysShow": false,
+					"editorAlwaysShow": true,
 					"editorShowInWorld": true,
 					"editorCutLongValues": true,
 					"editorTextSuffix": null,
@@ -870,16 +870,16 @@
 					"tilesetUid": null
 				},
 				{
-					"identifier": "Directions",
+					"identifier": "image_angle",
 					"doc": null,
-					"__type": "LocalEnum.Directions",
-					"uid": 66,
-					"type": "F_Enum(65)",
+					"__type": "Int",
+					"uid": 96,
+					"type": "F_Int",
 					"isArray": false,
 					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
-					"editorDisplayMode": "ValueOnly",
+					"editorDisplayMode": "Hidden",
 					"editorDisplayScale": 1,
 					"editorDisplayPos": "Above",
 					"editorLinkStyle": "StraightArrow",
@@ -892,14 +892,11 @@
 					"useForSmartColor": false,
 					"exportToToc": false,
 					"searchable": false,
-					"min": null,
-					"max": null,
+					"min": 0,
+					"max": 270,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": {
-						"id": "V_String",
-						"params": ["Up"]
-					},
+					"defaultOverride": { "id": "V_Int", "params": [0] },
 					"textLanguageMode": null,
 					"symmetricalRef": false,
 					"autoChainRef": true,
@@ -2714,7 +2711,7 @@
 					"layerDefUid": 7,
 					"pxOffsetX": 0,
 					"pxOffsetY": 0,
-					"visible": true,
+					"visible": false,
 					"optionalRules": [],
 					"intGridCsv": [],
 					"autoLayerTiles": [],
@@ -2887,6 +2884,8 @@
 						{ "px": [304,112], "src": [16,0], "f": 0, "t": 1, "d": [1069], "a": 1 },
 						{ "px": [320,112], "src": [32,0], "f": 0, "t": 2, "d": [1070], "a": 1 },
 						{ "px": [336,112], "src": [32,0], "f": 0, "t": 2, "d": [1071], "a": 1 },
+						{ "px": [352,112], "src": [32,0], "f": 0, "t": 2, "d": [1072], "a": 1 },
+						{ "px": [368,112], "src": [32,0], "f": 0, "t": 2, "d": [1073], "a": 1 },
 						{ "px": [0,128], "src": [48,32], "f": 0, "t": 83, "d": [1200], "a": 1 },
 						{ "px": [16,128], "src": [64,32], "f": 0, "t": 84, "d": [1201], "a": 1 },
 						{ "px": [112,128], "src": [16,64], "f": 0, "t": 161, "d": [1207], "a": 1 },
@@ -4090,7 +4089,7 @@
 								}] },
 								{ "__identifier": "warplevel", "__type": "String", "__value": "", "__tile": null, "defUid": 24, "realEditorValues": [] },
 								{ "__identifier": "canenter", "__type": "Bool", "__value": false, "__tile": null, "defUid": 22, "realEditorValues": [] },
-								{ "__identifier": "Directions", "__type": "LocalEnum.Directions", "__value": "Up", "__tile": null, "defUid": 66, "realEditorValues": [] }
+								{ "__identifier": "image_angle", "__type": "Int", "__value": 90, "__tile": null, "defUid": 96, "realEditorValues": [{ "id": "V_Int", "params": [90] }] }
 							],
 							"__worldX": 368,
 							"__worldY": 128
@@ -4118,7 +4117,7 @@
 								}] },
 								{ "__identifier": "warplevel", "__type": "String", "__value": "", "__tile": null, "defUid": 24, "realEditorValues": [] },
 								{ "__identifier": "canenter", "__type": "Bool", "__value": false, "__tile": null, "defUid": 22, "realEditorValues": [] },
-								{ "__identifier": "Directions", "__type": "LocalEnum.Directions", "__value": "Up", "__tile": null, "defUid": 66, "realEditorValues": [] }
+								{ "__identifier": "image_angle", "__type": "Int", "__value": 0, "__tile": null, "defUid": 96, "realEditorValues": [] }
 							],
 							"__worldX": 64,
 							"__worldY": 400
@@ -4184,10 +4183,13 @@
 									"id": "V_String",
 									"params": ["C"]
 								}] },
-								{ "__identifier": "warptarget", "__type": "String", "__value": "", "__tile": null, "defUid": 21, "realEditorValues": [] },
+								{ "__identifier": "warptarget", "__type": "String", "__value": "B", "__tile": null, "defUid": 21, "realEditorValues": [{
+									"id": "V_String",
+									"params": ["B"]
+								}] },
 								{ "__identifier": "warplevel", "__type": "String", "__value": "", "__tile": null, "defUid": 24, "realEditorValues": [] },
 								{ "__identifier": "canenter", "__type": "Bool", "__value": false, "__tile": null, "defUid": 22, "realEditorValues": [] },
-								{ "__identifier": "Directions", "__type": "LocalEnum.Directions", "__value": "Up", "__tile": null, "defUid": 66, "realEditorValues": [] }
+								{ "__identifier": "image_angle", "__type": "Int", "__value": 0, "__tile": null, "defUid": 96, "realEditorValues": [] }
 							],
 							"__worldX": 400,
 							"__worldY": 400
@@ -5396,22 +5398,6 @@
 							"fieldInstances": [],
 							"__worldX": 176,
 							"__worldY": 80
-						},
-						{
-							"__identifier": "KoopaYellow",
-							"__grid": [140,11],
-							"__pivot": [0.5,0],
-							"__tags": [],
-							"__tile": { "tilesetUid": 2, "x": 528, "y": 400, "w": 16, "h": 16 },
-							"__smartColor": "#FEE761",
-							"iid": "b426c5f0-4ce0-11ef-baa0-23f4931f1e41",
-							"width": 16,
-							"height": 16,
-							"defUid": 94,
-							"px": [2248,176],
-							"fieldInstances": [],
-							"__worldX": 2248,
-							"__worldY": 176
 						}
 					]
 				},
@@ -6262,22 +6248,6 @@
 							"fieldInstances": [],
 							"__worldX": 1808,
 							"__worldY": 240
-						},
-						{
-							"__identifier": "Semilider",
-							"__grid": [109,12],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": { "tilesetUid": 15, "x": 80, "y": 0, "w": 16, "h": 16 },
-							"__smartColor": "#EAD4AA",
-							"iid": "3b9b17d0-4ce0-11ef-baa0-d734cf03f2e4",
-							"width": 544,
-							"height": 16,
-							"defUid": 6,
-							"px": [1744,192],
-							"fieldInstances": [],
-							"__worldX": 1744,
-							"__worldY": 192
 						}
 					]
 				}

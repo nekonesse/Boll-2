@@ -248,6 +248,7 @@ if (state == "jump") {
 	sprite="jump"
 	if (vsp>0) sprite="fall"
 	if (runjump) sprite="runjump"
+	if (bonk) sprite="bonk"
 }
 
 if (state == "pound") {

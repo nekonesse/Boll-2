@@ -21,6 +21,8 @@ hit_sizex = 6
 hit_sizey = 6
 collision_array=[oCollider];
 
+colangle=0;
+
 flipped=false
 
 function ball_movement() {
@@ -50,12 +52,13 @@ function ball_movement() {
 		//apply friction
 		gsp = approach_val(gsp,0,0.02)
 		
-		var coll=check_collision_line(x-hit_sizex,y+hit_sizey+2,x+hit_sizex,y+hit_sizey+2, COL_BOTTOM)
+		var coll=collision_line(x-hit_sizex,y+hit_sizey+2,x+hit_sizex,y+hit_sizey+2, collision_array, true, true)
+		var is_coll=check_collision_line(x-hit_sizex,y+hit_sizey+2,x+hit_sizex,y+hit_sizey+2, COL_BOTTOM, collision_array)
 		
 		//center of mass checking, checks if the center is leaning off an edge and pushes it off
-		if (coll) && (x > coll.bbox_right) && (y < (coll.bbox_top+2)) { //left leaning
+		if (is_coll) && (coll) && (x > coll.bbox_right) && (y < (coll.bbox_top+2)) { //left leaning
 			hsp -= 0.05
-		} else if (coll) && (x < coll.bbox_left) && (y < (coll.bbox_top+2)) { //right leaning
+		} else if (is_coll) && (coll) && (x < coll.bbox_left) && (y < (coll.bbox_top+2)) { //right leaning
 			hsp += 0.05
 		} else {
 			gsp -= (0.25 * dsin(colangle)) //regular slope speed
