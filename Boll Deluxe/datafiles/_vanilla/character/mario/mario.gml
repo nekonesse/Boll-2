@@ -3,7 +3,6 @@ sprite_list=split_string("stand,wait,lookup,pose,crouch,hurt,dead,walk,run,brake
 sound_list=split_string("select,damage,die,jump,win,step,bonk",",");
 
 #define create
-jump = 0;
 slopesliding = 0;
 no_move = 0;
 fric = 0.0625;
@@ -12,21 +11,30 @@ runjump = 0;
 skidding = 0;
 skiddir = 0;
 pound_timer = 0;
-pound = 0;
 storedxsc = 1;
-wallsliding = false;
 poundjump = 0;
+state = "";
 
+
+//chopp: oops rewriting the entire players script
 #define step
 
 if (braking) xsc=brakedir
 maxspd = 2+runvar;
-no_move = !(!pound && !pound_timer && !alarm_get(2));
-if (slopesliding) { //prevent mario from defying gravity like god if he magnets onto a semisolid while groundpounding
-	grav = defaultgrav;
-}
-//add more checks here
 
+#region PreventMovement
+no_move = 0;
+
+if (state == "pound") {
+	no_move = 1;
+}
+if (alarm_get(2)){
+	no_move = 1;
+}
+
+#endregion
+//add more checks here
+#region Normal
 if ((apress) && !(grounded)) {
 	alarm_set(0,5);  // ammount of frames for jump buffering
 	alarm_set(1,3);  // Walljump buffering
@@ -40,156 +48,147 @@ if ((alarm_get(0) > 0) && (grounded)) {
 	alarm_set(0,0)
 }
 
-// Fall off platform
-if (!grounded) {
-	vsp = min(4, vsp + grav);
-	canjump -= 1;
+if (state == "" || state == "jump") {
+	grav = defaultgrav;
 	
-	// chearii: coneyor speed management
-	if (abs(chsp * 100))
-	{
-		chsp *= 0.95;
-		
-		if (((chsp * 100) / 1) == 0)
-		chsp = 0;
+	if (bkey) {
+		run=1.5;
+	} else {
+		run = 0;
 	}
 	
-	#region Groundpound
-	if (downpress) && !(pound_timer) && !(pound) {
-		pound_timer=10;
+	if (!grounded) {
+		vsp = min(4, vsp + grav);
+		canjump -= 1;
+		
+		// chearii: coneyor speed management
+		if (abs(chsp * 100))
+		{
+			chsp *= 0.95;
+			
+			if (((chsp * 100) / 1) == 0)
+			chsp = 0;
+		}
+	} else {
+		canjump = 5;  // Coyote frames
+		runjump = 0;
+	
+		//maximum speed when sliding, infulence when sliding, influence on steep slopes, add steep influence while sliding?
+		player_slide(5.5, 0.225, 0.32, false);
+		
+		//temp skidding
+		if (sign(hsp)!=esign(move,xsc)) {
+			if (abs(hsp)>2 && !carry && !skidding) {
+				skidding=1
+				//playsfx(name+"skid",1)
+				skiddir=esign(move,xsc)
+			}
+		} else {
+			skidding=0
+		}
+	}
+}
+if (state == "") {
+	
+	if (!abs(sign(colslope)) && (abs(hsp) < 0.25)){
+		slopesliding = 0
+		crouch = 0
+	}
+}
+
+
+#endregion
+
+#region Groundpound
+if (state == "pound") {
+	slopesliding = 0
+	pound_timer = max(0,pound_timer-1);
+	
+	if (up) {
+		state = "";
+		pound_timer = 0;
+	}
+	
+	if (pound_timer > 0) {
 		hsp=0;
 		grav=0;
-		playsfx(charmName+"pound")
-	}
-	
-	if (pound_timer) && !(pound) {
-		pound_timer = max(0,pound_timer-1);
-		
-		if !(pound_timer) {
-			pound = 1;
-			grav = defaultgrav;
-		}
 		vsp = 0;
-	}
-	
-	if (pound) {
+	} else {
+		grav = defaultgrav;
 		vsp = 7;
 		hsp = 0;
 	}
-	
-	//cancel groundpound
-	if (up) && (pound) {
-		pound = 0;
-		pound_timer = 0;
-		grav = defaultgrav;
-	}
-	#endregion
-} else {
-	canjump = 5;  // Coyote frames
-	jump = 0;
-	runjump = 0;
-	if (pound) {
-		vsp = 0;
-		pound = false;
-	}
-	//maximum speed when sliding, infulence when sliding, influence on steep slopes, add steep influence while sliding?
-	player_slide(5.5, 0.225, 0.32, false);
-	
-	//temp skidding
-	if (sign(hsp)!=esign(move,xsc)) {
-		if (abs(hsp)>2 && !carry && !skidding) {
-			skidding=1
-			//playsfx(name+"skid",1)
-			skiddir=esign(move,xsc)
-		}
-	} else {
-		skidding=0
-	}
-
 }
 
-//End slope sliding (THIS CANNOT BE IN THE PLAYER_SLIDE FUNCTION WITHOUT REWORKING IT !!!!)
-if ((!abs(sign(colslope)) && (abs(hsp) < 0.25)) || jump) {
+#endregion
+
+#region Jumping
+if (state == "jump") {
 	slopesliding = 0
 	crouch = 0
-}
-	
-#region Jumping
-if (!akey) //Make player jump lower when jump is released
-{
-	if ((canstopjump) && (vsp < -2))
+	if (!akey && vsp < -2) //Make player jump lower when jump is released
 	{
-	    vsp *= 0.6;
+		vsp *= 0.6;
+	}
+	
+	if (downpress) {
+		pound_timer = 10
+		state = "pound"
+		playsfx(charmName+"pound")
+	}
+	
+	if (!alarm_get(2)) {
+		steep_slope = false;
+		no_move = false;
+	}
+	
+	if (move != 0) {
+		//wall sliding
+		var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
+		if (!grounded) && (coll) && (vsp > 0){
+			state = "wallslide"
+			
+		} 
 	}
 }
 
-//Actual Jump
-if (canjump > 0 || wallsliding) && (apress || (wallsliding && alarm_get(1) > 0))
-{
-	jump = 1;
-	bonk = 0;
-	bufferjump = 0;
-	groundtime = 0;
+if (state == "" && apress && canjump > 0) {
+	state = "jump"
 	grounded = false
-	if (wallsliding) {
-		//walljumping
+	vsp = -(6+min(1,abs(hsp)/10)+(bool(poundjump)+0.5));
+	playsfx(charmName+"jump",0,1)
+	if ((run && abs(hsp)>3) && !wallsliding) {runjump=1} 
+	if (poundjump) {
+ 		var i=instance_create_depth(x-10,y-8,0,pSmoke);
+		i.vspeed=-1;
+		var i=instance_create_depth(x+8,y-8,0,pSmoke);
+		i.vspeed=-1;
+	}
+	canjump = 0;
+}
+#endregion
+
+#region Wallsliding
+if (state == "wallslide") {
+	vsp=min(vsp,0.75);
+	var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
+	
+	if (move == 0 || !coll){
+		state = "";
+	}
+	
+	if (apress) {
 		hsp=esign(move,xsc)*-2.5
 		vsp=-5
 		xsc=esign(hsp,xsc)
 		no_move=true;
 		alarm_set(2,12);
-	} else {
-		//regular jumping
-		vsp = -(6+min(1,abs(hsp)/10)+(bool(poundjump)+0.5)); //jump power
-		//pound jump
-		//create pound smoke
-		if (poundjump) {
-			var i=instance_create_depth(x-10,y-8,0,pSmoke);
-			i.vspeed=-1;
-			var i=instance_create_depth(x+8,y-8,0,pSmoke);
-			i.vspeed=-1;
-		}
-		
-		canstopjump = 1;
-		no_move = false;
+		state = "jump";
 	}
-	canjump = 0;
-	steep_slope = false;
-	//check if speed is high enough for visual run jump
-	if ((run && abs(hsp)>3) && !wallsliding) {runjump=1} 
-	playsfx(charmName+"jump",1+(bool(poundjump)/4),0,1)
-	wallsliding = false;
-}
-
-if (jump && (!pound && !pound_timer) && !alarm_get(2)) {
-	steep_slope = false;
-	no_move = false;
+	
 }
 #endregion
 
-#region Wallsliding
-if (move != 0) {
-	//wall sliding
-	var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
-	if (!grounded) && (coll) && (vsp > 0) && !(move_lock) {
-		vsp=min(vsp,0.75);
-		wallsliding=true;
-	} else {
-		if (wallsliding) xsc=-xsc;
-		wallsliding=false;
-	}
-} else {
-	wallsliding=false;
-}
-#endregion
-
-#region Running
-if (bkey) {
-	run=1.5;
-} else {
-	run = 0;
-}
-#endregion
 
 if (colangle != 0 && slopesliding){
 	fric = 0.048; //limit friction for more slideee
@@ -213,8 +212,9 @@ if (sprindex_prev != sprite_index) {
 
 // Switch direction
 //add more checks here to prevent left/right changing direction
-if (left || right) && !(slopesliding) && !(pound_timer || pound)
-xsc = esign(move, xsc)
+if (left || right) && (state == "" || state == "jump") {
+	xsc = esign(move, xsc)
+}
 
 bonk=max(0,bonk-1)
 poundjump=max(0,poundjump-1)
@@ -223,25 +223,43 @@ runvar = approach_val(runvar,run,0.05)
 
 #define sprmanager
 frspd=1
-if (slopesliding) sprite="slide"
-else if (!grounded) {
-	if (wallsliding) sprite="wallslide"
-	else if (pound_timer) sprite="groundpound"
-	else if (pound) sprite="poundfall"
-	else if (bonk) sprite="bonk"
-	else if (vsp>0 && !runjump) sprite="fall"
-	else if (jump) if (runjump) sprite="runjump" else sprite="jump"
+
+if (state == "") {
+	if (ceil(abs(hsp))>3) sprite="run"
+	else if !(abs(hsp)) sprite="stand"
+	else {
+		frspd=abs(hsp)/4
+		sprite="walk"
+	}
+	
+	if (!grounded) {
+		if (vsp>0) sprite="fall"
+	}
+	
+	if (crouch) sprite="crouch"
+	
+	if (skidding) {
+		sprite="brake" 
+		xsc = -(skiddir)
+	}
 }
-else if (crouch) sprite="crouch"
-else if (skidding) {
-	sprite="brake" 
-	xsc = -(skiddir)
+
+if (state == "jump") {
+	sprite="jump"
+	if (vsp>0) sprite="fall"
+	if (runjump) sprite="runjump"
 }
-else if (ceil(abs(hsp))>3) sprite="run"
-else if !(abs(hsp)) sprite="stand"
-else {
-	frspd=abs(hsp)/4
-	sprite="walk"
+
+if (state == "pound") {
+	if (pound_timer > 0) sprite="groundpound" else sprite="poundfall"
+}
+
+if (state == "wallslide") {
+	sprite="wallslide"
+}
+
+if (slopesliding) {
+	sprite="slide"
 }
 
 //chopp: to handle any signals, make sure you define the code here with the same name 
@@ -256,9 +274,9 @@ show_debug_message("eatted it :)");
 bonk = 12
 
 #define floor_land
-if (pound) {
-	playsfx(charmName+"stomp")
+if (state == "pound") {
 	poundjump = 16;
+	playsfx(charmName+"stomp");
 	//create pound smoke
 	var i=instance_create_depth(x-2,y,0,pSmoke);
 	i.hspeed=1.5;
@@ -268,12 +286,8 @@ if (pound) {
 	i.vspeed=-1;
 }
 
-bonk = 0;
-pound = 0;
-pound_timer = 0;
+state = ""
+
 
 #define sprung
-canstopjump=0;
-bonk = 0;
-pound = 0;
-pound_timer = 0;
+state = "jump";
