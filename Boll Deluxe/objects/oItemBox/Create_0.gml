@@ -24,7 +24,7 @@ blockFinished.Connect( self, function() {
 
 blockHit.Connect( self, function(hit_p, obj) {
 	if !times_hit && content=="multicoins" reduce_timer=180;
-	
+
 	flash=bumpMax
 	times_hit++;
 	event_user(2);

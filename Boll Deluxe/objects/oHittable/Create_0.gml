@@ -21,7 +21,7 @@ blockHit = new Signal();
 blockFinished = new Signal();
 
 blockHit.Connect( self, function(hit_p, obj) {
-    
+ 
 	hit = hit_p;
 	dy = -1 * hit;
 	obj.bonk = 12;

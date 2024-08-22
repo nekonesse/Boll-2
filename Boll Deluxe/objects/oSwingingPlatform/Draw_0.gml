@@ -17,6 +17,6 @@ else
 	}
 	draw_sprite(spr_swingplatchain,1,floor(targetx),floor(targety))
 
-	draw_sprite(sprite_index,image_index,floor(x),floor(y))
+	draw_sprite_ext(sprite_index,image_index,floor(x),floor(y),image_xscale,image_yscale,image_angle,c_white,1)
 }
 

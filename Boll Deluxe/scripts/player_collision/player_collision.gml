@@ -8,12 +8,12 @@ function player_collision(){
 	
 	
 	//left wall
-	while check_collision_dot(x-hit_sizex, y-max(vsp, 0), COL_WALL){
+	while check_collision_dot(x-hit_sizex, y-clamp(vsp,-2,2), COL_WALL){
 		x++		
 	}
 		
 	//right wall
-	while check_collision_dot(x+hit_sizex, y-max(vsp, 0), COL_WALL){
+	while check_collision_dot(x+hit_sizex, y-clamp(vsp,-2,2), COL_WALL){
 		x--
 	}
 	
@@ -54,7 +54,10 @@ function player_collision(){
 				var _num = instance_place_list(x, y-1, oHittable, _list, false);
 				if (_num > 0) {
 					for (var i = 0; i < _num; ++i;) {
-						with(_list[| i]) if !(no_hit) blockHit.Emit(-1, other.id)
+						with(_list[| i]) if !(no_hit) {
+							dummyTimer = dummyTimerReset;
+							blockHit.Emit(-1, other.id)
+						}
 					}
 				}
 				
