@@ -107,7 +107,7 @@ if (!grounded) {
 		player_slide_sonic(0.125, rolling, 0.078125, 0.3125);
 	}
 	
-	if (steep_slope) && (state == "") { //slide down steep slopes
+	if (steep_slope) && (state == "" || state == "crouch" || state == "spindash") { //slide down steep slopes
 		gsp -= (0.225 * dsin(colangle))
 		no_move = 1
 	}

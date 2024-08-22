@@ -225,8 +225,6 @@
     {"$GMIncludedFile":"","%Name":"LDKTTiles.png","CopyToMask":-1,"filePath":"datafiles/mods/level/Testing Grounds","name":"LDKTTiles.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles/mods/level/Testing Grounds","name":"level.ldtk","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"TilesetMain.png","CopyToMask":-1,"filePath":"datafiles/mods/level/Testing Grounds","name":"TilesetMain.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"LDTKIcons.png","CopyToMask":-1,"filePath":"datafiles/mods/level/World 1-1","name":"LDTKIcons.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles/mods/level/World 1-1","name":"level.ldtk","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"LDKTTiles.png","CopyToMask":-1,"filePath":"datafiles/mods/level/World 1-Fthr","name":"LDKTTiles.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"level.ldtk","CopyToMask":-1,"filePath":"datafiles/mods/level/World 1-Fthr","name":"level.ldtk","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"TilesetMain.png","CopyToMask":-1,"filePath":"datafiles/mods/level/World 1-Fthr","name":"TilesetMain.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
