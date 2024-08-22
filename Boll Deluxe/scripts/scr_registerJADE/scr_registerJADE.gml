@@ -93,6 +93,7 @@ function JADE_load() {
         file_text_readln(save_file);
 	}
 	tilemap_clear(tilemap, 0) //erase tilemap beforehand
+	ds_list_empty(tile_layer_map) //erase tile map beforehand
     for (var i = 0; i < tilesize; ++i) { //loading tiles
 		var data = json_parse(file_text_read_string(save_file));
 		var tiledata = tilemap_get_at_pixel(tilemap, data[1], data[2]); //set tile at place

@@ -35,8 +35,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_yellowswitchslope",
-    "path":"sprites/spr_yellowswitchslope/spr_yellowswitchslope.yy",
+    "name":"spr_cyanswitchslope",
+    "path":"sprites/spr_cyanswitchslope/spr_cyanswitchslope.yy",
   },
   "spriteMaskId":null,
   "visible":true,
