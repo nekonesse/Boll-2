@@ -14,12 +14,11 @@ curs_y=mouse_y-cam_y
 var guiw=display_get_gui_width()
 var guih=display_get_gui_height()
 var tb_length = array_length(toolbar[selected_mode])
-not_on_gui= true
+not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
+&&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
+&&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
 	
-if point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
-&&point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
-&&point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
-&&(show_tileset && point_in_rectangle(curs_x,curs_y,45,45,250,250)) {
+if (show_tileset) {
 	not_on_gui = false	
 }
 
@@ -180,6 +179,35 @@ if (mbleftpress) {
 				break;
 			}
 		}
+		switch(selected_tool) {
+		case FLIP_TOOL:
+			switch(selected_mode) {
+				case TILE_MODE:
+					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
+					data = tile_set_flip(data, 1 - tile_get_flip(data))
+					tilemap_set(tilemap, data, gridx, gridy);
+				break;
+			}
+		break;
+		case MIRROR_TOOL:
+			switch(selected_mode) {
+				case TILE_MODE:
+					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
+					data = tile_set_mirror(data, 1 - tile_get_mirror(data))
+					tilemap_set(tilemap, data, gridx, gridy);
+				break;
+			}
+		break;
+		case ROTATE_TOOL:
+			switch(selected_mode) {
+				case TILE_MODE:
+					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
+					data = tile_set_rotate(data, 1 - tile_get_rotate(data))
+					tilemap_set(tilemap, data, gridx, gridy);
+				break;
+			}
+		break;
+		}
 	}
 }
 
@@ -327,8 +355,8 @@ if show_tileset && mbleft {
 		var t_width = sprite_get_width(spr_TilesetMain)
 		var t_height  = sprite_get_height(spr_TilesetMain)
 		var t_size = 16 * 0.33
-		var sel_x = max(mouse_x - 50, 0)
-		var sel_y = max(mouse_y - 50, 0)
+		var sel_x = max(device_mouse_x_to_gui(0) - 50, 0)
+		var sel_y = max(device_mouse_y_to_gui(0) - 50, 0)
 		//show_debug_message(string(floor(mouse_x / t_size)) + " : "+ string(tilelapmap.width/ 16))
 		current_tile_id = clamp(floor(sel_x / t_size), 0, t_width/ 16) + (clamp(floor(sel_y / t_size), 0, t_height/ 16) * (t_width/16))
 		
@@ -383,6 +411,19 @@ if (mbleft && not_on_gui) {
 				break;
 			}
 		break;
+		case PICKER_TOOL:
+			switch(selected_mode) {
+				case TILE_MODE:
+					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
+					if tile_get_index(data) != current_tile_id && not_on_gui {
+						current_tile_id = tile_get_index(data)
+						selected_toolbar = 0
+					}
+				break;
+			}
+		break;
+		
+		
 		}
 	
 }

@@ -91,7 +91,7 @@ for (var i = 0; i < tb_length; ++i) //draw Editor icons
 #endregion
 
 if selected_mode = TILE_MODE {
-	
+
 	if show_tileset {
 		var tilelapmap = tileset_get_info(tTilesetMain)
 		draw_sprite_ext(spr_TilesetMain, 0, 50,50, 0.33, 0.33, 0, c_white, 1)	
