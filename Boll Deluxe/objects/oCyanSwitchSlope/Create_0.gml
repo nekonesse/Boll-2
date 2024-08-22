@@ -6,7 +6,7 @@ LDtkReloadFields();
 
 if hflip = true {
 	image_xscale *= -1;
-	x -= sprite_width 
+	x -= sprite_width + 0.5
 }
 switch_state=false;
 slope_set_rise_run(self);

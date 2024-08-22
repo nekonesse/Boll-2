@@ -8,12 +8,13 @@ event_inherited()
 hflip = false;
 slope = true;
 semi = true;
+ramp = false
 influence = true;
 LDtkReloadFields();
 
 if hflip = true {
 	image_xscale = image_xscale * -1
-	x -= sprite_width 
+	x -= sprite_width + 0.5
 	}
 slope_set_rise_run(self);
 //no_collide = false;

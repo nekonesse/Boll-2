@@ -11,7 +11,7 @@
 	"iid": "89e20cd0-6280-11ee-9ff1-11df5747d5f3",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 97,
+	"nextUid": 98,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -332,6 +332,43 @@
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
 					"editorDisplayMode": "NameAndValue",
+					"editorDisplayScale": 1,
+					"editorDisplayPos": "Above",
+					"editorLinkStyle": "StraightArrow",
+					"editorDisplayColor": null,
+					"editorAlwaysShow": false,
+					"editorShowInWorld": true,
+					"editorCutLongValues": true,
+					"editorTextSuffix": null,
+					"editorTextPrefix": null,
+					"useForSmartColor": false,
+					"exportToToc": false,
+					"searchable": false,
+					"min": null,
+					"max": null,
+					"regex": null,
+					"acceptFileTypes": null,
+					"defaultOverride": null,
+					"textLanguageMode": null,
+					"symmetricalRef": false,
+					"autoChainRef": true,
+					"allowOutOfLevelRef": true,
+					"allowedRefs": "OnlySame",
+					"allowedRefsEntityUid": null,
+					"allowedRefTags": [],
+					"tilesetUid": null
+				},
+				{
+					"identifier": "ramp",
+					"doc": null,
+					"__type": "Bool",
+					"uid": 97,
+					"type": "F_Bool",
+					"isArray": false,
+					"canBeNull": false,
+					"arrayMinLength": null,
+					"arrayMaxLength": null,
+					"editorDisplayMode": "Hidden",
 					"editorDisplayScale": 1,
 					"editorDisplayPos": "Above",
 					"editorLinkStyle": "StraightArrow",
@@ -2671,13 +2708,13 @@
 					"layerDefUid": 7,
 					"pxOffsetX": 0,
 					"pxOffsetY": 0,
-					"visible": true,
+					"visible": false,
 					"optionalRules": [],
 					"intGridCsv": [],
 					"autoLayerTiles": [],
 					"seed": 4133538,
 					"overrideTilesetUid": null,
-					"gridTiles": [],
+					"gridTiles": [{ "px": [224,336], "src": [0,0], "f": 0, "t": 0, "d": [1169], "a": 1 }],
 					"entityInstances": []
 				},
 				{
@@ -2780,10 +2817,13 @@
 							"height": 32,
 							"defUid": 48,
 							"px": [240,352],
-							"fieldInstances": [{ "__identifier": "hflip", "__type": "Bool", "__value": true, "__tile": null, "defUid": 50, "realEditorValues": [{
-								"id": "V_Bool",
-								"params": [ true ]
-							}] }],
+							"fieldInstances": [
+								{ "__identifier": "hflip", "__type": "Bool", "__value": true, "__tile": null, "defUid": 50, "realEditorValues": [{
+									"id": "V_Bool",
+									"params": [ true ]
+								}] },
+								{ "__identifier": "ramp", "__type": "Bool", "__value": false, "__tile": null, "defUid": 97, "realEditorValues": [] }
+							],
 							"__worldX": 240,
 							"__worldY": 352
 						},
@@ -2799,10 +2839,13 @@
 							"height": 16,
 							"defUid": 48,
 							"px": [256,384],
-							"fieldInstances": [{ "__identifier": "hflip", "__type": "Bool", "__value": true, "__tile": null, "defUid": 50, "realEditorValues": [{
-								"id": "V_Bool",
-								"params": [ true ]
-							}] }],
+							"fieldInstances": [
+								{ "__identifier": "hflip", "__type": "Bool", "__value": true, "__tile": null, "defUid": 50, "realEditorValues": [{
+									"id": "V_Bool",
+									"params": [ true ]
+								}] },
+								{ "__identifier": "ramp", "__type": "Bool", "__value": false, "__tile": null, "defUid": 97, "realEditorValues": [] }
+							],
 							"__worldX": 256,
 							"__worldY": 384
 						},
@@ -2818,10 +2861,13 @@
 							"height": 16,
 							"defUid": 48,
 							"px": [272,400],
-							"fieldInstances": [{ "__identifier": "hflip", "__type": "Bool", "__value": true, "__tile": null, "defUid": 50, "realEditorValues": [{
-								"id": "V_Bool",
-								"params": [ true ]
-							}] }],
+							"fieldInstances": [
+								{ "__identifier": "hflip", "__type": "Bool", "__value": true, "__tile": null, "defUid": 50, "realEditorValues": [{
+									"id": "V_Bool",
+									"params": [ true ]
+								}] },
+								{ "__identifier": "ramp", "__type": "Bool", "__value": false, "__tile": null, "defUid": 97, "realEditorValues": [] }
+							],
 							"__worldX": 272,
 							"__worldY": 400
 						},
@@ -2837,7 +2883,10 @@
 							"height": 16,
 							"defUid": 48,
 							"px": [336,400],
-							"fieldInstances": [{ "__identifier": "hflip", "__type": "Bool", "__value": false, "__tile": null, "defUid": 50, "realEditorValues": [] }],
+							"fieldInstances": [
+								{ "__identifier": "hflip", "__type": "Bool", "__value": false, "__tile": null, "defUid": 50, "realEditorValues": [] },
+								{ "__identifier": "ramp", "__type": "Bool", "__value": false, "__tile": null, "defUid": 97, "realEditorValues": [] }
+							],
 							"__worldX": 336,
 							"__worldY": 400
 						},
@@ -2853,7 +2902,10 @@
 							"height": 16,
 							"defUid": 48,
 							"px": [368,384],
-							"fieldInstances": [{ "__identifier": "hflip", "__type": "Bool", "__value": false, "__tile": null, "defUid": 50, "realEditorValues": [] }],
+							"fieldInstances": [
+								{ "__identifier": "hflip", "__type": "Bool", "__value": false, "__tile": null, "defUid": 50, "realEditorValues": [] },
+								{ "__identifier": "ramp", "__type": "Bool", "__value": false, "__tile": null, "defUid": 97, "realEditorValues": [] }
+							],
 							"__worldX": 368,
 							"__worldY": 384
 						},
@@ -3013,7 +3065,13 @@
 							"height": 32,
 							"defUid": 48,
 							"px": [400,320],
-							"fieldInstances": [{ "__identifier": "hflip", "__type": "Bool", "__value": false, "__tile": null, "defUid": 50, "realEditorValues": [] }],
+							"fieldInstances": [
+								{ "__identifier": "hflip", "__type": "Bool", "__value": false, "__tile": null, "defUid": 50, "realEditorValues": [] },
+								{ "__identifier": "ramp", "__type": "Bool", "__value": true, "__tile": null, "defUid": 97, "realEditorValues": [{
+									"id": "V_Bool",
+									"params": [ true ]
+								}] }
+							],
 							"__worldX": 400,
 							"__worldY": 320
 						},
@@ -3029,7 +3087,10 @@
 							"height": 32,
 							"defUid": 48,
 							"px": [384,352],
-							"fieldInstances": [{ "__identifier": "hflip", "__type": "Bool", "__value": false, "__tile": null, "defUid": 50, "realEditorValues": [] }],
+							"fieldInstances": [
+								{ "__identifier": "hflip", "__type": "Bool", "__value": false, "__tile": null, "defUid": 50, "realEditorValues": [] },
+								{ "__identifier": "ramp", "__type": "Bool", "__value": false, "__tile": null, "defUid": 97, "realEditorValues": [] }
+							],
 							"__worldX": 384,
 							"__worldY": 352
 						},
@@ -3061,10 +3122,16 @@
 							"height": 32,
 							"defUid": 48,
 							"px": [224,320],
-							"fieldInstances": [{ "__identifier": "hflip", "__type": "Bool", "__value": true, "__tile": null, "defUid": 50, "realEditorValues": [{
-								"id": "V_Bool",
-								"params": [ true ]
-							}] }],
+							"fieldInstances": [
+								{ "__identifier": "hflip", "__type": "Bool", "__value": true, "__tile": null, "defUid": 50, "realEditorValues": [{
+									"id": "V_Bool",
+									"params": [ true ]
+								}] },
+								{ "__identifier": "ramp", "__type": "Bool", "__value": true, "__tile": null, "defUid": 97, "realEditorValues": [{
+									"id": "V_Bool",
+									"params": [ true ]
+								}] }
+							],
 							"__worldX": 224,
 							"__worldY": 320
 						},
