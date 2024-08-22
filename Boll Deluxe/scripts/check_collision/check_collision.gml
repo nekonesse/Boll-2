@@ -108,7 +108,7 @@ function get_angle_line(x1, y1, x2, y2){
 	
 	if collision_line(x1 ,y1,x2, y2, object,true,true)    {
 	    var found_list = ds_list_create()
-	    var found_size = collision_line_list(x1 ,y1,x2, y2, object,true,true, found_list, false)
+	    var found_size = collision_line_list(x1 ,y1,x2, y2, object,false,true, found_list, false)
     
 	    for (var i = 0; i < found_size; ++i) {    
 	        var found = found_list[| i];
