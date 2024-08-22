@@ -33,14 +33,14 @@ function warp_in_pipe(obj,spd,dir) {
 				if found.image_angle!=90 && found.image_angle!=270
 				other.y=found.y
 				else
-				other.y=found.y+8
+				other.y=found.y+4
 				other.warp_coll=found
 			} else {//if pipe is for some reason, not found, send back to original pipe
 				other.x=x
 				if image_angle!=90 && image_angle!=270
 				other.y=y
 				else
-				other.y=y+8
+				other.y=y+4
 				other.warp_coll=id;
 			}
 			other.piped=true;
@@ -58,7 +58,6 @@ function warp_out_pipe(obj,spd,dir) {
 	if warp_timer <= 1 {
 		visible=1;
 	}
-		
 	if !check_collision_rectangle(x-hit_sizex-2,y-hit_sizey-4,x+hit_sizex+2,y+hit_sizex,COL_WALL, obj) {
 		piped=false
 		warp_timer=0;
