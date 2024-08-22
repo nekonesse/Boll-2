@@ -89,3 +89,18 @@ for (var i = 0; i < tb_length; ++i) //draw Editor icons
 	
 	}
 #endregion
+
+if selected_mode = TILE_MODE {
+	
+	if show_tileset {
+		var tilelapmap = tileset_get_info(tTilesetMain)
+		draw_sprite_ext(spr_TilesetMain, 0, 50,50, 0.33, 0.33, 0, c_white, 1)	
+		var t_width = sprite_get_width(spr_TilesetMain)
+		var t_x,t_y,t_w,t_h;
+		t_x = 50+((current_tile_id mod (t_width / 16))* (16*0.33))
+		t_y = 50+(floor(current_tile_id/(t_width/16))* (16*0.33))
+		t_w = 16 * 0.33
+		t_h = 16 * 0.33
+		draw_rectangle(t_x,t_y,t_x + t_w,t_y + t_h,true)
+	}
+}

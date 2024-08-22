@@ -281,7 +281,7 @@ if (state == "pound") {
 	show_debug_message(colslope);
 	if colslope != 0 {
 		slopesliding = 1
-		gsp = (7 * colslope) 
+		gsp = (-12 * dsin(colangle)) 
 	}
 	playsfx(charmName+"stomp");
 	//create pound smoke

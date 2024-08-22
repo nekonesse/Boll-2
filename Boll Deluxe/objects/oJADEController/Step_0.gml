@@ -14,7 +14,16 @@ curs_y=mouse_y-cam_y
 var guiw=display_get_gui_width()
 var guih=display_get_gui_height()
 var tb_length = array_length(toolbar[selected_mode])
-not_on_gui=!point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)&&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)&&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
+not_on_gui= true
+	
+if point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
+&&point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
+&&point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
+&&(show_tileset && point_in_rectangle(curs_x,curs_y,45,45,250,250)) {
+	not_on_gui = false	
+}
+
+
 
 #region Camera Panning
 if (not_on_gui) && (mbmiddle) {
@@ -58,15 +67,23 @@ if keyboard_check_pressed(vk_escape) room_goto(rMainMenu)
 //half temp cycling object/tile behavior
 switch(selected_mode) {
 	case TILE_MODE:
-	if mouse_wheel_down() {
-		current_tile_id ++	
-	}
+	if selected_tool = BRUSH_TOOL {
+		if mouse_wheel_down() {
+			current_tile_id ++	
+		}
 
-	if mouse_wheel_up() {
-		current_tile_id --
+		if mouse_wheel_up() {
+			current_tile_id --
+		}
+	
+		if keyboard_check_pressed(vk_apostrophe) {
+			show_tileset = 1 - show_tileset 	
+		}
+	} else {
+		show_tileset = false
 	}
-
-	current_tile_id = wrap_val(current_tile_id, 0, 255) //todo, get tileset size lol
+	
+	//current_tile_id = wrap_val(current_tile_id, 0, 255) //todo, get tileset size lol
 
 	selected_tile=current_tile_id
 	break;
@@ -304,6 +321,22 @@ if (selected_tool == SELECT_TOOL && not_on_gui) {
 	}
 }
 
+if show_tileset && mbleft {
+	if (selected_mode = TILE_MODE) && (selected_tool = BRUSH_TOOL) {
+		var tilelapmap = tileset_get_info(tTilesetMain)
+		var t_width = sprite_get_width(spr_TilesetMain)
+		var t_height  = sprite_get_height(spr_TilesetMain)
+		var t_size = 16 * 0.33
+		var sel_x = max(mouse_x - 50, 0)
+		var sel_y = max(mouse_y - 50, 0)
+		//show_debug_message(string(floor(mouse_x / t_size)) + " : "+ string(tilelapmap.width/ 16))
+		current_tile_id = clamp(floor(sel_x / t_size), 0, t_width/ 16) + (clamp(floor(sel_y / t_size), 0, t_height/ 16) * (t_width/16))
+		
+	}
+}
+
+
+
 if (mbleft && not_on_gui) {
 	
 		switch(selected_tool) {
@@ -312,6 +345,10 @@ if (mbleft && not_on_gui) {
 				case OBJECT_MODE:
 				break;
 				case TILE_MODE:
+					if show_tileset {
+						exit;	
+					}
+					
 					var data = tilemap_get_at_pixel(tilemap, gridx, gridy); //set tile at place
 					if tile_get_index(data) != current_tile_id { //prevent tile overlapping (mainly a problem with the list)
 						show_debug_message($"Placed tile of index {current_tile_id} at {mouse_x} {mouse_y}")

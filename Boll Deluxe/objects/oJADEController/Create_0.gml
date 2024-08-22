@@ -99,6 +99,8 @@ initial_viewy=0;
 
 zoom_level = 1;
 
+show_tileset = false
+
 total_objects=0;
 
 object_list = ds_list_create();
