@@ -1,12 +1,8 @@
-/*
+
 if (in_shell) mask_index=spr_shellhitbox
 else mask_index=spr_koopahitbox
 
-if hp <= 0{
-    instance_destroy();
-}
-
-var player=instance_place(x,y-1,oPlayer)
+/*var player=instance_place(x,y-1,oPlayer)
 if (player && player.piped) { 
 	//so the player doesnt jump on the damn goombas while warping and shoot into heaven
 	exit

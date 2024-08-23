@@ -300,3 +300,8 @@ vsp = 0
 #define sprung
 state = "jump";
 canstopjump = true
+
+#define enemy_stomped
+if (state != "groundpound") {
+	vsp=-4-akey*1.5
+}

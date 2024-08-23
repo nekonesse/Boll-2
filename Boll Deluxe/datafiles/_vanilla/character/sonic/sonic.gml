@@ -271,3 +271,6 @@ vsp = 0
 #define sprung
 canstopjump = true;
 state = "spring";
+
+#define enemy_stomped
+vsp=-4-akey*1.5

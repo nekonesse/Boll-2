@@ -33,9 +33,14 @@ hit_sizey = 6
 image_xscale=1;
 image_yscale=1;
 
-enemyStomped.Connect( self, function(hit_p, obj) {
-	if (!no_stomping) hp-=1
+enemyStomped.Connect( self, function(hit_p) {
+	if (!no_stomping) {
+		hp-=1
+		with(hit_p) sig.Emit("enemy_stomped")
+		phaseid=hit_p
+	}
+});
 
-	//phaseid=instance_place(x,y-1,oPlayer)
-	//phaseid.vsp=-4-phaseid.akey*1.5
+enemyCollidePlayer.Connect( self, function(hit_p) {
+
 });
