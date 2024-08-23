@@ -170,7 +170,7 @@ if (state == "" && apress && canjump > 0) {
 
 #region Wallsliding
 if (state == "wallslide") {
-	vsp=min(vsp,0.75);
+	vsp=1;
 	var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
 	
 	if (move == 0 || !coll){

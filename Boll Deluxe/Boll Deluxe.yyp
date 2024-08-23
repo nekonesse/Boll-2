@@ -1024,6 +1024,7 @@
     {"id":{"name":"__shd_scribble_bake_shadow","path":"shaders/__shd_scribble_bake_shadow/__shd_scribble_bake_shadow.yy",},},
     {"id":{"name":"__shd_scribble","path":"shaders/__shd_scribble/__shd_scribble.yy",},},
     {"id":{"name":"__ShdCollagePremultiply","path":"shaders/__ShdCollagePremultiply/__ShdCollagePremultiply.yy",},},
+    {"id":{"name":"shd_alpha","path":"shaders/shd_alpha/shd_alpha.yy",},},
     {"id":{"name":"shd_flatcolor","path":"shaders/shd_flatcolor/shd_flatcolor.yy",},},
     {"id":{"name":"shd_pal_html_sprite","path":"shaders/shd_pal_html_sprite/shd_pal_html_sprite.yy",},},
     {"id":{"name":"shd_pal_html_surface","path":"shaders/shd_pal_html_surface/shd_pal_html_surface.yy",},},

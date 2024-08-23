@@ -68,11 +68,17 @@ switch(selected_mode) {
 	case TILE_MODE:
 	if selected_tool = BRUSH_TOOL {
 		if (mouse_wheel_down() || keyboard_check_pressed(vk_pagedown)) {
-			current_tile_id ++	
+			if !keyboard_check(vk_control)
+			current_tile_id --	
+			else
+			current_tile_id += (sprite_get_width(spr_TilesetMain)/16)
 		}
 
 		if (mouse_wheel_up() || keyboard_check_pressed(vk_pageup)) {
-			current_tile_id --
+			if !keyboard_check(vk_control)
+			current_tile_id ++
+			else
+			current_tile_id -= (sprite_get_width(spr_TilesetMain)/16)
 		}
 	
 		if keyboard_check_pressed(vk_apostrophe) {
@@ -234,11 +240,11 @@ if (selected_tool == SELECT_TOOL && not_on_gui) {
 					if white_box{ 
 						//selecting white area (kinda)
 						obj[5] = 1 
-					} else {
+					} /*else {
 						if !keyboard_check(vk_shift) {
 							obj[5] = 0 //set all others unselected when not holding shift
 						}
-					}
+					}*/
 				}
 			}
 			
@@ -355,8 +361,8 @@ if show_tileset && mbleft {
 		var t_width = sprite_get_width(spr_TilesetMain)
 		var t_height  = sprite_get_height(spr_TilesetMain)
 		var t_size = 16 * 0.33
-		var sel_x = clamp(device_mouse_x_to_gui(0) - 50, 0, t_width)
-		var sel_y = clamp(device_mouse_y_to_gui(0) - 50, 0, t_height)
+		var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
+		var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
 		//show_debug_message(string(floor(mouse_x / t_size)) + " : "+ string(tilelapmap.width/ 16))
 		current_tile_id = clamp(floor(sel_x / t_size), 0, t_width/ 16) + (clamp(floor(sel_y / t_size), 0, t_height/ 16) * (t_width/16))
 		
@@ -413,9 +419,7 @@ if (mbleft && not_on_gui) {
 						var array = [tile_get_index(data), gridx, gridy]
 						for (var i=0; i<ds_list_size(tile_layer_map); i++;) {
 							if array_equals(ds_list_find_value(tile_layer_map,i),array) {
-								show_debug_message(ds_list_find_value(tile_layer_map,i))
 								ds_list_delete(tile_layer_map, i) //delete from tile map
-								show_debug_message(tile_layer_map)
 								break;
 							}
 						}

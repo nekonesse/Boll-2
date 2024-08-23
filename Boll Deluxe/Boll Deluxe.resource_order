@@ -828,6 +828,7 @@
     {"name":"__shd_scribble_bake_outline_8dir_2px","order":3,"path":"shaders/__shd_scribble_bake_outline_8dir_2px/__shd_scribble_bake_outline_8dir_2px.yy",},
     {"name":"__shd_scribble_bake_outline_8dir","order":2,"path":"shaders/__shd_scribble_bake_outline_8dir/__shd_scribble_bake_outline_8dir.yy",},
     {"name":"__shd_scribble_bake_shadow","order":4,"path":"shaders/__shd_scribble_bake_shadow/__shd_scribble_bake_shadow.yy",},
+    {"name":"shd_alpha","order":1,"path":"shaders/shd_alpha/shd_alpha.yy",},
     {"name":"shd_pal_html_surface","order":1,"path":"shaders/shd_pal_html_surface/shd_pal_html_surface.yy",},
     {"name":"shd_pal_swapper","order":2,"path":"shaders/shd_pal_swapper/shd_pal_swapper.yy",},
     {"name":"snd_blockbreak","order":1,"path":"sounds/snd_blockbreak/snd_blockbreak.yy",},

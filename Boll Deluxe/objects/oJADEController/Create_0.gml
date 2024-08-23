@@ -60,9 +60,9 @@ toolbar[4][4]=REFERENCE_TOOL
 
 JADE_intializeobj();
 
-tile_layer = layer_create(0, "tilemap")
+tile_layer = layer_get_id("EditorTiles_Main")
 //tileset = tTilesetMain
-tilemap = layer_tilemap_create(tile_layer, 0, 0, tTilesetMain, 1000, 1000)
+tilemap = layer_tilemap_get_id(tile_layer)
 object_layer_map = ds_list_create()
 tile_layer_map = ds_list_create()
 
@@ -101,7 +101,7 @@ zoom_level = 1;
 
 //tileset picker
 show_tileset = false
-tileset_picker_x=100;
+tileset_picker_x=250;
 tileset_picker_y=100;
 
 total_objects=0;
@@ -140,3 +140,19 @@ function mouse_in_mode_slot(numb) {
 }
 
 selection_box_fr=0
+
+function tile_layer_alpha_check() {
+	//This makes the tile layer transparent if you arent in tile mode by using layer scripts
+	if oJADEController.selected_mode!=TILE_MODE {
+		shader_set(shd_alpha)
+		var alpha = shader_get_uniform(shd_alpha, "alpha");
+		shader_set_uniform_f(alpha,0.33)
+		show_debug_message($"Changing Tile Layer Alpha to {alpha}")
+	}
+}
+
+function tile_layer_shader_reset() {
+	shader_reset();
+}
+layer_script_begin(tile_layer, tile_layer_alpha_check);
+layer_script_end(tile_layer, tile_layer_shader_reset);
