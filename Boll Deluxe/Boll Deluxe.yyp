@@ -1046,6 +1046,7 @@
     {"id":{"name":"scribble_fallback_bulletpoint","path":"sprites/scribble_fallback_bulletpoint/scribble_fallback_bulletpoint.yy",},},
     {"id":{"name":"spr_16x16hitbox","path":"sprites/spr_16x16hitbox/spr_16x16hitbox.yy",},},
     {"id":{"name":"spr_1x1","path":"sprites/spr_1x1/spr_1x1.yy",},},
+    {"id":{"name":"spr_1x1outline","path":"sprites/spr_1x1outline/spr_1x1outline.yy",},},
     {"id":{"name":"spr_AssetsAnimated4","path":"sprites/spr_AssetsAnimated4/spr_AssetsAnimated4.yy",},},
     {"id":{"name":"spr_AssetsAnimated8","path":"sprites/spr_AssetsAnimated8/spr_AssetsAnimated8.yy",},},
     {"id":{"name":"spr_AssetsExtra","path":"sprites/spr_AssetsExtra/spr_AssetsExtra.yy",},},

@@ -389,6 +389,9 @@ function ternary(statement,true_val,false_val) {
 	return ((statement) ? true_val : false_val)
 }
 
-function draw_rect(_x, _y, w, h, color, alpha){
+function draw_rect(_x, _y, w, h, color, alpha, outline=false){
+	if !outline
 	draw_sprite_stretched_ext(spr_1x1,0,_x,_y,w,h,color,alpha)
+	else
+	draw_sprite_stretched_ext(spr_1x1outline,0,_x,_y,w,h,color,alpha)
 }

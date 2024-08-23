@@ -152,36 +152,6 @@ if (mbleftpress) {
 		if (selected_tool == BRUSH_TOOL) {
 			switch(selected_mode) {
 				case OBJECT_MODE:
-					if is_string(selected_obj) {
-						//var arr =ds_map_find_value(obj_data,selected_obj)
-						show_debug_message("created object: {0}", selected_obj)
-						ds_list_add(object_layer_map, [selected_obj, gridx, gridy, 1, 1, 0])//add object to list at place
-						var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
-						var sprite = ds_map_find_value(obj_data,obj[0])
-						if !is_undefined(obj) {
-							obj[6] = sprite[4]	
-							obj[7] = sprite[5]	
-							obj[8] = 0
-							obj[9] = 0	
-						}
-						
-						/*OBJECT STAT LIST
-						 0: name
-						 1: grid x
-						 2: grid y
-						 3: scale x
-						 4: scale y
-						 5: selected
-						 6: box x
-						 7: box y
-						 8: offset x
-						 9: offset y
-						*/
-						
-						/*SPRITE STAT LIST
-						 just look in JADE_intializeobj() lol
-						*/
-					}
 				break;
 			}
 		}
@@ -377,6 +347,46 @@ if (mbleft && not_on_gui) {
 		case BRUSH_TOOL:
 			switch(selected_mode) {
 				case OBJECT_MODE:
+					if is_string(selected_obj) {
+						for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
+							//is place matching cursor?
+							var obj = ds_list_find_value(object_layer_map, i)
+							if !is_undefined(obj) {
+							    if obj[1] == gridx && obj[2] == gridy {
+									exit;
+								}
+							}
+				
+						}
+						//var arr =ds_map_find_value(obj_data,selected_obj)
+						show_debug_message("created object: {0}", selected_obj)
+						ds_list_add(object_layer_map, [selected_obj, gridx, gridy, 1, 1, 0])//add object to list at place
+						var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
+						var sprite = ds_map_find_value(obj_data,obj[0])
+						if !is_undefined(obj) {
+							obj[6] = sprite[4]	
+							obj[7] = sprite[5]	
+							obj[8] = 0
+							obj[9] = 0	
+						}
+						
+						/*OBJECT STAT LIST
+						 0: name
+						 1: grid x
+						 2: grid y
+						 3: scale x
+						 4: scale y
+						 5: selected
+						 6: box x
+						 7: box y
+						 8: offset x
+						 9: offset y
+						*/
+						
+						/*SPRITE STAT LIST
+						 just look in JADE_intializeobj() lol
+						*/
+					}
 				break;
 				case TILE_MODE:
 					if show_tileset {

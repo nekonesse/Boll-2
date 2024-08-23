@@ -147,7 +147,6 @@ function tile_layer_alpha_check() {
 		shader_set(shd_alpha)
 		var alpha = shader_get_uniform(shd_alpha, "alpha");
 		shader_set_uniform_f(alpha,0.33)
-		show_debug_message($"Changing Tile Layer Alpha to {alpha}")
 	}
 }
 
