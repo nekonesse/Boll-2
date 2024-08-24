@@ -66,45 +66,68 @@ if keyboard_check_pressed(vk_escape) room_goto(rMainMenu)
 //half temp cycling object/tile behavior
 switch(selected_mode) {
 	case TILE_MODE:
-	if selected_tool = BRUSH_TOOL {
-		if (mouse_wheel_down() || keyboard_check_pressed(vk_pagedown)) {
-			if !keyboard_check(vk_control)
-			current_tile_id --	
-			else
-			current_tile_id += (sprite_get_width(spr_TilesetMain)/16)
-		}
+		if selected_tool = BRUSH_TOOL {
+			if (mouse_wheel_down() || keyboard_check_pressed(vk_pagedown)) {
+				if !keyboard_check(vk_control)
+				current_tile_id --	
+				else
+				current_tile_id += (sprite_get_width(spr_TilesetMain)/16)
+			}
 
-		if (mouse_wheel_up() || keyboard_check_pressed(vk_pageup)) {
-			if !keyboard_check(vk_control)
-			current_tile_id ++
-			else
-			current_tile_id -= (sprite_get_width(spr_TilesetMain)/16)
+			if (mouse_wheel_up() || keyboard_check_pressed(vk_pageup)) {
+				if !keyboard_check(vk_control)
+				current_tile_id ++
+				else
+				current_tile_id -= (sprite_get_width(spr_TilesetMain)/16)
+			}
+	
+			if keyboard_check_pressed(vk_apostrophe) {
+				show_tileset = 1 - show_tileset 	
+			}
+		} else {
+			show_tileset = false
 		}
 	
-		if keyboard_check_pressed(vk_apostrophe) {
-			show_tileset = 1 - show_tileset 	
-		}
-	} else {
-		show_tileset = false
-	}
-	
-	//current_tile_id = wrap_val(current_tile_id, 0, 255) //todo, get tileset size lol
+		//current_tile_id = wrap_val(current_tile_id, 0, 255) //todo, get tileset size lol
 
-	selected_tile=current_tile_id
+		selected_tile=current_tile_id
 	break;
 	
 	case OBJECT_MODE:
-	if (mouse_wheel_down() || keyboard_check_pressed(vk_pagedown)) {
-		current_obj_id ++	
-	}
+		if (mouse_wheel_down() || keyboard_check_pressed(vk_pagedown)) {
+			current_obj_id ++	
+		}
 
-	if (mouse_wheel_up() || keyboard_check_pressed(vk_pageup)) {
-		current_obj_id --
-	}
+		if (mouse_wheel_up() || keyboard_check_pressed(vk_pageup)) {
+			current_obj_id --
+		}
 
-	current_obj_id = wrap_val(current_obj_id, 0, ds_list_size(obj_name)- 1)
+		current_obj_id = wrap_val(current_obj_id, 0, ds_list_size(obj_name)- 1)
 
-	selected_obj=ds_list_find_value(obj_name, current_obj_id)
+		selected_obj=ds_list_find_value(obj_name, current_obj_id)
+		
+		//selection box deleting
+		if keyboard_check_pressed(vk_delete) && selected_tool==SELECT_TOOL {
+			var selected_amount=0
+			for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
+				var obj = ds_list_find_value(object_layer_map, i)
+				if (obj[5]) {
+					selected_amount++
+				} 
+			}
+			//dude i fucking hate this i have to do this bullshit setup because gamemaker only deletes half of them if i use one for loop
+			//even with the i=0 all of them except ONE get deleted its stupid !!
+			while (selected_amount) {
+				for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
+					var obj = ds_list_find_value(object_layer_map, i)
+					if (obj[5]) {
+						ds_list_delete(object_layer_map, i)
+						selected_amount--;
+						i=0
+					}
+				}
+			}
+		}
 	break;
 }
 
@@ -195,19 +218,17 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 	
 	var size = ds_list_size(object_layer_map)
 	var overlap = 0
-	var 
-	
-	
 	
 	for (var i = 0; i < size; ++i) {
 		//is place matching cursor?
 		var obj = ds_list_find_value(object_layer_map, i)
-		var sprite = ds_map_find_value(obj_data,obj[0])
-		var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-		var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
-		overlap=red_box+white_box
 		
 		if !is_undefined(obj) {
+			var sprite = ds_map_find_value(obj_data,obj[0])
+			var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
+			var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
+			overlap=red_box+white_box
+			
 			if !red_box { 
 				//if not selecting red box
 				if (mbleftpress) {
@@ -227,12 +248,12 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 					obj[5] = 1 
 				} else {
 					if !keyboard_check(vk_shift) {
-							obj[5] = 0 //set all others unselected when not holding shift
+						obj[5] = 0 //set all others unselected when not holding shift
 					}
 				}
-			}
 			
-		
+				
+			}
 		}
 	}
 	
