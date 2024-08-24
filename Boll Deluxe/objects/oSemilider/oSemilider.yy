@@ -41,5 +41,5 @@
     "Catspeak",
     "blocks",
   ],
-  "visible":true,
+  "visible":false,
 }
