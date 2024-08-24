@@ -1,7 +1,7 @@
 function parse_level(dir=working_directory+"\save.jade") {
 	var file = dir
 	if !file_exists(file) {
-		throw $"Level does not exist at {dir}"
+		throw "Level does not exist at given directory! make sure you've saved first!"
 	}
 	var save_file = file_text_open_read(file)
 	show_debug_message($"Loading JADE level from: {file}")
