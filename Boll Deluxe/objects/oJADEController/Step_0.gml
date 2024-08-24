@@ -191,7 +191,7 @@ if (mbleftpress) {
 	}
 }
 
-if (selected_tool == SELECT_TOOL && not_on_gui) {
+if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 	
 	var size = ds_list_size(object_layer_map)
 	var overlap = 0
@@ -345,7 +345,7 @@ if show_tileset && mbleft {
 
 
 
-if (mbleft && not_on_gui) {
+if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 	
 		switch(selected_tool) {
 		case BRUSH_TOOL:
