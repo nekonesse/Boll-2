@@ -35,7 +35,7 @@ function parse_level(dir=working_directory+"\save.jade") {
 	var tilemap = layer_tilemap_get_id(tile_layer)
     for (var i = 0; i < tilesize; ++i) { //loading tiles
 		var data = json_parse(file_text_read_string(save_file));
-		var tiledata = tilemap_get_at_pixel(tilemap, data[1], data[2]);
+		var tiledata = tilemap_get(tilemap, data[1], data[2]);
 		tiledata = tile_set_index(tiledata, data[0])
 		tilemap_set(tilemap, tiledata, data[1], data[2]) //set tile at place
 		file_text_readln(save_file);

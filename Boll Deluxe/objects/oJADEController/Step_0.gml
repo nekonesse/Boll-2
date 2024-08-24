@@ -6,7 +6,7 @@ var cam_h = camera_get_view_height(view_camera[0])
 mbleftpress=mouse_check_button_pressed(mb_left)
 mbleftrel=mouse_check_button_released(mb_left)
 mbleft=mouse_check_button(mb_left)
-mbmiddle = (mouse_check_button(mb_middle) || keyboard_check(vk_space)) //this scroll wheel is Pissing me off... i'm the original        keywalker
+mbmiddle = (mouse_check_button(mb_middle) || (keyboard_check(vk_space) && mouse_check_button(mb_left))) //this scroll wheel is Pissing me off... i'm the original        keywalker
 
 curs_x=mouse_x-cam_x
 curs_y=mouse_y-cam_y
@@ -162,6 +162,8 @@ if (mbleftpress) {
 					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
 					data = tile_set_flip(data, 1 - tile_get_flip(data))
 					tilemap_set(tilemap, data, gridx, gridy);
+					show_debug_message(data);
+					tile_update_properties();
 				break;
 			}
 		break;
@@ -171,6 +173,7 @@ if (mbleftpress) {
 					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
 					data = tile_set_mirror(data, 1 - tile_get_mirror(data))
 					tilemap_set(tilemap, data, gridx, gridy);
+					tile_update_properties();
 				break;
 			}
 		break;
@@ -180,6 +183,7 @@ if (mbleftpress) {
 					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
 					data = tile_set_rotate(data, 1 - tile_get_rotate(data))
 					tilemap_set(tilemap, data, gridx, gridy);
+					tile_update_properties();
 				break;
 			}
 		break;
@@ -356,9 +360,7 @@ if (mbleft && not_on_gui) {
 									exit;
 								}
 							}
-				
 						}
-						//var arr =ds_map_find_value(obj_data,selected_obj)
 						show_debug_message("created object: {0}", selected_obj)
 						ds_list_add(object_layer_map, [selected_obj, gridx, gridy, 1, 1, 0])//add object to list at place
 						var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
@@ -397,9 +399,15 @@ if (mbleft && not_on_gui) {
 					
 					if tile_get_index(data) != current_tile_id { //prevent tile overlapping (mainly a problem with the list)
 						show_debug_message($"Placed tile of index {current_tile_id} at {mouse_x} {mouse_y}")
-						ds_list_add(tile_layer_map, [current_tile_id, gridx, gridy])//add tile  to list at place
 						data = tile_set_index(data, current_tile_id)
+						data = tile_set_flip(data, 0)
+						data = tile_set_mirror(data, 0)
+						data = tile_set_rotate(data, 0)
 						tilemap_set(tilemap, data, gridx, gridy);
+						show_debug_message(data)
+						var tiledata = tilemap_get(tilemap, gridx, gridy)
+						ds_list_add(tile_layer_map, [tiledata, gridx, gridy]) //add tile  to list at place
+						tile_update_properties();
 					}
 				break;
 			}
@@ -422,11 +430,11 @@ if (mbleft && not_on_gui) {
 					}
 				break;
 				case TILE_MODE:
-					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
+					var data = tilemap_get(tilemap, gridx, gridy);
 					
 					if tile_get_index(data)!= 0 {
 						show_debug_message($"Deleted tile of index {tile_get_index(data)} at {mouse_x} {mouse_y}")
-						var array = [tile_get_index(data), gridx, gridy]
+						var array = [data, gridx, gridy]
 						for (var i=0; i<ds_list_size(tile_layer_map); i++;) {
 							if array_equals(ds_list_find_value(tile_layer_map,i),array) {
 								ds_list_delete(tile_layer_map, i) //delete from tile map

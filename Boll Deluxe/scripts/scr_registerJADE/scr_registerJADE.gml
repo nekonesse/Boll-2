@@ -62,14 +62,13 @@ function JADE_save() {
 	for (var i = 0; i < size; ++i) { //object saving
 		var obj = ds_list_find_value(object_layer_map, i)
 		var _json_string = json_stringify(obj)
-		show_debug_message(obj)
 		file_text_write_string(save_file, _json_string)
 		file_text_writeln(save_file)
 	}
 	for (var i = 0; i < tilesize; ++i) { //tilemap saving
 		var tile = ds_list_find_value(tile_layer_map, i)
-		var _json_string = json_stringify(tile)
 		show_debug_message(tile)
+		var _json_string = json_stringify(tile)
 		file_text_write_string(save_file, _json_string)
 		file_text_writeln(save_file)
 	}
@@ -97,10 +96,8 @@ function JADE_load(dir=working_directory+"\save.jade") {
 	ds_list_clear(tile_layer_map) //erase tile map beforehand
     for (var i = 0; i < tilesize; ++i) { //loading tiles
 		var data = json_parse(file_text_read_string(save_file));
-		var tiledata = tilemap_get_at_pixel(tilemap, data[1], data[2]); //set tile at place
+		tilemap_set(tilemap,data[0],data[1],data[2])
 		ds_list_add(tile_layer_map, [data[0], data[1], data[2]]) //add tile to list at place
-		tiledata = tile_set_index(tiledata, data[0])
-		tilemap_set(tilemap, tiledata, data[1], data[2]);
 		file_text_readln(save_file);
 	}
 	file_text_close(save_file);

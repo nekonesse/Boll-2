@@ -155,3 +155,22 @@ function tile_layer_shader_reset() {
 }
 layer_script_begin(tile_layer, tile_layer_alpha_check);
 layer_script_end(tile_layer, tile_layer_shader_reset);
+
+
+//for updating tile properties like flip, mirror, rotate etc
+function tile_update_properties() {
+	var data = tilemap_get(tilemap, gridx, gridy)
+	var array = [gridx, gridy]
+	for (var i=0; i<ds_list_size(tile_layer_map); i++;) {
+		show_debug_message(data)
+		var array_catched = ds_list_find_value(tile_layer_map,i)
+		var array_match= []
+		array_match[0] = array_catched[1]
+		array_match[1] = array_catched[2]
+		show_debug_message($"{array}, {array_match}")
+		if array_equals(array,array_match) {
+			ds_list_set(tile_layer_map,i,[data, gridx, gridy])
+			break;
+		}
+	}
+}
