@@ -456,3 +456,8 @@ if (mbleft && not_on_gui) {
 	
 }
 
+
+if keyboard_check_pressed(vk_f1) {
+	global.nextlevel=working_directory+"\save.jade" //the level the game will load
+	room_goto(rGame)
+}

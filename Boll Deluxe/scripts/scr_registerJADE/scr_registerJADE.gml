@@ -77,8 +77,8 @@ function JADE_save() {
 	show_debug_message($"Successfully saved JADE file to: {file}!")
 }
 
-function JADE_load() {
-	var file = working_directory+"\save.jade"
+function JADE_load(dir=working_directory+"\save.jade") {
+	var file = dir
 	if !file_exists(file) exit;
 	var save_file = file_text_open_read(file)
 	show_debug_message($"Loading JADE file from: {file}")
@@ -89,6 +89,7 @@ function JADE_load() {
 	ds_list_clear(object_layer_map) //erase object map beforehand
 	for (var i = 0; i < size; ++i) { //load objects
         var data = json_parse(file_text_read_string(save_file));
+		data[5] = 0
 		ds_list_add(object_layer_map,data)
         file_text_readln(save_file);
 	}
