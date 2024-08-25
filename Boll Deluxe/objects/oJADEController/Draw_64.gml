@@ -72,69 +72,60 @@ if selected_mode = TILE_MODE {
 #endregion
 
 #region Object List
-if selected_mode = OBJECT_MODE && surface_exists(object_list_area_surface) {
-	//window tab
-	draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
-	draw_set_font(smallF)
-	//top tab text
-	draw_text_transformed(object_list_area_x+2,object_list_area_y-4,"object list",0.66,0.66,0)
+if selected_mode == OBJECT_MODE {
+	if show_object_list && surface_exists(object_list_area_surface) {
+		//window tab
+		draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
+		draw_set_font(smallF)
+		//top tab text
+		draw_text_transformed(object_list_area_x+2,object_list_area_y-4,"object list",0.66,0.66,0)
 	
-	surface_set_target(object_list_area_surface)
-	draw_clear_alpha(c_black, 0)
-	draw_set_halign(fa_right)
+		surface_set_target(object_list_area_surface)
+		draw_clear_alpha(c_black, 0)
+		draw_set_halign(fa_right)
 	
-	var _str = "null"
-	//object list
-	for (var i = 0; i < ds_list_size(obj_name); ++i) {
-		_str = ds_list_find_value(obj_name, i)
-		if _str == undefined{
-			break;	
+		var _str = "null"
+		//object list
+		for (var i = 0; i < ds_list_size(obj_name); ++i) {
+			_str = ds_list_find_value(obj_name, i)
+			if _str == undefined{
+				break;	
+			}
+			var overlapping=point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y+((32/3)*i)+object_list_scroll_pos/3,object_list_area_x+object_list_area_width-6,object_list_area_y+(((32/3)*i)+10)+object_list_scroll_pos/3)
+		
+			if (overlapping && mbleftpress) {
+				current_obj_id=i
+			}
+		
+			var color = c_black
+			if (current_obj_id==i) color=c_white
+			else if (overlapping) color=c_yellow
+			else color=c_black
+		
+			//draw background rectangle
+			draw_rect(2,(32*i)+2+object_list_scroll_pos,object_list_area_width-8,28, color,0.5)
+			//draw object name
+			ScribblejrFit(_str, fa_right, fa_middle, smallF, 3, object_list_area_width-12, 32).Draw(object_list_area_width-6,(32*i)+15+object_list_scroll_pos)
+		
+			//draw object sprite
+			var arr=ds_map_find_value(obj_data,_str)
+			var sprite=arr[0]
+			var ysize=32
+			if sprite_get_height(sprite)*2 < 32
+			ysize=sprite_get_height(sprite)
+		
+			draw_sprite_stretched(sprite,0,4,(32*i)+object_list_scroll_pos,32,ysize)
+			draw_set_halign(fa_left)
 		}
-		var overlapping=point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y+((32/3)*i)+object_list_scroll_pos/3,object_list_area_x+object_list_area_width-6,object_list_area_y+(((32/3)*i)+10)+object_list_scroll_pos/3)
-		
-		if (overlapping && mbleftpress) {
-			current_obj_id=i
-		}
-		
-		var color = c_black
-		if (current_obj_id==i) color=c_white
-		else if (overlapping) color=c_yellow
-		else color=c_black
-		
-		//draw background rectangle
-		draw_rect(2,(32*i)+2+object_list_scroll_pos,object_list_area_width-8,28, color,0.5)
-		//draw object name
-		ScribblejrFit(_str, fa_right, fa_middle, smallF, 3, object_list_area_width-12, 32).Draw(object_list_area_width-6,(32*i)+15+object_list_scroll_pos)
-		
-		//draw object sprite
-		var arr=ds_map_find_value(obj_data,_str)
-		var sprite=arr[0]
-		var ysize=32
-		if sprite_get_height(sprite)*2 < 32
-		ysize=sprite_get_height(sprite)
-		
-		draw_sprite_stretched(sprite,0,4,(32*i)+object_list_scroll_pos,32,ysize)
-		draw_set_halign(fa_left)
+	
+		surface_reset_target();
+	
+		draw_surface_stretched(object_list_area_surface, object_list_area_x, object_list_area_y, object_list_area_width/3, object_list_area_height/3)
+	} else {
+		draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,8)
+		draw_set_font(smallF)
+		//top tab text
+		draw_text_transformed(object_list_area_x+2,object_list_area_y-4,"object list",0.66,0.66,0)
 	}
-	
-	surface_reset_target();
-	//your object
-	
-	
-	
-	/*_str = ds_list_find_value(obj_name, current_obj_id)
-	draw_text_color(16, 0, _str, c_yellow, c_yellow, c_yellow, c_yellow, 1)
-	//next 4 objects
-	for (var i = 1; i < 4; ++i) {
-		_str = ds_list_find_value(obj_name, current_obj_id + i)
-		if _str == undefined {
-			break;	
-		}
-		draw_text(16,(8* (i)), _str)	
-	} */
-	
-	//draw_rect(object_list_area_x,object_list_area_y,object_list_area_width,object_list_area_height,c_red,1,true)
-	
-	draw_surface_stretched(object_list_area_surface, object_list_area_x, object_list_area_y, object_list_area_width/3, object_list_area_height/3)
 }
 #endregion

@@ -70,9 +70,9 @@ not_on_gui = false
 
 //tile_layer_array[0,0]= 0
 
-selected_mode=0;
+selected_mode=OBJECT_MODE;
 selected_toolbar=0;
-selected_tool=SELECT_TOOL
+selected_tool=SELECT_TOOL;
 selected_obj=ds_list_find_value(obj_name, 0)
 selected_tile = 0
 selection = false
@@ -113,6 +113,7 @@ var guiw=display_get_gui_width()
 var guih=display_get_gui_height()
 
 on_object_list=false
+show_object_list=true
 
 object_list_area_width = 96*3
 object_list_area_height = 128*3
@@ -176,4 +177,17 @@ function tile_update_properties() {
 			break;
 		}
 	}
+}
+
+//add preset layout
+camera_set_view_pos(view_camera[0],0,room_height-camera_get_view_height(view_camera[0]))
+
+ds_list_add(object_layer_map, ["oCollider", 0, 167, 30, 2, 0])//add object to list at place
+var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
+var sprite = ds_map_find_value(obj_data,obj[0])
+if !is_undefined(obj) {
+	obj[6] = sprite[4]*30
+	obj[7] = sprite[5]*2
+	obj[8] = 0
+	obj[9] = 0	
 }

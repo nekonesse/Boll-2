@@ -19,7 +19,7 @@ on_object_list=point_in_rectangle(curs_x,curs_y,object_list_area_x-2,object_list
 not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
 &&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
 &&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
-&&!on_object_list
+&&!(on_object_list && show_object_list)
 &&!show_tileset
 
 #region Camera Panning
@@ -88,8 +88,8 @@ switch(selected_mode) {
 				current_tile_id -= (sprite_get_width(spr_TilesetMain)/16)
 			}
 	
-			if keyboard_check_pressed(vk_apostrophe) {
-				show_tileset = 1 - show_tileset 	
+			if keyboard_check_pressed(vk_tab) {
+				show_tileset = !show_tileset
 			}
 		} else {
 			show_tileset = false
@@ -101,6 +101,10 @@ switch(selected_mode) {
 	break;
 	
 	case OBJECT_MODE:
+		if keyboard_check_pressed(vk_tab) {
+			show_object_list = !show_object_list
+		}
+	
 		if (keyboard_check_pressed(vk_pagedown)) {
 			current_obj_id ++	
 		}
@@ -494,6 +498,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 
 
 if keyboard_check_pressed(vk_enter) {
+	JADE_save();
 	global.nextlevel=working_directory+"\save.jade" //the level the game will load
 	room_goto(rGame)
 }
