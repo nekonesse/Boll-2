@@ -44,7 +44,7 @@ if (view_grab) { //update camera position
 var mwheel = mouse_wheel_down() - mouse_wheel_up();
 #region Object List Scrolling
 if (mwheel != 0) {
-	object_list_scroll_pos+=16*mwheel
+	object_list_scroll_pos+=16*-mwheel
 	show_debug_message(object_list_scroll_pos)
 }
 
