@@ -67,12 +67,27 @@ if (abs(xnudge[1]))
 {
 	if (sign(xdiff) == sign(xnudge[1]))
 	{
-		xnudge[0] = min(abs(xnudge[1]), abs(xnudge[0]) + abs(xdiff)) * sign(xnudge[1]);
+		if (xnudge[0] < xnudge[1])
+		{
+			xnudge[0] = min(xnudge[1], xnudge[0] + abs(xdiff));	
+		}
+		else if (xnudge[0] > xnudge[1])
+		{
+			xnudge[0] = max(xnudge[1], xnudge[0] - abs(xdiff));	
+		}
+		//xnudge[0] = min(abs(xnudge[1]), xnudge[0] + abs(xdiff)) * sign(xnudge[1]);
 	}
 }
 else if (xnudge[0] != 0)
 {
-	xnudge[0] = max(0, abs(xnudge[0]) - abs(xdiff)) * sign(xnudge[0]);
+	if (xnudge[0] > 0)
+	{
+		xnudge[0] = max(0, xnudge[0] - (abs(xdiff) * sign(xnudge[0])));
+	}
+	else if (xnudge[0] < 0)
+	{
+		xnudge[0] = min(0, xnudge[0] - (abs(xdiff) * sign(xnudge[0])));
+	}
 }
 
 if (abs(ynudge[1]))
