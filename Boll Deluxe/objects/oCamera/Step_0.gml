@@ -67,15 +67,14 @@ if (abs(xnudge[1]))
 {
 	if (sign(xdiff) == sign(xnudge[1]))
 	{
-		if (xnudge[0] < xnudge[1])
+		if ((xnudge[0] < xnudge[1]) && (x >= target.x))
 		{
 			xnudge[0] = min(xnudge[1], xnudge[0] + abs(xdiff));	
 		}
-		else if (xnudge[0] > xnudge[1])
+		else if ((xnudge[0] > xnudge[1]) && (x <= target.x))
 		{
 			xnudge[0] = max(xnudge[1], xnudge[0] - abs(xdiff));	
 		}
-		//xnudge[0] = min(abs(xnudge[1]), xnudge[0] + abs(xdiff)) * sign(xnudge[1]);
 	}
 }
 else if (xnudge[0] != 0)
@@ -122,9 +121,12 @@ else
 	ynudge[1] = 0;
 }
 
-var xwidth, ywidth;
+var xwidth, ywidth, xx, yy;
 
 xwidth = camera_get_view_width(view_camera[0]);
 ywidth = camera_get_view_height(view_camera[0]);
 
-camera_set_view_pos(view_camera[0],x_final + xdiff - (xwidth div 2),y_final + (y - yprevious) - (ywidth div 2));
+xx = max(0, x_final + xdiff - (xwidth div 2));
+yy = max(0, y_final + (y - yprevious) - (ywidth div 2));
+
+camera_set_view_pos(view_camera[0],xx,yy);
