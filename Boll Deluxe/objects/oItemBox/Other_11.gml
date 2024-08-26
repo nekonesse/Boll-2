@@ -6,4 +6,10 @@ switch (content) {
 		i.parentblock=id
 		VinylPlay(snd_itemappear);
 	} break;
+	case "fireflower": {
+		var i=instance_create_depth(x,y,0,oFireFlower)
+		i.going=hit
+		i.parentblock=id
+		VinylPlay(snd_itemappear);
+	} break;
 }

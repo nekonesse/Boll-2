@@ -5316,6 +5316,25 @@
 							"fieldInstances": [],
 							"__worldX": 592,
 							"__worldY": 224
+						},
+						{
+							"__identifier": "ItemBox",
+							"__grid": [2,8],
+							"__pivot": [0.5,0.5],
+							"__tags": [],
+							"__tile": { "tilesetUid": 15, "x": 256, "y": 208, "w": 16, "h": 16 },
+							"__smartColor": "#FEAE34",
+							"iid": "2fea7730-4ce0-11ef-baa0-b9261815d812",
+							"width": 16,
+							"height": 16,
+							"defUid": 13,
+							"px": [40,136],
+							"fieldInstances": [{ "__identifier": "content", "__type": "String", "__value": "fireflower", "__tile": null, "defUid": 92, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["fireflower"]
+							}] }],
+							"__worldX": 40,
+							"__worldY": 136
 						}
 					]
 				},

@@ -17,6 +17,7 @@ defaultgrav = grav;
 //spindash = 0;
 spindashTotal = 0;
 topspd = 4.5;
+grow = 0;
 state = "";
 control_lock = 0;
 
@@ -180,6 +181,8 @@ if (sprindex_prev != sprite_index) {
 
 bonk=max(bonk,bonk-1)
 
+grow = max(grow, (grow - 1));
+
 
 #define sprmanager
 
@@ -220,8 +223,16 @@ if (state == "spindash") {
 show_debug_message("Situation becomes worse....");
 
 #define mushroom
+show_debug_message("Heh, I eatted it!");
+oldsize = size;
+size = "big";
+grow = 60;
 
-show_debug_message("Heh, eatted it!");
+#define fireflower
+show_debug_message("Heh, I dranked it!");
+oldsize = size;
+size = "fire";
+grow = 60;
 
 #define ceil_bonk
 

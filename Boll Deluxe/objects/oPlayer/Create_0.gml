@@ -1,6 +1,6 @@
 //PLAYER SIGNALS
 
-sig_names = ["jumped", "mushroom"]
+sig_names = ["jumped", "mushroom", "fireflower"]
 // MAKE SURE THE NAME ACTUALLY EXISTS IN THE CHARM OR THE PROGRAM WILL FREEZE!! - chopp
 sig = new Signal();
 updateBox = new Signal();
@@ -101,7 +101,14 @@ drawStar=false
 
 sheet=-1;
 var dir=$"{working_directory}\\_vanilla\\character\\{charmName}\\{charmName}";
-mysprite=sprite_add_ext($"{dir}-basic.png",0,0,0,true);
+
+player_sheets = {};
+for (var i = 0; i < array_length(global.powerups); i += 1) {
+	player_sheets[$ global.powerups[i]] = sprite_add_ext($"{dir}-{global.powerups[i]}.png",0,0,0,true);
+	if (!sprite_exists(player_sheets[$ global.powerups[i]])) {
+		show_debug_message($"tried to add player sheet but no sheet for size '{global.powerups[i]}' exists? defaulting to basic sheet")
+	}
+}
 
 ///// EVENT SETUP /////
 

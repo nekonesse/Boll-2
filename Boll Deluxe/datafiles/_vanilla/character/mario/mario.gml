@@ -13,6 +13,7 @@ skiddir = 0;
 pound_timer = 0;
 storedxsc = 1;
 poundjump = 0;
+grow = 0;
 state = "";
 
 
@@ -189,7 +190,6 @@ if (state == "wallslide") {
 }
 #endregion
 
-
 if (colangle != 0 && slopesliding){
 	fric = 0.048; //limit friction for more slideee
 	// weeeeee
@@ -220,6 +220,8 @@ bonk=max(0,bonk-1)
 poundjump=max(0,poundjump-1)
 
 runvar = approach_val(runvar,run,0.05)
+
+grow = max(0, (grow - 1));
 
 #define sprmanager
 frspd=1
@@ -270,6 +272,15 @@ show_debug_message("Situation becomes worse....");
 
 #define mushroom
 show_debug_message("eatted it :)");
+oldsize = size;
+size = "big";
+grow = 60;
+
+#define fireflower
+show_debug_message("dranked it :)");
+oldsize = size;
+size = "fire";
+grow = 60;
 
 #define ceil_bonk
 bonk = 12

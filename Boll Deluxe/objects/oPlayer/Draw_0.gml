@@ -1,3 +1,4 @@
+get_player_sheet();
 animate_player();
 if (sheet != -1) {
 	if (greenmode) {

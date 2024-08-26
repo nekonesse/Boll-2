@@ -65,7 +65,7 @@ function skin_animationdata(slot,name,list,size) {
 	    spr=list[i]
 	    //read frame count list
 	    //the below code was mega simplified since we don't have to deal with the commas for different sizes.
-	    //I'm utilizing the defaults of nozerounreal here so that in the case that it doesn't actually find the tag it just goes for a non size specific version. i.e, one without a tag.s
+	    //I'm utilizing the defaults of nozerounreal here so that in the case that it doesn't actually find the tag it just goes for a non size specific version. i.e, one without a tag.s  ||  lazy 8am moster here Thank You.		
 		frames_list[i]=nozerounreal(skin_setting(sizename+" "+string(spr)+" frames"),skin_setting(string(spr)+" frames"))
 	    
 		//read animation speed
@@ -134,8 +134,28 @@ function init_player() { //make this load animation data later
 	top_margin=120;
 	dy=0;
 	
-	skin_animationdata(pNum,charmName,sprite_list,0);
+	for (var sizeNum = 0; sizeNum < array_length(global.powerups); sizeNum += 1) { //temporary size count, could replace with better method later maybe? works for now though -moster
+		skin_animationdata(pNum,charmName,sprite_list,sizeNum);
+	}
 	init_sounds();
+}
+
+function get_player_sheet() {
+	mem = size;
+	if (grow && (global.roomTimer mod 6 < 3)) {
+		size = oldsize;
+	}
+	var mysheet = player_sheets[$ string(size)]
+	if (sprite_exists(mysheet)) {
+		if (sheet != mysheet) {
+			sheet = mysheet;
+		}
+	} else if (sheet != player_sheets[$ "basic"]) { //fall back to basic if sheet doesn't exist for some reason
+		sheet = player_sheets[$ "basic"];
+	}
+	if (size != mem) {
+		size = mem;
+	}
 }
 
 function draw_player() {
@@ -169,8 +189,13 @@ function animate_player() {
 	//if ((depth=0 || depth=1) && pNum=gamemanager.plrsort) depth=!depth
 	 
 	//Growing and hurting size changes.
-	//mem=size
-	//if (((hurt || fall=6) && hk<4) || (grow && gk mod 6<3)) size=oldsize
+	//commented out old code right now, also taking damage doesnt exist yet so its not there. also used the room timer 4 the flash honestly because i dont care rn -moster
+	mem = size;
+	//if (((hurt || fall=6) && hk<4) || (grow && /gk mod 6<3)) size=oldsize
+	
+	if (grow && (global.roomTimer mod 6 < 3)) {
+		size = oldsize;
+	}
 
 	//if (global.tpose) {sprite="stand" frame=0}
 
@@ -187,7 +212,11 @@ function animate_player() {
 	if (frame>=frn) {frame=frame-frn if (frl<frn) frame=frl}
 	frame=modulo(frame,0,frn)  
 
-	//below is the code that deals with taking damage, as well as growing, commented out just in case rn
-	//if (!super) if (((hurt || fall=6) && hk<4) || (grow && gk mod 6<3)) size=mem
+	//below is the old code that deals with taking damage, as well as growing, commented out just in case rn
+	/*if (!super) if (((hurt || fall=6) && hk<4) || ((grow && gk mod 6<3)) size=mem*/ 
+	
+	if (size != mem) {
+		size = mem;
+	}
 }
 

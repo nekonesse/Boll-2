@@ -1,5 +1,6 @@
 var _sprite_id = async_load[?"id"];
-if (_sprite_id == mysprite)
+
+if (_sprite_id == player_sheets[$ string(size)])
 {
-    sheet = _sprite_id;
+	sheet = _sprite_id;
 }
