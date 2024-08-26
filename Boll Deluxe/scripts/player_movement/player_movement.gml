@@ -37,8 +37,8 @@ function player_movement(){
 		}
 	}
 	
-	if (abs(gsp) > maxspd) && (grounded) gsp=approach_val(gsp,maxspd,0.5) 
-	if (abs(hsp) > maxspd) && (!grounded) hsp=approach_val(hsp,maxspd,0.5)
+	if (abs(gsp) > maxspd) && (grounded) gsp=approach_val(gsp, maxspd * sign(gsp), 0.5) 
+	if (abs(hsp) > maxspd) && (!grounded) hsp=approach_val(hsp, maxspd * sign(hsp), 0.5)
 	
 	if grounded {
 		vsp = gsp * -dsin(colangle)

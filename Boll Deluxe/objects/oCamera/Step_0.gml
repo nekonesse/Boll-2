@@ -89,7 +89,7 @@ x_final = x + xnudge[0];
 y_final = y + ynudge[0];
 
 // literally just for testing
-var testnudge = true;
+var testnudge = global.debug;
 
 if (testnudge)
 {
