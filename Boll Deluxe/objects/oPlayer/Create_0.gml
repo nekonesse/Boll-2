@@ -100,6 +100,8 @@ image_yscale = 1
 drawStar=false 
 my_camera=instance_create(x,y,oCamera)
 
+my_camera.target = self;
+
 sheet=-1;
 var dir=$"{working_directory}\\_vanilla\\character\\{charmName}\\{charmName}";
 
