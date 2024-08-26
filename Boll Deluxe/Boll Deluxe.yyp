@@ -271,6 +271,7 @@
     {"id":{"name":"oBossParent","path":"objects/oBossParent/oBossParent.yy",},},
     {"id":{"name":"oBrick","path":"objects/oBrick/oBrick.yy",},},
     {"id":{"name":"oBulletBill","path":"objects/oBulletBill/oBulletBill.yy",},},
+    {"id":{"name":"oCamera","path":"objects/oCamera/oCamera.yy",},},
     {"id":{"name":"oChainsaw","path":"objects/oChainsaw/oChainsaw.yy",},},
     {"id":{"name":"oCoin","path":"objects/oCoin/oCoin.yy",},},
     {"id":{"name":"oCollider","path":"objects/oCollider/oCollider.yy",},},

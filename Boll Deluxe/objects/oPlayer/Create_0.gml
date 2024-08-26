@@ -98,6 +98,7 @@ depth=0;
 image_xscale = 1
 image_yscale = 1
 drawStar=false 
+my_camera=instance_create(x,y,oCamera)
 
 sheet=-1;
 var dir=$"{working_directory}\\_vanilla\\character\\{charmName}\\{charmName}";

@@ -168,6 +168,7 @@
     {"name":"oBillBlaster","order":13,"path":"objects/oBillBlaster/oBillBlaster.yy",},
     {"name":"oBossParent","order":2,"path":"objects/oBossParent/oBossParent.yy",},
     {"name":"oBrick","order":5,"path":"objects/oBrick/oBrick.yy",},
+    {"name":"oCamera","order":4,"path":"objects/oCamera/oCamera.yy",},
     {"name":"oChainsaw","order":11,"path":"objects/oChainsaw/oChainsaw.yy",},
     {"name":"oCoin","order":1,"path":"objects/oCoin/oCoin.yy",},
     {"name":"oCSS","order":1,"path":"objects/oCSS/oCSS.yy",},
