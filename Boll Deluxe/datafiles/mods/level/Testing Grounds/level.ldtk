@@ -2577,7 +2577,7 @@
 			"maxHeight": null,
 			"keepAspectRatio": false,
 			"tileOpacity": 1,
-			"fillOpacity": 1,
+			"fillOpacity": 0.25,
 			"lineOpacity": 1,
 			"hollow": false,
 			"color": "#38D79B",
@@ -5467,41 +5467,22 @@
 						},
 						{
 							"__identifier": "CameraNudge",
-							"__grid": [20,17],
+							"__grid": [20,13],
 							"__pivot": [0,0],
 							"__tags": [],
 							"__tile": null,
 							"__smartColor": "#38D79B",
 							"iid": "35a8dff0-4ce0-11ef-8e48-1b4c5c2fce69",
-							"width": 224,
-							"height": 128,
+							"width": 192,
+							"height": 192,
 							"defUid": 97,
-							"px": [320,272],
+							"px": [320,208],
 							"fieldInstances": [
 								{ "__identifier": "nudge_x", "__type": "Int", "__value": -64, "__tile": null, "defUid": 98, "realEditorValues": [{ "id": "V_Int", "params": [-64] }] },
 								{ "__identifier": "nudge_y", "__type": "Int", "__value": 0, "__tile": null, "defUid": 99, "realEditorValues": [] }
 							],
 							"__worldX": 320,
-							"__worldY": 272
-						},
-						{
-							"__identifier": "CameraNudge",
-							"__grid": [19,8],
-							"__pivot": [0,0],
-							"__tags": [],
-							"__tile": null,
-							"__smartColor": "#38D79B",
-							"iid": "400687e0-4ce0-11ef-8e48-e57f317604a4",
-							"width": 16,
-							"height": 16,
-							"defUid": 97,
-							"px": [304,128],
-							"fieldInstances": [
-								{ "__identifier": "nudge_x", "__type": "Int", "__value": 0, "__tile": null, "defUid": 98, "realEditorValues": [] },
-								{ "__identifier": "nudge_y", "__type": "Int", "__value": 0, "__tile": null, "defUid": 99, "realEditorValues": [] }
-							],
-							"__worldX": 304,
-							"__worldY": 128
+							"__worldY": 208
 						}
 					]
 				},
