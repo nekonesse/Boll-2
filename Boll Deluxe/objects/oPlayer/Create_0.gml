@@ -97,10 +97,17 @@ global.paused=0
 depth=0;
 image_xscale = 1
 image_yscale = 1
-drawStar=false 
+drawStar=false;
+
+// camera
 my_camera=instance_create(x,y,oCamera)
 
 my_camera.target = self;
+
+if (!global.zoom_on_start)
+{
+	my_camera.zoom = 1;	
+}
 
 sheet=-1;
 var dir=$"{working_directory}\\_vanilla\\character\\{charmName}\\{charmName}";

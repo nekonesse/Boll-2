@@ -4,6 +4,10 @@ if (target == noone)
 	return;	
 }
 
+// a div 1 operation would probably be better, but that's probably wasteful
+xsensor = intlib_make_u32(CAM_SENSOR_WIDTH * zoom);
+ysensor = intlib_make_u32(CAM_SENSOR_HEIGHT * zoom);
+
 //vertical sensors
 //TODO: make it not stutter when walking up slopes
 var signy = sign(y - round(target.y))
@@ -22,8 +26,8 @@ if (y > target.y) {
 	} else if (target.grounded) {
 		ydist = y - round(target.y) //get distance to travel
 	}
-} else if (y < target.y - 24) {
-	y = round(target.y - 24);
+} else if (y < target.y - ysensor) {
+	y = round(target.y - ysensor);
 	ydist = 0
 }
 
@@ -31,7 +35,7 @@ if (y > target.y) {
 //horizontal sensors
 switch state {
 	case 0 : { //follow player
-		var check = (target.x - x > 64 || target.x - x < -64); // check boundaries and store
+		var check = (target.x - x > xsensor || target.x - x < -xsensor); // check boundaries and store
 		
 		if (xsc == sign(x - target.x)) {x = target.x} // snap to player if they keep going the same direction
 		
@@ -102,12 +106,13 @@ else
 x_final = x + xnudge[0];
 y_final = y + ynudge[0];
 
-// nudge collision
-var camnudge;
+// camera modifier collisions
+var camnudge, camzoom;
 
 with(target)
 {
-	camnudge = instance_place(x,y,oCameraNudge);	
+	camnudge = instance_place(x,y,oCameraNudge);
+	camzoom = instance_place(x,y,oCameraZoom);
 }
 
 if (camnudge)
@@ -121,12 +126,50 @@ else
 	ynudge[1] = 0;
 }
 
-var xwidth, ywidth, xx, yy;
+if (camzoom)
+{
+	// CameraZoom regions use a "bigger number = zoom in" format
+	// to prevent discrepancy, we gotta do this
+	target_zoom = 1 / camzoom.zoom;
+}
+else
+{
+	target_zoom = 1;
+}
+
+// move and resize the camera
+var xwidth, ywidth, xx, yy, xb, yb;
 
 xwidth = camera_get_view_width(view_camera[0]);
 ywidth = camera_get_view_height(view_camera[0]);
 
-xx = max(0, x_final + xdiff - (xwidth div 2));
-yy = max(0, y_final + (y - yprevious) - (ywidth div 2));
+xx = min(room_width, max(0, x_final + xdiff - (xwidth div 2)));
+yy = min(room_height, max(0, y_final + (y - yprevious) - (ywidth div 2)));
+
+// handle zooming
+var finxdiff = abs(xx - x_final_prev);
+var finydiff = abs(yy - y_final_prev);
+
+// only let the camera zoom once we actually begin moving
+if (zoom_delay)
+{
+	zoom_delay = max(0, zoom_delay - 1);
+}
+else if (finxdiff || finydiff)
+{
+	can_zoom = true;	
+}
+
+if (can_zoom)
+{
+	zoom = approach_val(zoom, target_zoom, CAM_ZOOM_RATE);
+}
+
+xb = intlib_make_u32(xbounds * zoom);
+yb = intlib_make_u32(ybounds * zoom);
 
 camera_set_view_pos(view_camera[0],xx,yy);
+camera_set_view_size(view_camera[0],xbounds * zoom,ybounds * zoom);
+
+x_final_prev = xx;
+y_final_prev = yy;

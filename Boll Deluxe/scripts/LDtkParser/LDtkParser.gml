@@ -21,6 +21,7 @@ global.__ldtk_config = {
 			FG_Decor_Tiles: "FG_Decor_Tiles",
 			Misc_Entities: "Misc_Entities",
 			Ground_Tiles: "Ground_Tiles",
+			Camera_Controllers: "CameraControllers",
 			Entities: "Entities",
 			Tiles: "Misc_Tiles",
 			BG_Decor_Tiles: "BG_Decor_Tiles",

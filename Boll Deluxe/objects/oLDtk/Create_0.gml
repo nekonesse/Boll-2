@@ -4,6 +4,9 @@
 // ...and to set this macro to 0 when building the game!
 #macro LDTK_LIVE 0
 
+// turn off zooming
+global.zoom_on_start = false;
+
 if (LDTK_LIVE) {
 	LDtkConfig({
 		file: working_directory+"\mods\\level\\"+global.nextlevel+"\\level.ldtk",
@@ -30,6 +33,7 @@ LDtkMappings({
 		FG_Decor_Tiles: "FG_Decor_Tiles",
 		Misc_Entities: "Misc_Entities",
 		Ground_Tiles: "Ground_Tiles",
+		Camera_Controllers: "CameraControllers",
 		Entities: "Entities",
 		Tiles: "Misc_Tiles",
 		BG_Decor_Tiles: "BG_Decor_Tiles",

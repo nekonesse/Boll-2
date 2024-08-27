@@ -1,0 +1,1 @@
+global.zoom_on_start = true;

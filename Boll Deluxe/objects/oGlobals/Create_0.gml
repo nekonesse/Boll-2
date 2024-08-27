@@ -17,6 +17,10 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_constant_add("COL_TOP",COL_TOP)
 		txr_constant_add("COL_LINE",COL_LINE)
 		txr_constant_add("COL_DOT",COL_DOT)
+		txr_constant_add("CAM_SENSOR_HEIGHT",CAM_SENSOR_WIDTH)
+		txr_constant_add("CAM_SENSOR_HEIGHT",CAM_SENSOR_HEIGHT)
+		txr_constant_add("CAM_ZOOM_TIME",CAM_ZOOM_TIME)
+		txr_constant_add("CAM_ZOOM_RATE",CAM_ZOOM_RATE)
 		//Objects
 		txr_constant_add("oCollider",oCollider)
 		txr_constant_add("oSemilider",oSemilider)
@@ -1179,6 +1183,7 @@ show_debug_message($"The {_charmList}: WE AGREE!");
 global.levellist=0;
 global.sounds=ds_map_create();
 load_levels();
+global.zoom_on_start = false; // does this level have the starting zoom-in?
 
 //// General data ////
 global._playerChars = [];
