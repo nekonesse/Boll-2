@@ -2,6 +2,7 @@
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function player_movement(){
 	player_warping();
+	my_camera.stalled = piped;
 	
 	if (piped) exit
 	

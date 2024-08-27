@@ -35,6 +35,16 @@ function warp_in_pipe(obj,spd,dir) {
 				else
 				other.y=found.y+4
 				other.warp_coll=found
+				
+				// chearii: camera stupidity
+				if (other.my_camera)
+				{
+					other.my_camera.x = found.x;
+					other.my_camera.y = found.y;
+				
+					other.my_camera.x_final = found.x;
+					other.my_camera.y_final = found.y;
+				}
 			} else {//if pipe is for some reason, not found, send back to original pipe
 				other.x=x
 				if image_angle!=90 && image_angle!=270
@@ -42,6 +52,16 @@ function warp_in_pipe(obj,spd,dir) {
 				else
 				other.y=y+4
 				other.warp_coll=id;
+				
+				// chearii: camera stupidity
+				if (other.my_camera)
+				{
+					other.my_camera.x = x;
+					other.my_camera.y = y;
+				
+					other.my_camera.x_final = x;
+					other.my_camera.y_final = y;
+				}
 			}
 			other.piped=true;
 			other.warp_out=true;

@@ -1,7 +1,22 @@
+var xwidth, ywidth, xx, yy, xb, yb;
+
 // scream and cry and whine if target doesn't exist
 if (target == noone)
 {
-	return;	
+	return;
+}
+
+// we're stalled; move the camera only
+if (stalled)
+{
+	xwidth = camera_get_view_width(view_camera[0]);
+	ywidth = camera_get_view_height(view_camera[0]);
+
+	xx = min(room_width, max(0, x_final + (x - xprevious) - (xwidth div 2)));
+	yy = min(room_height, max(0, y_final + (y - yprevious) - (ywidth div 2)));
+
+	camera_set_view_pos(view_camera[0],xx,yy);
+	return;
 }
 
 // a div 1 operation would probably be better, but that's probably wasteful
@@ -138,8 +153,6 @@ else
 }
 
 // move and resize the camera
-var xwidth, ywidth, xx, yy, xb, yb;
-
 xwidth = camera_get_view_width(view_camera[0]);
 ywidth = camera_get_view_height(view_camera[0]);
 

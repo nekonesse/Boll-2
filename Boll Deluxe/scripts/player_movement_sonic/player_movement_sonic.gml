@@ -3,6 +3,7 @@
 function player_movement_sonic(){
 	
 	player_warping();
+	my_camera.stalled = piped;
 	
 	if (piped) exit
 	

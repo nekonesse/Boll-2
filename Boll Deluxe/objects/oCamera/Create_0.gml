@@ -5,6 +5,7 @@ xdist = 0
 ydist = 0
 
 target = noone;
+stalled = false;
 
 // camera zoom
 can_zoom = false; // can the camera zoom yet?
