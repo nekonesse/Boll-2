@@ -32,6 +32,3 @@ y_final_prev = y_final;
 
 xbounds = camera_get_view_width(view_camera[0]);
 ybounds = camera_get_view_height(view_camera[0]);
-
-
-show_debug_message("Ah! My Bolls Are "+string(intlib_make_u32(-1))+"! Ahhh!");
