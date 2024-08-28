@@ -40,10 +40,7 @@ ysensor = intlib_make_u32(CAM_SENSOR_HEIGHT * zoom);
 xwidth = camera_get_view_width(view_camera[0]);
 ywidth = camera_get_view_height(view_camera[0]);
 
-//vertical sensors
-//TODO: make it not stutter when walking up slopes
-var signy = sign(y - round(target.y));
-
+// vertical sensors
 // chearii: billions must truncate
 // is this prone to integer overflows at some point? yeah
 // but who the fuck's going to make a stage that's over 9 quintillion pixels tall

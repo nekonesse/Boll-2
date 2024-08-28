@@ -10,7 +10,7 @@ lockflags = 0;
 
 // camera zoom
 can_zoom = false; // can the camera zoom yet?
-zoom_delay = 16;   // delay in frames before the can_zoom check, prevents instant zoomout on level start
+zoom_delay = 16;  // delay in frames before the can_zoom check, prevents instant zoomout on level start
 
 // set up in a way to have NSMB-style level starts
 zoom = 0.5;       // zoom value
