@@ -156,7 +156,7 @@ if (state == "jump" || state == "") && !(grounded) {
 if (state == "" && apress && canjump > 0) {
 	state = "jump"
 	grounded = false
-	vsp = -(6+min(1,abs(hsp)/10)+(bool(poundjump)+0.5));
+	vsp = -(5.25+min(1,abs(hsp)/10)+(bool(poundjump)+0.5));
 	playsfx(charmName+"jump",1+(bool(poundjump)/4),0,1)
 	if ((run && abs(hsp)>3) && !wallsliding) {runjump=1} 
 	if (poundjump) {
@@ -272,9 +272,11 @@ show_debug_message("Situation becomes worse....");
 
 #define mushroom
 show_debug_message("eatted it :)");
-oldsize = size;
-size = "big";
-grow = 60;
+if (size != "fire") {
+	oldsize = size;
+	size = "big";
+	grow = 60;
+}
 
 #define fireflower
 show_debug_message("dranked it :)");
@@ -292,7 +294,7 @@ if (state == "pound") {
 	show_debug_message(colslope);
 	if colslope != 0 {
 		slopesliding = 1
-		gsp = (-12 * dsin(colangle)) 
+		gsp = (-8 * dsin(colangle)) 
 	}
 	playsfx(charmName+"stomp");
 	//create pound smoke

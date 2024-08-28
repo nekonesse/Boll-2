@@ -8,7 +8,7 @@ if (hit != 0)
 {
 	if going {
 		if dummyTimer > 0 {
-			dy = approach_val(dy, bumpMax * -hit, 1.5);
+			dy = approach_val(dy, bumpMax * -hit, 2);
 			var doneCheck = (hit == -1 ? (round(dy) >= bumpMax) : (round(dy) <= -bumpMax))
 			if doneCheck {
 				dummyTimer--;

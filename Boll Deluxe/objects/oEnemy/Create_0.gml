@@ -47,5 +47,6 @@ enemyStomped.Connect( self, function(hit_p) {
 });
 
 enemyCollidePlayer.Connect( self, function(hit_p) {
-
+	with(hit_p) sig.Emit("enemy_stomped")
+	phaseid=hit_p
 });

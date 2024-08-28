@@ -5,10 +5,11 @@ function player_interactions(){
 	if (enemystomp) {
 		if !hurt && !grounded && vsp > 0
 		enemystomp.enemyStomped.Emit(id);
-	}
-	var enemy=collision_point(x,y,oEnemy, false, true)
-	if (enemy) && !(enemystomp && enemy.id == enemystomp) {
-		enemy.enemyCollidePlayer.Emit(id);
+	} else {
+		var enemy=collision_point(x,y,oEnemy, false, true)
+		if (enemy) && !(enemystomp && enemy.id == enemystomp) {
+			enemy.enemyCollidePlayer.Emit(id);
+		}
 	}
 	
 	var spring = collision_line(x-hit_sizex,y+hit_sizey+1,x+hit_sizex,y+hit_sizey+1, oTerrainSpring, false, true)
