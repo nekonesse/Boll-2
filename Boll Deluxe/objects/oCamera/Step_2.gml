@@ -306,8 +306,8 @@ x_final = x + xnudge[0];
 y_final = y + ynudge[0];
 
 // move and resize the camera
-xx = min(room_width, max(0, x_final + xdiff - (xwidth div 2)));
-yy = min(room_height, max(0, y_final + ydiff - (ywidth div 2)));
+xx = min(room_width, max(0, x_final - (xwidth div 2)));
+yy = min(room_height, max(0, y_final - (ywidth div 2)));
 
 // handle zooming
 var finxdiff = abs(xx - x_final_prev);
