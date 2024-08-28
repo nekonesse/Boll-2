@@ -42,6 +42,10 @@ if (view_grab) { //update camera position
 #endregion
 
 var mwheel = mouse_wheel_down() - mouse_wheel_up();
+if (mwheel == 0) {mwheel = keyboard_check_direct(vk_down) - keyboard_check_direct(vk_up)}
+//whoever sees this, i hope you have a nice day
+//              -ArcanePool
+
 #region Object List Scrolling
 if (mwheel != 0) && (on_object_list) {
 	object_list_scroll_pos+=16*-mwheel
@@ -74,14 +78,14 @@ if keyboard_check_pressed(vk_escape) room_goto(rMainMenu)
 switch(selected_mode) {
 	case TILE_MODE:
 		if selected_tool = BRUSH_TOOL {
-			if (mouse_wheel_down() || keyboard_check_pressed(vk_pagedown)) {
+			if (mwheel == 1 || keyboard_check_pressed(vk_pagedown)) {
 				if !keyboard_check(vk_control)
 				current_tile_id --	
 				else
 				current_tile_id += (sprite_get_width(spr_TilesetMain)/16)
 			}
 
-			if (mouse_wheel_up() || keyboard_check_pressed(vk_pageup)) {
+			if (mwheel == -1 || keyboard_check_pressed(vk_pageup)) {
 				if !keyboard_check(vk_control)
 				current_tile_id ++
 				else
