@@ -245,8 +245,9 @@ function poly_collide(obj = self, is_player = false)
                     // chearii: indeed I will
                     this.colangle = radtodeg(nrm.X);
 					
-					if ((this.object_index == oPlayer) && (this.slopesliding))
+					if (this.object_index == oPlayer)
 					{
+						if (this.slopesliding)
 						getslope = false;	
 					}
 
