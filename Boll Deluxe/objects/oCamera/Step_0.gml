@@ -45,8 +45,8 @@ if (!(ycorrect || (lockflags & STALL_Y)))
 	{
 	case 1:
 		// exiting course correct
-		y = approach_val(y,round(target.y),4);
-		if (y == round(target.y))
+		y = approach_val(y,floor(target.y),4);
+		if (y == floor(target.y))
 		{
 			state[1] = 0;
 		}	
@@ -54,21 +54,21 @@ if (!(ycorrect || (lockflags & STALL_Y)))
 	default:
 		if (y > target.y) {
 			if (ydist != 0) {
-				ydist = y - round(target.y)
+				ydist = y - floor(target.y)
 				ydist -= sign(ydist) * 3 //this stutters it
 		
 				//y = target.y + ydist; 
 				y -= sign(ydist) * 3 
-				if (round(ydist) div 3 == 0 || signy != sign(y - round(target.y))) {
+				if (floor(ydist) div 3 == 0 || signy != sign(y - floor(target.y))) {
 					ydist = 0
 					y = target.y
 				}
 		
 			} else if (target.grounded) {
-				ydist = y - round(target.y) //get distance to travel
+				ydist = y - floor(target.y) //get distance to travel
 			}
 		} else if (y < target.y - ysensor) {
-			y = round(target.y - ysensor);
+			y = floor(target.y - ysensor);
 			ydist = 0
 		}
 	}
