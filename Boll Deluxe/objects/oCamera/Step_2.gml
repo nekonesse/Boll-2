@@ -327,7 +327,7 @@ xx = min(room_width, max(0, x_final - (xwidth div 2)));
 yy = min(room_height, max(0, y_final - (ywidth div 2)));
 
 // handle zooming
-var finxdiff = abs(xx - x_final_prev);
+var finxdiff = intlib_make_fixedpoint(abs(xx - x_final_prev));
 var finydiff = abs(yy - y_final_prev);
 
 // only let the camera zoom once we actually begin moving
