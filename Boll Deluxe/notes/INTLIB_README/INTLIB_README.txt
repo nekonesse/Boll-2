@@ -24,6 +24,9 @@ intlib_make_u16(num): converts a gamemaker number to an unsigned 16-bit integer
 intlib_make_u32(num): converts a gamemaker number to an unsigned 32-bit integer 
 (range: 0 to 4294967295)
 
+intlib_make_u64(num): converts a gamemaker number to an unsigned 64-bit integer
+(range: 0 to 18446744073709551615)
+
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @    SIGNED INTEGER CONVERSION    @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -36,6 +39,9 @@ intlib_make_s16(num): converts a gamemaker number to a signed 16-bit integer
 
 intlib_make_s32(num): converts a gamemaker number to a signed 32-bit integer 
 (range: 0 to 2147483647, -1 to -2147483648)
+
+intlib_make_s64(num): converts a gamemaker number to a signed 64-bit integer
+(range: -9223372036854775808 to 9223372036854775807)
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @    DECIMAL TO FIXED-POINT    @

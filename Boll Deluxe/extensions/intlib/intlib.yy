@@ -28,6 +28,8 @@
         {"$GMExtensionFunction":"","%Name":"intlib_make_s16","argCount":0,"args":[2,],"documentation":"","externalName":"sint16_convert","help":"intlib_make_s16(value)","hidden":false,"kind":1,"name":"intlib_make_s16","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
         {"$GMExtensionFunction":"","%Name":"intlib_make_u32","argCount":0,"args":[2,],"documentation":"","externalName":"uint32_convert","help":"intlib_make_u32(value)","hidden":false,"kind":1,"name":"intlib_make_u32","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
         {"$GMExtensionFunction":"","%Name":"intlib_make_s32","argCount":0,"args":[2,],"documentation":"","externalName":"sint32_convert","help":"intlib_make_u32(value)","hidden":false,"kind":1,"name":"intlib_make_s32","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
+        {"$GMExtensionFunction":"","%Name":"intlib_make_u64","argCount":0,"args":[2,],"documentation":"","externalName":"uint64_convert","help":"intlib_make_u64(value)","hidden":false,"kind":1,"name":"intlib_make_u64","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
+        {"$GMExtensionFunction":"","%Name":"intlib_make_s64","argCount":0,"args":[2,],"documentation":"","externalName":"sint64_convert","help":"intlib_make_s64(value)","hidden":false,"kind":1,"name":"intlib_make_s64","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
       ],"init":"","kind":1,"name":"intlib.dll","order":[
         {"name":"intlib_make_u8","path":"extensions/intlib/intlib.yy",},
         {"name":"intlib_make_u8_and_store","path":"extensions/intlib/intlib.yy",},
