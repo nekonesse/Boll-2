@@ -3,20 +3,12 @@
 
 //#macro COL oCollider
 
-function player_collision(){
-	if (piped) exit
+// run this in end step, clipping stupidity happens otherwise
+function player_poly_collision()
+{
+	if (piped) exit;
 	
-	//left wall
-	while check_collision_dot(x-hit_sizex, y-sign(vsp), COL_WALL){
-		x++		
-	}
-		
-	//right wall
-	while check_collision_dot(x+hit_sizex, y-sign(vsp), COL_WALL){
-		x--
-	}
-	
-	// do polygon collisions first
+	// polygon collisions
 	var lastpolyfloor = polyfloor[1];
 	polyfloor[0] = false;
 	poly_collide(self, true);
@@ -72,6 +64,20 @@ function player_collision(){
 			}
 		}
 	}
+}
+
+function player_collision(){
+	if (piped) exit
+	
+	//left wall
+	while check_collision_dot(x-hit_sizex, y-sign(vsp), COL_WALL){
+		x++		
+	}
+		
+	//right wall
+	while check_collision_dot(x+hit_sizex, y-sign(vsp), COL_WALL){
+		x--
+	}
 	
 	//landing on solid ground
 	if !grounded && vsp >= 0 {
@@ -122,7 +128,6 @@ function player_collision(){
 			VinylPlay(snd_blockbump)
 		}
 	}
-	
 	
 	//normal ground loop (for a variety of slopes
 	if grounded {
