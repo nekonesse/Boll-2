@@ -99,6 +99,9 @@ image_xscale = 1
 image_yscale = 1
 drawStar=false;
 
+// boxpoly setup
+setup_box_poly(self);
+
 // camera
 my_camera=instance_create(x,y,oCamera)
 

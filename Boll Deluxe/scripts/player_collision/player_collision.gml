@@ -6,6 +6,70 @@
 function player_collision(){
 	if (piped) exit
 	
+	// do polygon collisions first
+	var lastpolyfloor = polyfloor[1];
+	polyfloor[0] = false;
+	poly_collide(self, true);
+	
+	// dumb hack: if our timer's gone down, scan downwards a bit until we hit a polygon
+	if ((polyfloor[1]) && (lastpolyfloor > polyfloor[1]))
+	{
+		var scan = 4; // only 4 cycles since this is per-pixel
+		var prescany = y;
+		
+		while (scan)
+		{
+			y += 1;
+			polyfloor[0] = false;
+			poly_collide(self, true);
+			
+			if (polyfloor[0])
+			{
+				break;	
+			}
+			
+			scan -= 1;
+		}
+		
+		// prevent shitty jumpsnaps that I'll get yelled at for
+		// have to do this AFTER the scan due to polyfloor[0] being a boolean
+		if ((intlib_make_fixedpoint(vsp) < 0) && (polyfloor[0] == false))
+		{	
+			if (polyfloor[1])
+			{
+				polyfloor[1] = 0;
+			}
+		}
+		
+		// found nothing, return to our old position
+		if (polyfloor[0] == false)
+		{
+			y = prescany;	
+		}
+	}
+	
+	var groundcheck = (polyfloor[1] > 0);
+	
+	// not on a polyfloor, use grounded
+	if (!groundcheck)
+	{
+		groundcheck = grounded;	
+	}
+	else
+	{
+		if (lastpolyfloor == 0)
+		{
+			// landed on a polygon, do the usual landing routine
+			grounded = true;
+			
+			if self.object_index = oPlayer{
+				sig.Emit("floor_land")
+			} else {
+				gsp = hsp
+				vsp = 0	
+			}
+		}
+	}
 	
 	//left wall
 	while check_collision_dot(x-hit_sizex, y-sign(vsp), COL_WALL){
@@ -69,7 +133,7 @@ function player_collision(){
 	
 	
 	//normal ground loop (for a variety of slopes
-	if grounded {
+	if groundcheck {
 		//gets angle so it doesnt jitter
 		get_angle_line(x-hit_sizex,y+hit_sizey,x-hit_sizex,y +hit_sizey + 3)
 		get_angle_line(x+hit_sizex,y+hit_sizey,x+hit_sizex,y +hit_sizey + 3)
@@ -82,18 +146,21 @@ function player_collision(){
 		
 		//fall
 		if (!check_collision_line(x-hit_sizex,y+hit_sizey,x-hit_sizey,y +hit_sizey + 16 , COL_BOTTOM) && !check_collision_line(x+hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey + 16, COL_BOTTOM) ){
-				vsp = gsp * -dsin(colangle)
-				hsp = gsp * dcos(colangle)
-				grounded = false
-				colangle = 0
-				colslope = 0
+				if (!abs(polyfloor[1]))
+				{
+					vsp = gsp * -dsin(colangle)
+					hsp = gsp * dcos(colangle)
+					grounded = false
+					colangle = 0
+					colslope = 0
+				}
 				exit;
 			}
 			
 	}
 		
 		
-	if grounded {
+	if groundcheck {
 		
 		//move down
 		if (check_collision_line(x-hit_sizex,y+hit_sizey,x-hit_sizex,y +hit_sizey + 16 , COL_BOTTOM) || check_collision_line(x+hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey + 16, COL_BOTTOM) ){   

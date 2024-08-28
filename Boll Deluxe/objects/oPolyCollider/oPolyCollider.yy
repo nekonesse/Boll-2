@@ -37,5 +37,5 @@
     "path":"sprites/spr_collider_poly/spr_collider_poly.yy",
   },
   "spriteMaskId":null,
-  "visible":false,
+  "visible":true,
 }

@@ -7,6 +7,7 @@
 //defaultgrav, gravity
 //hsp, horizontal speed
 //vsp, vertical speed
+//polyfloor, hit the "floor" of a polygon
 enemyStomped = new Signal();
 enemyCollidePlayer = new Signal();
 grav=defaultgrav
@@ -32,6 +33,10 @@ hit_sizey = 6
 
 image_xscale=1;
 image_yscale=1;
+sprindex_prev = sprite_index;
+
+// boxpoly setup
+setup_box_poly(self);
 
 enemyStomped.Connect( self, function(hit_p) {
 	if (!no_stomping) {

@@ -90,10 +90,29 @@ function obj_update_poly_from_bounding(obj, xscale = 1, yscale = 1)
 	obj.vertices[3].Y = bottom;
 }
 
+function player_update_poly_from_hitsize(obj)
+{
+	var left = (-obj.hit_sizex);
+	var right = left + (obj.hit_sizex * 2);
+	var bottom = (-obj.hit_sizey);
+	var top = bottom + (obj.hit_sizey * 2);
+	
+	obj.vertices[0].X = left;
+	obj.vertices[0].Y = top;
+	
+	obj.vertices[1].X = right;
+	obj.vertices[1].Y = top;
+	
+	obj.vertices[2].X = right;
+	obj.vertices[2].Y = bottom;
+	
+	obj.vertices[3].X = left;
+	obj.vertices[3].Y = bottom;	
+}
 
 // transformUpdateRequired should be set to true
 
-function GetTransformedVertices(doOffset, xoff, yoff, forceCenter = false)
+function GetTransformedVertices(obj = self,doOffset, xoff, yoff, forceCenter = false)
 {
 	if (doOffset == undefined)
 		doOffset = true;
@@ -101,12 +120,12 @@ function GetTransformedVertices(doOffset, xoff, yoff, forceCenter = false)
 	xoff = ((xoff == undefined) ? 0 : xoff);
 	yoff = ((yoff == undefined) ? 0 : yoff);
 	
-	var vdist = vertices[2].Y - vertices[0].Y;
+	var vdist = obj.vertices[2].Y - obj.vertices[0].Y;
 	
 	
 	
 	
-	if (transformUpdateRequired)
+	if (obj.transformUpdateRequired)
 	{
 		var xo = ((doOffset) ? (-sprite_xoffset) : 0);
 		var yo = ((doOffset) ? (-sprite_yoffset) : 0);
@@ -121,16 +140,16 @@ function GetTransformedVertices(doOffset, xoff, yoff, forceCenter = false)
 			newy = bbox_bottom - (vdist div 2);
 		}
 		
-		var transform = new GMTransform(newx, newy, polyangle);
+		var transform = new GMTransform(newx, newy, obj.polyangle);
 		
-		for (var i = 0; i < array_length(vertices); i++)
+		for (var i = 0; i < array_length(obj.vertices); i++)
 		{
-			var v = vertices[i];
-			transformedVertices[i] = VT_Transform(v, transform);
+			var v = obj.vertices[i];
+			obj.transformedVertices[i] = VT_Transform(v, transform);
 		}
 	}
 	
-	return transformedVertices;
+	return obj.transformedVertices;
 }
 
 function vector_add(a, b)
@@ -187,7 +206,7 @@ function vector_normalize(v)
 	return new GMVector(v.X * inv, v.Y * inv);
 }
 
-function IntersectPolygons(verticesA, verticesB)
+function IntersectPolygons(obj = self,verticesA, verticesB)
 {
 	var normal = new GMVector(0,0);
 	var pdepth = INT_MAX;
@@ -276,7 +295,7 @@ function IntersectPolygons(verticesA, verticesB)
 	if (vector_dot(vectordir, normal) < 0)
 		normal = vector_mul(normal, -1);
 	
-	datapacket = [normal, pdepth];
+	obj.datapacket = [normal, pdepth];
 	
 	return true;
 }
@@ -332,15 +351,16 @@ function init_box_poly()
 	newObjectOverride = true;
 	
 	polyangle = image_angle div 1;
+	polyfloor = [false, 0];
 	
 	poly_x_prev = x;
 	poly_y_prev = y;
 	rot_prev = polyangle;
 }
 
-function draw_box_poly()
+function draw_box_poly(obj = self)
 {
-	var vt = transformedVertices;
+	var vt = obj.transformedVertices;
 	
 	if (!vt[0])
 	{
@@ -354,18 +374,18 @@ function draw_box_poly()
 	draw_line(vt[3].X,vt[3].Y,vt[0].X,vt[0].Y);	
 }
 
-function P_PolygonManager(obj, doOffset = false, xoff = 0, yoff = 0)
+function P_PolygonManager(obj = self, doOffset = false, xoff = 0, yoff = 0)
 {
-	if ((obj.x != poly_x_prev)||(obj.y != poly_y_prev)||(polyangle != rot_prev)||(newObjectOverride))
+	if ((obj.x != obj.poly_x_prev)||(obj.y != obj.poly_y_prev)||(obj.polyangle != obj.rot_prev)||(obj.newObjectOverride))
 	{
-		transformUpdateRequired = true;
-		newObjectOverride = false;
+		obj.transformUpdateRequired = true;
+		obj.newObjectOverride = false;
 	}
 	else
-		transformUpdateRequired = false;
+		obj.transformUpdateRequired = false;
 
-	var bodyA = self;
-	var verticesA = GetTransformedVertices(doOffset,(obj.sprite_xoffset + xoff) div 1, (obj.sprite_yoffset + yoff) div 1);
+	var bodyA = obj;
+	var verticesA = GetTransformedVertices(obj,doOffset,(obj.sprite_xoffset + xoff) div 1, (obj.sprite_yoffset + yoff) div 1);
 }
 
 function setup_box_poly(obj,override = undefined)

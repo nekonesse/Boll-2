@@ -25,6 +25,9 @@ colangle=0;
 
 flipped=false
 
+sprindex_prev = sprite_index;
+setup_box_poly(self);
+
 function ball_movement() {
 	//bounce off wall
 	if check_collision_line(x+(hit_sizex+1)*xsc, y+hit_sizey-4,x+(hit_sizex+1)*xsc, y-hit_sizey+4, COL_WALL, oCollider) {
