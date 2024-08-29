@@ -60,38 +60,12 @@ if (!(ycorrect || (lockflags & STALL_Y)))
 		}	
 		break;
 	default:
-		if (y > targety) {
-			// move the camera if we're on the ground or out of screen bounds
-			var movecamy = (y > ((targety+(target.yprevious-targety)) + ysensor*2))
-			
-			if (movecamy)
-			{
-				y = floor(target.y+ysensor*2);
-				ydist = 0
-				/*if (ydist != 0)
-				{
-					if (abs(ydist) == 1)
-					{
-						y = targety; // immediately snap to the target
-					}
-					else
-					{
-						y = approach_val(y,targety,3);
-				
-						if (y == targety)
-						{
-							ydist = 0;	
-						}
-					}
-		
-				}
-				else
-				{
-					ydist = (y div 1) - targety; //get distance to travel
-				}*/
-			}
-		} else if (y < target.y - ysensor) {
-			y = floor(target.y - ysensor);
+		// chearii: rewrite upwards movement so that jitters don't happen ever
+		if (y >= targety + ysensor)
+		{
+			y = intlib_make_s16(targety + ysensor);
+		} else if (y < targety) {
+			y = floor(targety); // they're both integers now, but I'll leave this alone
 			ydist = 0
 		}
 	}
