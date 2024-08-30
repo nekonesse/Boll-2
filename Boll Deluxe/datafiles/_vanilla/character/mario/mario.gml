@@ -41,7 +41,7 @@ maxspd = 2 + runvar + ((size != "basic") * 0.5);
 no_move = 0;
 
 if (state == "pound") || (alarm_get(2)) || (hurt) {
-	no_move = 1;
+	no_move = true;
 }
 
 #endregion
@@ -153,7 +153,6 @@ if (state == "jump" || state == "") && !(grounded) && !piped {
 	
 	if (!alarm_get(2)) {
 		steep_slope = false;
-		no_move = false;
 	}
 	
 	if (move != 0) {
@@ -282,13 +281,20 @@ if (slopesliding) {
 
 if (hurt) {
 	sprite="hurt"
+	if (dead) {
+		sprite="dead"
+	}
 }
 #endregion
 
 //chopp: to handle any signals, make sure you define the code here with the same name 
 
-#define jumped
-show_debug_message("Situation becomes worse....");
+#define on_kill
+dead=1
+vspeed=-3;
+gravity=0.075;
+
+//#define death
 
 #define mushroom
 show_debug_message("eatted it :)");
@@ -341,7 +347,6 @@ if (state != "groundpound") {
 
 #define hurt_by_enemy
 stopsfx(charmName+"damage")
-playsfx(charmName+"damage")
 hurt=1
 hsp=2.25*-xsc
 vsp=-4
@@ -352,13 +357,15 @@ oldsize = size;
 switch (size) {
 	case "basic":
 	case "mini":
-		show_debug_message("what if they added 'totem the undying' to undertale as an armor and like thats why asriel cant kill you")
+		signal_emit(sig, "on_kill", charmName)
 		break;
 	case "big":
 		size = "basic";
+		playsfx(charmName+"damage")
 		break;
 	default:
 		size = "big";
+		playsfx(charmName+"damage")
 		break;
 }
 grow = 60;

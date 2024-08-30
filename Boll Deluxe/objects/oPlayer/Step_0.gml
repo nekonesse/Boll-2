@@ -22,4 +22,9 @@ if abs(colangle) > 60 && abs(colangle) < 300 {
 	steep_slope = true	
 }
 
-txr_exec(global.scripts[? $"{charmName}_step"]);
+if !dead {
+	txr_exec(global.scripts[? $"{charmName}_step"]);
+}
+else {
+	txr_exec(global.scripts[? $"{charmName}_dead"]);
+}

@@ -233,14 +233,18 @@ if (state == "spindash") {
 
 if (hurt) {
 	sprite="knock"
+	if (dead) {
+		sprite="dead"
+	}
 }
 #endregion
 
 //chopp: to handle any signals, make sure you define the code here with the same name 
 
-#define jumped
-
-show_debug_message("Situation becomes worse....");
+#define on_kill
+dead=1
+vspeed=-3;
+gravity=0.075;
 
 #define mushroom
 show_debug_message("eatted it :)");
@@ -308,7 +312,6 @@ vsp=-4-akey*1.5
 
 #define hurt_by_enemy
 stopsfx(charmName+"damage")
-playsfx(charmName+"damage")
 hurt=1
 hsp=2.25*-xsc
 vsp=-4
@@ -319,13 +322,15 @@ oldsize = size;
 switch (size) {
 	case "basic":
 	case "mini":
-		show_debug_message("what if they added 'fish of undying' to minecraft and it was just undyne")
+		signal_emit(sig, "on_kill", charmName)
 		break;
 	case "big":
 		size = "basic";
+		playsfx(charmName+"damage")
 		break;
 	default:
 		size = "big";
+		playsfx(charmName+"damage")
 		break;
 }
 grow = 60;

@@ -1,5 +1,5 @@
 with(oPlayer) {
-	if (grounded) && collision_line(x-hit_sizex+other.x_diff,y+hit_sizex+2+abs(other.y_diff),x+hit_sizex+abs(other.x_diff),y+hit_sizex+2+other.y_diff,other,false,true) {
+	if (grounded) && collision_line(x-hit_sizex+other.x_diff,y+hit_sizey+2+abs(other.y_diff),x+hit_sizex+other.x_diff,y+hit_sizey+2+abs(other.y_diff),other,false,true) {
 		x += other.x_diff;
 		y += other.y_diff;
 	}
