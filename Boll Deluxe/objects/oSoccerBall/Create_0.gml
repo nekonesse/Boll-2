@@ -26,7 +26,7 @@ colangle=0;
 flipped=false
 
 sprindex_prev = sprite_index;
-setup_box_poly(self);
+setup_box_poly(id);
 
 function ball_movement() {
 	//bounce off wall

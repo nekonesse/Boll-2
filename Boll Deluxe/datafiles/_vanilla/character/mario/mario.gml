@@ -20,6 +20,20 @@ state = "";
 //chopp: oops rewriting the entire players script
 #define step
 
+//Change hitbox size based on powerup
+//your hitbox is in the center so the hitbox variables should be HALF of the total box size.
+switch (size) {
+	case "basic": {
+		hit_sizey = 6
+	} break
+	case "mini": {
+		hit_sizey = 3
+	} break
+	default: {
+		hit_sizey = 12
+	} break
+}
+
 if (braking) xsc=brakedir
 maxspd = 2 + runvar + ((size != "basic") * 0.5);
 
@@ -225,7 +239,8 @@ runvar = approach_val(runvar,run,0.05)
 
 grow = max(0, (grow - 1));
 
-#define sprmanager
+#define draw
+#region Sprite Manager
 frspd=1
 
 if (state == "") {
@@ -266,6 +281,7 @@ if (state == "wallslide") {
 if (slopesliding) {
 	sprite="slide"
 }
+#endregion
 
 //chopp: to handle any signals, make sure you define the code here with the same name 
 

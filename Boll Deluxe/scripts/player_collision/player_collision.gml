@@ -110,10 +110,10 @@ function player_collision(){
 			vsp = 2
 			
 			//bonking
-			if self.object_index = oPlayer{
+			if object_index == oPlayer{
 				//Hitting / Bumping blocks
 				var _list = ds_list_create();
-				var _num = instance_place_list(x, y-1, oHittable, _list, false);
+				var _num = instance_place_list(x, y-hit_sizey-1, oHittable, _list, false);
 				if (_num > 0) {
 					for (var i = 0; i < _num; ++i;) {
 						with(_list[| i]) if !(no_hit) {

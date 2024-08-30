@@ -392,9 +392,14 @@ function setup_box_poly(obj,override = undefined)
 {
 	with(obj)
 		init_box_poly();
-		
-	var h = ((sprite_get_bbox_top(obj.sprite_index) - sprite_get_bbox_bottom(obj.sprite_index)) * obj.image_yscale) div 1;
-	var w = ((sprite_get_bbox_left(obj.sprite_index) - sprite_get_bbox_right(obj.sprite_index)) * obj.image_xscale) div 1;
+	
+	if object_index!=oPolyCollider {
+		var h = ((y-hit_sizey) - (y+hit_sizey)) div 1;
+		var w = ((x-hit_sizex) - (x+hit_sizex)) div 1;
+	} else {
+		var h = ((sprite_get_bbox_top(obj.sprite_index) - sprite_get_bbox_bottom(obj.sprite_index)) * obj.image_yscale) div 1;
+		var w = ((sprite_get_bbox_left(obj.sprite_index) - sprite_get_bbox_right(obj.sprite_index)) * obj.image_xscale) div 1;
+	}
 	
 	if (override != undefined)
 		w = override;

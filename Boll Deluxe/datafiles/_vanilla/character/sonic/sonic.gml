@@ -23,8 +23,20 @@ control_lock = 0;
 
 #define step
 
+switch (size) {
+	case "basic": {
+		hit_sizey = 6
+	} break
+	case "mini": {
+		hit_sizey = 3
+	} break
+	default: {
+		hit_sizey = 12
+	} break
+}
+
 if (braking) xsc=brakedir
-topspd = 4.5 + ((size != "basic" || size != "mini") * 0.5);
+topspd = 4 + ((size != "basic" || size != "mini") * 0.5);
 maxspd = 12.5;
 no_move = false
 //add more checks here
@@ -33,7 +45,7 @@ if (state == "roll") {
 	rolling = true
 }
 
-if (control_lock > 0 && !hurt) no_move = true
+if (control_lock > 0 || hurt) no_move = true
 
 
 // Fall off platform
@@ -58,6 +70,7 @@ if (!grounded) {
 		xsc = esign(move, xsc)
 	}
 } else {
+	hurt = false
 	canjump = 5;  // Coyote frames
 	canstopjump = false
 	//add more checks here to prevent left/right changing direction
@@ -139,14 +152,13 @@ if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped){
 
 #region Rolling
 if (state != "roll" || !grounded) && !(piped) {
-	accel = 0.046875
+	accel = 0.05
 	if (!grounded) {
 		accel = 0.09375
 		fastaccel = 0.09375
 	}
 	fastaccel = 0.5 //deaccel
-	fric = 0.046875
-	//taken from the sonic physics guide
+	fric = 0.05
 }
 
 
@@ -181,10 +193,10 @@ if (sprindex_prev != sprite_index) {
 
 bonk=max(bonk,bonk-1)
 
-grow = max(grow, (grow - 1));
+grow = max(0, (grow - 1));
 
-
-#define sprmanager
+#define draw
+#region Sprite Manager
 
 frspd=1
 
@@ -216,6 +228,11 @@ if (state == "spindash") {
 	sprite="spindash"
 }
 
+if (hurt) {
+	sprite="knock"
+}
+#endregion
+
 //chopp: to handle any signals, make sure you define the code here with the same name 
 
 #define jumped
@@ -223,19 +240,20 @@ if (state == "spindash") {
 show_debug_message("Situation becomes worse....");
 
 #define mushroom
-show_debug_message("Heh, I eatted it!");
-oldsize = size;
-size = "big";
-grow = 60;
+show_debug_message("eatted it :)");
+if (size != "fire") {
+	oldsize = size;
+	size = "big";
+	grow = 60;
+}
 
 #define fireflower
-show_debug_message("Heh, I dranked it!");
+show_debug_message("dranked it :)");
 oldsize = size;
 size = "fire";
 grow = 60;
 
 #define ceil_bonk
-
 bonk = 12
 
 #define floor_land
@@ -286,7 +304,12 @@ state = "spring";
 vsp=-4-akey*1.5
 
 #define hurt_by_enemy
+show_debug_message("hit")
 hurt=1
-hsp=4*-xsc
-vsp=-4
+hsp=3.5*-xsc
+vsp=-3
+state=""
 grounded=false
+oldsize = size;
+size = "basic";
+grow = 60;

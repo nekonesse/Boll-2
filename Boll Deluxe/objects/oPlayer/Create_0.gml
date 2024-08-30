@@ -100,7 +100,7 @@ image_yscale = 1
 drawStar=false;
 
 // boxpoly setup
-setup_box_poly(self);
+setup_box_poly(id);
 
 // camera
 my_camera=instance_create(x,y,oCamera)
@@ -126,5 +126,7 @@ for (var i = 0; i < array_length(global.powerups); i += 1) {
 ///// EVENT SETUP /////
 
 txr_exec(global.scripts[? $"{charmName}_create"]);
+start_hit_sizex = hit_sizex
+start_hit_sizey = hit_sizey
 
 init_player();

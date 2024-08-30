@@ -36,7 +36,7 @@ image_yscale=1;
 sprindex_prev = sprite_index;
 
 // boxpoly setup
-setup_box_poly(self);
+setup_box_poly(id);
 
 enemyStomped.Connect( self, function(hit_p) {
 	if (!no_stomping) {

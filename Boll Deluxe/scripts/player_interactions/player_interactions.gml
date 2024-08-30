@@ -2,12 +2,12 @@ function player_interactions(){
 	if (piped) exit
 	
 	var enemystomp=collision_line(x-hit_sizex,y+hit_sizey+1,x+hit_sizex,y+hit_sizey+1, oEnemy, false, true)
-	if (enemystomp) {
-		if !hurt && !grounded && vsp > 0
+	if (enemystomp) && !grounded && vsp > 0 {
+		if !hurt
 		enemystomp.enemyStomped.Emit(id);
 	} else {
 		var enemy=collision_point(x,y,oEnemy, false, true)
-		if (enemy) && !(enemystomp && enemy.id == enemystomp) {
+		if (enemy) && !hurt {
 			enemy.enemyCollidePlayer.Emit(id);
 		}
 	}

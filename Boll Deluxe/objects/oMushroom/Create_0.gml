@@ -17,4 +17,4 @@ depth=2
 going=0;
 parentblock=undefined;
 
-setup_box_poly(self);
+setup_box_poly(id);

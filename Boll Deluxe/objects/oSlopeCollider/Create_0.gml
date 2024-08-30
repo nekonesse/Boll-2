@@ -10,9 +10,9 @@ ramp = false;
 LDtkReloadFields();
 
 if hflip = true {
-	image_xscale = image_xscale * -1
+	image_xscale *= -1;
 	x -= sprite_width + 0.5
-	}
+}
 slope_set_rise_run(self);
 //no_collide = false;
 

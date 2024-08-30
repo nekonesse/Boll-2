@@ -169,7 +169,7 @@ function draw_player() {
 		box_width-margin*2,
 		box_height-margin*2, //might need to add some lengthdir bullshit to make it rotate on offset properly
 		floor(x)+lengthdir_x((margin)*xsc,sprite_angle)+lengthdir_x((margin+dy)*ysc,sprite_angle-90)-floor(offset_x)+(box_width/2)*-xsc,
-		floor(y)+lengthdir_y((margin*2)*xsc,sprite_angle)+lengthdir_y((margin+dy)*ysc,sprite_angle-90)-floor(offset_y)-(11)+(box_height/2)*-ysc,
+		floor(y)+lengthdir_y((margin*2)*xsc,sprite_angle)+lengthdir_y((margin+dy)*ysc,sprite_angle-90)-floor(offset_y)-(10)+(hit_sizey-start_hit_sizey)+(box_height/2)*-ysc,
 		xsc,ysc,
 		sprite_angle,
 		col,col,col,col,
@@ -183,7 +183,7 @@ function animate_player() {
 	oldspr=sprite
 	//This makes the spr manager not run under certain circumstances.
 	// if (!piped && !codeblock_stopsprmanager)
-	txr_exec(global.scripts[? $"{charmName}_sprmanager"]);
+	txr_exec(global.scripts[? $"{charmName}_draw"]);
 	
 	//this one handles drawing order inside multiplayer, or rather, the way it switches so that both are flashing when on top of one another.
 	//if ((depth=0 || depth=1) && pNum=gamemanager.plrsort) depth=!depth
