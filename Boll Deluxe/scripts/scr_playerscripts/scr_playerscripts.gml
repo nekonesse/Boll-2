@@ -107,13 +107,17 @@ function init_sounds() {
 }
 
 function playsfx(sound,pitch=1,loop=0,gain=1) {
-	var snd=audioExtSoundGet(sound)
-	VinylPlay(audioExtSoundGetSoundID(snd),loop,gain,pitch)
+	if audioExtSoundExists(sound) {
+		var snd=audioExtSoundGet(sound)
+		VinylPlay(audioExtSoundGetSoundID(snd),loop,gain,pitch)
+	}
 }
 
 function stopsfx(sound) {
-	var snd=audioExtSoundGet(sound)
-	VinylStop(audioExtSoundGetSoundID(snd))
+	if audioExtSoundExists(sound) {
+		var snd=audioExtSoundGet(sound)
+		VinylStop(audioExtSoundGetSoundID(snd))
+	}
 }
 
 function init_player() { //make this load animation data later

@@ -34,6 +34,9 @@ switch (size) {
 		hit_sizey = 12
 	} break
 }
+if (state == "jump") && (size != "mini") {
+	hit_sizey = 6
+}
 
 if (braking) xsc=brakedir
 topspd = 4 + ((size != "basic" || size != "mini") * 0.5);
@@ -72,7 +75,7 @@ if (!grounded) {
 } else {
 	hurt = false
 	canjump = 5;  // Coyote frames
-	canstopjump = false
+	if !(hurt) canstopjump = false
 	//add more checks here to prevent left/right changing direction
 	if (left || right) && !(state == "spindash") {
 		xsc = esign(gsp, xsc)
@@ -141,7 +144,7 @@ if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped){
 	state = "jump"
 	grounded = false
 	colangle = colangle * 0.9
-	vsp -= (6) * dcos(colangle/4);
+	vsp -= (6) * dcos(colangle/8);
 	hsp -= (6) * dsin(colangle);
 	playsfx(charmName+"jump",1,0,1)
 	canjump = 0;
@@ -304,10 +307,12 @@ state = "spring";
 vsp=-4-akey*1.5
 
 #define hurt_by_enemy
-show_debug_message("hit")
+stopsfx(charmName+"damage")
+playsfx(charmName+"damage")
 hurt=1
-hsp=3.5*-xsc
-vsp=-3
+hsp=2.25*-xsc
+vsp=-4
+canstopjump=true
 state=""
 grounded=false
 oldsize = size;

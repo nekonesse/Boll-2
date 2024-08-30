@@ -78,7 +78,7 @@ function warp_out_pipe(obj,spd,dir) {
 	if warp_timer <= 1 {
 		visible=1;
 	}
-	if !check_collision_rectangle(x-hit_sizex-2,y-hit_sizey-4,x+hit_sizex+2,y+hit_sizex,COL_WALL, obj) {
+	if !collision_line(x,y-hit_sizey-4,x,y+hit_sizey, obj, false, true) {
 		piped=false
 		warp_timer=0;
 		warp_coll=noone

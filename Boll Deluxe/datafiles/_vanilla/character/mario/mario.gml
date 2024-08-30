@@ -40,10 +40,7 @@ maxspd = 2 + runvar + ((size != "basic") * 0.5);
 #region PreventMovement
 no_move = 0;
 
-if (state == "pound") {
-	no_move = 1;
-}
-if (alarm_get(2)){
+if (state == "pound") || (alarm_get(2)) || (hurt) {
 	no_move = 1;
 }
 
@@ -105,7 +102,7 @@ if (state == "" || state == "jump") && !piped {
 		}
 	}
 }
-if (state == "") {
+if (state == "") && !(hurt) {
 	canstopjump = false
 	if (!abs(sign(colslope)) && (abs(hsp) < 0.25)){
 		slopesliding = 0
@@ -282,6 +279,10 @@ if (state == "wallslide") {
 if (slopesliding) {
 	sprite="slide"
 }
+
+if (hurt) {
+	sprite="hurt"
+}
 #endregion
 
 //chopp: to handle any signals, make sure you define the code here with the same name 
@@ -339,10 +340,12 @@ if (state != "groundpound") {
 }
 
 #define hurt_by_enemy
-show_debug_message("hit")
+stopsfx(charmName+"damage")
+playsfx(charmName+"damage")
 hurt=1
-hsp=3.5*-xsc
-vsp=-3
+hsp=2.25*-xsc
+vsp=-4
+canstopjump=true
 state=""
 grounded=false
 oldsize = size;
