@@ -4,6 +4,7 @@
 global.debug=0
 global.netgame = false; // top 10 boll deluxe things that will never happen:
 global.nextlevel = working_directory+"\save.jade"
+global.jade_testing = false; // whether the current level is being tested in JADE or not
 
 if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,input_controller_object)
 

@@ -509,5 +509,6 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 if keyboard_check_pressed(vk_enter) {
 	JADE_save();
 	global.nextlevel=working_directory+"\save.jade" //the level the game will load
+	global.jade_testing = true;
 	room_goto(rGame)
 }
