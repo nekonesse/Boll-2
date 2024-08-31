@@ -90,7 +90,12 @@ function init_sounds() {
 		if file_exists(dir+$"{charmName}{sound_list[i]}.wav") {
 			var snd=audioExtSoundGet($"{charmName}{sound_list[i]}")
 			VinylSetupSound(audioExtSoundGetSoundID(snd))
-			show_debug_message($"Loaded sound ID: {charmName}{sound_list[i]}")
+			
+			if (string(checkSnd) = "{ length : 0 }") { // lame ass hack, check above function for info
+				show_debug_message($"Found sound ID: {charmName}{sound_list[i]}, but failed to load it?")
+			} else {
+				show_debug_message($"Loaded sound ID: {charmName}{sound_list[i]}")
+			}
 		} else {
 			show_debug_message($"Failed to load sound ID: {charmName}{sound_list[i]}, is your file missing?")
 		}

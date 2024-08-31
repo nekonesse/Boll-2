@@ -23,7 +23,11 @@ function VinylSetupSound(_sound, _gain = 1, _pitch = 1, _loop = undefined, _mixN
     static _soundDict = _system.__soundDict;
     
     if (_mixName == VINYL_NO_MIX) _mixName = undefined;
-    __VinylEnsurePatternSound(_sound).__UpdateSetup(_gain, _pitch, _loop, _mixName, _duckerName, _duckPrio, _metadata);
+	
+	checkSnd = __VinylEnsurePatternSound(_sound) // hacky fix for strange bug: adding too many charm sounds makes the function just randomly not work for one
+	if (string(checkSnd) != "{ length : 0 }") {  // sound and crash the game, so had to seperate this line. TODO: sound doesn't play after avoiding crash. -moster
+		checkSnd.__UpdateSetup(_gain, _pitch, _loop, _mixName, _duckerName, _duckPrio, _metadata);
+	}
     
     if (VINYL_LIVE_EDIT && (not _system.__importingJSON))
     {

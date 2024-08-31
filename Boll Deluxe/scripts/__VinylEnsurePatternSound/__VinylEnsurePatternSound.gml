@@ -13,5 +13,7 @@ function __VinylEnsurePatternSound(_sound)
         struct_set_from_hash(_soundDict, int64(_sound), _pattern);
     }
     
+	// show_debug_message(_pattern);
+	
     return _pattern;
 }
