@@ -39,6 +39,7 @@ sprindex_prev = sprite_index;
 setup_box_poly(id);
 
 enemyStomped.Connect( self, function(hit_p) {
+	show_debug_message("hi im the oenemy stomp signal")
 	if (!no_stomping) {
 		hp-=1
 		with(hit_p) sig.Emit("enemy_stomped")

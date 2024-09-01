@@ -8,7 +8,7 @@ if ramp {
 	if player && player.grounded && abs(player.gsp) >= 1 {
 		if (hflip && player.x < x - (sprite_width/ 2) + 4  && sign(player.gsp) = -1) {
 			with(player) {
-				show_debug_message("rump")
+				sig.Emit("ramped")
 				vsp = gsp * -dsin(colangle)
 				hsp = gsp * dcos(colangle)
 				grounded = false
@@ -17,7 +17,7 @@ if ramp {
 			}
 		} else if (!hflip && player.x > x + (sprite_width/ 2) - 4 && sign(player.gsp) = 1) {
 			with(player) {
-				show_debug_message("other rump")
+				sig.Emit("ramped")
 				vsp = gsp * -dsin(colangle)
 				hsp = gsp * dcos(colangle)
 				grounded = false
