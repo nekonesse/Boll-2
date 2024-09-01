@@ -172,14 +172,17 @@ function draw_player() {
 	//if (flash) exit
 	var margin=1/256;
 	var fry=get_spriteindex()
+	var cx = (box_width / 2) //centered x
+	var cy = (box_height / 2) //centered y
 	draw_sprite_general(
 		sheet,0,
 		8+floor(frame)*(box_width+1)+margin,
 		top_margin+8+fry*(box_height+1)+(margin*2),
 		box_width-margin*2,
 		box_height-margin*2, //might need to add some lengthdir bullshit to make it rotate on offset properly
-		floor(x)+lengthdir_x((margin-offset_x)*xsc,sprite_angle)+lengthdir_x((margin+dy-(5+offset_y))*ysc,(sprite_angle-90)*ysc)-floor(offset_x)+(box_width/2)*-xsc,
-		floor(y)+lengthdir_y((margin-offset_x)*xsc,sprite_angle)+lengthdir_y((margin+dy-(5+offset_y))*ysc,(sprite_angle-90)*ysc)-floor(offset_y)-(5)+(hit_sizey-start_hit_sizey)+(box_height/2)*-ysc,
+		//kms -moster
+		floor(x) + lengthdir_x((margin - offset_x - cx) * xsc, sprite_angle * xsc) + lengthdir_x((margin + dy - (5 + offset_y + cy)) * ysc, (sprite_angle - 90) * ysc) - floor(offset_x) * -xsc,
+		floor(y) + lengthdir_y((margin - offset_x - cx) * xsc, sprite_angle * xsc) + lengthdir_y((margin + dy - (5 + offset_y + cy)) * ysc, (sprite_angle - 90) * ysc) - floor(offset_y) - (5) + (hit_sizey - start_hit_sizey) * -ysc,
 		xsc,ysc,
 		sprite_angle*xsc,
 		col,col,col,col,
