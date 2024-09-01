@@ -178,10 +178,10 @@ function draw_player() {
 		top_margin+8+fry*(box_height+1)+(margin*2),
 		box_width-margin*2,
 		box_height-margin*2, //might need to add some lengthdir bullshit to make it rotate on offset properly
-		floor(x)+lengthdir_x((margin)*xsc,sprite_angle)+lengthdir_x((margin+dy)*ysc,sprite_angle-90)-floor(offset_x)+(box_width/2)*-xsc,
-		floor(y)+lengthdir_y((margin*2)*xsc,sprite_angle)+lengthdir_y((margin+dy)*ysc,sprite_angle-90)-floor(offset_y)-(10)+(hit_sizey-start_hit_sizey)+(box_height/2)*-ysc,
+		floor(x)+lengthdir_x((margin-offset_x)*xsc,sprite_angle)+lengthdir_x((margin+dy-(5+offset_y))*ysc,(sprite_angle-90)*ysc)-floor(offset_x)+(box_width/2)*-xsc,
+		floor(y)+lengthdir_y((margin-offset_x)*xsc,sprite_angle)+lengthdir_y((margin+dy-(5+offset_y))*ysc,(sprite_angle-90)*ysc)-floor(offset_y)-(5)+(hit_sizey-start_hit_sizey)+(box_height/2)*-ysc,
 		xsc,ysc,
-		sprite_angle,
+		sprite_angle*xsc,
 		col,col,col,col,
 		alpha
 	)			
@@ -227,7 +227,7 @@ function animate_player() {
 			offset_y=offset_y_list[sizeNum]
 			animf=animspd_list[sizeNum]
 			box_width=box_width_list[sizeNum]
-			box_height=box_height_list[0]
+			box_height=box_height_list[sizeNum]
 			break
 		}
 	}
