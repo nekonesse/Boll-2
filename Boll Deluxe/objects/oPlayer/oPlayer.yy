@@ -45,9 +45,6 @@
     "name":"spr_player",
     "path":"sprites/spr_player/spr_player.yy",
   },
-  "spriteMaskId":{
-    "name":"spr_placeholder_hitbox",
-    "path":"sprites/spr_placeholder_hitbox/spr_placeholder_hitbox.yy",
-  },
+  "spriteMaskId":null,
   "visible":true,
 }
