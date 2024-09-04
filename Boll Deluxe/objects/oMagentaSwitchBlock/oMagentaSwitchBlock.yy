@@ -38,5 +38,8 @@
     "path":"sprites/spr_magentaswitchblock/spr_magentaswitchblock.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "blocks",
+  ],
   "visible":true,
 }

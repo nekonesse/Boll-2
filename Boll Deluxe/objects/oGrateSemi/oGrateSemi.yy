@@ -37,5 +37,8 @@
     "path":"sprites/spr_gratesemi/spr_gratesemi.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "blocks",
+  ],
   "visible":true,
 }

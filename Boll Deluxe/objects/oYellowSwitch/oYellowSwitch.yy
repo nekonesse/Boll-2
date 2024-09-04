@@ -37,5 +37,8 @@
     "path":"sprites/spr_yellowswitch/spr_yellowswitch.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "blocks",
+  ],
   "visible":true,
 }

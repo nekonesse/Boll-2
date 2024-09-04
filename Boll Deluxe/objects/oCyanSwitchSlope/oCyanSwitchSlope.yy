@@ -15,8 +15,8 @@
     "path":"folders/Objects/Objects/Switch Blocks.yy",
   },
   "parentObjectId":{
-    "name":"oYellowSwitchBlock",
-    "path":"objects/oYellowSwitchBlock/oYellowSwitchBlock.yy",
+    "name":"oCyanSwitchBlock",
+    "path":"objects/oCyanSwitchBlock/oCyanSwitchBlock.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,
@@ -40,5 +40,8 @@
     "path":"sprites/spr_cyanswitchslope/spr_cyanswitchslope.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "blocks",
+  ],
   "visible":true,
 }

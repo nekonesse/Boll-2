@@ -37,5 +37,8 @@
     "path":"sprites/spr_fireflower/spr_fireflower.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "items",
+  ],
   "visible":true,
 }

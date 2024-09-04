@@ -38,5 +38,8 @@
     "path":"sprites/spr_cyanswitchblock/spr_cyanswitchblock.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "blocks",
+  ],
   "visible":true,
 }

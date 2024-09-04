@@ -78,7 +78,8 @@ if selected_mode == OBJECT_MODE {
 		draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
 		draw_set_font(smallF)
 		//top tab text
-		draw_text_transformed(object_list_area_x+2,object_list_area_y-4,"object list",0.66,0.66,0)
+		var tab_name = ["blocks", "baddies", "items", "tech"]
+		draw_text_transformed(object_list_area_x+2,object_list_area_y-4,$"object list - {tab_name[current_cat]}",0.66,0.66,0)
 	
 		surface_set_target(object_list_area_surface)
 		draw_clear_alpha(c_black, 0)
@@ -86,26 +87,28 @@ if selected_mode == OBJECT_MODE {
 	
 		var _str = "null"
 		//object list
-		for (var i = 0; i < ds_list_size(obj_name); ++i) {
-			_str = ds_list_find_value(obj_name, i)
+		for (var i = 0; i < ds_list_size(jade_cats[current_cat]); ++i) {
+			_str = ds_list_find_value(jade_cats[current_cat], i)
 			if _str == undefined{
 				break;	
 			}
-			var overlapping=point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y+((32/3)*i)+object_list_scroll_pos/3,object_list_area_x+object_list_area_width-6,object_list_area_y+(((32/3)*i)+10)+object_list_scroll_pos/3)
+			var overlapping=point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y+((32/3)*i)+object_list_scroll_pos[current_cat]/3,object_list_area_x+object_list_area_width-6,object_list_area_y+(((32/3)*i)+10)+object_list_scroll_pos[current_cat]/3)
 		
 			if (overlapping && mbleftpress) {
-				current_obj_id=i
+				current_obj_id[current_cat]=i
+				selected_obj = _str
 			}
 		
 			var color = c_black
-			if (current_obj_id==i) color=c_white
+			if (selected_obj == _str) color = c_white
+			else if (current_obj_id[current_cat] == i) color=c_blue
 			else if (overlapping) color=c_yellow
 			else color=c_black
 		
 			//draw background rectangle
-			draw_rect(2,(32*i)+2+object_list_scroll_pos,object_list_area_width-8,28, color,0.5)
+			draw_rect(2,(32*i)+2+object_list_scroll_pos[current_cat],object_list_area_width-8,28, color,0.5)
 			//draw object name
-			ScribblejrFit(_str, fa_right, fa_middle, smallF, 3, object_list_area_width-12, 32).Draw(object_list_area_width-6,(32*i)+15+object_list_scroll_pos)
+			ScribblejrFit(_str, fa_right, fa_middle, smallF, 3, object_list_area_width-12, 32).Draw(object_list_area_width-6,(32*i)+15+object_list_scroll_pos[current_cat])
 		
 			//draw object sprite
 			var arr=ds_map_find_value(obj_data,_str)
@@ -114,7 +117,7 @@ if selected_mode == OBJECT_MODE {
 			if sprite_get_height(sprite)*2 < 32
 			ysize=sprite_get_height(sprite)
 		
-			draw_sprite_stretched(sprite,0,4,(32*i)+object_list_scroll_pos,32,ysize)
+			draw_sprite_stretched(sprite,0,4,(32*i)+object_list_scroll_pos[current_cat],32,ysize)
 			draw_set_halign(fa_left)
 		}
 	
@@ -125,7 +128,8 @@ if selected_mode == OBJECT_MODE {
 		draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,8)
 		draw_set_font(smallF)
 		//top tab text
-		draw_text_transformed(object_list_area_x+2,object_list_area_y-4,"object list",0.66,0.66,0)
+		var tab_name = ["blocks", "baddies", "items", "tech"]
+		draw_text_transformed(object_list_area_x+2,object_list_area_y-4,$"object list - {tab_name[current_cat]}",0.66,0.66,0)
 	}
 }
 #endregion

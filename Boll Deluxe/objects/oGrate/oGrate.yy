@@ -34,5 +34,8 @@
     "path":"sprites/spr_grate/spr_grate.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "blocks",
+  ],
   "visible":true,
 }

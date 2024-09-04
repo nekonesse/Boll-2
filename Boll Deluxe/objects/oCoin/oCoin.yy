@@ -34,5 +34,8 @@
     "path":"sprites/spr_coin/spr_coin.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "items",
+  ],
   "visible":true,
 }

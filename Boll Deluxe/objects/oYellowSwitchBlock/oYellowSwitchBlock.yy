@@ -38,5 +38,8 @@
     "path":"sprites/spr_yellowswitchblock/spr_yellowswitchblock.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "blocks",
+  ],
   "visible":true,
 }

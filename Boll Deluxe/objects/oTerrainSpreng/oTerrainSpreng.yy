@@ -37,5 +37,8 @@
     "path":"sprites/spr_yellowterrainspring/spr_yellowterrainspring.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "tech",
+  ],
   "visible":true,
 }

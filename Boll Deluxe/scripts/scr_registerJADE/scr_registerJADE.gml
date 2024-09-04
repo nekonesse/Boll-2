@@ -4,9 +4,19 @@
 #macro BACKGROUND_MODE 3
 #macro NODE_MODE 4
 
-function JADE_intializeobj(){	
-	obj_data=ds_map_create();
-	obj_name = ds_list_create()	
+function JADE_initializeobj() {	
+	obj_data = ds_map_create();
+	obj_name = ds_list_create();
+	
+	#region Categories
+		cat_blocks = ds_list_create();
+		cat_baddies = ds_list_create();	
+		cat_items = ds_list_create();
+		cat_tech = ds_list_create();
+		
+		jade_cats = [cat_blocks, cat_baddies, cat_items, cat_tech];
+	#endregion
+	
 	/*
 		hey so let me explain how this works:
 		uuid is the 'id' for an object, its used for accessing everything. preferrably a string. 
@@ -27,22 +37,29 @@ function JADE_intializeobj(){
 	//9. scalable vertically (bool)
 	//10. what editor mode object list to appear in
 	show_debug_message("Registering JADE object list...")
+	registerobj(object_get_name(oPlayerSpawn), spr_spawner, 0, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), true, true, OBJECT_MODE, 0)
 	
-	var obj_list1 = tag_get_asset_ids("blocks", asset_object);
+	register_array(tag_get_asset_ids("blocks", asset_object), 0);
+	register_array(tag_get_asset_ids("enemies", asset_object), 1);
+	register_array(tag_get_asset_ids("items", asset_object), 2);
+	register_array(tag_get_asset_ids("tech", asset_object), 3); //shoulda put the switch blocks in tech this one literally just has springs LOL
 	
-	for (var i = 0; i < array_length(obj_list1); ++i) {
-		var _name = object_get_name(obj_list1[i])
-		var _sprite = object_get_sprite(obj_list1[i])
-	    registerobj(_name, _sprite, 0, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), sprite_get_width(_sprite), sprite_get_height(_sprite), true, true, OBJECT_MODE)
-	}
-	registerobj(object_get_name(oPlayerSpawn), spr_spawner, 0, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), true, true, OBJECT_MODE)
 	//registerobj("collider", spr_collider, 0, 0, 0, 1, 1, true, true, OBJECT_MODE)
 }
 
-function registerobj(uuid,sprite,index,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode) {
+function register_array(array, category) {
+	for (var i = 0; i < array_length(array); ++i) {
+		var _name = object_get_name(array[i])
+		var _sprite = object_get_sprite(array[i])
+	    registerobj(_name, _sprite, 0, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), sprite_get_width(_sprite), sprite_get_height(_sprite), true, true, OBJECT_MODE, category)
+	}	
+}
+
+function registerobj(uuid,sprite,index,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,category) {
 	if !ds_map_exists(obj_data,uuid) {
 		ds_map_add(obj_data,uuid,[sprite,index,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode])
 		ds_list_add(obj_name,uuid)
+		ds_list_add(jade_cats[category],uuid)
 		show_debug_message($"Successfully registered object id: {uuid} in JADE")
 	} else {
 		show_debug_message($"Object ID: {uuid} is already registered in JADE! ignoring..")

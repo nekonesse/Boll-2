@@ -34,5 +34,8 @@
     "path":"sprites/spr_enemyground/spr_enemyground.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "blocks",
+  ],
   "visible":true,
 }

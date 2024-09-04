@@ -42,17 +42,38 @@ if (view_grab) { //update camera position
 #endregion
 
 var mwheel = mouse_wheel_down() - mouse_wheel_up();
-if (mwheel == 0) {mwheel = keyboard_check_direct(vk_down) - keyboard_check_direct(vk_up)}
+if (mwheel == 0) {
+	mwheel = keyboard_check_direct(vk_down) - keyboard_check_direct(vk_up)
+}
+
+var dir = mouse_check_button_pressed(mb_side2) - mouse_check_button_pressed(mb_side1) //peopne who dont have a fancy gaming mouse or whatever finally getting a taste of the button Not Existing
+if (dir == 0) {
+	dir = keyboard_check_pressed(vk_right) - keyboard_check_pressed(vk_left)
+}
+
 //whoever sees this, i hope you have a nice day
 //              -ArcanePool
 
 #region Object List Scrolling
 if (mwheel != 0) && (on_object_list) {
-	object_list_scroll_pos+=16*-mwheel
-	show_debug_message(object_list_scroll_pos)
+	object_list_scroll_pos[current_cat]+=16*-mwheel
+	show_debug_message(object_list_scroll_pos[current_cat])
 }
 
-object_list_scroll_pos = clamp(object_list_scroll_pos, -(ds_list_size(obj_name)*32/3), 0)
+object_list_scroll_pos[current_cat] = clamp(object_list_scroll_pos[current_cat], -(ds_list_size(jade_cats[current_cat])*32/3), 0)
+#endregion
+
+#region Category Switching
+if (dir != 0) && (on_object_list) {
+	current_cat += dir
+	if (current_cat < 0) {
+		current_cat = (array_length(jade_cats) - 1)
+	} else if (current_cat >= array_length(jade_cats)) {
+		current_cat = 0	
+	}
+	
+	show_debug_message($"switched to category {current_cat}")
+}
 #endregion
 
 #region Camera Zooming
@@ -108,18 +129,26 @@ switch(selected_mode) {
 		if keyboard_check_pressed(vk_tab) {
 			show_object_list = !show_object_list
 		}
-	
+		
+		var switch_obj = 0;
+		
 		if (keyboard_check_pressed(vk_pagedown)) {
-			current_obj_id ++	
+			current_obj_id[current_cat] ++
+			switch_obj = 1;
 		}
 
 		if (keyboard_check_pressed(vk_pageup)) {
-			current_obj_id --
+			current_obj_id[current_cat] --
+			switch_obj = 1;
 		}
 
-		current_obj_id = wrap_val(current_obj_id, 0, ds_list_size(obj_name)- 1)
+		current_obj_id[current_cat] = wrap_val(current_obj_id[current_cat], 0, ds_list_size(jade_cats[current_cat])- 1)
 
-		selected_obj=ds_list_find_value(obj_name, current_obj_id)
+		if (switch_obj) { //keeps object through category switch until you scroll through the list for convenience
+			selected_obj = ds_list_find_value(jade_cats[current_cat], current_obj_id[current_cat])
+		}
+		
+		if keyboard_check_pressed(ord("I")) show_debug_message(selected_obj)
 		
 		//selection box deleting
 		if keyboard_check_pressed(vk_delete) && selected_tool==SELECT_TOOL {
@@ -173,13 +202,13 @@ if (mbleftpress) {
 		room_goto(rMainMenu)
 	}
 	if mouse_in_setting_slot(3) { //saving
-		var file = get_save_filename("JADE file|*.jade", "Unnamed.jade")
+		var file = get_save_filename_ext("JADE File|*.jade", "", working_directory, "Save level.");
 		if (file != "") {
 			JADE_save(file)
 		}
 	}
 	if mouse_in_setting_slot(2) { //loading
-		var file = get_open_filename("JADE file|*.jade", "Unnamed.jade")
+		var file = get_save_filename_ext("JADE File|*.jade", "", working_directory, "Save level.");
 		if (file != "") {
 			JADE_load(file)
 		}
@@ -428,7 +457,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 						*/
 						
 						/*SPRITE STAT LIST
-						 just look in JADE_intializeobj() lol
+						 just look in JADE_initializeobj() lol
 						*/
 					}
 				break;

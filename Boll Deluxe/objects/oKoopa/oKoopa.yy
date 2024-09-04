@@ -51,6 +51,7 @@
   },
   "tags":[
     "Catspeak",
+    "enemies",
   ],
   "visible":true,
 }

@@ -37,5 +37,8 @@
     "path":"sprites/spr_mushroom/spr_mushroom.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "items",
+  ],
   "visible":true,
 }

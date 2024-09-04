@@ -58,7 +58,7 @@ toolbar[4][2]=NODE_TOOL
 toolbar[4][3]=ERASE_TOOL
 toolbar[4][4]=REFERENCE_TOOL
 
-JADE_intializeobj();
+JADE_initializeobj();
 
 tile_layer = layer_get_id("EditorTiles_Main")
 //tileset = tTilesetMain
@@ -73,6 +73,7 @@ not_on_gui = false
 selected_mode=OBJECT_MODE;
 selected_toolbar=0;
 selected_tool=SELECT_TOOL;
+
 selected_obj=ds_list_find_value(obj_name, 0)
 selected_tile = 0
 selection = false
@@ -85,7 +86,9 @@ selection_box_y = 0
 temp_mode=0;
 temp_toolbar=0;
 
-current_obj_id = 0
+for (i = 0; i < array_length(jade_cats); i++) {
+	current_obj_id[i] = 0
+}
 current_tile_id = 0
 
 curs_x=mouse_x
@@ -124,7 +127,11 @@ object_list_area_color = make_color_hsv(0, 0, 240)
 
 object_list_text_color = make_color_hsv(0, 0, 40)
 
-object_list_scroll_pos = 0
+for (i = 0; i < array_length(jade_cats); i++) {
+	object_list_scroll_pos[i] = 0
+}
+
+current_cat = 0
 #endregion
 
 function mouse_in_setting_slot(numb) {
