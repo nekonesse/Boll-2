@@ -108,7 +108,7 @@ if selected_mode == OBJECT_MODE {
 			//draw background rectangle
 			draw_rect(2,(32*i)+2+object_list_scroll_pos[current_cat],object_list_area_width-8,28, color,0.5)
 			//draw object name
-			ScribblejrFit(_str, fa_right, fa_middle, smallF, 3, object_list_area_width-12, 32).Draw(object_list_area_width-6,(32*i)+15+object_list_scroll_pos[current_cat])
+			ScribblejrFit(_str, fa_right, fa_middle, smallF, 3, object_list_area_width-48, 32).Draw(object_list_area_width-6,(32*i)+15+object_list_scroll_pos[current_cat])
 		
 			//draw object sprite
 			var arr=ds_map_find_value(obj_data,_str)

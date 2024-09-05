@@ -47,13 +47,8 @@ if (mwheel == 0) {
 	mwheel = keyboard_check_direct(vk_down) - keyboard_check_direct(vk_up)
 }
 
-var dir = mouse_check_button_pressed(mb_side2) - mouse_check_button_pressed(mb_side1) //peopne who dont have a fancy gaming mouse or whatever finally getting a taste of the button Not Existing
-if (dir == 0) {
-	dir = keyboard_check_pressed(vk_right) - keyboard_check_pressed(vk_left)
-}
-
-//whoever sees this, i hope you have a nice day
-//              -ArcanePool
+var dir = (keyboard_check_pressed(vk_right) || mouse_check_button_pressed(mb_side1)) - (mouse_check_button_pressed(mb_side2) || keyboard_check_pressed(vk_left)) 
+//peopne who dont have a fancy gaming mouse or whatever finally getting a taste of the button Not Existing
 
 #region Object List Scrolling
 if (mwheel != 0) && (on_object_list) {

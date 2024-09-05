@@ -6,7 +6,7 @@ if (switch_state) {
 		influence = true;
 	}
 } else {
-	image_index=approach_val(image_index,0,0.25)
+	image_index=approach_val(image_index,0,0.33)
 	if image_index <= 1 {
 		mask_index=spr_collider
 		slope = false;
