@@ -93,7 +93,6 @@ steep_slope = 0;
 slopesliding = 0;
 hurt=0;
 image_speed=0
-global.paused=0
 depth=0;
 image_xscale = 1
 image_yscale = 1

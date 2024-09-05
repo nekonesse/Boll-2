@@ -88,6 +88,11 @@ if selected_mode == OBJECT_MODE {
 		var _str = "null"
 		//object list
 		for (var i = 0; i < ds_list_size(jade_cats[current_cat]); ++i) {
+			
+			if ((32/3)*i < object_list_scroll_pos[current_cat]/3) || ((32/3)*i > (object_list_scroll_pos[current_cat]/3)+object_list_area_height) {
+				continue;
+			}
+			
 			_str = ds_list_find_value(jade_cats[current_cat], i)
 			if _str == undefined{
 				break;	

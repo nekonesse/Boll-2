@@ -2,7 +2,7 @@
 if (in_shell) mask_index=spr_shellhitbox
 else mask_index=spr_koopahitbox
 
-if check_hitbox_on_hitbox(self, oPlayer) {
+if check_hitbox_on_hitbox(id, oPlayer) {
 	show_debug_message("the kooper!")	
 }
 

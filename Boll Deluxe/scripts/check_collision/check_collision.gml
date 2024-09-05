@@ -121,6 +121,8 @@ function get_angle_line(x1, y1, x2, y2){
 
 function check_hitbox_on_hitbox(object1, object2){
 	//var found = noone
+	if !instance_exists(object1) || !instance_exists(object2) exit;
+	
 	var x1, x2, y1, y2
 	x1 = floor(object1.x)
 	x2 = floor(object2.x)
