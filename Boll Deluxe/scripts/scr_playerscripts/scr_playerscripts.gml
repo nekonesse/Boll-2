@@ -182,7 +182,7 @@ function draw_player() {
 		box_height-margin*2, //might need to add some lengthdir bullshit to make it rotate on offset properly
 		//kms -moster
 		floor(x) + lengthdir_x(((margin - offset_x - cx) * xsc), sprite_angle * xsc) + lengthdir_x(((margin + dy - (5 + offset_y + cy)) * ysc), (sprite_angle - 90) * ysc) - floor(offset_x) * -xsc,
-		floor(y) + lengthdir_y(((margin - offset_x - cx) * xsc), sprite_angle * xsc) + lengthdir_y(((margin + dy - (5 + offset_y + cy)) * ysc), (sprite_angle - 90) * ysc) - floor(offset_y) - (5) + (hit_sizey - start_hit_sizey) * -ysc,
+		floor(y) + lengthdir_y(((margin - offset_x - cx) * xsc), sprite_angle * xsc) + lengthdir_y(((margin + dy - (5 + offset_y + cy)) * ysc), (sprite_angle - 90) * ysc) - floor(offset_y) - (11) - (hit_sizey) * -ysc,
 		xsc,ysc,
 		sprite_angle*xsc,
 		col,col,col,col,

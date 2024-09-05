@@ -353,10 +353,16 @@ if (state == "pound") {
 	var i=instance_create_depth(x-2,y,0,pSmoke);
 	i.hspeed=-1.5;
 	i.vspeed=-1;
+
+	var blockcoll=collision_point(x,y+hit_sizey+1,oHittable, false, true)
+	if (blockcoll) && !(blockcoll.going) && (blockcoll.amount) {
+		blockcoll.dummyTimer = blockcoll.dummyTimerReset;
+		signal_emit(blockcoll.blockHit, 1, id)
+	}
 }
 canstopjump = false
 state = ""
-vsp = 0	
+vsp = 0
 
 
 #define sprung
