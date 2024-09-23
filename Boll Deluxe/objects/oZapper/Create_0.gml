@@ -5,6 +5,7 @@ buftimer=0;
 
 connections = [];
 connectedObjects = [];
+connectedObjectsBefore = [];
 radius = 48;
 
 findConnectedObjects = function(obj) {

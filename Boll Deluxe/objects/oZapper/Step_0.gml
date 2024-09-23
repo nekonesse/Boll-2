@@ -14,6 +14,9 @@ for(var i = 0, len = ds_list_size(list); i < len; i++;) {
     }
 }
 
+if array_equals(connectedObjectsBefore, connectedObjects) //check if any connections have changed, if so, continue calculating the lines
+exit
+
 for(var i = 0, len = array_length(connectedObjects); i < len; i++;) { 
     var connectObj = connectedObjects[i];
     ds_list_clear(list);
@@ -39,3 +42,5 @@ for(var i = 0, len = array_length(connectedObjects); i < len; i++;) {
 ds_list_destroy(list);
 
 }
+
+connectedObjectsBefore=connectedObjects
