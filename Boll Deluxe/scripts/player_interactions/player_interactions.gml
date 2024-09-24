@@ -19,4 +19,9 @@ function player_interactions(){
 		spring.image_speed=1
 		sig.Emit("sprung")
 	}
+	
+	var amp = collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oAmp, false, true)
+	if (amp) && !(electrocuted) && !(hurt) && !(dead) {
+		sig.Emit("electrocute");
+	}
 }

@@ -1,4 +1,5 @@
 buftimer=max(0,buftimer-1);
+
 if !(buftimer) { //update tick
 buftimer=5;
 
@@ -7,6 +8,9 @@ collision_circle_list(x+32, y, 32, global.conductive_array, false, false, list, 
 
 for(var i = 0, len = ds_list_size(list); i < len; i++;) { 
     var obj = list[| i]
+	with (obj) {
+		onConducted.Emit();
+	}
 	array_push(connections, [x, y, obj.x, obj.y]);
     if !array_contains(connectedObjects, obj) {
         array_push(connectedObjects, obj);

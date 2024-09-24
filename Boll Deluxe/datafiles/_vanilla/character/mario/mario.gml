@@ -61,7 +61,7 @@ if ((alarm_get(0) > 0) && (grounded)) {
 	alarm_set(0,0)
 }
 
-if (state == "" || state == "jump") && !piped {
+if (state == "" || state == "jump") && !piped && !electrocuted && !electrocution_timer {
 	grav = defaultgrav;
 	
 	if (bkey) {
@@ -285,6 +285,10 @@ if (hurt) {
 		sprite="dead"
 	}
 }
+
+if (electrocuted) {
+	sprite="hurt"
+}
 #endregion
 
 //chopp: to handle any signals, make sure you define the code here with the same name 
@@ -376,6 +380,37 @@ if (state != "groundpound") {
 
 #define hurt_by_enemy
 stopsfx(charmName+"damage")
+hurt=1
+hsp=2.25*-xsc
+vsp=-4
+canstopjump=true
+state=""
+grounded=false
+oldsize = size;
+switch (size) {
+	case "basic":
+	case "mini":
+		signal_emit(sig, "on_kill", charmName)
+		break;
+	case "big":
+		size = "basic";
+		playsfx(charmName+"damage")
+		break;
+	default:
+		size = "big";
+		playsfx(charmName+"damage")
+		break;
+}
+grow = 60;
+
+#define electrocute
+state=""
+electrocuted = true;
+electrocution_timer=60;
+
+#define hurt_by_electrocution
+stopsfx(charmName+"damage")
+electrocuted = false;
 hurt=1
 hsp=2.25*-xsc
 vsp=-4

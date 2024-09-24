@@ -75,6 +75,8 @@ carrying = 0;
 run=0;
 bonk=0;
 collflags = 0; // collision flags
+electrocuted = false; //if player is electrocuted by something
+electrocution_timer = 0; //for the electrocuted animation
 
 //warping stuff
 warp_timer = 0;
