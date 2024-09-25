@@ -5,7 +5,7 @@ if global.debug {
 	draw_line(x,y,x+lengthdir_x(16,colangle+90),y+lengthdir_y(16,colangle+90))
 	
 	draw_set_font(smallF)
-	var coll=check_collision_line(x-hit_sizex,y+hit_sizey+2,x+hit_sizex,y+hit_sizey+2,COL_BOTTOM)
+	var coll=collision_line(x-hit_sizex,y+hit_sizey+2,x+hit_sizex,y+hit_sizey+2,oCollider,true,true)
 		
 	var left=(coll) && (x > coll.bbox_right) && (y < (coll.bbox_top+2))
 	var right=(coll) && (x < coll.bbox_left) && (y < (coll.bbox_top+2))
