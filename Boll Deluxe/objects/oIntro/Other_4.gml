@@ -1,9 +1,4 @@
-if (keyboard_check_direct(vk_anykey)) {
-	egg = keyboard_key
-	
-	egg = get_string("Input easter-egg string value. (single letter/number only)","")
-	//deprecated but will do for now
-}
+egg=random(3)
 if (egg == "3") {
 	sprite_prefetch(sBlast1)
 	

@@ -1,7 +1,5 @@
 //PLAYER SIGNALS
 
-sig_names = ["jumped", "mushroom", "fireflower"]
-// MAKE SURE THE NAME ACTUALLY EXISTS IN THE CHARM OR THE PROGRAM WILL FREEZE!! - chopp
 sig = new Signal();
 updateBox = new Signal();
 
@@ -19,6 +17,8 @@ palette_index=0
 greenmode=0
 
 ///// GENERAL /////
+sprite_list=[];
+sound_list=[];
 pNum = 0; //player number (P1, P2, etc.)
 charmName = global._playerChars[pNum]; //what charm this player character is using
 size="basic";
@@ -77,6 +77,7 @@ bonk=0;
 collflags = 0; // collision flags
 electrocuted = false; //if player is electrocuted by something
 electrocution_timer = 0; //for the electrocuted animation
+grow=0;
 
 //warping stuff
 warp_timer = 0;
@@ -113,16 +114,7 @@ if (!global.zoom_on_start)
 	my_camera.zoom = 1;	
 }
 
-sheet=-1;
-var dir=$"{working_directory}\\_vanilla\\character\\{charmName}\\{charmName}";
-
-player_sheets = {};
-for (var i = 0; i < array_length(global.powerups); i += 1) {
-	player_sheets[$ global.powerups[i]] = sprite_add_ext($"{dir}-{global.powerups[i]}.png",0,0,0,true);
-	if (!sprite_exists(player_sheets[$ global.powerups[i]])) {
-		show_debug_message($"tried to add player sheet but no sheet for size '{global.powerups[i]}' exists? defaulting to basic sheet")
-	}
-}
+//sheet=global.player_sheets[0][0]
 
 ///// EVENT SETUP /////
 

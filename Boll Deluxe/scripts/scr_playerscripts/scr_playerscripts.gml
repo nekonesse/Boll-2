@@ -1,21 +1,53 @@
 function skin_setting(_sett) {
-		var File =file_text_open_read($"{working_directory}/_vanilla/character/{charmName}/config.ini");
+	var File =file_text_open_read($"{working_directory}/_vanilla/character/{charmName}/config.ini");
 		
-		var Line =file_text_read_string(File);
-		while (!string_starts_with(Line, _sett+"=")) && (!file_text_eof(File)) {
-			file_text_readln(File);
-			Line =file_text_read_string(File);
-		}
+	var Line =file_text_read_string(File);
+	while (!string_starts_with(Line, _sett+"=")) && (!file_text_eof(File)) {
+		file_text_readln(File);
+		Line =file_text_read_string(File);
+	}
 		
-		var _string = string_delete(Line, 1, string_length(_sett+"="));
+	var _string = string_delete(Line, 1, string_length(_sett+"="));
 		
-		file_text_close(File);
+	file_text_close(File);
 		
-		return unreal(_string,0);
+	return unreal(_string,0);
 }
 
 function skin_getarray(_sett) {
 	var File =file_text_open_read($"{working_directory}/_vanilla/character/{charmName}/config.ini");
+	var Line =file_text_read_string(File);
+	while (!string_starts_with(Line, _sett+"=")) && (!file_text_eof(File)) {
+		file_text_readln(File);
+		Line =file_text_read_string(File);
+	}
+	if (!file_text_eof(File)) {
+		file_text_readln(File);
+		var _string = string_delete(Line, 1, string_length(_sett+"="));
+		file_text_close(File);
+		return split_string(_string,",");
+	}
+	file_text_close(File);
+}
+
+function config_setting(_sett, dir) {
+	var File =file_text_open_read($"{dir}/config.ini");
+		
+	var Line =file_text_read_string(File);
+	while (!string_starts_with(Line, _sett+"=")) && (!file_text_eof(File)) {
+		file_text_readln(File);
+		Line =file_text_read_string(File);
+	}
+		
+	var _string = string_delete(Line, 1, string_length(_sett+"="));
+		
+	file_text_close(File);
+		
+	return unreal(_string,0);
+}
+
+function config_getarray(_sett, dir) {
+	var File =file_text_open_read($"{dir}/config.ini");
 	var Line =file_text_read_string(File);
 	while (!string_starts_with(Line, _sett+"=")) && (!file_text_eof(File)) {
 		file_text_readln(File);
@@ -152,16 +184,33 @@ function init_player() { //make this load animation data later
 
 function get_player_sheet() {
 	mem = size;
+	var pid=0;
+	var psize=0;
+	
 	if (grow && (global.roomTimer mod 6 < 3)) {
 		size = oldsize;
 	}
-	var mysheet = player_sheets[$ string(size)]
+	for (var i = 0; i < array_length(oGlobals._charmList); ++i) {
+	    if (oGlobals._charmList[i]==global._playerChars[pNum]) {
+			pid=i;
+			break
+		} continue
+	}
+	for (var j = 0; j < array_length(global.powerups); ++j) {
+	    if (global.powerups[j]==size) {
+			psize=j;
+			break
+		} continue
+	}
+	
+	var mysheet = global.player_sheets[pid][psize]
+	show_debug_message($"{pid} {psize}")
 	if (sprite_exists(mysheet)) {
 		if (sheet != mysheet) {
 			sheet = mysheet;
 		}
-	} else if (sheet != player_sheets[$ "basic"]) { //fall back to basic if sheet doesn't exist for some reason
-		sheet = player_sheets[$ "basic"];
+	} else if (sheet != global.player_sheets[pid][psize]) { //fall back to basic if sheet doesn't exist for some reason
+		sheet = global.player_sheets[pid][0];
 	}
 	if (size != mem) {
 		size = mem;

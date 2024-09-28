@@ -12,4 +12,10 @@ switch (content) {
 		i.parentblock=id
 		VinylPlay(snd_itemappear);
 	} break;
+	case "thunderflower": {
+		var i=instance_create_depth(x,y,0,oThunderFlower)
+		i.going=hit
+		i.parentblock=id
+		VinylPlay(snd_itemappear);
+	} break;
 }

@@ -12,3 +12,5 @@ enum directions {
 	left,
 	right
 }
+
+global.powerups = ["basic", "big", "fire", "thunder", "feather"] //trust the process -moster

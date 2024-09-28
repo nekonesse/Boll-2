@@ -1254,4 +1254,3 @@ global.zoom_on_start = false; // does this level have the starting zoom-in?
 
 //// General data ////
 global._playerChars = [];
-global.powerups = ["basic", "big", "fire", "feather", "extra"] //trust the process -moster

@@ -6418,6 +6418,25 @@
 							"fieldInstances": [],
 							"__worldX": 424,
 							"__worldY": 88
+						},
+						{
+							"__identifier": "ItemBox",
+							"__grid": [18,8],
+							"__pivot": [0.5,0.5],
+							"__tags": [],
+							"__tile": { "tilesetUid": 15, "x": 256, "y": 208, "w": 16, "h": 16 },
+							"__smartColor": "#FEAE34",
+							"iid": "ed5c7da0-73f0-11ef-8280-d9e5e614c6c3",
+							"width": 16,
+							"height": 16,
+							"defUid": 13,
+							"px": [296,136],
+							"fieldInstances": [{ "__identifier": "content", "__type": "String", "__value": "thunderflower", "__tile": null, "defUid": 92, "realEditorValues": [{
+								"id": "V_String",
+								"params": ["thunderflower"]
+							}] }],
+							"__worldX": 296,
+							"__worldY": 136
 						}
 					]
 				},
