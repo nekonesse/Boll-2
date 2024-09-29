@@ -1,3 +1,4 @@
 instance_destroy(oBackgroundManager);
-
-delete_sheets();
+PlayerColl.Clear();
+PlayerColl.Destroy();
+delete PlayerColl;

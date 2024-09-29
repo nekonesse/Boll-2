@@ -1,6 +1,6 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function scr_compile(){
+function compile_code(){
 	var index = 0
 	var _compiled = ds_map_create();
 	var def_names = []
@@ -93,13 +93,14 @@ function scr_compile(){
 
 function import_sheets() {
 	show_debug_message("BEGIN SHEET COMPLATION...")
+	oGameManager.PlayerColl.StartBatch();
 	for(var i = 0; i < array_length(global._playerChars); ++i) {
 		var _name = global._playerChars[i]; 
 		var dir=$"{working_directory}\\_vanilla\\character\\{_name}"
-		for (var j = 0; j < array_length(global.powerups); ++j) {
-			if is_array(config_getarray($"{global.powerups[j]}_sprites", dir)) {
-				global.player_spritelists[i][j]=config_getarray($"{global.powerups[j]}_sprites", dir)
-				var array=global.player_spritelists[i][j]
+		if is_array(config_getarray("sprite_list", dir)) {
+			global.player_spritelists[i]=config_getarray("sprite_list", dir)
+			var array=global.player_spritelists[i]
+			for (var j = 0; j < array_length(global.powerups); ++j) {
 				for (var g = 0; g < array_length(array); ++g) {
 					var frames=nozerounreal(config_setting(global.powerups[j]+" "+array[g]+" frames", dir),config_setting(array[g]+" frames", dir))
 					var org_x=unreal(config_setting(global.powerups[j]+" "+array[g]+" orgX", dir),config_setting(array[g]+" orgX", dir))
@@ -112,22 +113,7 @@ function import_sheets() {
 			}
 		}
 	}
-	/*for(var i = 0; i < array_length(oGlobals._charmList); ++i) {
-		for (var j = 0; j < array_length(global.powerups); ++j) {
-			if sprite_exists(global.player_sheets[i][j]) {
-				show_message("WARNING: `" + oGlobals._charmList[i] + size + "` already has a sheet compiled.")
-			} else {
-				var _name = oGlobals._charmList[i];
-				var _dir = $"{working_directory}\\_vanilla\\character\\{_name}\\{_name}-{global.powerups[j]}.png";
-				show_debug_message(_dir)
-				if !(file_exists(_dir)) {
-					show_debug_message($"tried to add player sheet but no sheet for size '{global.powerups[j]}' exists? defaulting to basic sheet")
-				} else {
-					global.player_sheets[i][j] = sprite_add_ext(_dir,0,0,0,true);
-				}
-			}
-		}
-	}*/
+	oGameManager.PlayerColl.FinishBatch();
 	show_debug_message("Sheets have finished being compiled")
 }
 

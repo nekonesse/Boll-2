@@ -1,8 +1,6 @@
-show_debug_message($"spr_{charmName}_{size}_stand")
-draw_image(oGameManager.PlayerColl.GetImageInfo($"spr_{charmName}_{size}_stand"), 0, x, y)
-/*get_player_sheet();
-animate_player();
-if (sheet != -1) {
+show_debug_message(spriteEvent)
+if (CollageImageExists(oGameManager.PlayerColl.GetImageInfo(get_spriteindex()))) {
+	animate_player();
 	if (greenmode) {
 		shader_set(shd_flatcolor);
 		

@@ -14,6 +14,26 @@ function skin_setting(_sett) {
 	return unreal(_string,0);
 }
 
+function skin_getstring(_sett) {
+	var File =file_text_open_read($"{working_directory}/_vanilla/character/{charmName}/config.ini");
+		
+	var Line =file_text_read_string(File);
+	while (!string_starts_with(Line, _sett+"=")) && (!file_text_eof(File)) {
+		file_text_readln(File);
+		Line =file_text_read_string(File);
+		if (file_text_eof(File) && !string_pos(_sett+"=",Line)) {
+			file_text_close(File);
+			return ""
+		}
+	}
+		
+	var _string = string_delete(Line, 1, string_length(_sett+"="));
+		
+	file_text_close(File);
+		
+	return _string
+}
+
 function skin_getarray(_sett) {
 	var File =file_text_open_read($"{working_directory}/_vanilla/character/{charmName}/config.ini");
 	var Line =file_text_read_string(File);
@@ -46,6 +66,22 @@ function config_setting(_sett, dir) {
 	return unreal(_string,0);
 }
 
+function config_getstring(_sett, dir) {
+	var File =file_text_open_read($"{dir}/config.ini");
+		
+	var Line =file_text_read_string(File);
+	while (!string_starts_with(Line, _sett+"=")) && (!file_text_eof(File)) {
+		file_text_readln(File);
+		Line =file_text_read_string(File);
+	}
+		
+	var _string = string_delete(Line, 1, string_length(_sett+"="));
+		
+	file_text_close(File);
+		
+	return _string
+}
+
 function config_getarray(_sett, dir) {
 	var File =file_text_open_read($"{dir}/config.ini");
 	var Line =file_text_read_string(File);
@@ -63,47 +99,59 @@ function config_getarray(_sett, dir) {
 }
 
 function get_spriteindex() { //returns the array index of the player's current sprite
-	var _f = function(_element, _index)
-	{
-		return (sprite_list[_index] == sprite);
+	var ind=0;
+	for (var i = 0; i < array_length(spriteEvents); ++i) {
+	    if (spriteEvents[i]==spriteEvent) {
+			ind=i;
+			break;
+		}
 	}
-	var _index = array_find_index(sprite_list,_f)
-	return _index
+	var key=ds_map_find_value(spriteMap,$"{size} {spriteEvents[i]}")
+	return $"spr_{charmName}_{size}_{key}"
 }
 
-function skin_animationdata(slot,name,list,size) {
-	var t,spr,sizename;
+function skin_animationdata(slot,name,list) {
+	var t,spr;
 
-	sizename=global.powerups[size]
-
-	for (var i=0;i<array_length(list);i+=1) {
-	    spr=list[i]
-	    //read frame count list
-	    //the below code was mega simplified since we don't have to deal with the commas for different sizes.
-	    //I'm utilizing the defaults of nozerounreal here so that in the case that it doesn't actually find the tag it just goes for a non size specific version. i.e, one without a tag.s  ||  lazy 8am moster here Thank You.		
-		frames_list[i]=nozerounreal(skin_setting(sizename+" "+string(spr)+" frames"),skin_setting(string(spr)+" frames"))
+	for (var j = 0; j < array_length(global.powerups); ++j) {
+		for (var g = 0; g < array_length(spriteEvents); ++g) {
+			var _getspr=skin_getstring($"{global.powerups[j]}{spriteEvents[g]}")
+			if (_getspr=="") {
+				_getspr=string(skin_getstring($"{spriteEvents[g]}"))
+			}
+			if !(_getspr=="") {
+				ds_map_add(spriteMap,$"{global.powerups[j]} {spriteEvents[g]}",_getspr)
+			}
+		}
+		for (var i=0;i<array_length(list);i+=1) {
+		    spr=list[i]
+		    //read frame count list
+		    //the below code was mega simplified since we don't have to deal with the commas for different sizes.
+		    //I'm utilizing the defaults of nozerounreal here so that in the case that it doesn't actually find the tag it just goes for a non size specific version. i.e, one without a tag.s  ||  lazy 8am moster here Thank You.		
+			frames_list[i]=nozerounreal(skin_setting(global.powerups[j]+" "+string(spr)+" frames"),skin_setting(string(spr)+" frames"))
 	    
-		//read animation speed
-	    t=nozerounreal(skin_setting(sizename+" "+string(spr)+" speed"),skin_setting(string(spr)+" speed")) 
-	    if !(ceil(t)) t=1
+			//read animation speed
+		    t=nozerounreal(skin_setting(global.powerups[j]+" "+string(spr)+" speed"),skin_setting(string(spr)+" speed")) 
+		    if !(ceil(t)) t=1
 	    
-		speed_list[i]=t
+			speed_list[i]=t
 		
-	    //read animation loop
-	    loops_list[i]=max(1,nozerounreal(skin_setting(sizename+" "+string(spr)+" loop"),skin_setting(string(spr)+" loop")))
+		    //read animation loop
+		    loops_list[i]=max(1,nozerounreal(skin_setting(global.powerups[j]+" "+string(spr)+" loop"),skin_setting(string(spr)+" loop")))
       
 
-		//read frametimes
-		if is_array(skin_getarray(string(spr)+" frametimes"))
-		times_list[i]=skin_getarray(string(spr)+" frametimes")
-		else
-		times_list[i]=array_create(frames_list[i])
-	}
+			//read frametimes
+			if is_array(skin_getarray(string(spr)+" frametimes"))
+			times_list[i]=skin_getarray(string(spr)+" frametimes")
+			else
+			times_list[i]=array_create(frames_list[i], 1)
+		}
 	
-	offset_x_list[size]=nozerounreal(skin_setting(sizename+" offset x"),skin_setting("offset x"))
-	offset_y_list[size]=nozerounreal(skin_setting(sizename+" offset y"),skin_setting("offset y"))
-	animspd_list[size]=median(0,nozerounreal(skin_setting(sizename+" animation speed"),skin_setting("animation speed")))
-	poleoffx[size]=nozerounreal(skin_setting(sizename+" pole center offset"),skin_setting("pole center offset"))
+		offset_x_list[j]=nozerounreal(skin_setting(global.powerups[j]+" offset x"),skin_setting("offset x"))
+		offset_y_list[j]=nozerounreal(skin_setting(global.powerups[j]+" offset y"),skin_setting("offset y"))
+		animspd_list[j]=median(0,nozerounreal(skin_setting(global.powerups[j]+" animation speed"),skin_setting("animation speed")))
+		poleoffx[j]=nozerounreal(skin_setting(global.powerups[j]+" pole center offset"),skin_setting("pole center offset"))
+	}
 }
 
 function init_sounds() {
@@ -140,7 +188,8 @@ function stopsfx(sound) {
 }
 
 function init_player() { //make this load animation data later
-	sprite_list=["stand"];
+	spriteEvents=["idle"];
+	spriteMap=ds_map_create();
 	sound_list=[]; //failsafe
 	txr_exec(global.scripts[? $"{charmName}_datalist"]); //sprite list
 	frames_list=[1];
@@ -150,8 +199,6 @@ function init_player() { //make this load animation data later
 	offset_x_list[0]=0;
 	offset_y_list[0]=0;
 	animspd_list[0]=0;
-	box_width_list[0]=2;
-	box_height_list[0]=2;
 	animf=1;
 	offset_x=0;
 	offset_y=0;
@@ -167,54 +214,27 @@ function init_player() { //make this load animation data later
 	top_margin=120;
 	dy=0;
 	
-	for (var sizeNum = 0; sizeNum < array_length(global.powerups); sizeNum += 1) { //temporary size count, could replace with better method later maybe? works for now though -moster
-		skin_animationdata(pNum,charmName,sprite_list,sizeNum);
-	}
+	skin_animationdata(pNum,charmName,spriteEvents);
 	init_sounds();
-}
-
-function get_player_sheet() {
-	mem = size;
-	var pid=0;
-	var psize=0;
-	
-	if (grow && (global.roomTimer mod 6 < 3)) {
-		size = oldsize;
-	}
-	for (var i = 0; i < array_length(oGlobals._charmList); ++i) {
-	    if (oGlobals._charmList[i]==global._playerChars[pNum]) {
-			pid=i;
-			break
-		} continue
-	}
-	for (var j = 0; j < array_length(global.powerups); ++j) {
-	    if (global.powerups[j]==size) {
-			psize=j;
-			break
-		} continue
-	}
-	
-	var mysheet = global.player_sheets[pid][psize]
-	show_debug_message($"{pid} {psize}")
-	if (sprite_exists(mysheet)) {
-		if (sheet != mysheet) {
-			sheet = mysheet;
-		}
-	} else if (sheet != global.player_sheets[pid][psize]) { //fall back to basic if sheet doesn't exist for some reason
-		sheet = global.player_sheets[pid][0];
-	}
-	if (size != mem) {
-		size = mem;
-	}
 }
 
 function draw_player() {
 	//if (flash) exit
-	var margin=1/256;
-	var fry=get_spriteindex()
-	var cx = (box_width / 2) //centered x
-	var cy = (box_height / 2) //centered y
-	draw_sprite_general(
+	var spr=oGameManager.PlayerColl.GetImageInfo(get_spriteindex())
+	if CollageImageExists(spr) {
+		CollageDrawImageExt(
+			spr, 
+			fr,
+			floor(x) - (floor(offset_x)) * -xsc, 
+			floor(y) - (floor(offset_y) - (6) - (hit_sizey)) * -ysc,
+			xsc,
+			ysc,
+			sprite_angle*xsc,
+			col,
+			alpha
+		)
+	}
+	/*draw_sprite_general(
 		sheet,0,
 		8+floor(frame)*(box_width+1)+margin,
 		top_margin+8+fry*(box_height+1)+(margin*2),
@@ -227,56 +247,50 @@ function draw_player() {
 		sprite_angle*xsc,
 		col,col,col,col,
 		alpha
-	)			
+	)			*/
 }
 
 function animate_player() {
-	//animation manager specifically for player characters, if you want one for enemies make a different script.
+	//animation manager specifically for player characters
 	
-	oldspr=sprite
-	//This makes the spr manager not run under certain circumstances.
-	// if (!piped && !codeblock_stopsprmanager)
+	oldspr=get_spriteindex()
+
 	txr_exec(global.scripts[? $"{charmName}_draw"]);
 	
 	//this one handles drawing order inside multiplayer, or rather, the way it switches so that both are flashing when on top of one another.
 	//if ((depth=0 || depth=1) && pNum=gamemanager.plrsort) depth=!depth
 	 
 	//Growing and hurting size changes.
-	//commented out old code right now, also taking damage doesnt exist yet so its not there. also used the room timer 4 the flash honestly because i dont care rn -moster
 	mem = size;
-	//if (((hurt || fall=6) && hk<4) || (grow && /gk mod 6<3)) size=oldsize
 	
 	if (grow && (global.roomTimer mod 6 < 3)) {
 		size = oldsize;
 	}
 
-	//if (global.tpose) {sprite="stand" frame=0}
-
-	if (sprite!=oldspr) frame=0
+	if (get_spriteindex()!=oldspr) frame=0
 	
-	var spri=get_spriteindex()
-	//show_message($"list - {frames_list}\nspriteindex - {sprite}") - debug shit :)
-	frn=frames_list[spri] //frame number
-	frs=(frspd*animf*speed_list[spri])/max(1,times_list[spri,floor(frame)]) //(game speed * percent * sprite speed) / frame time
-	frl=loops_list[spri]-1 //loop point  
-	//if (water && !cantslowanim) frs*=wf                       
-	if (piped!=2) frame+=frs
-	if (frame<0) frame+=frn
-	if (frame>=frn) {frame=frame-frn if (frl<frn) frame=frl}
-	frame=modulo(frame,0,frn)
-	for (var sizeNum = 0; sizeNum < array_length(global.powerups); sizeNum += 1) { //temporary size count, could replace with better method later maybe? works for now though -moster
-		if global.powerups[sizeNum]==size {
-			offset_x=offset_x_list[sizeNum]
-			offset_y=offset_y_list[sizeNum]
-			animf=animspd_list[sizeNum]
-			box_width=box_width_list[sizeNum]
-			box_height=box_height_list[sizeNum]
-			break
+	show_debug_message(global.player_spritelists[pNum])
+	var spri=array_get_index(global.player_spritelists[pNum], ds_map_find_value(spriteMap,$"{size} {spriteEvent}"))
+	show_debug_message(ds_map_find_value(spriteMap,$"{size} {spriteEvent}"))
+	show_debug_message(spri)
+	if spri!=-1 {
+		frn=frames_list[spri] //frame number
+		frs=(frspd*animf*speed_list[spri])/max(1,times_list[spri,floor(frame)]) //(game speed * percent * sprite speed) / frame time
+		frl=loops_list[spri]-1 //loop point  
+		//if (water && !cantslowanim) frs*=wf                       
+		if (piped!=2) frame+=frs
+		if (frame<0) frame+=frn
+		if (frame>=frn) {frame=frame-frn if (frl<frn) frame=frl}
+		frame=modulo(frame,0,frn)
+		for (var sizeNum = 0; sizeNum < array_length(global.powerups); sizeNum += 1) { //temporary size count, could replace with better method later maybe? works for now though -moster
+			if global.powerups[sizeNum]==size {
+				offset_x=offset_x_list[sizeNum]
+				offset_y=offset_y_list[sizeNum]
+				animf=animspd_list[sizeNum]
+				break
+			}
 		}
 	}
-
-	//below is the old code that deals with taking damage, as well as growing, commented out just in case rn
-	/*if (!super) if (((hurt || fall=6) && hk<4) || ((grow && gk mod 6<3)) size=mem*/ 
 	
 	if (size != mem) {
 		size = mem;

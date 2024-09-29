@@ -1,4 +1,5 @@
 #define datalist
+spriteEvents=split_string("idle,walk,run,wait,lookUp,crouch,victory,hurt,dead,brake,jump,fall,bonk,runJump,doubleJump,doubleJumpFall,doubleJumpBonk,wallSlide,wallJump,groundPound,groundPoundFall,slopeSlide,carryIdle,carryWalk,carryRun,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,roll,swim,swimPaddle,carrySwim,carryPaddle,spinJump,pushing,balancing,dive,bellySlide,fireToss,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
 sound_list=split_string("select,damage,die,jump,win,step,bonk",",");
 
 #define create
@@ -240,54 +241,55 @@ grow = max(0, (grow - 1));
 frspd=1
 
 if (state == "") {
-	if (ceil(abs(hsp))>3) sprite="run"
-	else if !(abs(hsp)) sprite="stand"
+	if (ceil(abs(hsp))>3) spriteEvent="run"
+	else if !(abs(hsp)) spriteEvent="idle"
 	else {
 		frspd=abs(hsp)/4
-		sprite="walk"
+		spriteEvent="walk"
 	}
 	
 	if (!grounded) {
-		if (vsp>0) sprite="fall"
+		if (vsp>0) spriteEvent="fall"
 	}
 	
-	if (crouch) sprite="crouch"
+	if (crouch) spriteEvent="crouch"
 	
 	if (skidding) {
-		sprite="brake" 
+		spriteEvent="brake" 
 		xsc = -(skiddir)
 	}
 }
 
 if (state == "jump") {
-	sprite="jump"
-	if (vsp>0) sprite="fall"
-	if (runjump) sprite="runjump"
-	if (bonk) sprite="bonk"
+	spriteEvent="jump"
+	if (vsp>0) spriteEvent="fall"
+	if (runjump) spriteEvent="runJump"
+	if (bonk) spriteEvent="bonk"
 }
 
 if (state == "pound") {
-	if (pound_timer > 0) sprite="groundpound" else sprite="poundfall"
+	if (pound_timer > 0) spriteEvent="groundPound" else spriteEvent="poundFall"
 }
 
-if (state == "wallslide") {
-	sprite="wallslide"
+if (state == "wallSlide") {
+	spriteEvent="wallSlide"
 }
 
 if (slopesliding) {
-	sprite="slide"
+	spriteEvent="slide"
 }
 
 if (hurt) {
-	sprite="hurt"
+	spriteEvent="hurt"
 	if (dead) {
-		sprite="dead"
+		spriteEvent="dead"
 	}
 }
 
 if (electrocuted) {
-	sprite="hurt"
+	spriteEvent="hurt"
 }
+spriteEvent="idle"
 #endregion
 
 //chopp: to handle any signals, make sure you define the code here with the same name 

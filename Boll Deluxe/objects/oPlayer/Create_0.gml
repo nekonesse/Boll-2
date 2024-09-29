@@ -4,9 +4,7 @@ sig = new Signal();
 updateBox = new Signal();
 
 sig.Connect( self, function(str_var) {
-    
 	txr_exec(global.scripts[? $"{charmName}_{str_var}"]);
-
 });
 
 // Palette
@@ -17,7 +15,7 @@ palette_index=0
 greenmode=0
 
 ///// GENERAL /////
-sound_list=[];
+
 pNum = 0; //player number (P1, P2, etc.)
 charmName = global._playerChars[pNum]; //what charm this player character is using
 size="basic";
@@ -116,7 +114,7 @@ if (!global.zoom_on_start)
 //sheet=global.player_sheets[0][0]
 
 //Sprite Events
-spriteEvent=""
+spriteEvent="idle"
 
 ///// EVENT SETUP /////
 

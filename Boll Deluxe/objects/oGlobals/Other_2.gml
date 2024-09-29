@@ -70,4 +70,4 @@ global._loopThrough = function(_lookfor, _filedir) { //Function to go through an
 	return _str;
 }
 
-global.scripts = scr_compile()
+global.scripts = compile_code()
