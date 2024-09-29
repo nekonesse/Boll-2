@@ -330,7 +330,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.6.2.162",
+    "IDEVersion":"2024.8.1.171",
   },
   "name":"Boll Deluxe",
   "resources":[
@@ -1197,6 +1197,7 @@
     {"id":{"name":"shd_pal_html_sprite","path":"shaders/shd_pal_html_sprite/shd_pal_html_sprite.yy",},},
     {"id":{"name":"shd_pal_html_surface","path":"shaders/shd_pal_html_surface/shd_pal_html_surface.yy",},},
     {"id":{"name":"shd_pal_swapper","path":"shaders/shd_pal_swapper/shd_pal_swapper.yy",},},
+    {"id":{"name":"shd_segaFade","path":"shaders/shd_segaFade/shd_segaFade.yy",},},
     {"id":{"name":"snd_blockbreak","path":"sounds/snd_blockbreak/snd_blockbreak.yy",},},
     {"id":{"name":"snd_blockbump","path":"sounds/snd_blockbump/snd_blockbump.yy",},},
     {"id":{"name":"snd_enemybigexplode","path":"sounds/snd_enemybigexplode/snd_enemybigexplode.yy",},},
