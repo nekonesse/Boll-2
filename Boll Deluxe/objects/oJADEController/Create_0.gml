@@ -117,6 +117,8 @@ var guih=display_get_gui_height()
 
 on_object_list=false
 show_object_list=true
+object_list_active = 1
+properties_tab_active = 0
 
 object_list_area_width = 96*3
 object_list_area_height = 128*3
@@ -197,4 +199,5 @@ if !is_undefined(obj) {
 	obj[7] = sprite[5]*2
 	obj[8] = 0
 	obj[9] = 0	
+	obj[10] = sprite[9]
 }

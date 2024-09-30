@@ -18,6 +18,11 @@ function parse_level(dir=working_directory+"\save.jade") {
 			obj.image_yscale=data[4]
 			obj.x+=sprite_get_xoffset(object_get_sprite(asset_get_index(data[0])));
 			obj.y+=sprite_get_yoffset(object_get_sprite(asset_get_index(data[0])));
+			
+			for (var j = 0; j < array_length(data[10]); j++) {
+				variable_instance_set(obj, data[10][j][0], data[10][j][2]);
+				show_debug_message($"set object {obj} ({object_get_name(obj.object_index)})'s variable '{data[10][j][0]}' to '{data[10][j][2]}'.");
+			}
 		}
         file_text_readln(save_file);
 		/*OBJECT STAT LIST
@@ -31,6 +36,7 @@ function parse_level(dir=working_directory+"\save.jade") {
 		 7: box y
 		 8: offset x
 		 9: offset y
+		 10: properties array
 		*/
 	}
 	var tile_layer = layer_get_id("Ground_Tiles")

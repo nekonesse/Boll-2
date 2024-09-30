@@ -334,7 +334,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.6.2.162",
+    "IDEVersion":"2024.8.1.171",
   },
   "name":"Boll Deluxe",
   "resources":[
@@ -992,6 +992,7 @@
     {"id":{"name":"scr_parseJADE","path":"scripts/scr_parseJADE/scr_parseJADE.yy",},},
     {"id":{"name":"scr_platforms","path":"scripts/scr_platforms/scr_platforms.yy",},},
     {"id":{"name":"scr_playerscripts","path":"scripts/scr_playerscripts/scr_playerscripts.yy",},},
+    {"id":{"name":"scr_properties","path":"scripts/scr_properties/scr_properties.yy",},},
     {"id":{"name":"scr_registerJADE","path":"scripts/scr_registerJADE/scr_registerJADE.yy",},},
     {"id":{"name":"scr_retro_pal_swapper_utilities","path":"scripts/scr_retro_pal_swapper_utilities/scr_retro_pal_swapper_utilities.yy",},},
     {"id":{"name":"scr_retro_pal_swapper","path":"scripts/scr_retro_pal_swapper/scr_retro_pal_swapper.yy",},},
@@ -1278,6 +1279,7 @@
     {"id":{"name":"spr_JADEtab_right","path":"sprites/spr_JADEtab_right/spr_JADEtab_right.yy",},},
     {"id":{"name":"spr_JADEtab_top","path":"sprites/spr_JADEtab_top/spr_JADEtab_top.yy",},},
     {"id":{"name":"spr_JADEwindow","path":"sprites/spr_JADEwindow/spr_JADEwindow.yy",},},
+    {"id":{"name":"spr_JADEwindowtab","path":"sprites/spr_JADEwindowtab/spr_JADEwindowtab.yy",},},
     {"id":{"name":"spr_koopahitbox","path":"sprites/spr_koopahitbox/spr_koopahitbox.yy",},},
     {"id":{"name":"spr_koopashellspin_g","path":"sprites/spr_koopashellspin_g/spr_koopashellspin_g.yy",},},
     {"id":{"name":"spr_koopashellspin_r","path":"sprites/spr_koopashellspin_r/spr_koopashellspin_r.yy",},},

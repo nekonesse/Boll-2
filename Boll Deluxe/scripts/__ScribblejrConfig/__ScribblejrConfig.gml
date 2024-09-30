@@ -48,4 +48,4 @@
 //Functions to call when Scribblejr emits messages. Change these if you want to redirect Scribblejr
 //messages to something other than the console / native error handler.
 #macro SCRIBBLEJR_SHOW_DEBUG_MESSAGE  show_debug_message //Warnings and general information
-#macro SCRIBBLEJR_SHOW_ERROR          show_error         //Fatal errors
+#macro SCRIBBLEJR_SHOW_ERROR          show_error

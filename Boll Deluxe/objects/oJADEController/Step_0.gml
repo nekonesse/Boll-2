@@ -14,8 +14,8 @@ curs_y=mouse_y-cam_y
 var guiw=display_get_gui_width()
 var guih=display_get_gui_height()
 var tb_length = array_length(toolbar[selected_mode])
-on_object_list=point_in_rectangle(curs_x,curs_y,object_list_area_x-2,object_list_area_y-6,object_list_area_x+object_list_area_width,object_list_area_y+object_list_area_height)
-if (!on_object_list) on_object_list = keyboard_check_direct(vk_alt)
+on_object_list = (point_in_rectangle(curs_x,curs_y,object_list_area_x-2,object_list_area_y-24,object_list_area_x+object_list_area_width,object_list_area_y+object_list_area_height) && show_object_list && object_list_active)
+if (!on_object_list && object_list_active && show_object_list) on_object_list = keyboard_check_direct(vk_alt)
 
 not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
 &&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
@@ -436,6 +436,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 							obj[7] = sprite[5]	
 							obj[8] = 0
 							obj[9] = 0	
+							obj[10] = sprite[9]
 						}
 						
 						/*OBJECT STAT LIST
@@ -449,6 +450,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 						 7: box y
 						 8: offset x
 						 9: offset y
+						 10: properties array
 						*/
 						
 						/*SPRITE STAT LIST

@@ -73,70 +73,155 @@ if selected_mode = TILE_MODE {
 
 #region Object List
 if selected_mode == OBJECT_MODE {
-	if show_object_list && surface_exists(object_list_area_surface) {
-		//window tab
-		draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
-		draw_set_font(smallF)
-		//top tab text
-		var tab_name = ["blocks", "baddies", "items", "tech"]
-		draw_set_halign(fa_left)
-		draw_text_transformed(object_list_area_x+2,object_list_area_y-4,$"object list - {tab_name[current_cat]}",0.66,0.66,0)
 	
-		surface_set_target(object_list_area_surface)
-		draw_clear_alpha(c_black, 0)
-		draw_set_halign(fa_right)
+	var over_tab=point_in_rectangle(curs_x,curs_y,object_list_area_x-1,object_list_area_y-24, object_list_area_x + ((object_list_area_width/3)/2),object_list_area_y-8)
+		
+	if (over_tab && mbleftpress) {
+		object_list_active = 1
+		properties_tab_active = 0
+		show_object_list = 1
+	}
 	
-		var _str = "null"
-		//object list
-		for (var i = 0; i < ds_list_size(jade_cats[current_cat]); ++i) {
+	over_tab=point_in_rectangle(curs_x,curs_y,object_list_area_x + 1 + ((object_list_area_width/3)/2),object_list_area_y-24, object_list_area_x + (((object_list_area_width/3)/4)*3),object_list_area_y-8)
+		
+	if (over_tab && mbleftpress) {
+		object_list_active = 0
+		properties_tab_active = 1
+		show_object_list = 1
+	}
+	
+	if show_object_list {
+		if object_list_active && surface_exists(object_list_area_surface) {
+		//window tab top buttons
+			//Object List Tab
+			draw_sprite_stretched(spr_JADEwindowtab,0,object_list_area_x-1,object_list_area_y-24, -1 + ((object_list_area_width/3)/2),18)
+			//Properties Tab
+			draw_sprite_stretched(spr_JADEwindowtab,1,(object_list_area_x + 1 + ((object_list_area_width/3)/2)),object_list_area_y-20, -1 + ((object_list_area_width/3)/2),14)
+
+			//window
+			draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
+			draw_set_font(smallF)
+			//window text
+			var window_name = ["blocks", "baddies", "items", "tech"]
+			draw_set_halign(fa_left)
+			draw_text_transformed(object_list_area_x+2,object_list_area_y-4,$"object list - {window_name[current_cat]}",0.66,0.66,0)
+		
+			//tab text
+			draw_set_halign(fa_center)
+			draw_text_transformed((object_list_area_x - 1 + (object_list_area_width/3)/4),object_list_area_y-16,"Object List",0.66,0.66,0)
+			draw_text_transformed((object_list_area_x + 1 + ((object_list_area_width/3)/4)*3),object_list_area_y-14,"Properties",0.66,0.66,0)
+		
+			surface_set_target(object_list_area_surface)
+			draw_clear_alpha(c_black, 0)
+			draw_set_halign(fa_right)
+	
+			var _str = "null"
+			//object list
+			for (var i = 0; i < ds_list_size(jade_cats[current_cat]); ++i) {
 				
-				//upward culling								//downwards culling
-			if (32*i < object_list_scroll_pos[current_cat]) || (32*i > object_list_scroll_pos[current_cat]+object_list_area_height) {
-				continue;
+					//upward culling								//downwards culling
+				if (32*i < object_list_scroll_pos[current_cat]) || (32*i > object_list_scroll_pos[current_cat]+object_list_area_height) {
+					continue;
+				}
+			
+				_str = ds_list_find_value(jade_cats[current_cat], i)
+				if _str == undefined{
+					break;	
+				}
+				var overlapping=point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y+((32/3)*i)-object_list_scroll_pos[current_cat]/3,object_list_area_x+object_list_area_width-6,object_list_area_y+(((32/3)*i)+10)-object_list_scroll_pos[current_cat]/3)
+		
+				if (overlapping && mbleftpress) {
+					current_obj_id[current_cat]=i
+					selected_obj = _str
+				}
+		
+				var color = c_black
+				if (selected_obj == _str) color = c_white
+				else if (current_obj_id[current_cat] == i) color=c_blue
+				else if (overlapping) color=c_yellow
+				else color=c_black
+		
+				//draw background rectangle
+				draw_rect(2,(32*i)+2-object_list_scroll_pos[current_cat],object_list_area_width-8,28, color,0.5)
+				//draw object name
+				ScribblejrFit(_str, fa_right, fa_middle, smallF, 3, object_list_area_width-44, 32).Draw(object_list_area_width-6,(32*i)+15-object_list_scroll_pos[current_cat])
+		
+				//draw object sprite
+				var arr=ds_map_find_value(obj_data,_str)
+				var sprite=arr[0]
+				var ysize=32
+				if sprite_get_height(sprite)*2 < 32
+				ysize=sprite_get_height(sprite)
+		
+				draw_sprite_stretched(sprite,0,4,(32*i)-object_list_scroll_pos[current_cat],32,ysize)
+				draw_set_halign(fa_left)
+			}
+	
+			surface_reset_target();
+	
+			draw_surface_stretched(object_list_area_surface, object_list_area_x, object_list_area_y, object_list_area_width/3, object_list_area_height/3)
+		} else if properties_tab_active {
+			//Properties Tab
+			draw_sprite_stretched(spr_JADEwindowtab,0,(object_list_area_x + 1 + ((object_list_area_width/3)/2)),object_list_area_y-24, -1 + ((object_list_area_width/3)/2),18)
+			//Object List Tab
+			draw_sprite_stretched(spr_JADEwindowtab,1,object_list_area_x-1,object_list_area_y-20, -1 + ((object_list_area_width/3)/2),14)
+		
+			//window
+			draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
+			
+			//window text
+			draw_set_halign(fa_left)
+			draw_text_transformed(object_list_area_x+2,object_list_area_y-4,"properties - where fuck i am",0.66,0.66,0)
+		
+			//tab text
+			draw_set_halign(fa_center)
+			draw_text_transformed((object_list_area_x - 1 + (object_list_area_width/3)/4),object_list_area_y-14,"Object List",0.66,0.66,0)
+			draw_text_transformed((object_list_area_x + 1 + ((object_list_area_width/3)/4)*3),object_list_area_y-16,"Properties",0.66,0.66,0)
+			
+			var size = ds_list_size(object_layer_map)
+			var properties_group = [-4];
+			
+			for (var i = 0; i < size; ++i) {
+				var obj = ds_list_find_value(object_layer_map, i)
+				var sprite = ds_map_find_value(obj_data,obj[0])
+				if (obj[5] = 1) {
+					if (properties_group[0] = -4) {
+						properties_group[0] = obj
+					} else {
+						if (properties_group[0][0] == obj[0]) {
+							array_push(properties_group,obj)	
+						}
+					}
+				}
 			}
 			
-			_str = ds_list_find_value(jade_cats[current_cat], i)
-			if _str == undefined{
-				break;	
+			if (properties_group[0] != -4) {
+				for (i = 0; i < array_length(properties_group); i++) {
+					draw_text_transformed(object_list_area_x + 4, object_list_area_y + 4 + (6 * i), properties_group[i], 0.66,0.66,0)
+				}
 			}
-			var overlapping=point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y+((32/3)*i)-object_list_scroll_pos[current_cat]/3,object_list_area_x+object_list_area_width-6,object_list_area_y+(((32/3)*i)+10)-object_list_scroll_pos[current_cat]/3)
-		
-			if (overlapping && mbleftpress) {
-				current_obj_id[current_cat]=i
-				selected_obj = _str
-			}
-		
-			var color = c_black
-			if (selected_obj == _str) color = c_white
-			else if (current_obj_id[current_cat] == i) color=c_blue
-			else if (overlapping) color=c_yellow
-			else color=c_black
-		
-			//draw background rectangle
-			draw_rect(2,(32*i)+2-object_list_scroll_pos[current_cat],object_list_area_width-8,28, color,0.5)
-			//draw object name
-			ScribblejrFit(_str, fa_right, fa_middle, smallF, 3, object_list_area_width-44, 32).Draw(object_list_area_width-6,(32*i)+15-object_list_scroll_pos[current_cat])
-		
-			//draw object sprite
-			var arr=ds_map_find_value(obj_data,_str)
-			var sprite=arr[0]
-			var ysize=32
-			if sprite_get_height(sprite)*2 < 32
-			ysize=sprite_get_height(sprite)
-		
-			draw_sprite_stretched(sprite,0,4,(32*i)-object_list_scroll_pos[current_cat],32,ysize)
 			draw_set_halign(fa_left)
 		}
-	
-		surface_reset_target();
-	
-		draw_surface_stretched(object_list_area_surface, object_list_area_x, object_list_area_y, object_list_area_width/3, object_list_area_height/3)
 	} else {
+		//Properties Tab
+		draw_sprite_stretched(spr_JADEwindowtab,1,(object_list_area_x + 1 + ((object_list_area_width/3)/2)),object_list_area_y-20, -1 + ((object_list_area_width/3)/2),14)
+		//Object List Tab
+		draw_sprite_stretched(spr_JADEwindowtab,1,object_list_area_x-1,object_list_area_y-20, -1 + ((object_list_area_width/3)/2),14)
+		//window
 		draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,8)
+		
 		draw_set_font(smallF)
-		//top tab text
-		var tab_name = ["blocks", "baddies", "items", "tech"]
-		draw_text_transformed(object_list_area_x+2,object_list_area_y-4,$"object list - {tab_name[current_cat]}",0.66,0.66,0)
+		draw_set_halign(fa_left)
+		
+		//window text
+		draw_text_transformed(object_list_area_x+2,object_list_area_y-4,"jade - select a tab",0.66,0.66,0)
+		
+		//tab text
+		draw_set_halign(fa_center)
+		draw_text_transformed((object_list_area_x - 1 + (object_list_area_width/3)/4),object_list_area_y-14,"Object List",0.66,0.66,0)
+		draw_text_transformed((object_list_area_x + 1 + ((object_list_area_width/3)/4)*3),object_list_area_y-14,"Properties",0.66,0.66,0)		
+		
+		draw_set_halign(fa_left)
 	}
 }
 #endregion

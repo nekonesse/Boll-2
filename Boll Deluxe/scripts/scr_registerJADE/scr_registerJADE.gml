@@ -36,8 +36,9 @@ function JADE_initializeobj() {
 	//8. scalable horizontally (bool)
 	//9. scalable vertically (bool)
 	//10. what editor mode object list to appear in
+	//11. object properties (check scr_properties)
 	show_debug_message("Registering JADE object list...")
-	registerobj(object_get_name(oPlayerSpawn), spr_spawner, 0, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), true, true, OBJECT_MODE, 0)
+	registerobj(object_get_name(oPlayerSpawn), spr_spawner, 0, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), true, true, OBJECT_MODE, 0, object_get_properties("oPlayerSpawn"))
 	
 	register_array(tag_get_asset_ids("blocks", asset_object), 0);
 	register_array(tag_get_asset_ids("enemies", asset_object), 1);
@@ -51,13 +52,14 @@ function register_array(array, category) {
 	for (var i = 0; i < array_length(array); ++i) {
 		var _name = object_get_name(array[i])
 		var _sprite = object_get_sprite(array[i])
-	    registerobj(_name, _sprite, 0, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), sprite_get_width(_sprite), sprite_get_height(_sprite), true, true, OBJECT_MODE, category)
+		var _properties = object_get_properties(_name)
+	    registerobj(_name, _sprite, 0, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), sprite_get_width(_sprite), sprite_get_height(_sprite), true, true, OBJECT_MODE, category, _properties)
 	}	
 }
 
-function registerobj(uuid,sprite,index,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,category) {
+function registerobj(uuid,sprite,index,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,category,properties) {
 	if !ds_map_exists(obj_data,uuid) {
-		ds_map_add(obj_data,uuid,[sprite,index,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode])
+		ds_map_add(obj_data,uuid,[sprite,index,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,properties])
 		ds_list_add(obj_name,uuid)
 		ds_list_add(jade_cats[category],uuid)
 		show_debug_message($"Successfully registered object id: {uuid} in JADE")
