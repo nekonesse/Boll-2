@@ -25,8 +25,8 @@ if (stalled)
 	xwidth = camera_get_view_width(view_camera[0]);
 	ywidth = camera_get_view_height(view_camera[0]);
 
-	xx = min(xmax, max(0, x_final + (x - xprevious) - (xwidth/2)));
-	yy = min(ymax, max(0, y_final + (y - yprevious) - (ywidth/2)));
+	xx = median(0, xmax, x_final + (x - xprevious) - (xwidth/2));
+	yy = median(0, ymax, y_final + (y - yprevious) - (ywidth/2));
 
 	camera_set_view_pos(view_camera[0],xx,yy);
 	return;
@@ -168,32 +168,25 @@ else
 // camera modifier collisions
 var camnudge, camzoom, camlock;
 
-with(target)
-{
+with(target) {
 	camnudge = instance_place(x,y,oCameraNudge);
 	camzoom = instance_place(x,y,oCameraZoom);
 	camlock = instance_place(x,y,oCameraLock);
 }
 
-if (camnudge)
-{
-	xnudge[1] = camnudge.nudge_x div 1;
-	ynudge[1] = camnudge.nudge_y div 1;
-}
-else
-{
+if (camnudge) {
+	xnudge[1] = floor(camnudge.nudge_x);
+	ynudge[1] = floor(camnudge.nudge_y);
+} else {
 	xnudge[1] = 0;
 	ynudge[1] = 0;
 }
 
-if (camzoom)
-{
+if (camzoom) {
 	// CameraZoom regions use a "bigger number = zoom in" format
 	// to prevent discrepancy, we gotta do this
 	target_zoom = 1 / camzoom.zoom;
-}
-else
-{
+} else {
 	target_zoom = 1;
 }
 
@@ -324,7 +317,7 @@ if (can_zoom)
 xb = intlib_make_u32(xbounds * zoom);
 yb = intlib_make_u32(ybounds * zoom);
 
-camera_set_view_pos(view_camera[0],xx,yy);
+camera_set_view_pos(view_camera[0],floor(xx),floor(yy));
 camera_set_view_size(view_camera[0],xbounds * zoom,ybounds * zoom);
 
 x_final_prev = xx;
