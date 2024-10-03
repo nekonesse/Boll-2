@@ -187,10 +187,8 @@ if selected_mode == OBJECT_MODE {
 				if (obj[5] = 1) {
 					if (properties_group[0] = -4) {
 						properties_group[0] = obj
-					} else {
-						if (properties_group[0][0] == obj[0]) {
-							array_push(properties_group,obj)	
-						}
+					} else if (properties_group[0][0] == obj[0]) {
+						array_push(properties_group,obj)
 					}
 				}
 			}
@@ -234,7 +232,6 @@ if selected_mode == OBJECT_MODE {
 										show_debug_message(proparr[10][i][2])
 										show_message(proparr)
 										proparr[10][i][2]=!bool(proparr[10][i][2])
-										show_message(proparr)
 									}
 								} else break
 								break
