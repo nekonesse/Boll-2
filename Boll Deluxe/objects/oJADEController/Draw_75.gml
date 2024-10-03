@@ -35,7 +35,7 @@ if (not_on_gui) {
 
 if global.debug {
 	draw_set_font(smallF)
-	draw_text(curs_x,curs_y+16,$"{gridx} {gridy}\n\n{view_grab}\n\n{cam_x} {cam_y}\n\n{selection_box}\n\n{cam_w} {cam_h}\n\n{zoom_level}")
+	draw_text(curs_x,curs_y+16,$"{gridx} {gridy}\n\n{view_grab}\n\n{cam_x} {cam_y}\n\n{selection_box}\n\n{cam_w} {cam_h}\n\n{zoom_level}\n\n{not_on_gui}")
 }
 
 draw_sprite(spr_JADEcursor,0,curs_x,curs_y)

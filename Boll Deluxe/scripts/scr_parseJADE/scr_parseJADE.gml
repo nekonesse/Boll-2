@@ -20,8 +20,11 @@ function parse_level(dir=working_directory+"\save.jade") {
 			obj.y+=sprite_get_yoffset(object_get_sprite(asset_get_index(data[0])));
 			
 			for (var j = 0; j < array_length(data[10]); j++) {
-				variable_instance_set(obj, data[10][j][0], data[10][j][2]);
-				show_debug_message($"set object {obj} ({object_get_name(obj.object_index)})'s variable '{data[10][j][0]}' to '{data[10][j][2]}'.");
+				if is_array(data[10][j]) {
+					variable_instance_set(obj, data[10][j][0], data[10][j][2]);
+					show_debug_message($"set object {obj} ({object_get_name(obj.object_index)})'s variable '{data[10][j][0]}' to '{data[10][j][2]}'.");
+					with(obj) {event_user(15)}
+				}
 			}
 		}
         file_text_readln(save_file);

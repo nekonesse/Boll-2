@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"winmenu_extras",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"winmenu_extras",
+  "parent":{
+    "name":"Extensions",
+    "path":"folders/Extensions.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

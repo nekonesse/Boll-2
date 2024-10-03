@@ -1,0 +1,1264 @@
+<!DOCTYPE HTML><html lang="en"><head>
+<meta charset="UTF-8">
+<title>winmenu cheat sheet</title>
+<meta name="viewport" content="width=device-width" />
+<meta name="livenode" content="#doc" />
+<meta property="theme-color" content="#FFF037" />
+<meta property="og:type" content="article" />
+<meta property="og:locale" content="en_us" />
+<meta property="og:site_name" content="YellowAfterlife" />
+<meta property="og:title" content="winmenu cheat sheet" />
+<script type="text/javascript">
+if (document.location.host == "yal.cc" && location.protocol == "http:") {
+	document.location.protocol = "https:";
+}
+</script>
+<style type="text/css">body, #doc tt, #doc code {
+	font: 15px 'Open Sans', sans-serif;
+	line-height: 1.35;
+}
+body {
+	margin: 0;
+}
+.main {
+	width: 100%;
+	min-height: 100%;
+	min-height: 100vh;
+	background-color: #f5f7f9;
+}
+.page {
+	max-width: 656px;
+	background: #ffffff;
+	margin: 0 auto;
+	padding: 8px;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+	min-height: 100%;
+	min-height: 100vh;
+	box-sizing: border-box;
+}
+.page > p:first-child {
+	margin-top: 0;
+}
+#doc, #doc ul, #doc ol {
+	padding-left: 0;
+	margin: 0;
+}
+#doc blockquote { margin: 0.5em 0; padding: 0; }
+#doc article > ul, #doc li > ul,
+#doc article > ol, #doc li > ol {
+	padding-left: 20px;
+}
+#doc article ul li {
+	list-style: disc;
+	list-style-image: url('data:image/svg+xml;base256,<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="20px" height="1em" viewBox="0 0 20px 1em"><circle cx="17px" cy="0.675em" r="2px"/></svg>'); 
+}
+
+#doc header {
+	margin: 0;
+	font-weight: 700;
+	font-size: 100%;
+	color: #458;
+	border-left: 2px solid #f3f3f3;/* #f9f9f9*/
+	padding-left: 4px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+#doc header a {
+	outline: none;
+	text-decoration: none;
+	color: #458;
+	word-break: break-word;
+}
+#doc header::before {
+	display: inline-block;
+	content: "+";
+	font: 12px monospace;
+	border: 1px solid #458;
+	line-height: 11px;
+	height: 11px;
+	width: 11px;
+	text-align: center;
+	border-radius: 50%;
+	margin-right: 4px;
+	vertical-align: middle;
+	flex-shrink: 0;
+}
+#doc section.open > header::before {
+	content: "-";
+}
+#doc section.empty > header::before {
+	content: " "; /*"·"*/
+}
+
+#doc header:hover,
+#doc .sticky-side:hover {
+	border-left-color: #E7E7E7; /* rgba(0, 0, 0, 0.05) */
+	background: rgba(0, 0, 0, 0.048);
+}
+#doc header .ret-arrow {
+	font-weight: normal;
+	margin: 0 0.1em;
+}
+
+#doc a.broken {
+	color: red;
+}
+#doc p, .intro p {
+	margin: 0;
+}
+#doc p + p, .intro p + p, #doc p.pad, .display-controls {
+	margin-top: 0.5em;
+}
+#doc img {
+	max-width: 100%;
+}
+#doc h3 {
+	margin: 0.25em 0;
+	font-size: 125%;
+	font-weight: normal;
+	border-bottom: 1px solid #ccc;
+}
+
+#doc article,
+#doc ul,
+#doc ol,
+#doc blockquote {
+	padding-left: 20px;
+	border-left: 2px solid #f3f3f3;
+}
+#doc article {
+	padding-top: 0.25em;
+	padding-bottom: 0.5em;
+	position: relative;
+}
+#doc .sticky-side {
+	position: absolute;
+	left: -2px;
+	top: 0;
+	bottom: 1px;
+	width: 20px;
+	writing-mode: vertical-rl;
+	font-size: 85%;
+	text-orientation: sideways;
+	/*transform: rotate(0.05deg);*/
+}
+#doc .sticky-side,
+#doc .sticky-side:visited {
+	color: rgba(0, 0, 0, 0.3);
+}
+#doc .sticky-side > span {
+	display: inline-block;
+	position: sticky;
+	left: 0;
+	top: 0;
+	padding: 0.3em 0;
+	max-height: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+	white-space: nowrap;
+}
+#doc tt {
+	font-weight: bold;
+}
+#doc code {
+	display: inline-block;
+	background: #FFFBE4;
+	font-family: Consolas, Ubuntu Mono, Dejavu Sans Mono, Lucida Console, monospace;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 16px;
+	padding: 0 2px;
+	border: 1px solid #E6E0C4;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	max-width: 100%;
+	word-break: break-word;
+}
+
+#doc table {
+	border-spacing: 0;
+	color: currentColor;
+}
+#doc table, #doc table td, #doc table th {
+	border: 1px solid #f3f3f3;
+}
+#doc table td, #doc table th {
+	padding: 0.1em 0.5em;
+}
+#doc pre {
+	font-family: Consolas, Dejavu Sans Mono, Segoe UI Mono, Ubuntu Mono, Lucida Console, monospace;
+	font-size: 9pt;
+	line-height: 1.25;
+	background: white;
+	padding: 4px 2px 4px 10px;
+	margin: 0;
+	-moz-tab-size: 4;
+	tab-size: 4;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+#doc pre a {
+	text-decoration: none;
+}
+#doc pre a:hover {
+	text-decoration: underline;
+}
+#doc abbr[title] {
+	text-decoration: underline;
+	-webkit-text-decoration-color: #bbb;
+	text-decoration-color: #bbb;
+	-webkit-text-decoration-style: double;
+	text-decoration-style: double;
+}
+#doc hr {
+	margin: 0.5em 0;
+	margin-right: 1em;
+	border: 0;
+	border-top: 2px dashed #f3f3f3;
+}
+#doc section + hr {
+	margin: 0;
+	height: 1em;
+	border: 1px solid #f3f3f3;
+	border-width: 1px 0 1px 0;
+}
+#doc section {
+	border-top: 1px solid #f3f3f3;
+	margin-top: 0.3em;
+}
+#doc section:first-child {
+	margin-top: 0em;
+}
+#doc section:last-child {
+	border-bottom: 1px solid #f3f3f3;
+}
+#doc section + section, #doc hr + section {
+	border-top: 0;
+	margin-top: 0;
+}
+#doc section + p {
+	border-top: 1px solid #f3f3f3;
+	padding-top: 0.3em;
+}
+/* delay display until load */
+#doc[ready] section:not(.open) > article {
+	display: none;
+}</style>
+<style type="text/css" id="lang_gml">/* GameMakerLanguage */
+pre.gmlmd .md { color: #7A81A9 } /* #define */
+pre.gmlmd .kw { color: #008; font-weight: bold } /* keyword */
+pre.gmlmd .co { color: #080 } /* comment */
+pre.gmlmd .nu { color: #F03232 } /* number */
+pre.gmlmd .nx { color: #00f } /* hex */
+pre.gmlmd .st { color: #00f } /* string */
+pre.gmlmd .ts { color: #00f } /* template string */
+pre.gmlmd .op { color: #000 } /* operator */
+pre.gmlmd .cb { color: #008; font-weight: bold } /* curly brace */
+pre.gmlmd .sv { color: #800 } /* std func */
+pre.gmlmd .sf { color: #800 } /* std var */
+pre.gmlmd .ri { color: #0078aa } /* assets */
+pre.gmlmd .uf { color: #808 } /* user func */
+pre.gmlmd .uv { color: #000 } /* user var */
+pre.gmlmd .lv { color: #648 } /* local var */
+pre.gmlmd .fd { color: #804 } /* field */
+
+pre.gmlmd a.uf {
+	background-color: #f7f0ff;
+}
+pre.gmlmd a.kw {
+	background-color: #f0f7ff;
+}
+pre.gmlmd a.sf, #doc pre a.sv {
+	background-color: #fff3f0;
+}
+
+#night:checked + .main pre.gmlmd .op { color: #CCCCCC }
+#night:checked + .main pre.gmlmd .co { color: #5B995B }
+#night:checked + .main pre.gmlmd .kw { color: #FFB871 }
+#night:checked + .main pre.gmlmd .md { color: #FFB871 }
+#night:checked + .main pre.gmlmd .cb { color: #FFB871 }
+#night:checked + .main pre.gmlmd .sf { color: #FFB871 }
+#night:checked + .main pre.gmlmd .uf { color: #FFB871 }
+#night:checked + .main pre.gmlmd .nu { color: #FF8080 }
+#night:checked + .main pre.gmlmd .st { color: #FCF320 }
+#night:checked + .main pre.gmlmd .ts { color: #FF8080 }
+#night:checked + .main pre.gmlmd .sv { color: #FF8080 }
+#night:checked + .main pre.gmlmd .gv { color: #FF80FF }
+#night:checked + .main pre.gmlmd .ri { color: #FF8080 }
+#night:checked + .main pre.gmlmd .lv { color: #FFF899 }
+#night:checked + .main pre.gmlmd .uv { color: #B2B1FF }
+#night:checked + .main pre.gmlmd .fd { color: #B2B1FF }
+
+#night:checked + .main pre.gmlmd a.uf,
+#night:checked + .main pre.gmlmd a.kw,
+#night:checked + .main pre.gmlmd a.sf {
+	background-color: #431;
+}
+#night:checked + .main pre.gmlmd a.sv {
+	background-color: #422;
+}</style>
+<style type="text/css" id="nav_menu">.main {
+	display: flex;
+	flex-direction: row-reverse;
+	height: 100%;
+	height: 100vh;
+}
+.main-center {
+	flex-grow: 1;
+	height: 100%;
+	height: 100vh;
+	overflow: auto;
+}
+.navmenu {
+	width: 250px;
+	height: 100%;
+	height: 100vh;
+	box-sizing: border-box;
+	overflow-x: hidden;
+	overflow-y: auto;
+	resize: horizontal;
+	margin-right: 10px;
+	
+	word-break: break-word;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	
+	background: white;
+	border: 0.3em solid white;
+}
+.navmenu ul {
+	margin: 0;
+	padding-left: 1.5em;
+}
+.navmenu a {
+	overflow: hidden;
+}
+@media (max-width: 760px) {
+	.navmenu {
+		display: none;
+	}
+}</style>
+<meta name="livenode2" content=".main > nav" />
+<style type="text/css" id="night_css">.main label[for="night"] {
+	cursor: pointer;
+}
+#night { display: none }
+#night:checked + .main {
+	background-color: #424242;
+}
+#night:checked + .main .page,
+#night:checked + .main .navmenu {
+	background-color: #1c1c1c;
+	border-color: #1c1c1c;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	color: white;
+}
+#night:checked + .main a,
+#night:checked + .main a:visited,
+#night:checked + .main #doc header,
+#night:checked + .main label[for="night"] {
+	color: #9DEC76;
+}
+#night:checked + .main #doc header:before,
+#night:checked + .main #doc h3 {
+	border-color: #9DEC76
+}
+#night:checked + .main #doc header,
+#night:checked + .main #doc header:hover,
+#night:checked + .main #doc .sticky-side:hover,
+#night:checked + .main #doc article,
+#night:checked + .main #doc section,
+#night:checked + .main #doc section + p,
+#night:checked + .main #doc hr,
+#night:checked + .main #doc ul,
+#night:checked + .main #doc ol,
+#night:checked + .main #doc table,
+#night:checked + .main #doc table td,
+#night:checked + .main #doc table th
+{
+	border-color: rgba(205,225,255,0.1);
+}
+#night:checked + .main #doc header:hover,
+#night:checked + .main #doc .sticky-side:hover,
+#night:checked + .main #doc .asset:hover {
+	background: rgba(205,225,255,0.1);
+}
+#night:checked + .main article ul li {
+	list-style-image: url('data:image/svg+xml;base256,<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="20px" height="1em" viewBox="0 0 20px 1em"><circle cx="17px" cy="0.675em" r="2px" fill="white"/></svg>'); 
+}
+#night:checked + .main pre {
+	color: #cccccc;
+	background: #000000;
+	border: 1px solid #3E4757;
+}
+#night:checked + .main #doc code {
+	background-color: #000;
+	border-color: #5b7c9f;
+	color: white;
+}
+#night:checked + .main #doc .sticky-side,
+#night:checked + .main #doc .sticky-side:visited {
+	color: rgba(255, 255, 255, 0.3);
+}</style>
+<style type="text/css" id="print_css">@media print {
+	.main { background-color: transparent }
+	.display-controls { display: none; }
+	.page { width: 100%; box-shadow: none; }
+	#doc header::before,
+	#doc section.open header::before	{
+		content: "~";
+	}
+	#doc { display: inherit }
+	#doc section:not(.open) > article,
+	#doc[ready] section:not(.open) > article {
+		display: inherit;
+	}
+}</style>
+<noscript><style>#doc header::before {
+	content: "~";
+}
+#doc header:hover {
+	border-left-color: #f3f3f3;
+	background: inherit;
+}
+#doc { display: inherit }
+#doc section:not(.open) > article {
+	display: inherit;
+}</style></noscript>
+</head><body>
+<input type="checkbox" id="night" checked/>
+<div class="main ">
+<script type="text/javascript">(function() {
+	var night = document.getElementById("night");
+	var path = "docmd night mode";
+	var ls = window.localStorage;
+	var dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+	if (ls) {
+		var item = ls.getItem(path);
+		night.checked = item ? item == "true" : dark;
+		night.onchange = function(_) {
+			ls.setItem(path, "" + night.checked);
+		};
+	} else night.checked = dark;
+})();</script>
+<div class="main-center">
+<main class="page">
+<section class="intro">
+<p>This is a "cheat sheet" for the "winMenu" extension by YellowAfterlife.
+</p><p>
+The extension can be found on <a href="https://yellowafterlife.itch.io/gamemaker-winmenu">itch.io</a>.</p>
+</section>
+<section class="display-controls">
+Click on sections to expand/collapse them.<br>Quick display controls:
+<a href="javascript:void(0)" onclick="opt_none(); return false">Categories</a>
+&middot; <a href="javascript:void(0)" onclick="opt_list(); return false">Sections</a>
+&middot; <a href="javascript:void(0)" onclick="opt_all(); return false">Everything</a>
+&middot; <a href="javascript:void(0)"><label for="night">Toggle night mode</label></a><br/>
+</section><section id="doc">
+<!--<doc--><p><p>
+
+<style>
+.main { background-color: #899FC6 }
+.page { box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) }
+#night:checked + .main { background-color: #405070 }
+#night:checked + .main .page { background-color: #1A202D }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</p><section><header id="Limitations"><a href="#Limitations" title="(permalink)">Limitations</a></header><article><ol>
+	<li><p>	Menus, like most WinAPI components, don't work very well
+		in DirectX exclusive fullscreen (<code>window_set_fullscreen</code>).
+	</p><p>
+		If your application needs to run in fullscreen,
+		consider borderless fullscreen (<code>window_set_showborder</code>) instead.
+	</p></li><li><p>	Per Windows rules, the game pauses while a menu is open.
+		</p><p>
+		It might be possible to implement non-pausing popup menus in the future,
+		but the menu bar / system menu would still pause the game.
+	</p></li></ol></article></section><section><header id="ver"><a href="#ver" title="(permalink)">Version differences</a></header><article><a class="sticky-side" href="#ver" title="Version differences"><span>Version differences</span></a><p>
+	The extension works on a handful of GameMaker versions with minor differences:
+	</p><section><header id="gms23"><a href="#gms23" title="(permalink)">GMS 2.3 and GM2022+</a></header><article><p>
+		Menu/bitmap values are mini-structs with a handle inside.
+	</p></article></section><section><header id="gms14"><a href="#gms14" title="(permalink)">GM:S and GMS 2.2</a></header><article><p>
+		Menu/bitmap values are two-element arrays
+		with a unique array ref at index 0
+		and handle at index 1.
+	</p></article></section><section><header id="gm81"><a href="#gm81" title="(permalink)">GameMaker 8.1</a></header><article><p>
+		Menu/bitmap values are two-element ds_grids
+		with a type name in cell (0,0)
+		and handle in cell (1,0).
+		</p><p>
+		For lack of <code>undefined</code>, functions return different values on error: </p><ul>
+		<li>	<code>-1</code> is returned instead of data structure indexes.
+		</li><li>	<code>""</code> (empty string) is returned instead of numbers.
+		</li><li>	<code>0</code> is returned instead of strings.
+		</li></ul><p>
+		You can use <code>is_real</code> / <code>is_string</code> to check these.
+	</p></article></section></article></section><section><header id="general"><a href="#general" title="(permalink)">General functions</a></header><article><a class="sticky-side" href="#general" title="General functions"><span>General functions</span></a><section><header id="winmenu_update"><a href="#winmenu_update" title="(permalink)">winmenu_update()</a></header><article><p>
+		Should be called once per frame, dispatches events.
+	</p></article></section><section><header id="winmenu_init_dll"><a href="#winmenu_init_dll" title="(permalink)">winmenu_init_dll()</a></header><article><p>
+		In GameMaker 8.1, you should call this before using the extension functions.
+		</p><p>
+		Newer versions load the extension automatically.
+	</p></article></section></article></section><section><header id="errors"><a href="#errors" title="(permalink)">Error handling</a></header><article><a class="sticky-side" href="#errors" title="Error handling"><span>Error handling</span></a><p>
+	When something doesn't go right, you can use these to get more information about
+	the last cause of trouble:
+	</p><section><header id="winmenu_get_last_error"><a href="#winmenu_get_last_error" title="(permalink)">winmenu_get_last_error()&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the error code from the last failed call.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/desktop/api/errhandlingapi/nf-errhandlingapi-getlasterror">GetLastError</a>
+	</p></article></section><section><header id="winmenu_get_last_error_text"><a href="#winmenu_get_last_error_text" title="(permalink)">winmenu_get_last_error_text()&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the error message from the last failed call.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-formatmessagew">FormatMessageW</a>
+	</p></article></section></article></section><section><header id="Managing-menus"><a href="#Managing-menus" title="(permalink)">Managing menus</a></header><article><a class="sticky-side" href="#Managing-menus" title="Managing menus"><span>Managing menus</span></a><section><header id="winmenu_create_bar"><a href="#winmenu_create_bar" title="(permalink)">winmenu_create_bar()&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Creates and returns a new <a href="#winmenu_bar">menu bar</a>.
+		</p><p>
+		Don't forget to <a href="#winmenu_destroy">destroy</a> your menus if they don't stick
+		for the duration of the game!
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-CreateMenu">CreateMenu</a>
+	</p></article></section><section><header id="winmenu_create_popup"><a href="#winmenu_create_popup" title="(permalink)">winmenu_create_popup()&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Creates and returns a new popup menu.
+		</p><p>
+		Similarly, you'll want to call <a href="#winmenu_destroy">winmenu_destroy</a> if the menu isn't expected to
+		stick around until the game exits.
+		</p><p>
+		These are used for actual popup menus and sub-menus inside a menu bar.
+		</p><p>
+		Using a menu bar instead of a popup menu causes variously buggy behaviour,
+		so make sure to use the right menu type for the task.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-CreatePopupMenu">CreatePopupMenu</a>
+	</p></article></section><section><header id="winmenu_destroy"><a href="#winmenu_destroy" title="(permalink)">winmenu_destroy(menu)&#8203;<span class="ret-arrow">&#10140;</span>bool</a></header><article><p>
+		Destroys a previously created menu.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-DestroyMenu">DestroyMenu</a>
+	</p></article></section><hr/><section><header id="winmenu_get_handle"><a href="#winmenu_get_handle" title="(permalink)">winmenu_get_handle(menu)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns a menu's raw handle (HMENU) as a number.
+	</p></article></section><section><header id="winmenu_from_handle"><a href="#winmenu_from_handle" title="(permalink)">winmenu_from_handle(handle)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Creates a menu reference from a handle.
+	</p></article></section><section><header id="winmenu_deref"><a href="#winmenu_deref" title="(permalink)">winmenu_deref(menu)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Destroys a menu reference without destroying the referenced menu.
+		</p><p>
+		This is handy if you created a menu reference from a handle
+		(or got it from <a href="#winmenu_get_submenu">winmenu_get_submenu</a>), checked what you needed,
+		and want to get rid of it without touching the menu.
+		</p><p>
+		This only has to be done explicitly in GameMaker 8.1.
+	</p></article></section><section><header id="winmenu_handle_is_menu"><a href="#winmenu_handle_is_menu" title="(permalink)">winmenu_handle_is_menu(handle)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns whether the given handle points to a valid menu.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-IsMenu">IsMenu</a>
+	</p></article></section><section><header id="winmenu_equals"><a href="#winmenu_equals" title="(permalink)">winmenu_equals(menu1, menu2)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns whether two menu references point to the same underlying HMENU.
+	</p></article></section></article></section><section><header id="winmenu_properties"><a href="#winmenu_properties" title="(permalink)">Menu properties</a></header><article><a class="sticky-side" href="#winmenu_properties" title="Menu properties"><span>Menu properties</span></a><section><header id="winmenu_size"><a href="#winmenu_size" title="(permalink)">winmenu_size(menu)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the number of items in a menu.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+	</p></article></section><p>
+	Default item:
+	</p><section><header id="winmenu_set_default_item"><a href="#winmenu_set_default_item" title="(permalink)">winmenu_set_default_item(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Changes the default item for the menu
+		(that will show in bold font, see notes in <a href="#winmenu_add">winmenu_add</a>).
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-SetMenuDefaultItem">SetMenuDefaultItem</a>
+	</p></article></section><section><header id="winmenu_get_default_item"><a href="#winmenu_get_default_item" title="(permalink)">winmenu_get_default_item(menu, bypos, recursive, allow_disabled)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the default item for the menu.
+		</p><p>
+		<code>bypos</code> indicates whether you want a command (false) or a position (true) of the item.
+		</p><p>
+		If <code>recursive</code> is <code>true</code> and the default item opens a sub-menu,
+		it will look for the default item in that menu (if any).
+		</p><p>
+		If <code>disabled</code> is <code>true</code>, the function returns the item even if it is disabled.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-GetMenuDefaultItem">GetMenuDefaultItem</a>
+	</p></article></section><p>
+	Height:
+	</p><section><header id="winmenu_set_max_height"><a href="#winmenu_set_max_height" title="(permalink)">winmenu_set_max_height(menu, max_height)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Changes the maximum height of a menu.
+		</p><p>
+		Value of <code>0</code> removes the limit for height.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-SetMenuInfo">SetMenuInfo</a> (<code>MIM_MAXHEIGHT</code>)
+	</p></article></section><section><header id="winmenu_get_max_height"><a href="#winmenu_get_max_height" title="(permalink)">winmenu_get_max_height(menu)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the maximum height of a menu.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-GetMenuInfo">GetMenuInfo</a> (<code>MIM_MAXHEIGHT</code>)
+	</p></article></section></article></section><section><header id="winmenu_bar"><a href="#winmenu_bar" title="(permalink)">Menu bar</a></header><article><a class="sticky-side" href="#winmenu_bar" title="Menu bar"><span>Menu bar</span></a><section><header id="winmenu_bar_set"><a href="#winmenu_bar_set" title="(permalink)">winmenu_bar_set(menu)</a></header><article><p>
+		Changes the game window's menu bar (shown below the title bar).
+		</p><p>
+		The menu should be created with <a href="#winmenu_create_bar">winmenu_create_bar</a>.
+		</p><p>
+		Note that this eats into the game area and you may want to account
+		for the added window height (using <a href="#winmenu_bar_get_height">winmenu_bar_get_height</a>)
+		at various window-sizing/measuring occasions.
+	</p></article></section><section><header id="winmenu_bar_get"><a href="#winmenu_bar_get" title="(permalink)">winmenu_bar_get()&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the current bar-menu (if any).
+	</p></article></section><section><header id="winmenu_bar_reset"><a href="#winmenu_bar_reset" title="(permalink)">winmenu_bar_reset()</a></header><article><p>
+		Removes the game window's menu bar (if any).
+	</p></article></section><section><header id="winmenu_bar_get_height"><a href="#winmenu_bar_get_height" title="(permalink)">winmenu_bar_get_height()&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the height of the menu bar.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+	</p></article></section><section><header id="winmenu_bar_get_info"><a href="#winmenu_bar_get_info" title="(permalink)">winmenu_bar_get_info(?index)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		This function returns position and information about a menu item at <code>index</code>,
+		or the menu itself if <code>index</code> is not provided.
+		</p><p>
+		The returned value depends on your GameMaker version: </p><ul>
+		<li>	<strong>GMS 2.3 and GM2022+:</strong><br/>
+			A struct with <code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, and <code>flags</code> variables.
+		</li><li>	<strong>GM:S and GMS 2.2</strong>:<br/>
+			An array with <code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, and <code>flags</code> values written in a row.
+		</li><li>	<strong>GM 8.1:</strong><br/>
+			A <code>ds_map</code> with <code>x</code>, <code>y</code>, <code>width</code>, <code>height</code>, and <code>flags</code> key-value pairs.<br/>
+			Don't forget to destroy it afterwards using <code>ds_map_destroy</code>!
+		</li></ul><p>
+		<code>flags</code> can contain the following bit flags: </p><ul>
+		<li>	<code>1</code>: menu bar has focus
+		</li><li>	<code>2</code>: menu item has focus
+		</li></ul><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-GetMenuBarInfo">GetMenuBarInfo</a>
+	</p></article></section><section><header id="winmenu_bar_redraw"><a href="#winmenu_bar_redraw" title="(permalink)">winmenu_bar_redraw()&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Redraws the menu bar.
+		</p><p>
+		You should only have to call this if you have modified the menu bar
+		after assigning it to the window.
+		</p><p>
+		Returns whether successful.
+	</p></article></section><section><header id="winmenu_bar_handler"><a href="#winmenu_bar_handler" title="(permalink)">winmenu_bar_handler : script(command)</a></header><article><a class="sticky-side" href="#winmenu_bar_handler" title="winmenu_bar_handler : script(command)"><span>winmenu_bar_handler : script(command)</span></a><p>
+		If a script is assigned into this global variable,
+		it will be called with the command ID whenever the user picks something from the menu.
+		</p><p>
+		Otherwise the extension will show information about the clicked items in the output
+		(using <code>show_debug_message</code>).
+		</p><section><header>GMS2.3 / GM2022 example</header><article><pre class="gmlmd">
+<a class="sf" href="#winmenu_bar_set">winmenu_bar_set</a><span class="op">(</span><span class="kw">global</span><span class="op">.</span><span class="gv">my_menu_bar</span><span class="op">)</span><span class="op">;</span>
+<a class="sv" href="#winmenu_bar_handler">winmenu_bar_handler</a> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="lv">_cmd</span><span class="op">)</span> <span class="cb">{</span>
+    <span class="kw">var</span> <span class="lv">_cmd_text</span> <span class="op">=</span> <a class="sf" href="#winmenu_get_text">winmenu_get_text</a><span class="op">(</span><span class="kw">global</span><span class="op">.</span><span class="gv">my_menu_bar</span><span class="op">,</span> <span class="lv">_cmd</span><span class="op">,</span> <span class="sv">false</span><span class="op">)</span><span class="op">;</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="lv">_cmd_text</span> <span class="op">==</span> <span class="sv">undefined</span><span class="op">)</span> <span class="lv">_cmd_text</span> <span class="op">=</span> <span class="st">"???"</span><span class="op">;</span>
+    <span class="sf">show_debug_message</span><span class="op">(</span><span class="st">"Menu bar item "</span> <span class="op">+</span> <span class="sf">string</span><span class="op">(</span><span class="lv">_cmd</span><span class="op">)</span> <span class="op">+</span> <span class="st">" (\""</span> <span class="op">+</span> <span class="lv">_cmd_text</span> <span class="op">+</span> <span class="st">"\") was clicked."</span><span class="op">)</span><span class="op">;</span>
+<span class="cb">}</span>
+</pre></article></section><section><header>GM:S / GM8.1 example</header><article><pre class="gmlmd">
+<a class="sf" href="#winmenu_bar_set">winmenu_bar_set</a><span class="op">(</span><span class="kw">global</span><span class="op">.</span><span class="gv">my_menu_bar</span><span class="op">)</span><span class="op">;</span>
+<a class="sv" href="#winmenu_bar_handler">winmenu_bar_handler</a> <span class="op">=</span> <span class="uf">scr_menu_bar_handler</span><span class="op">;</span>
+</pre><p>
+			and then in <code>scr_menu_bar_handler</code> script:
+			</p><pre class="gmlmd">
+<span class="kw">var</span> <span class="lv">_cmd</span> <span class="op">=</span> <span class="sv">argument0</span><span class="op">;</span>
+<span class="kw">var</span> <span class="lv">_cmd_text</span> <span class="op">=</span> <a class="sf" href="#winmenu_get_text">winmenu_get_text</a><span class="op">(</span><span class="uv">m_bar</span><span class="op">,</span> <span class="lv">_cmd</span><span class="op">,</span> <span class="sv">false</span><span class="op">)</span><span class="op">;</span>
+<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="sf">is_string</span><span class="op">(</span><span class="lv">_cmd_text</span><span class="op">)</span><span class="op">)</span> <span class="lv">_cmd_text</span> <span class="op">=</span> <span class="st">"???"</span><span class="op">;</span>
+<span class="sf">show_debug_message</span><span class="op">(</span><span class="st">"Menu bar item "</span> <span class="op">+</span> <span class="sf">string</span><span class="op">(</span><span class="lv">_cmd</span><span class="op">)</span> <span class="op">+</span> <span class="st">' ("'</span> <span class="op">+</span> <span class="lv">_cmd_text</span> <span class="op">+</span> <span class="st">'") was clicked.'</span><span class="op">)</span><span class="op">;</span>
+</pre></article></section></article></section></article></section><section><header id="winmenu_sysmenu"><a href="#winmenu_sysmenu" title="(permalink)">System menu</a></header><article><a class="sticky-side" href="#winmenu_sysmenu" title="System menu"><span>System menu</span></a><section><header id="winmenu_sysmenu_get"><a href="#winmenu_sysmenu_get" title="(permalink)">winmenu_sysmenu_get(revert = false)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the game window's system menu (a popup menu).
+		</p><p>
+		The system menu appears when right-clicking the title bar
+		or shift-right-clicking the game's taskbar button.
+		</p><p>
+		If <code>revert</code> is <code>true</code>, this reverts the menu to its original state before returning.
+		</p><p>
+		You should <i>not</i> destroy this menu.
+	</p></article></section><section><header id="winmenu_sysmenu_get_info"><a href="#winmenu_sysmenu_get_info" title="(permalink)">winmenu_sysmenu_get_info(?index)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Similar to <a href="#winmenu_bar_get_info">winmenu_bar_get_info</a>, but for the system menu.
+	</p></article></section><section><header id="winmenu_system_handler"><a href="#winmenu_system_handler" title="(permalink)">winmenu_system_handler : script(command)</a></header><article><p>
+		Similar to <a href="#winmenu_bar_handler">winmenu_bar_handler</a>, but for the system menu.
+		</p><p>
+		However: this can also trigger for commands that aren't yours -
+		e.g. if the user has a third-party application that adds new items to the window menus
+		(like Dexpot or WindowFX), the event will dispatch for these as well.
+	</p></article></section></article></section><section><header id="winmenu_popup"><a href="#winmenu_popup" title="(permalink)">Popup menus</a></header><article><a class="sticky-side" href="#winmenu_popup" title="Popup menus"><span>Popup menus</span></a><section><header id="winmenu_show_popup"><a href="#winmenu_show_popup" title="(permalink)">winmenu_show_popup(menu, flags = 0, ?x, ?y)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Shows a popup menu at the specified (screen-space) location.
+		</p><p>
+		If location is not specified, shows at current mouse location.
+		</p><p>
+		Returns the command for the chosen menu item,
+		or 0 if the user cancels the menu or an error occurs.
+		</p><p>
+		<code>flags</code> can be zero or more of the following (bit flags): </p><ul>
+		<li><p>	General: </p><ul>
+			<li>	<code>wmpf_can_right_click</code><br/>
+				Items can also be chosen with the right mouse button.
+			</li></ul></li><li><p>	Alignment: </p><ul>
+			<li>	<code>wmpf_halign_left</code><br/>
+			</li><li>	<code>wmpf_halign_center</code><br/>
+			</li><li>	<code>wmpf_halign_right</code><br/>
+			</li><li>	<code>wmpf_valign_top</code><br/>
+			</li><li>	<code>wmpf_valign_middle</code><br/>
+			</li><li>	<code>wmpf_valign_bottom</code><br/>
+			</li></ul><p>
+			These are identical to how <code>draw_set_halign</code>/<code>draw_set_valign</code> work, but for menus.
+		</p></li><li><p>	Animation: </p><ul>
+			<li>	<code>wmpf_anim_to_right</code><br/>
+			</li><li>	<code>wmpf_anim_to_left</code><br/>
+			</li><li>	<code>wmpf_anim_to_bottom</code><br/>
+			</li><li>	<code>wmpf_anim_to_top</code><br/>
+			</li><li>	<code>wmpf_anim_none</code><br/>
+			</li></ul><p>
+			These control the direction in which the menu "rolls out"
+			if animation is enabled in system settings.
+		</p></li></ul><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-TrackPopupMenuEx">TrackPopupMenuEx</a>
+	</p></article></section><section><header id="winmenu_show_popup_outside"><a href="#winmenu_show_popup_outside" title="(permalink)">winmenu_show_popup_outside(menu, exclude_x, exclude_y, exclude_width, exclude_height, flags = 0, ?x, ?y)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Like above, but avoids overlapping the specified rectangle
+		(e.g. the subject of a context menu).
+	</p></article></section></article></section><section><header id="winmenu_item"><a href="#winmenu_item" title="(permalink)">Managing items</a></header><article><a class="sticky-side" href="#winmenu_item" title="Managing items"><span>Managing items</span></a><p>
+	Adding:
+	</p><section><header id="winmenu_add"><a href="#winmenu_add" title="(permalink)">winmenu_add(menu, command, text, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Adds a new item to a menu.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>command</code> is a unique (across the current menu popup/bar) index
+		that is then used for telling what item was interacted with,
+		or accessing/modifying items.
+		</p><p>
+		<code>text</code> is an item label.<br/>
+		You can use <code>&amp;</code> to mark a letter for keyboard navigation (e.g. <code>"&amp;File"</code>);<br/>
+		You can display a keyboard shortcut for the menu item by separating it using
+		<code>"\t"</code> (GMS2 and GM2022+) or <code>chr(vk_tab)</code> (any version), such as
+		<code>"New" + chr(vk_tab) + "Ctrl+N"</code>.
+		</p><p>
+		<code>flags</code> can be one or a sum of the following: </p><ul>
+		<li>	<code>wmf_disabled</code><br/>
+			The item is disabled and grayed out.
+		</li><li>	<code>wmf_enabled</code><br/>
+			This flag is here for completeness, but you should know that you don't have to pass
+			it in - an item is enabled if it is not disabled.
+		</li><li>	<code>wmf_checked</code><br/>
+			The item is "checked" (a checkmark appears next to it).
+		</li><li>	<code>wmf_radiocheck</code><br/>
+			The checkmark appears as a radiobutton circle instead.
+		</li><li>	<code>wmf_hilite</code><br/>
+			The item is highlighted when the menu opens.<br/>
+			The flag clears after moving the mouse over the item or otherwise selecting it.
+		</li><li>	<code>wmf_separator</code><br/>
+			The item is a separator line
+		</li><li>	<code>wmf_default</code><br/>
+			The item is the "default"/suggested action for the menu and highlighted in bold.<br/>
+			For example, "Open" action in Explorer file context menus is the default one.<br/>
+			A menu can only have one "default" item at a time.
+		</li><li>	<code>wmf_right_justify</code><br/>
+			Aligns this and the subsequent menu bar items to the right side.<br/>
+			If you've seen software have a "?" button on the right edge, that's how it works.
+		</li><li>	<code>wmf_right_order</code><br/>
+			Opens sub-menus to the left rather than to the right of this item.<br/>
+			This is used for right-to-left languages, such as Arabic and Hebrew.
+		</li><li>	<code>wmf_break</code><br/>
+			Moves this and subsequent menu items to a new column (popup menus) or row (menu bars).
+		</li><li>	<code>wmf_bar_break</code><br/>
+			Same as above, but also draws a separator between them.
+		</li></ul><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-InsertMenuItemW">InsertMenuItemW</a>
+	</p></article></section><section><header id="winmenu_add_submenu"><a href="#winmenu_add_submenu" title="(permalink)">winmenu_add_submenu(menu, command, submenu, text, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Adds a menu with a sub-menu.
+		</p><p>
+		The sub-menu should be a menu created using <a href="#winmenu_create_popup">winmenu_create_popup</a>.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		Flags are explained in <a href="#winmenu_add">winmenu_add</a>.
+	</p></article></section><section><header id="winmenu_add_separator"><a href="#winmenu_add_separator" title="(permalink)">winmenu_add_separator(menu, command, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		A convenience function for inserting a separator (with <code>wmf_separator</code> flag).
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		Flags are explained in <a href="#winmenu_add">winmenu_add</a>.
+	</p></article></section><p>
+	Inserting:
+	</p><section><header id="winmenu_insert"><a href="#winmenu_insert" title="(permalink)">winmenu_insert(menu, item, bypos, command, text, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Inserts an item before another item.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		Flags are explained in <a href="#winmenu_add">winmenu_add</a>.
+	</p></article></section><section><header id="winmenu_insert_submenu"><a href="#winmenu_insert_submenu" title="(permalink)">winmenu_insert_submenu(menu, item, bypos, command, submenu, text, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Like <a href="#winmenu_add_submenu">winmenu_add_submenu</a>, but for insertion.
+	</p></article></section><section><header id="winmenu_insert_separator"><a href="#winmenu_insert_separator" title="(permalink)">winmenu_insert_separator(menu, item, bypos, command, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Like <a href="#winmenu_add_separator">winmenu_add_separator</a>, but for insertion.
+	</p></article></section><p>
+	Removing:
+	</p><section><header id="winmenu_delete"><a href="#winmenu_delete" title="(permalink)">winmenu_delete(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Removes a specified item from a menu.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		If the item contains a sub-menu, the sub-menu remains untouched.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><section><header id="winmenu_delete_rec"><a href="#winmenu_delete_rec" title="(permalink)">winmenu_delete_rec(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Removes a specified item from a menu.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		If the item contains a sub-menu, the sub-menu is destroyed.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section></article></section><section><header id="winmenu_item_props"><a href="#winmenu_item_props" title="(permalink)">Item properties</a></header><article><a class="sticky-side" href="#winmenu_item_props" title="Item properties"><span>Item properties</span></a><p>
+	Command:
+	</p><section><header id="winmenu_get_command"><a href="#winmenu_get_command" title="(permalink)">winmenu_get_command(menu, index)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the command of an item at the specified index.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+	</p></article></section><section><header id="winmenu_set_command"><a href="#winmenu_set_command" title="(permalink)">winmenu_set_command(menu, item, bypos, new_command)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Changes the command of an item.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><p>
+	Text:
+	</p><section><header id="winmenu_get_text"><a href="#winmenu_get_text" title="(permalink)">winmenu_get_text(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the current label of an item.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><section><header id="winmenu_set_text"><a href="#winmenu_set_text" title="(permalink)">winmenu_set_text(menu, item, bypos, new_label)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Updates the label of an item.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><p>
+	Sub-menus:
+	</p><section><header id="winmenu_has_submenu"><a href="#winmenu_has_submenu" title="(permalink)">winmenu_has_submenu(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns whether an item has a sub-menu attached.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><section><header id="winmenu_get_submenu"><a href="#winmenu_get_submenu" title="(permalink)">winmenu_get_submenu(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns an item's sub-menu.
+		</p><p>
+		In GM8.1, you should free the returned menu reference using <a href="#winmenu_deref">winmenu_deref</a>
+		once you're done working with it.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><section><header id="winmenu_set_submenu"><a href="#winmenu_set_submenu" title="(permalink)">winmenu_set_submenu(menu, item, bypos, new_submenu)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Updates an item's sub-menu.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><p>
+	Flags:
+	</p><section><header id="winmenu_get_flags"><a href="#winmenu_get_flags" title="(permalink)">winmenu_get_flags(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns flags of an item.
+		</p><p>
+		This function is effectively a combination of most other functions in this section
+		for people who know what bit math is.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		Flags are explained in <a href="#winmenu_add">winmenu_add</a>.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-GetMenuItemInfoW">GetMenuItemInfoW</a>
+	</p></article></section><section><header id="winmenu_set_flags"><a href="#winmenu_set_flags" title="(permalink)">winmenu_set_flags(menu, item, bypos, new_flags)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Updates flags of an item.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		Flags are explained in <a href="#winmenu_add">winmenu_add</a>.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-SetMenuItemInfoW">SetMenuItemInfoW</a>
+	</p></article></section><p>
+	Enable/disable:
+	</p><section><header id="winmenu_get_enabled"><a href="#winmenu_get_enabled" title="(permalink)">winmenu_get_enabled(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns whether an item is enabled.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><section><header id="winmenu_set_enabled"><a href="#winmenu_set_enabled" title="(permalink)">winmenu_set_enabled(menu, item, bypos, enabled)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Changes whether an item is enabled.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><p>
+	Highlight:
+	</p><section><header id="winmenu_get_hilite"><a href="#winmenu_get_hilite" title="(permalink)">winmenu_get_hilite(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns whether an item will be highlighted when the menu opens
+		(see <a href="#winmenu_add">winmenu_add</a> for explanation).
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><section><header id="winmenu_set_hilite"><a href="#winmenu_set_hilite" title="(permalink)">winmenu_set_hilite(menu, item, bypos, new_)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Changes whether an item will be highlighted when the menu opens
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-HiliteMenuItem">HiliteMenuItem</a>
+	</p></article></section><p>
+	Checkmark:
+	</p><section><header id="winmenu_get_checked"><a href="#winmenu_get_checked" title="(permalink)">winmenu_get_checked(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns whether the item is currently checked
+		(for both checkmarks and radiobuttons).
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><section><header id="winmenu_set_checked"><a href="#winmenu_set_checked" title="(permalink)">winmenu_set_checked(menu, item, bypos, checked)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Changes whether the item is currently checked.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><p>
+	Radio buttons:
+	</p><section><header id="winmenu_get_radio"><a href="#winmenu_get_radio" title="(permalink)">winmenu_get_radio(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns whether an item is shown as a radio button when checked.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><section><header id="winmenu_set_radio"><a href="#winmenu_set_radio" title="(permalink)">winmenu_set_radio(menu, item, bypos, show_as_radio)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Changes whether an item is shown as a radio button when checked.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+	</p></article></section><section><header id="winmenu_set_radio_group"><a href="#winmenu_set_radio_group" title="(permalink)">winmenu_set_radio_group(menu, first, last, selection, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		This function marks a range of items (inclusive) as radio buttons
+		and un-checks all of them except for the item indicated with <code>selection</code>.
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-CheckMenuRadioItem">CheckMenuRadioItem</a>
+	</p></article></section></article></section><section><header id="winmenu_item_util"><a href="#winmenu_item_util" title="(permalink)">Item utilities</a></header><article><a class="sticky-side" href="#winmenu_item_util" title="Item utilities"><span>Item utilities</span></a><section><header id="winmenu_get_item_rect"><a href="#winmenu_get_item_rect" title="(permalink)">winmenu_get_item_rect(use_hwnd, menu, index)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns a rectangle that the item occupies on screen.
+		</p><p>
+		Returned value is a struct in GMS2.3+,
+		an array in GM:S and GMS2.2,
+		and a ds_map in GM8.1.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-GetMenuItemRect">GetMenuItemRect</a>
+	</p></article></section><section><header id="winmenu_item_from_point"><a href="#winmenu_item_from_point" title="(permalink)">winmenu_item_from_point(use_hwnd, menu, x, y)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns what menu item is under (screen-space) coordinates.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-MenuItemFromPoint">MenuItemFromPoint</a>
+	</p></article></section></article></section><section><header id="winmenu_bitmap"><a href="#winmenu_bitmap" title="(permalink)">Bitmaps/icons</a></header><article><a class="sticky-side" href="#winmenu_bitmap" title="Bitmaps/icons"><span>Bitmaps/icons</span></a><p>
+	Menu items (except for items in the menu bar) can have icons.
+	</p><p>
+	I'm calling these "bitmaps" because an "icon" in WinAPI terms
+	is a different thing (that can have multiple sizes and other metadata).
+	</p><p>
+	<strong>Important:</strong> Windows expects menu bitmaps to have pre-multiplied alpha.
+	</p><section><header id="winmenu_bitmap_add"><a href="#winmenu_bitmap_add" title="(permalink)">winmenu_bitmap_add(path)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Loads a bitmap from the specified file.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		Notes: </p><ul>
+		<li>	The file must be a 32-bit BMP image
+		</li><li>	A full path might be necessary if you aren't loading from the working directory
+		</li></ul></article></section><section><header id="winmenu_bitmap_create_from_surface"><a href="#winmenu_bitmap_create_from_surface" title="(permalink)">winmenu_bitmap_create_from_surface(surface)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Creates a bitmap from a surface.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+	</p></article></section><section><header id="winmenu_bitmap_create_from_sprite"><a href="#winmenu_bitmap_create_from_sprite" title="(permalink)">winmenu_bitmap_create_from_sprite(sprite, subimg)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Creates a bitmap from a sprite.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+	</p></article></section><section><header id="winmenu_bitmap_create_from_buffer"><a href="#winmenu_bitmap_create_from_buffer" title="(permalink)">winmenu_bitmap_create_from_buffer(buffer, width, height, is_rgba)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Creates a bitmap from RGBA/BGRA pixel data in a buffer.
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		This function doesn't exist in GM8.1 version (for lack of buffers).
+	</p></article></section><hr/><section><header id="winmenu_bitmap_destroy"><a href="#winmenu_bitmap_destroy" title="(permalink)">winmenu_bitmap_destroy(bitmap)</a></header><article><p>
+		Destroys a previously created bitmap.
+	</p></article></section><section><header id="winmenu_bitmap_deref"><a href="#winmenu_bitmap_deref" title="(permalink)">winmenu_bitmap_deref(bitmap)</a></header><article><p>
+		Removes a bitmap reference without destroying the underlying bitmap.
+		</p><p>
+		This only has to be done explicitly in GM8.1.
+	</p></article></section><hr/><section><header id="winmenu_bitmap_equals"><a href="#winmenu_bitmap_equals" title="(permalink)">winmenu_bitmap_equals(bitmap1, bitmap2)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns whether two bitmaps reference the same underlying WinAPI bitmap.
+	</p></article></section></article></section><section><header id="winmenu_bitmap_icon"><a href="#winmenu_bitmap_icon" title="(permalink)">Item bitmaps</a></header><article><a class="sticky-side" href="#winmenu_bitmap_icon" title="Item bitmaps"><span>Item bitmaps</span></a><p>
+	These appear next to the menu item label (if any).
+	</p><section><header id="winmenu_set_bitmap"><a href="#winmenu_set_bitmap" title="(permalink)">winmenu_set_bitmap(menu, item, bypos, bitmap)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Changes the bitmap of a menu item.
+		</p><p>
+		<code>bitmap</code> is a <a href="#winmenu_bitmap">bitmap</a>, surely enough.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		Returns whether successful.
+	</p></article></section><section><header id="winmenu_set_bitmap_sys"><a href="#winmenu_set_bitmap_sys" title="(permalink)">winmenu_set_bitmap_sys(menu, item, bypos, index)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Changes the bitmap of a menu item to one of the special system bitmaps.
+		</p><p>
+		<code>index</code> can be one of the following: </p><ul>
+		<li>	<code>wmbm_mbar_close</code>
+		</li><li>	<code>wmbm_mbar_close_d</code>
+		</li><li>	<code>wmbm_mbar_minimize</code>
+		</li><li>	<code>wmbm_mbar_minimize_d</code>
+		</li><li>	<code>wmbm_mbar_restore</code>
+		</li><li>	<code>wmbm_popup_close</code>
+		</li><li>	<code>wmbm_popup_maximize</code>
+		</li><li>	<code>wmbm_popup_mimize</code>
+		</li><li>	<code>wmbm_popup_restore</code>
+		</li></ul><p>
+		These are the bitmap-icons that you see in system menus.<br/>
+		<code>_d</code> suffix means "disabled".
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-SetMenuItemInfoW">SetMenuItemInfoW</a> (<code>MIIM_BITMAP</code>)
+	</p></article></section><section><header id="winmenu_reset_bitmap"><a href="#winmenu_reset_bitmap" title="(permalink)">winmenu_reset_bitmap(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Clears the bitmap from a menu item.
+		</p><p>
+		This does not affect the bitmap in question.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		Returns whether successful.
+	</p></article></section><section><header id="winmenu_has_bitmap"><a href="#winmenu_has_bitmap" title="(permalink)">winmenu_has_bitmap(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns whether an item has a bitmap assigned.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+	</p></article></section><section><header id="winmenu_get_bitmap"><a href="#winmenu_get_bitmap" title="(permalink)">winmenu_get_bitmap(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the currently used bitmap of an item.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+	</p></article></section></article></section><section><header id="winmenu_checkmark"><a href="#winmenu_checkmark" title="(permalink)">Item checkmarks</a></header><article><a class="sticky-side" href="#winmenu_checkmark" title="Item checkmarks"><span>Item checkmarks</span></a><p>
+	Checkmark bitmaps appear instead of the regular checkmarks.
+	</p><p>
+	If an item has both a bitmap and a checkmark, these will appear in separate columns.
+	</p><p>
+	Much like regular checkmarks, checkmark bitmaps will not appear in
+	<a href="#winmenu_bar">menu bars</a>.
+	</p><section><header id="winmenu_set_checkmark_bitmaps"><a href="#winmenu_set_checkmark_bitmaps" title="(permalink)">winmenu_set_checkmark_bitmaps(menu, item, bypos, unchecked, checked)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Changes the checkmark bitmaps of a menu item.
+		</p><p>
+		<code>unchecked</code> and <code>checked</code> are <a href="#winmenu_bitmap">bitmaps</a>.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		Returns whether successful.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-SetMenuItemBitmaps">SetMenuItemBitmaps</a>
+	</p></article></section><section><header id="winmenu_reset_checkmark_bitmaps"><a href="#winmenu_reset_checkmark_bitmaps" title="(permalink)">winmenu_reset_checkmark_bitmaps(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Clears checkmark bitmaps from a menu item.
+		</p><p>
+		This does not affect the bitmaps in question.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		Returns whether successful.
+	</p></article></section><section><header id="winmenu_has_checkmark_bitmap"><a href="#winmenu_has_checkmark_bitmap" title="(permalink)">winmenu_has_checkmark_bitmap(menu, item, bypos, checked)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns whether an item has a checkmark bitmap assigned.
+		</p><p>
+		Checks for the "checked" bitmap if <code>checked</code> if true and "unchecked" otherwise.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+	</p></article></section><section><header id="winmenu_get_checkmark_bitmap"><a href="#winmenu_get_checkmark_bitmap" title="(permalink)">winmenu_get_checkmark_bitmap(menu, item, bypos, checked)&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Retrieves the current checkmark bitmap for a menu item.
+		</p><p>
+		Returns the "checked" bitmap if <code>checked</code> if true and "unchecked" otherwise.
+		</p><p>
+		<code>bypos</code> indicates whether <code>item</code> is a position (true) or a command (false).
+		</p><p>
+		If an error occurs, returns <code>undefined</code><sup><a href="#ver">[v]</a></sup>.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-GetMenuItemInfoW">GetMenuItemInfoW</a> (<code>MIIM_CHECKMARKS</code>)
+	</p></article></section><hr/><section><header id="winmenu_get_checkmark_width"><a href="#winmenu_get_checkmark_width" title="(permalink)">winmenu_get_checkmark_width()&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Returns the width of the default checkmark icon, in pixels.
+		</p><p>
+		It's a good idea to keep your icon sizes close to the system icon size,
+		but Windows does not currently enforce this.
+		</p><p>
+		<strong>MSDN:</strong> <a rel="nofollow" href="https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-GetSystemMetrics">GetSystemMetrics</a> (<code>SM_CXMENUCHECK</code>, <code>SM_CYMENUCHECK</code>)
+	</p></article></section><section><header id="winmenu_get_checkmark_height"><a href="#winmenu_get_checkmark_height" title="(permalink)">winmenu_get_checkmark_height()&#8203;<span class="ret-arrow">&#10140;</span></a></header><article><p>
+		Same as above, but for height.
+	</p></article></section></article></section><section><header id="winmenu_multi"><a href="#winmenu_multi" title="(permalink)">Multi-window handling</a></header><article><a class="sticky-side" href="#winmenu_multi" title="Multi-window handling"><span>Multi-window handling</span></a><p>
+	If your application consists of multiple windows
+	(using my "Windows' windows" extension or libMulti),
+	these functions let you apply the extension's functions to a different window.
+	</p><p>
+	In Windows' windows, you can get a handle of a window using <code>winwin_get_handle</code>.
+	</p><p>
+	libMulti doesn't have a way to get a window handle at the time of writing.
+	</p><section><header id="winmenu_set_target"><a href="#winmenu_set_target" title="(permalink)">winmenu_set_target(window_handle)</a></header><article><p>
+		Changes the target window to the specified handle.
+	</p></article></section><section><header id="winmenu_reset_target"><a href="#winmenu_reset_target" title="(permalink)">winmenu_reset_target()</a></header><article><p>
+		Changes the target window back to the main game window (<code>window_handle()</code>).
+	</p></article></section><section><header id="winmenu_cleanup_for"><a href="#winmenu_cleanup_for" title="(permalink)">winmenu_cleanup_for(window_handle)</a></header><article><p>
+		The extension caches a little information for windows it work with.
+		</p><p>
+		If you are creating and destroying windows often,
+		you might want to call this function when destroying a window
+		so that cached information is removed.
+		</p><p>
+		You don't have to call this for the main game window.
+	</p></article></section><p>
+	For example,
+	</p><pre class="gmlmd">
+<a class="sf" href="#winmenu_set_target">winmenu_set_target</a><span class="op">(</span><span class="uf">winwin_get_handle</span><span class="op">(</span><span class="uv">extra_window</span><span class="op">)</span><span class="op">)</span><span class="op">;</span>
+<span class="kw">var</span> <span class="lv">m_bar</span> <span class="op">=</span> <a class="sf" href="#winmenu_create_bar">winmenu_create_bar</a><span class="op">(</span><span class="op">)</span><span class="op">;</span>
+<a class="sf" href="#winmenu_add">winmenu_add</a><span class="op">(</span><span class="lv">m_bar</span><span class="op">,</span> <span class="nu">1</span><span class="op">,</span> <span class="st">"Hello!"</span><span class="op">)</span><span class="op">;</span>
+<a class="sf" href="#winmenu_bar_set">winmenu_bar_set</a><span class="op">(</span><span class="uv">m</span><span class="op">)</span><span class="op">;</span>
+<a class="sf" href="#winmenu_reset_target">winmenu_reset_target</a><span class="op">(</span><span class="op">)</span><span class="op">;</span>
+</pre></article></section></p><!--doc>-->
+</section>
+</div>
+<!--<navmenu--><nav class="navmenu"><ul><li><a href="#Limitations">Limitations</a><ul></ul></li><li><a href="#ver">Version differences</a><ul><li><a href="#gms23">GMS 2.3 and GM2022+</a><ul></ul></li><li><a href="#gms14">GM:S and GMS 2.2</a><ul></ul></li><li><a href="#gm81">GameMaker 8.1</a><ul></ul></li></ul></li><li><a href="#general">General functions</a><ul><li><a href="#winmenu_update">winmenu_update()</a><ul></ul></li><li><a href="#winmenu_init_dll">winmenu_init_dll()</a><ul></ul></li></ul></li><li><a href="#errors">Error handling</a><ul><li><a href="#winmenu_get_last_error">winmenu_get_last_error()&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_last_error_text">winmenu_get_last_error_text()&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li></ul></li><li><a href="#Managing-menus">Managing menus</a><ul><li><a href="#winmenu_create_bar">winmenu_create_bar()&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_create_popup">winmenu_create_popup()&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_destroy">winmenu_destroy(menu)&#8203;<span class="ret-arrow">&#10140;</span>bool</a><ul></ul></li><li><a href="#winmenu_get_handle">winmenu_get_handle(menu)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_from_handle">winmenu_from_handle(handle)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_deref">winmenu_deref(menu)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_handle_is_menu">winmenu_handle_is_menu(handle)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_equals">winmenu_equals(menu1, menu2)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li></ul></li><li><a href="#winmenu_properties">Menu properties</a><ul><li><a href="#winmenu_size">winmenu_size(menu)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_default_item">winmenu_set_default_item(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_default_item">winmenu_get_default_item(menu, bypos, recursive, allow_disabled)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_max_height">winmenu_set_max_height(menu, max_height)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_max_height">winmenu_get_max_height(menu)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li></ul></li><li><a href="#winmenu_bar">Menu bar</a><ul><li><a href="#winmenu_bar_set">winmenu_bar_set(menu)</a><ul></ul></li><li><a href="#winmenu_bar_get">winmenu_bar_get()&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_bar_reset">winmenu_bar_reset()</a><ul></ul></li><li><a href="#winmenu_bar_get_height">winmenu_bar_get_height()&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_bar_get_info">winmenu_bar_get_info(?index)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_bar_redraw">winmenu_bar_redraw()&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_bar_handler">winmenu_bar_handler : script(command)</a><ul></ul></li></ul></li><li><a href="#winmenu_sysmenu">System menu</a><ul><li><a href="#winmenu_sysmenu_get">winmenu_sysmenu_get(revert = false)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_sysmenu_get_info">winmenu_sysmenu_get_info(?index)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_system_handler">winmenu_system_handler : script(command)</a><ul></ul></li></ul></li><li><a href="#winmenu_popup">Popup menus</a><ul><li><a href="#winmenu_show_popup">winmenu_show_popup(menu, flags = 0, ?x, ?y)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_show_popup_outside">winmenu_show_popup_outside(menu, exclude_x, exclude_y, exclude_width, exclude_height, flags = 0, ?x, ?y)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li></ul></li><li><a href="#winmenu_item">Managing items</a><ul><li><a href="#winmenu_add">winmenu_add(menu, command, text, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_add_submenu">winmenu_add_submenu(menu, command, submenu, text, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_add_separator">winmenu_add_separator(menu, command, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_insert">winmenu_insert(menu, item, bypos, command, text, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_insert_submenu">winmenu_insert_submenu(menu, item, bypos, command, submenu, text, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_insert_separator">winmenu_insert_separator(menu, item, bypos, command, flags = 0)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_delete">winmenu_delete(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_delete_rec">winmenu_delete_rec(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li></ul></li><li><a href="#winmenu_item_props">Item properties</a><ul><li><a href="#winmenu_get_command">winmenu_get_command(menu, index)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_command">winmenu_set_command(menu, item, bypos, new_command)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_text">winmenu_get_text(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_text">winmenu_set_text(menu, item, bypos, new_label)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_has_submenu">winmenu_has_submenu(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_submenu">winmenu_get_submenu(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_submenu">winmenu_set_submenu(menu, item, bypos, new_submenu)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_flags">winmenu_get_flags(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_flags">winmenu_set_flags(menu, item, bypos, new_flags)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_enabled">winmenu_get_enabled(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_enabled">winmenu_set_enabled(menu, item, bypos, enabled)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_hilite">winmenu_get_hilite(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_hilite">winmenu_set_hilite(menu, item, bypos, new_)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_checked">winmenu_get_checked(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_checked">winmenu_set_checked(menu, item, bypos, checked)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_radio">winmenu_get_radio(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_radio">winmenu_set_radio(menu, item, bypos, show_as_radio)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_radio_group">winmenu_set_radio_group(menu, first, last, selection, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li></ul></li><li><a href="#winmenu_item_util">Item utilities</a><ul><li><a href="#winmenu_get_item_rect">winmenu_get_item_rect(use_hwnd, menu, index)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_item_from_point">winmenu_item_from_point(use_hwnd, menu, x, y)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li></ul></li><li><a href="#winmenu_bitmap">Bitmaps/icons</a><ul><li><a href="#winmenu_bitmap_add">winmenu_bitmap_add(path)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_bitmap_create_from_surface">winmenu_bitmap_create_from_surface(surface)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_bitmap_create_from_sprite">winmenu_bitmap_create_from_sprite(sprite, subimg)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_bitmap_create_from_buffer">winmenu_bitmap_create_from_buffer(buffer, width, height, is_rgba)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_bitmap_destroy">winmenu_bitmap_destroy(bitmap)</a><ul></ul></li><li><a href="#winmenu_bitmap_deref">winmenu_bitmap_deref(bitmap)</a><ul></ul></li><li><a href="#winmenu_bitmap_equals">winmenu_bitmap_equals(bitmap1, bitmap2)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li></ul></li><li><a href="#winmenu_bitmap_icon">Item bitmaps</a><ul><li><a href="#winmenu_set_bitmap">winmenu_set_bitmap(menu, item, bypos, bitmap)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_set_bitmap_sys">winmenu_set_bitmap_sys(menu, item, bypos, index)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_reset_bitmap">winmenu_reset_bitmap(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_has_bitmap">winmenu_has_bitmap(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_bitmap">winmenu_get_bitmap(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li></ul></li><li><a href="#winmenu_checkmark">Item checkmarks</a><ul><li><a href="#winmenu_set_checkmark_bitmaps">winmenu_set_checkmark_bitmaps(menu, item, bypos, unchecked, checked)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_reset_checkmark_bitmaps">winmenu_reset_checkmark_bitmaps(menu, item, bypos)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_has_checkmark_bitmap">winmenu_has_checkmark_bitmap(menu, item, bypos, checked)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_checkmark_bitmap">winmenu_get_checkmark_bitmap(menu, item, bypos, checked)&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_checkmark_width">winmenu_get_checkmark_width()&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li><li><a href="#winmenu_get_checkmark_height">winmenu_get_checkmark_height()&#8203;<span class="ret-arrow">&#10140;</span></a><ul></ul></li></ul></li><li><a href="#winmenu_multi">Multi-window handling</a><ul><li><a href="#winmenu_set_target">winmenu_set_target(window_handle)</a><ul></ul></li><li><a href="#winmenu_reset_target">winmenu_reset_target()</a><ul></ul></li><li><a href="#winmenu_cleanup_for">winmenu_cleanup_for(window_handle)</a><ul></ul></li></ul></li></ul></nav><!--navmenu>-->
+</main></div>
+<script type="text/javascript">(function() {
+	var doc, headers;
+	//
+	var path = "winmenu cheat sheet";
+	var state = null;
+	if (window.localStorage && JSON.parse) {
+		state = window.localStorage.getItem(path);
+		state = state ? JSON.parse(state) : { };
+		if (state == null) state = { };
+	}
+	var isLocal = (location.host.indexOf("localhost") == 0);
+	//
+	function h3bind(h3) {
+		var node = h3.parentNode;
+		var snip = node.children[1];
+		var id = h3.id || h3.textContent;
+		h3.snip = snip;
+		h3.doc_set = function(z) {
+			if (z) node.classList.add("open"); else node.classList.remove("open");
+			if (state) {
+				state[id] = z;
+				window.localStorage.setItem(path, JSON.stringify(state));
+			}
+		}
+		h3.doc_hide = function() {
+			this.doc_set(false);
+		}
+		h3.doc_show = function() {
+			this.doc_set(true);
+		}
+		h3.onclick = function(_) {
+			var seen = !node.classList.contains("open");
+			h3.doc_set(seen);
+			return false;
+		};
+	}
+	function getHashFunc(id) {
+		var node = document.getElementById(id);
+		if (node == null) return null;
+		return function(e) {
+			while (node && node != doc) {
+				if (node.classList.contains("item")) {
+					node.classList.add("open");
+				}
+				node = node.parentElement;
+			}
+		};
+	}
+	// Display helpers:
+	window.opt_none = function() {
+		for (var li = 0; li < headers.length; li++) headers[li].doc_hide();
+	};
+	window.opt_list = function() {
+		for (var li = 0; li < headers.length; li++) {
+			var h3 = headers[li];
+			if (h3.parentNode.parentNode != doc) {
+				h3.doc_hide();
+			} else h3.doc_show();
+		}
+	};
+	window.opt_all = function() {
+		for (var li = 0; li < headers.length; li++) headers[li].doc_show();
+	};
+	window.live_post = function() {
+		doc = document.getElementById("doc");
+		headers = doc.getElementsByTagName("header");
+		//
+		for (var i = 0; i < headers.length; i++) h3bind(headers[i]);
+		// Clicks in document expand the related section:
+		var anchors = doc.getElementsByTagName("a");
+		for (var i = 0; i < anchors.length; i++) {
+			var anchor = anchors[i];
+			if (anchor.classList.contains("header")) continue;
+			var href = anchor.getAttribute("href");
+			if (href[0] == "#") {
+				var fn = getHashFunc(href.substr(1));
+				if (!fn) {
+					anchor.classList.add("broken");
+					anchor.title = "(section missing)";
+				} else anchor.addEventListener("click", fn);
+			}
+		}
+		//
+		for (var li = 0; li < headers.length; li++) {
+			var h3 = headers[li];
+			var val = state ? state[h3.id || h3.textContent] : null;
+			if (val == null) val = isLocal || h3.parentNode.parentNode == doc;
+			if (val) h3.doc_show(); else h3.doc_hide();
+		}
+	};
+	window.live_post();
+	//
+	(function() {
+		var hash = document.location.hash;
+		if (hash) {
+			var _hash = hash.substr(1);
+			getHashFunc(_hash)();
+			setTimeout(function() {
+				document.location.hash = hash + " ";
+				setTimeout(function() {
+					document.location.hash = hash;
+				}, 100);
+			}, 100);
+		}
+	})();
+	//
+	doc.setAttribute("ready", "");
+	})();</script>
+</body></html>

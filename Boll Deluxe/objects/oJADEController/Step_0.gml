@@ -3,6 +3,10 @@ var cam_y = camera_get_view_y(view_camera[0])
 var cam_w = camera_get_view_width(view_camera[0])
 var cam_h = camera_get_view_height(view_camera[0])
 
+if !surface_exists(object_list_area_surface) {
+	object_list_area_surface = surface_create(object_list_area_width, object_list_area_height)
+}
+
 mbleftpress=mouse_check_button_pressed(mb_left)
 mbleftrel=mouse_check_button_released(mb_left)
 mbleft=mouse_check_button(mb_left)
@@ -14,7 +18,7 @@ curs_y=mouse_y-cam_y
 var guiw=display_get_gui_width()
 var guih=display_get_gui_height()
 var tb_length = array_length(toolbar[selected_mode])
-on_object_list = (point_in_rectangle(curs_x,curs_y,object_list_area_x-2,object_list_area_y-24,object_list_area_x+object_list_area_width/3,object_list_area_y+object_list_area_height/3) && show_object_list && object_list_active)
+on_object_list = (point_in_rectangle(curs_x,curs_y,object_list_area_x-2,object_list_area_y-24,object_list_area_x+object_list_area_width/3,object_list_area_y+object_list_area_height/3) && (show_object_list || object_list_active))
 if (!on_object_list && object_list_active && show_object_list) on_object_list = keyboard_check_direct(vk_alt)
 
 not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
@@ -277,19 +281,19 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 			
 			if !red_box { 
 				//if not selecting red box
-				if (mbleftpress) {
+				if (mbleftpress) && (not_on_gui) {
 					if white_box{ 
 						//selecting white area (kinda)
 						obj[5] = 1 
-					} /*else {
-						if !keyboard_check(vk_shift) {
+					} else {
+						if !keyboard_check(vk_shift) && (not_on_gui) {
 							obj[5] = 0 //set all others unselected when not holding shift
 						}
-					}*/
+					}
 				}
 			}
 			
-			if selection_box {
+			if (selection_box) && (not_on_gui) {
 				if rectangle_in_rectangle((obj[1]*16) , (obj[2]*16) ,(obj[1]*16) + obj[6] , (obj[2]*16) + obj[7], selection_box_x, selection_box_y, selection_box_x + (mouse_x - selection_box_x), selection_box_y + (mouse_y - selection_box_y)) {
 					obj[5] = 1 
 				} else {
@@ -297,8 +301,6 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 						obj[5] = 0 //set all others unselected when not holding shift
 					}
 				}
-			
-				
 			}
 		}
 	}
@@ -309,7 +311,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 		var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
 		var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
 		//is object selected?
-		if obj[5] = 1 {
+		if obj[5] {
 			#region move
 			if !red_box	{
 				if white_box && mbleftpress && selection = 0 && !selection_box{ 
@@ -385,7 +387,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 			}
 	}
 		
-	if (!overlap) && mbleftpress && !selection_box && (!selection) {
+	if (!overlap) && mbleftpress && !selection_box && (!selection) && not_on_gui {
 		selection_box = true
 		selection_box_x = mouse_x
 		selection_box_y = mouse_y

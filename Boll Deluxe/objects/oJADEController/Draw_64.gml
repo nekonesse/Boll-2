@@ -92,11 +92,11 @@ if selected_mode == OBJECT_MODE {
 	
 	if show_object_list && surface_exists(object_list_area_surface) {
 		if object_list_active {
-		//window tab top buttons
+			//window tab top buttons
 			//Object List Tab
-			draw_sprite_stretched(spr_JADEwindowtab,0,object_list_area_x-1,object_list_area_y-24, -1 + ((object_list_area_width/3)/2),18)
+			draw_sprite_stretched(spr_JADEwindowtab,0,object_list_area_x-1,object_list_area_y-20, -1 + ((object_list_area_width/3)/2),16)
 			//Properties Tab
-			draw_sprite_stretched(spr_JADEwindowtab,1,(object_list_area_x + 1 + ((object_list_area_width/3)/2)),object_list_area_y-20, -1 + ((object_list_area_width/3)/2),14)
+			draw_sprite_stretched(spr_JADEwindowtab,1,(object_list_area_x + 1 + ((object_list_area_width/3)/2)),object_list_area_y-16, -2 + ((object_list_area_width/3)/2),12)
 
 			//window
 			draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
@@ -109,7 +109,7 @@ if selected_mode == OBJECT_MODE {
 			//tab text
 			draw_set_halign(fa_center)
 			draw_text_transformed((object_list_area_x - 1 + (object_list_area_width/3)/4),object_list_area_y-16,"Object List",0.66,0.66,0)
-			draw_text_transformed((object_list_area_x + 1 + ((object_list_area_width/3)/4)*3),object_list_area_y-14,"Properties",0.66,0.66,0)
+			draw_text_transformed((object_list_area_x + 1 + ((object_list_area_width/3)/4)*3),object_list_area_y-12,"Properties",0.66,0.66,0)
 		
 			surface_set_target(object_list_area_surface)
 			draw_clear_alpha(c_black, 0)
@@ -161,9 +161,9 @@ if selected_mode == OBJECT_MODE {
 			surface_reset_target();
 		} else if properties_tab_active {
 			//Properties Tab
-			draw_sprite_stretched(spr_JADEwindowtab,0,(object_list_area_x + 1 + ((object_list_area_width/3)/2)),object_list_area_y-24, -1 + ((object_list_area_width/3)/2),18)
+			draw_sprite_stretched(spr_JADEwindowtab,0,(object_list_area_x + 1 + ((object_list_area_width/3)/2)),object_list_area_y-20, -2 + ((object_list_area_width/3)/2),16)
 			//Object List Tab
-			draw_sprite_stretched(spr_JADEwindowtab,1,object_list_area_x-1,object_list_area_y-20, -1 + ((object_list_area_width/3)/2),14)
+			draw_sprite_stretched(spr_JADEwindowtab,1,object_list_area_x-1,object_list_area_y-16, -1 + ((object_list_area_width/3)/2),12)
 		
 			//window
 			draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
@@ -171,7 +171,7 @@ if selected_mode == OBJECT_MODE {
 		
 			//tab text
 			draw_set_halign(fa_center)
-			draw_text_transformed((object_list_area_x - 1 + (object_list_area_width/3)/4),object_list_area_y-14,"Object List",0.66,0.66,0)
+			draw_text_transformed((object_list_area_x - 1 + (object_list_area_width/3)/4),object_list_area_y-12,"Object List",0.66,0.66,0)
 			draw_text_transformed((object_list_area_x + 1 + ((object_list_area_width/3)/4)*3),object_list_area_y-16,"Properties",0.66,0.66,0)
 			
 			surface_set_target(object_list_area_surface)
@@ -217,7 +217,63 @@ if selected_mode == OBJECT_MODE {
 				//draw divider
 				draw_rect(12,96,object_list_area_width-24,3,$65555c,1,false)
 				for (var i = 0; i < array_length(proparr[10]); ++i) {
-				    ScribblejrFit($"{string(proparr[10][i][1])}:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112+32*i)
+					if is_array(proparr[10][i]) { 
+						//draw variable name
+					    ScribblejrFit($"{string(proparr[10][i][1])}:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112+32*i)
+						switch(string(proparr[10][i][3])) {
+							case "checkbox": {
+								if !open_dropmenu {
+									draw_sprite_stretched(spr_JADEcheckbox,bool(proparr[10][i][2]),96+16,(112+32*i)-12,8*3,8*3)
+								
+									//toggle variable
+									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+32+10*i,object_list_area_x+44,object_list_area_y+40+10*i)
+								
+									if (incheck) && (mbleftpress) {
+										show_debug_message(proparr[10][i][2])
+										proparr[10][i][2]=!bool(proparr[10][i][2])
+									}
+								} else break
+								break
+							}
+							case "dropdown": {
+								draw_sprite_stretched(spr_JADEdropdown,0,96+16,(112+32*i)-12,8*20,8*3)
+								//draw selected variable
+								ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, smallF, 2, 160-8, 20).Draw(96+24,(112+32*i)-6)
+
+								//toggle variable
+								var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+10*i,object_list_area_x+34+56,object_list_area_y+40+10*i)
+								
+								if (incheck) && (mbleftpress) {
+									if !(open_dropmenu) {
+										open_dropmenu=i+1;
+									} else {
+										open_dropmenu=0;
+									}
+								}
+								
+								if (open_dropmenu-1 == i) {
+									var menuarr=proparr[10][i][4]
+									if !is_array(menuarr) break;
+									
+									for (var j = 0; j < array_length(menuarr); ++j) {
+									    //draw dropdown menus
+										draw_sprite_stretched(spr_JADEdropdown,j == array_length(menuarr)-1 ? 2 : 1,96+16,(112+32*i+24*j)+12,8*20,8*3)
+										//draw list of variables
+										ScribblejrFit(string(menuarr[j]), fa_left, fa_top, smallF, 2, 160-8, 20).Draw(96+24,(112+32*i+24*j)+18)
+										
+										var insubcheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+41+10*i+8*j,object_list_area_x+34+56,object_list_area_y+49+10*i+8*j)
+								
+										if (insubcheck) && (mbleftpress) {
+											//set selected object to selected variable
+											proparr[10][i][2]=menuarr[j];
+											open_dropmenu=0;
+										}
+									}
+								}
+								break
+							}
+						}
+					}
 				}
 			}
 			
@@ -231,9 +287,9 @@ if selected_mode == OBJECT_MODE {
 		draw_surface_stretched(object_list_area_surface, object_list_area_x, object_list_area_y, object_list_area_width/3, object_list_area_height/3)
 	} else {
 		//Properties Tab
-		draw_sprite_stretched(spr_JADEwindowtab,1,(object_list_area_x + 1 + ((object_list_area_width/3)/2)),object_list_area_y-20, -1 + ((object_list_area_width/3)/2),14)
+		draw_sprite_stretched(spr_JADEwindowtab,1,(object_list_area_x + 1 + ((object_list_area_width/3)/2)),object_list_area_y-16, -2 + ((object_list_area_width/3)/2),12)
 		//Object List Tab
-		draw_sprite_stretched(spr_JADEwindowtab,1,object_list_area_x-1,object_list_area_y-20, -1 + ((object_list_area_width/3)/2),14)
+		draw_sprite_stretched(spr_JADEwindowtab,1,object_list_area_x-1,object_list_area_y-16, -1 + ((object_list_area_width/3)/2),12)
 		//window
 		draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,8)
 		
@@ -245,8 +301,8 @@ if selected_mode == OBJECT_MODE {
 		
 		//tab text
 		draw_set_halign(fa_center)
-		draw_text_transformed((object_list_area_x - 1 + (object_list_area_width/3)/4),object_list_area_y-14,"Object List",0.66,0.66,0)
-		draw_text_transformed((object_list_area_x + 1 + ((object_list_area_width/3)/4)*3),object_list_area_y-14,"Properties",0.66,0.66,0)		
+		draw_text_transformed((object_list_area_x - 1 + (object_list_area_width/3)/4),object_list_area_y-12,"Object List",0.66,0.66,0)
+		draw_text_transformed((object_list_area_x + 1 + ((object_list_area_width/3)/4)*3),object_list_area_y-12,"Properties",0.66,0.66,0)		
 		
 		draw_set_halign(fa_left)
 	}

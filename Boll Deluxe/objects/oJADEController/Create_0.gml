@@ -125,9 +125,6 @@ object_list_area_height = 128*3
 object_list_area_x = (guiw-object_list_area_width/3)
 object_list_area_y = ((guih/2)-(object_list_area_height/3)/2)
 object_list_area_surface = surface_create(object_list_area_width, object_list_area_height)
-object_list_area_color = make_color_hsv(0, 0, 240)
-
-object_list_text_color = make_color_hsv(0, 0, 40)
 
 for (i = 0; i < array_length(jade_cats); i++) {
 	object_list_scroll_pos[i] = 0
@@ -154,6 +151,7 @@ function mouse_in_mode_slot(numb) {
 }
 
 selection_box_fr=0
+open_dropmenu=0;
 
 function tile_layer_alpha_check() {
 	//This makes the tile layer transparent if you arent in tile mode by using layer scripts
