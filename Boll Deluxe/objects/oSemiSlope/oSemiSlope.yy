@@ -39,8 +39,5 @@
     "path":"sprites/spr_slopesemi/spr_slopesemi.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "blocks",
-  ],
   "visible":false,
 }

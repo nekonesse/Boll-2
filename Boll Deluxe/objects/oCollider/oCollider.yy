@@ -34,9 +34,5 @@
     "path":"sprites/spr_collider/spr_collider.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "Catspeak",
-    "blocks",
-  ],
   "visible":false,
 }

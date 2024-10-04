@@ -195,15 +195,17 @@ ds_list_add(object_layer_map, ["oCollider", 0, 167, 30, 2, 0])//add object to li
 var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
 var sprite = ds_map_find_value(obj_data,obj[0])
 if !is_undefined(obj) {
-	obj[6] = sprite[4]*30
-	obj[7] = sprite[5]*2
+	obj[6] = sprite[3]
+	obj[7] = sprite[4]
 	obj[8] = 0
 	obj[9] = 0	
 	obj[10] = []
-	for (var o = 0; o < array_length(sprite[9]); o++) { //god Damn.
-		array_copy(obj[10][o],0,sprite[9][o],0,array_length(sprite[9][o]))
-		if is_array(obj[10][o][5]) {
-			array_copy(obj[10][o][5],0,sprite[9][o][5],0,array_length(sprite[9][o][5]))	
+	if is_array(sprite[8]) && array_length(sprite[8]) {
+		for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
+			array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
+			if is_array(obj[10][o][5]) {
+				array_copy(obj[10][o][5],0,sprite[8][o][5],0,array_length(sprite[8][o][5]))	
+			}
 		}
 	}
 }

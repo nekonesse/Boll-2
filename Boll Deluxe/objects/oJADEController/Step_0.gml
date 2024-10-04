@@ -357,12 +357,12 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 					obj[7] = round(obj[7] /16) * 16
 				
 
-					obj_other[3] = obj[6] / sprite[4] //setting scale
-					obj_other[4] = obj[7] / sprite[5]
+					obj_other[3] = obj[6] / sprite[3] //setting scale
+					obj_other[4] = obj[7] / sprite[4]
 					obj_other[6] = obj[6] 
 					obj_other[7] = obj[7]	
-					obj_other[8] = (sprite[2] = 0) ? 0 : sprite[2] + (sprite[4]/2) * obj_other[3] //setting offset
-					obj_other[9] = (sprite[3] = 0) ? 0 : sprite[3] + (sprite[5]/2) * obj_other[4]
+					obj_other[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj_other[3] //setting offset
+					obj_other[9] = (sprite[2] = 0) ? 0 : sprite[2] + (sprite[4]/2) * obj_other[4]
 					
 				
 				}
@@ -437,17 +437,17 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 						var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
 						var sprite = ds_map_find_value(obj_data,obj[0])
 						if !is_undefined(obj) {
-							obj[6] = sprite[4]	
-							obj[7] = sprite[5]	
+							obj[6] = sprite[3]
+							obj[7] = sprite[4]
 							obj[8] = 0
 							obj[9] = 0	
 							obj[10] = []
-							for (var o = 0; o < array_length(sprite[9]); o++) { //god Damn.
-								obj[10][o] = array_create(1,0)
-								array_copy(obj[10][o],0,sprite[9][o],0,array_length(sprite[9][o]))
-								if is_array(sprite[9][o][4]) {
-									obj[10][o][4] = array_create(1,0)
-									array_copy(obj[10][o][4],0,sprite[9][o][4],0,array_length(sprite[9][o][4]))
+							if is_array(sprite[8]) && array_length(sprite[8]) {
+								for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
+									array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
+									if is_array(obj[10][o][5]) {
+										array_copy(obj[10][o][5],0,sprite[8][o][5],0,array_length(sprite[8][o][5]))	
+									}
 								}
 							}
 						}
@@ -501,7 +501,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 						//is place matching cursor?
 						var obj = ds_list_find_value(object_layer_map, i)
 						if !is_undefined(obj) {
-						    if obj[1] = gridx && obj[2] = gridy {
+						    if obj[1] == gridx && obj[2] == gridy {
 								show_debug_message("deleted object: {0}", obj[0])
 								ds_list_delete(object_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
 								break;

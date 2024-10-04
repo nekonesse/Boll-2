@@ -28,17 +28,20 @@ function JADE_initializeobj() {
 	*/
 	//1. uuid
 	//2. sprite
-	//3. atlas index (for object list)
-	//4. placement x offset
-	//5. placement y offset
-	//6. placement xscale
-	//7. placement yscale
-	//8. scalable horizontally (bool)
-	//9. scalable vertically (bool)
-	//10. what editor mode object list to appear in
-	//11. object properties (check scr_properties)
+	//3. placement x offset
+	//4. placement y offset
+	//5. placement xscale
+	//6. placement yscale
+	//7. scalable horizontally (bool)
+	//8. scalable vertically (bool)
+	//9. what editor mode object list to appear in
+	//10. object properties (check scr_properties)
 	show_debug_message("Registering JADE object list...")
-	registerobj(object_get_name(oPlayerSpawn), spr_spawner, 0, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), true, true, OBJECT_MODE, 0, object_get_properties("oPlayerSpawn"))
+	registerobj(object_get_name(oPlayerSpawn), spr_spawner, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), true, true, OBJECT_MODE, 0, object_get_properties("oPlayerSpawn"))
+	registerobj(object_get_name(oCollider), spr_collider, -sprite_get_xoffset(spr_collider), -sprite_get_yoffset(spr_collider), sprite_get_width(spr_collider), sprite_get_height(spr_collider), true, true, OBJECT_MODE, 0, object_get_properties("oCollider"))
+	registerobj(object_get_name(oSlopeCollider), spr_slopesolid, -sprite_get_xoffset(spr_slopesolid), -sprite_get_yoffset(spr_slopesolid), sprite_get_width(spr_slopesolid), sprite_get_height(spr_slopesolid), true, true, OBJECT_MODE, 0, object_get_properties("oSlopeCollider"))
+	registerobj(object_get_name(oSemilider), spr_semilider, -sprite_get_xoffset(spr_semilider), -sprite_get_yoffset(spr_semilider), sprite_get_width(spr_semilider), sprite_get_height(spr_semilider), true, true, OBJECT_MODE, 0, object_get_properties("oSemilider"))
+	registerobj(object_get_name(oSemiSlope), spr_slopesemi, -sprite_get_xoffset(spr_slopesemi), -sprite_get_yoffset(spr_slopesemi), sprite_get_width(spr_slopesemi), sprite_get_height(spr_slopesemi), true, true, OBJECT_MODE, 0, object_get_properties("oSemiSlope"))
 	
 	register_array(tag_get_asset_ids("blocks", asset_object), 0);
 	register_array(tag_get_asset_ids("enemies", asset_object), 1);
@@ -53,13 +56,13 @@ function register_array(array, category) {
 		var _name = object_get_name(array[i])
 		var _sprite = object_get_sprite(array[i])
 		var _properties = object_get_properties(_name)
-	    registerobj(_name, _sprite, 0, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), sprite_get_width(_sprite), sprite_get_height(_sprite), true, true, OBJECT_MODE, category, _properties)
+	    registerobj(_name, _sprite, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), sprite_get_width(_sprite), sprite_get_height(_sprite), true, true, OBJECT_MODE, category, _properties)
 	}	
 }
 
-function registerobj(uuid,sprite,index,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,category,properties) {
+function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,category,properties) {
 	if !ds_map_exists(obj_data,uuid) {
-		ds_map_add(obj_data,uuid,[sprite,index,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,properties])
+		ds_map_add(obj_data,uuid,[sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,properties])
 		ds_list_add(obj_name,uuid)
 		ds_list_add(jade_cats[category],uuid)
 		show_debug_message($"Successfully registered object id: {uuid} in JADE")

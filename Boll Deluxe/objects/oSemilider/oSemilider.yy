@@ -37,9 +37,5 @@
     "path":"sprites/spr_semilider/spr_semilider.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "Catspeak",
-    "blocks",
-  ],
   "visible":false,
 }
