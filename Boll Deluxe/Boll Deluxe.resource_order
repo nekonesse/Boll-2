@@ -980,6 +980,7 @@
     {"name":"spr_JADEerase_overlay","order":6,"path":"sprites/spr_JADEerase_overlay/spr_JADEerase_overlay.yy",},
     {"name":"spr_JADEicon_bg","order":3,"path":"sprites/spr_JADEicon_bg/spr_JADEicon_bg.yy",},
     {"name":"spr_JADEicons","order":7,"path":"sprites/spr_JADEicons/spr_JADEicons.yy",},
+    {"name":"spr_JADEnumberinput","order":14,"path":"sprites/spr_JADEnumberinput/spr_JADEnumberinput.yy",},
     {"name":"spr_JADEselection","order":8,"path":"sprites/spr_JADEselection/spr_JADEselection.yy",},
     {"name":"spr_JADEtab_right","order":1,"path":"sprites/spr_JADEtab_right/spr_JADEtab_right.yy",},
     {"name":"spr_JADEtab_top","order":2,"path":"sprites/spr_JADEtab_top/spr_JADEtab_top.yy",},

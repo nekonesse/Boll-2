@@ -1246,6 +1246,7 @@
     {"id":{"name":"spr_JADEerase_overlay","path":"sprites/spr_JADEerase_overlay/spr_JADEerase_overlay.yy",},},
     {"id":{"name":"spr_JADEicon_bg","path":"sprites/spr_JADEicon_bg/spr_JADEicon_bg.yy",},},
     {"id":{"name":"spr_JADEicons","path":"sprites/spr_JADEicons/spr_JADEicons.yy",},},
+    {"id":{"name":"spr_JADEnumberinput","path":"sprites/spr_JADEnumberinput/spr_JADEnumberinput.yy",},},
     {"id":{"name":"spr_JADEselection","path":"sprites/spr_JADEselection/spr_JADEselection.yy",},},
     {"id":{"name":"spr_JADEtab_left","path":"sprites/spr_JADEtab_left/spr_JADEtab_left.yy",},},
     {"id":{"name":"spr_JADEtab_right","path":"sprites/spr_JADEtab_right/spr_JADEtab_right.yy",},},

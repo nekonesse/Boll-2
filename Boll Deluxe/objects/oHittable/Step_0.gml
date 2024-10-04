@@ -25,7 +25,8 @@ if (hit != 0)
 			if doneCheck
 				hitNegative = true;
 		} else {
-			amount--;
+			blockBumpFinished.Emit();
+			amount=max(amount-1,0);
 			if !(amount) {
 				blockFinished.Emit();
 			} else {
@@ -33,7 +34,6 @@ if (hit != 0)
 			}
 			dy = 0;
 			hit = 0;
-			//image_index = 1;
 			hitNegative = false;
 			dummyTimer = dummyTimerReset;
 		}

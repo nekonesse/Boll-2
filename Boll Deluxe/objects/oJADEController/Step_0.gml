@@ -57,7 +57,7 @@ var dir = (keyboard_check_pressed(vk_right) || mouse_check_button_pressed(mb_sid
 
 #region Object List Scrolling
 if (mwheel != 0) && (on_object_list) {
-	object_list_scroll_pos[current_cat]+=16*mwheel
+	object_list_scroll_pos[current_cat]+=24*mwheel
 }
 
 object_list_scroll_pos[current_cat] = clamp(object_list_scroll_pos[current_cat], 0, (ds_list_size(jade_cats[current_cat])*32)-object_list_area_height)
@@ -282,6 +282,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 			if !red_box { 
 				//if not selecting red box
 				if (mbleftpress) && (not_on_gui) {
+					open_dropmenu=0;
 					if white_box{ 
 						//selecting white area (kinda)
 						obj[5] = 1 
@@ -294,6 +295,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 			}
 			
 			if (selection_box) && (not_on_gui) {
+				open_dropmenu=0;
 				if rectangle_in_rectangle((obj[1]*16) , (obj[2]*16) ,(obj[1]*16) + obj[6] , (obj[2]*16) + obj[7], selection_box_x, selection_box_y, selection_box_x + (mouse_x - selection_box_x), selection_box_y + (mouse_y - selection_box_y)) {
 					obj[5] = 1 
 				} else {
@@ -543,7 +545,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 	
 }
 
-if keyboard_check_pressed(vk_enter) {
+if keyboard_check_pressed(vk_enter) && !(is_typing) {
 	JADE_save();
 	global.nextlevel=working_directory+"\save.jade" //the level the game will load
 	global.jade_testing = true;

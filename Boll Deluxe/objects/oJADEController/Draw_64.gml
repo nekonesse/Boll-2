@@ -75,19 +75,31 @@ if selected_mode = TILE_MODE {
 if selected_mode == OBJECT_MODE {
 	
 	var over_tab=point_in_rectangle(curs_x,curs_y,object_list_area_x-1,object_list_area_y-24, object_list_area_x + ((object_list_area_width/3)/2),object_list_area_y)
-		
+	
+	//open object list
 	if (over_tab && mbleftpress) {
-		object_list_active = 1
-		properties_tab_active = 0
-		show_object_list = 1
+		if !(object_list_active) {
+			temptypingstring=""
+			is_typing=0;
+			open_dropmenu=0;
+			object_list_active = 1
+			properties_tab_active = 0
+			show_object_list = 1
+		}
 	}
 	
 	over_tab=point_in_rectangle(curs_x,curs_y,object_list_area_x + 1 + ((object_list_area_width/3)/2),object_list_area_y-24, object_list_area_x + (((object_list_area_width/3)/2)*3),object_list_area_y)
-		
+	
+	//open properties tab
 	if (over_tab && mbleftpress) {
-		object_list_active = 0
-		properties_tab_active = 1
-		show_object_list = 1
+		if !(properties_tab_active) {
+			temptypingstring=""
+			is_typing=0;
+			open_dropmenu=0;
+			object_list_active = 0
+			properties_tab_active = 1
+			show_object_list = 1
+		}
 	}
 	
 	if show_object_list && surface_exists(object_list_area_surface) {
@@ -120,7 +132,7 @@ if selected_mode == OBJECT_MODE {
 			for (var i = 0; i < ds_list_size(jade_cats[current_cat]); ++i) {
 				
 					//upward culling								//downwards culling
-				if (32*i < object_list_scroll_pos[current_cat]) || (32*i > object_list_scroll_pos[current_cat]+object_list_area_height) {
+				if (32*i < object_list_scroll_pos[current_cat]-24) || (32*i > object_list_scroll_pos[current_cat]+object_list_area_height) {
 					continue;
 				}
 			
@@ -192,12 +204,10 @@ if selected_mode == OBJECT_MODE {
 					}
 				}
 			}
-			show_debug_message($"properties group is {properties_group}")
 			
 			var objname=""
 			if (properties_group[0] != -4) {
 				var proparr=properties_group[0]
-			    show_debug_message($"properties group real is {proparr}")
 				objname=proparr[0]
 				
 				var arr=ds_map_find_value(obj_data,proparr[0])
@@ -228,10 +238,11 @@ if selected_mode == OBJECT_MODE {
 									//toggle variable
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+32+10*i,object_list_area_x+44,object_list_area_y+40+10*i)
 								
-									if (incheck) && (mbleftpress) {
-										show_debug_message(proparr[10][i][2])
-										show_message(proparr)
-										proparr[10][i][2]=!bool(proparr[10][i][2])
+									if (mbleftpress) {
+										if (incheck) {
+											show_debug_message(proparr[10][i][2])
+											proparr[10][i][2]=!bool(proparr[10][i][2])
+										}
 									}
 								} else break
 								break
@@ -273,9 +284,59 @@ if selected_mode == OBJECT_MODE {
 								}
 								break
 							}
+							case "number_input": {
+								if !open_dropmenu {
+									draw_sprite_stretched(spr_JADEnumberinput,0,96+16,(112+32*i)-12,8*3,8*3)
+									if !(is_typing-1==i)
+									ScribblejrFit(string(proparr[10][i][2]), fa_middle, fa_top, smallF, 2, 19, 19).Draw(96+29,(112+32*i)-6)
+									else
+									ScribblejrFit(temptypingstring, fa_middle, fa_top, smallF, 2, 19, 19).Draw(96+29,(112+32*i)-6)
+									
+									//check if clicking on box
+									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+32+10*i,object_list_area_x+44,object_list_area_y+40+10*i)
+									
+									if (mbleftpress) {
+										//start typing
+										if (incheck) && !is_typing {
+											is_typing=i+1
+										}
+										
+										//if clicking off of the box, finish typing
+										if !(incheck) && (is_typing-1==i) {
+											//set the variable to our typed number, if its blank reset back to the value it was before
+											proparr[10][i][2]=unreal(temptypingstring,proparr[10][i][2])
+											temptypingstring=""
+											is_typing=0;
+										}
+									}
+									
+									//if pressed enter and typing, finish typing aswell
+									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
+										if !(incheck) && (is_typing-1==i) {
+											proparr[10][i][2]=unreal(temptypingstring,proparr[10][i][2])
+											temptypingstring=""
+											is_typing=0;
+										}
+									}
+									
+									if (is_typing-1==i) {
+										//simple typing script for numbers only
+										if string_length(string_digits(keyboard_lastchar)) && keyboard_check_pressed(vk_anykey) {
+											temptypingstring+=string_digits(keyboard_lastchar)
+										}
+										if keyboard_check_pressed(vk_backspace) {
+											temptypingstring=string_copy(temptypingstring,0,string_length(temptypingstring)-1)
+										}
+									}
+								} else break
+								break
+							}
 						}
 					}
 				}
+			} else {
+				temptypingstring=""
+				is_typing=0;
 			}
 			
 			surface_reset_target();

@@ -9,7 +9,7 @@ function object_get_properties(obj){
 		case oItemBox:
 			properties = [
 				["content", "Contents", "coin", "dropdown", ["coin", "multicoins", "mushroom", "fireflower", "thunderflower"]],
-				["amount", "Amount", 0, "number_input", 50],
+				["amount", "Amount", 1, "number_input", 50],
 				["bricked", "Is Brick", 0, "checkbox", 0]
 			]
 			break;

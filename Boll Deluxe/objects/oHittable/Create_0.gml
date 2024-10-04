@@ -18,6 +18,7 @@ image_hit = sprite_index
 image_exausted = sprite_index
 
 blockHit = new Signal();
+blockBumpFinished = new Signal();
 blockFinished = new Signal();
 
 blockHit.Connect( self, function(hit_p, obj) {
@@ -28,7 +29,7 @@ blockHit.Connect( self, function(hit_p, obj) {
 	obj.vsp = 2;
 	going = true;
 	
-	if !(amount) {
+	if (amount) {
 		sprite_index = image_hit
 	}
 });

@@ -151,6 +151,8 @@ function mouse_in_mode_slot(numb) {
 }
 
 selection_box_fr=0
+is_typing=0;
+temptypingstring="";
 open_dropmenu=0;
 
 function tile_layer_alpha_check() {
