@@ -37,19 +37,28 @@ function JADE_initializeobj() {
 	//9. what editor mode object list to appear in
 	//10. object properties (check scr_properties)
 	show_debug_message("Registering JADE object list...")
-	registerobj(object_get_name(oPlayerSpawn), spr_spawner, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), true, true, OBJECT_MODE, 0, object_get_properties("oPlayerSpawn"))
+	registerobj(object_get_name(oPlayerSpawn), spr_spawner, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), false, false, OBJECT_MODE, 0, object_get_properties("oPlayerSpawn"))
 	registerobj(object_get_name(oCollider), spr_collider, -sprite_get_xoffset(spr_collider), -sprite_get_yoffset(spr_collider), sprite_get_width(spr_collider), sprite_get_height(spr_collider), true, true, OBJECT_MODE, 0, object_get_properties("oCollider"))
 	registerobj(object_get_name(oSlopeCollider), spr_slopesolid, -sprite_get_xoffset(spr_slopesolid), -sprite_get_yoffset(spr_slopesolid), sprite_get_width(spr_slopesolid), sprite_get_height(spr_slopesolid), true, true, OBJECT_MODE, 0, object_get_properties("oSlopeCollider"))
 	registerobj(object_get_name(oSemilider), spr_semilider, -sprite_get_xoffset(spr_semilider), -sprite_get_yoffset(spr_semilider), sprite_get_width(spr_semilider), sprite_get_height(spr_semilider), true, true, OBJECT_MODE, 0, object_get_properties("oSemilider"))
 	registerobj(object_get_name(oSemiSlope), spr_slopesemi, -sprite_get_xoffset(spr_slopesemi), -sprite_get_yoffset(spr_slopesemi), sprite_get_width(spr_slopesemi), sprite_get_height(spr_slopesemi), true, true, OBJECT_MODE, 0, object_get_properties("oSemiSlope"))
-	registerobj(object_get_name(oDonutBlock), spr_donutblock, -sprite_get_xoffset(spr_donutblock), -sprite_get_yoffset(spr_donutblock), sprite_get_width(spr_donutblock), sprite_get_height(spr_donutblock), true, true, OBJECT_MODE, 0, object_get_properties("oDonutBlock"))
+	registerobj(object_get_name(oPipe), spr_pipe, -sprite_get_xoffset(spr_pipe), -sprite_get_yoffset(spr_pipe), sprite_get_width(spr_pipe), sprite_get_height(spr_pipe), false, false, OBJECT_MODE, 0, object_get_properties("oPipe"))
+	registerobj(object_get_name(oItemBox), spr_itembox, -sprite_get_xoffset(spr_itembox), -sprite_get_yoffset(spr_itembox), sprite_get_width(spr_itembox), sprite_get_height(spr_itembox), false, false, OBJECT_MODE, 0, object_get_properties("oItemBox"))
+	registerobj(object_get_name(oBrick), spr_brick, -sprite_get_xoffset(spr_brick), -sprite_get_yoffset(spr_brick), sprite_get_width(spr_brick), sprite_get_height(spr_brick), false, false, OBJECT_MODE, 0, object_get_properties("oBrick"))
+	registerobj(object_get_name(oHardBlock), spr_hardblock, -sprite_get_xoffset(spr_hardblock), -sprite_get_yoffset(spr_hardblock), sprite_get_width(spr_hardblock), sprite_get_height(spr_hardblock), false, false, OBJECT_MODE, 0, object_get_properties("oHardBlock"))
+	registerobj(object_get_name(oDonutBlock), spr_donutblock, -sprite_get_xoffset(spr_donutblock), -sprite_get_yoffset(spr_donutblock), sprite_get_width(spr_donutblock), sprite_get_height(spr_donutblock), true, false, OBJECT_MODE, 0, object_get_properties("oDonutBlock"))
+	registerobj(object_get_name(oNoteBlock), spr_noteblock, -sprite_get_xoffset(spr_noteblock), -sprite_get_yoffset(spr_noteblock), sprite_get_width(spr_noteblock), sprite_get_height(spr_noteblock), false, false, OBJECT_MODE, 0, object_get_properties("oNoteBlock"))
+	registerobj(object_get_name(oShootBlock), spr_shootblock, -sprite_get_xoffset(spr_shootblock), -sprite_get_yoffset(spr_shootblock), sprite_get_width(spr_shootblock), sprite_get_height(spr_shootblock), false, false, OBJECT_MODE, 0, object_get_properties("oShootBlock"))
+	registerobj(object_get_name(oMovingPlatform), spr_movingplatform, -sprite_get_xoffset(spr_movingplatform), -sprite_get_yoffset(spr_movingplatform), sprite_get_width(spr_movingplatform), sprite_get_height(spr_movingplatform), true, false, OBJECT_MODE, 0, object_get_properties("oMovingPlatform"))
+	registerobj(object_get_name(oSwingingPlatform), spr_movingplatform, -sprite_get_xoffset(spr_movingplatform), -sprite_get_yoffset(spr_movingplatform), sprite_get_width(spr_movingplatform), sprite_get_height(spr_movingplatform), true, false, OBJECT_MODE, 0, object_get_properties("oSwingingPlatform"))
+	registerobj(object_get_name(oChainsaw), spr_chainsaw, -8, -8, 16, 16, false, false, OBJECT_MODE, 0, object_get_properties("oChainsaw"))
+	registerobj(object_get_name(oDirectionChanger), spr_directionchanger, -sprite_get_xoffset(spr_directionchanger), -sprite_get_yoffset(spr_directionchanger), sprite_get_width(spr_directionchanger), sprite_get_height(spr_directionchanger), false, false, OBJECT_MODE, 0, object_get_properties("oDirectionChanger"))
 	
 	register_array(tag_get_asset_ids("blocks", asset_object), 0);
 	register_array(tag_get_asset_ids("enemies", asset_object), 1);
 	register_array(tag_get_asset_ids("items", asset_object), 2);
 	register_array(tag_get_asset_ids("tech", asset_object), 3); //shoulda put the switch blocks in tech this one literally just has springs LOL
-	
-	//registerobj("collider", spr_collider, 0, 0, 0, 1, 1, true, true, OBJECT_MODE)
+
 }
 
 function register_array(array, category) {
@@ -74,54 +83,51 @@ function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,m
 
 function JADE_save(file=working_directory+"\save.jade") {
 	file_delete(file)
-	var save_file = file_text_open_write(file)
 	show_debug_message($"Saving JADE file to: {file}")
-	var size = ds_list_size(object_layer_map)
-	var tilesize = ds_list_size(tile_layer_map)
-	file_text_write_string(save_file, size) //amount of objects
-	file_text_writeln(save_file)
-	file_text_write_string(save_file, tilesize) //amounts of tiles
-	file_text_writeln(save_file)
-	for (var i = 0; i < size; ++i) { //object saving
-		var obj = ds_list_find_value(object_layer_map, i)
-		var _json_string = json_stringify(obj)
-		file_text_write_string(save_file, _json_string)
-		file_text_writeln(save_file)
+	var array = [];
+	var arrayObjects=[];
+	for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
+	    array_push(arrayObjects, object_layer_map[| i])
 	}
-	for (var i = 0; i < tilesize; ++i) { //tilemap saving
-		var tile = ds_list_find_value(tile_layer_map, i)
-		show_debug_message(tile)
-		var _json_string = json_stringify(tile)
-		file_text_write_string(save_file, _json_string)
-		file_text_writeln(save_file)
+	var arrayTiles=[];
+	for (var i = 0; i < ds_list_size(tile_layer_map); ++i) {
+	    array_push(arrayTiles, tile_layer_map[| i])
 	}
-	file_text_close(save_file);
+	array_push(array, arrayObjects)
+	array_push(array, arrayTiles)
+	show_debug_message(array)
+	var _json=json_stringify(array); //compile all saved things
+	var save_file = buffer_create(string_byte_length(_json), buffer_grow, 1);
+	buffer_write(save_file, buffer_string, _json); //save compilation into a buffer
+	var compressed = buffer_compress(save_file, 0, buffer_tell(save_file))
+	buffer_save(compressed, file); //save buffer into the save file
+	buffer_delete(save_file)
+	buffer_delete(compressed)
 	show_debug_message($"Successfully saved JADE file to: {file}!")
 }
 
 function JADE_load(file=working_directory+"\save.jade") {
 	if !file_exists(file) exit;
-	var save_file = file_text_open_read(file)
+	var loaded = buffer_load(file)
+	var save_file = buffer_decompress(loaded)
+	var array = json_parse(buffer_read(save_file,buffer_string))
 	show_debug_message($"Loading JADE file from: {file}")
-	var size = unreal(file_text_read_string(save_file), 0) //read amount of objects
-	file_text_readln(save_file)
-	var tilesize = unreal(file_text_read_string(save_file), 0) //read amount of tiles
-	file_text_readln(save_file)
+	var size = array_length(array[0]) //read amount of objects
+	var tilesize = array_length(array[1]) //read amount of tiles
 	ds_list_clear(object_layer_map) //erase object map beforehand
 	for (var i = 0; i < size; ++i) { //load objects
-        var data = json_parse(file_text_read_string(save_file));
+        var data = array[0][i]
 		data[5] = 0
 		ds_list_add(object_layer_map,data)
-        file_text_readln(save_file);
-	}
+	} 
 	tilemap_clear(tilemap, 0) //erase tilemap beforehand
 	ds_list_clear(tile_layer_map) //erase tile map beforehand
     for (var i = 0; i < tilesize; ++i) { //loading tiles
-		var data = json_parse(file_text_read_string(save_file));
+		var data = array[1][i]
 		tilemap_set(tilemap,data[0],data[1],data[2])
 		ds_list_add(tile_layer_map, [data[0], data[1], data[2]]) //add tile to list at place
-		file_text_readln(save_file);
 	}
-	file_text_close(save_file);
+	buffer_delete(loaded)
+	buffer_delete(save_file)
 	show_debug_message($"Successfully loaded JADE file from: {file}!")
 }

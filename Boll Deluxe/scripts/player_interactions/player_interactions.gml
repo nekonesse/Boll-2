@@ -37,5 +37,5 @@ function player_interactions(){
 				vsp=-4-akey*1.5
 			}
 		}
-	}
+	} else dy=0
 }

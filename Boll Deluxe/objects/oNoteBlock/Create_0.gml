@@ -6,7 +6,7 @@ do_bump=false;
 blockHit.Connect( self, function(hit_p, obj) {
 	
 	hit = hit_p;
-	do_bump=false;
+	do_bump=true;
 	
 	dy = -1 * hit;
 	going = true;
