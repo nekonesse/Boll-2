@@ -30,6 +30,18 @@ function check_signs_matching(a, b)
     return (asign == bsign);
 }
 
+function check_signs_matching_zero(a, b)
+{
+	//function that calls check_signs_matching and then performs an additional check for if either value is zero
+	//used for replicating old engine accel bug
+    var check = check_signs_matching(a, b)
+	
+	if (a == 0 || b == 0) {
+		check = 0	
+	}
+    return check;
+}
+
 function obj_place_meeting(src,x,y,obj)
 {
 	var meet = false;

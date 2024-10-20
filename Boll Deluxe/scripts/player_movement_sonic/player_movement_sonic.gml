@@ -15,7 +15,7 @@ function player_movement_sonic(){
 		//dont walk up a slope if its too steep to walk on!
 		
 		if grounded {
-			var signmatch = check_signs_matching(gsp, move);
+			var signmatch = check_signs_matching_zero(gsp, move);
 			//var accel_real = ((signmatch) ? accel : fastaccel);
 			if signmatch {
 				if (abs(gsp) < topspd) && accel != 0 {
