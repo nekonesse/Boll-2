@@ -304,3 +304,78 @@ function animate_player() {
 function finish_death() {
 	room_restart();
 }	
+
+function player_castlewalk() {
+	if (finish && !dead) {
+	    //player automation for ending cutscene directly ported from oe lol
+    
+	    up=0
+	    down=0
+	    left=0
+	    right=0
+	    flash=0
+		
+		ending = "flag" //dont care about the others rn -moster
+		var viclength = 120
+	
+	    if (ending="flag") {
+	        //if (skindat("walkin")) { //no such thing as a skindat. will change to config later but right now i want game work -moster
+	        p = noone
+	        d = 600
+	        with (oThunderFlower) {
+				if (abs(x-other.x) < other.d) { //MANSION. BASEMENT. FIND IT!!!
+					other.p=id
+					other.d=abs(x-other.x)
+				} 
+			}
+	        if (p) {
+	            right=(x<p.x-4)
+	            left=(x>p.x+4)
+	            if (abs(x-p.x)<=4 && !jump && !posed) {
+	                txr_exec(global.scripts[? $"{charmName}_stop"]);
+	                no_move=1
+					no_step=1
+	                posed=1
+	                if (viclength) {
+	                    alarm[6]=viclength
+	                } else alarm[6]=1
+	                playsfx(charmName+"win")        
+					with (oGameManager)
+						alarm[11]=400
+	            }
+	        }
+	        //}
+	        if (!p) {
+				//so the camera doesnt move
+				if (my_camera) {
+					my_camera.locked = true;
+				}
+	            //walkoff
+	            if (!posed) {
+	                if (viclength) {
+	                    if (!jump) {
+	                        txr_exec(global.scripts[? $"{charmName}_stop"]);
+	                        no_move=1
+							no_step=1
+	                        posed=1  
+	                        alarm[2]=viclength
+							alarm[4]=viclength
+							with (oGameManager)
+								alarm[11]=400
+	                        playsfx(charmName+"win") 
+	                    }
+	                } else posed=1
+	            } else {
+					right=(x<room_width)	
+				}
+	        } 
+	    }
+	    if (!posed || (!p && posed && right)) {
+			apress = akey
+	        akey=((jump && akey) || place_meeting(x + (16 * xsc), y, oEnemy) || !grounded)
+			apress = (akey && !apress)
+	        bkey=0
+	        ckey=0
+	    }
+	}
+}

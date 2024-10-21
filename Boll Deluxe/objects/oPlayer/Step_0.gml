@@ -10,19 +10,23 @@ left = input_check("left");
 up = input_check("up");
 down = input_check("down");
 downpress = input_check_pressed("down");
-akey = input_check("a");
-apress = input_check_pressed("a");
-bkey = input_check("b");
-bpress = input_check_pressed("b");
-ckey = input_check("c");
-cpress = input_check_pressed("c");
+if !finish {
+	akey = input_check("a");
+	apress = input_check_pressed("a");
+	bkey = input_check("b");
+	bpress = input_check_pressed("b");
+	ckey = input_check("c");
+	cpress = input_check_pressed("c");
+}
+
+player_castlewalk()
 
 steep_slope = false
 if abs(colangle) > 60 && abs(colangle) < 300 {
 	steep_slope = true	
 }
 
-if !dead {
+if !dead && !no_step {
 	txr_exec(global.scripts[? $"{charmName}_step"]);
 }
 else {

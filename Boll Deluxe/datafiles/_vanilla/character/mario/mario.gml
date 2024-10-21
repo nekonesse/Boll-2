@@ -17,6 +17,12 @@ poundjump = 0;
 grow = 0;
 state = "";
 
+#define stop
+hsp = 0;
+gsp = 0;
+vsp = 0;
+state = "";
+no_move = 1;
 
 //chopp: oops rewriting the entire players script
 #define step
@@ -39,9 +45,10 @@ if (braking) xsc=brakedir
 maxspd = 2 + runvar + ((size != "basic") * 0.5);
 
 #region PreventMovement
+var no_move_prev = no_move;
 no_move = 0;
 
-if (state == "pound") || (alarm_get(2)) || (hurt) {
+if (state == "pound") || (alarm_get(2)) || (hurt) || (finish && posed && no_move_prev) {
 	no_move = true;
 }
 
@@ -273,6 +280,10 @@ if (state == "") {
 	if (skidding) {
 		spriteEvent="brake" 
 		xsc = -(skiddir)
+	}
+
+	if (finish && posed && no_move) {
+		spriteEvent="victory"
 	}
 }
 
