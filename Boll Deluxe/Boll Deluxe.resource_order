@@ -918,6 +918,7 @@
     {"name":"shd_alpha","order":1,"path":"shaders/shd_alpha/shd_alpha.yy",},
     {"name":"shd_pal_html_surface","order":1,"path":"shaders/shd_pal_html_surface/shd_pal_html_surface.yy",},
     {"name":"shd_pal_swapper","order":2,"path":"shaders/shd_pal_swapper/shd_pal_swapper.yy",},
+    {"name":"shd_scrollTexturePage","order":3,"path":"shaders/shd_scrollTexturePage/shd_scrollTexturePage.yy",},
     {"name":"shd_segaFade","order":2,"path":"shaders/shd_segaFade/shd_segaFade.yy",},
     {"name":"snd_blockbreak","order":1,"path":"sounds/snd_blockbreak/snd_blockbreak.yy",},
     {"name":"snd_enemybigexplode","order":1,"path":"sounds/snd_enemybigexplode/snd_enemybigexplode.yy",},

@@ -29,20 +29,5 @@ function draw_sprite_circle(sprite,subimg,xdraw,ydraw,xscale,yscale,radius,quant
 }
 
 function mode_seven(sprite, subimg, x_start, y_start, x_dest, y_dest, scan_offset, scan_times = 255) {
-	var xpos = x_start, 
-		ypos = y_start, 
-		yprev, md7, 
-		spr_width = sprite_get_width(sprite);
-		
-	var multx = (x_dest - x_start) / scan_times, 
-		multy = (y_dest - y_start) / scan_times;
-	
-	for (var i = 0;i == clamp(i,-scan_times,scan_times);i += 1) {
-		md7 = tan((i / scan_times) * (pi / 2));
-		
-		yprev = ypos; 
-		ypos += multy * md7;
-		xpos += multx * (md7 / 2);
-		draw_sprite_part_ext(sprite,subimg,0,wrap_val(i + scan_offset,0,sprite_get_height(sprite)),spr_width,1,xpos - (md7 * (spr_width * 0.5)),ypos,md7,yprev - ypos,#FFFFFF,1) //draw_line
-	}
+	draw_text(x_start,y_start,"mode_seven() IS OBSOLETED!!")
 }

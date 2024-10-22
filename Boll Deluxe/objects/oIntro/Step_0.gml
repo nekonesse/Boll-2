@@ -1,3 +1,5 @@
+
+
 if (egg == "3") {
 	if !(global.roomTimer & 1) {frame += 1}
 	if (frame >= hsp) {
@@ -27,7 +29,7 @@ if (egg == "3") {
 
 if flash {flash -= 1}
 
-if (keyboard_check_pressed(vk_anykey)) {
+if (!global.debug && keyboard_check_pressed(vk_anykey))||(keyboard_check_pressed(vk_enter)) {
 	game_set_speed(60,gamespeed_fps)
 	room_goto(rMainMenu)
 }

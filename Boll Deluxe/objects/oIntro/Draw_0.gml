@@ -9,18 +9,28 @@ if (egg == "3") {
 	if (frame >= 1) {
 		draw_rectangle_color(0,0,RESOLUTION_X,RESOLUTION_Y div 2,#5949D6,#5949D6,#B676B3,#B676B3,false)
 		draw_rectangle_color(0,RESOLUTION_Y div 2,RESOLUTION_X,RESOLUTION_Y,#B676B3,#B676B3,#FF9B99,#FF9B99,false)
-		mode_seven(spr_titleclouds,0,240,RESOLUTION_Y div 3,240,0,-global.roomTimer)
-		//mode_seven(spr_titleclouds,0,240,(RESOLUTION_Y div 3) * 2,240,RESOLUTION_Y,-global.roomTimer)
+
+		// "look at my texture pages." -blue circle
+		//                         - @mostersmth
+		
+		shader_set(shd_scrollTexturePage)
+		
+		var uni_x = shader_get_uniform(shd_scrollTexturePage, "xpos");
+		var uni_y = shader_get_uniform(shd_scrollTexturePage, "ypos");
+		
+		shader_set_uniform_f(uni_x,modulo(global.roomTimer,0,1600) / 1600);
+		shader_set_uniform_f(uni_y,modulo(-global.roomTimer,0,100) / 100);
+		
+		draw_sprite_tiled(spr_titleclouds,0,x,y)
+		shader_reset();
 	}
-	
-	//this does nothing btw
-	//shader_set(shd_flatcolor)
-	//vertex_submit(boll, pr_trianglelist, sprite_get_texture(spr_Samba, 0));
-	//shader_reset()
 	
 	draw_circle_color(bollStruct.x,bollStruct.y,bollStruct.z + 80,c_blue,c_blue,false)
 	
-	if (frame >= 1) {draw_text_transformed(161,16,"MARIO & SONIC IN...\n  BOLL DELUXE!!!",1,1,0)}
+	if (frame >= 1) {
+		//draw_text_transformed(161,16,"MARIO & SONIC IN...\n  BOLL DELUXE!!!",1,1,0)
+		draw_text_transformed(161,16,"    look at my\n  texture pages.",1,1,0)
+	}
 	
 	//draw_text(0,0,string(bollStruct.z)+"\n"+string(bollStruct.biggestZ)+"\n"+string(frame))
 	
@@ -30,4 +40,6 @@ if (egg == "3") {
 	//draw_sprite_ext(sprite_index,0,view_xport,view_yport,stretch,1,0,c_white,1)
 }
 
-if (flash && flash <= 30) {draw_rect(0,0,RESOLUTION_X,RESOLUTION_Y,#FFFFFF,flash / 30)}
+if (flash && flash <= 30) {
+	draw_rect(0,0,RESOLUTION_X,RESOLUTION_Y,#FFFFFF,flash / 30)
+}
