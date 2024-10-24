@@ -68,6 +68,8 @@ function player_poly_collision()
 
 function player_collision(){
 	if (piped) exit
+	if (object_get_parent(self.object_index) == oEnemy) //since enemies do not use gsp this is my hash tag Fixed! for gsp-related enemy issues
+		gsp = hsp 
 	
 	var posx, posy
 	posx = x
