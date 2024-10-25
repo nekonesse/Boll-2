@@ -25,3 +25,5 @@ if !(object_is_on) {
 	image_index=1;
 	onTimer++;
 }
+
+if (collapsing) image_index=1;

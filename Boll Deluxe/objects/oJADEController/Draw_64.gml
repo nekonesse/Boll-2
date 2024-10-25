@@ -226,7 +226,8 @@ if selected_mode == OBJECT_MODE {
 				ScribblejrFit(objname, fa_left, fa_middle, smallF, 3, object_list_area_width-104, 32).Draw(96,48)
 				//draw divider
 				draw_rect(12,96,object_list_area_width-24,3,$65555c,1,false)
-				for (var i = 0; i < array_length(proparr[10]); ++i) {
+				//we're doing a reverse loop, starting from the bottom to the top so that things like drop down menus can overlay the buttons below
+				for (var i = array_length(proparr[10])-1; i >= 0; --i) {
 					if is_array(proparr[10][i]) { 
 						//draw variable name
 					    ScribblejrFit($"{string(proparr[10][i][1])}:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112+32*i)
@@ -236,7 +237,7 @@ if selected_mode == OBJECT_MODE {
 									draw_sprite_stretched(spr_JADEcheckbox,bool(proparr[10][i][2]),96+16,(112+32*i)-12,8*3,8*3)
 								
 									//toggle variable
-									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+32+10*i,object_list_area_x+44,object_list_area_y+40+10*i)
+									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+32+10*i,object_list_area_x+44,object_list_area_y+40+10*i)&&(!open_dropmenu||open_dropmenu-1==i)
 								
 									if (mbleftpress) {
 										if (incheck) {
@@ -253,7 +254,7 @@ if selected_mode == OBJECT_MODE {
 								ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, smallF, 2, 160-8, 20).Draw(96+24,(112+32*i)-6)
 
 								//toggle variable
-								var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+10*i,object_list_area_x+34+56,object_list_area_y+40+10*i)
+								var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+10*i,object_list_area_x+34+56,object_list_area_y+40+10*i)&&(!open_dropmenu||open_dropmenu-1==i)
 								
 								if (incheck) && (mbleftpress) {
 									if !(open_dropmenu) {
@@ -273,7 +274,7 @@ if selected_mode == OBJECT_MODE {
 										//draw list of variables
 										ScribblejrFit(string(menuarr[j]), fa_left, fa_top, smallF, 2, 160-8, 20).Draw(96+24,(112+32*i+24*j)+18)
 										
-										var insubcheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+41+10*i+8*j,object_list_area_x+34+56,object_list_area_y+49+10*i+8*j)
+										var insubcheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+41+10*i+8*j,object_list_area_x+34+56,object_list_area_y+49+10*i+8*j)&&(!open_dropmenu||open_dropmenu-1==i)
 								
 										if (insubcheck) && (mbleftpress) {
 											//set selected object to selected variable
@@ -293,7 +294,7 @@ if selected_mode == OBJECT_MODE {
 									ScribblejrFit(temptypingstring, fa_middle, fa_top, smallF, 2, 19, 19).Draw(96+29,(112+32*i)-6)
 									
 									//check if clicking on box
-									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+32+10*i,object_list_area_x+44,object_list_area_y+40+10*i)
+									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+32+10*i,object_list_area_x+44,object_list_area_y+40+10*i)&&(!open_dropmenu||open_dropmenu-1==i)
 									
 									if (mbleftpress) {
 										//start typing
@@ -338,7 +339,7 @@ if selected_mode == OBJECT_MODE {
 									ScribblejrFit(temptypingstring, fa_left, fa_top, smallF, 2, 90, 19).Draw(96+29,(112+32*i)-6)
 									
 									//check if clicking on box
-									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+32+10*i,object_list_area_x+133,object_list_area_y+40+10*i)
+									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+32+10*i,object_list_area_x+133,object_list_area_y+40+10*i)&&(!open_dropmenu||open_dropmenu-1==i)
 									
 									if (mbleftpress) {
 										//start typing

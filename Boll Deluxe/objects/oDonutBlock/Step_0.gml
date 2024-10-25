@@ -1,4 +1,4 @@
-if (onTimer>=30) {
+if (onTimer>=30) || (onTimer>=3 && collapsing) {
 	fall=true;
 }
 

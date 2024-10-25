@@ -33,6 +33,13 @@ function object_get_properties(obj){
 			]
 			break;
 		case oDirectionChanger:
+			properties = [
+				["dir", "Direction", "right", "dropdown", ["up", "left", "right", "down"]],
+				["revdir", "Reverse Direction", "left", "dropdown", ["up", "left", "right", "down"]],
+				["reverse", "Is Reverse", 0, "checkbox", 0],
+				["is_break", "Is Cutoff", 0, "checkbox", 0],
+			]
+			break;
 		case oMovingPlatform:
 		case oChainsaw:
 			properties = [
@@ -49,6 +56,11 @@ function object_get_properties(obj){
 				["reverse", "Reverse", 0, "checkbox", 0],
 				["continuous", "Continuous", 0, "checkbox", 0],
 				["is_blue", "Weighted", 0, "checkbox", 0]
+			]
+			break;
+		case oDonutBlock:
+			properties = [
+				["collapsing", "Collapsing", 0, "checkbox", 0]
 			]
 			break;
 		default:
