@@ -22,8 +22,15 @@ function check_collision_dot(x1, y1, type = 0, object = collision_array){
 	        var found = found_list[| i];
 	        if (!found.no_collide) { 
 	          if (type != COL_BOTTOM && !found.semi) || (type == COL_BOTTOM) {
-					if found.slope { 
-						colslope = found.slope_factor * (-1 + (found.hflip* 2))
+					if found.slope {
+						if !(found.rounded) {
+							colslope = found.slope_factor * (-1 + (found.hflip * 2))
+						} else {
+							var new_rise=point_distance(x,y,x,found.bbox_bottom)
+							var new_run=point_distance(x,y,found.x,y)
+							var new_slope_factor=new_rise/new_run
+							colslope = new_slope_factor * (-1 + (found.hflip * 2))
+						}
 	                }else{
 						colslope = 0
 	                }
@@ -49,7 +56,14 @@ function check_collision_line(x1, y1, x2, y2, type = 0, object = collision_array
 	        if (!found.no_collide) { 
 	          if (type != COL_BOTTOM && !found.semi) || (type == COL_BOTTOM){
 					if found.slope { 
-						colslope = found.slope_factor * (-1 + (found.hflip* 2))
+						if !(found.rounded) {
+							colslope = found.slope_factor * (-1 + (found.hflip * 2))
+						} else {
+							var new_rise=point_distance(x,y,x,found.bbox_bottom)
+							var new_run=point_distance(x,y,found.x,y)
+							var new_slope_factor=new_rise/new_run
+							colslope = new_slope_factor * (-1 + (found.hflip * 2))
+						}
 	                }else{
 						colslope = 0
 	                }
@@ -75,7 +89,14 @@ function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_
 	        if (!found.no_collide) { 
 	          if (type != COL_BOTTOM && !found.semi)|| (type == COL_BOTTOM) {
 					if found.slope { 
-						colslope = found.slope_factor * (-1 + (found.hflip* 2))
+						if !(found.rounded) {
+							colslope = found.slope_factor * (-1 + (found.hflip * 2))
+						} else {
+							var new_rise=point_distance(x,y,x,found.bbox_bottom)
+							var new_run=point_distance(x,y,found.x,y)
+							var new_slope_factor=new_rise/new_run
+							colslope = new_slope_factor * (-1 + (found.hflip * 2))
+						}
 	                }else{
 						colslope = 0
 	                }

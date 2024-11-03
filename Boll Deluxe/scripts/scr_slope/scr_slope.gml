@@ -29,8 +29,12 @@ function slope_set_rise_run(obj)
 	obj.run = rn;
 	obj.slope_factor = rs/rn;
 	
-	obj.angle = point_direction(0, 16*image_yscale, 16*image_xscale, 0)
-	if (hflip) obj.angle += 180
+	if !obj.rounded {
+		obj.angle = point_direction(0, 16*image_yscale, 16*image_xscale, 0)
+		if (hflip) obj.angle += 180
+	} else {
+		obj.angle=0;
+	}
 }
 
 function draw_slope(obj)

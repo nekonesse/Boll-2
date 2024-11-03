@@ -38,5 +38,8 @@
     "path":"sprites/spr_soccerball/spr_soccerball.yy",
   },
   "spriteMaskId":null,
+  "tags":[
+    "blocks",
+  ],
   "visible":true,
 }
