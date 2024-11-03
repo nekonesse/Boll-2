@@ -15,6 +15,8 @@ function object_get_properties(obj){
 			break;
 		case oSemiSlope:
 		case oSlopeCollider:
+		case oRoundedSlope2x2:
+		case oRoundedSlope1x1:
 			properties = [
 				["hflip", "Flip", 0, "checkbox", 0],
 				["ramp", "Is Ramp", 0, "checkbox", 0]
