@@ -1,6 +1,4 @@
-//
-// Simple passthrough fragment shader
-//
+
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 
@@ -18,7 +16,15 @@ float modulo(float value, float lower, float upper) {
 }
 
 void main() {
+	//v_vTexcoord.x = v_vTexcoord.x / v_vTexcoord.y
+	
 	//v_vTexcoord = vec2(modulo(xpos,0.,1.), modulo(ypos,0.,1.));
 	
-    gl_FragColor = v_vColour * texture2D(gm_BaseTexture, vec2(modulo(v_vTexcoord.x + xpos,0.,1.), modulo(v_vTexcoord.y + ypos,0.,1.)));
+    gl_FragColor = v_vColour * texture2D(
+		gm_BaseTexture, 
+		vec2(
+			modulo(((0.5 - v_vTexcoord.x) / v_vTexcoord.y) + xpos,0.,1.),
+			modulo((v_vTexcoord.y + ypos), 0., 1.)
+		)
+	);
 }
