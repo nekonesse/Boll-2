@@ -197,7 +197,7 @@
     {"name":"oGrate","order":7,"path":"objects/oGrate/oGrate.yy",},
     {"name":"oGrateSemi","order":8,"path":"objects/oGrateSemi/oGrateSemi.yy",},
     {"name":"oHardBlock","order":9,"path":"objects/oHardBlock/oHardBlock.yy",},
-    {"name":"oHittable","order":1,"path":"objects/oHittable/oHittable.yy",},
+    {"name":"oHittable","order":11,"path":"objects/oHittable/oHittable.yy",},
     {"name":"oIntro","order":2,"path":"objects/oIntro/oIntro.yy",},
     {"name":"oItemBox","order":4,"path":"objects/oItemBox/oItemBox.yy",},
     {"name":"oKoopaRed","order":1,"path":"objects/oKoopaRed/oKoopaRed.yy",},

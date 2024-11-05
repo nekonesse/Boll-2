@@ -10,8 +10,8 @@
   "name":"oHittable",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects/Objects.yy",
+    "name":"Collision",
+    "path":"folders/Objects/Objects/Collision.yy",
   },
   "parentObjectId":{
     "name":"oCollider",
