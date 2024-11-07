@@ -1,6 +1,8 @@
 #macro gametitle "Boll Deluxe"
 #macro version "2.2"
 
+global.smallBoldFont=font_add_sprite_ext(spr_smallboldfont,"0123456789abcdefghijklmnopqrstuvwxyz,.'"+chr(34)+":;/"+chr(92)+"[]><*!?_-=+{}#$@%^&|`~",true,1)
+
 global.debug=0
 global.netgame = false; // top 10 boll deluxe things that will never happen:
 global.nextlevel = working_directory+"\save.jade"

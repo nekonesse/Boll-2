@@ -72,6 +72,11 @@ function object_get_properties(obj){
 				["dir", "Direction", "up", "dropdown", ["up", "left", "right", "down", "none"]]
 			]
 			break;
+		case oZapper:
+			properties = [
+				["dir", "Direction", "right", "dropdown", ["up", "left", "right", "down"]]
+			]
+			break;
 		default:
 			properties = [
 			]

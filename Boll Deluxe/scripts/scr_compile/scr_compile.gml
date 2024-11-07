@@ -92,29 +92,33 @@ function compile_code(){
 }
 
 function import_sheets() {
-	show_debug_message("BEGIN SHEET COMPLATION...")
+	show_debug_message("BEGIN SPRITE COMPLATION...")
 	oGameManager.PlayerColl.StartBatch();
 	for(var i = 0; i < array_length(global._playerChars); ++i) {
 		var _name = global._playerChars[i]; 
 		var dir=$"{working_directory}\\_vanilla\\character\\{_name}"
+		if file_exists($"{dir}\\sprites\\_HUDicon.png") {
+			oGameManager.PlayerColl.AddFile($"{dir}\\sprites\\_HUDicon.png",$"spr_{_name}_HUDicon",1,false,false,CollageOrigin.CENTER,CollageOrigin.CENTER)
+		} else throw $"SORRY! NO HUD ICON IN CHARACTER \"{_name}\" EXISTS! CHECK YOUR SPRITES!"
 		if is_array(config_getarray("sprite_list", dir)) {
 			global.player_spritelists[i]=config_getarray("sprite_list", dir)
 			var array=global.player_spritelists[i]
 			for (var j = 0; j < array_length(global.powerups); ++j) {
 				for (var g = 0; g < array_length(array); ++g) {
-					var frames=nozerounreal(config_setting(global.powerups[j]+" "+array[g]+" frames", dir),config_setting(array[g]+" frames", dir))
-					var org_x=unreal(config_setting(global.powerups[j]+" "+array[g]+" orgX", dir),config_setting(array[g]+" orgX", dir))
-					var org_y=unreal(config_setting(global.powerups[j]+" "+array[g]+" orgY", dir),config_setting(array[g]+" orgY", dir))
-					org_x=CollageOrigin.CENTER+org_x
-					org_y=CollageOrigin.CENTER+org_y
-					show_debug_message($"{array[g]} frames: {frames}")
-					oGameManager.PlayerColl.AddFile($"{dir}\\sprites\\{global.powerups[j]}\\{array[g]}.png",$"spr_{_name}_{global.powerups[j]}_{array[g]}",frames,false,false,org_x,org_y)
+					if (array[g]!="_HUDicon") { //make sure they arent trying to overwrite our HUD icon that we imported
+						var frames=nozerounreal(config_setting(global.powerups[j]+" "+array[g]+" frames", dir),config_setting(array[g]+" frames", dir))
+						var org_x=unreal(config_setting(global.powerups[j]+" "+array[g]+" orgX", dir),config_setting(array[g]+" orgX", dir))
+						var org_y=unreal(config_setting(global.powerups[j]+" "+array[g]+" orgY", dir),config_setting(array[g]+" orgY", dir))
+						org_x=CollageOrigin.CENTER+org_x
+						org_y=CollageOrigin.CENTER+org_y
+						oGameManager.PlayerColl.AddFile($"{dir}\\sprites\\{global.powerups[j]}\\{array[g]}.png",$"spr_{_name}_{global.powerups[j]}_{array[g]}",frames,false,false,org_x,org_y)
+					} else continue
 				}
 			}
 		}
 	}
 	oGameManager.PlayerColl.FinishBatch();
-	show_debug_message("Sheets have finished being compiled")
+	show_debug_message("Sprite have finished being compiled")
 }
 
 function delete_sheets() {

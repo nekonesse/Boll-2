@@ -11,7 +11,7 @@
 	"iid": "89e20cd0-6280-11ee-9ff1-11df5747d5f3",
 	"jsonVersion": "1.5.3",
 	"appBuildId": 473703,
-	"nextUid": 108,
+	"nextUid": 110,
 	"identifierStyle": "Capitalize",
 	"toc": [],
 	"worldLayout": "Free",
@@ -1080,19 +1080,19 @@
 				{
 					"identifier": "dir",
 					"doc": null,
-					"__type": "String",
-					"uid": 30,
-					"type": "F_String",
+					"__type": "Float",
+					"uid": 109,
+					"type": "F_Float",
 					"isArray": false,
 					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
-					"editorDisplayMode": "NameAndValue",
+					"editorDisplayMode": "Hidden",
 					"editorDisplayScale": 1,
 					"editorDisplayPos": "Above",
 					"editorLinkStyle": "StraightArrow",
 					"editorDisplayColor": null,
-					"editorAlwaysShow": true,
+					"editorAlwaysShow": false,
 					"editorShowInWorld": true,
 					"editorCutLongValues": true,
 					"editorTextSuffix": null,
@@ -1104,10 +1104,7 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": {
-						"id": "V_String",
-						"params": ["Right"]
-					},
+					"defaultOverride": null,
 					"textLanguageMode": null,
 					"symmetricalRef": false,
 					"autoChainRef": true,
@@ -1156,19 +1153,19 @@
 				{
 					"identifier": "dir",
 					"doc": null,
-					"__type": "String",
-					"uid": 32,
-					"type": "F_String",
+					"__type": "Float",
+					"uid": 108,
+					"type": "F_Float",
 					"isArray": false,
 					"canBeNull": false,
 					"arrayMinLength": null,
 					"arrayMaxLength": null,
-					"editorDisplayMode": "ValueOnly",
+					"editorDisplayMode": "Hidden",
 					"editorDisplayScale": 1,
 					"editorDisplayPos": "Above",
 					"editorLinkStyle": "StraightArrow",
 					"editorDisplayColor": null,
-					"editorAlwaysShow": true,
+					"editorAlwaysShow": false,
 					"editorShowInWorld": true,
 					"editorCutLongValues": true,
 					"editorTextSuffix": null,
@@ -1180,10 +1177,7 @@
 					"max": null,
 					"regex": null,
 					"acceptFileTypes": null,
-					"defaultOverride": {
-						"id": "V_String",
-						"params": ["right"]
-					},
+					"defaultOverride": null,
 					"textLanguageMode": null,
 					"symmetricalRef": false,
 					"autoChainRef": true,
@@ -4531,10 +4525,7 @@
 							"height": 16,
 							"defUid": 29,
 							"px": [456,392],
-							"fieldInstances": [{ "__identifier": "dir", "__type": "String", "__value": "up", "__tile": null, "defUid": 30, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["up"]
-							}] }],
+							"fieldInstances": [{ "__identifier": "dir", "__type": "Float", "__value": 90, "__tile": null, "defUid": 109, "realEditorValues": [{ "id": "V_Float", "params": [90] }] }],
 							"__worldX": 456,
 							"__worldY": 392
 						},
@@ -4550,10 +4541,7 @@
 							"height": 16,
 							"defUid": 29,
 							"px": [456,216],
-							"fieldInstances": [{ "__identifier": "dir", "__type": "String", "__value": "down", "__tile": null, "defUid": 30, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["down"]
-							}] }],
+							"fieldInstances": [{ "__identifier": "dir", "__type": "Float", "__value": 270, "__tile": null, "defUid": 109, "realEditorValues": [{ "id": "V_Float", "params": [270] }] }],
 							"__worldX": 456,
 							"__worldY": 216
 						},
@@ -4569,10 +4557,7 @@
 							"height": 16,
 							"defUid": 31,
 							"px": [456,328],
-							"fieldInstances": [{ "__identifier": "dir", "__type": "String", "__value": "down", "__tile": null, "defUid": 32, "realEditorValues": [{
-								"id": "V_String",
-								"params": ["down"]
-							}] }],
+							"fieldInstances": [{ "__identifier": "dir", "__type": "Float", "__value": 90, "__tile": null, "defUid": 108, "realEditorValues": [{ "id": "V_Float", "params": [90] }] }],
 							"__worldX": 456,
 							"__worldY": 328
 						},
