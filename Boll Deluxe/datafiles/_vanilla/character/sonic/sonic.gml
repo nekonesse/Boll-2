@@ -20,6 +20,10 @@ topspd = 4.5;
 grow = 0;
 state = "";
 control_lock = 0;
+dropdash_spd = 6;
+max_dropdash_spd = 9;
+dropdash = 0;
+dropdash_timer = 0;
 
 #define step
 
@@ -141,6 +145,23 @@ if (state == "jump") && !(piped){
 	{
 		vsp = -2
 	}
+
+	if (vsp >= -2 && apress && dropdash == 0) {
+		dropdash = 1
+	}
+
+	if (dropdash == 1) {
+		if (akey){
+			dropdash_timer++
+			if (dropdash_timer == 18) {
+				playsfx("sonicdropdash")
+			}
+		} else {
+			stopsfx("sonicdropdash")
+			dropdash = 2
+			dropdash_timer = 0
+		}
+	}
 	
 }
 
@@ -159,13 +180,13 @@ if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped){
 
 #region Rolling
 if (state != "roll" || !grounded) && !(piped) {
-	accel = 0.05
+	accel = 0.0425
 	if (!grounded) {
 		accel = 0.09375
 		fastaccel = 0.09375
 	}
-	fastaccel = 0.5 //deaccel
-	fric = 0.05
+	fastaccel = 0.45 //deaccel
+	fric = 0.0425
 }
 
 
@@ -177,6 +198,13 @@ if (state == "" || state == "crouch" || state == "spindash") && (grounded && dow
 
 if (state == "roll" && grounded) && !(piped) {
 	accel = 0
+	if (sign(gsp) == move_dir) {
+		if (sign(gsp) == -1){
+			gsp = min(0, gsp + fric)
+		}else{
+			gsp = max(0, gsp - fric)
+		}
+	}
 	fastaccel = 0.125
 	fric = 0.0234375
 	//taken from the sonic physics guide
@@ -319,6 +347,25 @@ if (colangle <= 336 && colangle >= 270)
 		}
 	}
 }
+
+if (dropdash == 1 && dropdash_timer >= 18) {
+	stopsfx("sonicdropdash")
+	playsfx("sonicrelease")
+	if (sign(hsp) == move_dir) {
+		gsp = (gsp / 4) + (dropdash_spd * move_dir)
+	} else {
+		if (colangle == 0) {
+			gsp = dropdash_spd * move_dir
+		} else {
+			gsp = (gsp / 2) + (dropdash_spd * move_dir)
+		}
+	}
+	state = "roll";
+	gsp = clamp(gsp,-max_dropdash_spd, max_dropdash_spd)
+	
+}
+dropdash_timer = 0
+dropdash = 0
 	
 vsp = 0
 

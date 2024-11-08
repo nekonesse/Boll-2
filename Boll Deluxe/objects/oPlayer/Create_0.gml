@@ -53,6 +53,7 @@ rot=0
 fr=0
 frame=0
 dy=0
+move_dir = 1
 
 cantslowanim=0
 flash=0

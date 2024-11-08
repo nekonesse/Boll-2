@@ -58,6 +58,10 @@ function player_movement_sonic(){
 		}
 	}
 	
+	if !grounded && vsp > -4 && vsp < 0 {
+		hsp -= (hsp / 128)	
+	}
+	
 	if (abs(gsp) > maxspd) && (grounded) gsp=approach_val(gsp, maxspd * sign(gsp), 0.5) 
 	if (abs(hsp) > maxspd) && (!grounded) hsp=approach_val(hsp, maxspd * sign(hsp), 0.5)
 	
