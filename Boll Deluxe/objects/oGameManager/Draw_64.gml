@@ -5,7 +5,8 @@ draw_clear_alpha(c_black,0);
 draw_set_font(global.smallBoldFont)
 for (var i = 0; i < array_length(global._playerChars); ++i) {
 	var spr=oGameManager.PlayerColl.GetImageInfo($"spr_{global._playerChars[i]}_HUDicon")
-    CollageDrawImage(spr,0,12+18*i,21)
+    if CollageIsImage(spr)
+	CollageDrawImage(spr,0,12+18*i,21)
 	var _lives=string_repeat("0", 2-string_length(string(global.lives[i]))) + string(global.lives[i])
 	draw_text(19+24*i,19,$"*{_lives}")
 	draw_text(6+24*i,2,string_lower(global._playerChars[i]))

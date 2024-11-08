@@ -1,5 +1,5 @@
 #define datalist
-spriteEvents=split_string("idle,wait,lookUp,pose,crouch,knock,dead,walk,run,runMax,brake,spring,springFall,jump,bonk,ball,spinDash,spinCharge,dropDash,carryIdle,carryWalk,carryRun,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,roll,carrySwim,pushing,balancing,dive,fireToss,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
+spriteEvents=split_string("idle,wait,lookUp,victory,crouch,knock,dead,walk,run,runMax,airWalk,brake,spring,springFall,jump,bonk,roll,spinDash,spinCharge,dropDash,carryIdle,carryWalk,carryRun,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,roll,carrySwim,pushing,balancing,dive,fireToss,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
 sound_list=split_string("select,damage,die,jump,win,step,bonk,release,skid,spin,spindash,insta,dash,boom,firedash,dropdash",",");
 
 #define create
@@ -169,8 +169,14 @@ if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped){
 	state = "jump"
 	grounded = false
 	colangle = colangle * 0.9
-	vsp -= (6) * dcos(colangle/8);
-	hsp -= (6) * dsin(colangle);
+	vsp = -6
+	
+	var vd=point_direction(0,0,hsp,vsp)+point_direction(0,0,1,colslope)
+    var vm=point_distance(0,0,hsp,vsp)
+    hsp=lengthdir_x(vm,vd)
+    vsp=lengthdir_y(vm,vd)
+    //adjust vsp and hsp to slope angle influence
+	
 	playsfx(charmName+"jump",1,0,1)
 	canjump = 0;
 	control_lock = 0;
@@ -249,14 +255,17 @@ if (state == "") {
 	}
 }
 
-if (state == "roll" || state == "jump") {
-	if state!="jump" frspd=0.2+abs(gsp)/3
-	else frspd=1
-	spriteEvent="ball"
+if (state == "jump") {
+	frspd=1
+	spriteEvent="jump"
 	if (bonk) {
-		frspd=1
 		spriteEvent="bonk"
 	}
+}
+
+if (state == "roll") {
+	frspd=0.2+abs(gsp)/3
+	spriteEvent="roll"
 }
 
 if (state == "spinDash") {

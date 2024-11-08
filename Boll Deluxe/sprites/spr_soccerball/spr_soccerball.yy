@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"6734a731-984f-43e4-a5f2-d3862cdf4d3c","name":"6734a731-984f-43e4-a5f2-d3862cdf4d3c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"5f839e8f-b1d0-47f0-9d2d-fe46cf5216ba","name":"5f839e8f-b1d0-47f0-9d2d-fe46cf5216ba","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":16,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"878c2d73-4613-4e9d-8181-13695ed6828d","blendMode":0,"displayName":"default","isLocked":false,"name":"878c2d73-4613-4e9d-8181-13695ed6828d","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"45d2022b-493f-4c44-830f-5115c91ae231","blendMode":0,"displayName":"default","isLocked":false,"name":"45d2022b-493f-4c44-830f-5115c91ae231","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_soccerball",
   "nineSlice":null,
@@ -59,7 +59,7 @@
     },
     "name":"spr_soccerball",
     "playback":1,
-    "playbackSpeed":30.0,
+    "playbackSpeed":0.0,
     "playbackSpeedType":0,
     "resourceType":"GMSequence",
     "resourceVersion":"2.0",
@@ -69,8 +69,8 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"6734a731-984f-43e4-a5f2-d3862cdf4d3c","path":"sprites/spr_soccerball/spr_soccerball.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"53c2bbd5-d565-499c-9cae-0f4f237cd474","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"5f839e8f-b1d0-47f0-9d2d-fe46cf5216ba","path":"sprites/spr_soccerball/spr_soccerball.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"6151c4ea-9684-4755-a2d8-6addba10a75d","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
