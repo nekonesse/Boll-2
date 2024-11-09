@@ -1,4 +1,6 @@
 ///@description Game HUD
+if !surface_exists(HUDsurface) exit;
+
 surface_set_target(HUDsurface);
 draw_clear_alpha(c_black,0);
 

@@ -210,6 +210,7 @@ if (state == "wallslide") && !piped {
 		xsc=esign(hsp,xsc)
 		no_move=true;
 		alarm_set(2,12);
+		playsfx(charmName+"jump",1,0,1)
 		state = "jump";
 	}
 	

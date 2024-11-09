@@ -1,5 +1,5 @@
 #define datalist
-spriteEvents=split_string("idle,wait,lookUp,victory,crouch,knock,dead,walk,run,runMax,airWalk,brake,spring,springFall,jump,bonk,roll,spinDash,spinCharge,dropDash,carryIdle,carryWalk,carryRun,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,roll,carrySwim,pushing,balancing,dive,fireToss,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
+spriteEvents=split_string("idle,wait,lookUp,victory,crouch,knock,dead,walk,run,runMax,wallRun,airWalk,brake,spring,springFall,jump,bonk,roll,spinDash,spinCharge,dropDash,carryIdle,carryWalk,carryRun,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,roll,carrySwim,pushing,balancing,dive,fireToss,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
 sound_list=split_string("select,damage,die,jump,win,step,bonk,release,skid,spin,spindash,insta,dash,boom,firedash,dropdash",",");
 
 #define create
@@ -24,6 +24,8 @@ dropdash_spd = 6;
 max_dropdash_spd = 9;
 dropdash = 0;
 dropdash_timer = 0;
+storedhsp=0;
+yvol=0;
 
 #define step
 
@@ -52,7 +54,7 @@ if (state == "roll") {
 	rolling = true
 }
 
-if (control_lock > 0 || hurt) no_move = true
+if (control_lock > 0 || hurt || state == "wallrun") no_move = true
 
 
 if !(piped) && !(electrocuted) && !(electrocution_timer) {
@@ -163,6 +165,16 @@ if (state == "jump") && !(piped){
 		}
 	}
 	
+	if (move != 0) && (vsp < 0) {
+		//wall sliding
+		var coll=check_collision_line(x+hsp+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+hsp+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
+		if (!grounded) && (coll) {
+			storedhsp=abs(hsp)
+			yvol=max((storedhsp), 6) //get amount of upward velocity calculated from horizontal AND vertical speed
+			state = "wallrun"
+			no_move=true;
+		} 
+	}
 }
 
 if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped){
@@ -183,6 +195,36 @@ if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped){
 }
 
 #endregion
+
+#region Wallrunning
+
+if (state == "wallrun") && !piped {
+	yvol=max(-7, yvol-0.2)
+	vsp=-yvol
+	no_move=true;
+	
+	if !(collision_point(x+(hit_sizex+1)*xsc,y,collision_array, false, true)) || grounded {
+		show_debug_message("fuck you")
+		state = "";
+		storedhsp=0;
+		storedvsp=0;
+	}
+	
+	if (apress) {
+		hsp=-3*esign(move,xsc)
+		vsp=-5
+		xsc=esign(hsp,xsc)
+		no_move=true;
+		alarm_set(2,12);
+		playsfx(charmName+"jump",1,0,1)
+		state = "jump";
+		storedhsp=0;
+		storedvsp=0;
+	}
+}
+#endregion
+
+
 
 #region Rolling
 if (state != "roll" || !grounded) && !(piped) {
@@ -241,35 +283,39 @@ grow = max(0, (grow - 1));
 
 frspd=1
 
-if (state == "") {
-	if (ceil(abs(gsp))>3) {
-		frspd=abs(gsp)/4
-		spriteEvent="run"
+switch (state) {
+	case "": {
+		if (ceil(abs(gsp))>3) {
+			frspd=abs(gsp)/4
+			spriteEvent="run"
+		}
+		else if !(abs(gsp)){ 
+			spriteEvent="idle"
+		}
+		else {
+			frspd=abs(gsp)/4
+			spriteEvent="walk"
+		}
+	} break;
+	case "jump": {
+		frspd=1
+		spriteEvent="jump"
+		if (bonk) {
+			spriteEvent="bonk"
+		}
+	} break;
+	case "roll": {
+		if (state == "roll") {
+			frspd=0.2+abs(gsp)/3
+			spriteEvent="roll"
+		}
+	} break;
+	case "spindash": {
+		spriteEvent="spinDash"
+	} break;
+	case "wallrun": {
+		spriteEvent="wallRun"
 	}
-	else if !(abs(gsp)){ 
-		spriteEvent="idle"
-	}
-	else {
-		frspd=abs(gsp)/4
-		spriteEvent="walk"
-	}
-}
-
-if (state == "jump") {
-	frspd=1
-	spriteEvent="jump"
-	if (bonk) {
-		spriteEvent="bonk"
-	}
-}
-
-if (state == "roll") {
-	frspd=0.2+abs(gsp)/3
-	spriteEvent="roll"
-}
-
-if (state == "spinDash") {
-	spriteEvent="spinDash"
 }
 
 if (hurt) {
@@ -321,7 +367,7 @@ bonk = 12
 
 #define floor_land
 canstopjump = false;
-state = "";
+if state!="wallrun" state = "";
 bonk = 0;
 gsp = hsp
 //landing speed lol
