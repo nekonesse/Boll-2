@@ -27,6 +27,25 @@ dropdash_timer = 0;
 storedhsp=0;
 storeddir=0;
 yvol=0;
+wallrunperiod=0;
+
+#define beginstep
+#region Start Wallrunning
+if (move != 0) && (vsp < 0) && (state!="wallrun") {
+	//wall sliding
+	var coll=check_collision_line(x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
+	if (!grounded) && (coll) {
+		storedhsp=abs(hsp)
+		storeddir=move;
+		var maxsp = 6;
+		var minsp = 2;
+		yvol=clamp(abs(storedhsp*2)+abs(min(vsp/2,0)), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
+		state = "wallrun"
+		no_move=true;
+		wallrunperiod=5;
+	} 
+}
+#endregion
 
 #define step
 
@@ -187,43 +206,37 @@ if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped){
 
 #region Wallrunning
 
-if (move != 0) && ((vsp < 0 && state == "") || state == "jump") {
-	//wall sliding
-	var coll=check_collision_line(x+((hit_sizex+3)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+3)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
-	if (!grounded) && (coll) {
-		hsp=0;
-		storedhsp=abs(hsp)
-		storeddir=move;
-		yvol=max(abs(min((storedhsp*2)+min(vsp/2,0), 8)),3.5) //get amount of upward velocity calculated from horizontal AND vertical speed
-		state = "wallrun"
-		no_move=true;
-	} 
-}
-
 if (state == "wallrun") && !piped {
-	yvol=max(-7, yvol-0.15)
-	vsp=-yvol
 	no_move=true;
 	move=storeddir;
+	if round(vsp) >= 0 {
+		vsp=0
+		wallrunperiod=max(0,wallrunperiod-1);
+	} else {
+		var wallfric=0.15
+		yvol=max(-7, yvol-wallfric)
+		vsp=-yvol
+	}
 	
-	if !(check_collision_dot(x+(hit_sizex+3)*xsc,y,COL_WALL)) || (grounded) || (vsp > 3) {
+	if !(check_collision_dot(x+(hit_sizex+3)*xsc,y,COL_WALL)) || (grounded) || !(wallrunperiod) {
 		state = "";
-		storedhsp=0;
+		//storedhsp=0;
 		storedvsp=0;
 		storeddir=0;
 	}
 	
 	if (apress) {
-		hsp=-3*esign(move,xsc)
+		storedhsp *= 0.75;
+		hsp=-max(storedhsp,1)*esign(move,xsc)
 		vsp=-5
 		xsc=esign(hsp,xsc)
 		no_move=true;
 		alarm_set(2,12);
 		playsfx(charmName+"jump",1,0,1)
 		state = "jump";
-		storedhsp=0;
 		storedvsp=0;
 		storeddir=0;
+		wallrunperiod=5;
 	}
 }
 #endregion
@@ -283,6 +296,7 @@ bonk=max(bonk,bonk-1)
 grow = max(0, (grow - 1));
 
 #define draw
+draw_text(x,y-32,storedhsp)
 
 #region Sprite Manager
 
@@ -375,6 +389,7 @@ canstopjump = false;
 if state!="wallrun" state = "";
 bonk = 0;
 gsp = hsp
+storedhsp=0;
 //landing speed lol
 if (colangle < 0) colangle += 360
 show_debug_message(colangle)
