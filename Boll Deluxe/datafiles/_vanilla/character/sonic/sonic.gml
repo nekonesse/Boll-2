@@ -24,26 +24,65 @@ dropdash_spd = 6;
 max_dropdash_spd = 9;
 dropdash = 0;
 dropdash_timer = 0;
-storedhsp=0;
+real_sprite_angle = 0;
+
+// wallrun junk
+
+// put this all in some Dumb Array
+wallrundata = [ 0, 0, 0,
+				0, 0, 0,
+				0, 0 ];
+
+wallrun_rollangle = 0;
+
 storeddir=0;
 yvol=0;
 wallrunperiod=0;
 
+
 #define beginstep
+
+// reset sprite angle
+sprite_angle = real_sprite_angle;
+
+if (state != "wallrun")
+{
+	wallrun_rollangle = max(0, wallrun_rollangle - 10);
+}
+
+// chearii: do speed updates BEFORE we hit a wall
+// might lead to inconsistencies, but who cares?
+wallrundata[0] = abs(hsp);
+wallrundata[1] = abs((x - xprevious) div 1);
+wallrundata[2] = sign(hsp);
+
+wallrundata[3] = abs(vsp);
+wallrundata[4] = abs((y - yprevious) div 1);
+wallrundata[5] = sign(vsp);
+
+// get the distance in total of the horizontal speed and vertical speed
+wallrundata[6] = sqrt((hsp * hsp) + (vsp * vsp));
+
+// do the same for difference
+wallrundata[7] = sqrt((wallrundata[1] * wallrundata[1]) + (wallrundata[4] * wallrundata[4]));
+
 #region Start Wallrunning
 if (move != 0) && (vsp < 0) && (state!="wallrun") {
 	//wall sliding
 	var coll=check_collision_line(x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
-	if (!grounded) && (coll) {
-		storedhsp=abs(hsp)
-		storeddir=move;
-		var maxsp = 6;
-		var minsp = 2;
-		yvol=clamp(abs(storedhsp*2)+abs(min(vsp/2,0)), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
-		state = "wallrun"
-		no_move=true;
-		wallrunperiod=5;
-	} 
+	if (!grounded)
+	{
+		if (coll)
+		{
+			storeddir=move;
+			var maxsp = 6;
+			var minsp = 2;
+			yvol=clamp(abs(wallrundata[6]*2)+abs(min(vsp/2,0)), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
+			state = "wallrun"
+			no_move=true;
+			wallrunperiod=5;
+		}
+	}
 }
 #endregion
 
@@ -207,6 +246,12 @@ if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped){
 #region Wallrunning
 
 if (state == "wallrun") && !piped {
+	
+	if (wallrun_rollangle < 90)
+	{
+		wallrun_rollangle = min(90, wallrun_rollangle + 5);
+	}
+	
 	no_move=true;
 	move=storeddir;
 	if round(vsp) >= 0 {
@@ -220,14 +265,14 @@ if (state == "wallrun") && !piped {
 	
 	if !(check_collision_dot(x+(hit_sizex+3)*xsc,y,COL_WALL)) || (grounded) || !(wallrunperiod) {
 		state = "";
-		//storedhsp=0;
+		//wallrundata[0]=0;
 		storedvsp=0;
 		storeddir=0;
 	}
 	
 	if (apress) {
-		storedhsp *= 0.75;
-		hsp=-max(storedhsp,1)*esign(move,xsc)
+		wallrundata[6] *= 0.75;
+		hsp=-max(wallrundata[6],1)*esign(move,xsc)
 		vsp=-5
 		xsc=esign(hsp,xsc)
 		no_move=true;
@@ -296,13 +341,19 @@ bonk=max(bonk,bonk-1)
 grow = max(0, (grow - 1));
 
 #define draw
-draw_text(x,y-32,storedhsp)
+draw_text(x,y-80,wallrundata[6]);
+draw_text(x,y-64,wallrundata[1]);
+draw_text(x,y-48,wallrun_rollangle);
 
 #region Sprite Manager
 
 frspd=1
 
+real_sprite_angle = sprite_angle;
+sprite_angle += wallrun_rollangle;
+
 switch (state) {
+
 	case "": {
 		if (ceil(abs(gsp))>3) {
 			frspd=abs(gsp)/4
@@ -333,6 +384,7 @@ switch (state) {
 		spriteEvent="spinDash"
 	} break;
 	case "wallrun": {
+		frspd=abs(vsp)/4
 		spriteEvent="wallRun"
 	}
 }
@@ -389,7 +441,7 @@ canstopjump = false;
 if state!="wallrun" state = "";
 bonk = 0;
 gsp = hsp
-storedhsp=0;
+wallrundata[0]=0;
 //landing speed lol
 if (colangle < 0) colangle += 360
 show_debug_message(colangle)
