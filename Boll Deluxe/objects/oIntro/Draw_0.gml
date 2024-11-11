@@ -1,25 +1,24 @@
-var i,md7,ypos = RESOLUTION_Y / 2, xpos = RESOLUTION_X / 2, yprev = 0;
-
 if (egg == "3") {
-	for (i = 0; i < 320; i++) {
+	for (var i = 0; i < 320; i++) {
 		draw_sprite_part_ext(sprite_index,frame,0,ysc * (i / 320),xsc,1,(i & 1) ^ (global.roomTimer & 1),i,1,1,#FFFFFF,1)
 	}
 	//draw_text(view_get_xport(0) + 320,room_height/2,"egg = "+string(egg)+"\nroomTimer = "+string(global.roomTimer)+"\nframe = "+string(frame))
 } else {
 	if (frame >= 1) {
-		draw_rectangle_color(0,0,RESOLUTION_X,RESOLUTION_Y div 2,#5949D6,#5949D6,#B676B3,#B676B3,false)
-		draw_rectangle_color(0,RESOLUTION_Y div 2,RESOLUTION_X,RESOLUTION_Y,#B676B3,#B676B3,#FF9B99,#FF9B99,false)
+		draw_rectangle_color(0,0,RESOLUTION_X,135,#5949D6,#5949D6,#B676B3,#B676B3,false)
+		draw_rectangle_color(0,135,RESOLUTION_X,RESOLUTION_Y,#B676B3,#B676B3,#FF9B99,#FF9B99,false)
 		
 		shader_set(shd_mode7Ceiling);
 		
 		shader_set_uniform_f_array(shaderUV,[spriteUV[0],spriteUV[1],spriteUV[2],spriteUV[3]]);
 		shader_set_uniform_f_array(offset,[global.roomTimer * 2, global.roomTimer * -0.75]);
-		shader_set_uniform_f(angle, 45);
+		shader_set_uniform_f(angle, 180);
 		shader_set_uniform_f(height, 128);
 		shader_set_uniform_f(mapSize, xsc);
 		shader_set_uniform_f(horizon, 128);
+		shader_set_uniform_f(pos, 96);
 		
-		draw_sprite_ext(spr_titleclouds,0,RESOLUTION_X div 2,RESOLUTION_X div 2,16,8,0,#FFFFFF,1);
+		draw_sprite_ext(spr_titleclouds,0,240,135,16,2,0,#FFFFFF,1);
 		shader_reset();
 	}
 	
