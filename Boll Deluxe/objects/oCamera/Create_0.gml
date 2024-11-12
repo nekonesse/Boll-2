@@ -25,12 +25,6 @@ ysensor = CAM_SENSOR_HEIGHT;
 xnudge = [0, 0];
 ynudge = [0, 0];
 ynudgespd = 0;
-
-// camera locks
-xmin = 0;
-ymin = 0;
-xmax = room_width;
-ymax = room_height;
 // camera course-correction booleans, prevents any extra camera movements
 xcorrect = false;
 ycorrect = false;
@@ -44,3 +38,10 @@ y_final_prev = y_final;
 
 xbounds = camera_get_view_width(view_camera[0]);
 ybounds = camera_get_view_height(view_camera[0]);
+
+// camera locks
+xmin = 0;
+ymin = 0;
+xmax = room_width-xbounds/2;
+ymax = room_height-ybounds/2;
+camera_set_view_border(view_camera[0],xmax,ymax)

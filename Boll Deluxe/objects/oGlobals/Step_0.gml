@@ -19,5 +19,3 @@ if global.debug {
 		room_speed+=10
 	}
 }
-
-global.camera_x = camera_get_view_x(view_camera[0]) div 1;

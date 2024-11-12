@@ -232,8 +232,8 @@ else
 	}
 	xmin = 0;
 	ymin = 0;
-	xmax = room_width;
-	ymax = room_height;
+	xmax = room_width-xbounds/2;
+	ymax = room_height-ybounds/2;
 }
 
 
@@ -292,8 +292,8 @@ x_final = x + xnudge[0];
 y_final = y + ynudge[0];
 
 // move and resize the camera
-xx = min(room_width, max(0, x_final - (xwidth div 2)));
-yy = min(room_height, max(0, y_final - (ywidth div 2)));
+xx = clamp(x_final - (xwidth div 2), 0, xmax);
+yy = clamp(y_final - (ywidth div 2), 0, ymax);
 
 // handle zooming
 var finxdiff = intlib_make_fixedpoint(abs(xx - x_final_prev));
@@ -317,7 +317,7 @@ if (can_zoom)
 xb = intlib_make_u32(xbounds * zoom);
 yb = intlib_make_u32(ybounds * zoom);
 
-camera_set_view_pos(view_camera[0],floor(xx),floor(yy));
+camera_set_view_pos(view_camera[0],floor(xx),clamp(floor(yy)-8,0,ymax));
 camera_set_view_size(view_camera[0],xbounds * zoom,ybounds * zoom);
 
 x_final_prev = xx;

@@ -226,8 +226,8 @@ function draw_player() {
 		CollageDrawImageExt(
 			spr, 
 			floor(frame),
-			floor(x) - (floor(offset_x)) * -xsc, 
-			floor(y) - (floor(offset_y) - dy - (6) - (hit_sizey)) * -ysc,
+			floor(x) - (lengthdir_x(offset_x,(sprite_angle-90)*xsc)) * -xsc, 
+			floor(y) - (lengthdir_y(offset_y,(sprite_angle-90)*ysc) - dy - (6) - (hit_sizey)) * -ysc,
 			xsc,
 			ysc,
 			sprite_angle*xsc,

@@ -40,7 +40,7 @@ yvol=0;
 wallrunperiod=0;
 
 
-#define beginstep
+#define step_begin
 
 // reset sprite angle
 sprite_angle = real_sprite_angle;
@@ -61,7 +61,7 @@ wallrundata[4] = abs((y - yprevious) div 1);
 wallrundata[5] = sign(vsp);
 
 // get the distance in total of the horizontal speed and vertical speed
-wallrundata[6] = sqrt((hsp * hsp) + (vsp * vsp));
+wallrundata[6] = sqrt((hsp * hsp) + (vsp * vsp)/2);
 
 // do the same for difference
 wallrundata[7] = sqrt((wallrundata[1] * wallrundata[1]) + (wallrundata[4] * wallrundata[4]));
@@ -76,8 +76,8 @@ if (move != 0) && (vsp < 0) && (state!="wallrun") {
 		{
 			storeddir=move;
 			var maxsp = 6;
-			var minsp = 2;
-			yvol=clamp(abs(wallrundata[6]*2)+abs(min(vsp/2,0)), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
+			var minsp = 2.5;
+			yvol=median(abs(wallrundata[6]), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
 			state = "wallrun"
 			no_move=true;
 			wallrunperiod=5;
@@ -115,6 +115,7 @@ if (state == "roll") {
 
 if (control_lock > 0 || hurt || state == "wallrun") no_move = true
 
+control_lock = max(0,control_lock - 1)
 
 if !(piped) && !(electrocuted) && !(electrocution_timer) {
 	
@@ -185,7 +186,6 @@ if (!grounded) {
 	}
 
 	#endregion
-	control_lock= max(0,control_lock - 1)
 	//handles slope influence
 	if (state == "roll") && !(piped) {
 		player_slide_sonic(0.125, rolling, 0.078125, 0.3125);
@@ -249,7 +249,7 @@ if (state == "wallrun") && !piped {
 	
 	if (wallrun_rollangle < 90)
 	{
-		wallrun_rollangle = min(90, wallrun_rollangle + 5);
+		wallrun_rollangle = min(90, wallrun_rollangle + 10);
 	}
 	
 	no_move=true;
@@ -271,12 +271,14 @@ if (state == "wallrun") && !piped {
 	}
 	
 	if (apress) {
+		control_lock=15;
 		wallrundata[6] *= 0.75;
-		hsp=-max(wallrundata[6],1)*esign(move,xsc)
+		hsp=-2.5*esign(move,xsc)
 		vsp=-5
+		move=-move
 		xsc=esign(hsp,xsc)
 		no_move=true;
-		alarm_set(2,12);
+		alarm_set(2,15);
 		playsfx(charmName+"jump",1,0,1)
 		state = "jump";
 		storedvsp=0;
@@ -341,10 +343,6 @@ bonk=max(bonk,bonk-1)
 grow = max(0, (grow - 1));
 
 #define draw
-draw_text(x,y-80,wallrundata[6]);
-draw_text(x,y-64,wallrundata[1]);
-draw_text(x,y-48,wallrun_rollangle);
-
 #region Sprite Manager
 
 frspd=1
@@ -367,8 +365,10 @@ switch (state) {
 			spriteEvent="walk"
 		}
 	} break;
+	case "crouch": {
+		spriteEvent="crouch"
+	} break;
 	case "jump": {
-		frspd=1
 		spriteEvent="jump"
 		if (bonk) {
 			spriteEvent="bonk"

@@ -207,6 +207,7 @@ if (state == "wallslide") && !piped {
 	if (apress) {
 		hsp=esign(move,xsc)*-2.5
 		vsp=-5
+		move=-move
 		xsc=esign(hsp,xsc)
 		no_move=true;
 		alarm_set(2,12);

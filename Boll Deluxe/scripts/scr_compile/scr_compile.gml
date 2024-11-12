@@ -105,12 +105,10 @@ function import_sheets() {
 			var array=global.player_spritelists[i]
 			for (var j = 0; j < array_length(global.powerups); ++j) {
 				for (var g = 0; g < array_length(array); ++g) {
-					if (array[g]!="_HUDicon") { //make sure they arent trying to overwrite our HUD icon that we imported
+					if (array[g]!="_HUDicon") && file_exists($"{dir}\\sprites\\{global.powerups[j]}\\{array[g]}.png") { //make sure they arent trying to overwrite our HUD icon that we imported
 						var frames=nozerounreal(config_setting(global.powerups[j]+" "+array[g]+" frames", dir),config_setting(array[g]+" frames", dir))
-						var org_x=unreal(config_setting(global.powerups[j]+" "+array[g]+" orgX", dir),config_setting(array[g]+" orgX", dir))
-						var org_y=unreal(config_setting(global.powerups[j]+" "+array[g]+" orgY", dir),config_setting(array[g]+" orgY", dir))
-						org_x=CollageOrigin.CENTER+org_x
-						org_y=CollageOrigin.CENTER+org_y
+						var org_x=nozerounreal(config_setting(global.powerups[j]+" "+array[g]+" orgx", dir),nozerounreal(config_setting(array[g]+" orgx", dir), nozerounreal(config_setting("origin x", dir), CollageOrigin.CENTER)))
+						var org_y=nozerounreal(config_setting(global.powerups[j]+" "+array[g]+" orgy", dir),nozerounreal(config_setting(array[g]+" orgy", dir), nozerounreal(config_setting("origin y", dir), CollageOrigin.CENTER)))
 						oGameManager.PlayerColl.AddFile($"{dir}\\sprites\\{global.powerups[j]}\\{array[g]}.png",$"spr_{_name}_{global.powerups[j]}_{array[g]}",frames,false,false,org_x,org_y)
 					} else continue
 				}
