@@ -451,3 +451,7 @@ function sprite_check_valid(spr)
 {
 	return ((spr != undefined) && (sprite_exists(spr)));
 }
+
+function point_in_ellipse(x_, y_, _width, _height, x_o, y_o) {
+	return (sqr(x_o - x_) / sqr(_width / 2)) + (sqr(y_o - y_) / sqr(_height / 2)) <= 1
+}

@@ -499,28 +499,38 @@ if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 	if (mbrightrel && tile_fill && fill_circle) {
 		var start_x = tile_fill_last_x 
 		var start_y = tile_fill_last_y 
-
-		var radius = (gridx - tile_fill_last_x) 
-		var radius2 = (gridy - tile_fill_last_y)
-		for(i = 0; i < 360; i += 0.1)
-	    {
-	            var x1 = radius * dcos(i);
-	            var y1 = radius2 * dsin(i);
-				var data = tilemap_get(tilemap, start_x + round(x1), start_y + round(y1))
-	            if tile_get_index(data) != current_tile_id[0][0] {
-					data = tile_set_index(data, current_tile_id[0][0])
-					//set tile to a mosaic of the current tile 'brush'
+		var size_x = (gridx - tile_fill_last_x)
+		var size_y = (gridy - tile_fill_last_y) 
+		
+		if size_x < 0 {
+			start_x = gridx
+			size_x = abs(size_x)
+		}
+		if size_y < 0 {
+			start_y = gridy
+			size_y = abs(size_y)
+		}
+		
+		for (var i = 0; i < size_x; ++i) {
+			for (var j = 0; j < size_y; ++j) {
+				if !point_in_ellipse(((start_x + i) * 16)+8, ((start_y + j) * 16)+8, (size_x*16)-8, (size_y*16)-8, (start_x + size_x/2) * 16, (start_y + size_y/2) * 16) continue;
 				
-					data = tile_set_flip(data, 0)
-					data = tile_set_mirror(data, 0)
-					data = tile_set_rotate(data, 0)
-					tilemap_set(tilemap, data, start_x + round(x1), start_y + round(y1));
+				var data = tilemap_get(tilemap, tile_fill_last_x + (i *16), tile_fill_last_y+ (j *16)); //get tile to change data
+				
+				data = tile_set_index(data, current_tile_id[i mod (tile_sel_width + 1)][j mod (tile_sel_height + 1)])
+				//set tile to a mosaic of the current tile 'brush'
+				
+				data = tile_set_flip(data, 0)
+				data = tile_set_mirror(data, 0)
+				data = tile_set_rotate(data, 0)
+				tilemap_set(tilemap, data, start_x + i, start_y + j);
 
-					var tiledata = tilemap_get(tilemap, round(x1), start_y + round(y1))
-					ds_list_add(tile_layer_map, [tiledata, round(x1), start_y + round(y1)]) //add tile  to list at place
-					tile_update_properties();
-				}
-	    }
+				var tiledata = tilemap_get(tilemap, start_x + i, start_y + j)
+				ds_list_add(tile_layer_map, [tiledata, start_x + i, start_y + j]) //add tile  to list at place
+				tile_update_properties();
+								
+			}
+		}
 		tile_fill = false
 	}
 }

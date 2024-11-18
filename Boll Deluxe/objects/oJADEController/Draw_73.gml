@@ -20,5 +20,18 @@ if selected_tool == FILL_TOOL && tile_fill && !fill_circle {
 }
 
 if selected_tool == FILL_TOOL && tile_fill && fill_circle {
+	var start_x = tile_fill_last_x 
+	var start_y = tile_fill_last_y 
+	var size_x = (gridx - tile_fill_last_x)
+	var size_y = (gridy - tile_fill_last_y) 
+		
+	if size_x < 0 {
+		start_x = gridx
+		size_x = abs(size_x)
+	}
+	if size_y < 0 {
+		start_y = gridy
+		size_y = abs(size_y)
+	}
 	draw_ellipse(tile_fill_last_x * 16,tile_fill_last_y * 16,gridx * 16, gridy * 16, true)
 }
