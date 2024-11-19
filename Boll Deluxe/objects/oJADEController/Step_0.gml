@@ -58,26 +58,28 @@ if (mwheel == 0) {
 var dir = (keyboard_check_pressed(vk_right) || mouse_check_button_pressed(mb_side1)) - (mouse_check_button_pressed(mb_side2) || keyboard_check_pressed(vk_left)) 
 //peopne who dont have a fancy gaming mouse or whatever finally getting a taste of the button Not Existing
 
-#region Object List Scrolling
-if (mwheel != 0) && (on_object_list) {
-	object_list_scroll_pos[current_cat]+=24*mwheel
-}
-
-object_list_scroll_pos[current_cat] = clamp(object_list_scroll_pos[current_cat], 0, (ds_list_size(jade_cats[current_cat])*32)-object_list_area_height)
-#endregion
-
-#region Category Switching
-if (dir != 0) && (on_object_list) {
-	current_cat += dir
-	if (current_cat < 0) {
-		current_cat = (array_length(jade_cats) - 1)
-	} else if (current_cat >= array_length(jade_cats)) {
-		current_cat = 0	
+if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
+	#region Object List Scrolling
+	if (mwheel != 0) && (on_object_list) {
+		object_list_scroll_pos[selected_mode][current_cat]+=24*mwheel
 	}
+
+	object_list_scroll_pos[selected_mode][current_cat] = clamp(object_list_scroll_pos[selected_mode][current_cat], 0, (ds_list_size(jade_cats[selected_mode][current_cat])*32)-object_list_area_height)
+	#endregion
+
+	#region Category Switching
+	if (dir != 0) && (on_object_list) {
+		current_cat += dir
+		if (current_cat < 0) {
+			current_cat = (array_length(jade_cats[selected_mode]) - 1)
+		} else if (current_cat >= array_length(jade_cats[selected_mode])) {
+			current_cat = 0	
+		}
 	
-	show_debug_message($"switched to category {current_cat}")
+		show_debug_message($"switched to category {current_cat}")
+	}
+	#endregion
 }
-#endregion
 
 #region Camera Zooming
 //THIS SHIT KILLS MY COMBO!!!!!!
@@ -115,19 +117,17 @@ switch(selected_mode) {
 				else
 				current_tile_id[0][0] -= (sprite_get_width(spr_TilesetMain)/16)
 			}
-	
-			if keyboard_check_pressed(vk_tab) {
-				show_tileset = !show_tileset
-			}
-		} else {
-			show_tileset = false
+		}
+		
+		if keyboard_check_pressed(vk_tab) {
+			show_tileset = !show_tileset
 		}
 	
 		//current_tile_id[0][0] = wrap_val(current_tile_id[0][0], 0, 255) //todo, get tileset size lol
 
 		selected_tile=current_tile_id[0][0]
 	break;
-	
+	case NODE_MODE:
 	case OBJECT_MODE:
 		if keyboard_check_pressed(vk_tab) {
 			show_object_list = !show_object_list
@@ -136,43 +136,29 @@ switch(selected_mode) {
 		var switch_obj = 0;
 		
 		if (keyboard_check_pressed(vk_pagedown)) {
-			current_obj_id[current_cat] ++
+			current_obj_id[selected_mode][current_cat] ++
 			switch_obj = 1;
 		}
 
 		if (keyboard_check_pressed(vk_pageup)) {
-			current_obj_id[current_cat] --
+			current_obj_id[selected_mode][current_cat] --
 			switch_obj = 1;
 		}
 
-		current_obj_id[current_cat] = wrap_val(current_obj_id[current_cat], 0, ds_list_size(jade_cats[current_cat])- 1)
+		current_obj_id[selected_mode][current_cat] = wrap_val(current_obj_id[selected_mode][current_cat], 0, ds_list_size(jade_cats[selected_mode][current_cat])- 1)
 
 		if (switch_obj) { //keeps object through category switch until you scroll through the list for convenience
-			selected_obj = ds_list_find_value(jade_cats[current_cat], current_obj_id[current_cat])
+			selected_obj = ds_list_find_value(jade_cats[selected_mode][current_cat], current_obj_id[selected_mode][current_cat])
 		}
 		
-		if keyboard_check_pressed(ord("I")) show_debug_message(selected_obj)
-		
 		//selection box deleting
-		if keyboard_check_pressed(vk_delete) && selected_tool==SELECT_TOOL {
-			var selected_amount=0
+		if keyboard_check_pressed(vk_delete) && selected_tool==SELECT_TOOL && selected_mode==OBJECT_MODE {
 			for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 				var obj = ds_list_find_value(object_layer_map, i)
 				if (obj[5]) {
-					selected_amount++
+					ds_list_delete(object_layer_map, i)
+					i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
 				} 
-			}
-			//dude i fucking hate this i have to do this bullshit setup because gamemaker only deletes half of them if i use one for loop
-			//even with the i=0 all of them except ONE get deleted its stupid !!
-			while (selected_amount) {
-				for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
-					var obj = ds_list_find_value(object_layer_map, i)
-					if (obj[5]) {
-						ds_list_delete(object_layer_map, i)
-						selected_amount--;
-						i=0
-					}
-				}
 			}
 		}
 	break;
@@ -716,7 +702,7 @@ if keyboard_check_pressed(ord("5")) || keyboard_check_pressed(vk_numpad5)  {
 	selected_toolbar=0;
 }
 
-if keyboard_check_pressed(ord("B")) {
+if keyboard_check_pressed(ord("D")) {
 	switch (selected_mode) {
 		case OBJECT_MODE:
 		case BACKGROUND_MODE:

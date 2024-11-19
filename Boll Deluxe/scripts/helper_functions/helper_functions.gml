@@ -455,3 +455,13 @@ function sprite_check_valid(spr)
 function point_in_ellipse(x_, y_, _width, _height, x_o, y_o) {
 	return (sqr(x_o - x_) / sqr(_width / 2)) + (sqr(y_o - y_) / sqr(_height / 2)) <= 1
 }
+
+function easeOutCirc(_x)
+{
+    return sqrt(1 - ((_x - 1) * (_x - 1)));
+}
+
+function easeMovement(_x, xdist)
+{
+    return easeOutCirc(min(xdist, _x)/xdist);
+}

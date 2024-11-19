@@ -12,8 +12,8 @@
   "name":"oIntro",
   "overriddenProperties":[],
   "parent":{
-    "name":"Out Of Game",
-    "path":"folders/Objects/Out Of Game.yy",
+    "name":"JADE",
+    "path":"folders/Objects/Out Of Game/JADE.yy",
   },
   "parentObjectId":null,
   "persistent":false,

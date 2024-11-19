@@ -13,8 +13,10 @@ function JADE_initializeobj() {
 		cat_baddies = ds_list_create();	
 		cat_items = ds_list_create();
 		cat_tech = ds_list_create();
+		cat_node = ds_list_create();
 		
-		jade_cats = [cat_blocks, cat_baddies, cat_items, cat_tech];
+		jade_cats[OBJECT_MODE] = [cat_blocks, cat_baddies, cat_items, cat_tech];
+		jade_cats[NODE_MODE] = [cat_node];
 	#endregion
 	
 	/*
@@ -100,7 +102,7 @@ function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,m
 	if !ds_map_exists(obj_data,uuid) {
 		ds_map_add(obj_data,uuid,[sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,properties])
 		ds_list_add(obj_name,uuid)
-		ds_list_add(jade_cats[category],uuid)
+		ds_list_add(jade_cats[mode][category],uuid)
 		show_debug_message($"Successfully registered object id: {uuid} in JADE")
 	} else {
 		show_debug_message($"Object ID: {uuid} is already registered in JADE! ignoring..")

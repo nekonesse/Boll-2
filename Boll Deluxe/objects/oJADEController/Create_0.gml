@@ -85,9 +85,6 @@ selection_box_y = 0
 temp_mode=0;
 temp_toolbar=0;
 
-for (var i = 0; i < array_length(jade_cats); i++) {
-	current_obj_id[i] = 0
-}
 current_tile_id[0][0] = 0
 tile_drag = false;
 tile_sel_width = 0
@@ -133,10 +130,12 @@ object_list_area_x = (guiw-object_list_area_width/3)
 object_list_area_y = ((guih/2)-(object_list_area_height/3)/2)
 object_list_area_surface = surface_create(object_list_area_width, object_list_area_height)
 
-for (i = 0; i < array_length(jade_cats); i++) {
-	object_list_scroll_pos[i] = 0
+for (var i = 0; i <= NODE_MODE; ++i) {
+    for (var j = 0; j < array_length(jade_cats); j++) {
+		object_list_scroll_pos[i][j] = 0
+		current_obj_id[i][j] = 0
+	}
 }
-
 current_cat = 0
 #endregion
 

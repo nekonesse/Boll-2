@@ -355,7 +355,6 @@
   "name":"Boll Deluxe",
   "resources":[
     {"id":{"name":"intlib","path":"extensions/intlib/intlib.yy",},},
-    {"id":{"name":"winmenu","path":"extensions/winmenu/winmenu.yy",},},
     {"id":{"name":"basicPlaceholderF","path":"fonts/basicPlaceholderF/basicPlaceholderF.yy",},},
     {"id":{"name":"scribble_fallback_font","path":"fonts/scribble_fallback_font/scribble_fallback_font.yy",},},
     {"id":{"name":"ScribblejrDefaultFont","path":"fonts/ScribblejrDefaultFont/ScribblejrDefaultFont.yy",},},
@@ -455,6 +454,7 @@
     {"id":{"name":"pSmoke","path":"objects/pSmoke/pSmoke.yy",},},
     {"id":{"name":"pSparkles1UP","path":"objects/pSparkles1UP/pSparkles1UP.yy",},},
     {"id":{"name":"pStompedEnemy","path":"objects/pStompedEnemy/pStompedEnemy.yy",},},
+    {"id":{"name":"Path1","path":"paths/Path1/Path1.yy",},},
     {"id":{"name":"rEditor","path":"rooms/rEditor/rEditor.yy",},},
     {"id":{"name":"rGame","path":"rooms/rGame/rGame.yy",},},
     {"id":{"name":"rIntro","path":"rooms/rIntro/rIntro.yy",},},
@@ -1206,7 +1206,6 @@
     {"id":{"name":"VinylStop","path":"scripts/VinylStop/VinylStop.yy",},},
     {"id":{"name":"VinylStopAll","path":"scripts/VinylStopAll/VinylStopAll.yy",},},
     {"id":{"name":"VinylWillStop","path":"scripts/VinylWillStop/VinylWillStop.yy",},},
-    {"id":{"name":"winmenu_extras","path":"scripts/winmenu_extras/winmenu_extras.yy",},},
     {"id":{"name":"__shd_scribble_bake_effect_4dir","path":"shaders/__shd_scribble_bake_effect_4dir/__shd_scribble_bake_effect_4dir.yy",},},
     {"id":{"name":"__shd_scribble_bake_effect_8dir_2px","path":"shaders/__shd_scribble_bake_effect_8dir_2px/__shd_scribble_bake_effect_8dir_2px.yy",},},
     {"id":{"name":"__shd_scribble_bake_effect_8dir","path":"shaders/__shd_scribble_bake_effect_8dir/__shd_scribble_bake_effect_8dir.yy",},},
