@@ -2,6 +2,7 @@ event_inherited();
 
 if (hit != 0) && (!goDirection) {
 	goDirection=hit
+	no_collide=true;
 }
 
 if (goDirection != 0) {

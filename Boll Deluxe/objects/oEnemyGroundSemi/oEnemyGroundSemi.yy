@@ -37,8 +37,5 @@
     "path":"sprites/spr_enemygroundsemi/spr_enemygroundsemi.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "blocks",
-  ],
   "visible":true,
 }

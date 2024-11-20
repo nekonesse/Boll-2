@@ -42,8 +42,5 @@
     "name":"spr_fireflower",
     "path":"sprites/spr_fireflower/spr_fireflower.yy",
   },
-  "tags":[
-    "items",
-  ],
   "visible":true,
 }

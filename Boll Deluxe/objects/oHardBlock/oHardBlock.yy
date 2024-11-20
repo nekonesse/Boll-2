@@ -35,8 +35,5 @@
     "path":"sprites/spr_hardblock/spr_hardblock.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "blocks",
-  ],
   "visible":true,
 }

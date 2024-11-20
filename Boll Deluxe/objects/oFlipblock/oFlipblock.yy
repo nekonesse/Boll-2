@@ -39,8 +39,5 @@
     "path":"sprites/spr_flipblock/spr_flipblock.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "blocks",
-  ],
   "visible":true,
 }

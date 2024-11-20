@@ -35,8 +35,5 @@
     "path":"sprites/spr_brick/spr_brick.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "blocks",
-  ],
   "visible":true,
 }

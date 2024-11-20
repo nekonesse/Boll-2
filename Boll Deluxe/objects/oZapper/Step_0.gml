@@ -4,7 +4,12 @@ if !(buftimer) { //update tick
 buftimer=4;
 
 var list = ds_list_create();
-collision_circle_list(x+32, y, 32, global.conductive_array, false, false, list, false);
+switch (dir) {
+	case "left": collision_circle_list(x-32, y, 32, global.conductive_array, false, false, list, false); break;
+	case "up": collision_circle_list(x, y-32, 32, global.conductive_array, false, false, list, false); break;
+	case "down": collision_circle_list(x, y+32, 32, global.conductive_array, false, false, list, false); break;
+	default: collision_circle_list(x+32, y, 32, global.conductive_array, false, false, list, false) break;
+}
 
 array_delete(connections,0,array_length(connections))
 

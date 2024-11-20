@@ -36,8 +36,5 @@
     "path":"sprites/spr_redterrainspring/spr_redterrainspring.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "tech",
-  ],
   "visible":true,
 }

@@ -30,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_nudgeregion",
-    "path":"sprites/spr_nudgeregion/spr_nudgeregion.yy",
+    "name":"spr_cameraregion",
+    "path":"sprites/spr_cameraregion/spr_cameraregion.yy",
   },
   "spriteMaskId":null,
   "visible":false,

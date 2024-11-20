@@ -38,8 +38,5 @@
     "path":"sprites/spr_greenterrainspring/spr_greenterrainspring.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "tech",
-  ],
   "visible":true,
 }

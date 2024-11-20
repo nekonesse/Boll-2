@@ -38,8 +38,5 @@
     "path":"sprites/spr_noteblock/spr_noteblock.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "blocks",
-  ],
   "visible":true,
 }

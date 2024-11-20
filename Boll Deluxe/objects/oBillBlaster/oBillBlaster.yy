@@ -43,8 +43,5 @@
     "path":"sprites/spr_blasterbase/spr_blasterbase.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "enemies",
-  ],
   "visible":true,
 }

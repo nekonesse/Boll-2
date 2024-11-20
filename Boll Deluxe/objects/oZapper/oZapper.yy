@@ -42,8 +42,5 @@
     "path":"sprites/spr_zapper/spr_zapper.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "tech",
-  ],
   "visible":true,
 }
