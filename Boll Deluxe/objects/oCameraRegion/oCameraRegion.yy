@@ -35,5 +35,5 @@
     "path":"sprites/spr_cameraregion/spr_cameraregion.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

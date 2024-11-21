@@ -77,6 +77,15 @@ function object_get_properties(obj){
 				["dir", "Direction", "right", "dropdown", ["up", "left", "right", "down"]]
 			]
 			break;
+		//NODE MODE
+		case oCameraRegion:
+			properties = [
+				["nudge_x", "Nudge X", 0, "number_input", 0],
+				["nudge_y", "Nudge Y", 0, "number_input", 0],
+				["zoom", "Zoom Level", 1, "number_input", 0],
+				["lockon", "Lock Camera", 0, "checkbox", 0]
+			]
+			break;
 		default:
 			properties = [
 			]

@@ -21,15 +21,15 @@ curs_y=mouse_y-cam_y
 var guiw=display_get_gui_width()
 var guih=display_get_gui_height()
 var tb_length = array_length(toolbar[selected_mode])
+on_list_top = (point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y-20,object_list_area_x+object_list_area_width/3,object_list_area_y) || point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y-20,object_list_area_x+object_list_area_width/3,object_list_area_y))
 on_object_list = (point_in_rectangle(curs_x,curs_y,object_list_area_x-2,object_list_area_y-24,object_list_area_x+object_list_area_width/3,object_list_area_y+object_list_area_height/3) && (show_object_list || object_list_active))
 if (!on_object_list && object_list_active && show_object_list) on_object_list = keyboard_check_direct(vk_alt)
 
 not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
 &&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
 &&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
-&&!(on_object_list && show_object_list && selected_mode==OBJECT_MODE)
+&&!(((on_object_list && show_object_list) || on_list_top) && (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE))
 &&!(show_tileset && selected_mode==TILE_MODE)
-&&!point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y-20,object_list_area_x+object_list_area_width/3,object_list_area_y);
 
 #region Camera Panning
 if (not_on_gui) && (mbmiddle) {
@@ -152,13 +152,25 @@ switch(selected_mode) {
 		}
 		
 		//selection box deleting
-		if keyboard_check_pressed(vk_delete) && selected_tool==SELECT_TOOL && selected_mode==OBJECT_MODE {
-			for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
-				var obj = ds_list_find_value(object_layer_map, i)
-				if (obj[5]) {
-					ds_list_delete(object_layer_map, i)
-					i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
-				} 
+		if keyboard_check_pressed(vk_delete) && selected_tool==SELECT_TOOL {
+			if (selected_mode==OBJECT_MODE) {
+				for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
+					var obj = ds_list_find_value(object_layer_map, i)
+					var sprite = ds_map_find_value(obj_data,obj[0])
+					if (sprite[7]==selected_mode) && (obj[5]) {
+						ds_list_delete(object_layer_map, i)
+						i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
+					} 
+				}
+			} else if (selected_mode==NODE_MODE) {
+				for (var i = 0; i < ds_list_size(node_layer_map); ++i) {
+					var obj = ds_list_find_value(node_layer_map, i)
+					var sprite = ds_map_find_value(obj_data,obj[0])
+					if (sprite[7]==selected_mode) && (obj[5]) {
+						ds_list_delete(node_layer_map, i)
+						i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
+					} 
+				}
 			}
 		}
 	break;
@@ -254,139 +266,263 @@ if (mbleftpress) {
 }
 
 if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
-	
-	var size = ds_list_size(object_layer_map)
 	var overlap = 0
 	
-	for (var i = 0; i < size; ++i) {
-		//is place matching cursor?
-		var obj = ds_list_find_value(object_layer_map, i)
+	if (selected_mode == OBJECT_MODE) { //should probably be using a switch statement but its 3am im too lazy to do that rn
+		var size = ds_list_size(object_layer_map)
+	
+		for (var i = 0; i < size; ++i) {
+			//is place matching cursor?
+			var obj = ds_list_find_value(object_layer_map, i)
 		
-		if !is_undefined(obj) {
-			var sprite = ds_map_find_value(obj_data,obj[0])
-			var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-			var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
-			overlap=red_box+white_box
+			if !is_undefined(obj) {
+				var sprite = ds_map_find_value(obj_data,obj[0])
+				var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
+				var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
+				overlap=red_box+white_box
 			
-			if !red_box { 
-				//if not selecting red box
-				if (mbleftpress) && (not_on_gui) {
+				if !red_box { 
+					//if not selecting red box
+					if (mbleftpress) && (not_on_gui) {
+						open_dropmenu=0;
+						if white_box{ 
+							//selecting white area (kinda)
+							obj[5] = 1 
+						} else {
+							if !keyboard_check(vk_shift) && (not_on_gui) {
+								obj[5] = 0 //set all others unselected when not holding shift
+							}
+						}
+					}
+				}
+			
+				if (selection_box) && (not_on_gui) {
 					open_dropmenu=0;
-					if white_box{ 
-						//selecting white area (kinda)
+					if rectangle_in_rectangle((obj[1]*16) , (obj[2]*16) ,(obj[1]*16) + obj[6] , (obj[2]*16) + obj[7], selection_box_x, selection_box_y, selection_box_x + (mouse_x - selection_box_x), selection_box_y + (mouse_y - selection_box_y)) {
 						obj[5] = 1 
 					} else {
-						if !keyboard_check(vk_shift) && (not_on_gui) {
+						if !keyboard_check(vk_shift) {
 							obj[5] = 0 //set all others unselected when not holding shift
 						}
 					}
 				}
 			}
+		}
+	
+		for (var i = 0; i < size; ++i) {
+			var obj = ds_list_find_value(object_layer_map, i)
+			var sprite = ds_map_find_value(obj_data,obj[0])
+			var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
+			var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
+			//is object selected?
+			if obj[5] {
+				#region move
+				if !red_box	{
+					if white_box && mbleftpress && selection = 0 && !selection_box{ 
+						selection = 2
+						selection_id = i
+						break;
+					}
+				}
 			
-			if (selection_box) && (not_on_gui) {
-				open_dropmenu=0;
-				if rectangle_in_rectangle((obj[1]*16) , (obj[2]*16) ,(obj[1]*16) + obj[6] , (obj[2]*16) + obj[7], selection_box_x, selection_box_y, selection_box_x + (mouse_x - selection_box_x), selection_box_y + (mouse_y - selection_box_y)) {
-					obj[5] = 1 
-				} else {
-					if !keyboard_check(vk_shift) {
-						obj[5] = 0 //set all others unselected when not holding shift
+				if selection = 2 {
+					selection_x[i] = mouse_x - (obj[1]*16)
+					selection_y[i] = mouse_y - (obj[2]*16)
+				}
+			
+				if selection = 3 {
+					obj[1] = round((mouse_x - selection_x[i]) / 16) 
+					obj[2] = round((mouse_y - selection_y[i]) / 16) 
+				}
+			
+				#endregion
+				#region resize
+					if red_box && mbleftpress && selection = 0 && !selection_box{ //red box selected
+							selection = 1
+							selection_id = i //boxed up
+					}
+
+			
+					if selection = 1 && i = selection_id {
+							var grabx = mouse_x - (obj[1]*16)
+							var graby = mouse_y - (obj[2]*16)
+							obj[6] = abs(grabx) + min(grabx, 0)//box movement
+							obj[7] = abs(graby) + min(graby, 0)
+
+					}
+					if selection = 1 && mbleftrel {
+				
+						obj = ds_list_find_value(object_layer_map, selection_id) //object you resized
+						var obj_other = ds_list_find_value(object_layer_map, i) //every other object selected
+					
+						obj[6] = round(obj[6] /16) * 16 //rounding box to grid
+						obj[7] = round(obj[7] /16) * 16
+				
+
+						obj_other[3] = obj[6] / sprite[3] //setting scale
+						obj_other[4] = obj[7] / sprite[4]
+						obj_other[6] = obj[6] 
+						obj_other[7] = obj[7]	
+						obj_other[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj_other[3] //setting offset
+						obj_other[9] = (sprite[2] = 0) ? 0 : sprite[2] + (sprite[4]/2) * obj_other[4]
+					
+				
+					}
+				#endregion
+			
+			} 
+
+				if (i = size - 1) && selection > 0 {
+					switch selection {
+						case 2:
+							selection = 3
+						break;
+						default:
+							if mbleftrel {
+								selection = 0
+								selection_id = NaN
+							}
+						break;
+					}
+				}
+			
+				if mbleftrel && selection_box && (i == size - 1) {
+						selection_box = false	
+				}
+		}
+	} else if (selected_mode==NODE_MODE) {
+		var size = ds_list_size(node_layer_map)
+	
+		for (var i = 0; i < size; ++i) {
+			//is place matching cursor?
+			var obj = ds_list_find_value(node_layer_map, i)
+		
+			if !is_undefined(obj) {
+				var sprite = ds_map_find_value(obj_data,obj[0])
+				var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
+				var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
+				overlap=red_box+white_box
+			
+				if !red_box { 
+					//if not selecting red box
+					if (mbleftpress) && (not_on_gui) {
+						open_dropmenu=0;
+						if white_box{ 
+							//selecting white area (kinda)
+							obj[5] = 1 
+						} else {
+							if !keyboard_check(vk_shift) && (not_on_gui) {
+								obj[5] = 0 //set all others unselected when not holding shift
+							}
+						}
+					}
+				}
+			
+				if (selection_box) && (not_on_gui) {
+					open_dropmenu=0;
+					if rectangle_in_rectangle((obj[1]*16) , (obj[2]*16) ,(obj[1]*16) + obj[6] , (obj[2]*16) + obj[7], selection_box_x, selection_box_y, selection_box_x + (mouse_x - selection_box_x), selection_box_y + (mouse_y - selection_box_y)) {
+						obj[5] = 1 
+					} else {
+						if !keyboard_check(vk_shift) {
+							obj[5] = 0 //set all others unselected when not holding shift
+						}
 					}
 				}
 			}
 		}
+	
+		for (var i = 0; i < size; ++i) {
+			var obj = ds_list_find_value(node_layer_map, i)
+			var sprite = ds_map_find_value(obj_data,obj[0])
+			var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
+			var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
+			//is object selected?
+			if obj[5] {
+				#region move
+				if !red_box	{
+					if (white_box && mbleftpress && !selection && !selection_box) { 
+						selection = 2
+						selection_id = i
+						break;
+					}
+				}
+			
+				if (selection == 2) {
+					selection_x[i] = mouse_x - (obj[1]*16)
+					selection_y[i] = mouse_y - (obj[2]*16)
+				}
+			
+				if (selection == 3) {
+					obj[1] = round((mouse_x - selection_x[i]) / 16) 
+					obj[2] = round((mouse_y - selection_y[i]) / 16) 
+				}
+			
+				#endregion
+				#region resize
+					if (red_box && mbleftpress && selection == 0 && !selection_box) { //red box selected
+							selection = 1
+							selection_id = i //boxed up
+					}
+
+			
+					if (selection = 1 && i = selection_id) {
+							var grabx = mouse_x - (obj[1]*16)
+							var graby = mouse_y - (obj[2]*16)
+							obj[6] = abs(grabx) + min(grabx, 0)//box movement
+							obj[7] = abs(graby) + min(graby, 0)
+
+					}
+					if (selection = 1 && mbleftrel) {
+				
+						obj = ds_list_find_value(node_layer_map, selection_id) //object you resized
+						var obj_other = ds_list_find_value(node_layer_map, i) //every other object selected
+					
+						obj[6] = round(obj[6] /16) * 16 //rounding box to grid
+						obj[7] = round(obj[7] /16) * 16
+				
+
+						obj_other[3] = obj[6] / sprite[3] //setting scale
+						obj_other[4] = obj[7] / sprite[4]
+						obj_other[6] = obj[6] 
+						obj_other[7] = obj[7]	
+						obj_other[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj_other[3] //setting offset
+						obj_other[9] = (sprite[2] = 0) ? 0 : sprite[2] + (sprite[4]/2) * obj_other[4]
+					
+				
+					}
+				#endregion
+			
+			} 
+
+				if (i = size - 1) && selection > 0 {
+					switch selection {
+						case 2:
+							selection = 3
+						break;
+						default:
+							if mbleftrel {
+								selection = 0
+								selection_id = NaN
+							}
+						break;
+					}
+				}
+			
+				if mbleftrel && selection_box && (i == size - 1) {
+						selection_box = false	
+				}
+		}
 	}
 	
-	for (var i = 0; i < size; ++i) {
-		var obj = ds_list_find_value(object_layer_map, i)
-		var sprite = ds_map_find_value(obj_data,obj[0])
-		var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-		var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
-		//is object selected?
-		if obj[5] {
-			#region move
-			if !red_box	{
-				if white_box && mbleftpress && selection = 0 && !selection_box{ 
-					selection = 2
-					selection_id = i
-					break;
-				}
-			}
-			
-			if selection = 2 {
-				selection_x[i] = mouse_x - (obj[1]*16)
-				selection_y[i] = mouse_y - (obj[2]*16)
-			}
-			
-			if selection = 3 {
-				obj[1] = round((mouse_x - selection_x[i]) / 16) 
-				obj[2] = round((mouse_y - selection_y[i]) / 16) 
-			}
-			
-			#endregion
-			#region resize
-				if red_box && mbleftpress && selection = 0 && !selection_box{ //red box selected
-						selection = 1
-						selection_id = i //boxed up
-				}
-
-			
-				if selection = 1 && i = selection_id {
-						var grabx = mouse_x - (obj[1]*16)
-						var graby = mouse_y - (obj[2]*16)
-						obj[6] = abs(grabx) + min(grabx, 0)//box movement
-						obj[7] = abs(graby) + min(graby, 0)
-
-				}
-				if selection = 1 && mbleftrel {
-				
-					obj = ds_list_find_value(object_layer_map, selection_id) //object you resized
-					var obj_other = ds_list_find_value(object_layer_map, i) //every other object selected
-					
-					obj[6] = round(obj[6] /16) * 16 //rounding box to grid
-					obj[7] = round(obj[7] /16) * 16
-				
-
-					obj_other[3] = obj[6] / sprite[3] //setting scale
-					obj_other[4] = obj[7] / sprite[4]
-					obj_other[6] = obj[6] 
-					obj_other[7] = obj[7]	
-					obj_other[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj_other[3] //setting offset
-					obj_other[9] = (sprite[2] = 0) ? 0 : sprite[2] + (sprite[4]/2) * obj_other[4]
-					
-				
-				}
-			#endregion
-			
-		} 
-
-			if (i = size - 1) && selection > 0 {
-				switch selection {
-					case 2:
-						selection = 3
-					break;
-					default:
-						if mbleftrel {
-							selection = 0
-							selection_id = NaN
-						}
-					break;
-				}
-			}
-			
-			if mbleftrel && selection_box && (i == size - 1) {
-					selection_box = false	
-			}
-	}
-		
 	if (!overlap) && mbleftpress && !selection_box && (!selection) && not_on_gui {
 		selection_box = true
 		selection_box_x = mouse_x
 		selection_box_y = mouse_y
 	}
-	
-	if mbleftrel && selection_box {
-		selection_box = false
-	}
+}
+
+if (mbleftrel && selection_box) {
+	selection_box = false
 }
 
 if show_tileset {
@@ -538,11 +674,67 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 								}
 							}
 						}
-						show_debug_message("created object: {0}", selected_obj)
-						ds_list_add(object_layer_map, [selected_obj, gridx, gridy, 1, 1, 0])//add object to list at place
-						var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
-						var sprite = ds_map_find_value(obj_data,obj[0])
-						if !is_undefined(obj) {
+						if !is_undefined(selected_obj) {
+							var sprite = ds_map_find_value(obj_data,selected_obj)
+							if sprite[7]!=OBJECT_MODE exit;
+							ds_list_add(object_layer_map, [selected_obj, gridx, gridy, 1, 1, 0])//add object to list at place
+							show_debug_message("created object: {0}", selected_obj)
+							var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
+							obj[6] = sprite[3]
+							obj[7] = sprite[4]
+							obj[8] = 0
+							obj[9] = 0	
+							obj[10] = []
+							if is_array(sprite[8]) && array_length(sprite[8]) {
+								for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
+									if is_array(sprite[8][o]) {
+										obj[10][o] = array_create(1,0)
+										array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
+										if is_array(sprite[8][o][4]) {
+											obj[10][o][4] = array_create(1,0)
+											array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
+										}
+									}
+								}
+							}
+						}
+						
+						/*OBJECT STAT LIST
+						 0: name
+						 1: grid x
+						 2: grid y
+						 3: scale x
+						 4: scale y
+						 5: selected
+						 6: box x
+						 7: box y
+						 8: offset x
+						 9: offset y
+						 10: properties array
+						*/
+						
+						/*SPRITE STAT LIST
+						 just look in JADE_initializeobj() lol
+						*/
+					}
+				break;
+				case NODE_MODE:
+					if is_string(selected_obj) {
+						for (var i = 0; i < ds_list_size(node_layer_map); ++i) {
+							//is place matching cursor?
+							var obj = ds_list_find_value(node_layer_map, i)
+							if !is_undefined(obj) {
+							    if obj[1] == gridx && obj[2] == gridy {
+									exit;
+								}
+							}
+						}
+						if !is_undefined(selected_obj) {
+							var sprite = ds_map_find_value(obj_data,selected_obj)
+							if sprite[7]!=NODE_MODE exit;
+							ds_list_add(node_layer_map, [selected_obj, gridx, gridy, 1, 1, 0])//add object to list at place
+							show_debug_message("created object: {0}", selected_obj)
+							var obj = ds_list_find_value(node_layer_map, ds_list_size(node_layer_map)-1)
 							obj[6] = sprite[3]
 							obj[7] = sprite[4]
 							obj[8] = 0
@@ -616,6 +808,21 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 						    if obj[1] == gridx && obj[2] == gridy {
 								show_debug_message("deleted object: {0}", obj[0])
 								ds_list_delete(object_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
+								break;
+							}
+						}
+				
+					}
+				break;
+				case NODE_MODE:
+					var size = ds_list_size(node_layer_map)
+					for (var i = 0; i < size; ++i) {
+						//is place matching cursor?
+						var obj = ds_list_find_value(node_layer_map, i)
+						if !is_undefined(obj) {
+						    if obj[1] == gridx && obj[2] == gridy {
+								show_debug_message("deleted object: {0}", obj[0])
+								ds_list_delete(node_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
 								break;
 							}
 						}

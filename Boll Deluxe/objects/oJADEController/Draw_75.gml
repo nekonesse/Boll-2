@@ -8,11 +8,13 @@ if (not_on_gui) {
 	switch (selected_tool) {
 		case BRUSH_TOOL:
 		switch (selected_mode) {
+			case NODE_MODE:
 			case OBJECT_MODE:
 			is_string(selected_obj) {
 				var arr=ds_map_find_value(obj_data,selected_obj)
 				var xoff=arr[1]
 				var yoff=arr[2]
+				if arr[7] == selected_mode
 				draw_sprite_ext(arr[0],0,gridx*16-xoff-cam_x,gridy*16-yoff-cam_y,1,1,0,c_white,0.25)
 			}
 			break;

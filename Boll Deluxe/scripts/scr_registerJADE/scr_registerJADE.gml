@@ -124,12 +124,17 @@ function JADE_save(file=working_directory+"\save.jade") {
 	for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 	    array_push(arrayObjects, object_layer_map[| i])
 	}
+	var arrayNodeObjects = [];
+	for (var i = 0; i < ds_list_size(node_layer_map); ++i) {
+	    array_push(arrayNodeObjects, node_layer_map[| i])
+	}
 	var arrayTiles=[];
 	for (var i = 0; i < ds_list_size(tile_layer_map); ++i) {
 	    array_push(arrayTiles, tile_layer_map[| i])
 	}
 	array_push(array, arrayObjects)
 	array_push(array, arrayTiles)
+	array_push(array, arrayNodeObjects)
 	show_debug_message(array)
 	var _json=json_stringify(array); //compile all saved things
 	var save_file = buffer_create(string_byte_length(_json), buffer_grow, 1);
@@ -148,13 +153,14 @@ function JADE_load(file=working_directory+"\save.jade") {
 	var array = json_parse(buffer_read(save_file,buffer_string))
 	show_debug_message($"Loading JADE file from: {file}")
 	var size = array_length(array[0]) //read amount of objects
+	var nodesize = array_length(array[2]) //read amount of objects
 	var tilesize = array_length(array[1]) //read amount of tiles
 	ds_list_clear(object_layer_map) //erase object map beforehand
 	for (var i = 0; i < size; ++i) { //load objects
         var data = array[0][i]
 		data[5] = 0
 		ds_list_add(object_layer_map,data)
-	} 
+	}
 	tilemap_clear(tilemap, 0) //erase tilemap beforehand
 	ds_list_clear(tile_layer_map) //erase tile map beforehand
     for (var i = 0; i < tilesize; ++i) { //loading tiles
@@ -162,6 +168,12 @@ function JADE_load(file=working_directory+"\save.jade") {
 		tilemap_set(tilemap,data[0],data[1],data[2])
 		ds_list_add(tile_layer_map, [data[0], data[1], data[2]]) //add tile to list at place
 	}
+	ds_list_clear(node_layer_map)
+	for (var i = 0; i < nodesize; ++i) { //load node objects
+        var data = array[2][i]
+		data[5] = 0
+		ds_list_add(node_layer_map,data)
+	} 
 	buffer_delete(loaded)
 	buffer_delete(save_file)
 	show_debug_message($"Successfully loaded JADE file from: {file}!")

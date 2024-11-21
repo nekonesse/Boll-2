@@ -6,13 +6,21 @@ if (target == noone)
 	return;
 }
 
+// camera modifier collisions
+var camregion;
+
+with(target) {
+	camregion = instance_place(x,y,oCameraRegion);
+}
+
+
 // get rid of lock-based camerastalls if we're not in a CameraLock
 if (lockflags)
 {
 	var this = self;
 	with(target)
 	{
-		if (!place_meeting(x,y,oCameraLock))
+		if (!(camregion && camregion.lockon))
 		{
 			this.lockflags = this.lockflags & IN_LOCK;	
 		}
@@ -165,28 +173,14 @@ else
 	ynudge[0] = max(0, abs(ynudge[0]) - ynudgespd) * sign(ynudge[0]);
 }
 
-// camera modifier collisions
-var camnudge, camzoom, camlock;
-
-with(target) {
-	camnudge = instance_place(x,y,oCameraNudge);
-	camzoom = instance_place(x,y,oCameraZoom);
-	camlock = instance_place(x,y,oCameraLock);
-}
-
-if (camnudge) {
-	xnudge[1] = floor(camnudge.nudge_x);
-	ynudge[1] = floor(camnudge.nudge_y);
+if (camregion) {
+	xnudge[1] = floor(camregion.nudge_x);
+	ynudge[1] = floor(camregion.nudge_y);
+	// Camera regions use a "bigger number = zoom in" format
+	target_zoom = 1 / camregion.zoom;
 } else {
 	xnudge[1] = 0;
 	ynudge[1] = 0;
-}
-
-if (camzoom) {
-	// CameraZoom regions use a "bigger number = zoom in" format
-	// to prevent discrepancy, we gotta do this
-	target_zoom = 1 / camzoom.zoom;
-} else {
 	target_zoom = 1;
 }
 
@@ -194,17 +188,17 @@ if (camzoom) {
 var cantmovex = false;
 var cantmovey = false;
 
-if (camlock)
+if (camregion) && (camregion.lockon)
 {
 	// get lock bounds
 	var lockx, locky;
-	lockx = intlib_make_u32(max(0, camlock.x));
-	locky = intlib_make_u32(max(0, camlock.y));
+	lockx = intlib_make_u32(max(0, camregion.x));
+	locky = intlib_make_u32(max(0, camregion.y));
 	
 	xmin = lockx + (xwidth div 2);
 	ymin = locky + (ywidth div 2);
-	xmax = min(room_width, lockx + camlock.x_limit) - (xwidth div 2);
-	ymax = min(room_height, locky + camlock.y_limit) - (ywidth div 2);
+	xmax = min(room_width, lockx + camregion.x_limit) - (xwidth div 2);
+	ymax = min(room_height, locky + camregion.y_limit) - (ywidth div 2);
 	
 	if (xmax < xmin)
 	{

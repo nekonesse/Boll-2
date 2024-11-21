@@ -8,9 +8,42 @@ function parse_level(dir=working_directory+"\save.jade") {
 	var array = json_parse(buffer_read(save_file,buffer_string))
 	show_debug_message($"Loading JADE level from: {file}")
 	var size = array_length(array[0]) //read amount of objects
+	var nodesize = array_length(array[2]) //read amount of objects (on the node layer)
 	var tilesize = array_length(array[1]) //read amount of tiles
 	for (var i = 0; i < size; ++i) { //load objects
         var data = array[0][i]
+		show_debug_message($"Parsing JADE object with name: {data[0]}")
+		var obj = instance_create_depth((data[1]*16), (data[2]*16), 0, asset_get_index(data[0]))
+		if instance_exists(obj) {
+			obj.image_xscale=data[3]
+			obj.image_yscale=data[4]
+			obj.x+=sprite_get_xoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_xscale;
+			obj.y+=sprite_get_yoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_yscale;
+			
+			for (var j = 0; j < array_length(data[10]); j++) {
+				if is_array(data[10][j]) {
+					variable_instance_set(obj, data[10][j][0], data[10][j][2]);
+					show_debug_message($"set object {obj} ({object_get_name(obj.object_index)})'s variable '{data[10][j][0]}' to '{data[10][j][2]}'.");
+				}
+			}
+			with(obj) {event_user(15)}
+		}
+		/*OBJECT STAT LIST
+		 0: name
+		 1: grid x
+		 2: grid y
+		 3: scale x
+		 4: scale y
+		 5: selected
+		 6: box x
+		 7: box y
+		 8: offset x
+		 9: offset y
+		 10: properties array
+		*/
+	}
+	for (var i = 0; i < nodesize; ++i) { //load objects
+        var data = array[2][i]
 		show_debug_message($"Parsing JADE object with name: {data[0]}")
 		var obj = instance_create_depth((data[1]*16), (data[2]*16), 0, asset_get_index(data[0]))
 		if instance_exists(obj) {

@@ -1,6 +1,13 @@
 for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 	var obj = ds_list_find_value(object_layer_map, i)
-	if (obj[5]) && selected_tool == SELECT_TOOL {
+	if (obj[5]) && selected_tool == SELECT_TOOL && selected_mode == OBJECT_MODE {
+		draw_sprite(spr_JADE4scaler, 3, (obj[1]*16) + round(obj[6]/16)*16, (obj[2]*16) + round(obj[7]/16)*16)
+	}
+}
+
+for (var i = 0; i < ds_list_size(node_layer_map); ++i) {
+	var obj = ds_list_find_value(node_layer_map, i)
+	if (obj[5]) && selected_tool == SELECT_TOOL && selected_mode == NODE_MODE {
 		draw_sprite(spr_JADE4scaler, 3, (obj[1]*16) + round(obj[6]/16)*16, (obj[2]*16) + round(obj[7]/16)*16)
 	}
 }

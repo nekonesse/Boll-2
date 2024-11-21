@@ -56,7 +56,6 @@ for (var i = 0; i < tb_length; ++i) //draw Editor icons
 
 #region Tile Picker
 if selected_mode = TILE_MODE {
-
 	if show_tileset {
 		var tilelapmap = tileset_get_info(tTilesetMain)
 		draw_sprite_ext(spr_TilesetMain, 0, tileset_picker_x,tileset_picker_y, 0.33, 0.33, 0, c_white, 1)	
@@ -548,11 +547,11 @@ if selected_mode == OBJECT_MODE {
 			draw_clear_alpha(c_black, 0)
 			draw_set_halign(fa_left)
 			
-			var size = ds_list_size(object_layer_map)
+			var size = ds_list_size(node_layer_map)
 			var properties_group = [-4];
 			
 			for (var i = 0; i < size; ++i) {
-				var obj = ds_list_find_value(object_layer_map, i)
+				var obj = ds_list_find_value(node_layer_map, i)
 				var sprite = ds_map_find_value(obj_data,obj[0])
 				if (obj[5] = 1) {
 					if (properties_group[0] = -4) {

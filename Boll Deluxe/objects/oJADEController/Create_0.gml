@@ -64,6 +64,7 @@ tile_layer = layer_get_id("EditorTiles_Main")
 //tileset = tTilesetMain
 tilemap = layer_tilemap_get_id(tile_layer)
 object_layer_map = ds_list_create()
+node_layer_map = ds_list_create()
 tile_layer_map = ds_list_create()
 
 not_on_gui = false

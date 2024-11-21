@@ -455,7 +455,6 @@
     {"id":{"name":"pSmoke","path":"objects/pSmoke/pSmoke.yy",},},
     {"id":{"name":"pSparkles1UP","path":"objects/pSparkles1UP/pSparkles1UP.yy",},},
     {"id":{"name":"pStompedEnemy","path":"objects/pStompedEnemy/pStompedEnemy.yy",},},
-    {"id":{"name":"Path1","path":"paths/Path1/Path1.yy",},},
     {"id":{"name":"rEditor","path":"rooms/rEditor/rEditor.yy",},},
     {"id":{"name":"rGame","path":"rooms/rGame/rGame.yy",},},
     {"id":{"name":"rIntro","path":"rooms/rIntro/rIntro.yy",},},
