@@ -175,6 +175,7 @@
     {"name":"oBossParent","order":2,"path":"objects/oBossParent/oBossParent.yy",},
     {"name":"oBrick","order":5,"path":"objects/oBrick/oBrick.yy",},
     {"name":"oCamera","order":5,"path":"objects/oCamera/oCamera.yy",},
+    {"name":"oCameraBoundary","order":11,"path":"objects/oCameraBoundary/oCameraBoundary.yy",},
     {"name":"oCameraLock","order":9,"path":"objects/oCameraLock/oCameraLock.yy",},
     {"name":"oCameraNudge","order":6,"path":"objects/oCameraNudge/oCameraNudge.yy",},
     {"name":"oCameraRegion","order":10,"path":"objects/oCameraRegion/oCameraRegion.yy",},

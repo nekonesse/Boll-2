@@ -376,6 +376,7 @@
     {"id":{"name":"oBrick","path":"objects/oBrick/oBrick.yy",},},
     {"id":{"name":"oBulletBill","path":"objects/oBulletBill/oBulletBill.yy",},},
     {"id":{"name":"oCamera","path":"objects/oCamera/oCamera.yy",},},
+    {"id":{"name":"oCameraBoundary","path":"objects/oCameraBoundary/oCameraBoundary.yy",},},
     {"id":{"name":"oCameraLock","path":"objects/oCameraLock/oCameraLock.yy",},},
     {"id":{"name":"oCameraNudge","path":"objects/oCameraNudge/oCameraNudge.yy",},},
     {"id":{"name":"oCameraRegion","path":"objects/oCameraRegion/oCameraRegion.yy",},},
