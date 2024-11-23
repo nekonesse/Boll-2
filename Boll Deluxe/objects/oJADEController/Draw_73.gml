@@ -3,6 +3,14 @@ for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 	if (obj[5]) && selected_tool == SELECT_TOOL && selected_mode == OBJECT_MODE {
 		draw_sprite(spr_JADE4scaler, 3, (obj[1]*16) + round(obj[6]/16)*16, (obj[2]*16) + round(obj[7]/16)*16)
 	}
+	
+	var sprite = ds_map_find_value(obj_data,obj[0])
+	if (sprite[9]) && (drawing_node==i) && (array_length(obj[11]) > 0) {
+		for (var j = 0; j < array_length(obj[11]); ++j) {
+			var arr=obj[11][j]
+			draw_line_color(arr[0],arr[1],arr[2],arr[3],c_red,c_orange)
+		}
+	}
 }
 
 for (var i = 0; i < ds_list_size(node_layer_map); ++i) {

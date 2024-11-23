@@ -1,7 +1,4 @@
-pathing[0]=[xstart,ystart,true]
-pathing[1]=[xstart+64,ystart-64,true]
-pathing[2]=[xstart+128,ystart,true]
-pathing[3]=[xstart+64,ystart+64,true]
+pathing=-1;
 pathprenum=0;
 pathnum=1;
 pathspd=2;

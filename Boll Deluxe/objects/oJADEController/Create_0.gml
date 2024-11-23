@@ -40,8 +40,7 @@ toolbar[2][3]=PICKER_TOOL
 toolbar[2][4]=ROTATE_TOOL
 toolbar[2][5]=MIRROR_TOOL
 toolbar[2][6]=FLIP_TOOL
-toolbar[2][7]=COLOR_TOOL
-toolbar[2][8]=REFERENCE_TOOL
+toolbar[2][7]=REFERENCE_TOOL
 //Background
 toolbar[3][0]=SELECT_TOOL
 toolbar[3][1]=BRUSH_TOOL
@@ -108,6 +107,10 @@ initial_viewx=0;
 initial_viewy=0;
 
 zoom_level = 1;
+
+drawing_node=-1;
+draw_node_x=0;
+draw_node_y=0;
 
 #region tileset picker variables
 show_tileset = false

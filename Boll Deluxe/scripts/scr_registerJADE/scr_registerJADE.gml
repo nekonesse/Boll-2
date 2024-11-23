@@ -87,10 +87,10 @@ function JADE_initializeobj() {
 	registerobj(object_get_name(oKoopaRed), spr_koopawalk_r, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oKoopaRed"))
 	registerobj(object_get_name(oKoopaYellow), spr_koopawalk_y, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oKoopaYellow"))
 	
-	registerobj(object_get_name(oCoin), spr_coin, 0, 0, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oCoin"))
-	registerobj(object_get_name(oMushroom), spr_mushroom, 0, 0, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oMushroom"))
-	registerobj(object_get_name(oFireFlower), spr_fireflower, -8, -10, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oFireFlower"))
-	registerobj(object_get_name(oThunderFlower), spr_thunderflowerJADE, -8, -10, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oFireFlower"))
+	registerobj(object_get_name(oCoin), spr_coin, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oCoin"), true)
+	registerobj(object_get_name(oMushroom), spr_mushroom, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oMushroom"), true)
+	registerobj(object_get_name(oFireFlower), spr_fireflower, -8, -10, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oFireFlower"), true)
+	registerobj(object_get_name(oThunderFlower), spr_thunderflowerJADE, -8, -10, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oFireFlower"), true)
 	
 	//NODE MODE
 	registerobj(object_get_name(oCameraRegion), spr_cameraregion, -sprite_get_xoffset(spr_cameraregion), -sprite_get_yoffset(spr_cameraregion), sprite_get_width(spr_cameraregion), sprite_get_height(spr_cameraregion), false, false, NODE_MODE, 0, object_get_properties("oCameraRegion"))
@@ -102,13 +102,13 @@ function register_array(array, category) {
 		var _name = object_get_name(array[i])
 		var _sprite = object_get_sprite(array[i])
 		var _properties = object_get_properties(_name)
-	    registerobj(_name, _sprite, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), sprite_get_width(_sprite), sprite_get_height(_sprite), true, true, OBJECT_MODE, category, _properties)
+	    registerobj(_name, _sprite, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), sprite_get_width(_sprite), sprite_get_height(_sprite), true, true, OBJECT_MODE, category, _properties, false)
 	}	
 }
 
-function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,category,properties) {
+function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,category,properties,nodeable=false) {
 	if !ds_map_exists(obj_data,uuid) {
-		ds_map_add(obj_data,uuid,[sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,properties])
+		ds_map_add(obj_data,uuid,[sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,properties,nodeable])
 		ds_list_add(obj_name,uuid)
 		ds_list_add(jade_cats[mode][category],uuid)
 		show_debug_message($"Successfully registered object id: {uuid} in JADE")

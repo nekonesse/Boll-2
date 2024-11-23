@@ -265,7 +265,7 @@ if (mbleftpress) {
 			}
 		break;
 		}
-	}
+	} else drawing_node=-1;
 }
 
 if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
@@ -281,7 +281,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 			if !is_undefined(obj) {
 				var sprite = ds_map_find_value(obj_data,obj[0])
 				var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-				var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
+				var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]- 1)
 				overlap=red_box+white_box
 			
 				if !red_box { 
@@ -297,11 +297,11 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 							}
 						}
 					}
-				}
+				} else break
 			
-				if (selection_box) && (not_on_gui) {
+				if !red_box && (selection_box) && (not_on_gui) && (mbleftrel) && !(selection_box_x == mouse_x && selection_box_y == mouse_y) {
 					open_dropmenu=0;
-					if rectangle_in_rectangle((obj[1]*16) , (obj[2]*16) ,(obj[1]*16) + obj[6] , (obj[2]*16) + obj[7], selection_box_x, selection_box_y, selection_box_x + (mouse_x - selection_box_x), selection_box_y + (mouse_y - selection_box_y)) {
+					if rectangle_in_rectangle((obj[1]*16) , (obj[2]*16) ,(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7] - 1, selection_box_x, selection_box_y, selection_box_x + (mouse_x - selection_box_x), selection_box_y + (mouse_y - selection_box_y)) {
 						obj[5] = 1 
 					} else {
 						if !keyboard_check(vk_shift) {
@@ -316,7 +316,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 			var obj = ds_list_find_value(object_layer_map, i)
 			var sprite = ds_map_find_value(obj_data,obj[0])
 			var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-			var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
+			var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]-1)
 			//is object selected?
 			if obj[5] {
 				#region move
@@ -327,8 +327,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 						break;
 					}
 				}
-			
-				if selection = 2 {
+				if selection = 2  {
 					selection_x[i] = mouse_x - (obj[1]*16)
 					selection_y[i] = mouse_y - (obj[2]*16)
 				}
@@ -351,7 +350,6 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 							var graby = mouse_y - (obj[2]*16)
 							obj[6] = abs(grabx) + min(grabx, 0)//box movement
 							obj[7] = abs(graby) + min(graby, 0)
-
 					}
 					if selection = 1 && mbleftrel {
 				
@@ -530,7 +528,7 @@ if (mbleftrel && selection_box) {
 
 if show_tileset {
 	
-	if (selected_mode = TILE_MODE) && (selected_tool = BRUSH_TOOL) {
+	if (selected_mode = TILE_MODE) {
 		var tilelapmap = tileset_get_info(tTilesetMain)
 		var t_width = sprite_get_width(spr_TilesetMain)
 		var t_height  = sprite_get_height(spr_TilesetMain)
@@ -569,6 +567,7 @@ if show_tileset {
 		}
 	}
 }
+	
 if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 	if (mbleftpress && !tile_fill) {
 		fill_circle = false
@@ -662,7 +661,6 @@ if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 
 
 if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
-	
 		switch(selected_tool) {
 		case BRUSH_TOOL:
 			switch(selected_mode) {
@@ -687,7 +685,8 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 							obj[7] = sprite[4]
 							obj[8] = 0
 							obj[9] = 0	
-							obj[10] = []
+							obj[10] = [] //properties
+							obj[11] = [] //node array
 							if is_array(sprite[8]) && array_length(sprite[8]) {
 								for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
 									if is_array(sprite[8][o]) {
@@ -873,6 +872,55 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 			}
 		}
 	
+}
+	
+if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
+	if (mbleftpress) {
+		if (drawing_node==-1) {
+			var size = ds_list_size(object_layer_map)
+	
+			for (var i = 0; i < size; ++i) {
+				//is place matching cursor?
+				var obj = ds_list_find_value(object_layer_map, i)
+		
+				if !is_undefined(obj) {
+					var over = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7] - 1)
+					
+					var sprite = ds_map_find_value(obj_data,obj[0])
+					var xoff = -sprite[1];
+					var yoff = -sprite[2];
+					
+					if (over) {
+						drawing_node=i;
+						if !array_length(obj[11]) {
+							draw_node_x=(obj[1]*16)+xoff;
+							draw_node_y=(obj[2]*16)+yoff;
+						} else {
+							var length = array_length(obj[11])-1;
+							draw_node_x=obj[11][length][2];
+							draw_node_y=obj[11][length][3];
+						}
+						break;
+					}
+				}
+			}
+		} else {
+			var obj = ds_list_find_value(object_layer_map, drawing_node)
+			
+			var sprite = ds_map_find_value(obj_data,obj[0])
+			var xoff = -sprite[1];
+			var yoff = -sprite[2];
+			
+			array_push(obj[11], [draw_node_x,draw_node_y,(gridx*16)+xoff,(gridy*16)+yoff,false])
+			show_debug_message(obj[11])
+			draw_node_x=(gridx*16)+xoff
+			draw_node_y=(gridy*16)+yoff
+		}
+	}
+	
+	if (mbrightpress) {
+		drawing_node=-1;
+	}
 }
 
 if keyboard_check_pressed(vk_enter) && !(is_typing) {
