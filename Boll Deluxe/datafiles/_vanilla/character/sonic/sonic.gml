@@ -116,7 +116,7 @@ if (state == "roll") {
 	rolling = true
 }
 
-if (control_lock > 0 || hurt || state == "wallrun") no_move = true
+if (control_lock > 0 || hurt || state == "wallrun" || electrocuted) no_move = true
 
 control_lock = max(0,control_lock - 1)
 
@@ -423,17 +423,20 @@ if !(deadtimer) {
 }
 
 #define mushroom
-show_debug_message("eatted it :)");
-if (size != "fire") {
+if (size == "basic" || size == "mini") {
 	oldsize = size;
 	size = "big";
 	grow = 60;
 }
 
 #define fireflower
-show_debug_message("dranked it :)");
 oldsize = size;
 size = "fire";
+grow = 60;
+
+#define thunderflower
+oldsize = size;
+size = "thunder";
 grow = 60;
 
 #define ceil_bonk

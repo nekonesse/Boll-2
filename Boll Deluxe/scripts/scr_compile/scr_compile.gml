@@ -115,7 +115,7 @@ function import_sheets() {
 		} else throw $"SORRY! NO HUD ICON IN CHARACTER \"{_name}\" EXISTS! CHECK YOUR SPRITES!"
 		
 		if file_exists($"{dir}\\pal.png") {
-			oGameManager.PlayerColl.AddFile($"{dir}\\pal.png",$"spr_{_name}_pal",1,false,false,0,0)		
+			oGameManager.playerPalettes[i]=sprite_add($"{dir}\\pal.png",0,0,0,0,0)
 		}
 		
 

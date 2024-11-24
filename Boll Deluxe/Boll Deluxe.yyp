@@ -299,6 +299,7 @@
     {"$GMIncludedFile":"","%Name":"bonk.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/basic","name":"bonk.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"brake.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/basic","name":"brake.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"crouch.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/basic","name":"crouch.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"death.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/basic","name":"death.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"dropdash.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/basic","name":"dropdash.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"hurt.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/basic","name":"hurt.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"lookup.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/basic","name":"lookup.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

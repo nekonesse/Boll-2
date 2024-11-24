@@ -1,8 +1,8 @@
 animate_player();
 if (CollageImageExists(oGameManager.PlayerColl.GetImageInfo(get_spriteindex()))) {
-	var palette = unreal(skin_setting(size + " palette"), 0)
+	var palette = unreal(skin_setting(get_size() + " palette"), 0)
 	if palette != 0 {
-		pal_swap_set(oGameManager.PlayerColl.GetImageInfo($"spr_{charmName}_pal"),palette,false)
+		pal_swap_set(oGameManager.playerPalettes[pNum],palette,false)
 	}
 	if (greenmode) {
 		shader_set(shd_flatcolor);

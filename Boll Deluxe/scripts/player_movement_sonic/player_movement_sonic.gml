@@ -5,7 +5,7 @@ function player_movement_sonic(){
 	player_warping();
 	my_camera.stalled = piped;
 	
-	if (piped) exit
+	if (piped) || (electrocuted) || (electrocution_timer) exit
 	
 	if !(no_move)
 	move = (right - left);

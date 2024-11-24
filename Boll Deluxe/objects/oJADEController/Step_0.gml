@@ -947,7 +947,37 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 	}
 	
 	if (mbrightpress) {
-		drawing_node=-1;
+		if (drawing_node!=-1) {
+			var obj = ds_list_find_value(object_layer_map, drawing_node)
+			var size = array_length(obj[11])
+			if (size) {
+				var sprite = ds_map_find_value(obj_data,obj[0])
+				var xoff = -sprite[1];
+				var yoff = -sprite[2];
+			
+				var deleted=false;
+				for (var i = 0; i < size; ++i) {
+					//is place matching cursor?
+				
+					var over = point_in_rectangle(mouse_x, mouse_y, obj[11][i][0]-xoff, obj[11][i][1]-yoff, obj[11][i][0]+15-xoff, obj[11][i][1]+15-yoff)
+					
+					if (over) {
+						array_delete(obj[11],i,1)
+						var size = array_length(obj[11])
+						if (size) {
+							draw_node_x=obj[11][size-1][0];
+							draw_node_y=obj[11][size-1][1];
+						}
+						deleted=true;
+						break
+					}
+				}
+				if !(deleted)
+				drawing_node=-1;
+			} else {
+				drawing_node=-1
+			}
+		}
 	}
 }
 
