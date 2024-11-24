@@ -42,8 +42,5 @@
     "path":"sprites/spr_pylom/spr_pylom.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "enemies",
-  ],
   "visible":true,
 }

@@ -1,7 +1,8 @@
 function parse_level(dir=working_directory+"\save.jade") {
 	var file = dir
 	if !file_exists(file) {
-		throw "Level does not exist at given directory! make sure you've saved first!"
+		show_message($"Level does not exist at {dir}! make sure you've saved first!")
+		room_goto(rMainMenu)
 	}
 	var loaded = buffer_load(file)
 	var save_file = buffer_decompress(loaded)

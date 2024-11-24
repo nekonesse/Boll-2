@@ -26,7 +26,7 @@ if (!optionLock) {
 				switch option {
 					case 0: crMenu="levelselectm" option=0 break;
 					case 1: crMenu="keybindsm" option=0 break;
-					case 2: room_goto(rEditor) option=0 break;
+					case 2: global.save_dir="" room_goto(rEditor) option=0 break;
 					case 3: room_goto(rIntro) option=0 break;
 					case 4: game_end(); break;
 				}
@@ -38,7 +38,7 @@ if (!optionLock) {
 			if (akey) {
 				crMenu="cssm";
 				//option=0;
-				global.nextlevel=global.levellist[option];
+				global.nextlevel=$"{working_directory}\mods\\level\\{global.levellist[option]}"
 				optionLock=1;
 				instance_create_depth(x,y,depth,oCSS);
 			}

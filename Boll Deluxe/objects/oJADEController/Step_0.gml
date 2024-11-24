@@ -215,14 +215,14 @@ if (mbleftpress) {
 		var file = get_save_filename_ext("JADE File|*.jade", "", working_directory, "Save Level");
 		if string_length(file) != 0 { 
 			savetextdur=60;
-			save_dir=file
+			global.save_dir=file
 			JADE_save(file)
 		}
 	}
 	if mouse_in_setting_slot(2) { //loading
 		var file = get_open_filename_ext("JADE File|*.jade", "", working_directory, "Load Level");
 		if string_length(file) != 0 {
-			save_dir=file
+			global.save_dir=file
 			JADE_load(file)
 		}
 	}
@@ -752,6 +752,8 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 							obj[8] = 0
 							obj[9] = 0	
 							obj[10] = []
+							obj[11] = []
+							obj[12] = []
 							if is_array(sprite[8]) && array_length(sprite[8]) {
 								for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
 									if is_array(sprite[8][o]) {
@@ -933,17 +935,36 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 	}
 }
 
-if keyboard_check_pressed(vk_enter) && !(is_typing) {
+if keyboard_check_pressed(vk_enter) && !(is_typing) { //PLAYTEST
 	JADE_save();
+	global._playerChars = [oGlobals._charmList[0]]
+
+	var myChar = get_string("Choose your character", oGlobals._charmList[0]) //debug jade charm select. not sure if this is what you meant by "multi-charm loading" but it can "load" "multi" "charm"
+	//gamemaker i don't CARE if its deprecated because of async you cant choose your charm while the charm is already loading
+
+	for (var i = 0; i < array_length(oGlobals._charmList); i++) {
+		if (myChar == oGlobals._charmList[i]) {
+			global._playerChars = [myChar]
+			break;
+		}
+	}
+	
 	global.nextlevel=working_directory+"\save.jade" //the level the game will load
 	global.jade_testing = true;
 	room_goto(rGame)
 }
 
 if (keyboard_check(vk_control)) && keyboard_check_pressed(ord("S")) { //saving
-	if (save_dir != "") {
+	if (global.save_dir != "") {
 		savetextdur=60;
-		JADE_save(save_dir)
+		JADE_save(global.save_dir)
+	} else {
+		var file = get_save_filename_ext("JADE File|*.jade", "", $"{working_directory}\mods\\level\\", "Save Level");
+		if string_length(file) != 0 { 
+			savetextdur=60;
+			global.save_dir=file
+			JADE_save(file)
+		}
 	}
 }
 

@@ -46,8 +46,5 @@
     "path":"sprites/spr_piranhaplant/spr_piranhaplant.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "enemies",
-  ],
   "visible":true,
 }

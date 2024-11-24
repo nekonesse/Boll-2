@@ -69,7 +69,6 @@ tile_layer_map = ds_list_create()
 not_on_gui = false
 
 savetextdur=0;
-save_dir="";
 
 selected_mode=OBJECT_MODE;
 selected_toolbar=0;

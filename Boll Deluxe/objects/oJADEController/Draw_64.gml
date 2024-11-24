@@ -905,12 +905,12 @@ if selected_mode == OBJECT_MODE {
 }
 #endregion
 
-if (savetextdur) && (save_dir!="") {
+if (savetextdur) && (global.save_dir!="") {
 	savetextdur=max(0,savetextdur-1)
 	draw_set_font(smallF)
 	draw_set_halign(fa_center)
 	draw_set_alpha(savetextdur/30)
-	draw_text_outline(guiw/2,guih-24,$"Saved to: {save_dir}!", 1, c_black, 8, 1, 1, 0)
+	draw_text_outline(guiw/2,guih-24,$"Saved to: {global.save_dir}!", 1, c_black, 8, 1, 1, 0)
 	draw_set_alpha(1)
 	draw_set_halign(fa_left)
 }

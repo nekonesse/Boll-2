@@ -53,8 +53,5 @@
     "name":"spr_goombahitbox",
     "path":"sprites/spr_goombahitbox/spr_goombahitbox.yy",
   },
-  "tags":[
-    "Catspeak",
-  ],
   "visible":true,
 }

@@ -41,8 +41,5 @@
     "path":"sprites/spr_koopawalk_y/spr_koopawalk_y.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "enemies",
-  ],
   "visible":true,
 }

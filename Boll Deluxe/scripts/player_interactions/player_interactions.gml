@@ -39,6 +39,7 @@ function player_interactions(){
 		}
 	} else dy=0
 	
+	#region Solid Spike Collision
 	var spike=collision_line(x-hit_sizex,y+(hit_sizey-2)-vsp,x-hit_sizex,y-(hit_sizey-2)-vsp, oSolidSpike, false, true)
 	if (spike) && (spike.dir="right" || spike.dir="none") {
 		sig.Emit("hurt_by_enemy")
@@ -57,5 +58,12 @@ function player_interactions(){
 	var spike=collision_line(x-hit_sizex-hsp,y-hit_sizey,x+hit_sizex-hsp,y-hit_sizey, oSolidSpike, false, true)
 	if (spike) && (spike.dir="down" || spike.dir="none") {
 		sig.Emit("hurt_by_enemy")
+	}
+	#endregion
+	
+	var mysteryorb=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oMysteryOrb, false, true)
+	if (mysteryorb) {
+		instance_destroy(mysteryorb);
+		finish=1;
 	}
 }

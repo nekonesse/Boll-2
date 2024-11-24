@@ -87,18 +87,21 @@ if (move != 0) && (vsp < 0) && (state!="wallrun") {
 #endregion
 
 #define step
-
 switch (size) {
 	case "basic": {
+		can_break_bricks=false
 		hit_sizey = 6
 	} break
 	case "mini": {
+		can_break_bricks=false
 		hit_sizey = 3
 	} break
 	default: {
+		can_break_bricks=true
 		hit_sizey = 12
 	} break
 }
+
 if (state == "jump" || state == "roll" || state == "spindash") && (size != "mini") {
 	hit_sizey = 6
 }

@@ -50,9 +50,5 @@
     "name":"spr_koopahitbox",
     "path":"sprites/spr_koopahitbox/spr_koopahitbox.yy",
   },
-  "tags":[
-    "Catspeak",
-    "enemies",
-  ],
   "visible":true,
 }

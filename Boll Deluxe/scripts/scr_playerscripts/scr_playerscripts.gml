@@ -106,8 +106,20 @@ function get_spriteindex() { //returns the array index of the player's current s
 			break;
 		}
 	}
+	var mem=size;
+	
+	if (grow && (global.roomTimer mod 6 < 3)) {
+		size = oldsize;
+	}
+	
 	var key=ds_map_find_value(spriteMap,$"{size} {spriteEvents[i]}")
-	return $"spr_{charmName}_{size}_{key}"
+	var spr = $"spr_{charmName}_{size}_{key}"
+	
+	if (size != mem) {
+		size = mem;
+	}
+	
+	return spr
 }
 
 function skin_animationdata(slot,name,list) {
@@ -227,7 +239,7 @@ function draw_player() {
 			spr, 
 			floor(frame),
 			floor(x) - (lengthdir_x(offset_x,(sprite_angle-90)*xsc)) * -xsc, 
-			floor(y) - (lengthdir_y(offset_y,(sprite_angle-90)*ysc) - dy - (6) - (hit_sizey)) * -ysc,
+			floor(y) - (lengthdir_y(offset_y,(sprite_angle-90)*ysc) - dy - (6) - (12-hit_sizey)) * -ysc,
 			xsc,
 			ysc,
 			sprite_angle*xsc,
@@ -262,11 +274,6 @@ function animate_player() {
 	//if ((depth=0 || depth=1) && pNum=gamemanager.plrsort) depth=!depth
 	 
 	//Growing and hurting size changes.
-	mem = size;
-	
-	if (grow && (global.roomTimer mod 6 < 3)) {
-		size = oldsize;
-	}
 	
 	var spri=array_get_index(global.player_spritelists[pNum], ds_map_find_value(spriteMap,$"{size} {spriteEvent}"))
 	
@@ -295,10 +302,6 @@ function animate_player() {
 			}
 		}
 	}
-	
-	if (size != mem) {
-		size = mem;
-	}
 }
 
 function finish_death() {
@@ -322,12 +325,12 @@ function player_castlewalk() {
 	        //if (skindat("walkin")) { //no such thing as a skindat. will change to config later but right now i want game work -moster
 	        p = noone
 	        d = 600
-	        with (oThunderFlower) {
+	        /*with (oThunderFlower) {
 				if (abs(x-other.x) < other.d) { //MANSION. BASEMENT. FIND IT!!!
 					other.p=id
 					other.d=abs(x-other.x)
 				} 
-			}
+			}*/
 	        if (p) {
 	            right=(x<p.x-4)
 	            left=(x>p.x+4)

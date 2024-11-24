@@ -44,8 +44,5 @@
     "name":"spr_banzaimask",
     "path":"sprites/spr_banzaimask/spr_banzaimask.yy",
   },
-  "tags":[
-    "enemies",
-  ],
   "visible":true,
 }

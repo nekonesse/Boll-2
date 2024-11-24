@@ -40,8 +40,5 @@
     "path":"sprites/spr_bulletbill/spr_bulletbill.yy",
   },
   "spriteMaskId":null,
-  "tags":[
-    "enemies",
-  ],
   "visible":true,
 }

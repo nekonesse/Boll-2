@@ -30,7 +30,7 @@ var _debugMess = function() {
 
 if (akey) {
 	if (instance_exists(oMainMenu))
-		room_goto(rLDTKload);
+		room_goto(rGame);
 		global._playerChars = [oGlobals._charmList[_select]];
 	instance_destroy();
 }

@@ -1,2 +1,7 @@
 /// @description go to menu
-room_goto(rMainMenu);
+if !(global.jade_testing) {
+	room_goto(rMainMenu);
+} else {
+	global.jade_testing=false;
+	room_goto(rEditor);
+}

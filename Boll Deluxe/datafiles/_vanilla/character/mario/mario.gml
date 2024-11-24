@@ -31,12 +31,15 @@ no_move = 1;
 //your hitbox is in the center so the hitbox variables should be HALF of the total box size.
 switch (size) {
 	case "basic": {
+		can_break_bricks=false
 		hit_sizey = 6
 	} break
 	case "mini": {
+		can_break_bricks=false
 		hit_sizey = 3
 	} break
 	default: {
+		can_break_bricks=true
 		hit_sizey = 12
 	} break
 }

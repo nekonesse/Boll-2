@@ -17,4 +17,11 @@ depth=2
 going=0;
 parentblock=undefined;
 
+pathing=-1;
+pathprenum=0;
+pathnum=1;
+pathspd=2;
+pathcanrev=true;
+pathisrev=false;
+
 setup_box_poly(id);

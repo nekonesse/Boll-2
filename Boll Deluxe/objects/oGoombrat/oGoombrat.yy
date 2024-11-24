@@ -44,9 +44,5 @@
     "name":"spr_goombawalk",
     "path":"sprites/spr_goombawalk/spr_goombawalk.yy",
   },
-  "tags":[
-    "Catspeak",
-    "enemies",
-  ],
   "visible":true,
 }
