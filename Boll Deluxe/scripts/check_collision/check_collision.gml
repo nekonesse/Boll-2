@@ -419,4 +419,7 @@ function node_path_movement() {
 			}
 		}
 	}
+	
+	x_diff = x - xprevious;
+	y_diff = y - yprevious;
 }

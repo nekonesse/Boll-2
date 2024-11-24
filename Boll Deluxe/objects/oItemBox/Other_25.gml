@@ -1,4 +1,5 @@
 ///@description JADE variable update
+event_inherited()
 if (bricked) {
 	sprite_index=spr_brick
 	image_normal=spr_brick

@@ -5,3 +5,4 @@ switch (dir) {
 	case "up": image_index=2 break;
 	case "down": image_index=3 break;
 }
+pathprenum=max(pathnum-1,0)

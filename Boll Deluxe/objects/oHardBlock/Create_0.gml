@@ -1,6 +1,5 @@
 // Inherit the parent event
 event_inherited();
-dir="none";
 
 pathing=-1;
 pathprenum=0;

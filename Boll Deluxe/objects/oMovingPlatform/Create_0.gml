@@ -17,6 +17,11 @@ image_speed=0;
 depth=5;
 fr=0
 
-LDtkReloadFields()
-
 image_yscale=1;
+
+pathing=-1;
+pathprenum=0;
+pathnum=1;
+pathspd=2;
+pathcanrev=true;
+pathisrev=false;

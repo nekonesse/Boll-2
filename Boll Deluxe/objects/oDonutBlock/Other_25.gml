@@ -1,0 +1,1 @@
+pathprenum=max(pathnum-1,0)

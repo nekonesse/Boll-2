@@ -918,7 +918,7 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 					var xoff = -sprite[1];
 					var yoff = -sprite[2];
 					
-					if (over) {
+					if (over) && (sprite[9]) {
 						drawing_node=i;
 						if !array_length(obj[11]) {
 							draw_node_x=(obj[1]*16)+xoff;
