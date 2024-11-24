@@ -106,16 +106,32 @@ switch(selected_mode) {
 		if selected_tool = BRUSH_TOOL {
 			if (mwheel == 1 || keyboard_check_pressed(vk_pagedown)) {
 				if !keyboard_check(vk_control)
-				current_tile_id[0][0] --	
+				for (var i = 0; i <= tile_sel_width; ++i) {
+						for (var j = 0; j <= tile_sel_height; ++j) {
+							current_tile_id[i][j] --
+						}
+				}
 				else
-				current_tile_id[0][0] += (sprite_get_width(spr_TilesetMain)/16)
+				for (var i = 0; i <= tile_sel_width; ++i) {
+						for (var j = 0; j <= tile_sel_height; ++j) {
+							current_tile_id[i][j] += (sprite_get_width(spr_TilesetMain)/16)
+						}
+				}
 			}
 
 			if (mwheel == -1 || keyboard_check_pressed(vk_pageup)) {
 				if !keyboard_check(vk_control)
-				current_tile_id[0][0] ++
+				for (var i = 0; i <= tile_sel_width; ++i) {
+						for (var j = 0; j <= tile_sel_height; ++j) {
+							current_tile_id[i][j] ++
+						}
+				}
 				else
-				current_tile_id[0][0] -= (sprite_get_width(spr_TilesetMain)/16)
+				for (var i = 0; i <= tile_sel_width; ++i) {
+						for (var j = 0; j <= tile_sel_height; ++j) {
+							current_tile_id[i][j] -= (sprite_get_width(spr_TilesetMain)/16)
+						}
+				}
 			}
 		}
 		
