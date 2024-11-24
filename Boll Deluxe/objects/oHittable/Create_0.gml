@@ -12,6 +12,7 @@ hitNegative = false; //used for the bumping "overshoot" anim end-bounce
 no_hit = false;
 default_depth = 0;
 amount=1; // the amount of items to hold
+no_path_follow=false;
 
 image_normal = sprite_index
 image_hit = sprite_index
@@ -32,3 +33,10 @@ blockHit.Connect( self, function(hit_p, obj) {
 		sprite_index = image_hit
 	}
 });
+
+pathing=-1;
+pathprenum=0;
+pathnum=1;
+pathspd=2;
+pathcanrev=true;
+pathisrev=false;

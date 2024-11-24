@@ -3,6 +3,10 @@ if player && ((!player.grounded && player.vsp < 0) || (player.jump)) && !no_hit 
 	blockHit.Emit(-1, player)
 }*/
 
+if !(no_path_follow) {
+	node_path_movement();
+}
+
 ///HIT IS DIRECTION OF BUMP, -1 IS UP, 1 IS DOWN
 if (hit != 0)
 {

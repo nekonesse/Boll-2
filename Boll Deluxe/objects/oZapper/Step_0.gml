@@ -1,7 +1,9 @@
+node_path_movement();
+
 buftimer=max(0,buftimer-1);
 
 if !(buftimer) { //update tick
-buftimer=4;
+buftimer=max(4-pathspd,1);
 
 var list = ds_list_create();
 switch (dir) {

@@ -23,12 +23,12 @@ for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 					var y2=obj[11][0][1]
 				}
 				draw_set_color($3d68cd)
-				draw_line(x2,y2,arr[0],arr[1])
+				draw_line(x2+(8-xoff),y2+(8-yoff),arr[0]+(8-xoff),arr[1]+(8-yoff))
 				draw_set_color(c_white)
 			}
 			if (not_on_gui) {
 				draw_set_color($3d68cd)
-				draw_line(draw_node_x,draw_node_y,(gridx*16)+xoff,(gridy*16)+yoff)
+				draw_line(draw_node_x+(8-xoff),draw_node_y+(8-yoff),(gridx*16)+8,(gridy*16)+8)
 				draw_set_color(c_white)
 			}
 			for (var j = 0; j < array_length(obj[11]); ++j) {

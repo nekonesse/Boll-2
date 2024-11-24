@@ -6,3 +6,4 @@ switch (dir) {
 	case "right": image_index=3 break;
 	case "none": image_index=4 break;
 }
+pathprenum=max(pathnum-1,0)
