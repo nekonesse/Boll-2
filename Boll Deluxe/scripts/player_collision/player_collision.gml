@@ -155,7 +155,7 @@ function player_collision(){
 		offsety = yprevious - y
 		
 		//fall
-		if (!check_collision_line(posx-hit_sizex,posy+hit_sizey,posx-hit_sizey,posy +hit_sizey + 15 , COL_BOTTOM) && !check_collision_line(posx+hit_sizex -1,posy+hit_sizey,posx+hit_sizex-1,posy+hit_sizey + 15, COL_BOTTOM) ){
+		if (!check_collision_line(posx-hit_sizex,posy+hit_sizey,posx-hit_sizex,posy +hit_sizey + 15 , COL_BOTTOM) && !check_collision_line(posx+hit_sizex-1,posy+hit_sizey,posx+hit_sizex-1,posy+hit_sizey + 15, COL_BOTTOM) ){
 				if (!abs(polyfloor[1]))
 				{
 					vsp = gsp * -dsin(colangle)

@@ -5,7 +5,7 @@ sound_list=split_string("select,damage,die,jump,win,step,bonk",",");
 #define create
 slopesliding = 0;
 no_move = 0;
-fric = 0.0625;
+fric = 0.07;
 runvar = 0;
 runjump = 0;
 dusttimer = 1;

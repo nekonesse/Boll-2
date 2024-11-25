@@ -300,8 +300,8 @@ if (state != "roll" || !grounded) && !(piped) {
 		accel = 0.09375
 		fastaccel = 0.09375
 	}
-	fastaccel = 0.45 //deaccel
-	fric = 0.0425
+	fastaccel = 0.7 //deaccel
+	fric = 0.055
 }
 
 
