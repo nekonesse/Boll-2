@@ -19,7 +19,6 @@ if !finish {
 	cpress = input_check_pressed("c");
 }
 
-
 if left{
 	move_dir = -1	
 }

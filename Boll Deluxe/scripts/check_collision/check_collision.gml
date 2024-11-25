@@ -422,4 +422,13 @@ function node_path_movement() {
 	
 	x_diff = x - xprevious;
 	y_diff = y - yprevious;
+	
+	if !(no_collide) {
+		with(oPlayer) {
+			if (grounded) && collision_line(x-hit_sizex+other.x_diff,y+hit_sizey+2+abs(other.y_diff),x+hit_sizex+other.x_diff,y+hit_sizey+2+abs(other.y_diff),other,false,true) {
+				x += other.x_diff;
+				y += other.y_diff;
+			}
+		}
+	}
 }

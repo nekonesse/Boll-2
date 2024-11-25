@@ -25,18 +25,28 @@ function player_interactions(){
 		sig.Emit("electrocute");
 	}
 	
-	var hittable=collision_line(x-(hit_sizex-1),y+hit_sizey+1,x+(hit_sizex-1),y+hit_sizey+1, oHittable, false, true)
-	if (hittable) && !(hurt) && !(dead)  {
-		dy=hittable.dy
+	var list=ds_list_create();
+	var num=collision_line_list(x-(hit_sizex-1),y+hit_sizey+1,x+(hit_sizex-1),y+hit_sizey+1, oHittable, false, true, list, true)
+	if (num > 0) {
+		var totaldy=0;
+		for (var i = 0; i < num; ++i) {
+			var hittable=list[| i]
+			if !(hurt) && !(dead)  {
+				if(abs(hittable.dy) > abs(totaldy)) {
+					totaldy=hittable.dy //get the greatest block's dy
+				}
 		
-		if (hittable.object_index == oNoteBlock) {
-			if !(hittable.do_bump) {
-				hittable.blockHit.Emit(1, id);
-				grounded=false;
-				canstopjump = true
-				vsp=-4-akey*1.5
+				if (hittable.object_index == oNoteBlock) {
+					if !(hittable.do_bump) {
+						hittable.blockHit.Emit(1, id);
+						grounded=false;
+						canstopjump = true
+						vsp=-4-akey*1.5
+					}
+				}
 			}
 		}
+		dy=totaldy
 	} else dy=0
 	
 	#region Solid Spike Collision

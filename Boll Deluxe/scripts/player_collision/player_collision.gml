@@ -120,8 +120,6 @@ function player_collision(){
 				posy = y
 				
 			}
-				
-			vsp = 2
 			
 			//bonking
 			if object_index == oPlayer{
@@ -129,7 +127,7 @@ function player_collision(){
 				VinylPlay(snd_blockbump)
 				sig.Emit("ceil_bonk")
 				var _list = ds_list_create();
-				var _num = collision_line_list(posx-(hit_sizex-1), posy-hit_sizey-1, posx+(hit_sizex-1), posy-hit_sizey-1, oHittable, false, true, _list, true);
+				var _num = collision_line_list(posx-(hit_sizex-1), posy-(hit_sizey+1)+vsp, posx+(hit_sizex-1), posy-(hit_sizey+1)+vsp, oHittable, false, true, _list, true);
 				if (_num > 0) {
 					for (var i = 0; i < _num; ++i;) {
 						with(_list[| i]) if !(no_hit) {
@@ -137,9 +135,10 @@ function player_collision(){
 							blockHit.Emit(-1, other.id)
 						}
 					}
-					show_debug_message(can_break_bricks)
 				}
 			}
+			
+			vsp = 2
 		}
 	}
 	

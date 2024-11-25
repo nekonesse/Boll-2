@@ -148,20 +148,48 @@ if (state == "pound") && !piping {
 	
 	//hittable block collision
 	if (grounded) && (pound_timer <= 0) {
-		var blockcoll=collision_point(x,y+hit_sizey+vsp+1,oHittable, false, true)
-		if (blockcoll) && !(blockcoll.no_hit) && (pounding_block == true) && (blockcoll.amount != 0) {
-			if (blockcoll.hit == 0) {
-				signal_emit(blockcoll.blockHit, 1, id)
-				pounding_block = false
+		var blocklist=ds_list_create();
+		var num=collision_line_list(x-(hit_sizex-1),y+hit_sizey+vsp+2,x+(hit_sizex-1),y+hit_sizey+vsp+2,oHittable, false, true,blocklist, true)
+		
+		found_block=false;
+		if (num > 0) {
+			for (var i = 0; i < num; i+=1;) {
+				var blockcoll=ds_list_find_value(blocklist, i)
+				if !(blockcoll.no_hit) && (pounding_block == true) && (blockcoll.amount != 0) {
+					if (blockcoll.hit == 0) {
+						found_block=true;
+						signal_emit(blockcoll.blockHit, 1, id)
+					}
+				}
 			}
-		} else {
-			state = "";
+			pounding_block = false
+		}
+		
+		if !found_block {
+			state = ""
+			vsp = 0
+			//create pound smoke
+			var i=instance_create_depth(x-1, y + hit_sizey, 0, pSmoke);
+			i.depth = (depth + 5);
+			i.image_xscale = 1;
+			i.hspeed=-3.25;
+			i.friction=0.2;
+			i.vspeed=-0.2;
+			i.gravity=-0.04;
+			var i=instance_create_depth(x+1, y + hit_sizey, 0, pSmoke);
+			i.depth = (depth + 5);
+			i.image_xscale = -1;
+			i.hspeed=3.25;
+			i.friction=0.2;
+			i.vspeed=-0.2;
+			i.gravity=-0.04;
 			pound_timer = 0;
 		}
 		
 		if (down) {
 			pounding_block = true
 		}
+		ds_list_destroy(blocklist)
 	}
 }
 
@@ -192,7 +220,7 @@ if (state == "jump" || state == "") && !(grounded) && !piped {
 		var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
 		if (!grounded) && (coll) && (vsp > 0){
 			state = "wallslide"
-		} 
+		}
 	}
 }
 
@@ -215,6 +243,8 @@ if (state == "" && apress && canjump > 0) && !piped {
 	}
 	var i=instance_create_depth(x, y + hit_sizey, 0, pJumpDust);
 	i.depth = (depth + 5);
+	i.vspeed=(y-yprevious)/1.5
+	i.friction=0.2
 }
 #endregion
 
@@ -410,28 +440,6 @@ if (state == "pound") {
 		gsp = (-8 * dsin(colangle)) 
 	}
 	playsfx(charmName+"stomp");
-
-	var blockcoll=collision_point(x,y+hit_sizey+vsp+1,oHittable, false, true)
-	if !(blockcoll) || (blockcoll && !blockcoll.amount) {
-		state = ""
-		vsp = 0
-		playsfx(charmName+"stomp");
-		//create pound smoke
-		var i=instance_create_depth(x-1, y + hit_sizey, 0, pSmoke); //no clue why i have to offset these 5 pixels up
-		i.depth = (depth + 5);
-		i.image_xscale = 1;
-		i.hspeed=-3.25;
-		i.friction=0.2;
-		i.vspeed=-0.2;
-		i.gravity=-0.04;
-		var i=instance_create_depth(x+1, y + hit_sizey, 0, pSmoke);
-		i.depth = (depth + 5);
-		i.image_xscale = -1;
-		i.hspeed=3.25;
-		i.friction=0.2;
-		i.vspeed=-0.2;
-		i.gravity=-0.04;
-	}
 } else {
 	state = ""
 	vsp = 0
