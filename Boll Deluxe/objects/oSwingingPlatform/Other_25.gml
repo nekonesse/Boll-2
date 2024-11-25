@@ -1,3 +1,4 @@
 ///@description Align Correctly
-y+=8
-x+=8
+targetx+=8
+targety+=8
+pathprenum=max(pathnum-1,0)

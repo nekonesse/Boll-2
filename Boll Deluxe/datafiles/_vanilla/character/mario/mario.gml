@@ -325,7 +325,7 @@ frspd=1
 
 if (state == "") {
 	if (ceil(abs(hsp))>3) spriteEvent="run"
-	else if !(abs(hsp)) {
+	else if !(round(abs(hsp))) {
 		spriteEvent="idle"
 	}
 	else {

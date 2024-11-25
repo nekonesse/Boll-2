@@ -34,10 +34,16 @@ for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 			for (var j = 0; j < array_length(obj[11]); ++j) {
 				var arr=obj[11][j]
 				
+				var over = point_in_rectangle(mouse_x, mouse_y, arr[0]+((obj[6]-16)/2)-xoff, arr[1]+((obj[7]-16)/2)-yoff, arr[0]+15+((obj[6]-16)/2)-xoff, arr[1]+15+((obj[7]-16)/2)-yoff)
+				
 				draw_sprite(spr_JADEnode,0,arr[0]+((obj[6]-16)/2)-xoff,arr[1]+((obj[7]-16)/2)-yoff)
 				draw_set_color(c_black)
 				draw_text((arr[0]+((obj[6]-16)/2)-xoff)+8,(arr[1]+((obj[7]-16)/2)-yoff)+8,j)
 				draw_set_color(c_white)
+				
+				if (over){
+					draw_circle_color((arr[0]+((obj[6]-16)/2)-xoff)+7,(arr[1]+((obj[7]-16)/2)-yoff)+7,8,$3d68cd,$3d68cd,true)
+				}
 			}
 		}
 		if (not_on_gui) {

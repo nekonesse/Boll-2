@@ -712,7 +712,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 							obj[9] = 0	
 							obj[10] = [] //properties
 							obj[11] = [] //node array
-							obj[12] = [2,false,0] //node properties
+							obj[12] = [2,false,0,false] //node properties
 							if is_array(sprite[8]) && array_length(sprite[8]) {
 								for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
 									if is_array(sprite[8][o]) {
