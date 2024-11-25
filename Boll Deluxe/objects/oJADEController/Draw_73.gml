@@ -11,7 +11,7 @@ for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 	var xoff = -sprite[1];
 	var yoff = -sprite[2];
 	if (sprite[9]) && (drawing_node==i) {
-		draw_sprite(spr_JADEnode,1,obj[1]*16,obj[2]*16)
+		draw_sprite(spr_JADEnode,1,(obj[1]*16)+(obj[6]-16)/2,(obj[2]*16)+(obj[7]-16)/2)
 		if (array_length(obj[11]) > 0) {
 			for (var j = 0; j < array_length(obj[11]); ++j) {
 				var arr=obj[11][j]
@@ -23,7 +23,7 @@ for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 					var y2=obj[11][0][1]
 				}
 				draw_set_color($3d68cd)
-				draw_line(x2+(8-xoff),y2+(8-yoff),arr[0]+(8-xoff),arr[1]+(8-yoff))
+				draw_line(x2+((obj[6]-16)/2)+(8-xoff),y2+((obj[7]-16)/2)+(8-yoff),arr[0]+((obj[6]-16)/2)+(8-xoff),arr[1]+((obj[7]-16)/2)+(8-yoff))
 				draw_set_color(c_white)
 			}
 			if (not_on_gui) {
@@ -33,9 +33,10 @@ for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 			}
 			for (var j = 0; j < array_length(obj[11]); ++j) {
 				var arr=obj[11][j]
-				draw_sprite(spr_JADEnode,0,arr[0]-xoff,arr[1]-yoff)
+				
+				draw_sprite(spr_JADEnode,0,arr[0]+((obj[6]-16)/2)-xoff,arr[1]+((obj[7]-16)/2)-yoff)
 				draw_set_color(c_black)
-				draw_text((arr[0]-xoff)+8,(arr[1]-yoff)+8,j)
+				draw_text((arr[0]+((obj[6]-16)/2)-xoff)+8,(arr[1]+((obj[7]-16)/2)-yoff)+8,j)
 				draw_set_color(c_white)
 			}
 		}

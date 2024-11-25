@@ -921,12 +921,12 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 					if (over) && (sprite[9]) {
 						drawing_node=i;
 						if !array_length(obj[11]) {
-							draw_node_x=(obj[1]*16)+xoff;
-							draw_node_y=(obj[2]*16)+yoff;
+							draw_node_x=(obj[1]*16)-((obj[6]-16)/2)+xoff
+							draw_node_y=(obj[2]*16)-((obj[7]-16)/2)+yoff
 						} else {
 							var length = array_length(obj[11])-1;
-							draw_node_x=obj[11][length][0];
-							draw_node_y=obj[11][length][1];
+							draw_node_x=obj[11][length][0]+((obj[6]-16)/2);
+							draw_node_y=obj[11][length][1]+((obj[7]-16)/2);
 						}
 						break;
 					}
@@ -939,7 +939,7 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 			var xoff = -sprite[1];
 			var yoff = -sprite[2];
 			
-			array_push(obj[11], [(gridx*16)+xoff,(gridy*16)+yoff,false])
+			array_push(obj[11], [(gridx*16)-((obj[6]-16)/2)+xoff,(gridy*16)-((obj[7]-16)/2)+yoff,false])
 			show_debug_message(obj[11])
 			draw_node_x=(gridx*16)+xoff
 			draw_node_y=(gridy*16)+yoff
@@ -959,14 +959,14 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 				for (var i = 0; i < size; ++i) {
 					//is place matching cursor?
 				
-					var over = point_in_rectangle(mouse_x, mouse_y, obj[11][i][0]-xoff, obj[11][i][1]-yoff, obj[11][i][0]+15-xoff, obj[11][i][1]+15-yoff)
+					var over = point_in_rectangle(mouse_x, mouse_y, obj[11][i][0]+((obj[6]-16)/2)-xoff, obj[11][i][1]+((obj[7]-16)/2)-yoff, obj[11][i][0]+15+((obj[6]-16)/2)-xoff, obj[11][i][1]+15+((obj[7]-16)/2)-yoff)
 					
 					if (over) {
 						array_delete(obj[11],i,1)
 						var size = array_length(obj[11])
 						if (size) {
-							draw_node_x=obj[11][size-1][0];
-							draw_node_y=obj[11][size-1][1];
+							draw_node_x=obj[11][size-1][0]+((obj[6]-16)/2);
+							draw_node_y=obj[11][size-1][1]+((obj[7]-16)/2);
 						}
 						deleted=true;
 						break
