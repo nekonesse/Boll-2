@@ -1,0 +1,12 @@
+hit_sizex=6
+hit_sizey=6
+vsp=0
+hsp=0
+gsp=0
+grounded=false
+grav=0.25
+piped=false
+collision_array=[oCollider]
+owner=-1;
+alarm[0]=5;
+setup_box_poly(id);

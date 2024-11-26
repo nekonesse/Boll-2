@@ -83,6 +83,15 @@ if (state == "" || state == "jump") && !piped && !electrocuted && !electrocution
 		run = 0;
 	}
 	
+	if (bpress) && (size=="fire") && !(has_fired) {
+		var proj=instance_create_depth(x+(hit_sizex+3)*xsc,y+hit_sizey-8,2,oFireball)
+		proj.hsp=2.5*xsc
+		proj.vsp=-2
+		proj.owner=id
+		
+		has_fired+=1;
+	}
+	
 	if (!grounded) {
 		vsp = min(4, vsp + grav);
 		canjump -= 1;

@@ -68,7 +68,10 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_constant_add("oMagentaSwitchSlope",oMagentaSwitchSlope)
 		txr_constant_add("oMushroom",oMushroom)
 		txr_constant_add("oFireFlower",oFireFlower)
+		txr_constant_add("oThunderFlower",oThunderFlower)
 		txr_constant_add("oCoin",oCoin)
+		txr_constant_add("oMysteryOrb",oMysteryOrb)
+		
 		//Enemies
 		txr_constant_add("oEnemy",oEnemy)
 		txr_constant_add("oGoomba",oGoomba)
@@ -82,16 +85,18 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_constant_add("oLargeSamba",oLargeSamba)
 		txr_constant_add("oPylom",oPylom)
 		txr_constant_add("oThwomp",oThwomp)
+		
+		//Projectiles
+		txr_constant_add("oFireball",oFireball)
+		
 		//Control
 		txr_constant_add("oPlayer",oPlayer)
 		txr_constant_add("oGlobals",oGlobals)
 		txr_constant_add("oBackgroundManager",oBackgroundManager)
 		txr_constant_add("oGameManager",oGameManager)
 		txr_constant_add("oCamera",oCamera)
-		txr_constant_add("oCameraNudge",oCameraNudge)
-		txr_constant_add("oCameraZoom",oCameraZoom)
-		txr_constant_add("oZoomOnStart",oZoomOnStart)
-		txr_constant_add("oCameraLock",oCameraLock)
+		txr_constant_add("oCameraRegion",oCameraRegion)
+		txr_constant_add("oCameraBoundary",oCameraBoundary)
 		
 		//Particles
 		txr_constant_add("pSmoke",pSmoke)

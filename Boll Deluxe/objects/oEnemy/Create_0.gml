@@ -10,6 +10,8 @@
 //polyfloor, hit the "floor" of a polygon
 enemyStomped = new Signal();
 enemyCollidePlayer = new Signal();
+enemyFireballed = new Signal();
+enemyKilled = new Signal();
 grav=defaultgrav
 rot=0
 xsc=1
@@ -24,6 +26,7 @@ in_shell=false;
 collision_array=[oCollider, oEnemyGround];
 
 killtype="";
+killdir=0;
 
 piped = false
 grounded = false
@@ -33,6 +36,7 @@ hit_sizey = 6
 
 image_xscale=1;
 image_yscale=1;
+depth=4;
 sprindex_prev = sprite_index;
 
 // boxpoly setup
@@ -41,12 +45,23 @@ setup_box_poly(id);
 enemyStomped.Connect( self, function(hit_p) {
 	if (!no_stomping) {
 		hp-=1
-		with(hit_p) sig.Emit("enemy_stomped")
+		with(hit_p) {
+			sig.Emit("enemy_stomped")
+			instance_create_depth(x,y+hit_sizey,2,pImpact)
+		}
 		phaseid=hit_p
+		killtype="stomp"
 	}
 });
 
 enemyCollidePlayer.Connect( self, function(hit_p) {
 	with(hit_p) sig.Emit("hurt_by_enemy")
 	phaseid=hit_p
+});
+
+enemyFireballed.Connect( self, function(proj, hit_p) {
+	hp-=1
+	instance_create_depth(proj.x,proj.y,2,pImpact)
+	killdir=esign(proj.x-x,1)
+	killtype="spin"
 });

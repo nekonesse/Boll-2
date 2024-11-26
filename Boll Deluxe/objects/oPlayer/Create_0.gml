@@ -80,6 +80,7 @@ electrocuted = false; //if player is electrocuted by something
 electrocution_timer = 0; //for the electrocuted animation
 grow=0;
 can_break_bricks=false;
+has_fired=0;
 
 //warping stuff
 warp_timer = 0;
