@@ -53,7 +53,7 @@ var tile_layer_shader_reset = function() {
 layer_script_begin(clouds3d_layer, tile_layer_3d);
 layer_script_end(clouds3d_layer, tile_layer_shader_reset);
 
-ydiff=0
-xdiff=0
-//vertical scale of the image
-ysc = 224
+// these variables should help positioning backgrounds comprised of only one non-looping image
+// if only one of those axis should not loop, then only use one
+xdiff = 0
+ydiff = 0
