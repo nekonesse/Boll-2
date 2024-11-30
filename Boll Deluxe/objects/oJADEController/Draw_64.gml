@@ -333,7 +333,7 @@ if selected_mode == OBJECT_MODE {
 							}
 							case "string_input": {
 								if !open_dropmenu {
-									draw_sprite_stretched(spr_JADEnumberinput,0,96+16,(112+32*i)-12,8*12,8*3)
+									draw_sprite_stretched(spr_JADEstringinput,0,96+16,(112+32*i)-12,96,24)
 									if !(is_typing-1==i)
 									ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, smallF, 2, 90, 19).Draw(96+29,(112+32*i)-6)
 									else
@@ -691,7 +691,7 @@ if selected_mode == OBJECT_MODE {
 							}
 							case "string_input": {
 								if !open_dropmenu {
-									draw_sprite_stretched(spr_JADEnumberinput,0,96+16,(112+32*i)-12,8*12,8*3)
+									draw_sprite_stretched(spr_JADEstringinput,0,96+16,(112+32*i)-12,96,24)
 									if !(is_typing-1==i)
 									ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, smallF, 2, 90, 19).Draw(96+29,(112+32*i)-6)
 									else

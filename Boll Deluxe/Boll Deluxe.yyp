@@ -414,6 +414,7 @@
     {"id":{"name":"oCyanSwitchBlock","path":"objects/oCyanSwitchBlock/oCyanSwitchBlock.yy",},},
     {"id":{"name":"oCyanSwitchBlockOff","path":"objects/oCyanSwitchBlockOff/oCyanSwitchBlockOff.yy",},},
     {"id":{"name":"oCyanSwitchSlope","path":"objects/oCyanSwitchSlope/oCyanSwitchSlope.yy",},},
+    {"id":{"name":"oDeathpit","path":"objects/oDeathpit/oDeathpit.yy",},},
     {"id":{"name":"oDirectionChanger","path":"objects/oDirectionChanger/oDirectionChanger.yy",},},
     {"id":{"name":"oDonutBlock","path":"objects/oDonutBlock/oDonutBlock.yy",},},
     {"id":{"name":"oEmpty","path":"objects/oEmpty/oEmpty.yy",},},
