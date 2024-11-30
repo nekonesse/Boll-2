@@ -72,7 +72,7 @@ if (grounded) {
 }
 
 #region Start Wallrunning
-if (move != 0) && (vsp < 0) && (state!="wallrun") && (abs(wallrundata[8]) > 0.5) {
+if (vsp < 0) && (state!="wallrun") && (abs(wallrundata[8]) > 0.5) {
 	//wall sliding
 	var coll=check_collision_line(x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
 	if (!grounded)
@@ -283,7 +283,7 @@ if (state == "wallrun") && !piped {
 		control_lock=7;
 		wallrundata[6] *= 0.75;
 		hsp=-3*esign(move,xsc)
-		vsp=-6
+		vsp=-5.5
 		move=-move
 		canstopjump=true;
 		xsc=esign(hsp,xsc)
