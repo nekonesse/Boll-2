@@ -72,7 +72,7 @@ if (grounded) {
 }
 
 #region Start Wallrunning
-if (vsp < 0) && (state!="wallrun") && (abs(wallrundata[8]) > 0.5) {
+if (move!=0) && (vsp < 0) && (state!="wallrun") && (abs(wallrundata[8]) > 0.5) {
 	//wall sliding
 	var coll=check_collision_line(x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
 	if (!grounded)
@@ -114,14 +114,13 @@ if (state == "jump" || state == "roll" || state == "spindash") && (size != "mini
 if (braking) xsc=brakedir
 topspd = 4 + ((size != "basic" || size != "mini") * 0.5);
 maxspd = 12.5;
-no_move = false
 //add more checks here
 var rolling = false
 if (state == "roll") {
 	rolling = true
 }
 
-if (control_lock > 0 || hurt || state == "wallrun" || electrocuted) no_move = true
+if !(control_lock > 0 || hurt || state == "wallrun" || electrocuted) no_move = false
 
 control_lock = max(0,control_lock - 1)
 
@@ -149,6 +148,7 @@ if (!grounded) {
 		xsc = esign(move, xsc)
 	}
 } else {
+	walljump = false
 	hurt = false
 	canjump = 5;  // Coyote frames
 	if !(hurt) canstopjump = false
@@ -280,9 +280,10 @@ if (state == "wallrun") && !piped {
 	}
 	
 	if (apress) {
-		control_lock=7;
+		walljump=true;
+		control_lock=15;
 		wallrundata[6] *= 0.75;
-		hsp=-3*esign(move,xsc)
+		hsp=-3.5*esign(move,xsc)
 		vsp=-5.5
 		move=-move
 		canstopjump=true;

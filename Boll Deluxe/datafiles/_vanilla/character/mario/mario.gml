@@ -18,6 +18,7 @@ grow = 0;
 state = "";
 groundpound_land=false;
 pounding_block = false;
+walljump = false;
 firing = 0;
 
 #define stop
