@@ -120,7 +120,7 @@ if (state == "roll") {
 	rolling = true
 }
 
-if !(control_lock > 0 || hurt || state == "wallrun" || electrocuted) no_move = false
+if !(control_lock > 0 || hurt || state == "wallrun" || electrocuted || walljump) no_move = false
 
 control_lock = max(0,control_lock - 1)
 
@@ -277,6 +277,7 @@ if (state == "wallrun") && !piped {
 		//wallrundata[0]=0;
 		storedvsp=0;
 		storeddir=0;
+		walljump=false;
 	}
 	
 	if (apress) {
