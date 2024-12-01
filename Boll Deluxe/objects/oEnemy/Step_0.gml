@@ -2,6 +2,15 @@ if global.paused || inactive && (object_index!=oBulletBill && object_index!=oBan
 
 //grounded=false
 
+if !on_screen() & !origin_on_screen() {
+	x = xstart
+	y = ystart
+}
+
+if !on_screen() exit;
+
+//instance_activate_region(x-64,y-64, 128, 128, true)
+
 if !(in_shell) && (edgeturn) && (grounded)
 {
 	if !check_collision_line(x + (-xsc * (hit_sizex-4)),y,x + (-xsc * (hit_sizex-4)),y+hit_sizey+16, COL_BOTTOM){
