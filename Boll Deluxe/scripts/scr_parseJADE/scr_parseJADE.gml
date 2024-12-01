@@ -24,12 +24,16 @@ function parse_level(dir=working_directory+"\save.jade") {
 				var temparr = []
 				array_copy(temparr,0,data[11],0,array_length(data[11]))
 				variable_instance_set(obj, "pathing", temparr);
-				variable_instance_set(obj, "pathspd", data[12][0]);
-				variable_instance_set(obj, "pathcanrev", data[12][1]);
-				variable_instance_set(obj, "pathnum", data[12][2]);
-				variable_instance_set(obj, "pathcanfall", data[12][3]);
-				variable_instance_set(obj, "pathdraw", data[12][4]);
-				variable_instance_set(obj, "pathstarted", data[12][5]);
+				if is_array(data[12]) {
+					variable_instance_set(obj, "pathspd", data[12][0]);
+					variable_instance_set(obj, "pathcanrev", data[12][1]);
+					variable_instance_set(obj, "pathnum", data[12][2]);
+					variable_instance_set(obj, "pathcanfall", data[12][3]);
+					variable_instance_set(obj, "pathdraw", data[12][4]);
+					if array_length(data[12]) > 5
+					variable_instance_set(obj, "pathstarted", data[12][5]);
+					else variable_instance_set(obj, "pathstarted", true);
+				}	
 			}
 			
 			for (var j = 0; j < array_length(data[10]); j++) {
@@ -67,6 +71,16 @@ function parse_level(dir=working_directory+"\save.jade") {
 				var temparr = []
 				array_copy(temparr,0,data[11],0,array_length(data[11]))
 				variable_instance_set(obj, "pathing", temparr);
+				if is_array(data[12]) {
+					variable_instance_set(obj, "pathspd", data[12][0]);
+					variable_instance_set(obj, "pathcanrev", data[12][1]);
+					variable_instance_set(obj, "pathnum", data[12][2]);
+					variable_instance_set(obj, "pathcanfall", data[12][3]);
+					variable_instance_set(obj, "pathdraw", data[12][4]);
+					if array_length(data[12]) > 5
+					variable_instance_set(obj, "pathstarted", data[12][5]);
+					else variable_instance_set(obj, "pathstarted", true);
+				}	
 			}
 			
 			for (var j = 0; j < array_length(data[10]); j++) {

@@ -161,7 +161,7 @@ function JADE_load(file=working_directory+"\save.jade") {
 	for (var i = 0; i < size; ++i) { //load objects
         var data = array[0][i]
 		data[5] = 0
-		if is_array(data[12]) && array_length(data[12]) < 5 {
+		if array_length(data) >= 13 && array_length(data[12]) < 5 {
 			data[12][5]=true
 		}
 		ds_list_add(object_layer_map,data)
