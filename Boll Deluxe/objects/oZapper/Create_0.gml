@@ -10,6 +10,7 @@ pathisrev=false;
 pathfallen=false;
 pathcanfall=false;
 pathdraw=true;
+pathstarted=true;
 
 buftimer=0;
 

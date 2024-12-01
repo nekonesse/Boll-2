@@ -361,6 +361,10 @@ if (state == "") {
 		spriteEvent="brake" 
 		xsc = -(skiddir)
 	}
+	
+	if (slopesliding) {
+		spriteEvent="slopeSlide"
+	}
 
 	if (finish && posed && no_move) {
 		spriteEvent="victory"
@@ -384,10 +388,6 @@ if (state == "wallslide") {
 
 if (firing) {
 	spriteEvent="fireToss"
-}
-
-if (slopesliding) {
-	spriteEvent="slopeSlide"
 }
 
 if (hurt) {
@@ -482,30 +482,41 @@ if (state != "groundpound") {
 	vsp=-4-akey*1.5
 }
 
-#define hurt_by_enemy
-stopsfx(charmName+"damage")
-hurt=1
-hsp=2.25*-xsc
-vsp=-4
-canstopjump=true
-state=""
-grounded=false
-oldsize = size;
-switch (size) {
-	case "basic":
-	case "mini":
-		signal_emit(sig, "on_kill", charmName)
-		break;
-	case "big":
-		size = "basic";
-		playsfx(charmName+"damage")
-		break;
-	default:
-		size = "big";
-		playsfx(charmName+"damage")
-		break;
+#define collide_with_enemy
+var coll=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oEnemy, false, true)
+if (coll) && !(slopesliding) {
+	stopsfx(charmName+"damage")
+	hurt=1
+	hsp=2.25*-xsc
+	vsp=-4
+	canstopjump=true
+	state=""
+	grounded=false
+	oldsize = size;
+	switch (size) {
+		case "basic":
+		case "mini":
+			signal_emit(sig, "on_kill", charmName)
+			break;
+		case "big":
+			size = "basic";
+			playsfx(charmName+"damage")
+			break;
+		default:
+			size = "big";
+			playsfx(charmName+"damage")
+			break;
+	}
+	grow = 60;
+} else {
+	instance_create_depth(coll.x+coll.xsc,coll.y,2,pImpact)
+	coll.hp-=1
+	coll.phaseid=id
+	coll.killdir=esign(coll.x-x,1)
+	coll.killhsp=hsp/1.75
+	coll.killvsp=-abs(hsp)/1.5
+	coll.killtype="spin"
 }
-grow = 60;
 
 #define electrocute
 state=""

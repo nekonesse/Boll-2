@@ -27,6 +27,8 @@ collision_array=[oCollider, oEnemyGround];
 
 killtype="";
 killdir=0;
+killhsp=1;
+killvsp=-3;
 
 piped = false
 grounded = false
@@ -55,7 +57,7 @@ enemyStomped.Connect( self, function(hit_p) {
 });
 
 enemyCollidePlayer.Connect( self, function(hit_p) {
-	with(hit_p) sig.Emit("hurt_by_enemy")
+	with(hit_p) sig.Emit("collide_with_enemy")
 	phaseid=hit_p
 });
 

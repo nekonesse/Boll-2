@@ -34,14 +34,6 @@ function object_get_properties(obj){
 				["timer_offset", "Timer Offset", 0, "number_input", 0]
 			]
 			break;
-		case oDirectionChanger:
-			properties = [
-				["dir", "Direction", 0, "number_input", 0],
-				["revdir", "Reverse Direction", 0, "number_input", 0],
-				["reverse", "Is Reverse", 0, "checkbox", 0],
-				["is_break", "Is Cutoff", 0, "checkbox", 0],
-			]
-			break;
 		case oMovingPlatform:
 		case oChainsaw:
 		case oAmp:

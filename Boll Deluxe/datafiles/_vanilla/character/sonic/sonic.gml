@@ -80,8 +80,8 @@ if (move!=0) && (vsp < 0) && (state!="wallrun") && (abs(wallrundata[8]) > 0.5) {
 		if (coll)
 		{
 			storeddir=move;
-			var maxsp = 6;
-			var minsp = 2.5;
+			var maxsp = 8;
+			var minsp = 4;
 			yvol=median(abs(wallrundata[6]), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
 			state = "wallrun"
 			no_move=true;
@@ -518,30 +518,41 @@ state = "";
 #define enemy_stomped
 vsp=-4-akey*1.5
 
-#define hurt_by_enemy
-stopsfx(charmName+"damage")
-hurt=1
-hsp=2.25*-xsc
-vsp=-4
-canstopjump=true
-state=""
-grounded=false
-oldsize = size;
-switch (size) {
-	case "basic":
-	case "mini":
-		signal_emit(sig, "on_kill", charmName)
-		break;
-	case "big":
-		size = "basic";
-		playsfx(charmName+"damage")
-		break;
-	default:
-		size = "big";
-		playsfx(charmName+"damage")
-		break;
+#define collide_with_enemy
+var coll=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oEnemy, false, true)
+if (coll) && (state!="roll") && (state!="spindash") {
+	stopsfx(charmName+"damage")
+	hurt=1
+	hsp=2.25*-xsc
+	vsp=-4
+	canstopjump=true
+	state=""
+	grounded=false
+	oldsize = size;
+	switch (size) {
+		case "basic":
+		case "mini":
+			signal_emit(sig, "on_kill", charmName)
+			break;
+		case "big":
+			size = "basic";
+			playsfx(charmName+"damage")
+			break;
+		default:
+			size = "big";
+			playsfx(charmName+"damage")
+			break;
+	}
+	grow = 60;
+} else {
+	instance_create_depth(coll.x+coll.xsc,coll.y,2,pImpact)
+	coll.hp-=1
+	coll.phaseid=id
+	coll.killdir=esign(coll.x-x,1)
+	coll.killhsp=hsp/1.75
+	coll.killvsp=-abs(hsp)/1.5
+	coll.killtype="spin"
 }
-grow = 60;
 
 #define electrocute
 state=""

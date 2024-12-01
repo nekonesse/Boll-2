@@ -38,16 +38,15 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_constant_add("oEnemyGround",oEnemyGround)
 		txr_constant_add("oEnemyGroundSemi",oEnemyGroundSemi)
 		txr_constant_add("oFlipblock",oFlipblock)
-		txr_constant_add("oFlipblockLong",oFlipblockLong)
 		txr_constant_add("oItemBox",oItemBox)
 		txr_constant_add("oBrick",oBrick)
 		txr_constant_add("oShootBlock",oShootBlock)
+		txr_constant_add("oDonutBlock",oDonutBlock)
 		txr_constant_add("oHardBlock",oHardBlock)
 		txr_constant_add("oPipe",oPipe)
 		txr_constant_add("oMovingPlatform",oMovingPlatform)
 		txr_constant_add("oSwingingPlatform",oSwingingPlatform)
 		txr_constant_add("oChainsaw",oChainsaw)
-		txr_constant_add("oDirectionChanger",oDirectionChanger)
 		txr_constant_add("oBillBlaster",oBillBlaster)
 		txr_constant_add("oBanzaiBlaster",oBanzaiBlaster)
 		txr_constant_add("oSoccerBall",oSoccerBall)
@@ -106,6 +105,9 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_constant_add("pGlitter",pGlitter)
 		txr_constant_add("pSparkles1UP",pSparkles1UP)
 		txr_constant_add("p1UP",p1UP)
+		txr_constant_add("pFireballExplosion",pFireballExplosion)
+		txr_constant_add("pFireballTrail",pFireballTrail)
+		txr_constant_add("pImpact",pImpact)
 	#endregion
 	
 	#region Type

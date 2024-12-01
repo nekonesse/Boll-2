@@ -890,6 +890,18 @@ if selected_mode == OBJECT_MODE {
 								proparr[4]=!proparr[4]
 							}
 						}
+						
+						ScribblejrFit($"Auto Start:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112+32*5)
+						draw_sprite_stretched(spr_JADEcheckbox,bool(proparr[5]),96+16,(112+32*5)-12,8*3,8*3)
+								
+						//toggle variable
+						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*5,object_list_area_x+44,object_list_area_y+40+(32/3)*5)&&(!open_dropmenu||open_dropmenu-1==5)
+								
+						if (mbleftpress) {
+							if (incheck) {
+								proparr[5]=!proparr[5]
+							}
+						}
 				}
 			} else {
 				temptypingstring=""

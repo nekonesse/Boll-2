@@ -13,7 +13,7 @@
   ],
   "parent":{
     "name":"Goombas",
-    "path":"folders/Objects/Enemies/Goombas.yy",
+    "path":"folders/Objects/Enemies/Parents/Goombas.yy",
   },
   "parentObjectId":{
     "name":"oEnemy",

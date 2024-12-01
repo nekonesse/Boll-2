@@ -1,6 +1,8 @@
 y+=vsp
 x+=hsp
 
+image_xscale=esign(hsp,1)
+
 player_collision();
 
 if check_collision_line(x+hit_sizex+hsp,y-hit_sizey,x+hit_sizex+hsp,y+hit_sizey,COL_WALL) || check_collision_line(x-hit_sizex+hsp,y-hit_sizey,x-hit_sizex+hsp,y+hit_sizey,COL_WALL) {

@@ -211,6 +211,7 @@ if !is_undefined(obj) {
 	obj[9] = 0	
 	obj[10] = []
 	obj[11] = []
+	obj[12] = [2,false,0,false,true,true] //node properties
 	if is_array(sprite[8]) && array_length(sprite[8]) {
 		for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
 			if is_array(sprite[8][o]) {

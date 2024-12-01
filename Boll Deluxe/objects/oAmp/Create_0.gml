@@ -18,6 +18,7 @@ pathisrev=false;
 pathfallen=false;
 pathcanfall=false;
 pathdraw=true;
+pathstarted=true;
 
 dir=0;
 spd=0;

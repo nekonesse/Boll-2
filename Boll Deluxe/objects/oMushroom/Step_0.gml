@@ -11,7 +11,7 @@ if !is_array(pathing) {
 	if (going!=0) exit;
 
 	if !grounded {
-		vsp += grav
+		vsp = min(vsp+grav,4)
 	} else {
 		vsp = 0	
 	}

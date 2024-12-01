@@ -10,3 +10,4 @@ pathisrev=false;
 pathfallen=false;
 pathcanfall=false;
 pathdraw=true;
+pathstarted=true;
