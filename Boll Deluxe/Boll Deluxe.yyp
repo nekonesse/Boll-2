@@ -1048,6 +1048,7 @@
     {"id":{"name":"scr_integer","path":"scripts/scr_integer/scr_integer.yy",},},
     {"id":{"name":"scr_load_boll_stuff","path":"scripts/scr_load_boll_stuff/scr_load_boll_stuff.yy",},},
     {"id":{"name":"scr_loadlevels","path":"scripts/scr_loadlevels/scr_loadlevels.yy",},},
+    {"id":{"name":"scr_on_screen","path":"scripts/scr_on_screen/scr_on_screen.yy",},},
     {"id":{"name":"scr_parseJADE","path":"scripts/scr_parseJADE/scr_parseJADE.yy",},},
     {"id":{"name":"scr_platforms","path":"scripts/scr_platforms/scr_platforms.yy",},},
     {"id":{"name":"scr_playerscripts","path":"scripts/scr_playerscripts/scr_playerscripts.yy",},},
