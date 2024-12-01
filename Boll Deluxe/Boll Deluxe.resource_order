@@ -750,6 +750,7 @@
     {"name":"scr_fx","order":10,"path":"scripts/scr_fx/scr_fx.yy",},
     {"name":"scr_integer","order":11,"path":"scripts/scr_integer/scr_integer.yy",},
     {"name":"scr_loadlevels","order":6,"path":"scripts/scr_loadlevels/scr_loadlevels.yy",},
+    {"name":"scr_on_screen","order":15,"path":"scripts/scr_on_screen/scr_on_screen.yy",},
     {"name":"scr_parseJADE","order":1,"path":"scripts/scr_parseJADE/scr_parseJADE.yy",},
     {"name":"scr_platforms","order":5,"path":"scripts/scr_platforms/scr_platforms.yy",},
     {"name":"scr_properties","order":2,"path":"scripts/scr_properties/scr_properties.yy",},
