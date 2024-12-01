@@ -292,34 +292,8 @@ function esign(val,_default){
 }
 
 function inview(obj = undefined) {
-	if (obj != undefined)
-	{
-		with(obj)
-		{
-			var cam = view_camera[0];
-			var x1 = camera_get_view_x(cam);
-			var y1 = camera_get_view_y(cam);
-			var x2 = x1 + camera_get_view_width(cam);
-			var y2 = y1 + camera_get_view_height(cam);
-		
-			if(point_in_rectangle(x,y, x1-32, y1-32, x2+32, y2+32)) {
-				return true
-			}	
-		}
-	}
-	else
-	{
-		var cam = view_camera[0];
-		var x1 = camera_get_view_x(cam);
-		var y1 = camera_get_view_y(cam);
-		var x2 = x1 + camera_get_view_width(cam);
-		var y2 = y1 + camera_get_view_height(cam);
-		
-		if(point_in_rectangle(x,y, x1-32, y1-32, x2+32, y2+32)) {
-			return true
-		}
-	}
-	
+	show_debug_message(self)
+	show_debug_message("DONT USE THIS FUNCTION!!!")
 	return false
 }
 
