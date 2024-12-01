@@ -2,6 +2,7 @@ if hp <= 0{
     instance_destroy();
 }
 
+if (phaseid) && !check_hitbox_on_hitbox(phaseid,id) phaseid=0
 /*if (place_meeting(x,y-1,oPlayer)) { //so the player doesnt jump on the damn goombas while warping and shoot into heaven
 	if (instance_place(x,y-1,oPlayer).piped) exit
 }

@@ -32,8 +32,6 @@
   "physicsShapePoints":[],
   "physicsStartAwake":true,
   "properties":[
-    {"$GMObjectProperty":"v1","%Name":"hsp","filters":[],"listItems":[],"multiselect":false,"name":"hsp","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"-0.5","varType":0,},
-    {"$GMObjectProperty":"v1","%Name":"vsp","filters":[],"listItems":[],"multiselect":false,"name":"vsp","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":0,},
     {"$GMObjectProperty":"v1","%Name":"edgeturn","filters":[],"listItems":[],"multiselect":false,"name":"edgeturn","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"False","varType":3,},
     {"$GMObjectProperty":"v1","%Name":"damage_on_contact","filters":[],"listItems":[],"multiselect":false,"name":"damage_on_contact","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":3,},
     {"$GMObjectProperty":"v1","%Name":"no_stomping","filters":[],"listItems":[],"multiselect":false,"name":"no_stomping","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":3,},
@@ -44,6 +42,8 @@
     {"$GMObjectProperty":"v1","%Name":"unshellable","filters":[],"listItems":[],"multiselect":false,"name":"unshellable","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":3,},
     {"$GMObjectProperty":"v1","%Name":"no_interaction","filters":[],"listItems":[],"multiselect":false,"name":"no_interaction","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"true","varType":3,},
     {"$GMObjectProperty":"v1","%Name":"mask_index","filters":[],"listItems":[],"multiselect":false,"name":"mask_index","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resource":{"name":"spr_16x16hitbox","path":"sprites/spr_16x16hitbox/spr_16x16hitbox.yy",},"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"spr_16x16hitbox","varType":5,},
+    {"$GMObjectProperty":"v1","%Name":"constantspd","filters":[],"listItems":[],"multiselect":false,"name":"constantspd","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0.5","varType":0,},
+    {"$GMObjectProperty":"v1","%Name":"walker","filters":[],"listItems":[],"multiselect":false,"name":"walker","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"False","varType":3,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",

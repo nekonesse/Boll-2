@@ -4,38 +4,61 @@ event_inherited();
 in_shell = 0;
 shell_time = 60*5;
 no_stomping = 0;
+shell_leway = 0
+shell_move = true
 
 enemyStomped.Connect( self, function(hit_p) {
 	show_debug_message("hi im the okoopa stomp signal")
 	if (!no_stomping) {
-		if (in_shell) {
-			if (floor(hsp)!=0) {
-				show_debug_message(hsp)
-				show_debug_message("ARRGH")
-				phaseid=hit_p
-				hsp = 0;
-				enemycoll=true;
-				with(hit_p) sig.Emit("enemy_stomped")
-				in_shell = shell_time;
-			}
-		} else {
+		//if (in_shell && shell_leway == 0) {
+		//	show_debug_message(hsp)
+		//	show_debug_message("i kick koopera")
+		//	phaseid=hit_p
+		//	hsp = 0;
+		//	enemycoll=true;
+		//	with(hit_p) sig.Emit("enemy_stomped")
+		//	in_shell = shell_time;
+		//	shell_leway = 10
+		//	hsp = sign(phaseid.x - x) * 2.2;
+		//	shell_move = !shell_move
+		//} 
+		if !in_shell{
 			show_debug_message("ARRGH")
-			hsp = 0;
+			constantspd = 0;
 			enemycoll=true;
 			y += 6; //Pulling the shell to the ground
 			with(hit_p) sig.Emit("enemy_stomped")
 			in_shell = shell_time;
+			no_stomping = true
+			shell_move = false
+			shell_leway = 15
+		}
+		if in_shell{
+			show_debug_message("ARRGH")
+			constantspd = 0;
+			enemycoll=true;
+			with(hit_p) sig.Emit("enemy_stomped")
+			in_shell = shell_time;
+			no_stomping = true
+			shell_move = false
+			shell_leway = 15
 		}
 	}
 });
 
 enemyCollidePlayer.Connect( self, function(hit_p) {
-	if (!no_stomping) {
 		phaseid=hit_p
-		if (in_shell) && (hsp==0) {
-				enemycoll=false;
-				hsp = sign(phaseid.xsc) * 2.2;
+		if (no_stomping) {
+			if (in_shell) && !shell_move && (shell_leway<=2) {
+				//enemycoll=false;
+				show_debug_message("kicked =kooper ground") 
+				constantspd = 4.25;
+				_direction = sign(x-phaseid.x) 
+				shell_move = true
+				shell_leway = 15
+				in_shell = shell_time
+				no_stomping = false
+			}
 		}
-		in_shell = shell_time;
-	}
+		//in_shell = shell_time;
 });

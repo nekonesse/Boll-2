@@ -1,8 +1,25 @@
 if global.paused || inactive exit
 
-if (in_shell) && (hsp=0) {
+no_dam = false
+
+if (in_shell) && (!shell_move){
 	in_shell--; //Decreases the time for the koopa to get up
-	if (!in_shell) {y -= 9; hsp = 0.5 * sign(image_xscale)} //Gets the Koopa to pull itself from the ground and continue walking in the direction the shell is facing
+	if (!in_shell) {
+		y -= 9; 
+		constantspd = 0.5 
+		no_stomping = false
+	} //Gets the Koopa to pull itself from the ground and continue walking in the direction the shell is facing
+}
+
+if (in_shell) {
+	if (!shell_move) {
+		shell_leway = 2;
+	}
+	
+	shell_leway--
+	if shell_leway > 0 {
+		no_dam = true	
+	}
 }
 
 event_inherited();

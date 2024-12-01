@@ -484,6 +484,8 @@ if (state != "groundpound") {
 
 #define collide_with_enemy
 var coll=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oEnemy, false, true)
+if (coll) && (!coll.no_dam) {
+	
 if (coll) && !(slopesliding) {
 	stopsfx(charmName+"damage")
 	hurt=1
@@ -516,6 +518,7 @@ if (coll) && !(slopesliding) {
 	coll.killhsp=hsp/1.75
 	coll.killvsp=-abs(hsp)/1.5
 	coll.killtype="spin"
+}
 }
 
 #define hurt_by_spike

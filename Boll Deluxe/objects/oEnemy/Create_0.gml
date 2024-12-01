@@ -13,10 +13,16 @@ enemyCollidePlayer = new Signal();
 enemyFireballed = new Signal();
 enemyKilled = new Signal();
 grav=defaultgrav
+_direction = -1
 rot=0
 xsc=1
 ysc=1
+hsp = 0
+vsp = 0
+gsp = 0
 spawn_object=noone
+no_dam = false;
+colangle = 0
 
 inactive=0;
 phaseid=noone;
@@ -57,7 +63,9 @@ enemyStomped.Connect( self, function(hit_p) {
 });
 
 enemyCollidePlayer.Connect( self, function(hit_p) {
-	with(hit_p) sig.Emit("collide_with_enemy")
+	with(hit_p) {
+		sig.Emit("collide_with_enemy")
+	}
 	phaseid=hit_p
 });
 
