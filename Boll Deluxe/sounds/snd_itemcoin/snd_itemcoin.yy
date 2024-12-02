@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.871111,
+  "duration":0.419093,
   "name":"snd_itemcoin",
   "parent":{
     "name":"Items",

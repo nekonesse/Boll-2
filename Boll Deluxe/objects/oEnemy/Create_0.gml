@@ -52,6 +52,7 @@ setup_box_poly(id);
 
 enemyStomped.Connect( self, function(hit_p) {
 	if (!no_stomping) {
+		VinylPlay(snd_enemystomp)
 		hp-=1
 		with(hit_p) {
 			sig.Emit("enemy_stomped")
@@ -70,8 +71,9 @@ enemyCollidePlayer.Connect( self, function(hit_p) {
 });
 
 enemyFireballed.Connect( self, function(proj, hit_p) {
+	VinylPlay(snd_enemykick)
 	hp-=1
 	instance_create_depth(proj.x,proj.y,2,pImpact)
-	killdir=esign(proj.x-x,1)
+	killhsp=esign(-proj.hsp,1)
 	killtype="spin"
 });

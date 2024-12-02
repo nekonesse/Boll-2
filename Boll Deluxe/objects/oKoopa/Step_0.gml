@@ -29,9 +29,10 @@ var enemy=instance_place(x,y,oEnemy)
 if (enemy != noone) { //make sure shell is actually colliding with an enemy before trying to kill the enemy it collided with???
 	if (in_shell) && (abs(hsp)) {
 		if !(enemy.unshellable) {
-			enemy.killtype="shell";
-			enemy.killdir = sign(hsp);
-			instance_destroy(enemy);
+			enemy.killtype="spin";
+			enemy.killhsp = sign(hsp);
+			instance_create_depth(x+hit_sizex*xsc,y,2,pImpact)
+			enemy.hp-=1;
 		} else {
 			instance_destroy();
 		}

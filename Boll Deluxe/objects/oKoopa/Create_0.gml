@@ -9,6 +9,7 @@ shell_move = true
 
 enemyStomped.Connect( self, function(hit_p) {
 	show_debug_message("hi im the okoopa stomp signal")
+	hp=1
 	if (!no_stomping) {
 		//if (in_shell && shell_leway == 0) {
 		//	show_debug_message(hsp)
@@ -23,21 +24,19 @@ enemyStomped.Connect( self, function(hit_p) {
 		//	shell_move = !shell_move
 		//} 
 		if !in_shell{
-			show_debug_message("ARRGH")
+			VinylPlay(snd_enemystomp)
 			constantspd = 0;
 			enemycoll=true;
 			y += 6; //Pulling the shell to the ground
-			with(hit_p) sig.Emit("enemy_stomped")
 			in_shell = shell_time;
 			no_stomping = true
 			shell_move = false
 			shell_leway = 15
 		}
 		if in_shell{
-			show_debug_message("ARRGH")
+			VinylPlay(snd_enemystomp)
 			constantspd = 0;
 			enemycoll=true;
-			with(hit_p) sig.Emit("enemy_stomped")
 			in_shell = shell_time;
 			no_stomping = true
 			shell_move = false
@@ -50,9 +49,11 @@ enemyCollidePlayer.Connect( self, function(hit_p) {
 		phaseid=hit_p
 		if (no_stomping) {
 			if (in_shell) && !shell_move && (shell_leway<=2) {
-				//enemycoll=false;
-				show_debug_message("kicked =kooper ground") 
-				constantspd = 4.25;
+				VinylPlay(snd_enemykick)
+				with (hit_p) {
+					instance_create_depth(x+hit_sizex*xsc,other.y,2,pImpact)
+				}
+				constantspd = 4;
 				_direction = sign(x-phaseid.x) 
 				shell_move = true
 				shell_leway = 15
@@ -60,5 +61,4 @@ enemyCollidePlayer.Connect( self, function(hit_p) {
 				no_stomping = false
 			}
 		}
-		//in_shell = shell_time;
 });

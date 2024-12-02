@@ -125,5 +125,79 @@ global.VinylConfigSON = [
         ],
     },
     */
-    
+    {
+		mix: "sound effects",
+		members: [
+			snd_itemappear, //items
+			{
+				sound: snd_itemappear,
+				gain: 0.25
+			},
+			snd_blockbump, //objects
+			{
+				sound: snd_blockbump,
+				gain: 0.5
+			},
+			snd_blockbreak,
+			{
+				sound: snd_blockbreak,
+				gain: 0.8
+			},
+			snd_hardblockbreak,
+			{
+				sound: snd_hardblockbreak,
+				gain: 0.8
+			},
+			snd_enemycannon, //hazards
+			{
+				sound: snd_enemycannon,
+				gain: 0.3
+			},
+			snd_enemycannonfast,
+			{
+				sound: snd_enemycannonfast,
+				gain: 0.3
+			},
+			snd_enemyexplode,
+			{
+				sound: snd_enemyexplode,
+				gain: 0.5
+			},
+			snd_enemybigexplode,
+			{
+				sound: snd_enemybigexplode,
+				gain: 0.5
+			},
+			snd_fireball,
+			{
+				sound: snd_fireball,
+				gain: 0.5
+			},
+			snd_powerup,
+			{
+				sound: snd_powerup,
+				gain: 0.5
+			},
+			snd_pipe,
+			{
+				sound: snd_pipe,
+				gain: 0.5
+			},
+			snd_switch,
+			{
+				sound: snd_switch,
+				gain: 0.5
+			},
+			snd_enemykick,
+			{
+				sound: snd_enemykick,
+				gain: 0.5
+			},
+			snd_enemystomp,
+			{
+				sound: snd_enemystomp,
+				gain: 0.5
+			}
+		],
+	}
 ];

@@ -707,6 +707,8 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_function_add("time_seconds_to_bpm", time_seconds_to_bpm, -1);
 		txr_function_add("playsfx", playsfx, -1);
 		txr_function_add("stopsfx", stopsfx, -1);
+		txr_function_add("VinylPlay", VinylPlay, -1);
+		txr_function_add("VinylStop", VinylStop, -1);
 		
 		txr_constant_add("audiogroup_default", audiogroup_default);
 		txr_constant_add("AudioEffectTypeBitcrusher", AudioEffectType.Bitcrusher);

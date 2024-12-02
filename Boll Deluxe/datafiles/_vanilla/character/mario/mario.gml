@@ -92,6 +92,7 @@ if (state == "" || state == "jump") && !piped && !electrocuted && !electrocution
 		proj.hsp=2.5*xsc
 		proj.vsp=2
 		proj.owner=id
+		VinylPlay(asset_get_index("snd_fireball"))
 		
 		has_fired+=1;
 		frame=0;
@@ -435,6 +436,7 @@ if !(deadtimer) {
 }
 
 #define mushroom
+VinylPlay(asset_get_index("snd_powerup"))
 if (size == "basic" || size == "mini") {
 	oldsize = size;
 	size = "big";
@@ -442,11 +444,13 @@ if (size == "basic" || size == "mini") {
 }
 
 #define fireflower
+VinylPlay(asset_get_index("snd_powerup"))
 oldsize = size;
 size = "fire";
 grow = 60;
 
 #define thunderflower
+VinylPlay(asset_get_index("snd_powerup"))
 oldsize = size;
 size = "thunder";
 grow = 60;

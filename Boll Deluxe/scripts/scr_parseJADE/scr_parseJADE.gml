@@ -11,6 +11,7 @@ function parse_level(dir=working_directory+"\save.jade") {
 	var size = array_length(array[0]) //read amount of objects
 	var nodesize = array_length(array[2]) //read amount of objects (on the node layer)
 	var tilesize = array_length(array[1]) //read amount of tiles
+
 	for (var i = 0; i < size; ++i) { //load objects
         var data = array[0][i]
 		show_debug_message($"Parsing JADE object with name: {data[0]}")
@@ -105,13 +106,28 @@ function parse_level(dir=working_directory+"\save.jade") {
 		 10: properties array
 		*/
 	}
-	var tile_layer = layer_get_id("Ground_Tiles")
-	var tilemap = layer_tilemap_get_id(tile_layer)
-    for (var i = 0; i < tilesize; ++i) { //loading tiles
-		var data = array[1][i]
-		var tiledata = tilemap_get(tilemap, data[1], data[2]);
-		tiledata = tile_set_index(tiledata, data[0])
-		tilemap_set(tilemap, tiledata, data[1], data[2]) //set tile at place
+	if array_length(array) >= 4 {
+		var tilelayersize = array_length(array[3]) //read amount of tile layers
+		for (var i = 0; i < tilelayersize; ++i) {
+			var tile_layer = layer_create(array[3][i][1],array[3][i][0])
+			var tilemap = layer_tilemap_create(tile_layer,0,0,array[3][i][2],ceil(room_width/16),ceil(room_height/16))
+			if array_length(array[1][i])
+			for (var j = 0; j < array_length(array[1][i]); ++j) { //loading tiles
+				var data = array[1][i][j]
+				var tiledata = tilemap_get(tilemap, data[1], data[2]);
+				tiledata = tile_set_index(tiledata, data[0])
+				tilemap_set(tilemap, tiledata, data[1], data[2]) //set tile at place
+			}
+		}
+	} else { //legacy tile conversion
+		var tile_layer = layer_create(100,"MainTiles")
+		var tilemap = layer_tilemap_create(tile_layer,0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+		for (var j = 0; j < array_length(array[1]); ++j) { //loading tiles
+			var data = array[1][j]
+			var tiledata = tilemap_get(tilemap, data[1], data[2]);
+			tiledata = tile_set_index(tiledata, data[0])
+			tilemap_set(tilemap, tiledata, data[1], data[2]) //set tile at place
+		}
 	}
 	buffer_delete(loaded)
 	buffer_delete(save_file)

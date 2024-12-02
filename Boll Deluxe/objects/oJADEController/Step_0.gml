@@ -79,8 +79,18 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 		show_debug_message($"switched to category {current_cat}")
 	}
 	#endregion
+} else if (selected_mode==TILE_MODE) {
+	var layerdir=keyboard_check_pressed(vk_left) - keyboard_check_pressed(vk_right)
+	if (layerdir != 0) {
+		selected_tile_layer += dir
+		if (selected_tile_layer < 0) {
+			selected_tile_layer = (array_length(tile_layer) - 1)
+		} else if (selected_tile_layer >= array_length(tile_layer)) {
+			selected_tile_layer = 0	
+		}
+		tilemap=tile_layer[selected_tile_layer]
+	}
 }
-
 #region Camera Zooming
 //THIS SHIT KILLS MY COMBO!!!!!!
 /*
@@ -630,7 +640,7 @@ if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 				tilemap_set(tilemap, data, start_x + i, start_y + j);
 
 				var tiledata = tilemap_get(tilemap, start_x + i, start_y + j)
-				ds_list_add(tile_layer_map, [tiledata, start_x + i, start_y + j]) //add tile  to list at place
+				ds_list_add(tile_layer_map[selected_tile_layer], [tiledata, start_x + i, start_y + j]) //add tile  to list at place
 				tile_update_properties();
 								
 			}
@@ -675,7 +685,7 @@ if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 				tilemap_set(tilemap, data, start_x + i, start_y + j);
 
 				var tiledata = tilemap_get(tilemap, start_x + i, start_y + j)
-				ds_list_add(tile_layer_map, [tiledata, start_x + i, start_y + j]) //add tile  to list at place
+				ds_list_add(tile_layer_map[selected_tile_layer], [tiledata, start_x + i, start_y + j]) //add tile  to list at place
 				tile_update_properties();
 								
 			}
@@ -819,7 +829,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 								tilemap_set(tilemap, data, gridx + i, gridy + j);
 								show_debug_message(data)
 								var tiledata = tilemap_get(tilemap, gridx + i, gridy + j)
-								ds_list_add(tile_layer_map, [tiledata, gridx + i, gridy + j]) //add tile  to list at place
+								ds_list_add(tile_layer_map[selected_tile_layer], [tiledata, gridx + i, gridy + j]) //add tile  to list at place
 								tile_update_properties();
 							}
 						}
@@ -865,9 +875,9 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 					if tile_get_index(data)!= 0 {
 						show_debug_message($"Deleted tile of index {tile_get_index(data)} at {mouse_x} {mouse_y}")
 						var array = [data, gridx, gridy]
-						for (var i=0; i<ds_list_size(tile_layer_map); i++;) {
-							if array_equals(ds_list_find_value(tile_layer_map,i),array) {
-								ds_list_delete(tile_layer_map, i) //delete from tile map
+						for (var i=0; i<ds_list_size(tile_layer_map[selected_tile_layer]); i++;) {
+							if array_equals(ds_list_find_value(tile_layer_map[selected_tile_layer],i),array) {
+								ds_list_delete(tile_layer_map[selected_tile_layer], i) //delete from tile map
 								break;
 							}
 						}

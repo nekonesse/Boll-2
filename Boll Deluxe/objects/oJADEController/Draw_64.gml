@@ -69,6 +69,8 @@ if selected_mode = TILE_MODE {
 		
 		draw_rectangle(t_x,t_y,t_x + t_w-1,t_y + t_h-1,true)
 	}
+	
+	ScribblejrFit(layer_get_name(layers[selected_tile_layer]),fa_right,fa_top,smallF).Draw(guiw-4,guih/2)
 }
 #endregion
 
