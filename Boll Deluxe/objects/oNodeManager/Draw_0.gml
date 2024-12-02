@@ -11,7 +11,8 @@ for (var i = 0; i < ds_list_size(objectNodesList); ++i) {
 		for (var j = 0; j < length-1; ++j) {
 		    var arr=pathing[j+1]
 			var arr2=pathing[j]
-			if point_in_rectangle(arr[0]+8-xoff,arr[1]+8-yoff,camx,camy,camx+camwidth,camy+camheight) || point_in_rectangle(arr2[0]+8-xoff,arr2[1]+8-xoff,camx,camy,camx+camwidth,camy+camheight) {
+			var obj=objectNodesList[| i][5]
+			if point_in_rectangle(arr[0]+8-xoff,arr[1]+8-yoff,camx,camy,camx+camwidth,camy+camheight) || point_in_rectangle(arr2[0]+8-xoff,arr2[1]+8-xoff,camx,camy,camx+camwidth,camy+camheight) || (instance_exists(obj) && (obj.pathprenum==j || obj.pathnum==j)){
 				var ysc=(point_direction(arr[0]+8-xoff,arr[1]+8-yoff,arr2[0]+8-xoff,arr2[1]+8-yoff) >= 180) ? -1 : 1
 				draw_sprite_ext(spr_track,0,arr[0]+8-xoff,arr[1]+8-yoff,point_distance(arr[0],arr[1],arr2[0],arr2[1]),ysc,point_direction(arr[0],arr[1],arr2[0],arr2[1]),c_white,1);
 			} else continue

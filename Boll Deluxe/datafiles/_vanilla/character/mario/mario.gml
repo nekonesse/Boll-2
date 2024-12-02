@@ -518,7 +518,7 @@ if (coll) && !(slopesliding) {
 	instance_create_depth(coll.x+coll.xsc,coll.y,2,pImpact)
 	coll.hp-=1
 	coll.phaseid=id
-	coll.killdir=esign(coll.x-x,1)
+	coll.killdir=esign(hsp,1)
 	coll.killhsp=hsp/1.75
 	coll.killvsp=-abs(hsp)/1.5
 	coll.killtype="spin"

@@ -1,1 +1,2 @@
-y-=8
+y+=1
+grounded=true

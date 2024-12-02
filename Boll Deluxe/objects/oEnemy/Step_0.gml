@@ -2,12 +2,12 @@ if global.paused || inactive && (object_index!=oBulletBill && object_index!=oBan
 
 //grounded=false
 
-if !on_screen() & !origin_on_screen() {
+if !on_screen() && !origin_on_screen() {
 	x = xstart
 	y = ystart
+} else if on_screen() {
+	instance_activate_region(x-activation_region_width, y-activation_region_width, activation_region_width, activation_region_height, true)
 }
-
-if !on_screen() exit;
 
 //instance_activate_region(x-64,y-64, 128, 128, true)
 

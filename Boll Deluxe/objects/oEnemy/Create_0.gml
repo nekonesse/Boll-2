@@ -42,6 +42,9 @@ grounded = false
 hit_sizex = 6
 hit_sizey = 6
 
+activation_region_width=32;
+activation_region_height=32;
+
 image_xscale=1;
 image_yscale=1;
 depth=4;

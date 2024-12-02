@@ -8,7 +8,7 @@ function on_screen(RegionW = 16, RegionH = 16) {
 	sw = camera_get_view_width(c);
 	sh = camera_get_view_height(c);
  
-	if(bbox_right > cx-RegionW && bbox_left < cx + sw +  RegionW && bbox_bottom > cy - RegionH && (bbox_top < cy + sh+RegionH)) 
+	if(x-hit_sizex > cx-RegionW && x+hit_sizex < cx + sw +  RegionW && y+hit_sizey > cy - RegionH && (y-hit_sizey < cy + sh+RegionH)) 
 	{
 		return true;
 	}
