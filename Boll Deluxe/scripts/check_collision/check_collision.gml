@@ -340,8 +340,17 @@ function find_camera_bound(x1, y1, x2, y2)
 	return found;
 }
 
-function node_path_movement(movePlayer=false) {
-	if is_array(pathing) && (pathspd) && !(pathfallen) { //prevent crashing & a slight optimization
+function node_path_movement(movePlayer=true) {
+	if !(pathstarted) {
+		with(oPlayer) {
+			if (grounded) && collision_line(x-hit_sizex+other.x_diff,y+hit_sizey+2+abs(other.y_diff),x+hit_sizex+other.x_diff,y+hit_sizey+2+abs(other.y_diff),other,false,true) {
+				other.pathstarted=true;
+			}
+		}
+	}
+	
+	if is_array(pathing) && (pathspd) && !(pathfallen) && (pathstarted) { //prevent crashing & a slight optimization
+		
 		var arr=pathing[pathnum];
 	
 		if (arr[2]) && !(pathfallen)

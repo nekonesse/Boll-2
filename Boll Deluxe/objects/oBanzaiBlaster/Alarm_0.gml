@@ -1,4 +1,4 @@
-if inview() {
+if  on_screen() {
 	var dir = 1
 	if (instance_exists(oPlayer)) {
 		dir = sign(nearestplayer().x-x)

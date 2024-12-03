@@ -1,11 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"oDirectionChanger",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"oDeathpit",
+  "eventList":[],
   "managed":true,
-  "name":"oDirectionChanger",
+  "name":"oDeathpit",
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
@@ -29,10 +27,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"spr_directionchanger",
-    "path":"sprites/spr_directionchanger/spr_directionchanger.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
-  "visible":false,
+  "visible":true,
 }

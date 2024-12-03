@@ -1,5 +1,5 @@
-hit_sizex=6
-hit_sizey=6
+hit_sizex=8
+hit_sizey=8
 vsp=0
 hsp=0
 gsp=0

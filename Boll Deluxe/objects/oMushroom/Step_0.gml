@@ -2,16 +2,20 @@ if !is_array(pathing) {
 	if (going!=0) {
 		image_index=0
 		y+=0.33*(going)
-		if !place_meeting(x,y-1*going,parentblock) {
-			going=0
-			hsp = 0.75*((nearestplayer().x > x) ? -1 : 1);
+		if instance_exists(parentblock) {
+			x+=parentblock.x_diff
+			y+=parentblock.y_diff
+			if !place_meeting(x,y-1*going,parentblock) {
+				going=0
+				hsp = 0.75*((nearestplayer().x > x) ? -1 : 1);
+			}
 		}
 	}
 
 	if (going!=0) exit;
 
 	if !grounded {
-		vsp += grav
+		vsp = min(vsp+grav,4)
 	} else {
 		vsp = 0	
 	}

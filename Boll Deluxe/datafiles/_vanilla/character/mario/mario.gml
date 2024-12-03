@@ -18,6 +18,8 @@ grow = 0;
 state = "";
 groundpound_land=false;
 pounding_block = false;
+walljump = false;
+firing = 0;
 
 #define stop
 hsp = 0;
@@ -83,14 +85,21 @@ if (state == "" || state == "jump") && !piped && !electrocuted && !electrocution
 		run = 0;
 	}
 	
-	if (bpress) && (size=="fire") && !(has_fired) {
-		var proj=instance_create_depth(x+(hit_sizex+3)*xsc,y+hit_sizey-8,2,oFireball)
+	#region Fire Projectile
+	
+	if (bpress) && (size=="fire") && (has_fired < 2) && !(slopesliding) {
+		var proj=instance_create_depth(x+(hit_sizex+3)*xsc,y+hit_sizey-12,2,oFireball)
 		proj.hsp=2.5*xsc
-		proj.vsp=-2
+		proj.vsp=2
 		proj.owner=id
+		VinylPlay(asset_get_index("snd_fireball"))
 		
 		has_fired+=1;
+		frame=0;
+		firing=15;
 	}
+	
+	#endregion
 	
 	if (!grounded) {
 		vsp = min(4, vsp + grav);
@@ -322,6 +331,7 @@ if (left || right) && (state == "" || state == "jump") && !slopesliding && !pipe
 
 bonk=max(0,bonk-1)
 poundjump=max(0,poundjump-1)
+firing=max(0,firing-1)
 
 runvar = approach_val(runvar,run,0.05)
 
@@ -352,6 +362,10 @@ if (state == "") {
 		spriteEvent="brake" 
 		xsc = -(skiddir)
 	}
+	
+	if (slopesliding) {
+		spriteEvent="slopeSlide"
+	}
 
 	if (finish && posed && no_move) {
 		spriteEvent="victory"
@@ -373,8 +387,8 @@ if (state == "wallslide") {
 	spriteEvent="wallSlide"
 }
 
-if (slopesliding) {
-	spriteEvent="slopeSlide"
+if (firing) {
+	spriteEvent="fireToss"
 }
 
 if (hurt) {
@@ -422,6 +436,7 @@ if !(deadtimer) {
 }
 
 #define mushroom
+VinylPlay(asset_get_index("snd_powerup"))
 if (size == "basic" || size == "mini") {
 	oldsize = size;
 	size = "big";
@@ -429,11 +444,13 @@ if (size == "basic" || size == "mini") {
 }
 
 #define fireflower
+VinylPlay(asset_get_index("snd_powerup"))
 oldsize = size;
 size = "fire";
 grow = 60;
 
 #define thunderflower
+VinylPlay(asset_get_index("snd_powerup"))
 oldsize = size;
 size = "thunder";
 grow = 60;
@@ -469,7 +486,46 @@ if (state != "groundpound") {
 	vsp=-4-akey*1.5
 }
 
-#define hurt_by_enemy
+#define collide_with_enemy
+var coll=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oEnemy, false, true)
+if (coll) && (!coll.no_dam) {
+	
+if (coll) && !(slopesliding) {
+	stopsfx(charmName+"damage")
+	hurt=1
+	hsp=2.25*-xsc
+	vsp=-4
+	canstopjump=true
+	state=""
+	grounded=false
+	oldsize = size;
+	switch (size) {
+		case "basic":
+		case "mini":
+			signal_emit(sig, "on_kill", charmName)
+			break;
+		case "big":
+			size = "basic";
+			playsfx(charmName+"damage")
+			break;
+		default:
+			size = "big";
+			playsfx(charmName+"damage")
+			break;
+	}
+	grow = 60;
+} else {
+	instance_create_depth(coll.x+coll.xsc,coll.y,2,pImpact)
+	coll.hp-=1
+	coll.phaseid=id
+	coll.killdir=esign(hsp,1)
+	coll.killhsp=hsp/1.75
+	coll.killvsp=-abs(hsp)/1.5
+	coll.killtype="spin"
+}
+}
+
+#define hurt_by_spike
 stopsfx(charmName+"damage")
 hurt=1
 hsp=2.25*-xsc
@@ -490,8 +546,8 @@ switch (size) {
 	default:
 		size = "big";
 		playsfx(charmName+"damage")
-		break;
-}
+	break;	
+}	
 grow = 60;
 
 #define electrocute

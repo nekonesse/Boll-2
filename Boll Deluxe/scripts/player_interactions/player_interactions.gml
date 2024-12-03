@@ -52,24 +52,29 @@ function player_interactions(){
 	#region Solid Spike Collision
 	var spike=collision_line(x-hit_sizex,y+(hit_sizey-2)-vsp,x-hit_sizex,y-(hit_sizey-2)-vsp, oSolidSpike, false, true)
 	if (spike) && (spike.dir="right" || spike.dir="none") {
-		sig.Emit("hurt_by_enemy")
+		sig.Emit("hurt_by_spike")
 	}
 	
 	var spike=collision_line(x+hit_sizex,y+(hit_sizey-2)-vsp,x+hit_sizex,y-(hit_sizey-2)-vsp, oSolidSpike, false, true)
 	if (spike) && (spike.dir="left" || spike.dir="none") {
-		sig.Emit("hurt_by_enemy")
+		sig.Emit("hurt_by_spike")
 	}
 	
 	var spike=collision_line(x-hit_sizex-hsp,y+hit_sizey,x+hit_sizex-hsp,y+hit_sizey, oSolidSpike, false, true)
 	if (spike) && (spike.dir="up" || spike.dir="none") {
-		sig.Emit("hurt_by_enemy")
+		sig.Emit("hurt_by_spike")
 	}
 	
 	var spike=collision_line(x-hit_sizex-hsp,y-hit_sizey,x+hit_sizex-hsp,y-hit_sizey, oSolidSpike, false, true)
 	if (spike) && (spike.dir="down" || spike.dir="none") {
-		sig.Emit("hurt_by_enemy")
+		sig.Emit("hurt_by_spike")
 	}
 	#endregion
+	
+	var chainsaw=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oChainsaw, false, true)
+	if (chainsaw) {
+		sig.Emit("hurt_by_spike")
+	}
 	
 	var mysteryorb=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oMysteryOrb, false, true)
 	if (mysteryorb) {

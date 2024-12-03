@@ -20,7 +20,7 @@ ds_list_destroy(_list);
 
 var coll=instance_place(x,y,oCollider)
 if (coll) && !(coll.no_collide) && !(coll.semi) && (coll != spawn_object) {
-	if inview() VinylPlay(snd_enemybigexplode);
+	if on_screen() VinylPlay(snd_enemybigexplode);
 	instance_destroy();
 }
 

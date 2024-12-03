@@ -59,12 +59,27 @@ toolbar[4][4]=REFERENCE_TOOL
 
 JADE_initializeobj();
 
-tile_layer = layer_get_id("EditorTiles_Main")
+layers[0]=layer_create(-200,"EditorTiles_FG")
+layers[1]=layer_create(-100,"EditorTiles_FGDeco")
+layers[2]=layer_create(100,"EditorTiles_Main")
+layers[3]=layer_create(150,"EditorTiles_Misc")
+layers[4]=layer_create(200,"EditorTiles_Deco")
+layers[5]=layer_create(300,"EditorTiles_Semi")
+layers[6]=layer_create(400,"EditorTiles_BG")
+
+tile_layer[0] = layer_tilemap_create(layers[0],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[1] = layer_tilemap_create(layers[1],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[2] = layer_tilemap_create(layers[2],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[3] = layer_tilemap_create(layers[3],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[4] = layer_tilemap_create(layers[4],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[5] = layer_tilemap_create(layers[5],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[6] = layer_tilemap_create(layers[6],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+selected_tile_layer=2;
 //tileset = tTilesetMain
-tilemap = layer_tilemap_get_id(tile_layer)
+tilemap = tile_layer[2]
 object_layer_map = ds_list_create()
 node_layer_map = ds_list_create()
-tile_layer_map = ds_list_create()
+
 
 not_on_gui = false
 
@@ -95,6 +110,8 @@ tile_fill_last_x = 0
 tile_fill_last_y = 0
 tile_fill = false
 fill_circle = false
+
+
 
 curs_x=mouse_x
 curs_y=mouse_y
@@ -165,34 +182,28 @@ is_typing=0;
 temptypingstring="";
 open_dropmenu=0;
 
-var tile_layer_alpha_check = function() {
-	//This makes the tile layer transparent if you arent in tile mode by using layer scripts
-	if oJADEController.selected_mode!=TILE_MODE {
-		shader_set(shd_alpha)
-		var alpha = shader_get_uniform(shd_alpha, "alpha");
-		shader_set_uniform_f(alpha,0.33)
+for (var i = 0; i < array_length(tile_layer); ++i) {
+	tile_layer_map[i] = ds_list_create()
+	layer_script_begin(layers[i], tile_layer_alpha_check);
+	var shadreset = function() {
+		shader_reset()
 	}
+	layer_script_end(layers[i], shadreset);
 }
-
-var tile_layer_shader_reset = function() {
-	shader_reset();
-}
-layer_script_begin(tile_layer, tile_layer_alpha_check);
-layer_script_end(tile_layer, tile_layer_shader_reset);
 
 //for updating tile properties like flip, mirror, rotate etc
 tile_update_properties = function() {
 	var data = tilemap_get(tilemap, gridx, gridy)
 	var array = [gridx, gridy]
-	for (var i=0; i<ds_list_size(tile_layer_map); i++;) {
+	for (var i=0; i<ds_list_size(tile_layer_map[selected_tile_layer]); i++;) {
 		show_debug_message(data)
-		var array_catched = ds_list_find_value(tile_layer_map,i)
+		var array_catched = ds_list_find_value(tile_layer_map[selected_tile_layer],i)
 		var array_match= []
 		array_match[0] = array_catched[1]
 		array_match[1] = array_catched[2]
 		show_debug_message($"{array}, {array_match}")
 		if array_equals(array,array_match) {
-			ds_list_set(tile_layer_map,i,[data, gridx, gridy])
+			ds_list_set(tile_layer_map[selected_tile_layer],i,[data, gridx, gridy])
 			break;
 		}
 	}
@@ -211,6 +222,7 @@ if !is_undefined(obj) {
 	obj[9] = 0	
 	obj[10] = []
 	obj[11] = []
+	obj[12] = [2,false,0,false,true,true] //node properties
 	if is_array(sprite[8]) && array_length(sprite[8]) {
 		for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
 			if is_array(sprite[8][o]) {

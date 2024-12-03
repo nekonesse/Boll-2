@@ -4,6 +4,10 @@ if keyboard_check_pressed(vk_f4) greenmode=!greenmode
 
 //updateBox.Emit()
 
+var c = view_camera[view_current]
+//instance_activate_region(camera_get_view_x(c)-32,camera_get_view_y(c)-32, camera_get_view_width(c) + 32, camera_get_view_height(c) + 32, true)
+
+
 // chearii: guessing these are a buncha quickvars
 right = input_check("right");
 left = input_check("left");

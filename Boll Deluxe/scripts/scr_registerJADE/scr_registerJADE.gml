@@ -118,7 +118,7 @@ function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,m
 	}
 }
 
-function JADE_save(file=working_directory+"\save.jade") {
+function JADE_save(file="\save.jade") {
 	file_delete(file)
 	show_debug_message($"Saving JADE file to: {file}")
 	var array = [];
@@ -131,12 +131,20 @@ function JADE_save(file=working_directory+"\save.jade") {
 	    array_push(arrayNodeObjects, node_layer_map[| i])
 	}
 	var arrayTiles=[];
-	for (var i = 0; i < ds_list_size(tile_layer_map); ++i) {
-	    array_push(arrayTiles, tile_layer_map[| i])
+	for (var i = 0; i < array_length(tile_layer_map); ++i) {
+		arrayTiles[i]=[];
+	    for (var j = 0; j < ds_list_size(tile_layer_map[i]); ++j) {
+		    array_push(arrayTiles[i], tile_layer_map[i][| j])
+		}
+	}
+	var arrayTileLayers=[];
+	for (var i = 0; i < array_length(layers); ++i) {
+	    array_push(arrayTileLayers, [layer_get_name(layers[i]), layer_get_depth(layers[i]), tilemap_get_tileset(tile_layer[i])])
 	}
 	array_push(array, arrayObjects)
 	array_push(array, arrayTiles)
 	array_push(array, arrayNodeObjects)
+	array_push(array, arrayTileLayers)
 	show_debug_message(array)
 	var _json=json_stringify(array); //compile all saved things
 	var save_file = buffer_create(string_byte_length(_json), buffer_grow, 1);
@@ -148,7 +156,7 @@ function JADE_save(file=working_directory+"\save.jade") {
 	show_debug_message($"Successfully saved JADE file to: {file}!")
 }
 
-function JADE_load(file=working_directory+"\save.jade") {
+function JADE_load(file="\save.jade") {
 	if !file_exists(file) exit;
 	var loaded = buffer_load(file)
 	var save_file = buffer_decompress(loaded)
@@ -161,22 +169,46 @@ function JADE_load(file=working_directory+"\save.jade") {
 	for (var i = 0; i < size; ++i) { //load objects
         var data = array[0][i]
 		data[5] = 0
+		if array_length(data) >= 13 && array_length(data[12]) < 5 {
+			data[12][5]=true
+		}
 		ds_list_add(object_layer_map,data)
 	}
-	tilemap_clear(tilemap, 0) //erase tilemap beforehand
-	ds_list_clear(tile_layer_map) //erase tile map beforehand
-    for (var i = 0; i < tilesize; ++i) { //loading tiles
-		var data = array[1][i]
-		tilemap_set(tilemap,data[0],data[1],data[2])
-		ds_list_add(tile_layer_map, [data[0], data[1], data[2]]) //add tile to list at place
+	if array_length(array) >= 4 {
+	    for (var i = 0; i < tilesize; ++i) { //loading tiles
+			tilemap_clear(tile_layer[i], 0) //erase tilemap beforehand
+			ds_list_clear(tile_layer_map[i]) //erase tile map beforehand
+			for (var j = 0; j < array_length(array[1][i]); ++j) {
+				var data = array[1][i][j]
+			    tilemap_set(tile_layer[i],data[0],data[1],data[2])
+				ds_list_add(tile_layer_map[i], [data[0], data[1], data[2]]) //add tile to list at place
+			}
+		}
+	} else { //legacy tile conversion
+		tilemap_clear(tile_layer[2], 0) //erase tilemap beforehand
+		ds_list_clear(tile_layer_map[2]) //erase tile map beforehand
+		for (var j = 0; j < array_length(array[1]); ++j) {
+			var data = array[1][j]
+			tilemap_set(tile_layer[2],data[0],data[1],data[2])
+			ds_list_add(tile_layer_map[2], [data[0], data[1], data[2]]) //add tile to list at place
+		}
 	}
 	ds_list_clear(node_layer_map)
 	for (var i = 0; i < nodesize; ++i) { //load node objects
         var data = array[2][i]
 		data[5] = 0
 		ds_list_add(node_layer_map,data)
-	} 
+	}
 	buffer_delete(loaded)
 	buffer_delete(save_file)
 	show_debug_message($"Successfully loaded JADE file from: {file}!")
+}
+
+function tile_layer_alpha_check() {
+	//This makes the tile layer transparent if you arent in tile mode by using layer scripts
+	if oJADEController.selected_mode!=TILE_MODE || layer!=oJADEController.layers[oJADEController.selected_tile_layer] {
+		shader_set(shd_alpha)
+		var alpha = shader_get_uniform(shd_alpha, "alpha");
+		shader_set_uniform_f(alpha,0.33)
+	}
 }

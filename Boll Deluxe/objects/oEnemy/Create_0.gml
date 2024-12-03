@@ -13,10 +13,16 @@ enemyCollidePlayer = new Signal();
 enemyFireballed = new Signal();
 enemyKilled = new Signal();
 grav=defaultgrav
+_direction = -1
 rot=0
 xsc=1
 ysc=1
+hsp = 0
+vsp = 0
+gsp = 0
 spawn_object=noone
+no_dam = false;
+colangle = 0
 
 inactive=0;
 phaseid=noone;
@@ -27,12 +33,17 @@ collision_array=[oCollider, oEnemyGround];
 
 killtype="";
 killdir=0;
+killhsp=1;
+killvsp=-3;
 
 piped = false
 grounded = false
 
 hit_sizex = 6
 hit_sizey = 6
+
+activation_region_width=32;
+activation_region_height=32;
 
 image_xscale=1;
 image_yscale=1;
@@ -44,6 +55,7 @@ setup_box_poly(id);
 
 enemyStomped.Connect( self, function(hit_p) {
 	if (!no_stomping) {
+		VinylPlay(snd_enemystomp)
 		hp-=1
 		with(hit_p) {
 			sig.Emit("enemy_stomped")
@@ -55,13 +67,16 @@ enemyStomped.Connect( self, function(hit_p) {
 });
 
 enemyCollidePlayer.Connect( self, function(hit_p) {
-	with(hit_p) sig.Emit("hurt_by_enemy")
+	with(hit_p) {
+		sig.Emit("collide_with_enemy")
+	}
 	phaseid=hit_p
 });
 
 enemyFireballed.Connect( self, function(proj, hit_p) {
+	VinylPlay(snd_enemykick)
 	hp-=1
 	instance_create_depth(proj.x,proj.y,2,pImpact)
-	killdir=esign(proj.x-x,1)
+	killhsp=esign(-proj.hsp,1)
 	killtype="spin"
 });

@@ -23,9 +23,9 @@ pathnum=1;
 pathspd=2;
 pathcanrev=false;
 pathisrev=false;
-
-
 pathfallen=false;
 pathcanfall=false;
+pathdraw=true;
+pathstarted=true;
 
 setup_box_poly(id);

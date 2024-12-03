@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"__VinylConfigJSON",
   "parent":{
-    "name":"Config",
-    "path":"folders/Vinyl/Config.yy",
+    "name":"Sounds",
+    "path":"folders/Sounds.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -1,4 +1,4 @@
-function parse_level(dir=working_directory+"\save.jade") {
+function parse_level(dir="\save.jade") {
 	var file = dir
 	if !file_exists(file) {
 		show_message($"Level does not exist at {dir}! make sure you've saved first!")
@@ -11,6 +11,7 @@ function parse_level(dir=working_directory+"\save.jade") {
 	var size = array_length(array[0]) //read amount of objects
 	var nodesize = array_length(array[2]) //read amount of objects (on the node layer)
 	var tilesize = array_length(array[1]) //read amount of tiles
+
 	for (var i = 0; i < size; ++i) { //load objects
         var data = array[0][i]
 		show_debug_message($"Parsing JADE object with name: {data[0]}")
@@ -24,10 +25,16 @@ function parse_level(dir=working_directory+"\save.jade") {
 				var temparr = []
 				array_copy(temparr,0,data[11],0,array_length(data[11]))
 				variable_instance_set(obj, "pathing", temparr);
-				variable_instance_set(obj, "pathspd", data[12][0]);
-				variable_instance_set(obj, "pathcanrev", data[12][1]);
-				variable_instance_set(obj, "pathnum", data[12][2]);
-				variable_instance_set(obj, "pathcanfall", data[12][3]);
+				if is_array(data[12]) {
+					variable_instance_set(obj, "pathspd", data[12][0]);
+					variable_instance_set(obj, "pathcanrev", data[12][1]);
+					variable_instance_set(obj, "pathnum", data[12][2]);
+					variable_instance_set(obj, "pathcanfall", data[12][3]);
+					variable_instance_set(obj, "pathdraw", data[12][4]);
+					if array_length(data[12]) > 5
+					variable_instance_set(obj, "pathstarted", data[12][5]);
+					else variable_instance_set(obj, "pathstarted", true);
+				}	
 			}
 			
 			for (var j = 0; j < array_length(data[10]); j++) {
@@ -65,6 +72,16 @@ function parse_level(dir=working_directory+"\save.jade") {
 				var temparr = []
 				array_copy(temparr,0,data[11],0,array_length(data[11]))
 				variable_instance_set(obj, "pathing", temparr);
+				if is_array(data[12]) {
+					variable_instance_set(obj, "pathspd", data[12][0]);
+					variable_instance_set(obj, "pathcanrev", data[12][1]);
+					variable_instance_set(obj, "pathnum", data[12][2]);
+					variable_instance_set(obj, "pathcanfall", data[12][3]);
+					variable_instance_set(obj, "pathdraw", data[12][4]);
+					if array_length(data[12]) > 5
+					variable_instance_set(obj, "pathstarted", data[12][5]);
+					else variable_instance_set(obj, "pathstarted", true);
+				}	
 			}
 			
 			for (var j = 0; j < array_length(data[10]); j++) {
@@ -89,13 +106,28 @@ function parse_level(dir=working_directory+"\save.jade") {
 		 10: properties array
 		*/
 	}
-	var tile_layer = layer_get_id("Ground_Tiles")
-	var tilemap = layer_tilemap_get_id(tile_layer)
-    for (var i = 0; i < tilesize; ++i) { //loading tiles
-		var data = array[1][i]
-		var tiledata = tilemap_get(tilemap, data[1], data[2]);
-		tiledata = tile_set_index(tiledata, data[0])
-		tilemap_set(tilemap, tiledata, data[1], data[2]) //set tile at place
+	if array_length(array) >= 4 {
+		var tilelayersize = array_length(array[3]) //read amount of tile layers
+		for (var i = 0; i < tilelayersize; ++i) {
+			var tile_layer = layer_create(array[3][i][1],array[3][i][0])
+			var tilemap = layer_tilemap_create(tile_layer,0,0,array[3][i][2],ceil(room_width/16),ceil(room_height/16))
+			if array_length(array[1][i])
+			for (var j = 0; j < array_length(array[1][i]); ++j) { //loading tiles
+				var data = array[1][i][j]
+				var tiledata = tilemap_get(tilemap, data[1], data[2]);
+				tiledata = tile_set_index(tiledata, data[0])
+				tilemap_set(tilemap, tiledata, data[1], data[2]) //set tile at place
+			}
+		}
+	} else { //legacy tile conversion
+		var tile_layer = layer_create(100,"MainTiles")
+		var tilemap = layer_tilemap_create(tile_layer,0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+		for (var j = 0; j < array_length(array[1]); ++j) { //loading tiles
+			var data = array[1][j]
+			var tiledata = tilemap_get(tilemap, data[1], data[2]);
+			tiledata = tile_set_index(tiledata, data[0])
+			tilemap_set(tilemap, tiledata, data[1], data[2]) //set tile at place
+		}
 	}
 	buffer_delete(loaded)
 	buffer_delete(save_file)

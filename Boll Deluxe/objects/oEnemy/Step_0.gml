@@ -2,12 +2,21 @@ if global.paused || inactive && (object_index!=oBulletBill && object_index!=oBan
 
 //grounded=false
 
+if !on_screen() && !origin_on_screen() {
+	x = xstart
+	y = ystart
+} else if on_screen() {
+	instance_activate_region(x-activation_region_width, y-activation_region_width, activation_region_width, activation_region_height, true)
+}
+
+//instance_activate_region(x-64,y-64, 128, 128, true)
+
 if !(in_shell) && (edgeturn) && (grounded)
 {
 	if !check_collision_line(x + (-xsc * (hit_sizex-4)),y,x + (-xsc * (hit_sizex-4)),y+hit_sizey+16, COL_BOTTOM){
 		if !(turned) {
 			turned=1
-			hsp *= -1;
+			_direction *= -1;
 			turning = 10;
 			prevsprite_index=sprite_index
 		}
@@ -18,7 +27,7 @@ if !(in_shell) && (edgeturn) && (grounded)
 
 
 if check_collision_line(x+(hit_sizex+1)*-xsc, y+hit_sizey-3,x+(hit_sizex+1)*-xsc, y-hit_sizey+3, COL_WALL) {
-	hsp *= -1;
+	_direction *= -1;
 	turning = 10;
 	prevsprite_index=sprite_index
 }
@@ -30,7 +39,7 @@ if (enemycoll) {
 		// i will eat my shoes. make sure the object is an enemy before checking variables that not enemies dont have
 		if !(coll.no_interaction) && !(coll.inactive) && !(flipped) {
 			flipped = 1;
-			hsp *= -1;
+			_direction *= -1;
 			turning = 10;
 			prevsprite_index=sprite_index
 		}
@@ -50,6 +59,12 @@ if !place_meeting(x+hsp,y, [oEnemy, oCollider]) {
 if !grounded
 {
 	vsp += grav;
+} else {
+	if walker {
+		gsp = constantspd * _direction
+	}
+	vsp = gsp * -dsin(colangle)
+	hsp = gsp * dcos(colangle)
 }
 
 x += hsp
@@ -57,4 +72,4 @@ y += vsp
 
 player_collision();
 
-if hsp != 0 xsc=-esign(hsp,-1)
+if gsp != 0 xsc=-esign(gsp,-1)
