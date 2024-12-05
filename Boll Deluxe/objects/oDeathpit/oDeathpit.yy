@@ -1,13 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"oDeathpit",
+  "%Name":"oDeathPit",
   "eventList":[],
   "managed":true,
-  "name":"oDeathpit",
+  "name":"oDeathPit",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects/Objects.yy",
+    "name":"Control",
+    "path":"folders/Objects/Control.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -27,7 +27,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"spr_deathpit",
+    "path":"sprites/spr_deathpit/spr_deathpit.yy",
+  },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

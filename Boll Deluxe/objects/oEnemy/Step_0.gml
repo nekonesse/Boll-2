@@ -2,14 +2,12 @@ if global.paused || inactive && (object_index!=oBulletBill && object_index!=oBan
 
 //grounded=false
 
-if !on_screen() && !origin_on_screen() {
+if !on_screen(32,32) && !origin_on_screen(xstart,ystart,32,32) {
 	x = xstart
 	y = ystart
-} else if on_screen() {
+} else if on_screen(32,32) {
 	instance_activate_region(x-activation_region_width, y-activation_region_width, activation_region_width, activation_region_height, true)
 }
-
-//instance_activate_region(x-64,y-64, 128, 128, true)
 
 if !(in_shell) && (edgeturn) && (grounded)
 {
@@ -27,9 +25,7 @@ if !(in_shell) && (edgeturn) && (grounded)
 
 
 if check_collision_line(x+(hit_sizex+1)*-xsc, y+hit_sizey-3,x+(hit_sizex+1)*-xsc, y-hit_sizey+3, COL_WALL) {
-	_direction *= -1;
-	turning = 10;
-	prevsprite_index=sprite_index
+	enemyTurnAround.Emit();
 }
 
 if (enemycoll) {

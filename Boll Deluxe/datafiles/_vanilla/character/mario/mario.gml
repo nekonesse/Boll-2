@@ -171,7 +171,7 @@ if (state == "pound") && !piping {
 		
 		found_block=false;
 		if (num > 0) {
-			for (var i = 0; i < num; i+=1;) {
+			for (var i = 0; i < num; i+=1) {
 				var blockcoll=ds_list_find_value(blocklist, i)
 				if !(blockcoll.no_hit) && (pounding_block == true) && (blockcoll.amount != 0) {
 					if (blockcoll.hit == 0) {
@@ -488,9 +488,9 @@ if (state != "groundpound") {
 
 #define collide_with_enemy
 var coll=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oEnemy, false, true)
-if (coll) && (!coll.no_dam) {
+if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 	
-if (coll) && !(slopesliding) {
+if (coll) && !(slopesliding){
 	stopsfx(charmName+"damage")
 	hurt=1
 	hsp=2.25*-xsc
@@ -518,9 +518,10 @@ if (coll) && !(slopesliding) {
 	instance_create_depth(coll.x+coll.xsc,coll.y,2,pImpact)
 	coll.hp-=1
 	coll.phaseid=id
-	coll.killdir=esign(hsp,1)
-	coll.killhsp=hsp/1.75
-	coll.killvsp=-abs(hsp)/1.5
+	coll.killdir=esign(coll.x-x,1)
+	coll.killhsp=max(abs(hsp)/1.75,2)
+	coll.xsc=esign(hsp,xsc)
+	coll.killvsp=-max(2,abs(hsp)/1.5)
 	coll.killtype="spin"
 }
 }

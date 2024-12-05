@@ -96,6 +96,8 @@ function JADE_initializeobj() {
 	//NODE MODE
 	registerobj(object_get_name(oCameraRegion), spr_cameraregion, -sprite_get_xoffset(spr_cameraregion), -sprite_get_yoffset(spr_cameraregion), sprite_get_width(spr_cameraregion), sprite_get_height(spr_cameraregion), false, false, NODE_MODE, 0, object_get_properties("oCameraRegion"))
 	registerobj(object_get_name(oCameraBoundary), spr_cameraboundary, -sprite_get_xoffset(spr_cameraboundary), -sprite_get_yoffset(spr_cameraboundary), sprite_get_width(spr_cameraboundary), sprite_get_height(spr_cameraboundary), false, false, NODE_MODE, 0, object_get_properties("oCameraBoundary"))
+	registerobj(object_get_name(oActivationRegion), spr_activationregion, -sprite_get_xoffset(spr_activationregion), -sprite_get_yoffset(spr_activationregion), sprite_get_width(spr_activationregion), sprite_get_height(spr_activationregion), false, false, NODE_MODE, 0, object_get_properties("oActivationRegion"))
+	registerobj(object_get_name(oDeathPit), spr_deathpit, -sprite_get_xoffset(spr_deathpit), -sprite_get_yoffset(spr_deathpit), sprite_get_width(spr_deathpit), sprite_get_height(spr_deathpit), false, false, NODE_MODE, 0, object_get_properties("oDeathPit"))
 }
 
 function register_array(array, category) {

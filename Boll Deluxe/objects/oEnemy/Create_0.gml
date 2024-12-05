@@ -12,6 +12,7 @@ enemyStomped = new Signal();
 enemyCollidePlayer = new Signal();
 enemyFireballed = new Signal();
 enemyKilled = new Signal();
+enemyTurnAround = new Signal();
 grav=defaultgrav
 _direction = -1
 rot=0
@@ -23,6 +24,7 @@ gsp = 0
 spawn_object=noone
 no_dam = false;
 colangle = 0
+phase_leeway = 10;
 
 inactive=0;
 phaseid=noone;
@@ -62,6 +64,7 @@ enemyStomped.Connect( self, function(hit_p) {
 			instance_create_depth(x,y+hit_sizey,2,pImpact)
 		}
 		phaseid=hit_p
+		phase_leeway=7;
 		killtype="stomp"
 	}
 });
@@ -71,6 +74,7 @@ enemyCollidePlayer.Connect( self, function(hit_p) {
 		sig.Emit("collide_with_enemy")
 	}
 	phaseid=hit_p
+	phase_leeway=7;
 });
 
 enemyFireballed.Connect( self, function(proj, hit_p) {
@@ -79,4 +83,10 @@ enemyFireballed.Connect( self, function(proj, hit_p) {
 	instance_create_depth(proj.x,proj.y,2,pImpact)
 	killhsp=esign(-proj.hsp,1)
 	killtype="spin"
+});
+
+enemyTurnAround.Connect( self, function() {
+	_direction *= -1;
+	turning = 10;
+	prevsprite_index=sprite_index
 });

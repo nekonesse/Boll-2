@@ -19,8 +19,10 @@ function parse_level(dir="\save.jade") {
 		if instance_exists(obj) {
 			obj.image_xscale=data[3]
 			obj.image_yscale=data[4]
-			obj.x+=sprite_get_xoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_xscale;
-			obj.y+=sprite_get_yoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_yscale;
+			obj.xstart+=sprite_get_xoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_xscale;
+			obj.ystart+=sprite_get_yoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_yscale;
+			obj.x=obj.xstart
+			obj.y=obj.ystart
 			if array_length(data[11]) {
 				var temparr = []
 				array_copy(temparr,0,data[11],0,array_length(data[11]))
@@ -43,6 +45,7 @@ function parse_level(dir="\save.jade") {
 					show_debug_message($"set object {obj} ({object_get_name(obj.object_index)})'s variable '{data[10][j][0]}' to '{data[10][j][2]}'.");
 				}
 			}
+			
 			with(obj) {event_user(15)}
 		}
 		/*OBJECT STAT LIST

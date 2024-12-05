@@ -3,6 +3,13 @@ x+=hsp
 
 image_xscale=esign(hsp,1)
 
+if !on_screen(32,32) {
+	instance_destroy();
+	if (owner!=-1) {
+		owner.has_fired-=1;
+	}
+}
+
 player_collision();
 
 if check_collision_line(x+hit_sizex+hsp,y-hit_sizey,x+hit_sizex+hsp,y+hit_sizey,COL_WALL) || check_collision_line(x-hit_sizex+hsp,y-hit_sizey,x-hit_sizex+hsp,y+hit_sizey,COL_WALL) {

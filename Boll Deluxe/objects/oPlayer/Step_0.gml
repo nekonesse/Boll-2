@@ -4,8 +4,10 @@ if keyboard_check_pressed(vk_f4) greenmode=!greenmode
 
 //updateBox.Emit()
 
-var c = view_camera[view_current]
-//instance_activate_region(camera_get_view_x(c)-32,camera_get_view_y(c)-32, camera_get_view_width(c) + 32, camera_get_view_height(c) + 32, true)
+if collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey,oDeathPit,false,true) && !dead {
+	hurt=1
+	sig.Emit("on_kill")
+}
 
 
 // chearii: guessing these are a buncha quickvars

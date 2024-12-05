@@ -8,5 +8,4 @@ grav=0.25
 piped=false
 collision_array=[oCollider]
 owner=-1;
-alarm[0]=5;
 setup_box_poly(id);

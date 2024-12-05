@@ -135,6 +135,7 @@ function player_collision(){
 						}
 					}
 				}
+				ds_list_destroy(_list);
 			}
 			
 			vsp = 2

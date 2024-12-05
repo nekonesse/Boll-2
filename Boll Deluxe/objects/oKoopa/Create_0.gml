@@ -4,25 +4,13 @@ event_inherited();
 in_shell = 0;
 shell_time = 60*5;
 no_stomping = 0;
-shell_leway = 0
 shell_move = true
+can_break_bricks = true
 
 enemyStomped.Connect( self, function(hit_p) {
 	show_debug_message("hi im the okoopa stomp signal")
 	hp=1
 	if (!no_stomping) {
-		//if (in_shell && shell_leway == 0) {
-		//	show_debug_message(hsp)
-		//	show_debug_message("i kick koopera")
-		//	phaseid=hit_p
-		//	hsp = 0;
-		//	enemycoll=true;
-		//	with(hit_p) sig.Emit("enemy_stomped")
-		//	in_shell = shell_time;
-		//	shell_leway = 10
-		//	hsp = sign(phaseid.x - x) * 2.2;
-		//	shell_move = !shell_move
-		//} 
 		if !in_shell{
 			VinylPlay(snd_enemystomp)
 			constantspd = 0;
@@ -31,7 +19,6 @@ enemyStomped.Connect( self, function(hit_p) {
 			in_shell = shell_time;
 			no_stomping = true
 			shell_move = false
-			shell_leway = 15
 		}
 		if in_shell{
 			VinylPlay(snd_enemystomp)
@@ -40,15 +27,15 @@ enemyStomped.Connect( self, function(hit_p) {
 			in_shell = shell_time;
 			no_stomping = true
 			shell_move = false
-			shell_leway = 15
 		}
 	}
 });
 
 enemyCollidePlayer.Connect( self, function(hit_p) {
 		phaseid=hit_p
+		phase_leeway=7;
 		if (no_stomping) {
-			if (in_shell) && !shell_move && (shell_leway<=2) {
+			if (in_shell) && !(shell_move) {
 				VinylPlay(snd_enemykick)
 				with (hit_p) {
 					instance_create_depth(x+hit_sizex*xsc,other.y,2,pImpact)
@@ -56,9 +43,14 @@ enemyCollidePlayer.Connect( self, function(hit_p) {
 				constantspd = 4;
 				_direction = sign(x-phaseid.x) 
 				shell_move = true
-				shell_leway = 15
 				in_shell = shell_time
 				no_stomping = false
 			}
 		}
+});
+
+enemyTurnAround.Connect( self, function() {
+	if (in_shell) && (shell_move) {
+		VinylPlay(snd_blockbump)
+	}
 });

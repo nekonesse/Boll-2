@@ -33,8 +33,6 @@ wallrundata = [ 0, 0, 0,
 				0, 0, 0,
 				0, 0, 0 ];
 
-wallrun_rollangle = 0;
-
 storeddir=0;
 yvol=0;
 wallrunperiod=0;
@@ -44,11 +42,6 @@ wallrunperiod=0;
 
 // reset sprite angle
 sprite_angle = real_sprite_angle;
-
-if (state != "wallrun")
-{
-	wallrun_rollangle = max(0, wallrun_rollangle - 10);
-}
 
 // chearii: do speed updates BEFORE we hit a wall
 // might lead to inconsistencies, but who cares?
@@ -255,12 +248,7 @@ if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped){
 
 if (state == "wallrun") && !piped {
 	canstopjump=true;
-	
-	if (wallrun_rollangle < 90)
-	{
-		wallrun_rollangle = min(90, wallrun_rollangle + 10);
-	}
-	
+
 	no_move=true;
 	move=storeddir;
 	if round(vsp) >= 0 {
@@ -360,7 +348,6 @@ grow = max(0, (grow - 1));
 frspd=1
 
 real_sprite_angle = sprite_angle;
-sprite_angle += wallrun_rollangle;
 
 switch (state) {
 
@@ -551,8 +538,9 @@ if (coll) && (state!="roll") && (state!="spindash") {
 	coll.hp-=1
 	coll.phaseid=id
 	coll.killdir=esign(coll.x-x,1)
-	coll.killhsp=hsp/1.75
-	coll.killvsp=-abs(hsp)/1.5
+	coll.killhsp=max(abs(hsp)/1.75,2)
+	coll.xsc=esign(hsp,xsc)
+	coll.killvsp=-max(2,abs(hsp)/1.5)
 	coll.killtype="spin"
 }
 }
