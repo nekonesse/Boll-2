@@ -20,5 +20,5 @@ with(oActivationRegion) {
 	instance_activate_region(x,y,sprite_width,sprite_height,true)
 }
 with(oPlayer) {
-	instance_activate_region(floor(x)-hit_sizex-48,floor(y)-hit_sizey-48, hit_sizex+48, hit_sizey+48, true)
+	instance_activate_region(floor(x)-hit_sizex-48,floor(y)-hit_sizey-48, hit_sizex+96, hit_sizey+96, true)
 }
