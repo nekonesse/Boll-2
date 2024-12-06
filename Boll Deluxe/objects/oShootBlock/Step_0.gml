@@ -1,24 +1,31 @@
 event_inherited();
 
-if (hit != 0) && (!goDirection) {
-	goDirection=hit
-	no_collide=true;
-	no_path_follow=true;
-	hspeed=0;
-	vspeed=0;
-	gravity=0;
-}
-
 if (goDirection != 0) {
 	y += goDirection*3;
 	image_index = ternary(goDirection, 1, 2);
 	
-	if place_meeting(x,y+goDirection,oCollider) {
+	if check_collision_line(bbox_left+1,y+(sprite_height/2)*goDirection,bbox_right-1,y+(sprite_height/2)*goDirection,COL_TOP,oCollider) {
+		var blocklist=ds_list_create();
+		var num=collision_line_list(bbox_left+1,y+(sprite_height/2)*goDirection,bbox_right-1,y+(sprite_height/2)*goDirection,oHittable, false, true, blocklist, true)
+		if (num > 0) {
+			for (var i = 0; i < num; i+=1) {
+				var blockcoll=ds_list_find_value(blocklist, i)
+				if !(blockcoll.no_hit) && (blockcoll.amount != 0) {
+					if (blockcoll.hit == 0) {
+						blockcoll.blockHit.Emit(goDirection, id)
+					}
+				}
+			}
+		}
+		
+		ds_list_destroy(blocklist);
+		
+		instance_create(x,y+(sprite_height/2)*goDirection,pImpact)
 		VinylPlay(snd_blockbreak)
 		instance_destroy();
-		var j=instance_create(x-4,y+4,pDestruction) with(j){image_index=0 hspeed=-1 vspeed=-2} //bottom left
-		var j=instance_create(x+4,y+4,pDestruction) with(j){image_index=0 hspeed=1 vspeed=-2} //bottom right
-		var j=instance_create(x-4,y-4,pDestruction) with(j){image_index=0 hspeed=-1 vspeed=-4} //top left
-		var j=instance_create(x+4,y-4,pDestruction) with(j){image_index=0 hspeed=1 vspeed=-4} //top right
+		var j=instance_create(x-4,y+4,pDestruction) with(j){image_index=7 hspeed=-1 vspeed=-2} //bottom left
+		var j=instance_create(x+4,y+4,pDestruction) with(j){image_index=7 hspeed=1 vspeed=-2} //bottom right
+		var j=instance_create(x-4,y-4,pDestruction) with(j){image_index=7 hspeed=-1 vspeed=-4} //top left
+		var j=instance_create(x+4,y-4,pDestruction) with(j){image_index=7 hspeed=1 vspeed=-4} //top right
 	}
 }

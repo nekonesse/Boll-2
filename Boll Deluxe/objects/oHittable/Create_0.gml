@@ -10,7 +10,7 @@ dummyTimer = dummyTimerReset;
 bumpMax = 10; //highest "up" pos for bumping
 hitNegative = false; //used for the bumping "overshoot" anim end-bounce
 no_hit = false;
-default_depth = 0;
+default_depth = 1;
 amount=1; // the amount of items to hold
 no_path_follow=false;
 

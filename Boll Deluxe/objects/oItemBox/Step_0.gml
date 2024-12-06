@@ -1,9 +1,13 @@
 event_inherited();
 
 if (going) {
-	flash=max(flash-1,0)
-	image_index=sign(flash)
-}
+	if !(amount) {
+		flash=max(flash-1,0)
+		image_index=sign(flash)
+	} else image_index=1
+	
+	image_speed=0;
+} else image_speed=1;
 
 reduce_timer=max(reduce_timer-1,0)
 

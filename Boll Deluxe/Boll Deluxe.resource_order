@@ -55,7 +55,6 @@
     {"name":"25  Gamepads (Direct)","order":27,"path":"folders/Input/25  Gamepads (Direct).yy",},
     {"name":"26  Keyboard (Direct)","order":28,"path":"folders/Input/26  Keyboard (Direct).yy",},
     {"name":"27  Combos","order":29,"path":"folders/Input/27  Combos.yy",},
-    {"name":"LDtkParser","order":208,"path":"folders/LDtkParser.yy",},
     {"name":"Notes","order":203,"path":"folders/Notes.yy",},
     {"name":"Objects","order":199,"path":"folders/Objects.yy",},
     {"name":"Control","order":2,"path":"folders/Objects/Control.yy",},

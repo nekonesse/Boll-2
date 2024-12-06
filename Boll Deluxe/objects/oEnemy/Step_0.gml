@@ -63,6 +63,17 @@ if !grounded
 	hsp = gsp * dcos(colangle)
 }
 
+var shootblock=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey,oShootBlock,false,true)
+if (shootblock) && (shootblock.goDirection!=0) && !(phaseid) {
+	with(shootblock) {
+		instance_create(x,y+(sprite_height/2)*goDirection,pImpact)
+	}
+	VinylPlay(snd_enemykick)
+	hp-=1
+	phaseid=shootblock
+	phase_leeway=3
+}
+
 x += hsp
 y += vsp
 
