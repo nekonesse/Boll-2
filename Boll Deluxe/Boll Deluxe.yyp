@@ -1282,6 +1282,8 @@
     {"id":{"name":"snd_itemcoin","path":"sounds/snd_itemcoin/snd_itemcoin.yy",},},
     {"id":{"name":"snd_pipe","path":"sounds/snd_pipe/snd_pipe.yy",},},
     {"id":{"name":"snd_powerup","path":"sounds/snd_powerup/snd_powerup.yy",},},
+    {"id":{"name":"snd_shootblockbreak","path":"sounds/snd_shootblockbreak/snd_shootblockbreak.yy",},},
+    {"id":{"name":"snd_shootblockshoot","path":"sounds/snd_shootblockshoot/snd_shootblockshoot.yy",},},
     {"id":{"name":"snd_switch","path":"sounds/snd_switch/snd_switch.yy",},},
     {"id":{"name":"VinylFallbackSound","path":"sounds/VinylFallbackSound/VinylFallbackSound.yy",},},
     {"id":{"name":"mario_test","path":"sprites/mario_test/mario_test.yy",},},

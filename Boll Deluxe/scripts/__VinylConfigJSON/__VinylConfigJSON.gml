@@ -148,6 +148,16 @@ global.VinylConfigSON = [
 				sound: snd_hardblockbreak,
 				gain: 0.8
 			},
+			snd_shootblockshoot,
+			{
+				sound: snd_shootblockshoot,
+				gain: 0.5
+			},
+			snd_shootblockbreak,
+			{
+				sound: snd_shootblockbreak,
+				gain: 0.5
+			},
 			snd_enemycannon, //hazards
 			{
 				sound: snd_enemycannon,

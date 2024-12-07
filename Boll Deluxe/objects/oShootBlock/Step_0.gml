@@ -4,6 +4,10 @@ if (goDirection != 0) {
 	y += goDirection*3;
 	image_index = ternary(goDirection, 1, 2);
 	
+	if !on_screen_xy(32,32) {
+		instance_destroy();
+	}
+	
 	if check_collision_line(bbox_left+1,y+(sprite_height/2)*goDirection,bbox_right-1,y+(sprite_height/2)*goDirection,COL_TOP,oCollider) {
 		var blocklist=ds_list_create();
 		var num=collision_line_list(bbox_left+1,y+(sprite_height/2)*goDirection,bbox_right-1,y+(sprite_height/2)*goDirection,oHittable, false, true, blocklist, true)
@@ -20,8 +24,8 @@ if (goDirection != 0) {
 		
 		ds_list_destroy(blocklist);
 		
+		VinylPlay(snd_shootblockbreak)
 		instance_create(x,y+(sprite_height/2)*goDirection,pImpact)
-		VinylPlay(snd_blockbreak)
 		instance_destroy();
 		var j=instance_create(x-4,y+4,pDestruction) with(j){image_index=7 hspeed=-1 vspeed=-2} //bottom left
 		var j=instance_create(x+4,y+4,pDestruction) with(j){image_index=7 hspeed=1 vspeed=-2} //bottom right

@@ -11,6 +11,7 @@ blockHit.Connect(self, function() {
 
 blockBumpFinished.Connect(self, function(){
 	if (hit != 0) && (!goDirection) {
+		VinylPlay(snd_shootblockshoot);
 		goDirection=hit
 		no_collide=true;
 		no_path_follow=true;
