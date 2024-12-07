@@ -13,7 +13,6 @@ if (y != yprevious) { //same thing applies here
 	ydiff = y / (room_height - RESOLUTION_Y);
 	layer_y(sky_layer,y)
 	layer_y(clouds_layer,y+54)
-	layer_y(clouds3d_layer,-16)
 	layer_y(hills_layer,room_height-120)
 	layer_y(hills2_layer,room_height-80)
 }
