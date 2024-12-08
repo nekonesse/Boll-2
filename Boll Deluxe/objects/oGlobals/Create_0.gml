@@ -581,6 +581,8 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_function_add("get_fps", function() { return fps; }, 0);
 		txr_function_add("get_fps_real", function() { return fps_real; }, 0);
 		txr_function_add("get_timer", get_timer, -1);
+		txr_function_add("get_spriteindex", get_spriteindex, -1);
+		txr_function_add("get_spritenum", get_spritenum, -1);
 	#endregion
 	
 	#region Player Functions

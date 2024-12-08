@@ -121,7 +121,7 @@ function config_getarray(_sett, dir) {
 	file_text_close(File);
 }
 
-function get_spriteindex() { //returns the array index of the player's current sprite
+function get_spriteindex() { //returns the sprite name of the player's current sprite
 	var ind=0;
 	for (var i = 0; i < array_length(spriteEvents); ++i) {
 	    if (spriteEvents[i]==spriteEvent) {
@@ -143,6 +143,10 @@ function get_spriteindex() { //returns the array index of the player's current s
 	}
 	
 	return spr
+}
+
+function get_spritenum(sprite_event) { //returns the array index of the player's current sprite
+	return array_get_index(global.player_spritelists[pNum], ds_map_find_value(spriteMap,string(size)+" "+string(sprite_event)))
 }
 
 function get_size() { //returns the array index of the player's current sprite
@@ -263,6 +267,7 @@ function init_player() { //make this load animation data later
 	alpha=1;
 	top_margin=120;
 	dy=0;
+	oldSpriteEvent="idle";
 	show_debug_message(spriteEvents)
 	
 	
@@ -306,6 +311,7 @@ function animate_player() {
 	//animation manager specifically for player characters
 	
 	oldspr=get_spriteindex()
+	oldSpriteEvent=spriteEvent;
 
 	txr_exec(global.scripts[? $"{charmName}_draw"]);
 	
@@ -316,7 +322,10 @@ function animate_player() {
 	
 	var spri=array_get_index(global.player_spritelists[pNum], ds_map_find_value(spriteMap,$"{size} {spriteEvent}"))
 	
-	if (get_spriteindex()!=oldspr) {
+	var myspr=get_spriteindex()
+	if myspr=-1 myspr=oldspr
+	
+	if (myspr!=oldspr) {
 		frame=0
 		show_debug_message(ds_map_find_value(spriteMap,$"{size} {spriteEvent}"))
 		show_debug_message(spri)
@@ -341,6 +350,8 @@ function animate_player() {
 			}
 		}
 	}
+	
+	txr_exec(global.scripts[? $"{charmName}_upd_frame"]);
 }
 
 function finish_death() {

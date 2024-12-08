@@ -1,5 +1,5 @@
 #define datalist
-spriteEvents=split_string("idle,walk,run,wait,lookUp,crouch,victory,hurt,dead,brake,jump,fall,bonk,runJump,runJumpFall,doubleJump,doubleJumpFall,doubleJumpBonk,wallSlide,wallJump,groundPound,groundPoundFall,slopeSlide,carryIdle,carryWalk,carryRun,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,roll,swim,swimPaddle,carrySwim,carryPaddle,spinJump,pushing,balancing,dive,bellySlide,fireToss,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
+spriteEvents=split_string("idle,walk,run,wait,lookUp,crouchIdle,crouchWalk,crouchJump,crouchFall,crouchFireToss,crouchBonk,crouchFireToss,victory,hurt,dead,brake,jump,fall,bonk,runJump,runJumpFall,doubleJump,doubleJumpFall,doubleJumpBonk,wallSlide,wallJump,groundPound,groundPoundFall,slopeSlide,carryIdle,carryWalk,carryRun,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,roll,swim,swimPaddle,carrySwim,carryPaddle,spinJump,pushing,balancing,dive,bellySlide,fireToss,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
 sound_list=split_string("select,damage,die,jump,win,step,bonk",",");
 
 #define create
@@ -20,6 +20,7 @@ groundpound_land=false;
 pounding_block = false;
 walljump = false;
 firing = 0;
+crouch = false;
 
 #define stop
 hsp = 0;
@@ -44,12 +45,13 @@ switch (size) {
 	} break
 	default: {
 		can_break_bricks=true
-		hit_sizey = 12
+		if !(crouch) hit_sizey = 12
+		else hit_sizey = 6
 	} break
 }
 
 if (braking) xsc=brakedir
-maxspd = 2 + runvar + ((size != "basic") * 0.5);
+maxspd = 2 + runvar + ((size != "basic" && !crouch) * 0.5) - (1.25*crouch);
 
 #region PreventMovement
 var no_move_prev = no_move;
@@ -79,7 +81,7 @@ if ((alarm_get(0) > 0) && (grounded)) {
 if (state == "" || state == "jump") && !piped && !electrocuted && !electrocution_timer {
 	grav = defaultgrav;
 	
-	if (bkey) {
+	if (bkey) && !(crouch) {
 		run=1.5;
 	} else {
 		run = 0;
@@ -114,6 +116,10 @@ if (state == "" || state == "jump") && !piped && !electrocuted && !electrocution
 			chsp = 0;
 		}
 	} else {
+		if (state == "") && (down) && !(piped) {
+			crouch=true;
+		} else crouch = false
+		
 		hurt = false
 		canjump = 5;  // Coyote frames
 		runjump = 0;
@@ -122,7 +128,7 @@ if (state == "" || state == "jump") && !piped && !electrocuted && !electrocution
 		player_slide(12.5, 0.225, 0.32, false);
 		
 		//temp skidding
-		if (sign(gsp)!=esign(move,xsc)) {
+		if (sign(gsp)!=esign(move,xsc)) && !(crouch) {
 			if (abs(hsp)>2 && !carry && !skidding) {
 				skidding=1
 				//playsfx(name+"skid",1)
@@ -138,7 +144,6 @@ if (state == "") && !(hurt) {
 	canstopjump = false
 	if (!abs(sign(colslope)) && (abs(hsp) < 0.25)){
 		slopesliding = 0
-		crouch = 0
 	}
 }
 
@@ -216,7 +221,6 @@ if (state == "pound") && !piping {
 #region Jumping
 if (state == "jump" || state == "") && !(grounded) && !piped {
 	slopesliding = 0
-	crouch = 0
 	if (!akey && vsp < -2 && !canstopjump) //Make player jump lower when jump is released
 	{
 		vsp *= 0.6;
@@ -233,7 +237,7 @@ if (state == "jump" || state == "") && !(grounded) && !piped {
 		steep_slope = false;
 	}
 	
-	if (move != 0) {
+	if (move != 0) && !(crouch) {
 		//wall sliding
 		var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
 		if (!grounded) && (coll) && (vsp > 0){
@@ -242,7 +246,7 @@ if (state == "jump" || state == "") && !(grounded) && !piped {
 	}
 }
 
-if (state == "" && apress && canjump > 0) && !piped {
+if ((state == "" || state=="crouch") && apress && canjump > 0) && !piped {
 	state = "jump"
 	grounded = false
 	vsp = -(5.25+min(1,abs(hsp)/10)+(bool(poundjump)+0.5)); //preform the actual jump
@@ -343,22 +347,34 @@ grow = max(0, (grow - 1));
 frspd=1
 
 if (state == "") {
-	if (ceil(abs(hsp))>3) spriteEvent="run"
-	else if !(round(abs(hsp))) {
-		spriteEvent="idle"
-	}
-	else {
-		frspd=abs(hsp)/4
-		spriteEvent="walk"
+	if !(crouch) {
+		if (ceil(abs(hsp))>3) {
+			spriteEvent="run"
+		}
+		else if !(round(abs(hsp))) {
+			spriteEvent="idle"
+		}
+		else {
+			frspd=abs(hsp)/4
+			spriteEvent="walk"
+		}
+	} else {
+		if (abs(hsp) < 0.25) {
+			spriteEvent="crouchIdle"
+		}
+		else {
+			spriteEvent="crouchWalk"
+		}
 	}
 	
 	if (!grounded) {
-		if (vsp>0) spriteEvent="fall"
+		if (vsp>0) {
+			if !(crouch)  spriteEvent="fall"
+			else spriteEvent="crouchFall"
+		}
 	}
 	
-	if (crouch) spriteEvent="crouch"
-	
-	if (skidding) {
+	if (skidding) && !(crouch) {
 		spriteEvent="brake" 
 		xsc = -(skiddir)
 	}
@@ -373,10 +389,17 @@ if (state == "") {
 }
 
 if (state == "jump") {
-	spriteEvent="jump"
-	if (vsp>0) spriteEvent="fall"
-	if (runjump) spriteEvent="runJump"
-	if (bonk) spriteEvent="bonk"
+	if !(crouch)  spriteEvent="jump"
+	else spriteEvent="crouchJump"
+	if (vsp>0) { 
+		if !(crouch)  spriteEvent="fall"
+		else spriteEvent="crouchFall"
+	}
+	if (runjump) && !(crouch) spriteEvent="runJump"
+	if (bonk) {
+		if !(crouch)  spriteEvent="bonk"
+		else spriteEvent="crouchBonk"
+	}
 }
 
 if (state == "pound") {
@@ -388,7 +411,9 @@ if (state == "wallslide") {
 }
 
 if (firing) {
-	spriteEvent="fireToss"
+	if !(crouch) {
+		spriteEvent="fireToss"
+	} else spriteEvent="crouchFireToss"
 }
 
 if (hurt) {
@@ -403,7 +428,13 @@ if (electrocuted) {
 }
 #endregion
 
-//chopp: to handle any signals, make sure you define the code here with the same name 
+#define upd_frame
+if spriteEvent=="crouchIdle" {
+	if oldSpriteEvent=="crouchWalk" || oldSpriteEvent=="crouchJump" || oldSpriteEvent=="crouchFall" || oldSpriteEvent=="crouchBonk" || oldSpriteEvent=="crouchFireToss" {
+		var spri = get_spritenum(spriteEvent)
+		frame = loops_list[spri]-1
+	}
+}
 
 #define on_kill
 playsfx(charmName+"die")
