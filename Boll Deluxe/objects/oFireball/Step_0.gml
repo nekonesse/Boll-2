@@ -1,5 +1,4 @@
-y+=vsp
-x+=hsp
+vsp=min(vsp+grav,4)
 
 image_xscale=esign(hsp,1)
 
@@ -10,9 +9,9 @@ if !on_screen(32,32) {
 	}
 }
 
-player_collision(false);
+//player_collision(false);
 
-if check_collision_line(x+hit_sizex+hsp,y-hit_sizey+1,x+hit_sizex+hsp,y+hit_sizey-1,COL_WALL) || check_collision_line(x-hit_sizex+hsp,y-hit_sizey+1,x-hit_sizex+hsp,y+hit_sizey-1,COL_WALL) {
+if check_collision_line(x-hit_sizex,y,x+hit_sizex,y,COL_WALL) {
 	if (owner!=-1) {
 		owner.has_fired-=1;
 	}
@@ -20,11 +19,12 @@ if check_collision_line(x+hit_sizex+hsp,y-hit_sizey+1,x+hit_sizex+hsp,y+hit_size
 	instance_destroy();
 }
 
-if (grounded) {
-	grounded=false;
+if check_collision_dot(x,y+hit_sizey, COL_BOTTOM) {
 	vsp=-2;
-} else {
-	vsp=min(vsp+grav,4)
+}
+
+while check_collision_dot(x,y+hit_sizey, COL_BOTTOM) {
+	y--	
 }
 
 
@@ -39,3 +39,6 @@ if check_hitbox_on_hitbox(id,instance_nearest(x,y,oEnemy)) {
 	instance_create_depth(x+hsp,y,0,pFireballExplosion)
 	instance_destroy();
 }
+
+y+=vsp
+x+=hsp
