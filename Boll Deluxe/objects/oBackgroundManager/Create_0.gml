@@ -23,6 +23,8 @@ layer_background_htiled(hills2_bg,true)
 layer_background_visible(hills2_bg,true)
 
 var tile_layer_3d = function() {
+	if !surface_exists(oBackgroundManager.clouds_3d_surface) exit
+	
 	surface_set_target(oBackgroundManager.clouds_3d_surface)
 	shader_set(shd_mode7Ceiling);
 	draw_clear_alpha(c_black, 0);
@@ -53,6 +55,7 @@ var tile_layer_shader_reset = function() {
 	shader_reset();
 	surface_reset_target();
 	
+	if surface_exists(oBackgroundManager.clouds_3d_surface)
 	draw_surface(oBackgroundManager.clouds_3d_surface,oBackgroundManager.x,oBackgroundManager.y-16)
 }
 

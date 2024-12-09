@@ -41,7 +41,7 @@ function player_interactions(){
 						hittable.blockHit.Emit(1, id);
 						grounded=false;
 						canstopjump = true
-						vsp=-4-akey*1.5
+						vsp=-5-akey*1.5
 					}
 				}
 			}
