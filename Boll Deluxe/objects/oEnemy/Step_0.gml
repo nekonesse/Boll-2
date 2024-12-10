@@ -1,4 +1,4 @@
-if global.paused || inactive && (object_index!=oBulletBill && object_index!=oBanzaiBill) exit
+if global.paused && (object_index!=oBulletBill && object_index!=oBanzaiBill) exit
 
 //grounded=false
 
@@ -33,7 +33,7 @@ if (enemycoll) {
 
 	if !(no_interaction) && (coll != noone && object_get_parent(coll.object_index) == oEnemy) { 
 		// i will eat my shoes. make sure the object is an enemy before checking variables that not enemies dont have
-		if !(coll.no_interaction) && !(coll.inactive) && !(flipped) {
+		if !(coll.no_interaction) && !(flipped) {
 			flipped = 1;
 			_direction *= -1;
 			turning = 10;
@@ -79,4 +79,4 @@ y += vsp
 
 player_collision();
 
-if gsp != 0 xsc=-esign(gsp,-1)
+if gsp != 0 && (hp > 0) xsc=-esign(gsp,-1)

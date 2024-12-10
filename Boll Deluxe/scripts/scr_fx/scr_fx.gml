@@ -47,7 +47,7 @@ function draw_1up_text(obj, spr = spr_p1UP)
 
     with(obj)
     {
-        in_view = on_screen()
+        in_view = on_screen_xy()
     }
 
     if (in_view)
@@ -105,7 +105,7 @@ function fx_1up_sparkles(obj, spr = spr_pSparkles1UP)
     // hack for in_view
     with(obj)
     {
-        in_view = on_screen()
+        in_view = on_screen_xy()
     }
 
     // init draw vals

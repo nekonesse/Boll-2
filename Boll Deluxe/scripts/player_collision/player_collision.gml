@@ -128,7 +128,7 @@ function player_collision(shoveOutOfWalls=true){
 				VinylPlay(snd_blockbump)
 				sig.Emit("ceil_bonk")
 				var _list = ds_list_create();
-				var _num = collision_line_list(posx-(hit_sizex-1), posy-(hit_sizey+1)+vsp, posx+(hit_sizex-1), posy-(hit_sizey+1)+vsp, oHittable, false, true, _list, true);
+				var _num = collision_line_list(posx-(hit_sizex), posy-(hit_sizey+1)+vsp, posx+(hit_sizex), posy-(hit_sizey+1)+vsp, oHittable, false, true, _list, true);
 				if (_num > 0) {
 					for (var i = 0; i < _num; ++i;) {
 						with(_list[| i]) if !(no_hit) {

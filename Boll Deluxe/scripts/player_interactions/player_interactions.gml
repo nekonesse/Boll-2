@@ -26,7 +26,7 @@ function player_interactions(){
 	}
 	
 	var list=ds_list_create();
-	var num=collision_line_list(x-(hit_sizex-1),y+hit_sizey+1,x+(hit_sizex-1),y+hit_sizey+1, oHittable, false, true, list, true)
+	var num=collision_line_list(x-(hit_sizex),y+hit_sizey+1,x+(hit_sizex),y+hit_sizey+1, oHittable, false, true, list, true)
 	if (num > 0) {
 		var totaldy=0;
 		for (var i = 0; i < num; ++i) {

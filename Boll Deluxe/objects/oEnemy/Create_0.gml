@@ -26,7 +26,6 @@ no_dam = false;
 colangle = 0
 phase_leeway = 10;
 
-inactive=0;
 phaseid=noone;
 turned=0;
 turning=0;
@@ -81,7 +80,8 @@ enemyFireballed.Connect( self, function(proj, hit_p) {
 	VinylPlay(snd_enemykick)
 	hp-=1
 	instance_create_depth(proj.x,proj.y,2,pImpact)
-	killhsp=esign(proj.hsp,1)
+	killhsp=1
+	xsc=esign(proj.hsp, xsc)
 	killtype="spin"
 });
 

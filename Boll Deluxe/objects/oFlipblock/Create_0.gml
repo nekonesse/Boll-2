@@ -6,7 +6,6 @@ bbox_mem = [bbox_left,bbox_right,bbox_top,bbox_bottom];
 
 blockHit.Connect( self, function(hit_p, obj) {
     
-	event_inherited()
 	flip_time = 300;
 	image_speed = abs(hit);
 	show_debug_message("boing2")

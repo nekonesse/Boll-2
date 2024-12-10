@@ -13,6 +13,7 @@ no_hit = false;
 default_depth = 1;
 amount=1; // the amount of items to hold
 no_path_follow=false;
+lose_amount=false;
 
 image_normal = sprite_index
 image_hit = sprite_index

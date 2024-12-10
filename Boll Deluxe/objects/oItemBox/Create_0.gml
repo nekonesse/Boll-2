@@ -2,6 +2,7 @@ event_inherited();
 hitted=0;
 content="coin"
 bricked=false;
+lose_amount=true;
 
 
 if content=="multicoins" amount=12

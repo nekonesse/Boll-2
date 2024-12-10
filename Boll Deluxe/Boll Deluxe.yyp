@@ -256,6 +256,7 @@
     {"$GMIncludedFile":"","%Name":"carryfall.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"carryfall.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"carryjump.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"carryjump.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"carrylookup.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"carrylookup.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"carrystand.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"carrystand.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"carrywalk.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"carrywalk.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"climbing.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"climbing.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"crouch.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"crouch.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

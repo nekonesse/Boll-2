@@ -1,4 +1,4 @@
-if global.paused || inactive exit
+if global.paused exit
 
 no_dam = false
 

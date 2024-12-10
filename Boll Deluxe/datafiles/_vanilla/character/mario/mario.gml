@@ -172,7 +172,7 @@ if (state == "pound") && !piping {
 	//hittable block collision
 	if (grounded) && (pound_timer <= 0) {
 		var blocklist=ds_list_create();
-		var num=collision_line_list(x-(hit_sizex-1),y+hit_sizey+vsp+2,x+(hit_sizex-1),y+hit_sizey+vsp+2,oHittable, false, true,blocklist, true)
+		var num=collision_line_list(x-hit_sizex,y+hit_sizey+vsp+2,x+hit_sizex,y+hit_sizey+vsp+2,oHittable, false, true, blocklist, true)
 		
 		found_block=false;
 		if (num > 0) {

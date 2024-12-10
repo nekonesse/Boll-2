@@ -1,5 +1,5 @@
 /// @description Jumping from ledges
-if (global.paused || inactive) exit;
+if (global.paused) exit;
 
 if (turned) {
 	hsp = -hsp //undo turn

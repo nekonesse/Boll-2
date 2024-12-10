@@ -22,8 +22,10 @@ if (hit != 0)
 				hitNegative = true;
 		} else {
 			blockBumpFinished.Emit();
-			amount=max(amount-1,0);
-			if !(amount) {
+			if (lose_amount) {
+				amount=max(amount-1,0);
+			}
+			if !(amount) || !(lose_amount) {
 				blockFinished.Emit();
 			} else {
 				sprite_index = image_normal;	
