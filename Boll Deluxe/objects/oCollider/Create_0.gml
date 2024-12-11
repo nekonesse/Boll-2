@@ -1,5 +1,6 @@
 no_collide = false;
 semi = false;
+ceiling_only = false;
 slope = false;
 rounded = false;
 x_diff = 0;

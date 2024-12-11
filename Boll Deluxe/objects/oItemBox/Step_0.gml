@@ -2,9 +2,9 @@ event_inherited();
 
 if (hidden) {
 	visible = 0;
-	no_collide = 1
+	ceiling_only = 1
 } else {
-	no_collide = 0	
+	ceiling_only = 0	
 }
 
 if (going) {
