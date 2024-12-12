@@ -1085,6 +1085,7 @@
     {"name":"spr_playermask","order":5,"path":"sprites/spr_playermask/spr_playermask.yy",},
     {"name":"spr_pMysteryparticles","order":7,"path":"sprites/spr_pMysteryparticles/spr_pMysteryparticles.yy",},
     {"name":"spr_pRunDust","order":5,"path":"sprites/spr_pRunDust/spr_pRunDust.yy",},
+    {"name":"spr_pSlimeDrop","order":11,"path":"sprites/spr_pSlimeDrop/spr_pSlimeDrop.yy",},
     {"name":"spr_pSparkles1UP","order":2,"path":"sprites/spr_pSparkles1UP/spr_pSparkles1UP.yy",},
     {"name":"spr_pylom_b","order":1,"path":"sprites/spr_pylom_b/spr_pylom_b.yy",},
     {"name":"spr_pylomlog","order":2,"path":"sprites/spr_pylomlog/spr_pylomlog.yy",},

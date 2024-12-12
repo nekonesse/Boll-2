@@ -1,0 +1,1 @@
+draw_sprite(sprite_index, sprite, x div 1, y div 1)

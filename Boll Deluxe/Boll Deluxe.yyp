@@ -1476,6 +1476,7 @@
     {"id":{"name":"spr_playermask","path":"sprites/spr_playermask/spr_playermask.yy",},},
     {"id":{"name":"spr_pMysteryparticles","path":"sprites/spr_pMysteryparticles/spr_pMysteryparticles.yy",},},
     {"id":{"name":"spr_pRunDust","path":"sprites/spr_pRunDust/spr_pRunDust.yy",},},
+    {"id":{"name":"spr_pSlimeDrop","path":"sprites/spr_pSlimeDrop/spr_pSlimeDrop.yy",},},
     {"id":{"name":"spr_pSmoke","path":"sprites/spr_pSmoke/spr_pSmoke.yy",},},
     {"id":{"name":"spr_pSparkles1UP","path":"sprites/spr_pSparkles1UP/spr_pSparkles1UP.yy",},},
     {"id":{"name":"spr_pylom_b","path":"sprites/spr_pylom_b/spr_pylom_b.yy",},},
