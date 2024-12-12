@@ -1367,6 +1367,7 @@
     {"id":{"name":"spr_cameraboundary","path":"sprites/spr_cameraboundary/spr_cameraboundary.yy",},},
     {"id":{"name":"spr_cameraregion","path":"sprites/spr_cameraregion/spr_cameraregion.yy",},},
     {"id":{"name":"spr_chainsaw","path":"sprites/spr_chainsaw/spr_chainsaw.yy",},},
+    {"id":{"name":"spr_checkpoint_hit","path":"sprites/spr_checkpoint_hit/spr_checkpoint_hit.yy",},},
     {"id":{"name":"spr_checkpoint","path":"sprites/spr_checkpoint/spr_checkpoint.yy",},},
     {"id":{"name":"spr_coin","path":"sprites/spr_coin/spr_coin.yy",},},
     {"id":{"name":"spr_coincollect","path":"sprites/spr_coincollect/spr_coincollect.yy",},},
