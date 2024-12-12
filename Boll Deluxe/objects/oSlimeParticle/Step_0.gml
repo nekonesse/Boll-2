@@ -8,7 +8,7 @@ if (vMove && global.roomTimer & 0b11 == 0) {
 }
 
 if (place_meeting(x, y + vsp, oCollider) && vsp > 0) {
-	vsp = floor(-vsp * 0.5)
+	vsp = floor(-vsp div 2)
 	sprite += 1
 }
 if place_meeting(x+hsp, y, oCollider) {
