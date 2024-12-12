@@ -21,7 +21,7 @@ if (state = 1) {
 		vsp = 0
 		timer_offset = 90
 		y = col.bbox_top - 15
-		VinylPlay(snd_enemyexplode,false,1,1)
+		VinylPlay(snd_enemyexplode)
 	}
 } else if (state = 2) {
 	if !timer_offset {
