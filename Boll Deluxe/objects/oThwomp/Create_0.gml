@@ -1,6 +1,6 @@
-state = -1
-vsp = 0
-hsp = 0
-dir = 0
-timer_offset = 90
-buffer = [0,0]
+// Inherit the parent event
+event_inherited();
+
+state = 0
+frame = 0
+timer_offset = 0

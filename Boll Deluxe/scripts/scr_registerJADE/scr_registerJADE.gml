@@ -87,7 +87,7 @@ function JADE_initializeobj() {
 	registerobj(object_get_name(oKoopaYellow), spr_koopawalk_y, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oKoopaYellow"))
 	registerobj(object_get_name(oAmp), spr_amp, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oAmp"), true)
 	registerobj(object_get_name(oSlime), spr_slime_editor, -65, -85, 130, 85, false, false, OBJECT_MODE, 1, object_get_properties("oSlime"))
-	registerobj(object_get_name(oThwomp), spr_goombastomped, 4, 7, 8, 14, false, false, OBJECT_MODE, 1, object_get_properties("oThwomp"))
+	registerobj(object_get_name(oThwomp), spr_thwomp, 4, 7, 8, 14, false, false, OBJECT_MODE, 1, object_get_properties("oThwomp"))
 	
 	registerobj(object_get_name(oCoin), spr_coin, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oCoin"), true)
 	registerobj(object_get_name(oMushroom), spr_mushroom, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oMushroom"), true)

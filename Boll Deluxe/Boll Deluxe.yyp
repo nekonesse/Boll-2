@@ -1508,6 +1508,7 @@
     {"id":{"name":"spr_thunderflower","path":"sprites/spr_thunderflower/spr_thunderflower.yy",},},
     {"id":{"name":"spr_thunderflowerJADE","path":"sprites/spr_thunderflowerJADE/spr_thunderflowerJADE.yy",},},
     {"id":{"name":"spr_thunderflowerpal","path":"sprites/spr_thunderflowerpal/spr_thunderflowerpal.yy",},},
+    {"id":{"name":"spr_thwomp","path":"sprites/spr_thwomp/spr_thwomp.yy",},},
     {"id":{"name":"spr_TilesetAnimated4","path":"sprites/spr_TilesetAnimated4/spr_TilesetAnimated4.yy",},},
     {"id":{"name":"spr_TilesetAnimated8","path":"sprites/spr_TilesetAnimated8/spr_TilesetAnimated8.yy",},},
     {"id":{"name":"spr_TilesetExtra","path":"sprites/spr_TilesetExtra/spr_TilesetExtra.yy",},},

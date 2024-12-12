@@ -1,22 +1,38 @@
 var col = noone;
 if (state = 0) {
-	if collision_rectangle(x-40,y,x+40,y+512,oPlayer,true,true) {
+	
+	frame = 0
+	
+	if collision_rectangle(x-90,y,x+90,y+255,oPlayer,false,true) {
+		frame = 1
+	}
+	
+	if collision_rectangle(x-40,y,x+40,y+255,oPlayer,false,true) {
+		frame = 2
 		state = 1
 	}
-} else if (state = 1) {
-	vsp = approach_val(vsp, 5, 0.5)
-	col = instance_place(x,y+vsp,oCollider)
+}
+
+if (state = 1) {
+	vsp = clamp(vsp + 0.25, 0, 4)
+	col = instance_place(x, y+vsp, oCollider)
 	if col {
 		state = 2
 		vsp = 0
 		timer_offset = 90
-		y = col.bbox_top - (sprite_height div 2)
-		VinylPlay(snd_enemycannon)
+		y = col.bbox_top - 15
+		VinylPlay(snd_enemyexplode,false,1,1)
 	}
 } else if (state = 2) {
 	if !timer_offset {
-		y = approach_val(y,ystart,1)
+		y = approach_val(y, ystart, 1)
+		frame = 0
+		if (y == ystart) {
+			state = 0
+		}
+		exit;
 	}
 	timer_offset -= 1
-	if (y == ystart) {state = 0}
 }
+
+y += vsp
