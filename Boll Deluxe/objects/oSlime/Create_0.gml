@@ -41,6 +41,11 @@ init = function()
 	morph_max_width = 0;
 	morph_top = 0;
 	sine = 0;
+	
+	eye_frame = 2;
+	eye_blinktime = 0;
+	eye_opentime = 0;
+	eyes_visible = false;
 
 	grounded = 0;
 
@@ -50,7 +55,7 @@ init = function()
 	{
 		// start off moving around
 		//SlimeSpawnEyes(self);
-		//eyes.visible = false;
+		eyes_visible = true;
 		action_state = 8;
 	
 		if (spawn_huge)
@@ -68,6 +73,3 @@ eyedestx = 0;
 eyedesty = 0;
 active = false;
 ready = false;
-
-last_delta_2 = 0;
-cur_delta_2 = 0;

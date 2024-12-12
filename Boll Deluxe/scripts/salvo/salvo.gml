@@ -1767,7 +1767,8 @@ function SlimeDefend(obj)
     }
 }
 
-function SlimeSpawnEyes(obj)
+// !!DEPRECATED, REMOVE!!
+/*function SlimeSpawnEyes(obj)
 {
     var new_eyes;
     if (obj.eyes)
@@ -1786,7 +1787,7 @@ function SlimeSpawnEyes(obj)
         obj.eyes_id = new_eyes.id;
         new_eyes.sprframe = 2;  // spawn with eyes open
     }
-}
+}*/
 
 
 // case 5: setup boss variant (in our case, the standard variant)
@@ -1808,7 +1809,7 @@ function BOSS_Salvo(obj)
         obj.field_0x1c = (FRACUNIT * 4);
 		obj.action_state++;
 		obj.timer = 32;
-        SlimeSpawnEyes(obj);
+        obj.eyes_visible = true;
 	}
     else if (106 < eyesYDiff)
     {
@@ -1823,7 +1824,7 @@ function BOSS_Salvo(obj)
             obj.field_0x1c = (FRACUNIT * 4);
 			obj.action_state++;
 			obj.timer = 32;
-            SlimeSpawnEyes(obj);
+            obj.eyes_visible = true;
         }
     }
     OBJ_SlimeMain(obj);
@@ -2266,6 +2267,8 @@ function SlimeThinker(obj = self)
     }
 }
 
+// !!DEPRECATED, REMOVE!!
+/*
 function DistanceAngle(xdiff, ydiff)
 {
     var iVar1, iVar2;
@@ -2317,7 +2320,7 @@ function DistanceAngle(xdiff, ydiff)
 
 function GetSinCosFromAngle(angle)
 {
-  var uVar2; /* u32 */
+  var uVar2;
   var cosval, sinval;
   
   show_debug_message(angle);
@@ -2471,3 +2474,4 @@ function SlimeEyeVis(obj = self)
 
     obj.otime++;
 }
+*/
