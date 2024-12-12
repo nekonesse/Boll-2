@@ -1,3 +1,4 @@
+/// @desc deprecated object!!!
 xpos = (x * FRACUNIT) div 1;
 ypos = (y * FRACUNIT) div 1;
 mul = 16;

@@ -1,4 +1,13 @@
+///  @description manage morphing sprites
+global.drawcost = 0;
+global.drawcost_pct = 0;
+
 if instance_exists(oSlime) {
+	var delta_timer = get_timer();
+
+	last_delta = 0;
+	last_delta += delta_timer;
+	
 	shader_set(shd_morphing);
 
 	var _tex = sprite_get_uvs(spr_slime_morphcone, 0);
@@ -20,4 +29,7 @@ if instance_exists(oSlime) {
 	}
 
 	shader_reset();
+	
+	global.drawcost = abs(get_timer() - last_delta);
+	global.drawcost_pct = (global.drawcost / delta_time) * 100;
 }

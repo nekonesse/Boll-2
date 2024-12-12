@@ -10,18 +10,19 @@ if (!hit) {
 		exit;
 	}
 	
+	VinylPlay(snd_checkpoint)
 	
 	var spd = abs(other.x - other.xprevious) //too many speed variables
 	
 	// AAARGH -moster
 	
 	if (spd <= 3) {
-		image_speed = 1.25;
+		image_speed = 1.5;
 	} else if (spd <= 6) {
-		image_speed = 3.25;
+		image_speed = 3.5;
 		spin_amount = 1;
 	} else {
-		image_speed = 5.25;
+		image_speed = 5.5;
 		spin_amount = 2;
 	}
 	

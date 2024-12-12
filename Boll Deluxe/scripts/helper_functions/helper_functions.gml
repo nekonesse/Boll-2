@@ -463,3 +463,20 @@ function call_func_from_table(obj, A, idx)
 
     func(obj);
 }
+
+// gets cost of morphing sprites
+function get_morph_cost()
+{
+	var raw, pct;
+	
+	raw = -1;
+	pct = -1;
+	
+	if (variable_global_exists("drawcost") && variable_global_exists("drawcost_pct"))
+	{
+		raw = global.drawcost;
+		pct = global.drawcost_pct;
+	}
+	
+	return [ raw, pct ];
+}

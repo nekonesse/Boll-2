@@ -32,11 +32,6 @@ else
 	
 }*/
 
-var delta_timer = get_timer();
-
-last_delta_2 = 0;
-last_delta_2 += delta_timer;
-
 if ((global.paused)||(!active)||(!ready))
 {
 	show_debug_message("no.");

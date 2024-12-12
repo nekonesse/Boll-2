@@ -26,40 +26,46 @@ if (global.debug)
 
 }
 
-var eyeposy=y-16
-var eyeposx=x
-var nearplayer=instance_nearest(x,y,oPlayer)
+// only do eye logic if we have to
+if (eyes_visible)
+{
+	var eyeposy=y-16
+	var eyeposx=x
+	var nearplayer=instance_nearest(x,y,oPlayer)
 
-if instance_exists(oPlayer) {
-	var eyetargetx=lengthdir_x(24,point_direction(eyeposx,eyeposy,nearplayer.x,nearplayer.y))
-	var eyetargety=lengthdir_y(12,point_direction(eyeposx,eyeposy,nearplayer.x,nearplayer.y))
-} else {
-	var eyetargetx=0
-	var eyetargety=0
+	if instance_exists(oPlayer) {
+		var eyetargetx=lengthdir_x(24,point_direction(eyeposx,eyeposy,nearplayer.x,nearplayer.y))
+		var eyetargety=lengthdir_y(12,point_direction(eyeposx,eyeposy,nearplayer.x,nearplayer.y))
+	} else {
+		var eyetargetx=0
+		var eyetargety=0
+	}
+
+	eyedestx=lerp(eyedestx,eyetargetx,0.05)
+	eyedesty=lerp(eyedesty,eyetargety,0.05)
+
+	var eye_scale = int64((morph_scale / 65535) * 16);
+	var eye_scale_h = eye_scale div 2;
+
+	var eyelocx=median(-eye_scale,floor(eyedestx),eye_scale)
+	var eyelocy=median(-eye_scale_h,floor(eyedesty),eye_scale_h)
+
+	draw_sprite(
+		spr_slime_eye,eye_frame,
+		floor(eyeposx+eyelocx-6),
+		floor(eyeposy+morph.vis_y+eyelocy)
+	);
+	draw_sprite(
+		spr_slime_eye,eye_frame,
+		floor(eyeposx+eyelocx+2),
+		floor(eyeposy+morph.vis_y+eyelocy)
+	);
 }
-
-eyedestx=lerp(eyedestx,eyetargetx,0.05)
-eyedesty=lerp(eyedesty,eyetargety,0.05)
-
-var eyelocx=median(-16,floor(eyedestx),16)
-var eyelocy=median(-8,floor(eyedesty),8)
-
-draw_sprite(
-	spr_slime_eye,2,
-	floor(eyeposx+eyelocx-6),
-	floor(eyeposy+morph.vis_y+eyelocy)
-);
-draw_sprite(
-	spr_slime_eye,2,
-	floor(eyeposx+eyelocx+2),
-	floor(eyeposy+morph.vis_y+eyelocy)
-);
 
 if (global.debug)
 {
+	// cost estimator
 	draw_set_color(c_red);
-	draw_text(x,y-128,$"(cost)\nthinker: {max(0, cur_delta - last_delta) / 1000}ms ({(max(0, cur_delta - last_delta)) / delta_time * 100}%)"
-				    +$"\nobject: {cur_delta_2 / 1000}ms"
-					+$"\noverall: {(cur_delta_2 / delta_time) * 100}%");
+	draw_text(x,y-128,$"(cost)\nthinker: {max(0, cur_delta - last_delta) / 1000}ms ({(max(0, cur_delta - last_delta)) / delta_time * 100}%)");
 	draw_set_color(c_white);	
 }
