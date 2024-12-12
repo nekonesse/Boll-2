@@ -299,7 +299,6 @@
     {"$GMIncludedFile":"","%Name":"fall.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"fall.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"firetoss.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"firetoss.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"flagpole.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"flagpole.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"groundpound.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"groundpound.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"hang.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"hang.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"hurt.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"hurt.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"jump.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/mario/sprites/big","name":"jump.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
