@@ -955,6 +955,7 @@
     {"name":"shd_pal_swapper","order":2,"path":"shaders/shd_pal_swapper/shd_pal_swapper.yy",},
     {"name":"shd_segaFade","order":2,"path":"shaders/shd_segaFade/shd_segaFade.yy",},
     {"name":"snd_blockbreak","order":1,"path":"sounds/snd_blockbreak/snd_blockbreak.yy",},
+    {"name":"snd_checkpoint","order":8,"path":"sounds/snd_checkpoint/snd_checkpoint.yy",},
     {"name":"snd_enemybigexplode","order":1,"path":"sounds/snd_enemybigexplode/snd_enemybigexplode.yy",},
     {"name":"snd_enemycannon","order":4,"path":"sounds/snd_enemycannon/snd_enemycannon.yy",},
     {"name":"snd_enemycannonfast","order":3,"path":"sounds/snd_enemycannonfast/snd_enemycannonfast.yy",},

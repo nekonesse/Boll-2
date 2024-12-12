@@ -1326,6 +1326,7 @@
     {"id":{"name":"shd_segaFade","path":"shaders/shd_segaFade/shd_segaFade.yy",},},
     {"id":{"name":"snd_blockbreak","path":"sounds/snd_blockbreak/snd_blockbreak.yy",},},
     {"id":{"name":"snd_blockbump","path":"sounds/snd_blockbump/snd_blockbump.yy",},},
+    {"id":{"name":"snd_checkpoint","path":"sounds/snd_checkpoint/snd_checkpoint.yy",},},
     {"id":{"name":"snd_enemybigexplode","path":"sounds/snd_enemybigexplode/snd_enemybigexplode.yy",},},
     {"id":{"name":"snd_enemycannon","path":"sounds/snd_enemycannon/snd_enemycannon.yy",},},
     {"id":{"name":"snd_enemycannonfast","path":"sounds/snd_enemycannonfast/snd_enemycannonfast.yy",},},
