@@ -23,13 +23,14 @@ var guih=display_get_gui_height()
 var tb_length = array_length(toolbar[selected_mode])
 on_list_top = (point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y-20,object_list_area_x+object_list_area_width/3,object_list_area_y) || point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y-20,object_list_area_x+object_list_area_width/3,object_list_area_y))
 on_object_list = (point_in_rectangle(curs_x,curs_y,object_list_area_x-2,object_list_area_y-24,object_list_area_x+object_list_area_width/3,object_list_area_y+object_list_area_height/3) && (show_object_list || object_list_active))
+on_tile_picker = (point_in_rectangle(curs_x,curs_y,tileset_picker_x-2,tileset_picker_y-6,tileset_picker_x + (sprite_get_width(spr_TilesetMain) / (3 / tile_zoom)), tileset_picker_y + (sprite_get_height(spr_TilesetMain) / (3 / tile_zoom))) && (show_tileset))
 if (!on_object_list && object_list_active && show_object_list) on_object_list = keyboard_check_direct(vk_alt)
 
 not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
 &&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
 &&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
 &&!(((on_object_list && show_object_list) || on_list_top) && (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE))
-&&!(show_tileset && selected_mode==TILE_MODE)
+&&(!on_tile_picker && selected_mode==TILE_MODE)
 
 #region Camera Panning
 if (not_on_gui) && (mbmiddle) {
@@ -81,7 +82,7 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 	#endregion
 } else if (selected_mode==TILE_MODE) {
 	var layerdir=keyboard_check_pressed(vk_left) - keyboard_check_pressed(vk_right)
-	if (layerdir != 0) {
+	if (layerdir != 0 && !keyboard_check(vk_alt)) {
 		selected_tile_layer += dir
 		if (selected_tile_layer < 0) {
 			selected_tile_layer = (array_length(tile_layer) - 1)
@@ -563,11 +564,19 @@ if (mbleftrel && selection_box) {
 
 if show_tileset {
 	
-	if (selected_mode = TILE_MODE) {
+	if (dir != 0 && keyboard_check(vk_alt)) {
+		tile_zoom = (tile_zoom == 2 ? 1 : 2)
+			
+		tileset_picker_x = (guiw-((sprite_get_width(spr_TilesetMain) / 3) * tile_zoom)) - 8
+		tileset_picker_y = ((guih/2) - ((sprite_get_width(spr_TilesetMain) / 3) * tile_zoom) /2) - 8
+	}
+		
+	
+	if (selected_mode = TILE_MODE && on_tile_picker) {
 		var tilelapmap = tileset_get_info(tTilesetMain)
 		var t_width = sprite_get_width(spr_TilesetMain)
 		var t_height  = sprite_get_height(spr_TilesetMain)
-		var t_size = 16 * 0.33
+		var t_size = 16 * (0.33 * tile_zoom)
 		if (mbleftpress && !tile_drag) {
 			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
 			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
@@ -816,7 +825,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 					}
 				break;
 				case TILE_MODE:
-					if show_tileset {
+					if show_tileset && on_tile_picker {
 						exit;	
 					}
 					for (var i = 0; i <= tile_sel_width; ++i) {

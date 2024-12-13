@@ -129,17 +129,19 @@ draw_node_x=0;
 draw_node_y=0;
 
 #region tileset picker variables
+var guiw=display_get_gui_width()
+var guih=display_get_gui_height()
+
 show_tileset = false
-tileset_picker_x=250;
-tileset_picker_y=100;
+on_tile_picker = false
+tile_zoom = 1;
+tileset_picker_x = (guiw-(sprite_get_width(spr_TilesetMain) / 3))
+tileset_picker_y = ((guih/2) - (sprite_get_width(spr_TilesetMain) / 3) /2) - 8
 #endregion
 
 object_list = ds_list_create();
 
 #region object list variables
-var guiw=display_get_gui_width()
-var guih=display_get_gui_height()
-
 on_object_list=false
 show_object_list=true
 object_list_active = 1
