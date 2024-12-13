@@ -317,8 +317,10 @@ player_collision();
 post_wall();
 
 if (grounded) {
-	var i = instance_place(x,y+4,oCollider)
-	friction_mult = i.my_friction
+	var i = instance_place(x, y + hit_sizey + 4,oCollider)
+	if !is_undefined(i.my_friction) {
+		friction_mult = i.my_friction;
+	}
 }
 
 if (ceil(abs(hsp))>3 && grounded && state == "") {

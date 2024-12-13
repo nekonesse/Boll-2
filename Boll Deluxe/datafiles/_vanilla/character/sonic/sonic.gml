@@ -9,6 +9,7 @@ no_move = 0;
 //accel = 0.046875
 //fastaccel = 0.5 //deaccel
 //fric = 0.046875
+friction_mult = 1;
 skidding = 0;
 skiddir = 0;
 storedxsc = 1;
@@ -326,11 +327,19 @@ if (state == "roll" && grounded) && !(piped) {
 }
 #endregion
 
+fric = fric * friction_mult;
 	
 player_movement_sonic();
 player_interactions();
 player_collision();
 post_wall();
+
+if (grounded) {
+	var i = instance_place(x, y + hit_sizey + 4,oCollider)
+	if !is_undefined(i.my_friction) {
+		friction_mult = i.my_friction;
+	}
+}
 
 // check to see if we need to update the polybox
 if (sprindex_prev != sprite_index) {
