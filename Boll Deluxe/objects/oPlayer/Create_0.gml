@@ -105,6 +105,9 @@ image_xscale = 1
 image_yscale = 1
 drawStar=false;
 
+// chearii: special case for dealing damage to enemies
+damagespecial = -1;
+
 // boxpoly setup
 setup_box_poly(id);
 
