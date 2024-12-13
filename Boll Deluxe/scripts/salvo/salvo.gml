@@ -210,6 +210,9 @@ function init_slime_data(obj = self)
 	obj.intro_ypos2 = 0;
 	obj.intro_yaccel = 2;
 	obj.intro_yspd = 0;
+	
+	// someone ground pounded on us; this speed tracks how fast
+	obj.crush_vsp = -1;
 
     // we're dead, this is how long it's been for
     obj.deadtime = 0;
@@ -793,7 +796,7 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
 				
 				// resize the debug array if it Exists and is too small
 			    // debug stuff
-				/*if (variable_instance_exists(morph, "debug_col"))
+				if (variable_instance_exists(morph, "debug_col"))
 			    {
 			        if (array_length(morph.debug_col) < (index + 1))
 			        {
@@ -803,9 +806,9 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
 
 			        // log this!!!
 			        morph.debug_col[index] = [ xpos - (morph.x_width div 2),
-											   (read_pos div 2) + yoff,
+											   (read_pos) + yoff,
 											   xpos + (morph.x_width div 2) ];
-			    }*/
+			    }
 
                 // check if there's a collision at this line
                 // enmded up rewriting this because the old system was too jank
@@ -813,11 +816,12 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
 				
 				if (obj.x >= (xpos - (morph.x_width div 2)))
 				&& (obj.x <= (xpos + (morph.x_width div 2)))
+				&& (morph.x_width > 2)
 				{
 					uVar5 = uVar5 + 1;
 					
 					morph.col_width = morph.x_width div 2;
-					morph.col_height = (read_pos div 2);
+					morph.col_height = (read_pos);
 				}
             }
             offset += 2;
@@ -937,11 +941,41 @@ function MorphHandleObjectCollisions(morph, obj)
 
     var collide_p = instance_nearest(obj.x, obj.y, oPlayer);
 	
-	var exceed = max(0, obj.y - (CAMERA_MAX_HEIGHT - 8));
+	var exceed = max(0, (obj.y - camera_y) - (CAMERA_MAX_HEIGHT - 8));
 
     if (collide_p)
     {
+		
+		//show_debug_message("player close");
+		morph.col_height = -1;
         CheckMorphCollision(collide_p, morph, obj.x, exceed);
+		
+		if (morph.col_height > -1)
+		{
+			var hit_height = min(CAMERA_MAX_HEIGHT - 8, morph.col_height + collide_p.hit_sizey);
+			var real_height = max(0, obj.y - (hit_height + exceed + camera_y));
+			
+			var heightpct = max(0, min(100, ((real_height) / (morph.vis_height)) * 100)) div 1;
+			
+			show_debug_message($"hit: {heightpct}");
+			
+			if (heightpct >= 60)
+			&& (collide_p.damagespecial > 0)
+			{
+				if (obj.colflags & COL_FLOOR)
+				{
+					// we're being crushed
+					obj.action_state = 9;
+					obj.crush_vsp = int64(collide_p.damagespecial);
+				}
+				else if (obj.action_state != 6)
+				{
+					// slam us to the ground
+					obj.vsp = collide_p.damagespecial + 0.1125;
+					obj.action_state = 0;
+				}
+			}
+		}
     }
 
     // TODO: rewrite this Whole Mess to use collision_rectangle_list based on a "hitbox" for the
@@ -1928,11 +1962,35 @@ function dummyfunc(obj)
     return 0;
 }
 
+// got crushed by Something
+function SlimeCrushed(obj = self)
+{
+	obj.hsp = 0;
+	obj.height = max(16, obj.height - max(0, int64(obj.crush_vsp * 2)));
+	
+	if (obj.height <= 16)
+	{
+		VinylPlay(snd_popYI,false,0.45,1);
+		// maybe add a spray of particles here?
+		obj.deleteflag = true;	
+	}
+}
+
 globalvar SlimeFuncs;
 
-SlimeFuncs = [SlimeGeneric, Slime_MoveOnGround, SlimeChase, SlimeDefend, SlimeGeneric, BOSS_Salvo,
-                SlimeGeneric, SlimeIntro_Grow, SlimeStartBossBattle, dummyfunc, SlimeHandleDeath,
-                SlimeDoPoof];
+SlimeFuncs = [SlimeGeneric,          // 0
+			  Slime_MoveOnGround,    // 1
+			  SlimeChase,            // 2
+			  SlimeDefend,           // 3
+			  SlimeGeneric,          // 4
+			  BOSS_Salvo,            // 5
+              SlimeGeneric,          // 6
+			  SlimeIntro_Grow,       // 7
+			  SlimeStartBossBattle,  // 8
+			  SlimeCrushed,          // 9
+			  SlimeHandleDeath,      // 10
+              SlimeDoPoof
+			  ];
 
 
 function SlimeMovePlayer(obj)
@@ -1958,7 +2016,7 @@ function SlimeMovePlayer(obj)
         {
             obj.morph.colflags =
                 make_s16((128 * ((obj.facing >> 1) ? -1 : 1)) - obj.camx2 >> 1);
-            if ((2 < make_u16(obj.action_state - 9)) &&
+            if ((2 < make_u16(obj.action_state - 9) && (obj.action_state != 9)) &&
                 ((hsp_frac + (FRACUNIT * 4)) < ((FRACUNIT * 7999) div 1000)))
             {
                 hsp_frac = hsp_frac - obj.morph.colflags;
@@ -2239,7 +2297,7 @@ function SlimeThinker(obj = self)
         make_u16((make_s32((make_s32(obj.height) * make_u32(obj.morph_scale >> 8)) >> 8) )
             * 3 >> 1);
 			
-    if (obj.action_state < 0xc)
+    if (obj.action_state < 12)
     {
         Slime_HandleBGRender(obj);
         SlimeCollisionInteractions(obj);
@@ -2252,9 +2310,9 @@ function SlimeThinker(obj = self)
     if (obj.active)
     {
         action = obj.action_state;
-        if (action != 0xc)
+        if ((action != 12))
         {
-            if (action != 0xd)
+            if (action != 13)
             {
                 SlimeHandleDamage(obj);
             }

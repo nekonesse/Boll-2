@@ -234,8 +234,30 @@ if (variable_instance_exists(self,"intro_ypos2"))
 
 if (deleteflag)
 {
-	
-	instance_create_depth(x,y,depth,pSmoke);
+	if (crush_vsp == -1)
+	{
+		instance_create_depth(x,y,depth,pSmoke);
+	}
+	else
+	{
+		// spray slime particles
+		var part_num = 8;
+		var part_ang = 90;
+		var ang_factor = (part_ang / part_num);
+		var ang_offset = 90 + (part_ang / 2);
+		var new_part;
+		var launchang, phsp, pvsp;
+		
+		for (var i = 0; i < part_num; i++)
+		{
+			launchang = (ang_factor * max(1, i + 1));
+			phsp = (crush_vsp / 2) * cos(degtorad(launchang - ang_offset));
+			pvsp = (crush_vsp / 2) * sin(degtorad(launchang - ang_offset));
+			new_part = instance_create_depth(x, y - 24, depth - 1, pSlimeParticle);
+			new_part.hsp = phsp;
+			new_part.vsp = pvsp;
+		}
+	}
 	
 	instance_destroy();
 }

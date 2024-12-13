@@ -13,6 +13,7 @@ dusttimer = 1;
 skidding = 0;
 skiddir = 0;
 pound_timer = 0;
+pound_severity = -1;
 storedxsc = 1;
 poundjump = 0;
 grow = 0;
@@ -32,6 +33,9 @@ no_move = 1;
 
 //chopp: oops rewriting the entire players script
 #define step
+
+// chearii: pound severity, probably only for slimes tbh
+pound_severity = -1;
 
 //Change hitbox size based on powerup
 //your hitbox is in the center so the hitbox variables should be HALF of the total box size.
@@ -167,6 +171,7 @@ if (state == "pound") && !piping {
 	} else {
 		grav = defaultgrav;
 		vsp = 7;
+		pound_severity = vsp;
 		hsp = 0;
 	}
 	
@@ -348,6 +353,8 @@ firing=max(0,firing-1)
 runvar = approach_val(runvar,run,0.05)
 
 grow = max(0, (grow - 1));
+
+damagespecial = max(0, pound_severity);
 
 #define draw
 

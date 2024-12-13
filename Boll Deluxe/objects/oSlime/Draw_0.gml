@@ -64,6 +64,24 @@ if (eyes_visible)
 
 if (global.debug)
 {
+	var line;
+	if (array_length(morph.debug_col) > 0)
+	{
+		var len = array_length(morph.debug_col);
+		
+		for (var i = 0; i < len; i++)
+		{
+			if (!is_array(morph.debug_col[i]))
+			{
+				continue;	
+			}
+			
+			line = morph.debug_col[i];
+			
+			draw_line(line[0], camera_y + line[1], line[2], camera_y + line[1]);
+		}
+	}
+	
 	// cost estimator
 	draw_set_color(c_red);
 	draw_text(x,y-128,$"(cost)\nthinker: {max(0, cur_delta - last_delta) / 1000}ms ({(max(0, cur_delta - last_delta)) / delta_time * 100}%)");
