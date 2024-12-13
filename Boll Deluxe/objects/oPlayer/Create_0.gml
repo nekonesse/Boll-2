@@ -44,6 +44,7 @@ steep_slope = false
 accel = 0.09375; //how fast you gain speed
 fastaccel = 0.3125; // accel during a turnaround
 fric = 0.0625; //slipperiness
+friction_mult = 1; //multiplier for friction (e.g. ice blocks)
 move=0
 
 xsc=1

@@ -6,6 +6,7 @@ sound_list=split_string("select,damage,die,jump,win,step,bonk",",");
 slopesliding = 0;
 no_move = 0;
 fric = 0.07;
+friction_mult = 1;
 runvar = 0;
 runjump = 0;
 dusttimer = 1;
@@ -302,11 +303,18 @@ if (colangle != 0 && slopesliding) {
 } else {
 	fric = 0.0625;
 }
+
+fric = fric * friction_mult;
 	
 player_movement();
 player_interactions();
 player_collision();
 post_wall();
+
+if (grounded) {
+	var i = instance_place(x,y+4,oCollider)
+	friction_mult = i.my_friction
+}
 
 if (ceil(abs(hsp))>3 && grounded && state == "") {
 	dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
