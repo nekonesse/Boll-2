@@ -30,7 +30,7 @@ not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*
 &&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
 &&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
 &&!(((on_object_list && show_object_list) || on_list_top) && (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE))
-&&(!on_tile_picker && selected_mode==TILE_MODE)
+&&!(on_tile_picker && selected_mode==TILE_MODE)
 
 #region Camera Panning
 if (not_on_gui) && (mbmiddle) {
