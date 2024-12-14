@@ -124,7 +124,7 @@ if (state == "" || state == "jump") && !piped && !electrocuted && !electrocution
 		if (state == "") && (down) && !(piped) {
 			crouch=true;
 		} else {
-			if (!check_collision_line(x-hit_sizex,y-hit_sizey-8,x+hit_sizex,y-hit_sizey-8,COL_TOP) && size!="basic" ) {
+			if (!check_collision_line(x-hit_sizex,y-hit_sizey-8,x+hit_sizex,y-hit_sizey-8,COL_TOP) || size=="basic") {
 				crouch = false
 			}
 		}

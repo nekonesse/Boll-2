@@ -397,6 +397,10 @@ switch (state) {
 	}
 }
 
+if (dropdash && dropdash_timer >= 18) {
+	spriteEvent="dropDash"
+}
+
 if (hurt) {
 	spriteEvent="hurt"
 	if (dead) {
@@ -486,7 +490,7 @@ if (colangle <= 336 && colangle >= 270)
 	}
 }
 
-if (dropdash == 1 && dropdash_timer >= 18) {
+if (dropdash && dropdash_timer >= 18) {
 	stopsfx("sonicdropdash")
 	playsfx("sonicrelease")
 	if (sign(hsp) == move_dir) {

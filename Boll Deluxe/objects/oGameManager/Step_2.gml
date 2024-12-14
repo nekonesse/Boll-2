@@ -3,10 +3,10 @@ if !surface_exists(HUDsurface) {
 }
 
 instance_deactivate_all(true)
-var camx=camera_get_view_x(view_camera[0])-32
-var camy=camera_get_view_y(view_camera[0])-32
-var camwidth=camera_get_view_width(view_camera[0])+64
-var camheight=camera_get_view_height(view_camera[0])+64
+var camx=camera_get_view_x(view_camera[0])-64
+var camy=camera_get_view_y(view_camera[0])-64
+var camwidth=camera_get_view_width(view_camera[0])+128
+var camheight=camera_get_view_height(view_camera[0])+128
 instance_activate_region(camx,camy,camwidth,camheight,true)
 instance_activate_object(oBackgroundManager)
 instance_activate_object(oNodeManager)

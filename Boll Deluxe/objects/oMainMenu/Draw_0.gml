@@ -20,7 +20,7 @@ switch (crMenu) {
 	break;
 	
 	case "levelselectm":
-		var _startStr = "[global.omiFont][fa_center][fa_left]";
+		var _startStr = "[spr_omifont][fa_center][fa_left]";
 		draw_text_scribble(_rmWid/2,16,$"[basicPlaceholderF][fa_center][fa_middle]SELECT LEVEL")
 	
 		_displayOPS = global.levellist;

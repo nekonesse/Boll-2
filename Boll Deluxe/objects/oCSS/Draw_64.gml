@@ -16,7 +16,7 @@ for (var i=0; i<_charCount; i++;) {
 	if (_select=i) {
 		draw_sprite(spr_rostercard,5,_startX+_x,_startY+_y);
 	}
-	draw_text_scribble(_startX+_x, _startY+_y-4, $"[global.omiFont][fa_middle][fa_centre]{_arr[i]}");
+	draw_text_scribble(_startX+_x, _startY+_y-4, $"[spr_omifont][fa_middle][fa_center]{_arr[i]}");
 	
 	_x+=_cardSizeW+_spacing;
 	if ((i+1)%_rowLimit=0) {

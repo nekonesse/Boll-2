@@ -21,7 +21,7 @@ function player_slide(max_speed, slide_influence, steep_influence, do_steep_whil
 		if (abs(hsp) < 0.05) {
 			slopesliding = 0;
 			crouch = false
-			if (!check_collision_line(x-hit_sizex,y-hit_sizey-8,x+hit_sizex,y-hit_sizey-8,COL_TOP) && size!="basic") {
+			if (!check_collision_line(x-hit_sizex,y-hit_sizey-8,x+hit_sizex,y-hit_sizey-8,COL_TOP) || size=="basic") {
 				crouch = false
 			} else crouch = true
 			no_move = 0;
