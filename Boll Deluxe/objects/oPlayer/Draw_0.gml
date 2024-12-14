@@ -32,7 +32,7 @@ if (CollageImageExists(oGameManager.PlayerColl.GetImageInfo(get_spriteindex())))
 }
 
 if (global.debug) {
-	draw_set_font(smallF)
+	draw_set_font(global.omiFont)
 	draw_set_alpha(0.5)
 	draw_rectangle_color(floor(x)-hit_sizex,floor(y)-hit_sizey,floor(x)+hit_sizex,floor(y)+hit_sizey,c_red,c_red,c_red,c_red,false)
 	gpu_set_blendmode(bm_add);

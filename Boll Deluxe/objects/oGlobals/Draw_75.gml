@@ -3,7 +3,7 @@ draw_set_alpha(0.25)
 draw_rectangle_color(0,0,64,256,c_black,c_black,c_black,c_black,false)
 draw_set_alpha(1)
 
-draw_set_font(smallF)
+draw_set_font(global.omiFont)
 var morph_costs = get_morph_cost();
 
 var ext = ""

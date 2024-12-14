@@ -1,5 +1,6 @@
 // Inherit the parent event
 event_inherited();
+can_break_bricks = true;
 
 bumpMax = 5; //highest "up" pos for bumping
 

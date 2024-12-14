@@ -705,6 +705,87 @@ if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 	}
 }
 
+if (mbrightpress && not_on_gui) {
+	switch(selected_tool) {
+		case SELECT_TOOL:
+			switch(selected_mode) {
+				case OBJECT_MODE:
+					for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
+						//is place matching cursor?
+						var obj = ds_list_find_value(object_layer_map, i)
+						if !is_undefined(obj) {
+							var sprite = ds_map_find_value(obj_data,obj[0])
+							var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
+							var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]- 1)
+							if !red_box && white_box { 
+								obj[5] = 1
+								temptypingstring=""
+								is_typing=0;
+								open_dropmenu=0;
+								object_list_active = 0
+								properties_tab_active = 1
+								show_object_list = 1
+								break
+							}
+						}
+					}
+				break;
+				case NODE_MODE:
+					if is_string(selected_obj) {
+						for (var i = 0; i < ds_list_size(node_layer_map); ++i) {
+							//is place matching cursor?
+							var obj = ds_list_find_value(node_layer_map, i)
+							if !is_undefined(obj) {
+								var sprite = ds_map_find_value(obj_data,obj[0])
+								var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
+								var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]- 1)
+								show_debug_message("test")
+								if !red_box && white_box { 
+									obj[5] = 1
+									object_list_active=false
+									properties_tab_active=true
+								} else break
+							}
+						}
+					}
+				break;
+			}
+		break;
+		case BRUSH_TOOL: {
+			switch(selected_mode) {
+				case OBJECT_MODE:
+					var size = ds_list_size(object_layer_map)
+					for (var i = 0; i < size; ++i) {
+						//is place matching cursor?
+						var obj = ds_list_find_value(object_layer_map, i)
+						if !is_undefined(obj) {
+						    if obj[1] == gridx && obj[2] == gridy {
+								ds_list_delete(object_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
+								break;
+							}
+						}
+				
+					}
+				break;
+				case NODE_MODE:
+					var size = ds_list_size(node_layer_map)
+					for (var i = 0; i < size; ++i) {
+						//is place matching cursor?
+						var obj = ds_list_find_value(node_layer_map, i)
+						if !is_undefined(obj) {
+						    if obj[1] == gridx && obj[2] == gridy {
+								ds_list_delete(node_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
+								break;
+							}
+						}
+				
+					}
+				break;
+			}
+		}
+		break;
+	}
+}
 
 if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 		switch(selected_tool) {

@@ -59,7 +59,7 @@ if selected_mode = TILE_MODE {
 	if show_tileset && surface_exists(object_list_area_surface) {
 		//window
 		draw_sprite_stretched(spr_JADEwindow,0,tileset_picker_x-2,tileset_picker_y-6,(sprite_get_width(spr_TilesetMain)/(3 / tile_zoom))+2,(sprite_get_height(spr_TilesetMain)/(3 / tile_zoom))+8)
-		draw_set_font(smallF)
+		draw_set_font(global.omiFont)
 		//window text
 		draw_set_halign(fa_left)
 		draw_text_transformed(tileset_picker_x+2,tileset_picker_y-4,$"tile picker - {layer_get_name(layers[selected_tile_layer])}",0.66,0.66,0)
@@ -126,7 +126,7 @@ if selected_mode == OBJECT_MODE {
 
 			//window
 			draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
-			draw_set_font(smallF)
+			draw_set_font(global.omiFont)
 			//window text
 			var window_name = ["blocks", "baddies", "items", "tech"]
 			draw_set_halign(fa_left)
@@ -170,7 +170,7 @@ if selected_mode == OBJECT_MODE {
 				//draw background rectangle
 				draw_rect(2,(32*i)+2-object_list_scroll_pos[selected_mode][current_cat],object_list_area_width-8,28, color,0.5)
 				//draw object name
-				ScribblejrFit(_str, fa_right, fa_middle, smallF, 3, object_list_area_width-44, 32).Draw(object_list_area_width-6,(32*i)+15-object_list_scroll_pos[selected_mode][current_cat])
+				ScribblejrFit(_str, fa_right, fa_middle, global.omiFont, 3, object_list_area_width-44, 32).Draw(object_list_area_width-6,(32*i)+15-object_list_scroll_pos[selected_mode][current_cat])
 		
 				//draw object sprite
 				var arr=ds_map_find_value(obj_data,_str)
@@ -193,7 +193,7 @@ if selected_mode == OBJECT_MODE {
 		
 			//window
 			draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
-			draw_set_font(smallF)
+			draw_set_font(global.omiFont)
 		
 			//tab text
 			draw_set_halign(fa_center)
@@ -237,14 +237,14 @@ if selected_mode == OBJECT_MODE {
 				//draw object icon
 				draw_sprite_stretched(sprite,0,16,16,64,ysize)
 				//draw object name
-				ScribblejrFit(objname, fa_left, fa_middle, smallF, 3, object_list_area_width-104, 32).Draw(96,48)
+				ScribblejrFit(objname, fa_left, fa_middle, global.omiFont, 3, object_list_area_width-104, 32).Draw(96,48)
 				//draw divider
 				draw_rect(12,96,object_list_area_width-24,3,$65555c,1,false)
 				//we're doing a reverse loop, starting from the bottom to the top so that things like drop down menus can overlay the buttons below
 				for (var i = array_length(proparr[10])-1; i >= 0; --i) {
 					if is_array(proparr[10][i]) { 
 						//draw variable name
-					    ScribblejrFit($"{string(proparr[10][i][1])}:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112+32*i)
+					    ScribblejrFit($"{string(proparr[10][i][1])}:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*i)
 						switch(string(proparr[10][i][3])) {
 							case "checkbox": {
 								if !open_dropmenu {
@@ -257,6 +257,11 @@ if selected_mode == OBJECT_MODE {
 										if (incheck) {
 											show_debug_message(proparr[10][i][2])
 											proparr[10][i][2]=!bool(proparr[10][i][2])
+											var k=1
+											repeat (array_length(properties_group)-1) {
+												properties_group[k][10][i][2]=proparr[10][i][2]
+												k++
+											}
 										}
 									}
 								} else break
@@ -265,7 +270,7 @@ if selected_mode == OBJECT_MODE {
 							case "dropdown": {
 								draw_sprite_stretched(spr_JADEdropdown,0,96+16,(112+32*i)-12,8*20,8*3)
 								//draw selected variable
-								ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, smallF, 2, 160-8, 20).Draw(96+24,(112+32*i)-6)
+								ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, global.omiFont, 2, 160-8, 20).Draw(96+24,(112+32*i)-6)
 
 								//toggle variable
 								var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*i,object_list_area_x+34+56,object_list_area_y+40+(32/3)*i)&&(!open_dropmenu||open_dropmenu-1==i)
@@ -286,13 +291,17 @@ if selected_mode == OBJECT_MODE {
 									    //draw dropdown menus
 										draw_sprite_stretched(spr_JADEdropdown,j == array_length(menuarr)-1 ? 2 : 1,96+16,(112+32*i+24*j)+12,8*20,8*3)
 										//draw list of variables
-										ScribblejrFit(string(menuarr[j]), fa_left, fa_top, smallF, 2, 160-8, 20).Draw(96+24,(112+32*i+24*j)+18)
+										ScribblejrFit(string(menuarr[j]), fa_left, fa_top, global.omiFont, 2, 160-8, 20).Draw(96+24,(112+32*i+24*j)+18)
 										
 										var insubcheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+40+(32/3)*i+8*j,object_list_area_x+34+56,object_list_area_y+48+(32/3)*i+8*j)&&(!open_dropmenu||open_dropmenu-1==i)
 								
 										if (insubcheck) && (mbleftpress) {
 											//set selected object to selected variable
-											proparr[10][i][2]=menuarr[j];
+											var k=0
+											repeat (array_length(properties_group)) {
+											    properties_group[k][10][i][2]=menuarr[j];
+												k++
+											}
 											open_dropmenu=0;
 										}
 									}
@@ -303,9 +312,9 @@ if selected_mode == OBJECT_MODE {
 								if !open_dropmenu {
 									draw_sprite_stretched(spr_JADEnumberinput,0,96+16,(112+32*i)-12,8*3,8*3)
 									if !(is_typing-1==i)
-									ScribblejrFit(string(proparr[10][i][2]), fa_middle, fa_top, smallF, 2, 19, 19).Draw(96+29,(112+32*i)-6)
+									ScribblejrFit(string(proparr[10][i][2]), fa_middle, fa_top, global.omiFont, 2, 19, 19).Draw(96+29,(112+32*i)-6)
 									else
-									ScribblejrFit(temptypingstring, fa_middle, fa_top, smallF, 2, 19, 19).Draw(96+29,(112+32*i)-6)
+									ScribblejrFit(temptypingstring, fa_middle, fa_top, global.omiFont, 2, 19, 19).Draw(96+29,(112+32*i)-6)
 									
 									//check if clicking on box
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*i,object_list_area_x+44,object_list_area_y+40+(32/3)*i)&&(!open_dropmenu||open_dropmenu-1==i)
@@ -319,7 +328,11 @@ if selected_mode == OBJECT_MODE {
 										//if clicking off of the box, finish typing
 										if !(incheck) && (is_typing-1==i) {
 											//set the variable to our typed number, if its blank reset back to the value it was before
-											proparr[10][i][2]=unreal(temptypingstring,proparr[10][i][2])
+											var k=0
+											repeat (array_length(properties_group)) {
+											    properties_group[k][10][i][2]=unreal(temptypingstring,properties_group[k][10][i][2])
+												k++
+											}
 											temptypingstring=""
 											is_typing=0;
 										}
@@ -327,15 +340,38 @@ if selected_mode == OBJECT_MODE {
 									
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
-										proparr[10][i][2]=unreal(temptypingstring,proparr[10][i][2])
+										var k=0
+										repeat (array_length(properties_group)) {
+											properties_group[k][10][i][2]=unreal(temptypingstring,properties_group[k][10][i][2])
+											k++
+										}
 										temptypingstring=""
 										is_typing=0;
 									}
 									
 									if (is_typing-1==i) {
-										//simple typing script for numbers only
-										if string_length(string_digits(keyboard_lastchar)) && keyboard_check_pressed(vk_anykey) {
-											temptypingstring+=string_digits(keyboard_lastchar)
+										//simple typing script
+										if string_length(keyboard_lastchar) && keyboard_check_pressed(vk_anykey) {
+											switch (keyboard_lastkey) { //forbidden keys, these can create unnessecary letters that are unwanted
+												case ord("0"):
+												case ord("1"):
+												case ord("2"): 
+												case ord("3"): 
+												case ord("4"): 
+												case ord("5"): 
+												case ord("6"): 
+												case ord("7"): 
+												case ord("8"): 
+												case ord("9"): 
+												case 190: 
+												case 189: {
+													temptypingstring+=keyboard_lastchar;
+													break;
+												}
+												default: {
+													break;
+												}
+											}
 										}
 										if keyboard_check_pressed(vk_backspace) {
 											temptypingstring=string_copy(temptypingstring,0,string_length(temptypingstring)-1)
@@ -348,9 +384,9 @@ if selected_mode == OBJECT_MODE {
 								if !open_dropmenu {
 									draw_sprite_stretched(spr_JADEstringinput,0,96+16,(112+32*i)-12,96,24)
 									if !(is_typing-1==i)
-									ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, smallF, 2, 90, 19).Draw(96+29,(112+32*i)-6)
+									ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, global.omiFont, 2, 82, 19).Draw(96+24,(112+32*i)-6)
 									else
-									ScribblejrFit(temptypingstring, fa_left, fa_top, smallF, 2, 90, 19).Draw(96+29,(112+32*i)-6)
+									ScribblejrFit(temptypingstring, fa_left, fa_top, global.omiFont, 2, 82, 19).Draw(96+24,(112+32*i)-6)
 									
 									//check if clicking on box
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+11*i,object_list_area_x+133,object_list_area_y+40+11*i)&&(!open_dropmenu||open_dropmenu-1==i)
@@ -363,8 +399,11 @@ if selected_mode == OBJECT_MODE {
 										
 										//if clicking off of the box, finish typing
 										if !(incheck) && (is_typing-1==i) {
-											//set the variable to our typed number, if its blank reset back to the value it was before
-											proparr[10][i][2]=string(temptypingstring)
+											var k=0
+											repeat (array_length(properties_group)) {
+												properties_group[k][10][i][2]=string(temptypingstring)
+												k++
+											}
 											temptypingstring=""
 											is_typing=0;
 										}
@@ -372,27 +411,34 @@ if selected_mode == OBJECT_MODE {
 									
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
-										proparr[10][i][2]=string(temptypingstring)
+										var k=0
+										repeat (array_length(properties_group)) {
+											properties_group[k][10][i][2]=string(temptypingstring)
+											k++
+										}
 										temptypingstring=""
 										is_typing=0;
 									}
 									
 									if (is_typing-1==i) {
 										//simple typing script
-										if string_length(string_lettersdigits(keyboard_lastchar)) && keyboard_check_pressed(vk_anykey) {
+										if string_length(keyboard_lastchar) && keyboard_check_pressed(vk_anykey) {
 											switch (keyboard_lastkey) {
-												case vk_tab:
+												case vk_tab: //forbidden keys, these can create unnessecary letters that are unwanted
 												case vk_backspace:
 												case vk_capslock:
 												case vk_control:
 												case vk_rcontrol:
 												case vk_shift:
 												case vk_rshift:
-												case vk_enter: { //forbidden keys, these can create unnessecary letters that are unwanted
+												case vk_enter:
+												case ord(chr(34)): //quote
+												case ord(chr(92)): { //backslash
 													break;
 												}
 												default: {
-													temptypingstring+=string_lettersdigits(keyboard_lastchar)
+													temptypingstring+=keyboard_lastchar
+													break;
 												}
 											}
 										}
@@ -414,7 +460,7 @@ if selected_mode == OBJECT_MODE {
 			surface_reset_target();
 			
 			//window text
-			draw_set_font(smallF)
+			draw_set_font(global.omiFont)
 			draw_text_transformed(object_list_area_x+2,object_list_area_y-4,$"properties - {objname}",0.66,0.66,0)
 		}
 		
@@ -427,7 +473,7 @@ if selected_mode == OBJECT_MODE {
 		//window
 		draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,8)
 		
-		draw_set_font(smallF)
+		draw_set_font(global.omiFont)
 		draw_set_halign(fa_left)
 		
 		//window text
@@ -481,7 +527,7 @@ if selected_mode == OBJECT_MODE {
 
 			//window
 			draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
-			draw_set_font(smallF)
+			draw_set_font(global.omiFont)
 			
 			//window text
 			draw_set_halign(fa_left)
@@ -526,7 +572,7 @@ if selected_mode == OBJECT_MODE {
 				//draw background rectangle
 				draw_rect(2,(32*i)+2-object_list_scroll_pos[selected_mode][current_cat],object_list_area_width-8,28, color,0.5)
 				//draw object name
-				ScribblejrFit(_str, fa_right, fa_middle, smallF, 3, object_list_area_width-44, 32).Draw(object_list_area_width-6,(32*i)+15-object_list_scroll_pos[selected_mode][current_cat])
+				ScribblejrFit(_str, fa_right, fa_middle, global.omiFont, 3, object_list_area_width-44, 32).Draw(object_list_area_width-6,(32*i)+15-object_list_scroll_pos[selected_mode][current_cat])
 		
 				//draw object sprite
 				var arr=ds_map_find_value(obj_data,_str)
@@ -549,7 +595,7 @@ if selected_mode == OBJECT_MODE {
 		
 			//window
 			draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
-			draw_set_font(smallF)
+			draw_set_font(global.omiFont)
 		
 			//tab text
 			draw_set_halign(fa_center)
@@ -595,14 +641,14 @@ if selected_mode == OBJECT_MODE {
 				//draw object icon
 				draw_sprite_stretched(sprite,0,16,16,64,ysize)
 				//draw object name
-				ScribblejrFit(objname, fa_left, fa_middle, smallF, 3, object_list_area_width-104, 32).Draw(96,48)
+				ScribblejrFit(objname, fa_left, fa_middle, global.omiFont, 3, object_list_area_width-104, 32).Draw(96,48)
 				//draw divider
 				draw_rect(12,96,object_list_area_width-24,3,$65555c,1,false)
 				//we're doing a reverse loop, starting from the bottom to the top so that things like drop down menus can overlay the buttons below
 				for (var i = array_length(proparr[10])-1; i >= 0; --i) {
 					if is_array(proparr[10][i]) { 
 						//draw variable name
-					    ScribblejrFit($"{string(proparr[10][i][1])}:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112+32*i)
+					    ScribblejrFit($"{string(proparr[10][i][1])}:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*i)
 						switch(string(proparr[10][i][3])) {
 							case "checkbox": {
 								if !open_dropmenu {
@@ -623,7 +669,7 @@ if selected_mode == OBJECT_MODE {
 							case "dropdown": {
 								draw_sprite_stretched(spr_JADEdropdown,0,96+16,(112+32*i)-12,8*20,8*3)
 								//draw selected variable
-								ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, smallF, 2, 160-8, 20).Draw(96+24,(112+32*i)-6)
+								ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, global.omiFont, 2, 160-8, 20).Draw(96+24,(112+32*i)-6)
 
 								//toggle variable
 								var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*i,object_list_area_x+34+56,object_list_area_y+40+(32/3)*i)&&(!open_dropmenu||open_dropmenu-1==i)
@@ -644,7 +690,7 @@ if selected_mode == OBJECT_MODE {
 									    //draw dropdown menus
 										draw_sprite_stretched(spr_JADEdropdown,j == array_length(menuarr)-1 ? 2 : 1,96+16,(112+32*i+24*j)+12,8*20,8*3)
 										//draw list of variables
-										ScribblejrFit(string(menuarr[j]), fa_left, fa_top, smallF, 2, 160-8, 20).Draw(96+24,(112+32*i+24*j)+18)
+										ScribblejrFit(string(menuarr[j]), fa_left, fa_top, global.omiFont, 2, 160-8, 20).Draw(96+24,(112+32*i+24*j)+18)
 										
 										var insubcheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+40+(32/3)*i+8*j,object_list_area_x+34+56,object_list_area_y+48+(32/3)*i+8*j)&&(!open_dropmenu||open_dropmenu-1==i)
 								
@@ -661,9 +707,9 @@ if selected_mode == OBJECT_MODE {
 								if !open_dropmenu {
 									draw_sprite_stretched(spr_JADEnumberinput,0,96+16,(112+32*i)-12,8*3,8*3)
 									if !(is_typing-1==i)
-									ScribblejrFit(string(proparr[10][i][2]), fa_middle, fa_top, smallF, 2, 19, 19).Draw(96+29,(112+32*i)-6)
+									ScribblejrFit(string(proparr[10][i][2]), fa_middle, fa_top, global.omiFont, 2, 19, 19).Draw(96+29,(112+32*i)-6)
 									else
-									ScribblejrFit(temptypingstring, fa_middle, fa_top, smallF, 2, 19, 19).Draw(96+29,(112+32*i)-6)
+									ScribblejrFit(temptypingstring, fa_middle, fa_top, global.omiFont, 2, 19, 19).Draw(96+29,(112+32*i)-6)
 									
 									//check if clicking on box
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*i,object_list_area_x+44,object_list_area_y+40+(32/3)*i)&&(!open_dropmenu||open_dropmenu-1==i)
@@ -677,7 +723,11 @@ if selected_mode == OBJECT_MODE {
 										//if clicking off of the box, finish typing
 										if !(incheck) && (is_typing-1==i) {
 											//set the variable to our typed number, if its blank reset back to the value it was before
-											proparr[10][i][2]=unreal(temptypingstring,proparr[10][i][2])
+											var k=0
+											repeat (array_length(properties_group)) {
+											    properties_group[k][10][i][2]=unreal(temptypingstring,properties_group[k][10][i][2])
+												k++
+											}
 											temptypingstring=""
 											is_typing=0;
 										}
@@ -685,15 +735,38 @@ if selected_mode == OBJECT_MODE {
 									
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
-										proparr[10][i][2]=unreal(temptypingstring,proparr[10][i][2])
+										var k=0
+										repeat (array_length(properties_group)) {
+											properties_group[k][10][i][2]=unreal(temptypingstring,properties_group[k][10][i][2])
+											k++
+										}
 										temptypingstring=""
 										is_typing=0;
 									}
 									
 									if (is_typing-1==i) {
-										//simple typing script for numbers only
-										if string_length(string_digits(keyboard_lastchar)) && keyboard_check_pressed(vk_anykey) {
-											temptypingstring+=string_digits(keyboard_lastchar)
+										//simple typing script
+										if string_length(keyboard_lastchar) && keyboard_check_pressed(vk_anykey) {
+											switch (keyboard_lastkey) { //forbidden keys, these can create unnessecary letters that are unwanted
+												case ord("0"):
+												case ord("1"):
+												case ord("2"): 
+												case ord("3"): 
+												case ord("4"): 
+												case ord("5"): 
+												case ord("6"): 
+												case ord("7"): 
+												case ord("8"): 
+												case ord("9"): 
+												case 190: 
+												case 189: {
+													temptypingstring+=keyboard_lastchar;
+													break;
+												}
+												default: {
+													break;
+												}
+											}
 										}
 										if keyboard_check_pressed(vk_backspace) {
 											temptypingstring=string_copy(temptypingstring,0,string_length(temptypingstring)-1)
@@ -706,9 +779,9 @@ if selected_mode == OBJECT_MODE {
 								if !open_dropmenu {
 									draw_sprite_stretched(spr_JADEstringinput,0,96+16,(112+32*i)-12,96,24)
 									if !(is_typing-1==i)
-									ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, smallF, 2, 90, 19).Draw(96+29,(112+32*i)-6)
+									ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, global.omiFont, 2, 90, 19).Draw(96+29,(112+32*i)-6)
 									else
-									ScribblejrFit(temptypingstring, fa_left, fa_top, smallF, 2, 90, 19).Draw(96+29,(112+32*i)-6)
+									ScribblejrFit(temptypingstring, fa_left, fa_top, global.omiFont, 2, 90, 19).Draw(96+29,(112+32*i)-6)
 									
 									//check if clicking on box
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+11*i,object_list_area_x+133,object_list_area_y+40+11*i)&&(!open_dropmenu||open_dropmenu-1==i)
@@ -786,11 +859,11 @@ if selected_mode == OBJECT_MODE {
 				//draw object icon
 				draw_sprite_stretched(sprite[0],0,16,16,64,ysize)
 				//draw object name
-				ScribblejrFit(objname, fa_left, fa_middle, smallF, 3, object_list_area_width-104, 32).Draw(96,48)
+				ScribblejrFit(objname, fa_left, fa_middle, global.omiFont, 3, object_list_area_width-104, 32).Draw(96,48)
 				//draw divider
 				draw_rect(12,96,object_list_area_width-24,3,$65555c,1,false)
 					if is_array(proparr) { 
-						ScribblejrFit($"Reverse on End:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112+32*1)
+						ScribblejrFit($"Reverse on End:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*1)
 						draw_sprite_stretched(spr_JADEcheckbox,bool(proparr[1]),96+16,(112+32*1)-12,8*3,8*3)
 								
 						//toggle variable
@@ -803,13 +876,13 @@ if selected_mode == OBJECT_MODE {
 						}
 						
 						//number inputs
-						ScribblejrFit($"Path Speed:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112)
+						ScribblejrFit($"Path Speed:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112)
 						
 						draw_sprite_stretched(spr_JADEnumberinput,0,96+16,(112)-12,8*3,8*3)
 						if !(is_typing-1==0)
-						ScribblejrFit(string(proparr[0]), fa_middle, fa_top, smallF, 2, 19, 19).Draw(96+29,(112)-6)
+						ScribblejrFit(string(proparr[0]), fa_middle, fa_top, global.omiFont, 2, 19, 19).Draw(96+29,(112)-6)
 						else
-						ScribblejrFit(temptypingstring, fa_middle, fa_top, smallF, 2, 19, 19).Draw(96+29,(112)-6)
+						ScribblejrFit(temptypingstring, fa_middle, fa_top, global.omiFont, 2, 19, 19).Draw(96+29,(112)-6)
 						
 						//check if clicking on box
 						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34,object_list_area_x+44,object_list_area_y+40)&&(!open_dropmenu||open_dropmenu-1==0)
@@ -837,13 +910,13 @@ if selected_mode == OBJECT_MODE {
 						}
 						
 						//number inputs
-						ScribblejrFit($"Starting Node:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112+32*2)
+						ScribblejrFit($"Starting Node:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*2)
 						
 						draw_sprite_stretched(spr_JADEnumberinput,0,96+16,(112+32*2)-12,8*3,8*3)
 						if !(is_typing-1==2)
-						ScribblejrFit(string(proparr[2]), fa_middle, fa_top, smallF, 2, 19, 19).Draw(96+29,(112+32*2)-6)
+						ScribblejrFit(string(proparr[2]), fa_middle, fa_top, global.omiFont, 2, 19, 19).Draw(96+29,(112+32*2)-6)
 						else
-						ScribblejrFit(temptypingstring, fa_middle, fa_top, smallF, 2, 19, 19).Draw(96+29,(112+32*2)-6)
+						ScribblejrFit(temptypingstring, fa_middle, fa_top, global.omiFont, 2, 19, 19).Draw(96+29,(112+32*2)-6)
 						
 						//check if clicking on box
 						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*2,object_list_area_x+44,object_list_area_y+40+(32/3)*2)&&(!open_dropmenu||open_dropmenu-1==2)
@@ -880,7 +953,7 @@ if selected_mode == OBJECT_MODE {
 							}
 						}
 						
-						ScribblejrFit($"Fall on End:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112+32*3)
+						ScribblejrFit($"Fall on End:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*3)
 						draw_sprite_stretched(spr_JADEcheckbox,bool(proparr[3]),96+16,(112+32*3)-12,8*3,8*3)
 								
 						//toggle variable
@@ -892,7 +965,7 @@ if selected_mode == OBJECT_MODE {
 							}
 						}
 						
-						ScribblejrFit($"Draw Track:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112+32*4)
+						ScribblejrFit($"Draw Track:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*4)
 						draw_sprite_stretched(spr_JADEcheckbox,bool(proparr[4]),96+16,(112+32*4)-12,8*3,8*3)
 								
 						//toggle variable
@@ -904,7 +977,7 @@ if selected_mode == OBJECT_MODE {
 							}
 						}
 						
-						ScribblejrFit($"Auto Start:", fa_left, fa_middle, smallF, 3, 96, 32).Draw(16,112+32*5)
+						ScribblejrFit($"Auto Start:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*5)
 						draw_sprite_stretched(spr_JADEcheckbox,bool(proparr[5]),96+16,(112+32*5)-12,8*3,8*3)
 								
 						//toggle variable
@@ -924,7 +997,7 @@ if selected_mode == OBJECT_MODE {
 			surface_reset_target();
 			
 			//window text
-			draw_set_font(smallF)
+			draw_set_font(global.omiFont)
 			draw_text_transformed(object_list_area_x+2,object_list_area_y-4,$"properties - {objname}",0.66,0.66,0)
 		}
 		
@@ -937,7 +1010,7 @@ if selected_mode == OBJECT_MODE {
 		//window
 		draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,8)
 		
-		draw_set_font(smallF)
+		draw_set_font(global.omiFont)
 		draw_set_halign(fa_left)
 		
 		//window text
@@ -955,7 +1028,7 @@ if selected_mode == OBJECT_MODE {
 
 if (savetextdur) && (global.save_dir!="") {
 	savetextdur=max(0,savetextdur-1)
-	draw_set_font(smallF)
+	draw_set_font(global.omiFont)
 	draw_set_halign(fa_center)
 	draw_set_alpha(savetextdur/30)
 	draw_text_outline(guiw/2,guih-24,$"Saved to: {global.save_dir}!", 1, c_black, 8, 1, 1, 0)

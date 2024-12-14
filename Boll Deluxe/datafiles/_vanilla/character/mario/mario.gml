@@ -123,7 +123,11 @@ if (state == "" || state == "jump") && !piped && !electrocuted && !electrocution
 	} else {
 		if (state == "") && (down) && !(piped) {
 			crouch=true;
-		} else crouch = false
+		} else {
+			if (!check_collision_line(x-hit_sizex,y-hit_sizey-8,x+hit_sizex,y-hit_sizey-8,COL_TOP) && size!="basic" ) {
+				crouch = false
+			}
+		}
 		
 		hurt = false
 		canjump = 5;  // Coyote frames
@@ -226,7 +230,9 @@ if (state == "pound") && !piping {
 
 #region Jumping
 if (state == "jump" || state == "") && !(grounded) && !piped {
-	slopesliding = 0
+	if (slopesliding) {
+		crouch = false
+	}
 	if (!akey && vsp < -2 && !canstopjump) //Make player jump lower when jump is released
 	{
 		vsp *= 0.6;
@@ -395,10 +401,6 @@ if (state == "") {
 		spriteEvent="brake" 
 		xsc = -(skiddir)
 	}
-	
-	if (slopesliding) {
-		spriteEvent="slopeSlide"
-	}
 
 	if (finish && posed && no_move) {
 		spriteEvent="victory"
@@ -417,6 +419,10 @@ if (state == "jump") {
 		if !(crouch)  spriteEvent="bonk"
 		else spriteEvent="crouchBonk"
 	}
+}
+
+if (slopesliding) {
+	spriteEvent="slopeSlide"
 }
 
 if (state == "pound") {
