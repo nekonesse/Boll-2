@@ -5,6 +5,7 @@ surface_set_target(HUDsurface);
 draw_clear_alpha(c_black,0);
 
 draw_set_font(global.smallBoldFont)
+draw_set_halign(fa_left)
 for (var i = 0; i < array_length(global._playerChars); ++i) {
 	var spr=oGameManager.PlayerColl.GetImageInfo($"spr_{global._playerChars[i]}_HUDicon")
     if CollageIsImage(spr)

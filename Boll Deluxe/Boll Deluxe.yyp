@@ -1382,6 +1382,7 @@
     {"id":{"name":"spr_chainsaw","path":"sprites/spr_chainsaw/spr_chainsaw.yy",},},
     {"id":{"name":"spr_checkpoint_hit","path":"sprites/spr_checkpoint_hit/spr_checkpoint_hit.yy",},},
     {"id":{"name":"spr_checkpoint","path":"sprites/spr_checkpoint/spr_checkpoint.yy",},},
+    {"id":{"name":"spr_checkpointpal","path":"sprites/spr_checkpointpal/spr_checkpointpal.yy",},},
     {"id":{"name":"spr_coin","path":"sprites/spr_coin/spr_coin.yy",},},
     {"id":{"name":"spr_coincollect","path":"sprites/spr_coincollect/spr_coincollect.yy",},},
     {"id":{"name":"spr_coinhudicon","path":"sprites/spr_coinhudicon/spr_coinhudicon.yy",},},
