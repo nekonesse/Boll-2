@@ -43,6 +43,7 @@ steep_slope = false
 // chearii: accel and friction were 0.5 and 0.4, respectively. I'm just changing them to their SMW values
 accel = 0.09375; //how fast you gain speed
 fastaccel = 0.3125; // accel during a turnaround
+skid_accel = 0.16125; // accel while skidding ?
 fric = 0.0625; //slipperiness
 friction_mult = 1; //multiplier for friction (e.g. ice blocks)
 move=0
@@ -82,6 +83,7 @@ electrocution_timer = 0; //for the electrocuted animation
 grow=0;
 can_break_bricks=false;
 has_fired=0;
+wait_timer=0;	//wait animation
 
 //warping stuff
 warp_timer = 0;

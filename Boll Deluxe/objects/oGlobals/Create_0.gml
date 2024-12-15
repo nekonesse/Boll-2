@@ -108,6 +108,7 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		//Particles
 		txr_constant_add("pSmoke",pSmoke)
 		txr_constant_add("pRunDust",pRunDust)
+		txr_constant_add("pSkidDust",pSkidDust)
 		txr_constant_add("pJumpDust",pJumpDust)
 		txr_constant_add("pCoinCollected",pCoinCollected)
 		txr_constant_add("pGlitter",pGlitter)

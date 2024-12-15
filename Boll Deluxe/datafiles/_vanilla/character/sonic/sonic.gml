@@ -16,6 +16,8 @@ storedxsc = 1;
 grav=0.225;
 defaultgrav = grav;
 //spindash = 0;
+wait_timer = 0;
+dusttimer = 0;
 spindashTotal = 0;
 topspd = 4.5;
 grow = 0;
@@ -341,6 +343,22 @@ if (grounded) {
 	}
 }
 
+if ((ceil(abs(hsp))>3 && grounded && state == "") || skidding) {
+	dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
+	if (dusttimer == 1) {
+		var part = pRunDust
+		if (skidding) part = pSkidDust
+
+		var i=instance_create_depth(x - (1 * xsc), y + hit_sizey, 0, part);
+		i.depth = (depth + 5);
+		i.image_xscale = xsc;
+		i.hspeed=2.25 * -xsc;
+		i.friction=0.2;
+		i.vspeed=-0.1;
+		i.gravity=-0.02;
+	}
+}
+
 // check to see if we need to update the polybox
 if (sprindex_prev != sprite_index) {
 	//obj_update_poly_from_bounding(self);
@@ -361,16 +379,25 @@ real_sprite_angle = sprite_angle;
 switch (state) {
 
 	case "": {
-		if (ceil(abs(gsp))>3) {
-			frspd=abs(gsp)/4
-			spriteEvent="run"
-		}
-		else if !(abs(gsp)){ 
+		if (abs(gsp) == 0) {
+			wait_timer += 1
 			spriteEvent="idle"
-		}
-		else {
-			frspd=abs(gsp)/4
-			spriteEvent="walk"
+			if (wait_timer > 440) {
+				spriteEvent="wait"
+			}
+		} else {
+			wait_timer = 0;
+			if (ceil(abs(gsp))>3) {
+				frspd=abs(gsp)/4
+				spriteEvent="run"
+			}
+			else {
+				frspd=abs(gsp)/4
+				if (frspd < 0.3) {
+					frspd = 0.3;
+				}
+				spriteEvent="walk"
+			}
 		}
 	} break;
 	case "crouch": {
@@ -395,6 +422,10 @@ switch (state) {
 		frspd=abs(vsp)/4
 		spriteEvent="wallRun"
 	}
+}
+
+if (state != "") {
+	wait_timer = 0;
 }
 
 if (dropdash && dropdash_timer >= 18) {
@@ -457,6 +488,22 @@ if state!="wallrun" state = "";
 bonk = 0;
 gsp = hsp
 wallrundata[0]=0;
+
+var i=instance_create_depth(x - 1, y + hit_sizey, 0, pSkidDust); //should prooobably get some kind of particle spawning function in later. too many giant blocks of particle here.
+i.depth = (depth + 5);
+i.image_xscale = 1;
+i.hspeed=-2.25
+i.friction=0.2;
+i.vspeed=-0.1;
+i.gravity=-0.02;
+var i=instance_create_depth(x + 1, y + hit_sizey, 0, pSkidDust);
+i.depth = (depth + 5);
+i.image_xscale = -1;
+i.hspeed=2.25
+i.friction=0.2;
+i.vspeed=-0.1;
+i.gravity=-0.02;
+
 //landing speed lol
 if (colangle < 0) colangle += 360
 show_debug_message(colangle)

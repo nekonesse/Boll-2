@@ -12,6 +12,7 @@ runjump = 0;
 dusttimer = 1;
 skidding = 0;
 skiddir = 0;
+wait_timer = 0;
 pound_timer = 0;
 pound_severity = -1;
 storedxsc = 1;
@@ -136,14 +137,17 @@ if (state == "" || state == "jump") && !piped && !electrocuted && !electrocution
 		//maximum speed when sliding, infulence when sliding, influence on steep slopes, add steep influence while sliding?
 		player_slide(12.5, 0.225, 0.32, false);
 		
-		//temp skidding
-		if (abs(gsp) > 1.5+(size!="basic")) && (sign(gsp)!=esign(move,xsc)) && !(crouch) {
-			if (abs(hsp)>2 && !carry && !skidding) {
-				skidding=1
-				//playsfx(name+"skid",1)
-				skiddir=esign(move,xsc)
+		//skidding
+		if (((abs(gsp) >= (2 + (size != "basic"))) || skidding) && move != 0 && !check_signs_matching(gsp,move) && !crouch && !carrying) {
+			if (!skidding) {
+				skiddir = esign(move,xsc)
+				dusttimer = 0;
+				playsfx(charmName+"skid",1,1,0.75)
 			}
-		} else {
+			skidding = 1;
+		}
+		else if (skidding) {
+			stopsfx(charmName+"skid")
 			skidding=0
 		}
 	}
@@ -329,13 +333,16 @@ if (grounded) {
 	}
 }
 
-if (ceil(abs(hsp))>3 && grounded && state == "") {
+if ((ceil(abs(hsp))>3 && grounded && state == "") || skidding) {
 	dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
 	if (dusttimer == 1) {
-		var i=instance_create_depth(x - (1 * xsc), y + hit_sizey, 0, pRunDust);
+		var part = pRunDust
+		if (skidding) part = pSkidDust
+
+		var i=instance_create_depth(x - (1 * xsc), y + hit_sizey, 0, part);
 		i.depth = (depth + 5);
 		i.image_xscale = xsc;
-		i.hspeed=2.25 * -xsc;
+		i.hspeed=(2.25 - skidding) * -xsc;
 		i.friction=0.2;
 		i.vspeed=-0.1;
 		i.gravity=-0.02;
@@ -371,17 +378,27 @@ frspd=1
 
 if (state == "") {
 	if !(crouch) {
-		if (ceil(abs(hsp))>3.25) {
-			spriteEvent="run"
-		}
-		else if !(round(abs(hsp))) {
+		if (abs(gsp) == 0) {
+			wait_timer += 1
 			spriteEvent="idle"
-		}
-		else {
-			frspd=abs(hsp)/4
-			spriteEvent="walk"
+			if (wait_timer > 440) {
+				spriteEvent="wait"
+			}
+		} else {
+			wait_timer = 0
+			if (ceil(abs(gsp))>3.25) {
+				spriteEvent="run"
+			}
+			else {
+				frspd=abs(hsp)/4
+				if (frspd < 0.3) {
+					frspd = 0.3;
+				}
+				spriteEvent="walk"
+			}
 		}
 	} else {
+		wait_timer = 0
 		if (abs(hsp) < 0.25) {
 			spriteEvent="crouchIdle"
 		}
@@ -405,8 +422,9 @@ if (state == "") {
 	if (finish && posed && no_move) {
 		spriteEvent="victory"
 	}
+} else {
+	wait_timer = 0
 }
-
 if (state == "jump") {
 	if !(crouch)  spriteEvent="jump"
 	else spriteEvent="crouchJump"
@@ -514,6 +532,22 @@ bonk = 12
 
 #define floor_land
 gsp = hsp
+
+var i=instance_create_depth(x - 1, y + hit_sizey, 0, pSkidDust); //should prooobably get some kind of particle spawning function in later. too many giant blocks of particle here.
+i.depth = (depth + 5);
+i.image_xscale = 1;
+i.hspeed=-2.25
+i.friction=0.2;
+i.vspeed=-0.1;
+i.gravity=-0.02;
+var i=instance_create_depth(x + 1, y + hit_sizey, 0, pSkidDust);
+i.depth = (depth + 5);
+i.image_xscale = -1;
+i.hspeed=2.25
+i.friction=0.2;
+i.vspeed=-0.1;
+i.gravity=-0.02;
+
 #region Groundpound Land
 if (state == "pound") {
 	poundjump = 16;
