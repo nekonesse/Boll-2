@@ -39,7 +39,7 @@ function JADE_initializeobj() {
 	//9. what editor mode object list to appear in
 	//10. object properties (check scr_properties)
 	show_debug_message("Registering JADE object list...")
-	registerobj(object_get_name(oPlayerSpawn), spr_spawner, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), false, false, OBJECT_MODE, 0, object_get_properties("oPlayerSpawn"))
+	registerobj(object_get_name(oPlayerSpawn), spr_spawner, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), false, false, OBJECT_MODE, 0, object_get_properties("oPlayerSpawn"), "Player Spawn")
 	registerobj(object_get_name(oCollider), spr_collider, -sprite_get_xoffset(spr_collider), -sprite_get_yoffset(spr_collider), sprite_get_width(spr_collider), sprite_get_height(spr_collider), true, true, OBJECT_MODE, 0, object_get_properties("oCollider"))
 	registerobj(object_get_name(oSlopeCollider), spr_slopesolid, -sprite_get_xoffset(spr_slopesolid), -sprite_get_yoffset(spr_slopesolid), sprite_get_width(spr_slopesolid), sprite_get_height(spr_slopesolid), true, true, OBJECT_MODE, 0, object_get_properties("oSlopeCollider"))
 	registerobj(object_get_name(oRoundedSlope1x1), spr_rslope1, -sprite_get_xoffset(spr_rslope1), -sprite_get_yoffset(spr_rslope1), sprite_get_width(spr_rslope1), sprite_get_height(spr_rslope1), true, true, OBJECT_MODE, 0, object_get_properties("oRoundedSlope1x1"))
@@ -47,22 +47,23 @@ function JADE_initializeobj() {
 	registerobj(object_get_name(oSemilider), spr_semilider, -sprite_get_xoffset(spr_semilider), -sprite_get_yoffset(spr_semilider), sprite_get_width(spr_semilider), sprite_get_height(spr_semilider), true, true, OBJECT_MODE, 0, object_get_properties("oSemilider"))
 	registerobj(object_get_name(oSemiSlope), spr_slopesemi, -sprite_get_xoffset(spr_slopesemi), -sprite_get_yoffset(spr_slopesemi), sprite_get_width(spr_slopesemi), sprite_get_height(spr_slopesemi), true, true, OBJECT_MODE, 0, object_get_properties("oSemiSlope"))
 	registerobj(object_get_name(oPipe), spr_pipe, -sprite_get_xoffset(spr_pipe), -sprite_get_yoffset(spr_pipe), sprite_get_width(spr_pipe), sprite_get_height(spr_pipe), false, false, OBJECT_MODE, 0, object_get_properties("oPipe"))
-	registerobj(object_get_name(oItemBox), spr_itembox, -sprite_get_xoffset(spr_itembox), -sprite_get_yoffset(spr_itembox), sprite_get_width(spr_itembox), sprite_get_height(spr_itembox), false, false, OBJECT_MODE, 0, object_get_properties("oItemBox"), true)
-	registerobj(object_get_name(oBrick), spr_brick, -sprite_get_xoffset(spr_brick), -sprite_get_yoffset(spr_brick), sprite_get_width(spr_brick), sprite_get_height(spr_brick), false, false, OBJECT_MODE, 0, object_get_properties("oBrick"), true)
-	registerobj(object_get_name(oHardBlock), spr_hardblock, -sprite_get_xoffset(spr_hardblock), -sprite_get_yoffset(spr_hardblock), sprite_get_width(spr_hardblock), sprite_get_height(spr_hardblock), false, false, OBJECT_MODE, 0, object_get_properties("oHardBlock"), true)
-	registerobj(object_get_name(oDonutBlock), spr_donutblock, -sprite_get_xoffset(spr_donutblock), -sprite_get_yoffset(spr_donutblock), sprite_get_width(spr_donutblock), sprite_get_height(spr_donutblock), true, false, OBJECT_MODE, 0, object_get_properties("oDonutBlock"), true)
-	registerobj(object_get_name(oNoteBlock), spr_noteblock, -sprite_get_xoffset(spr_noteblock), -sprite_get_yoffset(spr_noteblock), sprite_get_width(spr_noteblock), sprite_get_height(spr_noteblock), false, false, OBJECT_MODE, 0, object_get_properties("oNoteBlock"), true)
-	registerobj(object_get_name(oFlipblock), spr_flipblock, -sprite_get_xoffset(spr_flipblock), -sprite_get_yoffset(spr_flipblock), sprite_get_width(spr_flipblock), sprite_get_height(spr_flipblock), false, false, OBJECT_MODE, 0, object_get_properties("oFlipBlock"), true)
-	registerobj(object_get_name(oShootBlock), spr_shootblock, -sprite_get_xoffset(spr_shootblock), -sprite_get_yoffset(spr_shootblock), sprite_get_width(spr_shootblock), sprite_get_height(spr_shootblock), false, false, OBJECT_MODE, 0, object_get_properties("oShootBlock"), true)
-	registerobj(object_get_name(oSolidSpike), spr_solidspike, -sprite_get_xoffset(spr_solidspike), -sprite_get_yoffset(spr_solidspike), sprite_get_width(spr_solidspike), sprite_get_height(spr_solidspike), true, true, OBJECT_MODE, 0, object_get_properties("oSolidSpike"), true)
-	registerobj(object_get_name(oMovingPlatform), spr_movingplatform, -sprite_get_xoffset(spr_movingplatform), -sprite_get_yoffset(spr_movingplatform), sprite_get_width(spr_movingplatform), sprite_get_height(spr_movingplatform), true, false, OBJECT_MODE, 0, object_get_properties("oMovingPlatform"), true)
-	registerobj(object_get_name(oSwingingPlatform), spr_movingplatform, -sprite_get_xoffset(spr_movingplatform), -sprite_get_yoffset(spr_movingplatform), sprite_get_width(spr_movingplatform), sprite_get_height(spr_movingplatform), true, false, OBJECT_MODE, 0, object_get_properties("oSwingingPlatform"), true)
-	registerobj(object_get_name(oChainsaw), spr_chainsaw, -8, -8, 16, 16, false, false, OBJECT_MODE, 0, object_get_properties("oChainsaw"), true)
+	registerobj(object_get_name(oItemBox), spr_itembox, -sprite_get_xoffset(spr_itembox), -sprite_get_yoffset(spr_itembox), sprite_get_width(spr_itembox), sprite_get_height(spr_itembox), false, false, OBJECT_MODE, 0, object_get_properties("oItemBox"), "Item Box", true)
+	registerobj(object_get_name(oBrick), spr_brick, -sprite_get_xoffset(spr_brick), -sprite_get_yoffset(spr_brick), sprite_get_width(spr_brick), sprite_get_height(spr_brick), false, false, OBJECT_MODE, 0, object_get_properties("oBrick"), "Brick", true)
+	registerobj(object_get_name(oHardBlock), spr_hardblock, -sprite_get_xoffset(spr_hardblock), -sprite_get_yoffset(spr_hardblock), sprite_get_width(spr_hardblock), sprite_get_height(spr_hardblock), false, false, OBJECT_MODE, 0, object_get_properties("oHardBlock"), "Hard Block", true)
+	registerobj(object_get_name(oDonutBlock), spr_donutblock, -sprite_get_xoffset(spr_donutblock), -sprite_get_yoffset(spr_donutblock), sprite_get_width(spr_donutblock), sprite_get_height(spr_donutblock), true, false, OBJECT_MODE, 0, object_get_properties("oDonutBlock"), "Donut Block", true)
+	registerobj(object_get_name(oNoteBlock), spr_noteblock, -sprite_get_xoffset(spr_noteblock), -sprite_get_yoffset(spr_noteblock), sprite_get_width(spr_noteblock), sprite_get_height(spr_noteblock), false, false, OBJECT_MODE, 0, object_get_properties("oNoteBlock"), "Note Block", true)
+	registerobj(object_get_name(oFlipblock), spr_flipblock, -sprite_get_xoffset(spr_flipblock), -sprite_get_yoffset(spr_flipblock), sprite_get_width(spr_flipblock), sprite_get_height(spr_flipblock), false, false, OBJECT_MODE, 0, object_get_properties("oFlipBlock"), "Flip Block", true)
+	registerobj(object_get_name(oShootBlock), spr_shootblock, -sprite_get_xoffset(spr_shootblock), -sprite_get_yoffset(spr_shootblock), sprite_get_width(spr_shootblock), sprite_get_height(spr_shootblock), false, false, OBJECT_MODE, 0, object_get_properties("oShootBlock"), "Shoot Block", true)
+	registerobj(object_get_name(oSolidSpike), spr_solidspike, -sprite_get_xoffset(spr_solidspike), -sprite_get_yoffset(spr_solidspike), sprite_get_width(spr_solidspike), sprite_get_height(spr_solidspike), true, true, OBJECT_MODE, 0, object_get_properties("oSolidSpike"), "Solid Spike", true)
+	registerobj(object_get_name(oMovingPlatform), spr_movingplatform, -sprite_get_xoffset(spr_movingplatform), -sprite_get_yoffset(spr_movingplatform), sprite_get_width(spr_movingplatform), sprite_get_height(spr_movingplatform), true, false, OBJECT_MODE, 0, object_get_properties("oMovingPlatform"), "Moving Platform", true)
+	registerobj(object_get_name(oSwingingPlatform), spr_movingplatform, -sprite_get_xoffset(spr_movingplatform), -sprite_get_yoffset(spr_movingplatform), sprite_get_width(spr_movingplatform), sprite_get_height(spr_movingplatform), true, false, OBJECT_MODE, 0, object_get_properties("oSwingingPlatform"), "Swinging Platform", true)
+	registerobj(object_get_name(oChainsaw), spr_chainsaw, -8, -8, 16, 16, false, false, OBJECT_MODE, 0, object_get_properties("oChainsaw"), "Chainsaw", true)
 	registerobj(object_get_name(oGrate), spr_grate, -sprite_get_xoffset(spr_grate), -sprite_get_yoffset(spr_grate), sprite_get_width(spr_grate), sprite_get_height(spr_grate), false, false, OBJECT_MODE, 0, object_get_properties("oGrate"))
 	registerobj(object_get_name(oGrateSemi), spr_gratesemi, -sprite_get_xoffset(spr_gratesemi), -sprite_get_yoffset(spr_gratesemi), sprite_get_width(spr_gratesemi), sprite_get_height(spr_gratesemi), false, false, OBJECT_MODE, 0, object_get_properties("oGrateSemi"))
 	registerobj(object_get_name(oEnemyGround), spr_enemyground, -sprite_get_xoffset(spr_enemyground), -sprite_get_yoffset(spr_enemyground), sprite_get_width(spr_enemyground), sprite_get_height(spr_enemyground), false, false, OBJECT_MODE, 0, object_get_properties("oEnemyGround"))
 	registerobj(object_get_name(oEnemyGroundSemi), spr_enemygroundsemi, -sprite_get_xoffset(spr_enemygroundsemi), -sprite_get_yoffset(spr_enemygroundsemi), sprite_get_width(spr_enemygroundsemi), sprite_get_height(spr_enemygroundsemi), false, false, OBJECT_MODE, 0, object_get_properties("oEnemyGroundsemi"))
 	registerobj(object_get_name(oIceBlock), spr_iceblockJADE, -sprite_get_xoffset(spr_iceblockJADE), -sprite_get_yoffset(spr_iceblockJADE), sprite_get_width(spr_iceblockJADE), sprite_get_height(spr_iceblockJADE), true, true, OBJECT_MODE, 0, object_get_properties("oIceBlock"))
+	registerobj(object_get_name(oWater), spr_water, 0, 0, 16, 16, true, true, OBJECT_MODE, 0, object_get_properties("oWater"), "Water", false, 0.25, 0.5)
 	
 	registerobj(object_get_name(oTerrainSpreng), spr_yellowterrainspring, -sprite_get_xoffset(spr_yellowterrainspring), -sprite_get_yoffset(spr_yellowterrainspring), sprite_get_width(spr_yellowterrainspring), sprite_get_height(spr_yellowterrainspring), false, false, OBJECT_MODE, 3, object_get_properties("oTerrainSpreng"))
 	registerobj(object_get_name(oTerrainSpring), spr_redterrainspring, -8, -16, 16, 16, false, false, OBJECT_MODE, 3, object_get_properties("oTerrainSpring"))
@@ -79,23 +80,23 @@ function JADE_initializeobj() {
 	registerobj(object_get_name(oMagentaSwitchBlock), spr_magentaswitchblock, -sprite_get_xoffset(spr_magentaswitchblock), -sprite_get_yoffset(spr_magentaswitchblock), sprite_get_width(spr_magentaswitchblock), sprite_get_height(spr_magentaswitchblock), false, false, OBJECT_MODE, 3, object_get_properties("oMagentaSwitchBlock"))
 	registerobj(object_get_name(oMagentaSwitchBlockOff), spr_magentaswitchblockoff, -sprite_get_xoffset(spr_magentaswitchblockoff), -sprite_get_yoffset(spr_magentaswitchblockoff), sprite_get_width(spr_magentaswitchblockoff), sprite_get_height(spr_magentaswitchblockoff), false, false, OBJECT_MODE, 3, object_get_properties("oMagentaSwitchBlockOff"))
 	registerobj(object_get_name(oMagentaSwitchSlope), spr_magentaswitchslope, -sprite_get_xoffset(spr_magentaswitchslope), -sprite_get_yoffset(spr_magentaswitchslope), sprite_get_width(spr_magentaswitchslope), sprite_get_height(spr_magentaswitchslope), false, false, OBJECT_MODE, 3, object_get_properties("oMagentaSwitchSlope"))
-	registerobj(object_get_name(oZapper), spr_zapper, -sprite_get_xoffset(spr_zapper), -sprite_get_yoffset(spr_zapper), sprite_get_width(spr_zapper), sprite_get_height(spr_zapper), false, false, OBJECT_MODE, 3, object_get_properties("oZapper"), true)
+	registerobj(object_get_name(oZapper), spr_zapper, -sprite_get_xoffset(spr_zapper), -sprite_get_yoffset(spr_zapper), sprite_get_width(spr_zapper), sprite_get_height(spr_zapper), false, false, OBJECT_MODE, 3, object_get_properties("oZapper"), "Zapper", true)
 	
 	registerobj(object_get_name(oGoomba), spr_goombawalk, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oGoomba"))
 	registerobj(object_get_name(oGoombrat), spr_goombratwalk, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oGoombrat"))
 	registerobj(object_get_name(oKoopa), spr_koopawalk_g, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oKoopa"))
 	registerobj(object_get_name(oKoopaRed), spr_koopawalk_r, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oKoopaRed"))
 	registerobj(object_get_name(oKoopaYellow), spr_koopawalk_y, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oKoopaYellow"))
-	registerobj(object_get_name(oAmp), spr_amp, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oAmp"), true)
+	registerobj(object_get_name(oAmp), spr_amp, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oAmp"), "Amp", true)
 	registerobj(object_get_name(oSlime), spr_slime_editor, -65, -85, 130, 85, false, false, OBJECT_MODE, 1, object_get_properties("oSlime"))
 	registerobj(object_get_name(oThwomp), spr_thwomp, 4, 7, 8, 14, false, false, OBJECT_MODE, 1, object_get_properties("oThwomp"))
 	
-	registerobj(object_get_name(oCoin), spr_coin, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oCoin"), true)
-	registerobj(object_get_name(oMushroom), spr_mushroom, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oMushroom"), true)
-	registerobj(object_get_name(oFireFlower), spr_fireflower, -8, -10, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oFireFlower"), true)
-	registerobj(object_get_name(oThunderFlower), spr_thunderflowerJADE, -8, -10, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oFireFlower"), true)
-	registerobj(object_get_name(oMysteryOrb), spr_mysteryorb, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oMysteryOrb"), true)
-	registerobj(object_get_name(oCheckpoint), spr_checkpoint, 21, 28, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oCheckpoint"))
+	registerobj(object_get_name(oCoin), spr_coin, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oCoin"), "Coin", true)
+	registerobj(object_get_name(oMushroom), spr_mushroom, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oMushroom"), "Mushroom", true)
+	registerobj(object_get_name(oFireFlower), spr_fireflower, -8, -10, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oFireFlower"), "Fire Flower", true)
+	registerobj(object_get_name(oThunderFlower), spr_thunderflowerJADE, -8, -10, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oThunderFlower"), "Thunder Flower",true)
+	registerobj(object_get_name(oMysteryOrb), spr_mysteryorb, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oMysteryOrb"), "Mystery Orb", true)
+	registerobj(object_get_name(oCheckpoint), spr_checkpoint, 21, 28, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oCheckpoint"), "Checkpoint")
 	
 	//NODE MODE
 	registerobj(object_get_name(oCameraRegion), spr_cameraregion, -sprite_get_xoffset(spr_cameraregion), -sprite_get_yoffset(spr_cameraregion), sprite_get_width(spr_cameraregion), sprite_get_height(spr_cameraregion), false, false, NODE_MODE, 0, object_get_properties("oCameraRegion"))
@@ -113,18 +114,18 @@ function register_array(array, category) {
 	}	
 }
 
-function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,category,properties,nodeable=false) {
+function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,category,properties,name=uuid,nodeable=false,sizex=1,sizey=1) {
 	if !ds_map_exists(obj_data,uuid) {
-		ds_map_add(obj_data,uuid,[sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,properties,nodeable])
+		ds_map_add(obj_data,uuid,[sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,properties,nodeable,name,sizex,sizey])
 		ds_list_add(obj_name,uuid)
-		ds_list_add(jade_cats[mode][category],uuid)
+		ds_list_add(jade_cats[mode][category],[uuid,name])
 		show_debug_message($"Successfully registered object id: {uuid} in JADE")
 	} else {
 		show_debug_message($"Object ID: {uuid} is already registered in JADE! ignoring..")
 	}
 }
 
-function JADE_save(file="\save.jade") {
+function JADE_save(file=game_save_id+"\save.jade") {
 	file_delete(file)
 	show_debug_message($"Saving JADE file to: {file}")
 	var array = [];
@@ -162,7 +163,7 @@ function JADE_save(file="\save.jade") {
 	show_debug_message($"Successfully saved JADE file to: {file}!")
 }
 
-function JADE_load(file="\save.jade") {
+function JADE_load(file=game_save_id+"\save.jade") {
 	if !file_exists(file) exit;
 	var loaded = buffer_load(file)
 	var save_file = buffer_decompress(loaded)

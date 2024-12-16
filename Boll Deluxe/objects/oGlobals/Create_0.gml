@@ -4,12 +4,13 @@
 global.save_dir=""
 
 global.smallBoldFont=font_add_sprite_ext(spr_smallboldfont,"0123456789abcdefghijklmnopqrstuvwxyz,.'"+chr(34)+":;/"+chr(92)+"[]><*!?_-=+{}#$@%^&|`~",true,1)
-global.omiFont=font_add_sprite_ext(spr_omifont,"0123456789:;.,<=>}%/"+chr(92)+"-_!?*+#'"+chr(34)+"~@][&abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",true,1)
+ScribblejrAttachSpritefont(global.smallBoldFont,true,1)
+global.omiFont=font_add_sprite_ext(spr_omifont,"0123456789:;.,<=>}%/"+chr(92)+"-_!?*+#'"+chr(34)+"~@][&abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ",true,1)
 ScribblejrAttachSpritefont(global.omiFont,true,1)
 
 global.debug=0
 global.netgame = false; // top 10 boll deluxe things that will never happen:
-global.nextlevel = "\save.jade"
+global.nextlevel = game_save_id+"\save.jade"
 global.jade_testing = false; // whether the current level is being tested in JADE or not
 
 #macro no_checkpoint -51781 // silver the hedgehogs do NOT turn this upside down.....

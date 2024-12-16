@@ -396,8 +396,8 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 						obj[7] = round(obj[7] /16) * 16
 				
 
-						obj_other[3] = obj[6] / sprite[3] //setting scale
-						obj_other[4] = obj[7] / sprite[4]
+						obj_other[3] = (obj[6] / sprite[3]) * sprite[11] //setting scale
+						obj_other[4] = (obj[7] / sprite[4]) * sprite[12]
 						obj_other[6] = obj[6] 
 						obj_other[7] = obj[7]	
 						obj_other[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj_other[3] //setting offset
@@ -518,8 +518,8 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 						obj[7] = round(obj[7] /16) * 16
 				
 
-						obj_other[3] = obj[6] / sprite[3] //setting scale
-						obj_other[4] = obj[7] / sprite[4]
+						obj_other[3] = (obj[6] / sprite[3]) * sprite[11] //setting scale
+						obj_other[4] = (obj[7] / sprite[4]) * sprite[12]
 						obj_other[6] = obj[6] 
 						obj_other[7] = obj[7]	
 						obj_other[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj_other[3] //setting offset
@@ -805,7 +805,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 						if !is_undefined(selected_obj) {
 							var sprite = ds_map_find_value(obj_data,selected_obj)
 							if sprite[7]!=OBJECT_MODE exit;
-							ds_list_add(object_layer_map, [selected_obj, gridx, gridy, 1, 1, 0])//add object to list at place
+							ds_list_add(object_layer_map, [selected_obj, gridx, gridy, sprite[11], sprite[12], 0])//add object to list at place
 							show_debug_message("created object: {0}", selected_obj)
 							var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
 							obj[6] = sprite[3]
@@ -1097,7 +1097,7 @@ if keyboard_check_pressed(vk_enter) && !(is_typing) { //PLAYTEST
 		}
 	}
 	
-	global.nextlevel="\save.jade" //the level the game will load
+	global.nextlevel=game_save_id+"\save.jade" //the level the game will load
 	global.jade_testing = true;
 	room_goto(rGame)
 }

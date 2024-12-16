@@ -141,7 +141,7 @@ if selected_mode == OBJECT_MODE {
 			draw_clear_alpha(c_black, 0)
 			draw_set_halign(fa_right)
 	
-			var _str = "null"
+			var _str = ["null", "null"]
 			//object list
 			for (var i = 0; i < ds_list_size(jade_cats[selected_mode][current_cat]); ++i) {
 				
@@ -151,18 +151,18 @@ if selected_mode == OBJECT_MODE {
 				}
 			
 				_str = ds_list_find_value(jade_cats[selected_mode][current_cat], i)
-				if _str == undefined{
+				if !is_array(_str) {
 					break;	
 				}
 				var overlapping=point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y+((32/3)*i)-object_list_scroll_pos[selected_mode][current_cat]/3,object_list_area_x+object_list_area_width-6,object_list_area_y+(((32/3)*i)+10)-object_list_scroll_pos[selected_mode][current_cat]/3)
 		
 				if (overlapping && mbleftpress) {
 					current_obj_id[selected_mode][current_cat]=i
-					selected_obj = _str
+					selected_obj = _str[0]
 				}
 		
 				var color = c_black
-				if (selected_obj == _str) color = c_white
+				if (selected_obj == _str[0]) color = c_white
 				else if (current_obj_id[selected_mode][current_cat] == i) color=c_blue
 				else if (overlapping) color=c_yellow
 				else color=c_black
@@ -170,10 +170,10 @@ if selected_mode == OBJECT_MODE {
 				//draw background rectangle
 				draw_rect(2,(32*i)+2-object_list_scroll_pos[selected_mode][current_cat],object_list_area_width-8,28, color,0.5)
 				//draw object name
-				ScribblejrFit(_str, fa_right, fa_middle, global.omiFont, 3, object_list_area_width-44, 32).Draw(object_list_area_width-6,(32*i)+15-object_list_scroll_pos[selected_mode][current_cat])
+				ScribblejrFit(_str[1], fa_right, fa_middle, global.omiFont, 3, object_list_area_width-44, 32).Draw(object_list_area_width-6,(32*i)+15-object_list_scroll_pos[selected_mode][current_cat])
 		
 				//draw object sprite
-				var arr=ds_map_find_value(obj_data,_str)
+				var arr=ds_map_find_value(obj_data,_str[0])
 				var sprite=arr[0]
 				var ysize=32
 				if sprite_get_height(sprite)*2 < 32
@@ -222,10 +222,11 @@ if selected_mode == OBJECT_MODE {
 			var objname=""
 			if (properties_group[0] != -4) {
 				var proparr=properties_group[0]
-				objname=proparr[0]
 				
 				var arr=ds_map_find_value(obj_data,proparr[0])
 				var sprite=arr[0]
+				var sprarr=ds_map_find_value(jade_cats[selected_mode][current_cat],proparr[0])
+				objname=sprarr[1]
 				var ysize=64
 				if sprite_get_height(sprite)*4 < 64
 				ysize=sprite_get_height(sprite)
@@ -560,11 +561,11 @@ if selected_mode == OBJECT_MODE {
 		
 				if (overlapping && mbleftpress) {
 					current_obj_id[selected_mode][current_cat]=i
-					selected_obj = _str
+					selected_obj = _str[0]
 				}
 		
 				var color = c_black
-				if (selected_obj == _str) color = c_white
+				if (selected_obj == _str[0]) color = c_white
 				else if (current_obj_id[selected_mode][current_cat] == i) color=c_blue
 				else if (overlapping) color=c_yellow
 				else color=c_black
@@ -572,10 +573,10 @@ if selected_mode == OBJECT_MODE {
 				//draw background rectangle
 				draw_rect(2,(32*i)+2-object_list_scroll_pos[selected_mode][current_cat],object_list_area_width-8,28, color,0.5)
 				//draw object name
-				ScribblejrFit(_str, fa_right, fa_middle, global.omiFont, 3, object_list_area_width-44, 32).Draw(object_list_area_width-6,(32*i)+15-object_list_scroll_pos[selected_mode][current_cat])
+				ScribblejrFit(_str[1], fa_right, fa_middle, global.omiFont, 3, object_list_area_width-44, 32).Draw(object_list_area_width-6,(32*i)+15-object_list_scroll_pos[selected_mode][current_cat])
 		
 				//draw object sprite
-				var arr=ds_map_find_value(obj_data,_str)
+				var arr=ds_map_find_value(obj_data,_str[0])
 				var sprite=arr[0]
 				var ysize=32
 				if sprite_get_height(sprite)*2 < 32

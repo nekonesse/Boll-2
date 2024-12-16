@@ -15,7 +15,7 @@ if (not_on_gui) {
 				var xoff=arr[1]
 				var yoff=arr[2]
 				if arr[7] == selected_mode
-				draw_sprite_ext(arr[0],0,gridx*16-xoff-cam_x,gridy*16-yoff-cam_y,1,1,0,c_white,0.25)
+				draw_sprite_ext(arr[0],0,gridx*16-xoff-cam_x,gridy*16-yoff-cam_y,arr[11],arr[12],0,c_white,0.25)
 			}
 			break;
 			case TILE_MODE:
