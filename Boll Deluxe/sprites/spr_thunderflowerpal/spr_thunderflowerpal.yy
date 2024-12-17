@@ -2,9 +2,9 @@
   "$GMSprite":"",
   "%Name":"spr_thunderflowerpal",
   "bboxMode":0,
-  "bbox_bottom":0,
+  "bbox_bottom":8,
   "bbox_left":0,
-  "bbox_right":0,
+  "bbox_right":6,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"7c530e79-590a-43c5-b5f7-2ad3c46c0fe6","name":"7c530e79-590a-43c5-b5f7-2ad3c46c0fe6","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"","%Name":"acd60501-317d-4e9a-b736-3b20f7de20ee","name":"acd60501-317d-4e9a-b736-3b20f7de20ee","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":9,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"952fb023-28aa-46d2-827e-bd21ed812a3b","blendMode":0,"displayName":"default","isLocked":false,"name":"952fb023-28aa-46d2-827e-bd21ed812a3b","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"ca7010bf-cd04-4dbe-89f6-4ebb885c5f4f","blendMode":0,"displayName":"default","isLocked":false,"name":"ca7010bf-cd04-4dbe-89f6-4ebb885c5f4f","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_thunderflowerpal",
   "nineSlice":null,
@@ -69,8 +69,8 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"7c530e79-590a-43c5-b5f7-2ad3c46c0fe6","path":"sprites/spr_thunderflowerpal/spr_thunderflowerpal.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"1190cf9c-0e60-41ba-8dea-e62310b4acd2","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"acd60501-317d-4e9a-b736-3b20f7de20ee","path":"sprites/spr_thunderflowerpal/spr_thunderflowerpal.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"79af3b5c-f32b-4d27-b788-e366680a1bfd","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
