@@ -123,6 +123,7 @@ initial_viewx=0;
 initial_viewy=0;
 
 zoom_level = 1;
+ui_opacity = 0.5;
 
 drawing_node=-1;
 draw_node_x=0;

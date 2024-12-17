@@ -4,19 +4,20 @@ var cam_y = camera_get_view_y(view_camera[0])
 var cam_w = camera_get_view_width(view_camera[0])
 var cam_h = camera_get_view_height(view_camera[0])
 
+draw_set_font(global.omiFont)
 if (not_on_gui) {
 	switch (selected_tool) {
 		case BRUSH_TOOL:
 		switch (selected_mode) {
 			case NODE_MODE:
 			case OBJECT_MODE:
-			is_string(selected_obj) {
-				var arr=ds_map_find_value(obj_data,selected_obj)
-				var xoff=arr[1]
-				var yoff=arr[2]
-				if arr[7] == selected_mode
-				draw_sprite_ext(arr[0],0,gridx*16-xoff-cam_x,gridy*16-yoff-cam_y,arr[11],arr[12],0,c_white,0.25)
-			}
+				if is_string(selected_obj) {
+					var arr=ds_map_find_value(obj_data,selected_obj)
+					var xoff=arr[1]
+					var yoff=arr[2]
+					if arr[7] == selected_mode
+					draw_sprite_ext(arr[0],0,gridx*16-xoff-cam_x,gridy*16-yoff-cam_y,arr[11],arr[12],0,c_white,0.25)
+				}
 			break;
 			case TILE_MODE:
 				var _tile = tilemap_get_tileset(tilemap)
@@ -40,8 +41,11 @@ if (not_on_gui) {
 	}
 }
 
+if (selected_tool == TILE_MODE) {
+	draw_sprite_ext(spr_JADEShowSelLayer,selected_tile_layer,0,RESOLUTION_Y,1,1,0,#FFFFFF,ui_opacity)
+}
+
 if global.debug {
-	draw_set_font(global.omiFont)
 	draw_text(curs_x,curs_y+16,$"{gridx} {gridy}\n\n{view_grab}\n\n{cam_x} {cam_y}\n\n{selection_box}\n\n{cam_w} {cam_h}\n\n{zoom_level}\n\n{not_on_gui}")
 }
 

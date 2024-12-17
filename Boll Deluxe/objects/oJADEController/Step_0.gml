@@ -80,9 +80,10 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 		show_debug_message($"switched to category {current_cat}")
 	}
 	#endregion
-} else if (selected_mode==TILE_MODE) {
-	var layerdir=keyboard_check_pressed(vk_left) - keyboard_check_pressed(vk_right)
+} else if (selected_mode == TILE_MODE) {
+	var layerdir = keyboard_check_pressed(vk_left) - keyboard_check_pressed(vk_right)
 	if (layerdir != 0 && !keyboard_check(vk_alt)) {
+		ui_opacity = 10;
 		selected_tile_layer += dir
 		if (selected_tile_layer < 0) {
 			selected_tile_layer = (array_length(tile_layer) - 1)
@@ -91,6 +92,7 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 		}
 		tilemap=tile_layer[selected_tile_layer]
 	}
+	if (ui_opacity > 0.4) {ui_opacity -= 0.05}
 }
 #region Camera Zooming
 //THIS SHIT KILLS MY COMBO!!!!!!
@@ -207,6 +209,7 @@ for (var i = 0; i < 5; ++i)
 {
 	if (mbleftpress) && mouse_in_mode_slot(i) {
 		if selected_mode != i {
+			ui_opacity = 10
 			selected_toolbar=0
 			selected_mode=i
 			selection = false
@@ -1219,3 +1222,5 @@ if keyboard_check_pressed(ord("I")) && !keyboard_check(vk_control) {
 }
 
 #endregion
+
+//keyboard_check

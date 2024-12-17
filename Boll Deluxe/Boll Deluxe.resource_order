@@ -1055,6 +1055,7 @@
     {"name":"spr_JADEnode","order":17,"path":"sprites/spr_JADEnode/spr_JADEnode.yy",},
     {"name":"spr_JADEnumberinput","order":14,"path":"sprites/spr_JADEnumberinput/spr_JADEnumberinput.yy",},
     {"name":"spr_JADEselection","order":8,"path":"sprites/spr_JADEselection/spr_JADEselection.yy",},
+    {"name":"spr_JADEShowSelLayer","order":19,"path":"sprites/spr_JADEShowSelLayer/spr_JADEShowSelLayer.yy",},
     {"name":"spr_JADEstringinput","order":15,"path":"sprites/spr_JADEstringinput/spr_JADEstringinput.yy",},
     {"name":"spr_JADEtab_right","order":1,"path":"sprites/spr_JADEtab_right/spr_JADEtab_right.yy",},
     {"name":"spr_JADEtab_top","order":2,"path":"sprites/spr_JADEtab_top/spr_JADEtab_top.yy",},
