@@ -1,6 +1,6 @@
 sprite_set_offset(sprite_index,sprite_width/2,sprite_height/2)
 
-image_angle=wrap_val(image_angle,0,360)
+image_angle = wrap_val(image_angle,0,360)
 
 player = instance_nearest(x,y,oPlayer)
 if distance_to_point(player.x,player.y) < 96 {
