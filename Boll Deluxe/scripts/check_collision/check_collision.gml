@@ -355,7 +355,7 @@ function node_path_movement(movePlayer=true) {
 		}
 	}
 	
-	if is_array(pathing) && (pathspd) && !(pathfallen) && (pathstarted) { //prevent crashing & a slight optimization
+	if is_array(pathing) && (pathspd>0) && !(pathfallen) && (pathstarted) { //prevent crashing & a slight optimization
 		
 		var arr=pathing[pathnum];
 	

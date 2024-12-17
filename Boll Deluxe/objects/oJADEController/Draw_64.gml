@@ -938,15 +938,33 @@ if selected_mode == OBJECT_MODE {
 									
 						//if pressed enter and typing, finish typing aswell
 						if keyboard_check_pressed(vk_enter) && (is_typing-1==2) {
-							proparr[2]=unreal(temptypingstring,proparr[2])
+							proparr[2]=floor(unreal(temptypingstring,proparr[2]))
 							temptypingstring=""
 							is_typing=0;
 						}
 									
 						if (is_typing) {
-							//simple typing script for numbers only
-							if string_length(string_digits(keyboard_lastchar)) && keyboard_check_pressed(vk_anykey) {
-								temptypingstring+=string_digits(keyboard_lastchar)
+							//simple typing script
+							if string_length(keyboard_lastchar) && keyboard_check_pressed(vk_anykey) {
+								switch (keyboard_lastkey) { //forbidden keys, these can create unnessecary letters that are unwanted
+									case ord("0"):
+									case ord("1"):
+									case ord("2"): 
+									case ord("3"): 
+									case ord("4"): 
+									case ord("5"): 
+									case ord("6"): 
+									case ord("7"): 
+									case ord("8"): 
+									case ord("9"): 
+									case 190: {
+										temptypingstring+=keyboard_lastchar;
+										break;
+									}
+									default: {
+										break;
+									}
+								}
 							}
 							if keyboard_check_pressed(vk_backspace) {
 								temptypingstring=string_copy(temptypingstring,0,string_length(temptypingstring)-1)
