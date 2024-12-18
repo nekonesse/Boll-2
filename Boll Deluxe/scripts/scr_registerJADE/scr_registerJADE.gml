@@ -97,6 +97,7 @@ function JADE_initializeobj() {
 	registerobj(object_get_name(oThunderFlower), spr_thunderflowerJADE, -8, -10, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oThunderFlower"), "Thunder Flower",true)
 	registerobj(object_get_name(oMysteryOrb), spr_mysteryorb, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oMysteryOrb"), "Mystery Orb", true)
 	registerobj(object_get_name(oCheckpoint), spr_checkpoint, 21, 28, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oCheckpoint"), "Checkpoint")
+	registerobj(object_get_name(oFlagpole), spr_JADEflagpole, -8, -160, 40, 160, false, false, OBJECT_MODE, 2, object_get_properties("oFlagpole"), "Flagpole", false)
 	
 	//NODE MODE
 	registerobj(object_get_name(oCameraRegion), spr_cameraregion, -sprite_get_xoffset(spr_cameraregion), -sprite_get_yoffset(spr_cameraregion), sprite_get_width(spr_cameraregion), sprite_get_height(spr_cameraregion), false, false, NODE_MODE, 0, object_get_properties("oCameraRegion"))

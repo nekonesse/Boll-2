@@ -81,4 +81,13 @@ function player_interactions(){
 		instance_destroy(mysteryorb);
 		finish=1;
 	}
+	
+	var flagpole=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oFlagpole, false, true)
+	if (flagpole) {
+		if (flagpole.state == 0) {
+			finish = 1;
+			flagpole.state = 1;
+			flagpole.player = self;
+		}
+	}
 }
