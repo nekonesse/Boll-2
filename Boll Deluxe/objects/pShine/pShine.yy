@@ -1,9 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"pGlitter",
+  "%Name":"pShine",
   "eventList":[],
   "managed":true,
-  "name":"pGlitter",
+  "name":"pShine",
   "overriddenProperties":[],
   "parent":{
     "name":"Particles",

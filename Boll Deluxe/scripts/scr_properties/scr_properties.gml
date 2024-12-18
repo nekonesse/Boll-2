@@ -3,15 +3,16 @@
 //TODO: Probably only save the third value of these to the object and just look up these arrays when changing / loading them lmao
 
 function object_get_properties(obj){
-	var properties = []
+	var properties = [];
 	
 	switch (asset_get_index(obj)){
 		case oItemBox:
 			properties = [
-				["content", "Contents", "coin", "dropdown", ["coin", "multicoins", "mushroom", "fireflower", "thunderflower"]],
+				["content", "Contents", "coin", "dropdown", ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star"]],
 				["amount", "Amount", 1, "number_input", 50],
 				["bricked", "Is Brick", 0, "checkbox", 0],
-				["hidden", "Is Hidden", 0, "checkbox", 0]
+				["hidden", "Is Hidden", 0, "checkbox", 0],
+				["eject", "Is Dispenser", 0, "checkbox", 0]
 			]
 			break;
 		case oSemiSlope:
@@ -92,10 +93,7 @@ function object_get_properties(obj){
 				["lockon", "Lock Camera", 0, "checkbox", 0]
 			]
 			break;
-		default:
-			properties = [
-			]
-			break;
+		default: break;
 	}
 	return properties;
 }

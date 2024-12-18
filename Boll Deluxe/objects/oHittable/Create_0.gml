@@ -5,6 +5,7 @@ image_speed=0;
 spd=0
 hit=0;
 going=false;
+eject=0;
 dummyTimerReset = 4; //time (in frames) to hold on final "up" pos
 dummyTimer = dummyTimerReset;
 bumpMax = 10; //highest "up" pos for bumping
@@ -14,6 +15,7 @@ default_depth = 1;
 amount=1; // the amount of items to hold
 no_path_follow=false;
 lose_amount=false;
+eject_pause=30;
 
 image_normal = sprite_index
 image_hit = sprite_index

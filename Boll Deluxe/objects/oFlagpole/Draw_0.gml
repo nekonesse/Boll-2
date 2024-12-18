@@ -7,7 +7,8 @@ if (state < 2) {
 	}
 	if (state == 1 && player != noone) {
 		if (reward == 0) {
-			reward = clamp(round(((y - player.y) / bbox_height) * 50), 5, 50);
+			var maxreward = 50;
+			reward = clamp(round(((y - player.y) / bbox_height) * (maxreward + 5)), 5, maxreward);
 		}
 		gfx_y += 2;
 		if (gfx_y > -32) {

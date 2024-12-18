@@ -1,7 +1,13 @@
-
+if (eject == 0 && eject_pause) {
+	eject_pause--;
+	exit;
+}
 ///HIT IS DIRECTION OF BUMP, -1 IS UP, 1 IS DOWN
 if (hit != 0)
 {
+	if (eject != 0) {
+		eject = hit;
+	}
 	if going {
 		if dummyTimer > 0 {
 			dy = approach_val(dy, bumpMax * -hit, 2);
@@ -23,17 +29,24 @@ if (hit != 0)
 		} else {
 			blockBumpFinished.Emit();
 			if (lose_amount) {
-				amount=max(amount-1,0);
+				amount = max(amount - 1,0);
+				if (amount == 0) {
+					eject = 0;
+				}
 			}
-			if !(amount) || !(lose_amount) {
+			if (!(amount) || !(lose_amount)) && (eject == 0) {
 				blockFinished.Emit();
 			} else {
 				sprite_index = image_normal;	
 			}
 			dy = 0;
-			hit = 0;
+			hit = eject;
 			hitNegative = false;
 			dummyTimer = dummyTimerReset;
+			if (eject != 0) {
+				eject_pause = 30;
+				going = true;
+			}
 		}
 		depth=default_depth;
 	}

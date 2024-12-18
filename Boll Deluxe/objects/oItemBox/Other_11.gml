@@ -1,21 +1,27 @@
 ///@description Empty Contents on finish
+var j, i = noone; //i dont know whats the empty resource id
 switch (content) {
+	
 	case "mushroom": {
-		var i=instance_create_depth(x,y,0,oMushroom)
-		i.going=hit
-		i.parentblock=id
-		VinylPlay(snd_itemappear);
+		j = oMushroom;
 	} break;
+	
 	case "fireflower": {
-		var i=instance_create_depth(x,y,0,oFireFlower)
-		i.going=hit
-		i.parentblock=id
-		VinylPlay(snd_itemappear);
+		j = oFireFlower;
 	} break;
+	
 	case "thunderflower": {
-		var i=instance_create_depth(x,y,0,oThunderFlower)
-		i.going=hit
-		i.parentblock=id
-		VinylPlay(snd_itemappear);
+		j = oThunderFlower;
 	} break;
+	
+	case "star": {
+		j = oStar;
+	} break;
+	
+	default: exit; //assume that the box is empty and dont proceed with spawning the object
 }
+
+i = instance_create_depth(x,y,0,j);
+i.going = hit;
+i.parentblock = id;
+VinylPlay(snd_itemappear);

@@ -3,6 +3,7 @@ hitted=0;
 content="coin"
 bricked=false;
 hidden=false;
+eject=false;
 lose_amount=true;
 
 
