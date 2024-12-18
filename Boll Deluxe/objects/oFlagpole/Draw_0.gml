@@ -21,7 +21,7 @@ if (state < 2) {
 	exit;
 }
 
-if (reward + 1) {
+if (reward) {
 	draw_text(x + 2, y - 128, string(reward));
 	global.coins_collected++;
 	VinylPlay(snd_itemcoin);
