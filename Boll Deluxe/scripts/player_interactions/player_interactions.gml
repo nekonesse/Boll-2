@@ -77,13 +77,13 @@ function player_interactions(){
 	}
 	
 	var mysteryorb=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oMysteryOrb, false, true)
-	if (mysteryorb) {
+	if (mysteryorb) && !(finish) {
 		instance_destroy(mysteryorb);
 		finish=1;
 	}
 	
 	var flagpole=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oFlagpole, false, true)
-	if (flagpole) {
+	if (flagpole) && !(finish) {
 		if (flagpole.state == 0) {
 			finish = 1;
 			flagpole.state = 1;

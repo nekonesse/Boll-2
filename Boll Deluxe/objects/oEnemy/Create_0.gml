@@ -65,6 +65,12 @@ enemyStomped.Connect( self, function(hit_p) {
 		phaseid=hit_p
 		phase_leeway=7;
 		killtype="stomp"
+	} else {
+		with(hit_p) {
+			sig.Emit("stomp_failed")
+		}
+		phaseid=hit_p
+		phase_leeway=7;
 	}
 });
 

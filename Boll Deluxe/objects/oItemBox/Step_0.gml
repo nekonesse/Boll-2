@@ -1,8 +1,8 @@
-event_inherited();
-
-if (content == "multicoins" && eject != 0) {
+if eject != 0 && (content == "multicoins") {
 	eject = 0;
 }
+
+event_inherited();
 
 if (hidden) {
 	visible = 0;

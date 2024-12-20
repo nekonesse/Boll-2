@@ -8,10 +8,10 @@ shell_move = true
 can_break_bricks = true
 
 enemyStomped.Connect( self, function(hit_p) {
-	show_debug_message("hi im the okoopa stomp signal")
+	show_debug_message("hi im the oKoopa stomp signal")
 	hp=1
 	if (!no_stomping) {
-		if !in_shell{
+		if !in_shell {
 			VinylPlay(snd_enemystomp)
 			constantspd = 0;
 			enemycoll=true;
@@ -20,7 +20,7 @@ enemyStomped.Connect( self, function(hit_p) {
 			no_stomping = true
 			shell_move = false
 		}
-		if in_shell{
+		if in_shell {
 			VinylPlay(snd_enemystomp)
 			constantspd = 0;
 			enemycoll=true;

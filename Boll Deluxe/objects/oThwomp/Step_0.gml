@@ -13,7 +13,7 @@ if (state = 0) {
 	}
 }
 
-if (state = 1) {
+if (state == 1) {
 	vsp = clamp(vsp + 0.25, 0, 4)
 	col = instance_place(x, y+vsp, oCollider)
 	if col {
@@ -23,7 +23,7 @@ if (state = 1) {
 		y = col.bbox_top - 15
 		VinylPlay(snd_enemyexplode)
 	}
-} else if (state = 2) {
+} else if (state == 2) {
 	if !timer_offset {
 		y = approach_val(y, ystart, 1)
 		frame = 0
