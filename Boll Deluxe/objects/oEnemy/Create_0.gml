@@ -66,6 +66,7 @@ enemyStomped.Connect( self, function(hit_p) {
 		phase_leeway=7;
 		killtype="stomp"
 	} else {
+		show_debug_message("enemy calling stomp_failed")
 		with(hit_p) {
 			sig.Emit("stomp_failed")
 		}

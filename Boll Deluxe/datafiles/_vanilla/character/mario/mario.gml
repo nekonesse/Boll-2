@@ -696,3 +696,7 @@ switch (size) {
 		break;
 }
 grow = 60;
+
+
+#define stomp_failed
+show_debug_message("stomp_failed called")
