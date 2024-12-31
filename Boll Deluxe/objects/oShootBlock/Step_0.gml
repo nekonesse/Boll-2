@@ -4,7 +4,7 @@ if (goDirection != 0) {
 	y += goDirection*3;
 	image_index = ternary(goDirection, 1, 2);
 	
-	if !on_screen_xy(32,32) {
+	if !on_screen_xy(32,32) && !place_meeting(x,y,oActivationRegion) {
 		instance_destroy();
 	}
 	

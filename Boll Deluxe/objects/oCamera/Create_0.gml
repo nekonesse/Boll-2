@@ -4,6 +4,8 @@ state = [0, 0]
 xdist = 0
 ydist = 0
 
+shakeoffset=0;
+
 target = noone;
 stalled = false;
 lockflags = 0;

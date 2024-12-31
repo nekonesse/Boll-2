@@ -82,6 +82,11 @@ function player_interactions(){
 		finish=1;
 	}
 	
+	var steely = collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oBigSteely, true, true)
+	if (steely) && !(hurt) && !(dead) {
+		sig.Emit("hurt_by_spike");
+	}
+	
 	var flagpole=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oFlagpole, false, true)
 	if (flagpole) && !(finish) {
 		if (flagpole.state == 0) {

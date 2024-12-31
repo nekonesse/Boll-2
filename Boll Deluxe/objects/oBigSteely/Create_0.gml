@@ -1,5 +1,5 @@
 ///// PHYSICS /////
-grav=0.25; //we're having an actual grav var now because changing gravity should be EASIER!!
+grav=0.2; //we're having an actual grav var now because changing gravity should be EASIER!!
 defaultgrav = grav; //for resetting gravity back to default
 vsp=0;
 hsp=0;
@@ -10,16 +10,16 @@ cvsp = 0;
 
 steep_slope = false
 
-fric = 0.02; //slipperiness
+fric = 0; //slipperiness
 rot=0
 xsc=1
 ysc=1
-grounded = false
+grounded = true
 piped = false
 
-hit_sizex = 6
-hit_sizey = 6
-collision_array=[oCollider];
+hit_sizex = 20
+hit_sizey = 20
+collision_array=[oCollider, oEnemyGround];
 
 colangle=0;
 
@@ -39,12 +39,32 @@ function ball_movement() {
 		vsp += grav
 		
 		//bounce off the ground
-		if (floor(vsp) > 0 && check_collision_line(x-hit_sizex,y+hit_sizey+vsp,x+hit_sizex,y+hit_sizey+vsp, COL_BOTTOM)) || (floor(vsp) < 0 && check_collision_line(x-hit_sizex,y-hit_sizey-vsp,x+hit_sizex,y-hit_sizey-vsp, COL_TOP)) {
+		if (floor(vsp) > 0.5 && check_collision_line(x-hit_sizex,y+hit_sizey+vsp,x+hit_sizex,y+hit_sizey+vsp, COL_BOTTOM)) || (floor(vsp) < 0 && check_collision_line(x-hit_sizex,y-hit_sizey-vsp,x+hit_sizex,y-hit_sizey-vsp, COL_TOP)) {
 			vsp =-vsp
 			vsp *= 0.5
 			
+			with(oCamera) {
+				shakeoffset=4
+			}
+			
+			VinylPlay(snd_enemyexplode)
+			var i=instance_create_depth(x-1, y + hit_sizey, 0, pSkidDust);
+			i.depth = (depth + 5);
+			i.image_xscale = 1;
+			i.hspeed=-3.25;
+			i.friction=0.2;
+			i.vspeed=-0.2;
+			i.gravity=-0.04;
+			var i=instance_create_depth(x+1, y + hit_sizey, 0, pSkidDust);
+			i.depth = (depth + 5);
+			i.image_xscale = -1;
+			i.hspeed=3.25;
+			i.friction=0.2;
+			i.vspeed=-0.2;
+			i.gravity=-0.04;
+			
 			//bounce off a slope at an angle
-			get_angle_line(x-hit_sizex-2,y+hit_sizey+3,x+hit_sizex+2,y+hit_sizey+3)
+			get_angle_line(x-(hit_sizex-2),y+hit_sizey+5,x+(hit_sizex-2),y+hit_sizey+5)
 			hsp += lengthdir_x(2,colangle+90) //the first value in lengthdir_x is the strength of a slope bounce
 		}
 	} else {
@@ -70,6 +90,9 @@ function ball_movement() {
 		vsp = gsp * -dsin(colangle)
 		hsp = gsp * dcos(colangle)
 	}
+	
+	gsp=clamp(gsp,-3,3)
+	hsp=clamp(hsp,-3,3)
 	
 	x += hsp 
 	y += vsp

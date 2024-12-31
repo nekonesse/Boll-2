@@ -314,9 +314,11 @@ if (camwall)
 	}
 }
 
+shakeoffset=approach_val(shakeoffset, 0, 1)
+
 // move and resize the camera
 xx = clamp(x_final - (xwidth div 2), 0, xmax);
-yy = clamp(y_final - (ywidth div 2), 0, ymax);
+yy = clamp(y_final - (ywidth div 2) + shakeoffset, 0, ymax);
 
 // handle zooming
 var finxdiff = intlib_make_fixedpoint(abs(xx - x_final_prev));

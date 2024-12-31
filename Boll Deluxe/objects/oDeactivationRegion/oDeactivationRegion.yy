@@ -1,15 +1,13 @@
 {
   "$GMObject":"",
-  "%Name":"cleanEdgeTest",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"oDeactivationRegion",
+  "eventList":[],
   "managed":true,
-  "name":"cleanEdgeTest",
+  "name":"oDeactivationRegion",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Control",
+    "path":"folders/Objects/Control.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -30,9 +28,9 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_spawner",
-    "path":"sprites/spr_spawner/spr_spawner.yy",
+    "name":"spr_deactivationregion",
+    "path":"sprites/spr_deactivationregion/spr_deactivationregion.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

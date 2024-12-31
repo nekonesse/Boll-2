@@ -1,9 +1,0 @@
-draw_sprite_cleanedge(sprite_index,
-					  0,
-					  x,
-					  y,
-					  1,
-					  1,
-					  current_time / 60,
-					  c_white,
-					  1);

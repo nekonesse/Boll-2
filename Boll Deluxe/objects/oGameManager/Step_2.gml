@@ -17,6 +17,7 @@ instance_activate_object(oPlayer)
 instance_activate_object(input_controller_object)
 instance_activate_object(oCameraBoundary)
 instance_activate_object(pSmoke)
+instance_activate_object(oDeactivationRegion)
 with(oActivationRegion) {
 	instance_activate_region(x,y,sprite_width,sprite_height,true)
 }

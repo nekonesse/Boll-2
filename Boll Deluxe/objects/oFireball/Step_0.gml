@@ -1,3 +1,5 @@
+event_inherited();
+
 vsp=min(vsp+grav,4)
 
 image_xscale=esign(hsp,1)
