@@ -22,6 +22,9 @@ if (state == 1) {
 		timer_offset = 90
 		y = col.bbox_top - 15
 		VinylPlay(snd_enemyexplode)
+		with(oCamera) {
+			shakeoffset=4
+		}
 	}
 } else if (state == 2) {
 	if !timer_offset {
