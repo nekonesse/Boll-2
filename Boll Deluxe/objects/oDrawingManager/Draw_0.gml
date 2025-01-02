@@ -75,7 +75,7 @@ if instance_exists(oSlime) {
 	for (var i = 0; i < len; i++)
 	{
 		pos = shinecoords[|i];
-		draw_sprite(spr_slime_shine,0,pos[0],pos[1] + pos[2]);
+		draw_sprite(spr_slime_shine,0,pos[0]-camera_x,pos[1] + pos[2]);
 	}
 	
 	surface_reset_target();
