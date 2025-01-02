@@ -36,6 +36,8 @@ colangle=0;
 
 flipped=false
 
+can_break_bricks=true;
+
 sprindex_prev = sprite_index;
 setup_box_poly(id);
 
@@ -47,6 +49,28 @@ function ball_movement() {
 		hsp=-(hsp/2)
 		gsp=hsp
 	}
+	
+	var list=ds_list_create();
+	var num=collision_ellipse_list(x-24+hsp,y-24+vsp,x+24+hsp,y+24+vsp, oCollider, true, true, list, true)
+	
+	if (num > 0) {
+		for (var i = 0; i < num; ++i) {
+			with(list[| i]) {
+				if object_is_ancestor(object_index, oHittable) {
+					blockHit.Emit(-1, id);
+				} else if object_index==oHardBlock {
+					if !VinylIsPlaying(snd_hardblockbreak) VinylPlay(snd_hardblockbreak);
+					instance_destroy();
+					var j=instance_create(x+4,y+12,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-2} //bottom left
+					var j=instance_create(x+12,y+12,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-2} //bottom right
+					var j=instance_create(x+4,y+4,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-4} //top left
+					var j=instance_create(x+12,y+4,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-4} //top right
+				}
+			}
+		}
+	}
+	
+	ds_list_destroy(list);
 	
 	//bounce off wall
 	if check_collision_line(x+hsp+(hit_sizex+1)*xsc, y+(hit_sizey-4),x+hsp+(hit_sizex+1)*xsc, y-(hit_sizey-4), COL_WALL) {

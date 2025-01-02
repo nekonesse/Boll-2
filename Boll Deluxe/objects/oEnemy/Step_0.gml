@@ -23,6 +23,11 @@ if !(in_shell) && (edgeturn) && (grounded)
 	}
 }
 
+var steely=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oBigSteely, true, true)
+
+if (steely) && (abs(steely.hsp)>0) {
+	hp=0
+}
 
 if check_collision_line(x+(hit_sizex+1)*-xsc, y+hit_sizey-3,x+(hit_sizex+1)*-xsc, y-hit_sizey+3, COL_WALL) {
 	enemyTurnAround.Emit();
