@@ -31,6 +31,7 @@ gsp = 0;
 vsp = 0;
 state = "";
 no_move = 1;
+stopsfx(charmName+"skid")
 
 //chopp: oops rewriting the entire players script
 #define step
@@ -504,6 +505,7 @@ if spriteEvent=="crouchIdle" {
 }
 
 #define on_kill
+stopsfx(charmName+"skid")
 playsfx(charmName+"die")
 dead=1
 deadtimer=240;

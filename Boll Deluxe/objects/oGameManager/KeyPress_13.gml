@@ -4,5 +4,7 @@ if (global.jade_testing || global.debug) { // need to be testing the level to st
 	global.checkpointX = no_checkpoint;
 	global.checkpointY = no_checkpoint;
 
+    VinylStopAll();
+    
 	room_goto(rEditor)
 }
