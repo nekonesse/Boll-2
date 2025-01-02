@@ -52,3 +52,7 @@ if (electrocuted) {
 		sig.Emit("hurt_by_electrocution")
 	}
 }
+
+if (pollenated) && (xprevious!=x || yprevious!=y) {
+	part_system_position(pollenPart,x,y)
+}

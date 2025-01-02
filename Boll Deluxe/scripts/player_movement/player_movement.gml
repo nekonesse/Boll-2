@@ -42,9 +42,14 @@ function player_movement(){
 	if (abs(gsp) > maxspd) && (grounded) gsp=approach_val(gsp, maxspd * sign(gsp), 0.5) 
 	if (abs(hsp) > maxspd) && (!grounded) hsp=approach_val(hsp, maxspd * sign(hsp), 0.5)
 	
-	if grounded {
+	if (grounded) {
+		pollenated = false;
 		vsp = gsp * -dsin(colangle)
 		hsp = gsp * dcos(colangle)
+	}
+	
+	if (pollenated) {
+		vsp=min(vsp,1)
 	}
 	
 	x += hsp 

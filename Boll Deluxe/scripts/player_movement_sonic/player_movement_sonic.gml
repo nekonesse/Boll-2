@@ -70,6 +70,7 @@ function player_movement_sonic(){
 	if (abs(hsp) > maxspd) && (!grounded) hsp=approach_val(hsp, maxspd * sign(hsp), 0.5)
 	
 	if (grounded) {
+		pollenated = false;
 		vsp = gsp * -dsin(colangle)
 		hsp = gsp * dcos(colangle)
 	}

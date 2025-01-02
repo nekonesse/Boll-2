@@ -18,6 +18,15 @@ function player_interactions(){
 		grounded = false
 		spring.image_speed=1
 		sig.Emit("sprung")
+		if (spring.object_index == oPollenFlower) {
+			pollenated=true
+			if !part_system_exists(pollenPart) {
+				pollenPart=part_system_create(pPollenParticles);
+				part_system_depth(pollenPart,-1)
+				part_system_position(pollenPart,x+8,y+8)
+				part_system_global_space(pollenPart,true)
+			}
+		}
 	}
 	
 	var amp = collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oAmp, false, true)
