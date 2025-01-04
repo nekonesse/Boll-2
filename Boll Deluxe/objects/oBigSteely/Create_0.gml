@@ -25,7 +25,8 @@ xsc=1
 ysc=1
 grounded = true
 piped = false
-natural = (global.roomTimer < 3)
+natural = false
+//natural = (global.roomTimer < 3)
 
 turned=false
 
