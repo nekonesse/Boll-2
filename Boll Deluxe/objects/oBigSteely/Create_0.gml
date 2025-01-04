@@ -25,6 +25,7 @@ xsc=1
 ysc=1
 grounded = true
 piped = false
+natural = (global.roomTimer < 3)
 
 turned=false
 
@@ -54,6 +55,7 @@ function ball_movement() {
 	var num=collision_ellipse_list(x-24+hsp,y-24+vsp,x+24+hsp,y+24+vsp, oCollider, true, true, list, true)
 	
 	if (num > 0) {
+		var j = noone;
 		for (var i = 0; i < num; ++i) {
 			with(list[| i]) {
 				if object_is_ancestor(object_index, oHittable) {
@@ -61,10 +63,10 @@ function ball_movement() {
 				} else if object_index==oHardBlock {
 					if !VinylIsPlaying(snd_hardblockbreak) VinylPlay(snd_hardblockbreak);
 					instance_destroy();
-					var j=instance_create(x+4,y+12,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-2} //bottom left
-					var j=instance_create(x+12,y+12,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-2} //bottom right
-					var j=instance_create(x+4,y+4,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-4} //top left
-					var j=instance_create(x+12,y+4,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-4} //top right
+					j = instance_create(x+4,y+12,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-2} //bottom left
+					j = instance_create(x+12,y+12,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-2} //bottom right
+					j = instance_create(x+4,y+4,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-4} //top left
+					j = instance_create(x+12,y+4,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-4} //top right
 				}
 			}
 		}

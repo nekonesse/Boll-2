@@ -1384,6 +1384,7 @@
     {"id":{"name":"spr_banzaimask","path":"sprites/spr_banzaimask/spr_banzaimask.yy",},},
     {"id":{"name":"spr_BGtest","path":"sprites/spr_BGtest/spr_BGtest.yy",},},
     {"id":{"name":"spr_bigsteely","path":"sprites/spr_bigsteely/spr_bigsteely.yy",},},
+    {"id":{"name":"spr_bigsteelyClone","path":"sprites/spr_bigsteelyClone/spr_bigsteelyClone.yy",},},
     {"id":{"name":"spr_blasterbase","path":"sprites/spr_blasterbase/spr_blasterbase.yy",},},
     {"id":{"name":"spr_blasterhead","path":"sprites/spr_blasterhead/spr_blasterhead.yy",},},
     {"id":{"name":"spr_brick","path":"sprites/spr_brick/spr_brick.yy",},},
