@@ -6,8 +6,7 @@
 // otherwise, this is a near-straight port, so subpixeling and other Fun Stuff ahoy
 
 /* TODO:
- * make slimes use the standard player_collision functions; might have to hack shit together with
-   the current hitbox code
+ * slime polygon stuff at some point
 */
 
 #macro SLIME_MOVE 0
