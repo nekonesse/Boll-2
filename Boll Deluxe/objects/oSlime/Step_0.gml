@@ -34,7 +34,7 @@ else
 
 if ((global.paused)||(!active)||(!ready))
 {
-	show_debug_message("no.");
+	//show_debug_message("no.");
 	exit;
 }
 
@@ -44,19 +44,6 @@ if (reset_yrel)
 	y_rel = make_s16(spawn_y - camera_y) + 22;
 	reset_yrel--;
 }
-
-if (instance_position(x,y,oCollider)) && (vsp > 0)
-&& (!(action_state == 5))
-{
-	//show_debug_message("collider at point");
-	colflags |= COL_FLOOR;
-	vsp = 0;
-}
-else
-{
-	colflags &= ~COL_FLOOR;
-}
-
 
 var nearestObj = instance_nearest(x,y,oPlayer);
 
@@ -71,6 +58,31 @@ if (nearestObj)
 grounded = (colflags & COL_FLOOR);
 
 SlimeThinker();
+
+// clamp sprite to screen bounds if needed
+morph_max_width = morph.vis_width;
+morph_top = (y div 1) - morph.vis_height;
+var halfwidth = (morph_max_width div 2) + 1;
+
+//show_debug_message("checking collision");
+
+if (colactive)
+{
+	player_collision(true,false,-halfwidth,
+								halfwidth,
+								-morph.vis_height,0,-morph.vis_height div 2);
+}
+
+if (grounded) && (vsp >= 0)
+&& (!(action_state == 5))
+{
+	colflags |= COL_FLOOR;
+	vsp = 0;
+}
+else
+{
+	colflags &= ~COL_FLOOR;
+}
 
 cur_delta = get_timer();
 
@@ -122,10 +134,6 @@ y += vsp;
 
 otime++;
 
-// clamp sprite to screen bounds if needed
-morph_max_width = morph.vis_width;
-morph_top = (y div 1) - morph.vis_height;
-
 morph_exceed = max(0, ((x - camera_x) + ((morph_max_width div 2) + 64)) - 256);
 
 // handle extra collisions
@@ -133,7 +141,7 @@ colflags &= ~COL_CEILI;
 
 var morph_height = abs(y - morph_top);
 
-if (collision_line(x - ((morph_max_width div 2) + 1) + 2,
+/*if (collision_line(x - ((morph_max_width div 2) + 1) + 2,
 				  morph_top,
 				  x + ((morph_max_width div 2) + 1) - 2,
 				  morph_top,
@@ -144,18 +152,10 @@ if (collision_line(x - ((morph_max_width div 2) + 1) + 2,
 	//show_debug_message("collider at point");
 	
 	colflags |= COL_CEILI;
-}
+}*/
 
-if (collision_line(x + ((morph_max_width div 2) + 1),
-				  y - 8,
-				  x + ((morph_max_width div 2) + 1),
-				  y - (morph_height div 2) + 8,oCollider,
-				  false,
-				  true))
-    && (hsp >= 0)
+if (colflags & COL_HORIZ)
 {
-	colflags |= COL_RWALL;
-	
 	if (!(colflags & COL_FLOOR))
 	{
 		slime[SLIME_HSPEED] *= -1;
@@ -166,36 +166,6 @@ if (collision_line(x + ((morph_max_width div 2) + 1),
 	{
 		hsp = 0;
 	}
-}
-else
-{
-	colflags &= ~COL_RWALL;	
-}
-
-if (collision_line(x - ((morph_max_width div 2) + 1),
-				  y - 8,
-				  x - ((morph_max_width div 2) + 1),
-				  y - (morph_height div 2) + 8,oCollider,
-				  false,
-				  true))
-    && (hsp < 0)
-{
-	colflags |= COL_LWALL;
-	
-	if (!(colflags & COL_FLOOR))
-	{
-		slime[SLIME_HSPEED] *= -1;
-		hsp *= -1;
-		hsp_mem *= -1;
-	}
-	else
-	{
-		hsp = 0;
-	}
-}
-else
-{
-	colflags &= ~COL_LWALL;	
 }
 
 if (collision_rectangle(x - ((morph_max_width div 2) + 1),

@@ -24,6 +24,8 @@ init = function()
 	y -= (62 + start_yoff);
 
 	init_slime_data(self);
+	
+	colactive = false;
 
 	vsp = 0;
 	hsp = 0;
@@ -56,6 +58,7 @@ init = function()
 		// start off moving around
 		//SlimeSpawnEyes(self);
 		eyes_visible = true;
+		colactive = true;
 		action_state = 8;
 	
 		if (spawn_huge)
