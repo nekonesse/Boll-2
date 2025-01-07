@@ -9,3 +9,5 @@ global.paused=0;
 global.conductive_array=[oAmp]
 
 HUDsurface=surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
+bgMusic=-1;
+fgMusic=-1;

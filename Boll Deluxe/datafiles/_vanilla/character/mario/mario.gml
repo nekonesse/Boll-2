@@ -604,10 +604,10 @@ if (state != "groundpound") {
 }
 
 #define collide_with_enemy
-var coll=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oEnemy, false, true)
+var coll=check_hitbox_on_hitbox(id, oEnemy)
 if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 	
-if (coll) && !(slopesliding){
+if (coll) && !(slopesliding) {
 	stopsfx(charmName+"damage")
 	hurt=1
 	hsp=2.25*-xsc

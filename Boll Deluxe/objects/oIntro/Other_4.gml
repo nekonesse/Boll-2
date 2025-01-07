@@ -1,4 +1,4 @@
-egg=string(floor(random(3) + 0.5))
+//egg=string(floor(random(3) + 0.5)) sorry im disabling this for now because its unfinished and also might be a problem later on
 if (egg == "3") {
 	sprite_prefetch(sBlast1)
 	

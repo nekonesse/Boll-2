@@ -174,26 +174,44 @@ function check_hitbox_on_hitbox(object1, object2){
 	//var found = noone
 	if !instance_exists(object1) || !instance_exists(object2) exit;
 	
-	var x1, x2, y1, y2
+	var x1, x2, y1, y2, hit_sizex2, hit_sizey2
 	x1 = floor(object1.x)
-	x2 = floor(object2.x)
 	y1 = floor(object1.y)
-	y2 = floor(object2.y)
 	
-	if collision_rectangle(x1 - hit_sizex,y1 - hit_sizey,x1 + hit_sizex,y1 + hit_sizey, object2,false,true)    {
-	    var found_list = ds_list_create()
-	    var found_size = collision_rectangle_list(x1 - hit_sizex,y1 - hit_sizey,x1 + hit_sizex,y1 + hit_sizey, object2,false,true, found_list, false)
-    
-	    for (var i = 0; i < found_size; ++i) {    
-	        var found = found_list[| i];
-	        if rectangle_in_rectangle(x1 - hit_sizex,y1 - hit_sizey,x1 + hit_sizex,y1 + hit_sizey, x2 - hit_sizex,y2 - hit_sizey,x2 + hit_sizex,y2 + hit_sizey) {
-				ds_list_destroy(found_list)
-	            return true;	
+	if (instance_number(object2) > 0) {
+	    for (var i = 0; i < instance_number(object2); ++i) {    
+	        var found = instance_find(object2, i);
+			x2 = floor(found.x)
+			y2 = floor(found.y)
+			hit_sizex2 = found.hit_sizex
+			hit_sizey2 = found.hit_sizey
+	        if rectangle_in_rectangle(x1 - hit_sizex,y1 - hit_sizey,x1 + hit_sizex,y1 + hit_sizey, x2 - hit_sizex2, y2 - hit_sizey2, x2 + hit_sizex2, y2 + hit_sizey2) {
+	            return found;
 			}
 	    }
-        ds_list_destroy(found_list)
     }
+	return noone;
+}
 
+function check_rectangle_in_hitbox(x1, y1, x2, y2, object){
+	//var found = noone
+	if !instance_exists(object) exit;
+	
+	var x3, y3, hit_sizex2, hit_sizey2
+	
+	if (instance_number(object) > 0) {
+	    for (var i = 0; i < instance_number(object); ++i) {    
+	        var found = instance_find(object, i);
+			x3 = floor(found.x)
+			y3 = floor(found.y)
+			hit_sizex2 = found.hit_sizex
+			hit_sizey2 = found.hit_sizey
+	        if rectangle_in_rectangle(x1,y1,x2,y2, x3 - hit_sizex2, y3 - hit_sizey2, x3 + hit_sizex2, y3 + hit_sizey2) {
+	            return found;
+			}
+	    }
+    }
+	return noone;
 }
 
 // polygon collision

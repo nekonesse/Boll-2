@@ -1,4 +1,9 @@
-if (parent_pipe == -1) exit
+if (parent_pipe == noone) {
+	player_collision();
+	x+=hsp
+	y+=vsp
+	exit
+}
 
 if !(go) {
 	timer=max(0,timer-1)
@@ -13,7 +18,7 @@ if !(go) {
 }
 
 if (go != 0) {
-	travel+=go
+	travel=approach_val(travel,32*esign(go,1),go)
 	travel=clamp(travel,-32,32) //i genuinely dont know why this is nessecary considering approach_val should already clamp
 	
 	if !place_meeting(x,y,parent_pipe) && !(exposed) {

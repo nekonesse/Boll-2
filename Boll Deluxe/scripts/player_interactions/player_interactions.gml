@@ -1,19 +1,19 @@
 function player_interactions(){
 	if (piped) exit
 	
-	var enemystomp=collision_line(x-hit_sizex,y+hit_sizey+1,x+hit_sizex,y+hit_sizey+1, oEnemy, false, true)
-	if (enemystomp) && !grounded && vsp > 0 {
+	var enemystomp=check_rectangle_in_hitbox(x-hit_sizex,y+hit_sizey+1,x+hit_sizex,y+hit_sizey+1, oEnemy)
+	if (enemystomp) && !(enemystomp.damage_on_contact) && !(enemystomp.no_stomping) && !grounded && vsp > 0  {
 		if !(hurt) && !(dead) 
 		enemystomp.enemyStomped.Emit(id);
 	} else {
-		var enemy=collision_point(x,y,oEnemy, false, true)
+		var enemy=check_hitbox_on_hitbox(id, oEnemy)
 		if (enemy) && !(hurt) && !(dead)  {
 			enemy.enemyCollidePlayer.Emit(id);
 		}
 	}
 	
 	var spring = collision_line(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey, oTerrainSpring, false, true)
-	if (spring) && !(hurt) && !(dead) {
+	if (spring) && !(hurt) && !(dead)  {
 		vsp=min(-spring.spring_power,vsp) //dont set vsp if it exceeds power
 		grounded = false
 		spring.image_speed=1

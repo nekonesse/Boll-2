@@ -125,6 +125,27 @@ global.VinylConfigSON = [
         ],
     },
     */
+	{
+        mix: "music",
+		
+        members: [
+            mus_overworld_BG_head,
+            mus_overworld_BG_loop,
+			mus_overworld_FG_head,
+            mus_overworld_FG_loop,
+        ],
+    },
+	{
+        hlt: "overworld bgm FG",
+        head: mus_overworld_FG_head,
+        loop: mus_overworld_FG_loop,
+    },
+	{
+        hlt: "overworld bgm BG",
+        head: mus_overworld_BG_head,
+        loop: mus_overworld_BG_loop,
+       
+    },
     {
 		mix: "sound effects",
 		members: [

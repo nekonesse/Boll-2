@@ -783,6 +783,8 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_function_add("check_collision_dot", check_collision_dot, -1);
 		txr_function_add("check_collision_line", check_collision_line, -1);
 		txr_function_add("check_collision_rectangle", check_collision_rectangle, -1);
+		txr_function_add("check_hitbox_on_hitbox", check_hitbox_on_hitbox, -1);
+		txr_function_add("check_rectangle_in_hitbox", check_rectangle_in_hitbox, -1);
 	#endregion
 	 
 	#region DS Lists
