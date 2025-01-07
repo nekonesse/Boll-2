@@ -20,19 +20,7 @@
 
 #macro FINEEASE 65536
 
-globalvar DAT_081a7e84, Slime_Offsets, SlimePosOffsetTable;
-DAT_081a7e84 = [ 0, 0, 0, 0, 1, 2, 3, 4, 6, 8, 10, 12, 14, 16, 19, 22, 25, 28, 32,
-                 36, 40, 44, 48, 52, 57, 62, 67, 72, 78, 84, 90, 96, 102, 108, 115,
-                 122, 96 ];
-
-/*SlimeRoundnessMaybe = [ 0, 22, 31, 38, 44, 49, 54, 58, 61, 65, 68, 71, 74, 77, 79,
-                        82, 84, 86, 88 91, 92, 94, 96, 98, 99, 101, 102, 104, 105,
-                        107, 108, 109, 110, 111, 113, 114, 115, 116, 116, 117,
-                        118, 119, 120, 120, 121, 122, 122, 123, 123, 124, 124,
-                        125, 125, 126, 126, 126, 126, 127, 127, 127, 127, 127,
-                        127, 127, 127, 127, 127, 126, 126, 125, 124, 123, 122,
-                        121, 120, 118, 116, 115, 113, 110, 108, 105, 102, 99, 96,
-                        92, 88, 84, 79, 74, 68, 64, 54, 44, 31, 0 ];*/
+globalvar Slime_Offsets, SlimePosOffsetTable;
 
 Slime_Offsets = [0xEAC0, 0x0EC0, 0xE0F0, 0x18F0, 0x00B0, 0x0000, 0x0000, 0x007F];
 
@@ -51,25 +39,25 @@ SlimePosOffsetTable = [2,  4,  14, 4,
 // easing functions to replace arrays
 function fixedEaseInCirc(a, mul)
 {
-	var b = min(1, max(0, a / FINEEASE));
-	return max(0, min(mul * FINEEASE, (mul div 1) * ((sqrt(1-((b-1)*(b-1))) * FINEEASE) div 1)));
+    var b = min(1, max(0, a / FINEEASE));
+    return max(0, min(mul * FINEEASE, (mul div 1) * ((sqrt(1-((b-1)*(b-1))) * FINEEASE) div 1)));
 }
 
 function fixedEaseOutCirc(a, mul)
 {
-	var aa = max(0, FINEEASE - a);
-	var b = (aa / FINEEASE);
-	return max(0, min(mul * FINEEASE, (mul div 1) * (((sqrt(1-((b-1)*(b-1))) * FINEEASE) div 1))));
+    var aa = max(0, FINEEASE - a);
+    var b = (aa / FINEEASE);
+    return max(0, min(mul * FINEEASE, (mul div 1) * (((sqrt(1-((b-1)*(b-1))) * FINEEASE) div 1))));
 }
 
 function fixedMul(a, b)
 {
-	return (a * b) div FINEEASE;	
+    return (a * b) div FINEEASE;	
 }
 
 function fixedEaseInQuad(a, mul)
 {
-	return fixedMul(a, a) * mul;
+    return fixedMul(a, a) * mul;
 }
 
 // DAT_081a7e84 is a quadratic ease-in into 122, over 36 iterations
@@ -83,18 +71,18 @@ function get_dat_081a7e84(a)
 // this'll allow for easier modification, if ever needed
 function get_slime_width(_x)
 {
-	if (_x < 0) || (_x > 96)
-	{
-		return 0;	
-	}
-	if (_x > 63)
-	{
-		return min(127, fixedEaseOutCirc(((_x - 63)*FINEEASE) div 33, 128) div FINEEASE);
-	}
-	else
-	{
-		return min(127, fixedEaseInCirc((_x*FINEEASE) div 64, 128) div FINEEASE);
-	}
+    if (_x < 0) || (_x > 96)
+    {
+        return 0;	
+    }
+    if (_x > 63)
+    {
+        return min(127, fixedEaseOutCirc(((_x - 63)*FINEEASE) div 33, 128) div FINEEASE);
+    }
+    else
+    {
+        return min(127, fixedEaseInCirc((_x*FINEEASE) div 64, 128) div FINEEASE);
+    }
 }
 
 
@@ -109,9 +97,9 @@ EWR_SprYRelToCamY = 0; // Y relative to the camera, (obj.y - camera_y)
 function init_slime_data(obj = self)
 {
     obj.active = true;
-	
-	// oooooouuuurrrruurgggghghghghghh
-	obj.collision_array = [oCollider, oEnemyGround];
+    
+    // oooooouuuurrrruurgggghghghghghh
+    obj.collision_array = [oCollider, oEnemyGround];
     
     // Morph!!! (crowd cheering sfx)
     obj.morph = new morph_struct(obj);
@@ -128,7 +116,7 @@ function init_slime_data(obj = self)
     obj.colmem = 0;
     obj.colflags = 0; // generic collision flags
     obj.vertcoltime = 0; // timer set whenever a floor or ceiling is hit
-	obj.bounces = 0;
+    obj.bounces = 0;
 
     // damage
     obj.hurtmem = obj.collide_obj;
@@ -138,7 +126,7 @@ function init_slime_data(obj = self)
 
     // speeds
     obj.vsp_px = 0;
-	obj.hsp_mem = 0;
+    obj.hsp_mem = 0;
     obj.vsp_mem = 0;
     obj.movesign = 0; // movement sign
 
@@ -174,7 +162,7 @@ function init_slime_data(obj = self)
     obj.morph_sinmul = 0;
     obj.morph_yprev = 0;
     obj.morph_yprev2 = 0;
-	obj.morph_yoffset = 0;
+    obj.morph_yoffset = 0;
 
     // ta ll
     obj.height = 0;
@@ -201,13 +189,13 @@ function init_slime_data(obj = self)
 
     // boss variant is in its intro state
     obj.intro_state = 0;
-	obj.intro_ypos = 0;
-	obj.intro_ypos2 = 0;
-	obj.intro_yaccel = 2;
-	obj.intro_yspd = 0;
-	
-	// someone ground pounded on us; this speed tracks how fast
-	obj.crush_vsp = -1;
+    obj.intro_ypos = 0;
+    obj.intro_ypos2 = 0;
+    obj.intro_yaccel = 2;
+    obj.intro_yspd = 0;
+    
+    // someone ground pounded on us; this speed tracks how fast
+    obj.crush_vsp = -1;
 
     // we're dead, this is how long it's been for
     obj.deadtime = 0;
@@ -221,32 +209,26 @@ function SlimeSpawn(obj = self)
         // initialize data if the programmers are Stupid
         init_slime_data(obj);
     }
-
-    //obj.xpos = (obj.x * FRACUNIT) div 1;
-    //obj.ypos = (obj.y * FRACUNIT) div 1;
-	
-	obj.vaccel = 0.01171875;
-
-    //obj.x = (obj.xpos div FRACUNIT);
-    //obj.y = (obj.ypos div FRACUNIT);
-
-    // DAT_0202b36a = 0x728;
-    // DAT_0202b37e = 0x7b0;
+    
+    obj.vaccel = 0.01171875;
 
     obj.bottom_bounding = 1968;
 
     obj.action_state = 5;
 
     obj.y += 6;
+    obj.ystart2 = obj.y; // redundant? yea, but ystart is already used, so I have to do this
 
-	obj.intro_ypos = int64(obj.y * FRACUNIT) + 8;
-	obj.intro_ypos2 = obj.intro_ypos;
+    obj.intro_ypos = int64(obj.y * FRACUNIT) + 8;
+    obj.intro_ypos2 = obj.intro_ypos;
 
-    obj.y_rel = make_s16(obj.y - camera_y) + 22;
+    obj.y_rel = make_s16(obj.ystart2 - camera_y)
+                + 22; // this allows the camera to move freely while slimes spawn
+
     obj.rebound = 0;
     obj.vsp_px = 0;
     obj.do_intro = 0;
-	obj.eyexpos = 0;
+    obj.eyexpos = 0;
 
     obj.morph_sinmul = 0;
     obj.morph_sinoffs = 0x100;
@@ -270,9 +252,9 @@ function SlimeSpawn(obj = self)
 function Slime_HandleBGRender(obj = self)
 {
     //show_debug_message("BG render");
-	var morph = obj.morph;
-	
-	// falling from ceiling
+    var morph = obj.morph;
+    
+    // falling from ceiling
     if (obj.action_state == 5)
     {
         // initialize morph spr positions
@@ -280,7 +262,7 @@ function Slime_HandleBGRender(obj = self)
         morph.vis_x = 0;
 
         // this is... using level tick??? what the fuck???
-		// NOT USING LEVEL TICK, I'M A FUCKING MORON
+        // NOT USING LEVEL TICK, I'M A FUCKING MORON
         morph.y2 = (obj.intro_ypos2 div FRACUNIT) - camera_y;
     }
     else
@@ -290,7 +272,7 @@ function Slime_HandleBGRender(obj = self)
             return;
         }
         
-		// chearii: who the fuck commented vis_x out
+        // chearii: who the fuck commented vis_x out
         morph.vis_x = 0;
         morph.vis_y = (make_s8((make_u32(obj.rebound_px) >> 8)) 
                         - make_s16((obj.morph_bottom * 5 >> 5))) - 8;
@@ -317,7 +299,7 @@ function Slime_HandleBGRender(obj = self)
 
     FUN_DrawSlime(obj);
     obj.morph_yprev = morph.y_prev;
-	if (obj.action_state != 5)
+    if (obj.action_state != 5)
     {
         obj.eyexpos = morph.vis_x;
     }
@@ -325,24 +307,24 @@ function Slime_HandleBGRender(obj = self)
 
 function FUN_RenderSlime(morph,obj)
 {
-	// hack: prevent that annoying line at the top of the morph by being selective about excess
+    // hack: prevent that annoying line at the top of the morph by being selective about excess
     if (obj.action_state == 5)
-	{
-		morph.exceed_y = max(0, (morph.y1 + 1 - (CAMERA_MAX_HEIGHT - 8)));	
-	}
-	else
-	{
-		morph.exceed_y = 0;
-	}
-	
-	Slime_SetMorphParams(morph);
+    {
+        morph.exceed_y = max(0, (morph.y1 + 1 - (CAMERA_MAX_HEIGHT - 8)));	
+    }
+    else
+    {
+        morph.exceed_y = 0;
+    }
+    
+    Slime_SetMorphParams(morph);
     Slime_SetXPos(morph);
     SlimePostRenderInteractions(morph,obj,Slime_Offsets);
 }
 
 function FUN_DrawSlime(obj)
 {
-	FUN_RenderSlime(obj.morph,obj);
+    FUN_RenderSlime(obj.morph,obj);
 }
 
 function Slime_SetMorphParams(morph)
@@ -353,9 +335,9 @@ function Slime_SetMorphParams(morph)
     var iVar1;
     //var addr_s16;
     
-	//addr_s16 = new morph_system();
-	
-	var exceed_1 = max(0, (morph.y2 + 1 - (CAMERA_MAX_HEIGHT - 8)));
+    //addr_s16 = new morph_system();
+    
+    var exceed_1 = max(0, (morph.y2 + 1 - (CAMERA_MAX_HEIGHT - 8)));
     
     morph.y2 = morph.y2 + 1;
     morph.y_rel = morph.y_rel + 1;
@@ -365,8 +347,8 @@ function Slime_SetMorphParams(morph)
     offset = (CAMERA_MAX_HEIGHT - 1);
 
     morph.y3 = morph.y1 + 1;
-	
-	var exceed_2 = max(0, (morph.y3 - (CAMERA_MAX_HEIGHT - 8)));
+    
+    var exceed_2 = max(0, (morph.y3 - (CAMERA_MAX_HEIGHT - 8)));
 
     
 
@@ -374,59 +356,59 @@ function Slime_SetMorphParams(morph)
     // read_short(DAT_HeightTable, morph.bottom);
     // DAT_HeightTable is literally a prerender of (1/x); nintendo, WHY???
     morph.height = max(128, (65536 div max(1, morph.bottom)));
-	//show_debug_message($"height: {morph.height}, bottom: {morph.bottom}");
+    //show_debug_message($"height: {morph.height}, bottom: {morph.bottom}");
 
     uHeight = make_u32(morph.height);
-	//show_debug_message(uHeight);
+    //show_debug_message(uHeight);
     morph.x2 = morph.x1;
     if (make_s32(make_s32(morph.x1) + 96) < ((room_width div 1) + 448))
     {
 
-		morph.offset = 160;
-		//var offset_real = morph.offset div 2;
+        morph.offset = 160;
+        //var offset_real = morph.offset div 2;
         hmul = (CAMERA_MAX_HEIGHT - 2) - (morph.y3 - exceed_2);
 
         if (hmul < 0)
         {
             height = make_s32(0x6000 - (uHeight * -hmul));
-			//show_debug_message("out of range");
+            //show_debug_message("out of range");
         }
         else
         {
             //show_debug_message("in range");
-			if ((CAMERA_MAX_HEIGHT - 2) - hmul < 0)
+            if ((CAMERA_MAX_HEIGHT - 2) - hmul < 0)
             {
                 hmul = (CAMERA_MAX_HEIGHT - 1);
             }
-			
+            
             offset = (CAMERA_MAX_HEIGHT - 1) - (hmul + 1);
             morph = Slime_SetStraightWidth(morph,hmul + 1);
-			
+            
             if (offset < 0)
             {
-				return;
+                return;
             }
         }
         hmul = make_s32(morph.scale);
         height2 = ((offset + morph.exceed_y) - (morph.y2 - exceed_1)) + 1;
-		
-		morph.vis_width = make_s32(128 * hmul + 0x40) >> 9;
-		morph.vis_height = 0;
-		
-		//show_debug_message($"height2: {height2}, offset: {offset}, morph's Y2: {(morph.y2 - exceed_1)}");
-		
+        
+        morph.vis_width = make_s32(128 * hmul + 0x40) >> 9;
+        morph.vis_height = 0;
+        
+        //show_debug_message($"height2: {height2}, offset: {offset}, morph's Y2: {(morph.y2 - exceed_1)}");
+        
         do
         {
-			morph.vis_height++;
-			height = make_s32(height - uHeight);
-			
+            morph.vis_height++;
+            height = make_s32(height - uHeight);
+            
             if (height < 0)
             {
-				if (morph.vis_height < 8)
-				{
-					morph.vis_height = 8;	
-				}
-				Slime_SetIncreasingWidth(morph,offset,height2);
+                if (morph.vis_height < 8)
+                {
+                    morph.vis_height = 8;	
+                }
+                Slime_SetIncreasingWidth(morph,offset,height2);
                 return;
             }
 
@@ -434,26 +416,26 @@ function Slime_SetMorphParams(morph)
 
             morph.offset--;
             //set_short(morph.data, morph.offset, (make_s16(iVar1) - make_s16(offset)) + 1);
-			morph.shader_data[1][max(0, morph.offset)] = make_s16((make_s16(iVar1)
-															  - make_s16(offset)) + 1);
+            morph.shader_data[1][max(0, morph.offset)] = make_s16((make_s16(iVar1)
+                                                              - make_s16(offset)) + 1);
             offset--;
 
             if (offset < 0)
             {
-				if (morph.vis_height < 8)
-				{
-					morph.vis_height = 8;	
-				}
-				return;
+                if (morph.vis_height < 8)
+                {
+                    morph.vis_height = 8;	
+                }
+                return;
             }
             
             height2--;
         } until (height2 == 0);
-		
-		if (morph.vis_height < 8)
-		{
-			morph.vis_height = 8;	
-		}
+        
+        if (morph.vis_height < 8)
+        {
+            morph.vis_height = 8;	
+        }
 
         FUN_08109490(morph,offset,iVar1,exceed_2);
     }
@@ -469,17 +451,17 @@ function Slime_SetIncreasingWidth(morph,startwidth,height)
     
     uVar2 = make_u32(~startwidth);
     puVar1 = (morph.offset * 2) + height * -2;
-	
-	//show_debug_message("[SetIncreasingWidth] loop");
+    
+    //show_debug_message("[SetIncreasingWidth] loop");
     do
     {
         uVar2++;
         morph.offset--;
         //set_short(morph.data, morph.offset, uVar2);
-		morph.shader_data[1][max(0, morph.offset)] = make_s16(uVar2);
-		//show_debug_message($"[SetIncreasingWidth] set {make_s16(uVar2)} at {morph.offset}");
+        morph.shader_data[1][max(0, morph.offset)] = make_s16(uVar2);
+        //show_debug_message($"[SetIncreasingWidth] set {make_s16(uVar2)} at {morph.offset}");
     } until (puVar1 >= (morph.offset * 2));
-	//show_debug_message("[SetIncreasingWidth] end loop");
+    //show_debug_message("[SetIncreasingWidth] end loop");
     FUN_08109490(morph,startwidth - height,0);
 }
 
@@ -490,17 +472,17 @@ function Slime_SetStraightWidth(morph, offs, width = 97)
 
     sVar2 = make_s16(0xFF00 | width); // 0xFF61
     min_offset = make_s16((morph.offset * 2) + offs * -2);
-	
-	//show_debug_message("[SetStraightWidth] loop");
+    
+    //show_debug_message("[SetStraightWidth] loop");
     do
     {
         morph.offset--;
         //set_short(morph.data, morph.offset, sVar2);
-		morph.shader_data[1][max(0, morph.offset)] = make_s16(sVar2);
-		//show_debug_message($"set data at {morph.offset}");
+        morph.shader_data[1][max(0, morph.offset)] = make_s16(sVar2);
+        //show_debug_message($"set data at {morph.offset}");
         sVar2++;
     } until (min_offset >= (morph.offset * 2));
-	//show_debug_message("[SetStraightWidth] end loop");
+    //show_debug_message("[SetStraightWidth] end loop");
     return morph;
 }
 
@@ -512,12 +494,12 @@ function FUN_08109490(addr_s16,max_height,width,exceed = 0)
     var iVar3, iVar5;
     var uVar4;
     var pbVar6;
-	
-	var offset_real = addr_s16.offset div 2;
+    
+    var offset_real = addr_s16.offset div 2;
     
     ypos = make_u32(make_s32(addr_s16.y2) - (make_s32(addr_s16.y_rel)));
-	//show_debug_message($"{make_s32(addr_s16.y2)} - {make_s32(addr_s16.y_rel)} = {make_s32(ypos)}");
-	
+    //show_debug_message($"{make_s32(addr_s16.y2)} - {make_s32(addr_s16.y_rel)} = {make_s32(ypos)}");
+    
     uVar4 = make_u32(ypos);
     if (make_s32(ypos) < 0) {
         uVar4 = make_u32(-ypos);
@@ -528,7 +510,7 @@ function FUN_08109490(addr_s16,max_height,width,exceed = 0)
     if (max_height <= uVar4) {
         uVar4 = max_height;
     }
-	//show_debug_message($"FUN_08109490: uVar4: {uVar4}");
+    //show_debug_message($"FUN_08109490: uVar4: {uVar4}");
     iVar5 = uVar4 + 1;
     pbVar6 = 1 + uVar4;
     width = width - make_u32(get_dat_081a7e84(pbVar6));
@@ -543,8 +525,8 @@ function FUN_08109490(addr_s16,max_height,width,exceed = 0)
     }
     else {
         pbVar1 = uVar4; // &DAT_081a7e84 + uVar4
-		//show_debug_message($"FUN_08109490: loop, iVar5: {iVar5}");
-		//addr_s16.offset = iVar5 * 2;
+        //show_debug_message($"FUN_08109490: loop, iVar5: {iVar5}");
+        //addr_s16.offset = iVar5 * 2;
         do
         {
             pbVar6 = pbVar1;
@@ -558,19 +540,19 @@ function FUN_08109490(addr_s16,max_height,width,exceed = 0)
 
             addr_s16.offset--;
             //set_short(addr_s16.data, addr_s16.offset, (make_s16(iVar3) - make_s16(uVar4)) + 1);
-			addr_s16.shader_data[1][max(0, addr_s16.offset)] = make_s16((make_s16(iVar3)
-																- make_s16(uVar4)) + 1);
+            addr_s16.shader_data[1][max(0, addr_s16.offset)] = make_s16((make_s16(iVar3)
+                                                                - make_s16(uVar4)) + 1);
 
             max_height = uVar4 - 1;
             if (make_s32(max_height) < 0)
             {
                 //show_debug_message("FUN_08109490: end loop, return");
-				return;
+                return;
             }
             iVar5 -= 1;
             pbVar1 = pbVar6 - 1;
         } until (make_s32(iVar5) == 0)
-		//show_debug_message("FUN_08109490: end loop");
+        //show_debug_message("FUN_08109490: end loop");
 
         if (max_height < 0x24)
         {
@@ -587,8 +569,8 @@ function FUN_08109450(addr_s16, calcFunc, offset, morphtbl_offs, width, cycles)
     var width_array;
     var min_offset;
     var morphdata, morph_offs;
-	
-	var offset_real = addr_s16.offset div 2;
+    
+    var offset_real = addr_s16.offset div 2;
     
     while(true)
     {
@@ -604,7 +586,7 @@ function FUN_08109450(addr_s16, calcFunc, offset, morphtbl_offs, width, cycles)
 
         addr_s16.offset--;
         //set_short(addr_s16.data, addr_s16.offset, morphdata);
-		addr_s16.shader_data[1][max(0, addr_s16.offset)] = make_s16(morphdata);
+        addr_s16.shader_data[1][max(0, addr_s16.offset)] = make_s16(morphdata);
 
         if ((morph_offs - 1) < 0)
         {
@@ -622,7 +604,7 @@ function FUN_08109450(addr_s16, calcFunc, offset, morphtbl_offs, width, cycles)
                 addr_s16.offset--;
                 morphdata += 1;
                 //set_short(addr_s16.data, addr_s16.offset, morphdata);
-				addr_s16.shader_data[1][max(0, addr_s16.offset)] = make_s16(morphdata);
+                addr_s16.shader_data[1][max(0, addr_s16.offset)] = make_s16(morphdata);
             }
             return;
         }
@@ -642,7 +624,7 @@ function Slime_SetMorphX(morph,
     if (-1 < _y)
     {
         offset = (_y * 2);
-		offset_real = (_y);
+        offset_real = (_y);
         do
         {
             if (_y < CAMERA_MAX_HEIGHT)
@@ -651,24 +633,24 @@ function Slime_SetMorphX(morph,
                     morph.data,
                     offset,
                     );*/
-				morph.shader_data[0][max(0, offset_real)] = make_s16(
-															make_s16(
-															make_s32(sineScale *
-															make_s16(floor(sin((angle & 0xffff)
-																	/ RADFRACDIV) * 256))) >>
-																0x10) +
-																_x) / 256;
+                morph.shader_data[0][max(0, offset_real)] = make_s16(
+                                                            make_s16(
+                                                            make_s32(sineScale *
+                                                            make_s16(floor(sin((angle & 0xffff)
+                                                                    / RADFRACDIV) * 256))) >>
+                                                                0x10) +
+                                                                _x) / 256;
             }
 
             angle = (angle & 0xffff) + angleVel;
             offset -= 2;
-			offset_real--;
+            offset_real--;
 
             _y--;
             limit--;
         } until ((limit == 0) || (-1 >= _y));
-		//show_debug_message("Slime_SetMorphX: end loop");
-		;
+        //show_debug_message("Slime_SetMorphX: end loop");
+        ;
     }
 }
 
@@ -677,12 +659,12 @@ function SetMorphPositions(morph, yoff, xoff)
 {
     var morphY;
     var yPos;
-	
+    
     morphY =
         make_s32(make_s16(make_u16(make_u32(morph.vis_y << 0x10) >> 8)) | make_u8(make_u32(morph.vis_y) >> 8))
-		* ldrsh(morph.bottom) + 0x8000;
+        * ldrsh(morph.bottom) + 0x8000;
     morph.vis_y = make_s16(morphY >> 0x10);
-	
+    
     yPos = (morphY >> 0x10) + yoff;
 
     if (yPos < CAMERA_MAX_HEIGHT)
@@ -706,10 +688,10 @@ function Slime_SetXPos(morph)
     var yPos;
 
     yPos = make_s32(morph.y1);
-	morph.exceed_x = max(0, morph.x2 + ((morph.vis_width div 2) + 64) - 256);
+    morph.exceed_x = max(0, morph.x2 + ((morph.vis_width div 2) + 64) - 256);
     xPos = make_s32(morph.x2 - 8 - morph.exceed_x);
-	
-	var exceed = max(0, (yPos + 1 - (CAMERA_MAX_HEIGHT - 8)));
+    
+    var exceed = max(0, (yPos + 1 - (CAMERA_MAX_HEIGHT - 8)));
 
     Slime_SetMorphX(morph,
                     morph.height * morph.sinoffs >> 8,
@@ -729,7 +711,6 @@ function Slime_SetXPos(morph)
 function SlimePostRenderInteractions(morph,obj,tbl)
 {
     MorphHandleObjectCollisions(morph,obj);
-    //HandleSlimeCollision(morph,obj,tbl);
 }
 
 function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
@@ -743,8 +724,8 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
 
     uVar6 = 0;
     offset = 0;
-	
-	morph.hitme = noone;
+    
+    morph.hitme = noone;
 
     if (morph.collide_severity != 0)
     {
@@ -753,14 +734,14 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
     }
 
     sVar1 = floor((obj.y - obj.hit_sizey) - camera_y);
-	exceed = max(0, sVar1 - (CAMERA_MAX_HEIGHT + 8));
-	
-	var index = 0;
-	
-	var under, over;
-	var xhit, lefthit, righthit;
-	under = 0;
-	over = 0;
+    exceed = max(0, sVar1 - (CAMERA_MAX_HEIGHT + 8));
+    
+    var index = 0;
+    
+    var under, over;
+    var xhit, lefthit, righthit;
+    under = 0;
+    over = 0;
 
     while (true)
     {
@@ -768,9 +749,9 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
         uVar5 = 0;
         // loop for 5 cycles
         targ_offset = offset + 6;
-		index = 0;
-		array_resize(morph.debug_col,1);
-		morph.debug_col[0] = [ 0, 0, 0 ];
+        index = 0;
+        array_resize(morph.debug_col,1);
+        morph.debug_col[0] = [ 0, 0, 0 ];
         do
         {
             // multiply by 2 (presumably prevents erroneous collides)
@@ -782,62 +763,62 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
             uVar2 = make_u32(SlimePosOffsetTable[offset + 1] + ycam);
 
             if (uVar2 < ((CAMERA_MAX_HEIGHT + 8) + yoff))
-			&& (uVar2 >= (yoff))
+            && (uVar2 >= (yoff))
             {
                 // relY = uVar2 = (yoshiRelY + data[cycle + 1])
 
                 var read_pos = (max(0, uVar2 - yoff) );
                 morph.x_width = morph.shader_data[1][read_pos] + make_s16(uVar2 - yoff) & 0xff;
                 x_pos = abs((0x80 - int64(morph.shader_data[0][read_pos] * 256))
-						- make_s32(morph.rel_offset[0]));
+                        - make_s32(morph.rel_offset[0]));
 
                 uVar6 = uVar2;
-				
-				if (morph.x_width >= 255)
-				{
-					morph.x_width = 0;
-				}
-				
-				// resize the debug array if it Exists and is too small
-			    // debug stuff
-				if (variable_instance_exists(morph, "debug_col"))
-			    {
-			        if (array_length(morph.debug_col) < (index + 1))
-			        {
+                
+                if (morph.x_width >= 255)
+                {
+                    morph.x_width = 0;
+                }
+                
+                // resize the debug array if it Exists and is too small
+                // debug stuff
+                if (variable_instance_exists(morph, "debug_col"))
+                {
+                    if (array_length(morph.debug_col) < (index + 1))
+                    {
             
-			            array_resize(morph.debug_col, index + 1);
-			        }
+                        array_resize(morph.debug_col, index + 1);
+                    }
 
-			        // log this!!!
-			        morph.debug_col[index] = [ xpos - (morph.x_width div 2),
-											   (read_pos) + yoff,
-											   xpos + (morph.x_width div 2) ];
-			    }
+                    // log this!!!
+                    morph.debug_col[index] = [ xpos - (morph.x_width div 2),
+                                               (read_pos) + yoff,
+                                               xpos + (morph.x_width div 2) ];
+                }
 
                 // check if there's a collision at this line
                 // enmded up rewriting this because the old system was too jank
-				// it's 2024, not 2003. I don't need to imitate archaic systems!
-				
-				xhit = ((obj.x >= (xpos - (morph.x_width div 2)))
-						&& (obj.x <= (xpos + (morph.x_width div 2))));
-				
-				lefthit = (((obj.x - obj.hit_sizex) >= (xpos - (morph.x_width div 2)))
-							&& ((obj.x - obj.hit_sizex) <= (xpos + (morph.x_width div 2))));
-							
-				righthit = (((obj.x + obj.hit_sizex) >= (xpos - (morph.x_width div 2)))
-							&& ((obj.x + obj.hit_sizex) <= (xpos + (morph.x_width div 2))));
-				
-				if (xhit || lefthit || righthit)
-				&& (morph.x_width > 2)
-				{
-					uVar5 = uVar5 + 1;
-					
-					morph.col_width = morph.x_width div 2;
-					morph.col_height = (read_pos);
-				}
+                // it's 2024, not 2003. I don't need to imitate archaic systems!
+                
+                xhit = ((obj.x >= (xpos - (morph.x_width div 2)))
+                        && (obj.x <= (xpos + (morph.x_width div 2))));
+                
+                lefthit = (((obj.x - obj.hit_sizex) >= (xpos - (morph.x_width div 2)))
+                            && ((obj.x - obj.hit_sizex) <= (xpos + (morph.x_width div 2))));
+                            
+                righthit = (((obj.x + obj.hit_sizex) >= (xpos - (morph.x_width div 2)))
+                            && ((obj.x + obj.hit_sizex) <= (xpos + (morph.x_width div 2))));
+                
+                if (xhit || lefthit || righthit)
+                && (morph.x_width > 2)
+                {
+                    uVar5 = uVar5 + 1;
+                    
+                    morph.col_width = morph.x_width div 2;
+                    morph.col_height = (read_pos);
+                }
             }
             offset += 2;
-			index++;
+            index++;
         } until (offset >= targ_offset);
 
         // check if we're colliding
@@ -857,7 +838,7 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
 
                     // get the x diff (morphline_x - playerXOffset)
                     ycam = (0x80 - int64(morph.shader_data[0][morph_offset] * 256))
-						    - make_s32(morph.rel_offset[0]);
+                            - make_s32(morph.rel_offset[0]);
 
                     // iVar4 = abs(xdiff)
                     iVar4 = abs(ycam);
@@ -919,13 +900,13 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
             morph.colfactor_x = uVar5;
             return;
         }
-		
+        
         morph.fin_collide_severity = morph.collide_severity;
-		
-		if (morph.fin_collide_severity)
-		{
-			morph.hitme = obj;
-		}
+        
+        if (morph.fin_collide_severity)
+        {
+            morph.hitme = obj;
+        }
 
         if (morph.unk_6f46 != 0)
         {
@@ -935,7 +916,7 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
         }
 
         sVar1 = floor((obj.y - obj.hit_sizey) - camera_y);
-		exceed = max(0, sVar1 - (CAMERA_MAX_HEIGHT - 8));
+        exceed = max(0, sVar1 - (CAMERA_MAX_HEIGHT - 8));
 
         // if we get no collision, run the loop a second time
         offset = 20;
@@ -952,89 +933,43 @@ function MorphHandleObjectCollisions(morph, obj)
     // get the closest player, and check them first
 
     var collide_p = instance_nearest(obj.x, obj.y, oPlayer);
-	
-	var exceed = max(0, (obj.y - camera_y) - (CAMERA_MAX_HEIGHT - 8));
+    
+    var exceed = max(0, (obj.y - camera_y) - (CAMERA_MAX_HEIGHT - 8));
 
     if (collide_p)
     {
-		
-		//show_debug_message("player close");
-		morph.col_height = -1;
+        
+        //show_debug_message("player close");
+        morph.col_height = -1;
         CheckMorphCollision(collide_p, morph, obj.x, exceed);
-		
-		if (morph.col_height > -1)
-		{
-			var hit_height = min(CAMERA_MAX_HEIGHT - 8, morph.col_height + collide_p.hit_sizey);
-			var real_height = max(0, obj.y - (hit_height + exceed + camera_y));
-			
-			var heightpct = max(0, min(100, ((real_height) / (morph.vis_height)) * 100)) div 1;
-			
-			if (heightpct >= 60)
-			&& (collide_p.damagespecial > 0)
-			{
-				if (obj.colflags & COL_FLOOR)
-				{
-					// we're being crushed
-					obj.action_state = 9;
-					obj.crush_vsp = int64(collide_p.damagespecial);
-				}
-				else if (obj.action_state != 6)
-				{
-					// slam us to the ground
-					obj.vsp = collide_p.damagespecial + 0.1125;
-					obj.action_state = 0;
-				}
-			}
-		}
-    }
-
-    // TODO: rewrite this Whole Mess to use collision_rectangle_list based on a "hitbox" for the
-    // slime
-    // might also need some sort of "projectile" flag for objects? idk
-    
-    /*do
-    {
-        iVar4 = projectile_ptr;
-        psVar2 = psVar1;
-
-        // no idea what it's doing here, but it indexes a very specific pointer if these two
-        // addresses equal one another
-        if (projectile_ptr == root_ptr)
+        
+        if (morph.col_height > -1)
         {
-            psVar2 = (short*)(DAT_03007240 + 0x132e);
-            iVar4 = DAT_03007240 + 0x12d4;
-        }
-
-        psVar1 = psVar2 + -0x58;
-        projectile_ptr = iVar4 + -0xb0;
-
-        gobj_t* projectile = (gobj_t*)(iVar4 - 0xb0);
-
-        proj_y_rel = ((int)projectile.y_pixel - camera_y);
-        if (((projectile.throwtime != 0) && (STATE_REMOVE < projectile.state)) &&
-            (proj_y_rel < CAMERA_MAX_HEIGHT))
-        {
-            morph.hit_y_rel = make_s16(proj_y_rel);
-            morph.x_width = read_short(morph.data, (proj_y_rel * 2) + 1) + morph.hit_y_rel & 0xff;
-
-            proj_x_diff = (0x80 - read_short(morph.data, ((proj_y_rel & 0xffff) * 2))) -
-                          make_s16(hit.x - camera_x);
-            morph.hit_x_diff = proj_x_diff;
-
-            proj_x_diff = abs(proj_x_diff);
-
-            if (make_u32((proj_x_diff << 1)) < make_u32(morph.x_width))
+            var hit_height = min(CAMERA_MAX_HEIGHT - 8, morph.col_height + collide_p.hit_sizey);
+            var real_height = max(0, obj.y - (hit_height + exceed + camera_y));
+            
+            var heightpct = max(0, min(100, ((real_height) / (morph.vis_height)) * 100)) div 1;
+            
+            if (heightpct >= 60)
+            && (collide_p.damagespecial > 0)
             {
-                SetProjectileCollisionData(root_ptr, obj, projectile_ptr, morph.hit_x_diff);
-                return;
+                if (obj.colflags & COL_FLOOR)
+                {
+                    // we're being crushed
+                    obj.action_state = 9;
+                    obj.crush_vsp = int64(collide_p.damagespecial);
+                }
+                else if (obj.action_state != 6)
+                {
+                    // slam us to the ground
+                    obj.vsp = collide_p.damagespecial + 0.1125;
+                    obj.action_state = 0;
+                }
             }
         }
-        if (projectile_ptr == collide_addr)
-        {
-            obj.collide_objid = 0;
-            return;
-        }
-    } while (true);*/
+    }
+
+    // projectile collisions are handled in the step events
 }
 
 function SetProjectileCollisionData(obj, hit, xdiff)
@@ -1043,154 +978,14 @@ function SetProjectileCollisionData(obj, hit, xdiff)
     obj.collide_obj = hit;
 }
 
-function SlimeCheckCollision(morph, tbl, index, scale, bttm, coords)
-{
-    var ypos;
-
-    var xx1, xx2;
-
-    var mem = [ 0, 0, 0, 0 ];
-
-    /*
-    coords = YYYYXXXX
-    sets a series of collision flags at address 0x030069f4
-    flag bit 0010 = floor collide
-    flag bit 0001 = unknown (wall collide?)
-    */
-
-    // set X coords to check, X position is X + s16((scale * offset_hi_byte) / 256)
-    morph.x_width =
-        make_u16((make_u32(scale * make_u8(tbl[0 + index] >> 8)) / 256) + make_u16(coords));
-
-    xx1 = morph.x_width;
-    xx2 = xx1 + 1;
-
-    mem[0] = morph.x_width;
-
-    // Y position is Y + s16((bttm * offset_lo_byte) / 256)
-    ypos = (bttm * make_u8(tbl[0 + index] & 0xFF) / 256) + (coords >> 0x10);
-    morph.y_width = make_u16(ypos);
-
-    mem[1] = morph.y_width;
-	
-	var exceed = max(0, (ypos - camera_y) - (CAMERA_MAX_HEIGHT - 8));
-
-    if ((ypos - camera_y - exceed) < CAMERA_MAX_HEIGHT)
-    {
-        // get the width of the bottom scanline of our morph, and add our previous width to it
-        morph.x_width =
-            ((0x80 - int64(morph.shader_data[0][(((ypos - camera_y - exceed)))] * 256)) - morph.x2)
-			+ morph.x_width;
-
-        xx2 = morph.x_width;
-
-        mem[2] = ((0x80 - int64(morph.shader_data[0][(((ypos - camera_y - exceed)))] * 256))
-			- morph.x2);
-    }
-
-    // resize the debug array if it Exists and is too small
-    if (variable_instance_exists(morph, "debug_col"))
-    {
-        if (array_length(morph.debug_col) < (index + 1))
-        {
-            
-            array_resize(morph.debug_col, index + 1);
-        }
-
-        // log this!!!
-        morph.debug_col[index] = mem;
-    }
-
-    // check collision
-
-    // CheckCollision_IWRAM(ypos & 0xffff);
-    // hi, we're in GameMaker Land now, we have advanced technology!
-
-    if (instance_line(xx1, ypos, xx2, ypos, oCollider))
-    {
-        morph.colflags |= MCOL_CEILI;
-    }
-    else
-    {
-        morph.colflags &= ~MCOL_CEILI;
-    }
-
-    return index + 1;
-}
-
-function HandleSlimeCollision(morph, obj, tbl)
-{
-    var uVar1;
-    var v_collide_offs;
-    var mBottom, mScale;
-    var coords;
-
-    coords =
-        make_u32(make_u32(make_u32(camera_x) + make_u32(morph.x1)) & 0xffff) |
-        make_u32(make_u32(camera_y) + make_u32(morph.y1) + make_u16(obj.morph_yoffset)) * 0x10000;
-
-    mScale = make_s32(morph.scale);
-    mBottom = make_s32(morph.bottom);
-
-    uVar1 = SlimeCheckCollision(morph, tbl, 0, mScale, mBottom, coords);
-    v_collide_offs = make_s16(make_s16(make_s32(-(morph.colflags & 2)) >> 0x1f) * -2);
-
-    uVar1 = SlimeCheckCollision(morph, tbl, uVar1, mScale, mBottom, coords);
-
-    if ((morph.colflags & MCOL_CEILI) != 0)
-    {
-        // hit floor, add to this
-        v_collide_offs = make_s16(v_collide_offs + 1);
-    }
-    v_collide_offs = make_s16(v_collide_offs * 2);
-
-    uVar1 = SlimeCheckCollision(morph, tbl, uVar1, mScale, mBottom, coords);
-
-    if ((morph.colflags & MCOL_CEILI) != 0)
-    {
-        v_collide_offs = make_s16(v_collide_offs + 1);
-    }
-    v_collide_offs = make_s16(v_collide_offs * 2);
-
-    uVar1 = SlimeCheckCollision(morph, tbl, uVar1, mScale, mBottom, coords);
-
-    if ((morph.colflags & MCOL_CEILI) != 0)
-    {
-        v_collide_offs = make_s16(v_collide_offs + 1);
-    }
-    v_collide_offs = make_s16(v_collide_offs * 2);
-
-    uVar1 = SlimeCheckCollision(morph, tbl, uVar1, mScale, mBottom, coords);
-
-    if ((morph.colflags & MCOL_CEILI) != 0)
-    {
-        v_collide_offs = make_s16(v_collide_offs + 1);
-    }
-    morph.y_prev = morph.y1;
-    v_collide_offs = make_s16(v_collide_offs * 2);
-
-    SlimeCheckCollision(morph, tbl, uVar1, mScale, 0x100, coords);
-
-    if ((morph.colflags & MCOL_VERTI) != 0)
-    {
-        v_collide_offs = make_s16(v_collide_offs + 1);
-    }
-	
-	var vertcolflags = (obj.colflags & COL_VERTI);
-	
-    obj.colflags |= make_s16(v_collide_offs);
-
-    morph.colflags = 0;
-}
-
 function DoSlimeRebound(obj = self, vsp)
 {
-	// THIS IS SO ASSSSSSSS
-	vsp = asr(make_s32(make_u32(vsp << 16)), 16);
-	
-	obj.rebound = make_s16(make_u16(make_u32(vsp * -176) >> FRACBITS));
-	obj.rebound_px = obj.rebound;
-	obj.vsp_px = -(obj.rebound);
+    // THIS IS SO ASSSSSSSS
+    vsp = asr(make_s32(make_u32(vsp << 16)), 16);
+    
+    obj.rebound = make_s16(make_u16(make_u32(vsp * -176) >> FRACBITS));
+    obj.rebound_px = obj.rebound;
+    obj.vsp_px = -(obj.rebound);
 }
 
 function OBJ_SlimeBouncing(obj  = self)
@@ -1218,10 +1013,10 @@ function OBJ_SlimeBouncing(obj  = self)
 
         // this is way messier and harder to read, but more accurate overall;
         // this is EXACTLY how the ASM does it:
-		// the code gets the morph scale, converts it to signed 16-bit by shifting up and back down
-		// 16 bits
-		// THEN, we add 32 fracunits to the object's morph scale * the current scale value
-		// this final value is then converted to a 16 bit integer
+        // the code gets the morph scale, converts it to signed 16-bit by shifting up and back down
+        // 16 bits
+        // THEN, we add 32 fracunits to the object's morph scale * the current scale value
+        // this final value is then converted to a 16 bit integer
         if (true)
         {
             var reg1, oScale2;
@@ -1240,29 +1035,29 @@ function OBJ_SlimeBouncing(obj  = self)
     {
         maxVsp = make_u16(obj.vsp_mem);
     }
-	
-	// get used to ASR spam, it's a tell I ended up writing code based on the ASM LMAO
+    
+    // get used to ASR spam, it's a tell I ended up writing code based on the ASM LMAO
     scaleMem = make_s32(asr(make_s32(make_u32(objScale << 16)), 16));
-	
-	scaleMem += abs(obj.vsp_mem);
+    
+    scaleMem += abs(obj.vsp_mem);
 
     scaleMem = make_s32(make_u32(scaleMem * 2));
-	
-	// get the units of (scale * 2)
+    
+    // get the units of (scale * 2)
     scaleMem = (scaleMem >> FRACBITS);
-	
-	// only 8-bit because Reasons!!!
+    
+    // only 8-bit because Reasons!!!
     scaleMem &= 0xFF;
-	
-	var diff = make_s32(ldrsh(obj.rebound_px) - ldrsh(obj.vsp_mem));
-	
+    
+    var diff = make_s32(ldrsh(obj.rebound_px) - ldrsh(obj.vsp_mem));
+    
     if (diff >= 0)
     {
-		// this is an obnoxiously common procedure, and one of the main reasons why
-		// moving this from subpixeling/fracunits will be a major pain:
-		// the code is using unsigned 16-bit integer checks of subpixel values
-		// to check if the rebounds match
-		if (make_u16(obj.rebound_px) != make_u16(obj.rebound))
+        // this is an obnoxiously common procedure, and one of the main reasons why
+        // moving this from subpixeling/fracunits will be a major pain:
+        // the code is using unsigned 16-bit integer checks of subpixel values
+        // to check if the rebounds match
+        if (make_u16(obj.rebound_px) != make_u16(obj.rebound))
         {
             if (obj.action_state == 2)
             {
@@ -1280,37 +1075,37 @@ function OBJ_SlimeBouncing(obj  = self)
                 // ghidra overcomplicated this to hell
                 var new_vsp, r1, new_vsp_temp;
 
-			    new_vsp = make_u16(obj.vsp_px);
+                new_vsp = make_u16(obj.vsp_px);
 
-			    new_vsp_temp = make_u32(new_vsp << 16);
+                new_vsp_temp = make_u32(new_vsp << 16);
 
-			    if (new_vsp_temp != 0)
-			    {
-					// divide temp vsp by 2
-			        new_vsp_temp = make_s32(asr(new_vsp_temp, 17));
-			        
-					// this is actual nonsense that I can't bother to describe
-					r1 = new_vsp - (128 * FRACUNIT);
-					
-					// do an OR operation for reasons I can't entirely decipher
-			        new_vsp_temp |= r1;
-					
-					// roundtrip; make this an unsigned 16 bit integer
-			        new_vsp_temp = make_s32(make_u32(new_vsp_temp << 16));
-			        new_vsp = make_s32(make_u32(new_vsp_temp) >> 16);
+                if (new_vsp_temp != 0)
+                {
+                    // divide temp vsp by 2
+                    new_vsp_temp = make_s32(asr(new_vsp_temp, 17));
+                    
+                    // this is actual nonsense that I can't bother to describe
+                    r1 = new_vsp - (128 * FRACUNIT);
+                    
+                    // do an OR operation for reasons I can't entirely decipher
+                    new_vsp_temp |= r1;
+                    
+                    // roundtrip; make this an unsigned 16 bit integer
+                    new_vsp_temp = make_s32(make_u32(new_vsp_temp << 16));
+                    new_vsp = make_s32(make_u32(new_vsp_temp) >> 16);
 
-			        if (make_u16(new_vsp) < 0xFFDF)
-			        {
-						// under the maximum, set the new value
-			            obj.vsp_px = make_s16(new_vsp);
-			        }
-			        else
-			        {
-						// over the max, reset vsp_ox
-			            obj.vsp_px = 0;
-						//show_debug_message("alright dirty dan, your time is up!!!!");
-			        }
-			    }
+                    if (make_u16(new_vsp) < 0xFFDF)
+                    {
+                        // under the maximum, set the new value
+                        obj.vsp_px = make_s16(new_vsp);
+                    }
+                    else
+                    {
+                        // over the max, reset vsp_ox
+                        obj.vsp_px = 0;
+                        //show_debug_message("alright dirty dan, your time is up!!!!");
+                    }
+                }
             }
             obj.rebound_px = make_s16(obj.rebound);
         }
@@ -1341,10 +1136,10 @@ function OBJ_SlimeBouncing(obj  = self)
         return;
     }
     rebound2 = make_u16(obj.rebound_px);
-	
+    
     if (rebound2 == make_u16(obj.rebound))
     {
-		if ((obj.action_state == 2) || (rebound2 == 0))
+        if ((obj.action_state == 2) || (rebound2 == 0))
         {
             maxVsp = 0x600;
         }
@@ -1356,7 +1151,7 @@ function OBJ_SlimeBouncing(obj  = self)
             }
             else
             {
-				obj.rebound = make_s16(obj.rebound div 2);
+                obj.rebound = make_s16(obj.rebound div 2);
             }
             maxVsp = 0x1d0;
         }
@@ -1379,8 +1174,8 @@ function OBJ_SlimeBouncing(obj  = self)
                         objVsp = asr((checkVsp * -(1 << 16) >> 16) << 16, 16);
 
                         obj.vsp = make_s32(objVsp) / FRACUNIT;
-						
-						//show_debug_message(obj.vsp);
+                        
+                        //show_debug_message(obj.vsp);
 
                         VinylPlay(snd_slimebounce,false);
 
@@ -1392,7 +1187,7 @@ function OBJ_SlimeBouncing(obj  = self)
                         {
                             return;
                         }
-						//show_debug_message("Find my pages.");
+                        //show_debug_message("Find my pages.");
                         obj.hsp = 0.75;
                     }
                 }
@@ -1400,8 +1195,8 @@ function OBJ_SlimeBouncing(obj  = self)
             else
             {
                 obj.vsp = make_s32(asr(objVsp << 16, 16)) / FRACUNIT;
-				
-				//show_debug_message(obj.vsp);
+                
+                //show_debug_message(obj.vsp);
 
                 VinylPlay(snd_slimebounce,false);
 
@@ -1413,7 +1208,7 @@ function OBJ_SlimeBouncing(obj  = self)
                 {
                     return;
                 }
-				//show_debug_message("five night frederick");
+                //show_debug_message("five night frederick");
                 obj.hsp = 0.75;
             }
         }
@@ -1451,16 +1246,16 @@ function OBJ_SlimeMain(obj = self)
     var colOverride, colflags;
     var vsp_unsigned;
     var oVsp;
-	
-	colOverride = -1;
+    
+    colOverride = -1;
 
     if (obj.vertcoltime == 0)
     {
-		colflags = obj.colflags;
+        colflags = obj.colflags;
         if ((colflags & COL_VERTI) != 0)
         {
             colOverride = colflags & COL_CEILI;
-			obj.colmem = make_u16(colOverride);
+            obj.colmem = make_u16(colOverride);
         }
         else
         {
@@ -1492,10 +1287,10 @@ function OBJ_SlimeMain(obj = self)
     }
 
     // LAB_080be5a6
-	if (colOverride != -1)
-	{
-		obj.colmem = make_u16(colOverride);
-	}
+    if (colOverride != -1)
+    {
+        obj.colmem = make_u16(colOverride);
+    }
 
     if (obj.do_intro == 0)
     {
@@ -1503,26 +1298,26 @@ function OBJ_SlimeMain(obj = self)
         obj.do_intro = 1;
 
         // archive our speed
-		if (obj.hsp != 0)
-		{
-			obj.slime[SLIME_HSPEED] = make_s16(int64(obj.hsp * FRACUNIT));
-		}
-		
-		// bandaid fix, only reset hspeed if colflags match
-		if (((obj.vsp >= 0) && (obj.colflags & COL_FLOOR))
-		    || ((obj.vsp < 0) && (obj.colflags & COL_CEILI)))
-		{
-			obj.hsp = 0;
-		}
-		
-		oVsp = make_s16(obj.vsp_mem);
-	    if (-1 < make_s16(obj.vsp_mem))
-		{
-	        oVsp = -oVsp;
-	    }
+        if (obj.hsp != 0)
+        {
+            obj.slime[SLIME_HSPEED] = make_s16(int64(obj.hsp * FRACUNIT));
+        }
+        
+        // bandaid fix, only reset hspeed if colflags match
+        if (((obj.vsp >= 0) && (obj.colflags & COL_FLOOR))
+            || ((obj.vsp < 0) && (obj.colflags & COL_CEILI)))
+        {
+            obj.hsp = 0;
+        }
+        
+        oVsp = make_s16(obj.vsp_mem);
+        if (-1 < make_s16(obj.vsp_mem))
+        {
+            oVsp = -oVsp;
+        }
 
         obj.vsp_mem = make_u16(oVsp);
-		
+        
         DoSlimeRebound(obj, ldrsh(obj.vsp_mem));
     }
 
@@ -1546,7 +1341,7 @@ function OBJ_SlimeMain(obj = self)
     {
         oVsp = make_s16(vsp_unsigned >> 3) + 0x80;
     }
-	
+    
     obj.height = oVsp;
 }
 
@@ -1555,12 +1350,12 @@ function OBJ_SlimeMain(obj = self)
 function SlimeGeneric(obj)
 {
     var sin_mul, sin_mul_add;
-	
-	if (obj.depth == 610)
-	{
-		obj.depth = obj.real_depth + 1;
-		//obj.eyes.depth = obj.depth - 1;
-	}
+    
+    if (obj.depth == 610)
+    {
+        obj.depth = obj.real_depth + 1;
+        //obj.eyes.depth = obj.depth - 1;
+    }
 
     OBJ_SlimeMain(obj);
     sin_mul = make_u32(make_u16(obj.morph_sinmul) << 16);
@@ -1590,7 +1385,7 @@ function Slime_MoveOnGround(obj)
     }
 
     bounceMem = make_u32(obj.slime[SLIME_BOUNCE]);
-	
+    
     if (bounceMem == 0)
     {
         obj.hsp2 = 192 * ((obj.facing) ? 1 : -1);
@@ -1598,7 +1393,7 @@ function Slime_MoveOnGround(obj)
         if (((obj.colflags & COL_HORIZ) != 0) &&
             (make_s32(((make_u32(obj.colflags & COL_HORIZ) - 6) ^ make_u16(obj.camx2)) << 16) >= 0))
         {
-			obj.hsp2 = -obj.hsp2;
+            obj.hsp2 = -obj.hsp2;
         }
 
         if (obj.slime[SLIME_DMG_REBOUND] != 0)
@@ -1616,14 +1411,14 @@ function Slime_MoveOnGround(obj)
 
         if ((obj.slime[SLIME_BOUNCE] & 1) == 0)
         {
-			obj.haccel = bounceMem & 1;
+            obj.haccel = bounceMem & 1;
             obj.hsp = (bounceMem & 1) / FRACUNIT;
 
             obj.slime[SLIME_MOVE] = 2;
-			
-			// sonic SFX for a mario enemy? blasphemous!
-			VinylPlay(snd_hydrocityturbine,false,0.5);
-			
+            
+            // sonic SFX for a mario enemy? blasphemous!
+            VinylPlay(snd_hydrocityturbine,false,0.5);
+            
             obj.action_state = 3;
             return;
         }
@@ -1633,7 +1428,7 @@ function Slime_MoveOnGround(obj)
 
     obj.morph_scalediff = 0x200 - (obj.morph_scale >> 8);
     obj.hsp_mem = make_s32(asr(make_s32(make_u32(ldrsh(obj.hsp2) * ldrsh(obj.morph_scalediff))),
-							   8));
+                               8));
 
     if (obj.slime[SLIME_BOUNCE] == 0)
     {
@@ -1675,11 +1470,11 @@ function nearest_object_difference(obj = self)
     var result = -1;
 
     var nearest_inst = instance_nearest(x, y, oProjectile);
-	
-	if (!nearest_inst)
-	{
-		return [ 0, noone ];	
-	}
+    
+    if (!nearest_inst)
+    {
+        return [ 0, noone ];	
+    }
     xdiff_pixels = abs(nearest_inst.x - obj.x);
     ydiff_pixels = abs(nearest_inst.y - obj.y);
 
@@ -1699,7 +1494,7 @@ function SlimeChase(obj)
 
     if (make_u16(obj.rebound) != make_u16(obj.rebound_px))
     {
-		if (obj.hsp_mem < 0)
+        if (obj.hsp_mem < 0)
         {
             obj.morph_sinmul--;
         }
@@ -1726,34 +1521,34 @@ function SlimeChase(obj)
     {
         nearest_data = nearest_object_difference(obj);
 
-		if (nearest_data[1])
-		{
-	        nearestObj = nearest_data[1];
-			
-			if (nearestObj)
-	        {
-	            xdiff = make_u32(make_u16(nearestObj.x) - make_u16(obj.x));
-				//show_debug_message(xdiff);
-	            mask_xdiff = xdiff & 0xffff;
+        if (nearest_data[1])
+        {
+            nearestObj = nearest_data[1];
+            
+            if (nearestObj)
+            {
+                xdiff = make_u32(make_u16(nearestObj.x) - make_u16(obj.x));
+                //show_debug_message(xdiff);
+                mask_xdiff = xdiff & 0xffff;
 
-	            if ((xdiff * 0x10000 + 0x800000 >> 0x10 < 0x100) &&
-	                (make_s32((nearestObj.hsp ^ mask_xdiff) * 0x10000) < 0))
-	            {
-	                obj.slime[SLIME_BOUNCE] = 1;
-	                obj.action_state = 1;
+                if ((xdiff * 0x10000 + 0x800000 >> 0x10 < 0x100) &&
+                    (make_s32((nearestObj.hsp ^ mask_xdiff) * 0x10000) < 0))
+                {
+                    obj.slime[SLIME_BOUNCE] = 1;
+                    obj.action_state = 1;
 
-	                if (xdiff >= 0)
-	                {
-	                    obj.slime[SLIME_BOUNCE] = 3;
-	                    return;
-	                }
-	            }
-	        }
-		}
-		else
-		{
-			//obj.action_state = 1;
-		}
+                    if (xdiff >= 0)
+                    {
+                        obj.slime[SLIME_BOUNCE] = 3;
+                        return;
+                    }
+                }
+            }
+        }
+        else
+        {
+            //obj.action_state = 1;
+        }
     }
 
     if ((obj.colflags & 0xc) != 0)
@@ -1767,9 +1562,9 @@ function SlimeJiggle(obj)
     var vspMem;
 
     OBJ_SlimeBouncing(obj);
-	
-	vspMem = make_u16(abs(obj.vsp_mem));
-	
+    
+    vspMem = make_u16(abs(obj.vsp_mem));
+    
     obj.height = make_s16(vspMem >> 3) + 0xa0;
 }
 
@@ -1807,7 +1602,7 @@ function SlimeDefend(obj)
         if (obj.morph_sinoffs == sinoffs_target)
         {
             obj.slime[SLIME_MOVE]--;
-			//show_debug_message("pea. tear. griffin!!");
+            //show_debug_message("pea. tear. griffin!!");
         }
         if (obj.morph_sinmul < 8)
         {
@@ -1815,29 +1610,6 @@ function SlimeDefend(obj)
         }
     }
 }
-
-// !!DEPRECATED, REMOVE!!
-/*function SlimeSpawnEyes(obj)
-{
-    var new_eyes;
-    if (obj.eyes)
-    {
-        // obj.eyes doesn't exist. you saw nothing.
-        instance_destroy(obj.eyes);
-        obj.eyes = noone;
-    }
-
-    // attempt to spawn eyes
-    if (!(obj.eyes))
-    {
-        new_eyes = instance_create_depth(obj.x, obj.y - 56, obj.depth - 1, oSlimeEyes);
-        new_eyes.height = 15;
-        obj.eyes = new_eyes;
-        obj.eyes_id = new_eyes.id;
-        new_eyes.sprframe = 2;  // spawn with eyes open
-    }
-}*/
-
 
 // case 5: setup boss variant (in our case, the standard variant)
 // handled during salvo's boss introduction
@@ -1847,20 +1619,20 @@ function BOSS_Salvo(obj)
     var eyesYDiff;
 
     eyesYDiff = (obj.y - (obj.intro_ypos div FRACUNIT));
-	
-	// behind all main tiles
-	obj.depth = 610;
-	
-	if (obj.grounded)
-	{
-		// immediately move on
-		obj.vaccel = 0.046875;
+    
+    // behind all main tiles
+    obj.depth = 610;
+    
+    if (obj.grounded)
+    {
+        // immediately move on
+        obj.vaccel = 0.046875;
         obj.field_0x1c = (FRACUNIT * 4);
-		obj.action_state++;
-		obj.timer = 32;
+        obj.action_state++;
+        obj.timer = 32;
         obj.eyes_visible = true;
-		obj.colactive = true;
-	}
+        obj.colactive = true;
+    }
     else if (106 < eyesYDiff)
     {
         if (eyesYDiff < 111)
@@ -1870,12 +1642,12 @@ function BOSS_Salvo(obj)
         }
         else
         {
-			obj.vaccel = 0.046875;
+            obj.vaccel = 0.046875;
             obj.field_0x1c = (FRACUNIT * 4);
-			obj.action_state++;
-			obj.timer = 32;
+            obj.action_state++;
+            obj.timer = 32;
             obj.eyes_visible = true;
-			obj.colactive = true;
+            obj.colactive = true;
         }
     }
     OBJ_SlimeMain(obj);
@@ -1884,28 +1656,28 @@ function BOSS_Salvo(obj)
 // case 6: growing
 function SlimeIntro_Grow(obj)
 {
-	
-	var grow_rate = (2.25 * FRACUNIT) div 1;
-	
-	if (obj.timer == 0)
+    
+    var grow_rate = (2.25 * FRACUNIT) div 1;
+    
+    if (obj.timer == 0)
     {
         if (spawn_huge)
-		{
-			// only grow if we have to
-			if (make_s32((obj.morph_scale + grow_rate) * 65536) < 0)
-	        {
-	            obj.morph_scale = make_u16(obj.morph_scale + grow_rate);
-	        }
-	        else
-	        {
-	            obj.morph_scale = 0xffff;
-	        }
-		}
-		else
-		{
-			obj.action_state++;
-		}
-		
+        {
+            // only grow if we have to
+            if (make_s32((obj.morph_scale + grow_rate) * 65536) < 0)
+            {
+                obj.morph_scale = make_u16(obj.morph_scale + grow_rate);
+            }
+            else
+            {
+                obj.morph_scale = 0xffff;
+            }
+        }
+        else
+        {
+            obj.action_state++;
+        }
+        
         OBJ_SlimeMain(obj);
     }
 }
@@ -1940,8 +1712,8 @@ function SlimeHandleDeath(obj)
 
         // IWRAM_SFXPanning = (short)(obj.xpos >> 8) - BG_CamX;
         // PlaySound(0x8d);
-		
-		VinylPlay(snd_popYI,false,0.15,1);
+        
+        VinylPlay(snd_popYI,false,0.15,1);
         
         new_part = instance_create_depth(obj.x, obj.y, obj.depth - 1, pSlimeParticle);
         rand = irandom(65535);
@@ -1952,7 +1724,7 @@ function SlimeHandleDeath(obj)
         new_part.hsp = particle_hspds[min(13, (rand % 14))] / 256;
         new_part.vsp = particle_vspds[min(6, (rand % 7))] / 256;
         new_part.field_0xa2 = 0xff;
-		
+        
     }
     obj.morph_scale = obj.morph_scale - 32;
     if (obj.morph_scale < 0x2000)
@@ -1977,32 +1749,32 @@ function dummyfunc(obj)
 // got crushed by Something
 function SlimeCrushed(obj = self)
 {
-	obj.hsp = 0;
-	obj.height = max(16, obj.height - max(0, int64(obj.crush_vsp * 2)));
-	
-	if (obj.height <= 16)
-	{
-		VinylPlay(snd_popYI,false,0.45,1);
-		// maybe add a spray of particles here?
-		obj.deleteflag = true;	
-	}
+    obj.hsp = 0;
+    obj.height = max(16, obj.height - max(0, int64(obj.crush_vsp * 2)));
+    
+    if (obj.height <= 16)
+    {
+        VinylPlay(snd_popYI,false,0.45,1);
+        // maybe add a spray of particles here?
+        obj.deleteflag = true;	
+    }
 }
 
 globalvar SlimeFuncs;
 
 SlimeFuncs = [SlimeGeneric,          // 0
-			  Slime_MoveOnGround,    // 1
-			  SlimeChase,            // 2
-			  SlimeDefend,           // 3
-			  SlimeGeneric,          // 4
-			  BOSS_Salvo,            // 5
+              Slime_MoveOnGround,    // 1
+              SlimeChase,            // 2
+              SlimeDefend,           // 3
+              SlimeGeneric,          // 4
+              BOSS_Salvo,            // 5
               SlimeGeneric,          // 6
-			  SlimeIntro_Grow,       // 7
-			  SlimeStartBossBattle,  // 8
-			  SlimeCrushed,          // 9
-			  SlimeHandleDeath,      // 10
+              SlimeIntro_Grow,       // 7
+              SlimeStartBossBattle,  // 8
+              SlimeCrushed,          // 9
+              SlimeHandleDeath,      // 10
               SlimeDoPoof
-			  ];
+              ];
 
 
 function SlimeMovePlayer(obj)
@@ -2010,14 +1782,14 @@ function SlimeMovePlayer(obj)
     var hsp_frac, vsp_frac;
     
     var hitme;
-	
-	hitme = obj.morph.hitme;
-	
-	if (!hitme)
-	{
-		return;	
-	}
-	
+    
+    hitme = obj.morph.hitme;
+    
+    if (!hitme)
+    {
+        return;	
+    }
+    
     if (obj.morph.colfactor2 != 0)
     {
         hsp_frac = (hitme.hsp * FRACUNIT) div 1;
@@ -2055,8 +1827,8 @@ function SlimeMovePlayer(obj)
                 // YoshiFrame = 6;
                 // YoshiJumpState = 0x8001;
             }
-			
-			// no, this doesn't make sense
+            
+            // no, this doesn't make sense
             hitme.vsp = (vsp_frac / (FRACUNIT)) / FRACUNIT;
         }
     }
@@ -2084,7 +1856,7 @@ function SlimeCollisionInteractions(obj)
 
     if (obj.vertcoltime == 0)
     {
-		
+        
         if (obj.vsp < 0)
         {
             colmask = ~(COL_FLOOR);
@@ -2105,19 +1877,19 @@ function SlimeCollisionInteractions(obj)
             if ((uVar1 & COL_CEILI) != 0)
             {
                 //show_debug_message($"hit ceiling: {(uVar1 & COL_CEILI)}");
-				
-				obj.morph_yprev2 = obj.morph_yprev - 4;
+                
+                obj.morph_yprev2 = obj.morph_yprev - 4;
 
                 obj.vsp = 0;
-				
-				// don't do this during the intro; it causes the slime to lock up
-				if (obj.action_state != 6)
-				{
-					obj.action_state = 0;
-					
-					obj.vertcoltime++;
-					obj.vaccel = 0;
-				}
+                
+                // don't do this during the intro; it causes the slime to lock up
+                if (obj.action_state != 6)
+                {
+                    obj.action_state = 0;
+                    
+                    obj.vertcoltime++;
+                    obj.vaccel = 0;
+                }
 
                 obj.y = obj.y +
                             make_s32(make_u32(obj.morph_yprev2 - obj.morph_yprev));
@@ -2135,7 +1907,7 @@ function SlimeCollisionInteractions(obj)
         obj.y =
             obj.y +
             ((make_s32(make_u32(obj.morph_yprev2 - obj.morph_yprev) * 0x10000) >> FRACBITS) /
-			FRACUNIT);
+            FRACUNIT);
         uVar2 = make_u32(obj.colflags);
     }
 
@@ -2186,7 +1958,7 @@ function SlimeHandleDamage(obj)
             if (((action != 3) && (action != 9)) && (((action != 10) && (action != 11))))
             {
                 obj.dmgtics = 0x20;
-				hitMe.hit_tics++;
+                hitMe.hit_tics++;
 
                 if (obj.hit_severity != 0)
                 {
@@ -2239,7 +2011,7 @@ function SlimeHandleDamage(obj)
                 newslime.hsp = minislime_hspd / FRACUNIT;
 
                 newslime.vsp = (~(make_u32(irandom(65535) >> 8) | (irandom(65535) & 3) << 8) + 1)
-							   / FRACUNIT;
+                               / FRACUNIT;
                 obj.dmg_factor++;
 
                 if (obj.slime[SLIME_DMG_REBOUND] == 0)
@@ -2297,28 +2069,28 @@ function SlimeStartDeath(obj)
 function SlimeThinker(obj = self)
 {
     var action;
-	
-	var curtime = get_timer();
-	
-	obj.last_delta = 0;
-	obj.last_delta += (curtime);
-	
-	//show_debug_message($"height: {obj.height}, scale: {obj.morph_scale}");
+    
+    var curtime = get_timer();
+    
+    obj.last_delta = 0;
+    obj.last_delta += (curtime);
+    
+    //show_debug_message($"height: {obj.height}, scale: {obj.morph_scale}");
 
     obj.morph_bottom =
         make_u16((make_s32((make_s32(obj.height) * make_u32(obj.morph_scale >> 8)) >> 8) )
             * 3 >> 1);
-			
+            
     if (obj.action_state < 12)
     {
         Slime_HandleBGRender(obj);
         SlimeCollisionInteractions(obj);
     }
-	
-	//return;
-	
+    
+    //return;
+    
     SlimeReboundWalls(obj);
-	
+    
     if (obj.active)
     {
         action = obj.action_state;
@@ -2340,212 +2112,3 @@ function SlimeThinker(obj = self)
         }
     }
 }
-
-// !!DEPRECATED, REMOVE!!
-/*
-function DistanceAngle(xdiff, ydiff)
-{
-    var iVar1, iVar2;
-    var uVar3;
-    var iVar4, iVar5;
-
-    iVar5 = 32896;
-    iVar4 = make_s16(xdiff);
-    if (iVar4 < 0)
-    {
-        iVar5 = 0;
-        iVar4 = -iVar4;
-    }
-    iVar1 = make_s16(ydiff);
-    if (iVar1 < 0)
-    {
-        iVar5 = 128;
-        iVar1 = -iVar1;
-    }
-    iVar2 = iVar4;
-    if (iVar4 <= iVar1)
-    {
-        iVar5 = 64;
-        iVar2 = iVar1;
-        iVar1 = iVar4;
-    }
-    if (512 < iVar2)
-    {
-        iVar2 = 512;
-    }
-
-    uVar3 = make_s32(iVar1 * max(128, (65536 div max(1, iVar2)))) >> FRACBITS;
-    if (0xff < uVar3)
-    {
-        uVar3 = 0xff;
-    }
-
-    var j = (uVar3 / 320);
-    iVar4 = make_s16(int64(68 * sin((j * pi) / 2)));
-
-    if (make_s32(make_u32(iVar5 * 0x10000)) < 0)
-    {
-        iVar4 = -iVar4;
-    }
-    iVar4 = (make_u16(iVar5) & 0x7fff) * 2 + iVar4;
-
-    return iVar4;
-}
-
-function GetSinCosFromAngle(angle)
-{
-  var uVar2;
-  var cosval, sinval;
-  
-  show_debug_message(angle);
-
-  uVar2 = (make_u32(angle << 16) >> 15);
-
-  cosval = int64(-cos((angle) / 256) * 65536) / 16;
-  //cosval = *(short *)(&DAT_081af6ce + uVar2) >> 4;
-  sinval = int64(sin((angle) / 256) * 65536) / 16;
-  return [ cosval, sinval ];
-}
-
-function FUN_080bc094(param_1)
-{
-    var bVar1;
-    var uVar2;
-    var uVar3;
-    var uVar4;
-    var uVar5;
-    var uVar6;
-
-    var xdiff, ydiff;
-
-    var nearestObj = instance_nearest(param_1.x,param_1.y,oPlayer);
-
-    if (nearestObj)
-    {
-        xdiff = nearestObj.x - param_1.x;
-        ydiff = nearestObj.y - param_1.y;
-    }
-	
-	var ang = (degtorad(point_direction(xdiff,ydiff,0,0)) * 256);
-
-    param_1.distsincos = GetSinCosFromAngle(ang);
-
-    uVar5 = make_u8(xdiff);
-    uVar6 = make_u8(ydiff);
-
-    bVar1 = make_u8(param_1.rebound_px);
-
-    uVar3 = bVar1;
-    uVar2 = make_u16(bVar1);
-
-    uVar4 = make_u32(param_1.rebound_px >> 8);
-
-    if (uVar3 != uVar5)
-    {
-        if (make_s32(uVar3 * 0x1000000) < 0)
-        {
-            if ((make_s32(uVar5 * 0x1000000) < 0) && (uVar5 < uVar3))
-            {
-                uVar2 = bVar1 - 1;
-            }
-            else
-            {
-                uVar2 = bVar1 + 1;
-            }
-        }
-        else
-        {
-            if ((-1 < make_s32(uVar5 * 0x1000000)) && (uVar3 <= uVar5))
-            {
-                uVar2 = bVar1 + 1;
-            }
-            else
-            {
-                uVar2 = bVar1 - 1;
-            }
-        }
-        uVar2 = uVar2 & 0xff;
-    }
-
-    if (uVar4 == uVar6)
-    {
-        param_1.rebound_px = uVar2 | make_u16(uVar4 << 8);
-        return;
-    }
-
-    if (make_s32(uVar4 * 0x1000000) < 0)
-    {
-        if (uVar6 == 0)
-        {
-            param_1.rebound_px = uVar2 | make_u16(uVar4 << 8);
-            return;
-        }
-
-        if ((make_s32(uVar6 * 0x1000000) < 0) && (uVar6 < uVar4))
-        {
-            uVar4 = uVar4 - 1;
-        }
-        else
-        {
-            uVar4 = uVar4 + 1;
-        }
-    }
-    else
-    {
-        if ((-1 < make_s32(uVar6 * 0x1000000)) && (uVar4 <= uVar6))
-        {
-            uVar4 = uVar4 + 1;
-        }
-        else
-        {
-            uVar4 = uVar4 - 1;
-        }
-    }
-    uVar4 = uVar4 & 0xff;
-
-    param_1.rebound_px = uVar2 | make_u16(uVar4 << 8);
-    return;
-}
-
-function SlimeEyeVis(obj = self)
-{
-    if (obj.timer != 0)
-    {
-        obj.otime++;
-        return;
-    }
-
-    if (obj.action_state == 0)
-    {		
-		if ((irandom(65535) & 0x1f) == 0)
-        {
-			obj.action_state = 4;
-        }
-
-        obj.otime++;
-        return;
-    }
-	
-    if ((obj.action_state & 1) == 0)
-    {
-        obj.sprframe = make_s16(obj.sprframe - 1) % 3;
-
-        if (obj.sprframe == 0)
-        {
-            obj.action_state--;
-        }
-    }
-    else
-    {
-        obj.sprframe = make_s16(obj.sprframe + 1) % 3;
-
-        if (obj.sprframe == 2)
-        {
-            obj.action_state--;
-        }
-    }
-    obj.timer = 4;
-
-    obj.otime++;
-}
-*/
