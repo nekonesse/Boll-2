@@ -3,7 +3,7 @@ if !dead && !no_step {
 }
 
 /// @description poly collision hell
-player_poly_collision();
+//player_poly_collision();
 
 if !(pollenated) && part_system_exists(pollenPart) {
 	part_system_destroy(pollenPart)

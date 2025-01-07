@@ -67,7 +67,7 @@ function player_poly_collision()
 }
 
 function basic_step_move(iterations = 4){
-    var true_hsp = hsp
+    /*var true_hsp = hsp
     var true_vsp = vsp
     
     repeat(iterations) {
@@ -77,8 +77,9 @@ function basic_step_move(iterations = 4){
         player_interactions();
         player_collision();
     }
-   
-    
+   */
+    player_interactions();
+    player_collision();
 }
 
 
@@ -113,148 +114,146 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 		exit;
 	}
 	
-	// init/reset colflags
-	colflags = 0;
-	
-	var posx, posy
-	posx = x
-	posy = y
-	
-	if (shoveOutOfWalls) {
-		//left wall
-		while check_collision_line(posx+left, posy-sign(vsp)+c+top+3,posx+left,posy-sign(vsp)+c,COL_WALL){
-			x++	
-			posx = x
-			colflags |= COL_LWALL;
-		}
-		
-		//right wall
-		while check_collision_line(posx+right, posy-sign(vsp)+c+top+3,posx+right,posy-sign(vsp)+c,COL_WALL ){
-			x--
-			posx = x
-			colflags |= COL_RWALL;
-		}
-	}
-	
-	//landing on solid ground
-	if !grounded && vsp >= 0 {
-		if check_collision_rectangle(posx+left,posy,posx+right,posy+bottom, COL_BOTTOM){
-			grounded = true
-			colflags |= COL_FLOOR;
-			get_angle_rect(posx+left,posy+bottom-2,posx+right,posy+bottom + 3)
-            
-			
-			if self.object_index = oPlayer{
-				//move up
-				while check_collision_rectangle(posx+left,posy, posx+right, posy+bottom + vsp, COL_BOTTOM) {
-					y --
-					posy = y 
+	var _subPixel = 0.25;
+	if place_meeting(x+hsp, y, collision_array) {
+		if !place_meeting(x+hsp, y-abs(hsp)-1, collision_array) {
+			while place_meeting(x+hsp, y, collision_array) {
+				y -= _subPixel;
+				myFloorPlat=instance_place(x+hsp, y, collision_array)
+			}
+		} else {
+			if !place_meeting(x+hsp, y+abs(hsp)+1, collision_array) {
+				while place_meeting(x+hsp, y, collision_array) {
+					y+= _subPixel;
 				}
-				sig.Emit("floor_land")
 			} else {
-				gsp = hsp
-				vsp = 0	
-			}
-		}
-	}
-	
-	//hitting the ceiling
-	if !grounded && vsp < 0 {
-		if (check_collision_line(posx+right, posy+top, posx+left, posy+top, COL_TOP)){
-			//push out
-				
-			while (check_collision_line(posx+right, posy+top, posx+left, posy+top, COL_TOP)) {
-				y++
-				posy = y
-				
-			}
-			
-			//bonking
-			if object_index == oPlayer{
-				//Hitting / Bumping blocks
-				VinylPlay(snd_blockbump)
-				sig.Emit("ceil_bonk")
-				var _list = ds_list_create();
-				var _num = collision_line_list(posx+left, posy+top-1+vsp, posx+right, posy+top-1+vsp, oHittable, false, true, _list, true);
-				if (_num > 0) {
-					for (var i = 0; i < _num; ++i;) {
-						with(_list[| i]) if !(no_hit) {
-							dummyTimer = dummyTimerReset;
-							blockHit.Emit(-1, other.id)
-						}
-					}
+				var _pixelCheck = _subPixel * sign(hsp)
+				while !place_meeting(x+_pixelCheck, y, collision_array) {
+					x += _pixelCheck;	
 				}
-				ds_list_destroy(_list);
-			}
-			
-			colflags |= COL_CEILI;
-			vsp = 2
-		}
-	}
 	
-	//normal ground loop (for a variety of slopes
-	if grounded {
-		
-		if (vsp > 0)
-		{
-			colflags |= COL_FLOOR;
+				hsp = 0;
+			}
 		}
-		//gets angle so it doesnt jitter
-		get_angle_rect(posx+left,posy+bottom-2,posx+right,posy+bottom + 3)
-		
-		var offsetx, offsety, nopoly;
-		
-		offsetx = xprevious - x
-		offsety = yprevious - y
-		
-		if (!variable_instance_exists(self,"polyfloor"))
-		{
-			nopoly = true;
+	}
+
+	if (vsp >= 0) && !place_meeting(x+hsp, y+1, collision_array) && place_meeting(x+hsp, y+abs(hsp)+1, collision_array) {
+		while !place_meeting(x+hsp, y+_subPixel, collision_array) {
+			y += _subPixel;
 		}
-		else
-		{
-			nopoly = (!abs(polyfloor[1]));
+	}
+
+	x += hsp;
+
+	var _clampVsp = max(0, vsp);
+	var _list = ds_list_create();
+
+	var _num = instance_place_list(x, y+_clampVsp+1, collision_array, _list, false);
+
+	if _num > 0 {
+		for (var i = 0; i < _num; ++i) {
+		   var _inst = _list[| i];
+	   
+		   if place_meeting(x, y+1+_clampVsp, _inst) || (_inst.vsp <= vsp || instance_exists(myFloorPlat)) || (_inst.vsp >= 0) {
+			   var _isWall = !_inst.semi
+			   
+			   myFloorPlat = _inst;
+			   break;
+		   
+			   /*if _isWall || floor(bbox_bottom) <= ceil(_inst.bbox_top-_inst.vsp) {
+				   if !instance_exists(myFloorPlat) 
+				   || ((_inst.bbox_top + _inst.vsp == myFloorPlat.bbox_top + myFloorPlat.vsp) && !_isWall)
+				   || (_inst.bbox_top + _inst.vsp > myFloorPlat.bbox_top + myFloorPlat.vsp)
+				   || (_inst.bbox_top + _inst.vsp > myFloorPlat.bbox_top + myFloorPlat.vsp)
+				   || (_inst.bbox_top + _inst.vsp <= bbox_bottom) {
+					   myFloorPlat = _inst;
+				   }
+			   }*/
+		   } else continue
 		}
+	}
+
+	ds_list_destroy(_list);
+
+	if instance_exists(myFloorPlat) && !place_meeting(x, y+1, myFloorPlat) {
+		myFloorPlat = noone;
+	}
+
+	if instance_exists(myFloorPlat) {
+		while !place_meeting(x, y+_subPixel, myFloorPlat) && !place_meeting(x,y,collision_array) {
+			y += _subPixel;
+		}
+		if myFloorPlat.semi {
+			while place_meeting(x,y,myFloorPlat) {
+				y -= _subPixel;
+			}
+		}
+	
+		y = floor(y);
+		if (object_index==oPlayer) && (vsp!=0) sig.Emit("floor_land")
+		vsp = 0;
+		grounded = true;
+	} else {
+		grounded = false;
+		myFloorPlat = noone;
+	}
+
+	if vsp < 0 {
+		if place_meeting(x,y+vsp, collision_array) {
+			var _slopeSlide = false;
 		
-		//fall
-		if (!check_collision_rectangle(posx+left,posy+bottom,posx+right,posy+bottom + 15 , COL_BOTTOM)){
-				if (nopoly)
-				{
-					vsp = gsp * -dsin(colangle)
-					hsp = gsp * dcos(colangle)
-					grounded = false
-					colflags &= ~(COL_FLOOR);
-					colangle = 0
-					colslope = 0
+			if !(_slopeSlide) {
+				var _pixelCheck = _subPixel * sign(vsp);
+				while !(place_meeting(x, y+_pixelCheck, collision_array)) {
+					y += _pixelCheck;
 				}
-				exit;
+				
+				if (object_index==oPlayer) && (vsp!=0) sig.Emit("floor_land")
+				vsp = 0;
 			}
+		}
+	}
+
+	y += vsp;
+
+	moveplathsp = 0;
+	if instance_exists(myFloorPlat) {
+		moveplathsp = myFloorPlat.hsp;
+	}
+
+	if place_meeting(x+moveplathsp, y, collision_array) {
+		var _pixelCheck = _subPixel * sign(moveplathsp);
+		while !place_meeting(x+_pixelCheck, y, collision_array) {
+			 x+=_pixelCheck;
+		}
+	
+		moveplathsp = 0;
+	}
+	x += moveplathsp;
+
+	if instance_exists(myFloorPlat) && (myFloorPlat.vsp != 0) {
+		if !place_meeting(x, myFloorPlat.bbox_top, collision_array) 
+		&& myFloorPlat.bbox_top >= bbox_bottom {
+			y = myFloorPlat.bbox_top;
+		}
+	
+		if myFloorPlat.vsp < 0 && place_meeting(x,y+myFloorPlat.vsp, collision_array) {
+			if myFloorPlat.object_index == obj_semi || object_is_ancestor(myFloorPlat.object_index, obj_semi) {
+				while place_meeting(x, y+myFloorPlat.vsp, collision_array) {
+					y+=_subPixel;
+				}
 			
-	}
-		
-		
-	if grounded && (shoveOutOfWalls) {
-		
-		var shove = 0;
-		//move down
-		if (check_collision_rectangle(posx+left,posy+bottom,posx+right,posy+bottom + 15 , COL_BOTTOM)){   
-			while !check_collision_line(posx+left,posy+bottom,posx+right,posy+bottom, COL_BOTTOM){
-				y ++ 
-				posy = y
-				shove++;
+				while place_meeting(x,y, collision_array) {
+					y-=_subPixel;
+				}
+				y=round(y);
 			}
-		}
 		
-		//move up
-		while check_collision_line(posx+left,posy+bottom, posx+right, posy+bottom, COL_BOTTOM) {
-			y -- 
-			posy = y
-			shove--;
-		}
-		
-		if object_index == oPlayer{
-			shove = 0;
+			//myFloorPlat = noone;
+			grounded = false;
 		}
 	}
+
+	if (grounded) gsp=hsp
 
 }

@@ -274,6 +274,8 @@ if (state == "jump" || state == "") && !(grounded) && !piped {
 
 if ((state == "" || state=="crouch") && apress && (canjump > 0 || underwater)) && !piped {
 	grounded = false
+	y-=1;
+	myFloorPlat = noone;
 	if (slopesliding) {
 		crouch = false
 	}
@@ -342,7 +344,6 @@ fric = fric * friction_mult;
 	
 player_movement();
 basic_step_move();
-post_wall();
 
 if (grounded) {
 	var i = instance_place(x, y + hit_sizey + 4,oCollider)
