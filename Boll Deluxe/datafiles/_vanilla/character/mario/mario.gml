@@ -341,8 +341,7 @@ if (colangle != 0 && slopesliding) {
 fric = fric * friction_mult;
 	
 player_movement();
-player_interactions();
-player_collision();
+basic_step_move();
 post_wall();
 
 if (grounded) {

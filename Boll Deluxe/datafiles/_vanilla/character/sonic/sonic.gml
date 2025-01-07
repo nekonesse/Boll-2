@@ -332,8 +332,7 @@ if (state == "roll" && grounded) && !(piped) {
 fric = fric * friction_mult;
 	
 player_movement_sonic();
-player_interactions();
-player_collision();
+basic_step_move();
 post_wall();
 
 if (grounded) {

@@ -51,7 +51,4 @@ function player_movement(){
 	if (pollenated) {
 		vsp=min(vsp,1)
 	}
-	
-	x += hsp 
-	y += vsp
 }

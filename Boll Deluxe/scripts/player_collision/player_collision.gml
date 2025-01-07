@@ -66,7 +66,23 @@ function player_poly_collision()
 	}
 }
 
-function player_collision(shoveOutOfWalls=true,auto_coords=true,l,r,t,b,c = 0){
+function basic_step_move(iterations = 4){
+    var true_hsp = hsp
+    var true_vsp = vsp
+    
+    repeat(iterations) {
+        x += hsp /iterations
+        y += vsp /iterations
+        
+        player_interactions();
+        player_collision();
+    }
+   
+    
+}
+
+
+function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,c = 0){
 	
 	var left, right, top, bottom;
 	
@@ -106,14 +122,14 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l,r,t,b,c = 0){
 	
 	if (shoveOutOfWalls) {
 		//left wall
-		while check_collision_dot(posx+left, posy-sign(vsp)+c, COL_WALL){
+		while check_collision_line(posx+left, posy-sign(vsp)+c+top+3,posx+left,posy-sign(vsp)+c,COL_WALL){
 			x++	
 			posx = x
 			colflags |= COL_LWALL;
 		}
 		
 		//right wall
-		while check_collision_dot(posx+right, posy-sign(vsp)+c, COL_WALL){
+		while check_collision_line(posx+right, posy-sign(vsp)+c+top+3,posx+right,posy-sign(vsp)+c,COL_WALL ){
 			x--
 			posx = x
 			colflags |= COL_RWALL;
@@ -122,17 +138,17 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l,r,t,b,c = 0){
 	
 	//landing on solid ground
 	if !grounded && vsp >= 0 {
-		if check_collision_line(posx+left,posy+bottom,posx+right,posy+bottom, COL_BOTTOM){
+		if check_collision_rectangle(posx+left,posy,posx+right,posy+bottom, COL_BOTTOM){
 			grounded = true
 			colflags |= COL_FLOOR;
-			get_angle_line(posx+left,posy+bottom,posx+left,posy+bottom + 3)
-			get_angle_line(posx+right,posy+bottom,posx+right,posy+bottom + 3)
+			get_angle_rect(posx+left,posy+bottom-2,posx+right,posy+bottom + 3)
+            
 			
 			if self.object_index = oPlayer{
 				//move up
-				while check_collision_line(posx+left,posy+bottom, posx+right, posy+bottom, COL_BOTTOM) {
-					y -- 
-					posy = y
+				while check_collision_rectangle(posx+left,posy, posx+right, posy+bottom + vsp, COL_BOTTOM) {
+					y --
+					posy = y 
 				}
 				sig.Emit("floor_land")
 			} else {
@@ -144,12 +160,10 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l,r,t,b,c = 0){
 	
 	//hitting the ceiling
 	if !grounded && vsp < 0 {
-		if (check_collision_dot(posx+right, posy+top, COL_TOP)
-			or check_collision_dot(posx+left, posy+top, COL_TOP)){
+		if (check_collision_line(posx+right, posy+top, posx+left, posy+top, COL_TOP)){
 			//push out
 				
-			while (check_collision_dot(posx+right, posy+top, COL_TOP) 
-				or check_collision_dot(posx+left, posy+top, COL_TOP)) {
+			while (check_collision_line(posx+right, posy+top, posx+left, posy+top, COL_TOP)) {
 				y++
 				posy = y
 				
@@ -186,9 +200,7 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l,r,t,b,c = 0){
 			colflags |= COL_FLOOR;
 		}
 		//gets angle so it doesnt jitter
-		get_angle_line(posx+left,posy+bottom,posx+left,posy+bottom + 3)
-		get_angle_line(posx+right,posy+bottom,posx+right,posy+bottom + 3)
-		
+		get_angle_rect(posx+left,posy+bottom-2,posx+right,posy+bottom + 3)
 		
 		var offsetx, offsety, nopoly;
 		
@@ -205,7 +217,7 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l,r,t,b,c = 0){
 		}
 		
 		//fall
-		if (!check_collision_line(posx+left,posy+bottom,posx+left,posy+bottom + 15 , COL_BOTTOM) && !check_collision_line(posx+right-1,posy+bottom,posx+right-1,posy+bottom + 15, COL_BOTTOM) ){
+		if (!check_collision_rectangle(posx+left,posy+bottom,posx+right,posy+bottom + 15 , COL_BOTTOM)){
 				if (nopoly)
 				{
 					vsp = gsp * -dsin(colangle)
@@ -225,7 +237,7 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l,r,t,b,c = 0){
 		
 		var shove = 0;
 		//move down
-		if (check_collision_line(posx+left,posy+bottom,posx+left,posy+bottom + 15 , COL_BOTTOM) || check_collision_line(posx+right-1,posy+bottom,posx+right-1,posy+bottom + 15, COL_BOTTOM) ){   
+		if (check_collision_rectangle(posx+left,posy+bottom,posx+right,posy+bottom + 15 , COL_BOTTOM)){   
 			while !check_collision_line(posx+left,posy+bottom,posx+right,posy+bottom, COL_BOTTOM){
 				y ++ 
 				posy = y

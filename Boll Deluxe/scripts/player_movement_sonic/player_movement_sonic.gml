@@ -74,7 +74,4 @@ function player_movement_sonic(){
 		vsp = gsp * -dsin(colangle)
 		hsp = gsp * dcos(colangle)
 	}
-	
-	x += hsp 
-	y += vsp
 }

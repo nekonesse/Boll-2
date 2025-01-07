@@ -31,18 +31,18 @@ function check_collision_dot(x1, y1, type = 0, object = collision_array){
 	        if (!found.no_collide) { 
 				if (type == COL_TOP || !found.ceiling_only) {
 		          if (type != COL_BOTTOM && !found.semi) || (type == COL_BOTTOM) {
-						if found.slope {
-							if !(found.rounded) {
-								colslope = found.slope_factor * (-1 + (found.hflip * 2))
-							} else {
-								var new_rise=point_distance(x,y,x,found.bbox_bottom)
-								var new_run=point_distance(x,y,found.x,y)
-								var new_slope_factor=new_rise/new_run
-								colslope = new_slope_factor * (-1 + (found.hflip * 2))
-							}
-		                }else{
-							colslope = 0
-		                }
+						//if found.slope {
+							//if !(found.rounded) {
+								//colslope = found.slope_factor * (-1 + (found.hflip * 2))
+							//} else {
+								//var new_rise=point_distance(x,y,x,found.bbox_bottom)
+								//var new_run=point_distance(x,y,found.x,y)
+								//var new_slope_factor=new_rise/new_run
+								//colslope = new_slope_factor * (-1 + (found.hflip * 2))
+							//}
+		                //}else{
+							//colslope = 0
+		                //}
 						ds_list_destroy(found_list)
 		                return true;
 				  }
@@ -66,18 +66,18 @@ function check_collision_line(x1, y1, x2, y2, type = 0, object = collision_array
 		     if (!found.no_collide) {
 				if (type == COL_TOP || !found.ceiling_only) {
 		          if (type != COL_BOTTOM && !found.semi) || (type == COL_BOTTOM){
-						if found.slope { 
-							if !(found.rounded) {
-								colslope = found.slope_factor * (-1 + (found.hflip * 2))
-							} else {
-								var new_rise=point_distance(x,y,x,found.bbox_bottom)
-								var new_run=point_distance(x,y,found.x,y)
-								var new_slope_factor=new_rise/new_run
-								colslope = new_slope_factor * (-1 + (found.hflip * 2))
-							}
-		                }else{
-							colslope = 0
-		                }
+						//if found.slope { 
+							//if !(found.rounded) {
+								//colslope = found.slope_factor * (-1 + (found.hflip * 2))
+							//} else {
+								//var new_rise=point_distance(x,y,x,found.bbox_bottom)
+								//var new_run=point_distance(x,y,found.x,y)
+								//var new_slope_factor=new_rise/new_run
+								//colslope = new_slope_factor * (-1 + (found.hflip * 2))
+							//}
+		                //}else{
+							//colslope = 0
+		                //}
 						ds_list_destroy(found_list)
 		                return true;
 				  }
@@ -89,7 +89,7 @@ function check_collision_line(x1, y1, x2, y2, type = 0, object = collision_array
 
 }
 
-function check_collision_rectangle(x1, y1, x2, y2, returnme = false, type = 0, object = collision_array){
+function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_array){
 	//var found = noone
 	
 	var bestobj = noone;
@@ -103,43 +103,37 @@ function check_collision_rectangle(x1, y1, x2, y2, returnme = false, type = 0, o
 	        if (!found.no_collide) { 
 				if (type == COL_TOP || !found.ceiling_only) {
 		          if (type != COL_BOTTOM && !found.semi)|| (type == COL_BOTTOM) {
-						if found.slope { 
-							if !(found.rounded) {
-								colslope = found.slope_factor * (-1 + (found.hflip * 2))
-							} else {
-								var new_rise=point_distance(x,y,x,found.bbox_bottom)
-								var new_run=point_distance(x,y,found.x,y)
-								var new_slope_factor=new_rise/new_run
-								colslope = new_slope_factor * (-1 + (found.hflip * 2))
-							}
-		                }else{
-							colslope = 0
-		                }
+						//if found.slope { 
+							//if !(found.rounded) {
+								//colslope = found.slope_factor * (-1 + (found.hflip * 2))
+							//} else {
+								//var new_rise=point_distance(x,y,x,found.bbox_bottom)
+								//var new_run=point_distance(x,y,found.x,y)
+								//var new_slope_factor=new_rise/new_run
+								//colslope = new_slope_factor * (-1 + (found.hflip * 2))
+							//}
+		                //}else{
+							//colslope = 0
+		                //}
 					
-						bestobj = found;
-						ds_list_destroy(found_list)
-		                return ((returnme) ? bestobj : true);
+                        ds_list_destroy(found_list) 
+                        return true;
 				  }
 				}
 			}
 	    }
         ds_list_destroy(found_list)
     }
-	
-	if (returnme)
-	{
-		return bestobj;	
-	}
 }
 
- function get_angle_line(x1, y1, x2, y2){
+ function get_angle_rect(x1, y1, x2, y2){
 	//var found = noone
 	
 	var object = collision_array
 	
-	if collision_line(floor(x1) ,floor(y1),floor(x2), floor(y2), object,false,true)    {
+	if collision_rectangle(floor(x1) ,floor(y1),floor(x2), floor(y2), object,false,true)    {
 	    var found_list = ds_list_create()
-	    var found_size = collision_line_list(floor(x1) ,floor(y1),floor(x2), floor(y2), object,false,true, found_list, true)
+	    var found_size = collision_rectangle_list(floor(x1) ,floor(y1),floor(x2), floor(y2), object,false,true, found_list, true)
 
     
 	    for (var i = 0; i < found_size; ++i) {    
@@ -149,7 +143,12 @@ function check_collision_rectangle(x1, y1, x2, y2, returnme = false, type = 0, o
 				if found.slope {
 					if !found.rounded {
 						colangle = found.angle
+                        colslope = found.slope_factor * (-1 + (found.hflip * 2))
 					} else {
+                        var new_rise=point_distance(x,y,x,found.bbox_bottom)
+                        var new_run=point_distance(x,y,found.x,y)
+                        var new_slope_factor=new_rise/new_run
+                        colslope = new_slope_factor * (-1 + (found.hflip * 2))
 						if !found.hflip {
 							colangle = 360-point_direction(x,y,found.x,found.y) //basically we have to flip it diagonally, so we minus the angle by 360 to get the 'reverse' angle
 						} else {
@@ -157,6 +156,7 @@ function check_collision_rectangle(x1, y1, x2, y2, returnme = false, type = 0, o
 						}
 					}
 	            }else{
+                    colslope = 0
 					colangle = 0
 	            }
 				ds_list_destroy(found_list)
