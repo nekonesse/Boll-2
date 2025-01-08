@@ -24,6 +24,8 @@ pounding_block = false;
 walljump = false;
 firing = 0;
 crouch = false;
+//invincibletype = 0;                                                                                //0 is off, 1 is hurt frames and 2 is invincibility
+//invincibletimer = 0;
 
 #define stop
 hsp = 0;
@@ -56,6 +58,19 @@ switch (size) {
 		else hit_sizey = 6
 	} break
 }
+
+//if !invincibletimer {
+//	switch (invincibletype) {
+//		case 2 : {invincibletimer = 60 invincibletype = 1} break;
+//		case 1 :
+//		default: {invincibletimer = 0  invincibletype = 0} break;
+//	}
+//} else {
+//	invincibletimer -= 1;
+//	if !(global.roomTimer & 3) {
+//		instance_create(random_range(x - 8, x + 8), random_range(y, y - hit_sizey), pShine)
+//	}
+//}
 
 if (braking) xsc=brakedir
 if !in_water()
@@ -553,6 +568,11 @@ VinylPlay(asset_get_index("snd_powerup"))
 oldsize = size;
 size = "thunder";
 grow = 60;
+
+#define star
+VinylPlay(asset_get_index("snd_powerup"));
+//invincibletype = 2;                                                                               
+//invincibletimer = 600;
 
 #define ceil_bonk
 bonk = 12
