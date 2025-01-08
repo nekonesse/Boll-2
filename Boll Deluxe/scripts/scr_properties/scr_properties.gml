@@ -53,6 +53,12 @@ function object_get_properties(obj){
 				["spawn_tall", "Taller", 0, "checkbox", 0]
 			]
 			break;
+		case oBobOmb:
+			properties = [
+				["unshellable", "Panic", false, "checkbox", 0],
+				["in_shell", "Lit", false, "checkbox", 0]
+			]
+			break;
 		case oSwingingPlatform:
 			properties = [
 				["chain_length", "Chain Length", 4, "number_input", 0],
