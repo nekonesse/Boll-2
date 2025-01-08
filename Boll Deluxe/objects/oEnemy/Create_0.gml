@@ -43,6 +43,9 @@ grounded = false
 hit_sizex = 6
 hit_sizey = 6
 
+myFloorPlat=noone;
+moveplathsp=0;
+
 activation_region_width=32;
 activation_region_height=32;
 

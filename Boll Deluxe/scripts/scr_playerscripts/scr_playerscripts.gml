@@ -435,3 +435,9 @@ function player_castlewalk() {
 	    }
 	}
 }
+
+function mask_set(w,h) {
+	sprwidth=sprite_get_width(sprite_index)/2
+	sprheight=sprite_get_height(sprite_index)/2
+	sprite_collision_mask(sprite_index,false,2,sprwidth-(w/2),sprwidth-w,(sprwidth+w)-1,(sprheight*2)-1, bboxkind_rectangular, 0)
+}

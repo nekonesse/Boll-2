@@ -17,6 +17,9 @@ gsp=0;
 chsp = 0;
 cvsp = 0;
 
+myFloorPlat=noone;
+moveplathsp=0;
+
 steep_slope = false
 
 fric = 0.02; //slipperiness

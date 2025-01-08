@@ -46,6 +46,7 @@ else {
 	txr_exec(global.scripts[? $"{charmName}_death"]);
 }
 
+
 if (electrocuted) {
 	electrocution_timer=max(electrocution_timer-1,0);
 	if !(electrocution_timer) {

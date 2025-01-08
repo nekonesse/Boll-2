@@ -116,18 +116,18 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 	
 	var _subPixel = 0.25;
 	if place_meeting(x+hsp, y, collision_array) {
-		if !place_meeting(x+hsp, y-abs(hsp)-1, collision_array) {
-			while place_meeting(x+hsp, y, collision_array) {
+		if !place_meeting(x+hsp, y-abs(hsp*2)-1, collision_array) {
+			while place_meeting(x+hsp, y, collision_array) { //climbing up slope
 				y -= _subPixel;
 				myFloorPlat=instance_place(x+hsp, y, collision_array)
 			}
 		} else {
-			if !place_meeting(x+hsp, y+abs(hsp)+1, collision_array) {
-				while place_meeting(x+hsp, y, collision_array) {
+			if !place_meeting(x+hsp, y+abs(hsp*2)+1, collision_array) {
+				while place_meeting(x+hsp, y, collision_array) { //climbing down ceiling slopes
 					y+= _subPixel;
 				}
 			} else {
-				var _pixelCheck = _subPixel * sign(hsp)
+				var _pixelCheck = _subPixel * sign(hsp) //stop at all
 				while !place_meeting(x+_pixelCheck, y, collision_array) {
 					x += _pixelCheck;	
 				}
@@ -137,7 +137,7 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 		}
 	}
 
-	if (vsp >= 0) && !place_meeting(x+hsp, y+1, collision_array) && place_meeting(x+hsp, y+abs(hsp)+1, collision_array) {
+	if (vsp >= 0) && !place_meeting(x+hsp, y+1, collision_array) && place_meeting(x+hsp, y+abs(hsp*2), collision_array) { //climbing down slope
 		while !place_meeting(x+hsp, y+_subPixel, collision_array) {
 			y += _subPixel;
 		}
@@ -156,11 +156,8 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 	   
 		   if place_meeting(x, y+1+_clampVsp, _inst) || (_inst.vsp <= vsp || instance_exists(myFloorPlat)) || (_inst.vsp >= 0) {
 			   var _isWall = !_inst.semi
-			   
-			   myFloorPlat = _inst;
-			   break;
 		   
-			   /*if _isWall || floor(bbox_bottom) <= ceil(_inst.bbox_top-_inst.vsp) {
+			   if _isWall || floor(bbox_bottom) <= ceil(_inst.bbox_top-_inst.vsp) {
 				   if !instance_exists(myFloorPlat) 
 				   || ((_inst.bbox_top + _inst.vsp == myFloorPlat.bbox_top + myFloorPlat.vsp) && !_isWall)
 				   || (_inst.bbox_top + _inst.vsp > myFloorPlat.bbox_top + myFloorPlat.vsp)
@@ -168,7 +165,7 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 				   || (_inst.bbox_top + _inst.vsp <= bbox_bottom) {
 					   myFloorPlat = _inst;
 				   }
-			   }*/
+			   }
 		   } else continue
 		}
 	}
@@ -183,10 +180,9 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 		while !place_meeting(x, y+_subPixel, myFloorPlat) && !place_meeting(x,y,collision_array) {
 			y += _subPixel;
 		}
-		if myFloorPlat.semi {
-			while place_meeting(x,y,myFloorPlat) {
-				y -= _subPixel;
-			}
+		
+		while place_meeting(x,y,myFloorPlat) {
+			y -= _subPixel;
 		}
 	
 		y = floor(y);
@@ -254,6 +250,8 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 		}
 	}
 
-	if (grounded) gsp=hsp
+	if (grounded) {
+		gsp=hsp
+	}
 
 }

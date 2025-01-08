@@ -6,3 +6,5 @@ rounded = false;
 x_diff = 0;
 y_diff = 0;
 my_friction = 1;
+hsp = 0;
+vsp = 0;
