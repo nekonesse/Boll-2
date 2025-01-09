@@ -51,7 +51,7 @@ function check_collision_dot(x1, y1, type = 0, object = collision_array){
 	    }
         ds_list_destroy(found_list)
     }
-    //return false;
+    return false;
 } 
 
 function check_collision_line(x1, y1, x2, y2, type = 0, object = collision_array){
@@ -86,7 +86,7 @@ function check_collision_line(x1, y1, x2, y2, type = 0, object = collision_array
 	    }
         ds_list_destroy(found_list)
     }
-
+	return false;
 }
 
 function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_array){
@@ -124,6 +124,7 @@ function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_
 	    }
         ds_list_destroy(found_list)
     }
+	return false;
 }
 
  function get_angle_rect(x1, y1, x2, y2){
@@ -166,7 +167,7 @@ function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_
 	    }
         ds_list_destroy(found_list)
     }
-
+	return false;
 }
 
 
@@ -213,6 +214,40 @@ function check_rectangle_in_hitbox(x1, y1, x2, y2, object){
     }
 	return noone;
 }
+
+function check_collision_place(x1, y1, type = 0, object = collision_array){
+    
+    if place_meeting(x1,y1,object)    {
+	    var found_list = ds_list_create()
+	    var found_size = instance_place_list(x1,y1,object,found_list, false)
+    
+	    for (var i = 0; i < found_size; ++i) {    
+	        var found = found_list[| i];
+	        if (!found.no_collide) { 
+				if (type == COL_TOP || !found.ceiling_only) {
+		          if (type != COL_BOTTOM && !found.semi) || (type == COL_BOTTOM) {
+						//if found.slope {
+							//if !(found.rounded) {
+								//colslope = found.slope_factor * (-1 + (found.hflip * 2))
+							//} else {
+								//var new_rise=point_distance(x,y,x,found.bbox_bottom)
+								//var new_run=point_distance(x,y,found.x,y)
+								//var new_slope_factor=new_rise/new_run
+								//colslope = new_slope_factor * (-1 + (found.hflip * 2))
+							//}
+		                //}else{
+							//colslope = 0
+		                //}
+						ds_list_destroy(found_list)
+		                return true;
+				  }
+				}
+			}
+	    }
+        ds_list_destroy(found_list)
+    }
+    return false;
+} 
 
 // polygon collision
 
