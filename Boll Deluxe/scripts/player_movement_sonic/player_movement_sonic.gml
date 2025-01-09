@@ -17,33 +17,23 @@ function player_movement_sonic(){
 		if grounded {
 			var signmatch = check_signs_matching_zero(gsp, move);
 			//var accel_real = ((signmatch) ? accel : fastaccel);
-			if skidding {
-				gsp += (move * skid_accel);	
-			} else {
-				if signmatch {
-					if (abs(gsp) < topspd) && accel != 0 {
-						gsp += (move * accel);
-						if (abs(gsp) > topspd) {
-							gsp = topspd * sign(gsp);
-						}
-					}
-				} else {
-					gsp += (move * fastaccel);
-				}
-			}
-		}else {
-			var signmatch = check_signs_matching(hsp, move);
-			//var accel_real = ((signmatch) ? accel : fastaccel);
 			if signmatch {
-				if (abs(hsp) < topspd) && accel != 0 {
-					hsp += (move * accel);
-					if (abs(hsp) > topspd) {
-						hsp = topspd * sign(hsp);
-					}
-				}
-			} else {
-				hsp += (move * fastaccel);
-			}
+				if (abs(gsp) < topspd) && accel != 0 {
+					gsp += (move * accel);
+					//if (abs(gsp) > topspd) {
+						//gsp = topspd * sign(gsp);
+					//}
+				} 
+            } else {
+				gsp += (move * fastaccel); 
+            }
+			
+		}else {
+			//var signmatch = check_signs_matching(hsp, move);
+			//var accel_real = ((signmatch) ? accel : fastaccel);
+            if (abs(hsp) < topspd) && accel != 0 {  
+                hsp += (move * accel);
+            }
 		}
 		
 	}
@@ -62,8 +52,8 @@ function player_movement_sonic(){
 		}
 	}
 	
-	if !grounded && vsp > -4 && vsp < 0 {
-		hsp -= (hsp / 128)	
+	if !grounded && vsp > -2.5 && vsp < 0 {
+		hsp -= (floor(hsp / 0.125) / 512)
 	}
 	
 	if (abs(gsp) > maxspd) && (grounded) gsp=approach_val(gsp, maxspd * sign(gsp), 0.5) 

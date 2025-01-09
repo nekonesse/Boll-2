@@ -116,7 +116,11 @@ if (state == "roll") {
 	rolling = true
 }
 
-if !(control_lock > 0 || hurt || state == "wallrun" || electrocuted || walljump) no_move = false
+if !(control_lock > 0 || state == "wallrun" || electrocuted || walljump) no_move = false
+
+if (hurt) {
+	no_move = true;
+}
 
 control_lock = max(0,control_lock - 1)
 
@@ -386,7 +390,7 @@ switch (state) {
 			}
 		} else {
 			wait_timer = 0;
-			if (ceil(abs(gsp))>3) {
+			if (ceil(abs(gsp))>=topspd) {
 				frspd=abs(gsp)/4
 				spriteEvent="run"
 			}
