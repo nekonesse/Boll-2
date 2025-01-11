@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"JADE",
-    "path":"folders/Sprites/JADE.yy",
+    "name":"Objects",
+    "path":"folders/Sprites/JADE/Objects.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

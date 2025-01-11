@@ -9,4 +9,7 @@ y-=16
 xscale=1
 yscale=1
 
+hit_sizex=32
+hit_sizey=32
+
 event_user(0)

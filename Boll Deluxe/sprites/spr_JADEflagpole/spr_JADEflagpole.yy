@@ -26,7 +26,7 @@
   "origin":9,
   "parent":{
     "name":"Objects",
-    "path":"folders/Sprites/Objects.yy",
+    "path":"folders/Sprites/JADE/Objects.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

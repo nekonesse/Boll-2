@@ -16,7 +16,15 @@ for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 	
 	//for some reason applying camera x and camera y to the second rectangle just doesnt work for some reason 
 	
-	if !rectangle_in_rectangle(obj[1]*16, obj[2]*16, (obj[1]*16)+(sprite[3]*obj[3])-camera_get_view_x(view_camera[0]),(obj[2]*16)+(sprite[4]*obj[4])-camera_get_view_y(view_camera[0]), 0, 0, camera_get_view_x(view_camera[0])+camera_get_view_width(view_camera[0]), camera_get_view_y(view_camera[0])+camera_get_view_height(view_camera[0]))
+	if !rectangle_in_rectangle(
+		obj[1]*16,
+		obj[2]*16,
+		(obj[1]*16)+(sprite[3]*obj[3])-camera_get_view_x(view_camera[0]),
+		(obj[2]*16)+(sprite[4]*obj[4])-camera_get_view_y(view_camera[0]),
+		0, 0, 
+		camera_get_view_x(view_camera[0])+camera_get_view_width(view_camera[0]),
+		camera_get_view_y(view_camera[0])+camera_get_view_height(view_camera[0])
+	)
 	continue;
 	
 	var objalpha=1
