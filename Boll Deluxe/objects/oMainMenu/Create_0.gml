@@ -35,3 +35,6 @@ rebindKey = function(_giveBind) {
 		input_binding_set_safe(lemmebind, _binding);
 	});
 }
+
+//Touch Control
+if (global.touchscreen) {instance_create(x,y,oTouchControl)}

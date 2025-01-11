@@ -1288,3 +1288,6 @@ global.zoom_on_start = false; // does this level have the starting zoom-in?
 
 //// General data ////
 global._playerChars = [];
+
+global.touchscreen = 1
+//global.touchscreen = os_android
