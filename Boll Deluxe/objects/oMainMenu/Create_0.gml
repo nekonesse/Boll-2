@@ -37,4 +37,4 @@ rebindKey = function(_giveBind) {
 }
 
 //Touch Control
-if (global.touchscreen) {instance_create(x,y,oTouchControl)}
+if (global.touchscreen=1) {instance_create(x,y,oTouchControl)}
