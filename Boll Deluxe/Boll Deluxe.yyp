@@ -406,6 +406,7 @@
     {"$GMIncludedFile":"","%Name":"wait.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/big","name":"wait.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"walk.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/big","name":"walk.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"walkcarry.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/big","name":"walkcarry.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"walljump.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/big","name":"walljump.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"wallrun.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/big","name":"wallrun.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"boll.buf","CopyToMask":-1,"filePath":"datafiles/_vanilla/media","name":"boll.buf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"controllerblacklist.csv","CopyToMask":-1,"filePath":"datafiles","name":"controllerblacklist.csv","resourceType":"GMIncludedFile","resourceVersion":"2.0",},

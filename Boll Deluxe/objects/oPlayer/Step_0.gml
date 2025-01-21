@@ -5,7 +5,8 @@ if keyboard_check_pressed(vk_f4) greenmode=!greenmode
 //updateBox.Emit()
 
 if collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey,oDeathPit,false,true) && !dead {
-	hurt=1
+	hurt = 1
+	invincible_type = 0
 	sig.Emit("on_kill")
 }
 
@@ -55,4 +56,34 @@ if (electrocuted) {
 
 if (pollenated) && (xprevious!=x || yprevious!=y) {
 	part_system_position(pollenPart,x,y)
+}
+
+if (invincible_timer) {
+	invincible_timer --;
+	switch (invincible_type) {
+		case 2 : {
+			if (invincible_timer <= 0) {
+				invincible_timer = 90;
+				invincible_type = 1;
+				break;
+			}
+			instance_create(random_range(bbox_left,bbox_right),random_range(bbox_top,bbox_bottom),pShine)
+		} break;
+		case 1 : {
+			visible = (invincible_timer & 1 == 0)
+			
+			//the visible variable just skips the draw events entirely.
+			//if the player object relies on it, uncomment the line at 
+			// the draw event and delete this one.
+			
+			if (invincible_timer <= 0) {
+				invincible_type = 0;
+			}
+		} break;
+		case 0 : {
+			invincible_timer = 0;
+			//visible = true;
+		}
+		default : break;
+	}
 }

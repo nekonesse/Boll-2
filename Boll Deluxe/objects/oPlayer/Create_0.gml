@@ -103,11 +103,12 @@ colslope = 0;
 steep_slope = 0;
 slopesliding = 0;
 hurt=0;
+invincible_timer=intlib_make_u64(0);
+invincible_type=0;
 image_speed=0
 depth=0;
 image_xscale = 1
 image_yscale = 1
-drawStar=false;
 
 // chearii: special case for dealing damage to enemies
 damagespecial = -1;

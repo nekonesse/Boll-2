@@ -498,6 +498,11 @@ oldsize = size;
 size = "thunder";
 grow = 60;
 
+#define star
+VinylPlay(asset_get_index("snd_powerup"));
+invincible_type=2;
+invincible_timer=510;
+
 #define ceil_bonk
 bonk = 12
 

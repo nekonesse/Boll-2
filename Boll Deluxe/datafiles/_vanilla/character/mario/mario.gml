@@ -24,8 +24,8 @@ pounding_block = false;
 walljump = false;
 firing = 0;
 crouch = false;
-//invincibletype = 0;                                                                                //0 is off, 1 is hurt frames and 2 is invincibility
-//invincibletimer = 0;
+//invincible_type = 0;                                                                                //0 is off, 1 is hurt frames and 2 is invincibility
+//invincible_timer = 0;
 
 #define stop
 hsp = 0;
@@ -580,8 +580,8 @@ grow = 60;
 
 #define star
 VinylPlay(asset_get_index("snd_powerup"));
-//invincibletype = 2;                                                                               
-//invincibletimer = 600;
+invincible_type = 2;                                                                               
+invincible_timer = 510;
 
 #define ceil_bonk
 bonk = 12
