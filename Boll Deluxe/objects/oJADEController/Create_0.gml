@@ -186,7 +186,8 @@ temptypingstring="";
 open_dropmenu=0;
 
 for (var i = 0; i < array_length(tile_layer); ++i) {
-	tile_layer_map[i] = ds_list_create()
+	
+	tile_layer_map[i]=ds_list_create();
 	layer_script_begin(layers[i], tile_layer_alpha_check);
 	var shadreset = function() {
 		shader_reset()
@@ -194,48 +195,56 @@ for (var i = 0; i < array_length(tile_layer); ++i) {
 	layer_script_end(layers[i], shadreset);
 }
 
-//for updating tile properties like flip, mirror, rotate etc
-tile_update_properties = function() {
-	var data = tilemap_get(tilemap, gridx, gridy)
-	var array = [gridx, gridy]
-	for (var i=0; i<ds_list_size(tile_layer_map[selected_tile_layer]); i++;) {
-		show_debug_message(data)
-		var array_catched = ds_list_find_value(tile_layer_map[selected_tile_layer],i)
-		var array_match= []
-		array_match[0] = array_catched[1]
-		array_match[1] = array_catched[2]
-		show_debug_message($"{array}, {array_match}")
-		if array_equals(array,array_match) {
-			ds_list_set(tile_layer_map[selected_tile_layer],i,[data, gridx, gridy])
-			break;
-		}
-	}
-}
-
 //add preset layout
 camera_set_view_pos(view_camera[0],0,room_height-camera_get_view_height(view_camera[0]))
 
-ds_list_add(object_layer_map, ["oCollider", 0, 167, 30, 2, 0])//add object to list at place
-var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
-var sprite = ds_map_find_value(obj_data,obj[0])
-if !is_undefined(obj) {
-	obj[6] = sprite[3]*30 //set correct hitbox for the collider
-	obj[7] = sprite[4]*2 //set correct hitbox for the collider
-	obj[8] = 0
-	obj[9] = 0	
-	obj[10] = []
-	obj[11] = []
-	obj[12] = [2,false,0,false,true,true] //node properties
-	if is_array(sprite[8]) && array_length(sprite[8]) {
-		for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
-			if is_array(sprite[8][o]) {
-				obj[10][o] = array_create(1,0)
-				array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
-				if is_array(sprite[8][o][4]) {
-					obj[10][o][4] = array_create(1,0)
-					array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
+place_object = function(uuid,_x,_y,xscale=1,yscale=1) { 
+	ds_list_add(object_layer_map, [uuid, _x, _y, xscale, yscale, 0])//add object to list at place
+	var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
+	var sprite = ds_map_find_value(obj_data,obj[0])
+	if !is_undefined(obj) {
+		obj[6] = sprite[3]*xscale //set correct hitbox for the collider
+		obj[7] = sprite[4]*yscale //set correct hitbox for the collider
+		obj[8] = 0
+		obj[9] = 0
+		obj[10] = []
+		obj[11] = []
+		obj[12] = [2,false,0,false,true,true] //node properties
+		if is_array(sprite[8]) && array_length(sprite[8]) {
+			for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
+				if is_array(sprite[8][o]) {
+					obj[10][o] = array_create(1,0)
+					array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
+					if is_array(sprite[8][o][4]) {
+						obj[10][o][4] = array_create(1,0)
+						array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
+					}
 				}
 			}
 		}
 	}
 }
+
+tile_update_properties = function() {
+	var i=0;
+	var list=tile_layer_map[selected_tile_layer]
+	while (i < ds_list_size(list)) {
+		var data=list[| i]
+		if data==undefined {
+			ds_list_delete(list,i) 
+			continue
+		}
+		
+		var fetched=tilemap_get(tilemap,data[1],data[2])
+		show_debug_message($"checked: {data[0]} got: {fetched}")
+		
+		if (data[0]!=fetched) { //If data does not match the tile at place
+			ds_list_delete(list, i) //remove if tile has changed
+			continue
+		}
+		i++;
+	}
+}
+
+place_object("oCollider",0,167,30,2)
+place_object("oPlayerSpawn",3,166)

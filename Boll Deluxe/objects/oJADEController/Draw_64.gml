@@ -4,41 +4,47 @@ var guih=display_get_gui_height()
 //i am so sorry for this random math its just trial and error honestly
 #region Mode Icons
 draw_sprite_stretched(spr_JADEtab_left,0,0,(guih/4)-10,32,(32*5)+4)
+var i;
 
-for (var i = 0; i < 5; ++i) //draw Mode icons
+i=0;
+repeat(5) //draw Mode icons
 {
 	draw_sprite(spr_JADEicon_bg,0,0,((guih/4)-8)+32*i) //bg square
    
-	draw_sprite(spr_JADEicons,17+i,4,((guih/4)-4)+32*i) //icon
+	draw_sprite(spr_JADEicons,18+i,4,((guih/4)-4)+32*i) //icon
    
 	if (selected_mode == i) { //selection overlay
 		draw_sprite(spr_JADEicon_bg,1,0,((guih/4)-8)+32*i)
 	} else if mouse_in_mode_slot(i) {
 		draw_sprite(spr_JADEicon_bg,2,0,((guih/4)-8)+32*i) //hover overlay
 	}
+	i++;
 }
 #endregion
 
 #region Editor Icons
-draw_sprite_stretched(spr_JADEtab_top,0,(guiw)-(32*5),0,(32*5)+4,34)
+draw_sprite_stretched(spr_JADEtab_top,0,(guiw)-(32*6),0,(32*6)+4,34)
 
-for (var i = 0; i < 5; ++i) //draw Editor icons
+i=0;
+repeat(6) //draw Editor icons
 {
 	draw_sprite(spr_JADEicon_bg,0,(guiw-32)-(32*i),0) //bg square
    
-	draw_sprite(spr_JADEicons,16-i,(guiw-28)-(32*i),4) //icon
+	draw_sprite(spr_JADEicons,17-i,(guiw-28)-(32*i),4) //icon
    
 	if mouse_in_setting_slot(i) {
 		draw_sprite(spr_JADEicon_bg,2,(guiw-32)-(32*i),0) //hover overlay
 	}
+	i++;
 }
 #endregion
 
 #region Toolbar Icons
 var tb_length = array_length(toolbar[selected_mode])
-draw_sprite_stretched(spr_JADEtab_top,0,(guiw-16)-(32*14),0,(32*tb_length)+4,34)
+draw_sprite_stretched(spr_JADEtab_top,0,(guiw-16)-(32*14)-2,0,(32*tb_length)+4,34)
 
-for (var i = 0; i < tb_length; ++i) //draw Editor icons
+i=0;
+repeat(tb_length) //draw Editor icons
 {
 	if toolbar[selected_mode][i] != EMPTY_SLOT {
 		draw_sprite(spr_JADEicon_bg,0,(guiw-16)-(32*14)+(32*i),0) //bg square
@@ -51,6 +57,7 @@ for (var i = 0; i < tb_length; ++i) //draw Editor icons
 			draw_sprite(spr_JADEicon_bg,2,(guiw-16)-(32*14)+(32*i),0) //hover overlay
 		}
 	}
+	i++;
 }
 #endregion
 
@@ -143,17 +150,15 @@ if selected_mode == OBJECT_MODE {
 	
 			var _str = ["null", "null"]
 			//object list
-			for (var i = 0; i < ds_list_size(jade_cats[selected_mode][current_cat]); ++i) {
+			i=0;
+			repeat(ds_list_size(jade_cats[selected_mode][current_cat])) {
 				
-					//upward culling								//downwards culling
-				if (32*i < object_list_scroll_pos[selected_mode][current_cat]-24) || (32*i > object_list_scroll_pos[selected_mode][current_cat]+object_list_area_height) {
-					continue;
-				}
-			
 				_str = ds_list_find_value(jade_cats[selected_mode][current_cat], i)
-				if !is_array(_str) {
-					break;	
-				}
+					
+				if is_array(_str) 
+				&&	//upward culling								//downwards culling
+				!(32*i < object_list_scroll_pos[selected_mode][current_cat]-24) && !(32*i > object_list_scroll_pos[selected_mode][current_cat]+object_list_area_height) {
+				
 				var overlapping=point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y+((32/3)*i)-object_list_scroll_pos[selected_mode][current_cat]/3,object_list_area_x+object_list_area_width-6,object_list_area_y+(((32/3)*i)+10)-object_list_scroll_pos[selected_mode][current_cat]/3)
 		
 				if (overlapping && mbleftpress) {
@@ -182,6 +187,10 @@ if selected_mode == OBJECT_MODE {
 				//draw object icon
 				draw_sprite_stretched(sprite,0,4,(32*i)-object_list_scroll_pos[selected_mode][current_cat],32,ysize)
 				draw_set_halign(fa_left)
+				
+				}
+				
+				i++;
 			}
 	
 			surface_reset_target();
@@ -207,7 +216,8 @@ if selected_mode == OBJECT_MODE {
 			var size = ds_list_size(object_layer_map)
 			var properties_group = [-4];
 			
-			for (var i = 0; i < size; ++i) {
+			i=0;
+			repeat(size) {
 				var obj = ds_list_find_value(object_layer_map, i)
 				var sprite = ds_map_find_value(obj_data,obj[0])
 				if (obj[5] = 1) {
@@ -217,6 +227,7 @@ if selected_mode == OBJECT_MODE {
 						array_push(properties_group,obj)
 					}
 				}
+				i++;
 			}
 			
 			var objname=""
@@ -241,7 +252,8 @@ if selected_mode == OBJECT_MODE {
 				//draw divider
 				draw_rect(12,96,object_list_area_width-24,3,$65555c,1,false)
 				//we're doing a reverse loop, starting from the bottom to the top so that things like drop down menus can overlay the buttons below
-				for (var i = array_length(proparr[10])-1; i >= 0; --i) {
+				var i=array_length(proparr[10])-1;
+				repeat(array_length(proparr[10])) {
 					if is_array(proparr[10][i]) { 
 						//draw variable name
 					    ScribblejrFit($"{string(proparr[10][i][1])}:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*i)
@@ -287,7 +299,8 @@ if selected_mode == OBJECT_MODE {
 									var menuarr=proparr[10][i][4]
 									if !is_array(menuarr) break;
 									
-									for (var j = 0; j < array_length(menuarr); ++j) {
+									var j=0;
+									repeat(array_length(menuarr)) {
 									    //draw dropdown menus
 										draw_sprite_stretched(spr_JADEdropdown,j == array_length(menuarr)-1 ? 2 : 1,96+16,(112+32*i+24*j)+12,8*20,8*3)
 										//draw list of variables
@@ -304,6 +317,7 @@ if selected_mode == OBJECT_MODE {
 											}
 											open_dropmenu=0;
 										}
+										j++;
 									}
 								}
 								break
@@ -451,6 +465,7 @@ if selected_mode == OBJECT_MODE {
 							}
 						}
 					}
+					i--;
 				}
 			} else {
 				temptypingstring=""
@@ -545,18 +560,18 @@ if selected_mode == OBJECT_MODE {
 			var _str = "null"
 			current_cat=0;
 			//object list
-			for (var i = 0; i < ds_list_size(jade_cats[selected_mode][current_cat]); ++i) {
+			var i=0;
+			var _str = ["null", "null"]
+			repeat(ds_list_size(jade_cats[selected_mode][current_cat])) {
 				
-					//upward culling								//downwards culling
-				if (32*i < object_list_scroll_pos[selected_mode][current_cat]-24) || (32*i > object_list_scroll_pos[selected_mode][current_cat]+object_list_area_height) {
-					continue;
-				}
-			
 				_str = ds_list_find_value(jade_cats[selected_mode][current_cat], i)
-				if _str == undefined{
-					break;	
-				}
+				
 				var overlapping=point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y+((32/3)*i)-object_list_scroll_pos[selected_mode][current_cat]/3,object_list_area_x+object_list_area_width-6,object_list_area_y+(((32/3)*i)+10)-object_list_scroll_pos[selected_mode][current_cat]/3)
+				
+				if is_array(_str) 
+				&&	//upward culling								//downwards culling
+				!(32*i < object_list_scroll_pos[selected_mode][current_cat]-24) && !(32*i > object_list_scroll_pos[selected_mode][current_cat]+object_list_area_height) {
+				
 		
 				if (overlapping && mbleftpress) {
 					current_obj_id[selected_mode][current_cat]=i
@@ -584,6 +599,8 @@ if selected_mode == OBJECT_MODE {
 				//draw object icon
 				draw_sprite_stretched(sprite,0,4,(32*i)-object_list_scroll_pos[selected_mode][current_cat],32,ysize)
 				draw_set_halign(fa_left)
+				}
+				i++;
 			}
 	
 			surface_reset_target();
@@ -612,7 +629,8 @@ if selected_mode == OBJECT_MODE {
 			var size = ds_list_size(node_layer_map)
 			var properties_group = [-4];
 			
-			for (var i = 0; i < size; ++i) {
+			var i=0;
+			repeat(size) {
 				var obj = ds_list_find_value(node_layer_map, i)
 				var sprite = ds_map_find_value(obj_data,obj[0])
 				if (obj[5] = 1) {
@@ -622,6 +640,7 @@ if selected_mode == OBJECT_MODE {
 						array_push(properties_group,obj)
 					}
 				}
+				i++;
 			}
 			
 			if (properties_group[0] != -4) {
@@ -645,7 +664,8 @@ if selected_mode == OBJECT_MODE {
 				//draw divider
 				draw_rect(12,96,object_list_area_width-24,3,$65555c,1,false)
 				//we're doing a reverse loop, starting from the bottom to the top so that things like drop down menus can overlay the buttons below
-				for (var i = array_length(proparr[10])-1; i >= 0; --i) {
+				var i=array_length(proparr[10])-1;
+				repeat(array_length(proparr[10])) {
 					if is_array(proparr[10][i]) { 
 						//draw variable name
 					    ScribblejrFit($"{string(proparr[10][i][1])}:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*i)
@@ -661,6 +681,11 @@ if selected_mode == OBJECT_MODE {
 										if (incheck) {
 											show_debug_message(proparr[10][i][2])
 											proparr[10][i][2]=!bool(proparr[10][i][2])
+											var k=1
+											repeat (array_length(properties_group)-1) {
+												properties_group[k][10][i][2]=proparr[10][i][2]
+												k++
+											}
 										}
 									}
 								} else break
@@ -686,7 +711,8 @@ if selected_mode == OBJECT_MODE {
 									var menuarr=proparr[10][i][4]
 									if !is_array(menuarr) break;
 									
-									for (var j = 0; j < array_length(menuarr); ++j) {
+									var j=0;
+									repeat(array_length(menuarr)) {
 									    //draw dropdown menus
 										draw_sprite_stretched(spr_JADEdropdown,j == array_length(menuarr)-1 ? 2 : 1,96+16,(112+32*i+24*j)+12,8*20,8*3)
 										//draw list of variables
@@ -696,9 +722,14 @@ if selected_mode == OBJECT_MODE {
 								
 										if (insubcheck) && (mbleftpress) {
 											//set selected object to selected variable
-											proparr[10][i][2]=menuarr[j];
+											var k=0
+											repeat (array_length(properties_group)) {
+											    properties_group[k][10][i][2]=menuarr[j];
+												k++
+											}
 											open_dropmenu=0;
 										}
+										j++;
 									}
 								}
 								break
@@ -779,9 +810,9 @@ if selected_mode == OBJECT_MODE {
 								if !open_dropmenu {
 									draw_sprite_stretched(spr_JADEstringinput,0,96+16,(112+32*i)-12,96,24)
 									if !(is_typing-1==i)
-									ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, global.omiFont, 2, 90, 19).Draw(96+29,(112+32*i)-6)
+									ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, global.omiFont, 2, 82, 19).Draw(96+24,(112+32*i)-6)
 									else
-									ScribblejrFit(temptypingstring, fa_left, fa_top, global.omiFont, 2, 90, 19).Draw(96+29,(112+32*i)-6)
+									ScribblejrFit(temptypingstring, fa_left, fa_top, global.omiFont, 2, 82, 19).Draw(96+24,(112+32*i)-6)
 									
 									//check if clicking on box
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+11*i,object_list_area_x+133,object_list_area_y+40+11*i)&&(!open_dropmenu||open_dropmenu-1==i)
@@ -794,8 +825,11 @@ if selected_mode == OBJECT_MODE {
 										
 										//if clicking off of the box, finish typing
 										if !(incheck) && (is_typing-1==i) {
-											//set the variable to our typed number, if its blank reset back to the value it was before
-											proparr[10][i][2]=string(temptypingstring)
+											var k=0
+											repeat (array_length(properties_group)) {
+												properties_group[k][10][i][2]=string(temptypingstring)
+												k++
+											}
 											temptypingstring=""
 											is_typing=0;
 										}
@@ -803,27 +837,34 @@ if selected_mode == OBJECT_MODE {
 									
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
-										proparr[10][i][2]=string(temptypingstring)
+										var k=0
+										repeat (array_length(properties_group)) {
+											properties_group[k][10][i][2]=string(temptypingstring)
+											k++
+										}
 										temptypingstring=""
 										is_typing=0;
 									}
 									
 									if (is_typing-1==i) {
 										//simple typing script
-										if string_length(string_lettersdigits(keyboard_lastchar)) && keyboard_check_pressed(vk_anykey) {
+										if string_length(keyboard_lastchar) && keyboard_check_pressed(vk_anykey) {
 											switch (keyboard_lastkey) {
-												case vk_tab:
+												case vk_tab: //forbidden keys, these can create unnessecary letters that are unwanted
 												case vk_backspace:
 												case vk_capslock:
 												case vk_control:
 												case vk_rcontrol:
 												case vk_shift:
 												case vk_rshift:
-												case vk_enter: { //forbidden keys, these can create unnessecary letters that are unwanted
+												case vk_enter:
+												case ord(chr(34)): //quote
+												case ord(chr(92)): { //backslash
 													break;
 												}
 												default: {
-													temptypingstring+=string_lettersdigits(keyboard_lastchar)
+													temptypingstring+=keyboard_lastchar
+													break;
 												}
 											}
 										}
@@ -836,6 +877,7 @@ if selected_mode == OBJECT_MODE {
 							}
 						}
 					}
+					i--;
 				}
 			} else {
 				temptypingstring=""

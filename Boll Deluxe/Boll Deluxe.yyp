@@ -1466,6 +1466,7 @@
     {"id":{"name":"spr_itembox","path":"sprites/spr_itembox/spr_itembox.yy",},},
     {"id":{"name":"spr_JADE4scaler","path":"sprites/spr_JADE4scaler/spr_JADE4scaler.yy",},},
     {"id":{"name":"spr_JADEbg_grid","path":"sprites/spr_JADEbg_grid/spr_JADEbg_grid.yy",},},
+    {"id":{"name":"spr_JADEbg_screen","path":"sprites/spr_JADEbg_screen/spr_JADEbg_screen.yy",},},
     {"id":{"name":"spr_JADEcheckbox","path":"sprites/spr_JADEcheckbox/spr_JADEcheckbox.yy",},},
     {"id":{"name":"spr_JADEcursor","path":"sprites/spr_JADEcursor/spr_JADEcursor.yy",},},
     {"id":{"name":"spr_JADEdropdown","path":"sprites/spr_JADEdropdown/spr_JADEdropdown.yy",},},

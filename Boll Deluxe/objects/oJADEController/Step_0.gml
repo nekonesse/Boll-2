@@ -118,32 +118,50 @@ switch(selected_mode) {
 	case TILE_MODE:
 		if selected_tool = BRUSH_TOOL {
 			if (mwheel == 1 || keyboard_check_pressed(vk_pagedown)) {
-				if !keyboard_check(vk_control)
-				for (var i = 0; i <= tile_sel_width; ++i) {
-						for (var j = 0; j <= tile_sel_height; ++j) {
+				if !keyboard_check(vk_control) {
+					var i=0
+					repeat(tile_sel_width+1) {
+						var j=0;
+						repeat(tile_sel_height+1) {
 							current_tile_id[i][j] --
+							j++;
 						}
+						i++;
+					}
 				}
-				else
-				for (var i = 0; i <= tile_sel_width; ++i) {
-						for (var j = 0; j <= tile_sel_height; ++j) {
+				else {
+					var i=0
+					repeat(tile_sel_width+1) {
+						var j=0;
+						repeat(tile_sel_height+1) {
 							current_tile_id[i][j] += (sprite_get_width(spr_TilesetMain)/16)
 						}
+						i++;
+					}
 				}
 			}
 
 			if (mwheel == -1 || keyboard_check_pressed(vk_pageup)) {
-				if !keyboard_check(vk_control)
-				for (var i = 0; i <= tile_sel_width; ++i) {
-						for (var j = 0; j <= tile_sel_height; ++j) {
+				if !keyboard_check(vk_control) {
+					var i=0
+					repeat(tile_sel_width+1) {
+						var j=0;
+						repeat(tile_sel_height+1) {
 							current_tile_id[i][j] ++
+							j++;
 						}
+						i++;
+					}
 				}
-				else
-				for (var i = 0; i <= tile_sel_width; ++i) {
-						for (var j = 0; j <= tile_sel_height; ++j) {
+				else {
+					var i=0
+					repeat(tile_sel_width+1) {
+						var j=0;
+						repeat(tile_sel_height+1) {
 							current_tile_id[i][j] -= (sprite_get_width(spr_TilesetMain)/16)
 						}
+						i++;
+					}
 				}
 			}
 		}
@@ -205,7 +223,9 @@ switch(selected_mode) {
 	break;
 }
 
-for (var i = 0; i < 5; ++i)
+var i;
+i=0;
+repeat(5)
 {
 	if (mbleftpress) && mouse_in_mode_slot(i) {
 		if selected_mode != i {
@@ -214,25 +234,30 @@ for (var i = 0; i < 5; ++i)
 			selected_mode=i
 			selection = false
 			var size = ds_list_size(object_layer_map)
-			for (var i = 0; i < size; ++i) {
-				var obj = ds_list_find_value(object_layer_map, i)
+			var j=0;
+			repeat(size) {
+				var obj = ds_list_find_value(object_layer_map, j)
 		
 				if !is_undefined(obj) {
 					obj[5]=0;
 				}
+				j++;
 			}
 		}
 	}
+	i++
 }
 
 //change toolbar 
 var tb_length = array_length(toolbar[selected_mode])
-for (var i = 0; i < tb_length; ++i)
+i=0;
+repeat(tb_length)
 {
 	if (mbleftpress) && mouse_in_toolbar_slot(i) {
 		selected_toolbar=i
 		//show_message(selected_toolbar)
 	}
+	i++;
 }
 
 selected_tool=toolbar[selected_mode][selected_toolbar]
@@ -240,6 +265,20 @@ selected_tool=toolbar[selected_mode][selected_toolbar]
 if (mbleftpress) {
 	if mouse_in_setting_slot(0) { //exit button
 		room_goto(rMainMenu)
+	}
+	if mouse_in_setting_slot(4) { //new file
+		for (var i = 0; i < array_length(tile_layer); ++i) {
+			ds_list_clear(tile_layer_map[i]);
+			tilemap_clear(tile_layer[i],0)
+		}
+		ds_list_clear(object_layer_map);
+		ds_list_clear(node_layer_map);
+		
+		place_object("oCollider",0,167,30,2)
+		place_object("oPlayerSpawn",3,166)
+		
+		global.save_dir="";
+		savetextdur=0;
 	}
 	if mouse_in_setting_slot(3) { //saving
 		var file = get_save_filename_ext("JADE File|*.jade", "", working_directory, "Save Level");
@@ -278,7 +317,8 @@ if (mbleftpress) {
 					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
 					data = tile_set_flip(data, 1 - tile_get_flip(data))
 					tilemap_set(tilemap, data, gridx, gridy);
-					show_debug_message(data);
+					var tiledata = tilemap_get(tilemap, gridx, gridy)
+					ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
 					tile_update_properties();
 				break;
 			}
@@ -289,6 +329,8 @@ if (mbleftpress) {
 					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
 					data = tile_set_mirror(data, 1 - tile_get_mirror(data))
 					tilemap_set(tilemap, data, gridx, gridy);
+					var tiledata = tilemap_get(tilemap, gridx, gridy)
+					ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
 					tile_update_properties();
 				break;
 			}
@@ -299,6 +341,8 @@ if (mbleftpress) {
 					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
 					data = tile_set_rotate(data, 1 - tile_get_rotate(data))
 					tilemap_set(tilemap, data, gridx, gridy);
+					var tiledata = tilemap_get(tilemap, gridx, gridy)
+					ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
 					tile_update_properties();
 				break;
 			}
@@ -312,8 +356,9 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 	
 	if (selected_mode == OBJECT_MODE) { //should probably be using a switch statement but its 3am im too lazy to do that rn
 		var size = ds_list_size(object_layer_map)
-	
-		for (var i = 0; i < size; ++i) {
+		
+		var i=0;
+		repeat(size) {
 			//is place matching cursor?
 			var obj = ds_list_find_value(object_layer_map, i)
 		
@@ -349,9 +394,11 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 					}
 				}
 			}
+			i++;
 		}
 	
-		for (var i = 0; i < size; ++i) {
+		var i=0;
+		repeat(size) {
 			var obj = ds_list_find_value(object_layer_map, i)
 			var sprite = ds_map_find_value(obj_data,obj[0])
 			var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
@@ -399,7 +446,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 						var sprite_other = ds_map_find_value(obj_data, obj_other[0])
 						
 						
-						if (sprite_sel[5]) {
+						if (obj[5]) {
 							obj[6] = round(obj[6] /16) * 16 //rounding box to grid
 							if (sprite_other[5]) {
 								obj_other[3] = (obj[6] / sprite[3]) * sprite[11] //setting scale
@@ -407,7 +454,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 								obj_other[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj_other[3] //setting offset
 							}
 						}
-						if (sprite_sel[6]) {
+						if (obj[6]) {
 							obj[7] = round(obj[7] /16) * 16
 							if (sprite_other[6]) {
 								obj_other[4] = (obj[7] / sprite[4]) * sprite[12]
@@ -438,11 +485,13 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 				if mbleftrel && selection_box && (i == size - 1) {
 						selection_box = false	
 				}
+			i++;
 		}
 	} else if (selected_mode==NODE_MODE) {
 		var size = ds_list_size(node_layer_map)
-	
-		for (var i = 0; i < size; ++i) {
+		
+		var i=0;
+		repeat(size) {
 			//is place matching cursor?
 			var obj = ds_list_find_value(node_layer_map, i)
 		
@@ -478,9 +527,11 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 					}
 				}
 			}
+			i++;
 		}
-	
-		for (var i = 0; i < size; ++i) {
+		
+		var i=0;
+		repeat(size) {
 			var obj = ds_list_find_value(node_layer_map, i)
 			var sprite = ds_map_find_value(obj_data,obj[0])
 			var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
@@ -560,6 +611,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 				if mbleftrel && selection_box && (i == size - 1) {
 						selection_box = false	
 				}
+			i++;
 		}
 	}
 	
@@ -613,11 +665,15 @@ if show_tileset {
 			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
 			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
 			//show_debug_message("{0}, {1}", tile_sel_width, tile_sel_height)
-			for (var i = 0; i <= tile_sel_width; ++i) {
-			    for (var j = 0; j <= tile_sel_height; ++j) {
+			var i=0;
+			repeat(tile_sel_width+1) {
+				var j=0;
+			    repeat(tile_sel_height+1) {
 				    current_tile_id[i][j] = (clamp(floor(sel_x / t_size), 0, t_width/ 16) + i - tile_sel_width) + ((clamp(floor(sel_y / t_size), 0, t_height/ 16) + j - tile_sel_height) * (t_width/16))
-					show_debug_message("{0}, {1}: {2}", i, j, current_tile_id[i][j])
+					show_debug_message($"{i}, {j}: {current_tile_id[i][j]}")
+					j++;
 				}
+				i++;
 			}
 			tile_drag = false
 		}
@@ -648,8 +704,10 @@ if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 			size_y = abs(size_y)
 		}
 		
-		for (var i = 0; i < size_x; ++i) {
-			for (var j = 0; j < size_y; ++j) {
+		var i=0;
+		repeat(size_x) {
+			var j=0;
+			repeat (size_y){
 				var data = tilemap_get(tilemap, tile_fill_last_x + (i *16), tile_fill_last_y+ (j *16)); //get tile to change data
 				
 				data = tile_set_index(data, current_tile_id[i mod (tile_sel_width + 1)][j mod (tile_sel_height + 1)])
@@ -661,13 +719,13 @@ if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 				tilemap_set(tilemap, data, start_x + i, start_y + j);
 
 				var tiledata = tilemap_get(tilemap, start_x + i, start_y + j)
-				ds_list_add(tile_layer_map[selected_tile_layer], [tiledata, start_x + i, start_y + j]) //add tile  to list at place
+				ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,start_x + i,start_y + j]) //add tile  to list at place
 				
-				
-				tile_update_properties();
-								
+				j++;
 			}
+			i++;
 		}
+		tile_update_properties();
 		tile_fill = false
 						
 	}
@@ -693,25 +751,28 @@ if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 			size_y = abs(size_y)
 		}
 		
-		for (var i = 0; i < size_x; ++i) {
-			for (var j = 0; j < size_y; ++j) {
-				if !point_in_ellipse(((start_x + i) * 16)+8, ((start_y + j) * 16)+8, (size_x*16)-8, (size_y*16)-8, (start_x + size_x/2) * 16, (start_y + size_y/2) * 16) continue;
+		var i=0;
+		repeat(size_x) {
+			var j=0;
+			repeat (size_y){
+				if !point_in_ellipse(((start_x + i) * 16)+8, ((start_y + j) * 16)+8, (size_x*16)-8, (size_y*16)-8, (start_x + size_x/2) * 16, (start_y + size_y/2) * 16) {
 				
-				var data = tilemap_get(tilemap, tile_fill_last_x + (i *16), tile_fill_last_y+ (j *16)); //get tile to change data
+					var data = tilemap_get(tilemap, tile_fill_last_x + (i *16), tile_fill_last_y+ (j *16)); //get tile to change data
 				
-				data = tile_set_index(data, current_tile_id[i mod (tile_sel_width + 1)][j mod (tile_sel_height + 1)])
-				//set tile to a mosaic of the current tile 'brush'
+					data = tile_set_index(data, current_tile_id[i mod (tile_sel_width + 1)][j mod (tile_sel_height + 1)])
+					//set tile to a mosaic of the current tile 'brush'
 				
-				data = tile_set_flip(data, 0)
-				data = tile_set_mirror(data, 0)
-				data = tile_set_rotate(data, 0)
-				tilemap_set(tilemap, data, start_x + i, start_y + j);
+					data = tile_set_flip(data, 0)
+					data = tile_set_mirror(data, 0)
+					data = tile_set_rotate(data, 0)
+					tilemap_set(tilemap, data, start_x + i, start_y + j);
 
-				var tiledata = tilemap_get(tilemap, start_x + i, start_y + j)
-				ds_list_add(tile_layer_map[selected_tile_layer], [tiledata, start_x + i, start_y + j]) //add tile  to list at place
-				tile_update_properties();
-								
+					var tiledata = tilemap_get(tilemap, start_x + i, start_y + j)
+					ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,start_x + i,start_y + j]) //add tile  to list at place
+				}
+				j++;	
 			}
+			i++;
 		}
 		tile_fill = false
 	}
@@ -722,42 +783,52 @@ if (mbrightpress && not_on_gui) {
 		case SELECT_TOOL:
 			switch(selected_mode) {
 				case OBJECT_MODE:
-					for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
-						//is place matching cursor?
-						var obj = ds_list_find_value(object_layer_map, i)
-						if !is_undefined(obj) {
-							var sprite = ds_map_find_value(obj_data,obj[0])
-							var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-							var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]- 1)
-							if !red_box && white_box { 
-								obj[5] = 1
-								temptypingstring=""
-								is_typing=0;
-								open_dropmenu=0;
-								object_list_active = 0
-								properties_tab_active = 1
-								show_object_list = 1
-								break
+					if is_string(selected_obj) {
+						var i=0;
+						repeat(ds_list_size(object_layer_map)) {
+							//is place matching cursor?
+							var obj = ds_list_find_value(object_layer_map, i)
+							if !is_undefined(obj) {
+								var sprite = ds_map_find_value(obj_data,obj[0])
+								var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
+								var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]- 1)
+								if !red_box && white_box { 
+									obj[5] = 1
+									temptypingstring=""
+									is_typing=0;
+									open_dropmenu=0;
+									object_list_active = 0
+									properties_tab_active = 1
+									show_object_list = 1
+									break
+								}
 							}
+							i++;
 						}
 					}
 				break;
 				case NODE_MODE:
 					if is_string(selected_obj) {
-						for (var i = 0; i < ds_list_size(node_layer_map); ++i) {
+						var i=0;
+						repeat(ds_list_size(node_layer_map)) {
 							//is place matching cursor?
 							var obj = ds_list_find_value(node_layer_map, i)
 							if !is_undefined(obj) {
 								var sprite = ds_map_find_value(obj_data,obj[0])
 								var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
 								var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]- 1)
-								show_debug_message("test")
 								if !red_box && white_box { 
 									obj[5] = 1
-									object_list_active=false
-									properties_tab_active=true
-								} else break
+									temptypingstring=""
+									is_typing=0;
+									open_dropmenu=0;
+									object_list_active = 0
+									properties_tab_active = 1
+									show_object_list = 1
+									break
+								}
 							}
+							i++;
 						}
 					}
 				break;
@@ -767,7 +838,8 @@ if (mbrightpress && not_on_gui) {
 			switch(selected_mode) {
 				case OBJECT_MODE:
 					var size = ds_list_size(object_layer_map)
-					for (var i = 0; i < size; ++i) {
+					var i=0;
+					repeat(size) {
 						//is place matching cursor?
 						var obj = ds_list_find_value(object_layer_map, i)
 						if !is_undefined(obj) {
@@ -776,12 +848,13 @@ if (mbrightpress && not_on_gui) {
 								break;
 							}
 						}
-				
+						i++;
 					}
 				break;
 				case NODE_MODE:
 					var size = ds_list_size(node_layer_map)
-					for (var i = 0; i < size; ++i) {
+					var i=0;
+					repeat(size) {
 						//is place matching cursor?
 						var obj = ds_list_find_value(node_layer_map, i)
 						if !is_undefined(obj) {
@@ -790,7 +863,7 @@ if (mbrightpress && not_on_gui) {
 								break;
 							}
 						}
-				
+						i++;
 					}
 				break;
 			}
@@ -805,7 +878,8 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 			switch(selected_mode) {
 				case OBJECT_MODE:
 					if is_string(selected_obj) {
-						for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
+						var i=0;
+						repeat(ds_list_size(object_layer_map)) {
 							//is place matching cursor?
 							var obj = ds_list_find_value(object_layer_map, i)
 							if !is_undefined(obj) {
@@ -813,6 +887,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 									exit;
 								}
 							}
+							i++;
 						}
 						if !is_undefined(selected_obj) {
 							var sprite = ds_map_find_value(obj_data,selected_obj)
@@ -828,7 +903,8 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 							obj[11] = [] //node array
 							obj[12] = [2,false,0,false,true,true] //node properties
 							if is_array(sprite[8]) && array_length(sprite[8]) {
-								for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
+								var o=0;
+								repeat(array_length(sprite[8])) { //god Damn.
 									if is_array(sprite[8][o]) {
 										obj[10][o] = array_create(1,0)
 										array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
@@ -837,6 +913,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 											array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
 										}
 									}
+									o++;
 								}
 							}
 						}
@@ -862,7 +939,8 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 				break;
 				case NODE_MODE:
 					if is_string(selected_obj) {
-						for (var i = 0; i < ds_list_size(node_layer_map); ++i) {
+						var i=0;
+						repeat(ds_list_size(node_layer_map)) {
 							//is place matching cursor?
 							var obj = ds_list_find_value(node_layer_map, i)
 							if !is_undefined(obj) {
@@ -870,6 +948,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 									exit;
 								}
 							}
+							i++;
 						}
 						if !is_undefined(selected_obj) {
 							var sprite = ds_map_find_value(obj_data,selected_obj)
@@ -885,7 +964,8 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 							obj[11] = []
 							obj[12] = []
 							if is_array(sprite[8]) && array_length(sprite[8]) {
-								for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
+								var o=0;
+								repeat(array_length(sprite[8])) { //god Damn.
 									if is_array(sprite[8][o]) {
 										obj[10][o] = array_create(1,0)
 										array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
@@ -894,6 +974,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 											array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
 										}
 									}
+									o++;
 								}
 							}
 						}
@@ -921,8 +1002,10 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 					if show_tileset && on_tile_picker {
 						exit;	
 					}
-					for (var i = 0; i <= tile_sel_width; ++i) {
-						for (var j = 0; j <= tile_sel_height; ++j) {
+					var i=0;
+					repeat(tile_sel_width+1) {
+						var j=0;
+						repeat(tile_sel_height+1) {
 							var data = tilemap_get_at_pixel(tilemap, mouse_x + (i *16), mouse_y+ (j *16)); //set tile at place
 							if tile_get_index(data) != current_tile_id[i][j] { //prevent tile overlapping (mainly a problem with the list)
 								show_debug_message($"Placed tile of index {current_tile_id[i][j]} at {mouse_x + (i *16)} {mouse_y+ (j *16)}")
@@ -933,10 +1016,12 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 								tilemap_set(tilemap, data, gridx + i, gridy + j);
 								show_debug_message(data)
 								var tiledata = tilemap_get(tilemap, gridx + i, gridy + j)
-								ds_list_add(tile_layer_map[selected_tile_layer], [tiledata, gridx + i, gridy + j]) //add tile  to list at place
+								ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,gridx+i,gridy+j]) //add tile  to list at place
 								tile_update_properties();
 							}
+							j++;
 						}
+						i++;
 					}
 				break;
 			}
@@ -945,7 +1030,8 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 			switch(selected_mode) {
 				case OBJECT_MODE:
 					var size = ds_list_size(object_layer_map)
-					for (var i = 0; i < size; ++i) {
+					var i=0;
+					repeat(size) {
 						//is place matching cursor?
 						var obj = ds_list_find_value(object_layer_map, i)
 						if !is_undefined(obj) {
@@ -955,12 +1041,13 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 								break;
 							}
 						}
-				
+						i++;
 					}
 				break;
 				case NODE_MODE:
 					var size = ds_list_size(node_layer_map)
-					for (var i = 0; i < size; ++i) {
+					var i=0;
+					repeat(size){
 						//is place matching cursor?
 						var obj = ds_list_find_value(node_layer_map, i)
 						if !is_undefined(obj) {
@@ -970,7 +1057,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 								break;
 							}
 						}
-				
+						i++;
 					}
 				break;
 				case TILE_MODE:
@@ -978,15 +1065,9 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 					
 					if tile_get_index(data)!= 0 {
 						show_debug_message($"Deleted tile of index {tile_get_index(data)} at {mouse_x} {mouse_y}")
-						var array = [data, gridx, gridy]
-						for (var i=0; i<ds_list_size(tile_layer_map[selected_tile_layer]); i++;) {
-							if array_equals(ds_list_find_value(tile_layer_map[selected_tile_layer],i),array) {
-								ds_list_delete(tile_layer_map[selected_tile_layer], i) //delete from tile map
-								break;
-							}
-						}
 						data = tile_set_empty(data)
 						tilemap_set(tilemap, data, gridx, gridy); //delete tile at place lol
+						tile_update_properties();
 					}
 				break;
 			}
@@ -1021,7 +1102,8 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 		if (drawing_node==-1) {
 			var size = ds_list_size(object_layer_map)
 	
-			for (var i = 0; i < size; ++i) {
+			var i=0;
+			repeat(size) {
 				//is place matching cursor?
 				var obj = ds_list_find_value(object_layer_map, i)
 		
@@ -1045,6 +1127,7 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 						break;
 					}
 				}
+				i++;
 			}
 		} else {
 			var obj = ds_list_find_value(object_layer_map, drawing_node)
@@ -1070,7 +1153,8 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 				var yoff = -sprite[2];
 			
 				var deleted=false;
-				for (var i = 0; i < size; ++i) {
+				var i=0;
+				repeat(size) {
 					//is place matching cursor?
 				
 					var over = point_in_rectangle(mouse_x, mouse_y, obj[11][i][0]+((obj[6]-16)/2)-xoff, obj[11][i][1]+((obj[7]-16)/2)-yoff, obj[11][i][0]+15+((obj[6]-16)/2)-xoff, obj[11][i][1]+15+((obj[7]-16)/2)-yoff)
@@ -1085,6 +1169,7 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 						deleted=true;
 						break
 					}
+					i++;
 				}
 				if !(deleted)
 				drawing_node=-1;
@@ -1102,11 +1187,13 @@ if keyboard_check_pressed(vk_enter) && !(is_typing) { //PLAYTEST
 	var myChar = get_string("Choose your character", oGlobals._charmList[0]) //debug jade charm select. not sure if this is what you meant by "multi-charm loading" but it can "load" "multi" "charm"
 	//gamemaker i don't CARE if its deprecated because of async you cant choose your charm while the charm is already loading
 
-	for (var i = 0; i < array_length(oGlobals._charmList); i++) {
+	var i=0;
+	repeat(array_length(oGlobals._charmList)) {
 		if (myChar == oGlobals._charmList[i]) {
 			global._playerChars = [myChar]
 			break;
 		}
+		i++;
 	}
 	
 	global.nextlevel=game_save_id+"\save.jade" //the level the game will load

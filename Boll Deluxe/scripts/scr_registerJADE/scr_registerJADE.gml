@@ -3,6 +3,8 @@
 #macro TILE_MODE 2
 #macro BACKGROUND_MODE 3
 #macro NODE_MODE 4
+#macro JADE_VERSION 1
+
 
 function JADE_initializeobj() {	
 	obj_data = ds_map_create();
@@ -38,6 +40,10 @@ function JADE_initializeobj() {
 	//8. scalable vertically (bool)
 	//9. what editor mode object list to appear in
 	//10. object properties (check scr_properties)
+	//11. list display name (will use uuid if not set)
+	//12. is nodeable in node mode (bool)
+	//13. x scale override when placed
+	//14. y scale override when place
 	show_debug_message("Registering JADE object list...")
 	registerobj(object_get_name(oPlayerSpawn), spr_spawner, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), false, false, OBJECT_MODE, 0, object_get_properties("oPlayerSpawn"), "Player Spawn")
 	registerobj(object_get_name(oCollider), spr_collider, -sprite_get_xoffset(spr_collider), -sprite_get_yoffset(spr_collider), sprite_get_width(spr_collider), sprite_get_height(spr_collider), true, true, OBJECT_MODE, 0, object_get_properties("oCollider"), "Collider")
@@ -96,7 +102,7 @@ function JADE_initializeobj() {
 	registerobj(object_get_name(oBobOmb), spr_bobombwalk, -8, -8, 21, 22, false, false, OBJECT_MODE, 1, object_get_properties("oBobOmb"))
 	registerobj(object_get_name(oBigSteely), spr_bigsteely, -24, -24, 48, 48, false, false, OBJECT_MODE, 1, object_get_properties("oBigSteely"), "Big Steely", true)
 	registerobj(object_get_name(oBillBlaster), spr_billblasterJADE, 0, 0, 16, 32, false, true, OBJECT_MODE, 1, object_get_properties("oBillBlaster"), "Bill Blaster", false)
-	registerobj(object_get_name(oBanzaiBlaster), spr_banzaiblasterJADE, -32, -32, 64, 64, false, false, OBJECT_MODE, 1, object_get_properties("oBanzaiBlaster"), "Banzai Blaster", false)
+	registerobj(object_get_name(oBanzaiBlaster), spr_banzaiblasterJADE, -32, -32, 64, 64, false, true, OBJECT_MODE, 1, object_get_properties("oBanzaiBlaster"), "Banzai Blaster", false)
 	registerobj(object_get_name(oPiranhaPlant), spr_piranhaplant, -16, -16, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oPiranhaPlant"), "Piranha Plant", false)
 	registerobj(object_get_name(oJumpingPiranha), spr_jumpingpiranhafall, -16, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oPiranhaPlant"), "Piranha Plant", true)
 	
@@ -143,24 +149,36 @@ function JADE_save(file=game_save_id+"\save.jade") {
 	show_debug_message($"Saving JADE file to: {file}")
 	var array = [];
 	var arrayObjects=[];
-	for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
+	var i;
+	i=0;
+	repeat(ds_list_size(object_layer_map)) {
 	    array_push(arrayObjects, object_layer_map[| i])
+		i++;
 	}
 	var arrayNodeObjects = [];
-	for (var i = 0; i < ds_list_size(node_layer_map); ++i) {
+	i=0;
+	repeat(ds_list_size(node_layer_map)) {
 	    array_push(arrayNodeObjects, node_layer_map[| i])
+		i++;
 	}
 	var arrayTiles=[];
-	for (var i = 0; i < array_length(tile_layer_map); ++i) {
+	i=0;
+	repeat(array_length(tile_layer_map)) {
 		arrayTiles[i]=[];
-	    for (var j = 0; j < ds_list_size(tile_layer_map[i]); ++j) {
-		    array_push(arrayTiles[i], tile_layer_map[i][| j])
+		var j=0;
+	    repeat(ds_list_size(tile_layer_map[i])) {
+			array_push(arrayTiles[i], tile_layer_map[i][| j])
+			j++;
 		}
+		i++;
 	}
 	var arrayTileLayers=[];
-	for (var i = 0; i < array_length(layers); ++i) {
+	i=0;
+	repeat (array_length(layers)) {
 	    array_push(arrayTileLayers, [layer_get_name(layers[i]), layer_get_depth(layers[i]), tilemap_get_tileset(tile_layer[i])])
+		i++;
 	}
+	array_push(array, JADE_VERSION)
 	array_push(array, arrayObjects)
 	array_push(array, arrayTiles)
 	array_push(array, arrayNodeObjects)
@@ -182,42 +200,64 @@ function JADE_load(file=game_save_id+"\save.jade") {
 	var save_file = buffer_decompress(loaded)
 	var array = json_parse(buffer_read(save_file,buffer_string))
 	show_debug_message($"Loading JADE file from: {file}")
-	var size = array_length(array[0]) //read amount of objects
-	var nodesize = array_length(array[2]) //read amount of objects
-	var tilesize = array_length(array[1]) //read amount of tiles
+	var object_arr_index=1;
+	var tile_arr_index=2;
+	var node_arr_index=3;
+	var has_version=true;
+	if array_length(array) < 5 { //legacy conversion
+		has_version=false;
+		object_arr_index=0;
+		tile_arr_index=1;
+		node_arr_index=2;
+	}
+	var size = array_length(array[object_arr_index]) //read amount of objects
+	var nodesize = array_length(array[node_arr_index]) //read amount of objects
+	var tilesize = array_length(array[tile_arr_index]) //read amount of tiles
 	ds_list_clear(object_layer_map) //erase object map beforehand
-	for (var i = 0; i < size; ++i) { //load objects
-        var data = array[0][i]
+	var i;
+	
+	i=0;
+	repeat(size) { //load objects
+        var data = array[object_arr_index][i]
 		data[5] = 0
 		if array_length(data) >= 13 && array_length(data[12]) < 5 {
 			data[12][5]=true
 		}
 		ds_list_add(object_layer_map,data)
+		i++
 	}
 	if array_length(array) >= 4 {
-	    for (var i = 0; i < tilesize; ++i) { //loading tiles
+	    i=0;
+		repeat(tilesize) { //loading tiles
 			tilemap_clear(tile_layer[i], 0) //erase tilemap beforehand
 			ds_list_clear(tile_layer_map[i]) //erase tile map beforehand
-			for (var j = 0; j < array_length(array[1][i]); ++j) {
-				var data = array[1][i][j]
+			var j=0;
+			repeat (array_length(array[tile_arr_index][i])) {
+				var data = array[tile_arr_index][i][j]
 			    tilemap_set(tile_layer[i],data[0],data[1],data[2])
 				ds_list_add(tile_layer_map[i], [data[0], data[1], data[2]]) //add tile to list at place
+				j++;
 			}
+			i++
 		}
 	} else { //legacy tile conversion
 		tilemap_clear(tile_layer[2], 0) //erase tilemap beforehand
 		ds_list_clear(tile_layer_map[2]) //erase tile map beforehand
-		for (var j = 0; j < array_length(array[1]); ++j) {
-			var data = array[1][j]
+		var j=0;
+		repeat (array_length(array[tile_arr_index])) {
+			var data = array[tile_arr_index][j]
 			tilemap_set(tile_layer[2],data[0],data[1],data[2])
 			ds_list_add(tile_layer_map[2], [data[0], data[1], data[2]]) //add tile to list at place
+			j++;
 		}
 	}
 	ds_list_clear(node_layer_map)
-	for (var i = 0; i < nodesize; ++i) { //load node objects
-        var data = array[2][i]
+	i=0;
+	repeat (nodesize) { //load node objects
+        var data = array[node_arr_index][i]
 		data[5] = 0
 		ds_list_add(node_layer_map,data)
+		i++;
 	}
 	buffer_delete(loaded)
 	buffer_delete(save_file)

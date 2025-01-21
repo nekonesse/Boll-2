@@ -44,8 +44,8 @@ function compile_code(){
 	
 	_folder = file_find_close();
 	
-	
-	for(var j = 0; j < array_length(found_folders); ++j) {
+	var j=0;
+	repeat(array_length(found_folders)) {
 		
 		var _file = file_find_first($"{working_directory}\\_vanilla\\" + found_folders[j] + "\\*.gml",0)
 		show_debug_message("BEGIN SCRIPT COMPILE IN `" + found_folders[j] + "`");
@@ -59,8 +59,8 @@ function compile_code(){
 			//show_debug_message(_filepath2)
 			_file = string_delete(_file, string_length(_file) -3, 4)
 			def_names = global._findDefine( _filepath)
-		
-			for(var i = 0; i < array_length(def_names); ++i) {
+			var i=0;
+			repeat(array_length(def_names)) {
 			
 				var store = _file + "_" + def_names[i]
 				show_debug_message(store)
@@ -74,6 +74,7 @@ function compile_code(){
 				if (_compiled[? store] == undefined) {
 					show_message("ERROR IN `" + _file + "`: "+ def_names[i] + ": " + txr_error);
 				} 
+				i++;
 			}
 			
 			show_debug_message("END SCRIPT EXTRACT IN FILE " + _file);
@@ -83,7 +84,7 @@ function compile_code(){
 		
 		show_debug_message("END SCRIPT COMPILE IN FOLDER " + found_folders[j]);
 		_file = file_find_close();
-	
+		j++;
 	}
 	
 	show_debug_message("Scripts have finished being compiled")
@@ -107,7 +108,8 @@ function get_sprite_frames(dir, arr) {
 function import_sheets() {
 	show_debug_message("BEGIN SPRITE COMPLATION...")
 	oGameManager.PlayerColl.StartBatch();
-	for(var i = 0; i < array_length(global._playerChars); ++i) {
+	var i=0;
+	repeat(array_length(global._playerChars)) {
 		var _name = global._playerChars[i]; 
 		var dir=$"{working_directory}\\_vanilla\\character\\{_name}"
 		if file_exists($"{dir}\\sprites\\_HUDicon.png") {
@@ -119,38 +121,46 @@ function import_sheets() {
 		}
 		
 
-			get_sprite_frames(dir, global.player_spritelists[i])
+		get_sprite_frames(dir, global.player_spritelists[i])
 		
-			var array=global.player_spritelists[i]
-			for (var j = 0; j < array_length(global.powerups); ++j) {
-				var sprite_yank = global.powerups[j]
-				if config_getstring(global.powerups[j] + " override", dir) != "" {
-						sprite_yank = config_getstring(global.powerups[j] + " override", dir)		
-				}
-				show_debug_message(sprite_yank)
-				for (var g = 0; g < array_length(array); ++g) {
-					if (array[g]!="_HUDicon") && file_exists($"{dir}\\sprites\\{sprite_yank}\\{array[g]}.png") { //make sure they arent trying to overwrite our HUD icon that we imported
-						var frames=nozerounreal(config_setting(sprite_yank+" "+array[g]+" frames", dir),config_setting(array[g]+" frames", dir))
-						var org_x=nozerounreal(config_setting(sprite_yank+" "+array[g]+" orgx", dir),nozerounreal(config_setting(array[g]+" orgx", dir), nozerounreal(config_setting("origin x", dir), CollageOrigin.CENTER)))
-						var org_y=nozerounreal(config_setting(sprite_yank+" "+array[g]+" orgy", dir),nozerounreal(config_setting(array[g]+" orgy", dir), nozerounreal(config_setting("origin y", dir), CollageOrigin.CENTER)))
-						oGameManager.PlayerColl.AddFile($"{dir}\\sprites\\{sprite_yank}\\{array[g]}.png",$"spr_{_name}_{global.powerups[j]}_{array[g]}",frames,false,false,org_x,org_y)
-					} else continue
-				}
+		var array=global.player_spritelists[i]
+		var j=0;
+		repeat(array_length(global.powerups)) {
+			var sprite_yank = global.powerups[j]
+			if config_getstring(global.powerups[j] + " override", dir) != "" {
+					sprite_yank = config_getstring(global.powerups[j] + " override", dir)		
 			}
-			show_debug_message(global.player_spritelists[i])
-		
+			show_debug_message(sprite_yank)
+			var g=0;
+			repeat (array_length(array)) {
+				if (array[g]!="_HUDicon") && file_exists($"{dir}\\sprites\\{sprite_yank}\\{array[g]}.png") { //make sure they arent trying to overwrite our HUD icon that we imported
+					var frames=nozerounreal(config_setting(sprite_yank+" "+array[g]+" frames", dir),config_setting(array[g]+" frames", dir))
+					var org_x=nozerounreal(config_setting(sprite_yank+" "+array[g]+" orgx", dir),nozerounreal(config_setting(array[g]+" orgx", dir), nozerounreal(config_setting("origin x", dir), CollageOrigin.CENTER)))
+					var org_y=nozerounreal(config_setting(sprite_yank+" "+array[g]+" orgy", dir),nozerounreal(config_setting(array[g]+" orgy", dir), nozerounreal(config_setting("origin y", dir), CollageOrigin.CENTER)))
+						oGameManager.PlayerColl.AddFile($"{dir}\\sprites\\{sprite_yank}\\{array[g]}.png",$"spr_{_name}_{global.powerups[j]}_{array[g]}",frames,false,false,org_x,org_y)
+				}
+				g++;
+			}
+			j++;
+		}
+		show_debug_message(global.player_spritelists[i])
+		i++;
 	}
 	oGameManager.PlayerColl.FinishBatch();
 	show_debug_message("Sprite have finished being compiled")
 }
 
 function delete_sheets() {
-	for(var i = 0; i < array_length(oGlobals._charmList); ++i) {
-		for (var j = 0; j < array_length(global.powerups); ++j) {
+	var i=0;
+	repeat(array_length(oGlobals._charmList)) {
+		var j=0;
+		repeat(array_length(global.powerups)) {
 			if sprite_exists(global.player_sheets[i][j]) {
 				show_debug_message($"Deleting sprite cache index of {j} for charm: {oGlobals._charmList[i]}")
 				sprite_delete(global.player_sheets[i][j])
 			}
+			j++
 		}
+		i++
 	}
 }

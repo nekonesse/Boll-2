@@ -9,7 +9,9 @@ draw_rect(room_width, 0, int32l, room_height, c_black, 0.5)
 draw_rect(-1, -1, room_width+2, room_height+2, c_white, 0.75, true)
 draw_rect(-2, -2, room_width+4, room_height+4, c_white, 0.75, true)
 
-for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
+var i=0;
+
+repeat(ds_list_size(object_layer_map)) {
 	var obj = ds_list_find_value(object_layer_map, i)
 	
 	var sprite = ds_map_find_value(obj_data,obj[0])
@@ -19,13 +21,15 @@ for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 	if !rectangle_in_rectangle(
 		obj[1]*16,
 		obj[2]*16,
-		(obj[1]*16)+(sprite[3]*obj[3])-camera_get_view_x(view_camera[0]),
-		(obj[2]*16)+(sprite[4]*obj[4])-camera_get_view_y(view_camera[0]),
-		0, 0, 
+		(obj[1]*16)+(sprite[3]*obj[3]),
+		(obj[2]*16)+(sprite[4]*obj[4]),
+		camera_get_view_x(view_camera[0]), camera_get_view_y(view_camera[0]), 
 		camera_get_view_x(view_camera[0])+camera_get_view_width(view_camera[0]),
 		camera_get_view_y(view_camera[0])+camera_get_view_height(view_camera[0])
-	)
-	continue;
+	) {
+		i++;
+		continue;
+	}
 	
 	var objalpha=1
 	if !(selected_mode==OBJECT_MODE || (selected_tool==NODE_TOOL && sprite[9] && (drawing_node==-1 || drawing_node==i))) {
@@ -46,17 +50,31 @@ for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
 		var posy = (obj[2]*16)
 		draw_rect(posx, posy, 16, 16, c_white, 1, true)
 	}
+	
+	i++;
 }
 
-for (var i = 0; i < ds_list_size(node_layer_map); ++i) {
+
+i=0;
+repeat(ds_list_size(node_layer_map)) {
 	var obj = ds_list_find_value(node_layer_map, i)
 	
 	var sprite = ds_map_find_value(obj_data,obj[0])
 	
 	//for some reason applying camera x and camera y to the second rectangle just doesnt work for some reason 
 	
-	if !rectangle_in_rectangle(obj[1]*16, obj[2]*16, (obj[1]*16)+(sprite[3]*obj[3])-camera_get_view_x(view_camera[0]),(obj[2]*16)+(sprite[4]*obj[4])-camera_get_view_y(view_camera[0]), 0, 0, camera_get_view_x(view_camera[0])+camera_get_view_width(view_camera[0]), camera_get_view_y(view_camera[0])+camera_get_view_height(view_camera[0]))
-	continue;
+	if !rectangle_in_rectangle(
+		obj[1]*16,
+		obj[2]*16,
+		(obj[1]*16)+(sprite[3]*obj[3]),
+		(obj[2]*16)+(sprite[4]*obj[4]),
+		camera_get_view_x(view_camera[0]), camera_get_view_y(view_camera[0]), 
+		camera_get_view_x(view_camera[0])+camera_get_view_width(view_camera[0]),
+		camera_get_view_y(view_camera[0])+camera_get_view_height(view_camera[0])
+	) {
+		i++;
+		continue;
+	}
 	
 	var objalpha=1
 	if (selected_mode!=NODE_MODE) || (selected_tool==NODE_TOOL) {
@@ -73,4 +91,7 @@ for (var i = 0; i < ds_list_size(node_layer_map); ++i) {
 		var posy = (obj[2]*16)
 		draw_rect(posx, posy, 16, 16, c_white, 1, true)
 	}
+	
+	
+	i++;
 }
