@@ -13,6 +13,8 @@ boll = -1
 bollStruct = {xsc : 1, ysc : 1, x : 0, y : 0, z : 0, xsp : 0, ysp : 0, zsp : 0}
 stretch = 8
 flash = 0
+bolldive = 0
+bounce = 0
 
 //mode 7 init stuff
 pos = shader_get_uniform(shd_mode7Ceiling, "position");

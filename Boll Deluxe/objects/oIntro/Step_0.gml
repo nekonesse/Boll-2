@@ -13,16 +13,22 @@ if (egg == "3") {
 	}
 } else {
 	if !frame {
-		bollStruct.x += (240 - bollStruct.x) / 10
+		bolldive = sin(global.roomTimer * 0.05) * (135 - (bounce * 75))
+		bollStruct.x += (240 - bollStruct.x) / 35
 		bollStruct.y += (135 - bollStruct.y) / 10
-		bollStruct.z = sin(global.roomTimer * 0.01) * 32
+		bollStruct.z = sin(global.roomTimer * 0.0125) * 32
 	
 		if (bollStruct.z > bollStruct.biggestZ) {
 			bollStruct.biggestZ = bollStruct.z
 		} else {
+			hsp = sign(bolldive)
+			bolldive = -abs(bolldive);
 			bollStruct.z = bollStruct.biggestZ
-			frame = 1
-			flash = 30
+			bounce = 1;
+			if (hsp == sign(bolldive) && bounce == 1) {
+				frame = 1
+				flash = 30
+			}
 		}
 	}
 }

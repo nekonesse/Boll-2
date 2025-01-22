@@ -10,4 +10,14 @@ if (egg == "3") {
 	hsp = sprite_get_info(sprite_index).num_subimages
 }
 //boll = makeboll()
-bollStruct = {xsc : 1, ysc : 1, x : 250, y : 0, z : -32, xsp : 0, ysp : 0, zsp : 0, biggestZ : -40}
+bollStruct = {
+	xsc : 1, 
+	ysc : 1, 
+	x : 0, 
+	y : 0, 
+	z : -32, 
+	xsp : 0, 
+	ysp : 0, 
+	zsp : 0, 
+	biggestZ : -40
+}
