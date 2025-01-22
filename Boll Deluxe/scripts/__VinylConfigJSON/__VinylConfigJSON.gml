@@ -209,11 +209,16 @@ global.VinylConfigSON = [
 				sound: snd_fireball,
 				gain: 0.5
 			},
-			snd_powerup,
-			{
-				sound: snd_powerup,
-				gain: 0.5
-			},
+            snd_powerup,
+            {
+                sound: snd_powerup,
+                gain: 0.5
+            },
+            snd_1up,
+            {
+                sound: snd_1up,
+                gain: 0.5
+            },
 			snd_pipe,
 			{
 				sound: snd_pipe,

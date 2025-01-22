@@ -24,8 +24,8 @@ pounding_block = false;
 walljump = false;
 firing = 0;
 crouch = false;
-//invincible_type = 0;                                                                                //0 is off, 1 is hurt frames and 2 is invincibility
-//invincible_timer = 0;
+invincible_type = 0;                                                                                //0 is off, 1 is hurt frames and 2 is invincibility
+invincible_timer = 0;
 
 #define stop
 hsp = 0;
@@ -155,7 +155,12 @@ if (state == "" || state == "jump") && !piped && !electrocuted && !electrocution
 			}
 		}
 		
-		hurt = false
+		if (hurt) {
+			hurt = false;
+			invincible_type = 1;
+			invincible_timer = 75;
+		}
+		
 		canjump = 5;  // Coyote frames
 		runjump = 0;
 	
@@ -583,6 +588,9 @@ VinylPlay(asset_get_index("snd_powerup"));
 invincible_type = 2;                                                                               
 invincible_timer = 510;
 
+#define 1up
+give_lives(pNum, x + (hit_sizex / 2), y - 8)
+
 #define ceil_bonk
 bonk = 12
 
@@ -635,7 +643,7 @@ if (state != "groundpound") {
 var coll=check_hitbox_on_hitbox(id, oEnemy)
 if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 	
-if (coll) && !(slopesliding) {
+if (coll) && !(slopesliding) && !(invincible_type && invincible_timer) {
 	stopsfx(charmName+"damage")
 	hurt=1
 	hsp=2.25*-xsc
@@ -659,7 +667,7 @@ if (coll) && !(slopesliding) {
 			break;
 	}
 	grow = 60;
-} else {
+} else if (coll) && (!(invincible_type) || (invincible_type == 2)) {
 	instance_create_depth(coll.x+coll.xsc,coll.y,2,pImpact)
 	coll.hp-=1
 	coll.phaseid=id
@@ -672,60 +680,66 @@ if (coll) && !(slopesliding) {
 }
 
 #define hurt_by_spike
-stopsfx(charmName+"damage")
-hurt=1
-hsp=2.25*-xsc
-vsp=-4
-canstopjump=true
-state=""
-grounded=false
-oldsize = size;
-switch (size) {
-	case "basic":
-	case "mini":
-		signal_emit(sig, "on_kill", charmName)
-		break;
-	case "big":
-		size = "basic";
-		playsfx(charmName+"damage")
-		break;
-	default:
-		size = "big";
-		playsfx(charmName+"damage")
-	break;	
-}	
-grow = 60;
+if !(invincible_type && invincible_timer) {
+	stopsfx(charmName+"damage")
+	hurt=1
+	hsp=2.25*-xsc
+	vsp=-4
+	canstopjump=true
+	state=""
+	grounded=false
+	oldsize = size;
+	switch (size) {
+		case "basic":
+		case "mini":
+			signal_emit(sig, "on_kill", charmName)
+			break;
+		case "big":
+			size = "basic";
+			playsfx(charmName+"damage")
+			break;
+		default:
+			size = "big";
+			playsfx(charmName+"damage")
+		break;	
+	}	
+	grow = 60;
+}
 
 #define electrocute
-state=""
-electrocuted = true;
-electrocution_timer=60;
+if !(invincible_type && invincible_timer) {
+	state=""
+	electrocuted = true;
+	electrocution_timer=60;
+}
 
 #define hurt_by_electrocution
-stopsfx(charmName+"damage")
-electrocuted = false;
-hurt=1
-hsp=2.25*-xsc
-vsp=-4
-canstopjump=true
-state=""
-grounded=false
-oldsize = size;
-switch (size) {
-	case "basic":
-	case "mini":
-		signal_emit(sig, "on_kill", charmName)
-		break;
-	case "big":
-		size = "basic";
-		playsfx(charmName+"damage")
-		break;
-	default:
-		size = "big";
-		playsfx(charmName+"damage")
-		break;
+if !(invincible_type && invincible_timer) {
+	stopsfx(charmName+"damage")
+	electrocuted = false;
+	hurt=1
+	hsp=2.25*-xsc
+	vsp=-4
+	canstopjump=true
+	state=""
+	grounded=false
+	oldsize = size;
+	switch (size) {
+		case "basic":
+		case "mini":
+			signal_emit(sig, "on_kill", charmName)
+			break;
+		case "big":
+			size = "basic";
+			playsfx(charmName+"damage")
+			break;
+		default:
+			size = "big";
+			playsfx(charmName+"damage")
+			break;
+	}
+	grow = 60;
 }
-grow = 60;
 
 
 #define stomp_failed

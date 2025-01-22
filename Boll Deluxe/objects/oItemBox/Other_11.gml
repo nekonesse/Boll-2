@@ -13,10 +13,14 @@ switch (content) {
 	case "thunderflower": {
 		j = oThunderFlower;
 	} break;
-	
-	case "star": {
-		j = oStar;
-	} break;
+    
+    case "star": {
+        j = oStar;
+    } break;	
+    
+    case "1up": {
+        j = o1up;
+    } break;
 	
 	default: exit; //assume that the box is empty and dont proceed with spawning the object
 }

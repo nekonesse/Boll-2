@@ -435,3 +435,10 @@ function player_castlewalk() {
 	    }
 	}
 }
+
+function give_lives(player = 0, _x = x, _y = y, amount = 1, part = p1UP, sound = "snd_1up") {
+    VinylStop(asset_get_index(sound));
+    VinylPlay(asset_get_index(sound));
+    global.lives[player]+=amount //change when multiplayer is implemented i havent checked how to know which player a player is yet
+    instance_create(_x, _y, part);
+}

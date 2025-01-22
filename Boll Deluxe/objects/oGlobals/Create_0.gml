@@ -75,9 +75,10 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_constant_add("oMagentaSwitchBlock",oMagentaSwitchBlock)
 		txr_constant_add("oMagentaSwitchBlockOff",oMagentaSwitchBlockOff)
 		txr_constant_add("oMagentaSwitchSlope",oMagentaSwitchSlope)
-		txr_constant_add("oMushroom",oMushroom)
+        txr_constant_add("oMushroom",oMushroom)
 		txr_constant_add("oFireFlower",oFireFlower)
 		txr_constant_add("oThunderFlower",oThunderFlower)
+        txr_constant_add("o1up",o1up)
 		txr_constant_add("oCoin",oCoin)
 		txr_constant_add("oMysteryOrb",oMysteryOrb)
 		
@@ -595,6 +596,7 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_function_add("get_spriteindex", get_spriteindex, -1);
 		txr_function_add("get_spritenum", get_spritenum, -1);
 		txr_function_add("in_water", in_water, -1);
+        txr_function_add("give_lives", give_lives, -1);
 	#endregion
 	
 	#region Player Functions

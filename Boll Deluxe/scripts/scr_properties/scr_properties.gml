@@ -8,7 +8,7 @@ function object_get_properties(obj){
 	switch (asset_get_index(obj)){
 		case oItemBox:
 			properties = [
-				["content", "Contents", "coin", "dropdown", ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star"]],
+				["content", "Contents", "coin", "dropdown", ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up"]],
 				["amount", "Amount", 1, "number_input", 50],
 				["bricked", "Is Brick", 0, "checkbox", 0],
 				["hidden", "Is Hidden", 0, "checkbox", 0],
