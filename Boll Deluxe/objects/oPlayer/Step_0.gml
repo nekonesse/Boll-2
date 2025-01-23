@@ -63,14 +63,14 @@ if (invincible_timer) {
 	switch (invincible_type) {
 		case 2 : {
 			if (invincible_timer <= 0) {
-				invincible_timer = 90;
+				invincible_timer = 60;
+				grow=0;
 				invincible_type = 1;
 				break;
 			}
 			instance_create(random_range(bbox_left,bbox_right),random_range(bbox_top,bbox_bottom),pShine)
 		} break;
 		case 1 : {
-			visible = (invincible_timer & 1 == 0)
 			
 			//the visible variable just skips the draw events entirely.
 			//if the player object relies on it, uncomment the line at 
@@ -83,7 +83,6 @@ if (invincible_timer) {
 		case 0 : {
 			invincible_timer = 0;
 			//visible = true;
-		}
-		default : break;
+		} break;
 	}
 }

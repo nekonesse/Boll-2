@@ -41,6 +41,8 @@ newy = 0
 
 orbit_angle=0;
 spawn_orbit = 0;
+lock_x = false;
+lock_y = false;
 
 dir=0;
 ydir=0;

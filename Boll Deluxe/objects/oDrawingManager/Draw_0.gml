@@ -106,4 +106,5 @@ if instance_exists(oSlime) {
 	
 	global.drawcost = abs(get_timer() - last_delta);
 	global.drawcost_pct = (global.drawcost / delta_time) * 100;
+	show_debug_message("test!")
 }

@@ -2,6 +2,7 @@ reset_yrel = 3;
 
 last_delta = 0;
 cur_delta = 0;
+collision_array = [oCollider,oEnemyGround]
 
 init = function()
 {

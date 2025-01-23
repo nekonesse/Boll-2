@@ -26,28 +26,18 @@ function check_collision_dot(x1, y1, type = 0, object = collision_array){
 	    var found_list = ds_list_create()
 	    var found_size = collision_point_list(floor(x1),floor(y1),object,true,true, found_list, false)
     
-	    for (var i = 0; i < found_size; ++i) {    
+		var i=0;
+	    repeat (found_size) {    
 	        var found = found_list[| i];
 	        if (!found.no_collide) { 
 				if (type == COL_TOP || !found.ceiling_only) {
-		          if (type != COL_BOTTOM && !found.semi) || (type == COL_BOTTOM) {
-						//if found.slope {
-							//if !(found.rounded) {
-								//colslope = found.slope_factor * (-1 + (found.hflip * 2))
-							//} else {
-								//var new_rise=point_distance(x,y,x,found.bbox_bottom)
-								//var new_run=point_distance(x,y,found.x,y)
-								//var new_slope_factor=new_rise/new_run
-								//colslope = new_slope_factor * (-1 + (found.hflip * 2))
-							//}
-		                //}else{
-							//colslope = 0
-		                //}
+			        if (type != COL_BOTTOM && !found.semi) || (type == COL_BOTTOM) {
 						ds_list_destroy(found_list)
-		                return true;
-				  }
+				        return true;
+					}
 				}
 			}
+			i++;
 	    }
         ds_list_destroy(found_list)
     }
@@ -61,28 +51,18 @@ function check_collision_line(x1, y1, x2, y2, type = 0, object = collision_array
 	    var found_list = ds_list_create()
 	    var found_size = collision_line_list(floor(x1),floor(y1),floor(x2), floor(y2), object,true,true, found_list, false)
     
-	    for (var i = 0; i < found_size; ++i) {    
+	    var i=0;
+	    repeat (found_size) {    
 	        var found = found_list[| i];
 		     if (!found.no_collide) {
 				if (type == COL_TOP || !found.ceiling_only) {
-		          if (type != COL_BOTTOM && !found.semi) || (type == COL_BOTTOM){
-						//if found.slope { 
-							//if !(found.rounded) {
-								//colslope = found.slope_factor * (-1 + (found.hflip * 2))
-							//} else {
-								//var new_rise=point_distance(x,y,x,found.bbox_bottom)
-								//var new_run=point_distance(x,y,found.x,y)
-								//var new_slope_factor=new_rise/new_run
-								//colslope = new_slope_factor * (-1 + (found.hflip * 2))
-							//}
-		                //}else{
-							//colslope = 0
-		                //}
+					if (type != COL_BOTTOM && !found.semi) || (type == COL_BOTTOM) {
 						ds_list_destroy(found_list)
-		                return true;
-				  }
+				        return true;
+					}
 				}
 			}
+			i++;
 	    }
         ds_list_destroy(found_list)
     }
@@ -90,37 +70,23 @@ function check_collision_line(x1, y1, x2, y2, type = 0, object = collision_array
 }
 
 function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_array){
-	//var found = noone
-	
-	var bestobj = noone;
 	
 	if collision_rectangle(floor(x1) ,floor(y1),floor(x2),floor( y2), object,true,false)    {
 	    var found_list = ds_list_create()
 	    var found_size = collision_rectangle_list(floor(x1),floor(y1),floor(x2), floor(y2), object,true,true, found_list, false)
-    
-	    for (var i = 0; i < found_size; ++i) {    
+		
+		var i=0;
+	    repeat (found_size) {     
 	        var found = found_list[| i];
 	        if (!found.no_collide) { 
 				if (type == COL_TOP || !found.ceiling_only) {
-		          if (type != COL_BOTTOM && !found.semi)|| (type == COL_BOTTOM) {
-						//if found.slope { 
-							//if !(found.rounded) {
-								//colslope = found.slope_factor * (-1 + (found.hflip * 2))
-							//} else {
-								//var new_rise=point_distance(x,y,x,found.bbox_bottom)
-								//var new_run=point_distance(x,y,found.x,y)
-								//var new_slope_factor=new_rise/new_run
-								//colslope = new_slope_factor * (-1 + (found.hflip * 2))
-							//}
-		                //}else{
-							//colslope = 0
-		                //}
-					
-                        ds_list_destroy(found_list) 
-                        return true;
-				  }
+			        if (type != COL_BOTTOM && !found.semi)|| (type == COL_BOTTOM) {
+						ds_list_destroy(found_list) 
+		                return true;
+					}
 				}
 			}
+			i++;
 	    }
         ds_list_destroy(found_list)
     }
@@ -135,8 +101,8 @@ function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_
 	    var found_list = ds_list_create()
 	    var found_size = collision_rectangle_list(floor(x1) ,floor(y1),floor(x2), floor(y2), object,true,true, found_list, true)
 
-    
-	    for (var i = 0; i < found_size; ++i) {    
+		var i=0;
+	    repeat (found_size) {   
 	        var found = found_list[| i];
 	        if (!found.no_collide) { 
 	          
@@ -165,9 +131,8 @@ function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_
                     ds_list_destroy(found_list)
                     return true;
 	            }
-				
-			  
 			}
+			i++;
 	    }
         ds_list_destroy(found_list)
     }

@@ -23,6 +23,8 @@ if (global.debug)
 						 c_purple,
 						 true);
 						 
+	draw_text(x,y,colactive)
+						 
 
 }
 

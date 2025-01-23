@@ -59,29 +59,29 @@ function player_interactions(){
 	} else dy=0
 	
 	#region Solid Spike Collision
-	var spike=collision_line(x-hit_sizex,y+(hit_sizey-2)-vsp,x-hit_sizex,y-(hit_sizey-2)-vsp, oSolidSpike, false, true)
-	if (spike) && (spike.dir="right" || spike.dir="none") {
+	var spike=collision_line(x-hit_sizex+hsp,y-hit_sizey+2,x-hit_sizex+hsp,y+hit_sizey-abs(vsp), oSolidSpike, false, true)
+	if (spike) && (spike.dir="right" || spike.dir="none") && !(hurt) {
 		sig.Emit("hurt_by_spike")
 	}
 	
-	var spike=collision_line(x+hit_sizex,y+(hit_sizey-2)-vsp,x+hit_sizex,y-(hit_sizey-2)-vsp, oSolidSpike, false, true)
-	if (spike) && (spike.dir="left" || spike.dir="none") {
+	var spike=collision_line(x+hit_sizex+hsp,y-hit_sizey+2,x+hit_sizex+hsp,y+hit_sizey-abs(vsp), oSolidSpike, false, true)
+	if (spike) && (spike.dir="left" || spike.dir="none") && !(hurt) {
 		sig.Emit("hurt_by_spike")
 	}
 	
-	var spike=collision_line(x-hit_sizex-hsp,y+hit_sizey,x+hit_sizex-hsp,y+hit_sizey, oSolidSpike, false, true)
-	if (spike) && (spike.dir="up" || spike.dir="none") {
+	var spike=collision_line(x-hit_sizex-1,y+hit_sizey+1,x+hit_sizex-1,y+hit_sizey+1, oSolidSpike, false, true)
+	if (spike) && (spike.dir="up" || spike.dir="none") && !(hurt) {
 		sig.Emit("hurt_by_spike")
 	}
 	
-	var spike=collision_line(x-hit_sizex-hsp,y-hit_sizey,x+hit_sizex-hsp,y-hit_sizey, oSolidSpike, false, true)
-	if (spike) && (spike.dir="down" || spike.dir="none") {
+	var spike=collision_line(x-hit_sizex-1,y-hit_sizey+vsp,x+hit_sizex-1,y-hit_sizey+vsp, oSolidSpike, false, true)
+	if (spike) && (spike.dir="down" || spike.dir="none") && !(hurt) {
 		sig.Emit("hurt_by_spike")
 	}
 	#endregion
 	
 	var chainsaw=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oChainsaw, false, true)
-	if (chainsaw) {
+	if (chainsaw) && !(hurt) {
 		sig.Emit("hurt_by_spike")
 	}
 	

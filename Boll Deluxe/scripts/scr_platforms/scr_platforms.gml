@@ -286,7 +286,7 @@ function thinker_swinging_platform(obj)
 	}
 	else {
 		//continuous movement, no swinging
-		obj.orbit_angle += (obj.swing_speed/2) * dir;
+		obj.orbit_angle += -(obj.swing_speed/2) * dir;
 		obj.orbit_angle = wrap_val(obj.orbit_angle,0,359);
 	}
 
@@ -297,11 +297,15 @@ function thinker_swinging_platform(obj)
 	oldx = floor(obj.newx)
 	oldy = floor(obj.newy)
 
-	obj.newx = (obj.targetx) + (obj.orbit_length * dcos(obj.orbit_angle + obj.offset_angle));
-	obj.newy = (obj.targety)- (obj.orbit_length * dsin(obj.orbit_angle + obj.offset_angle));
-
-	obj.x = floor(obj.newx)
-	obj.y = floor(obj.newy)
+	if !(lock_x) {
+		obj.newx = (obj.targetx) + (obj.orbit_length * dcos(obj.orbit_angle + obj.offset_angle));
+		obj.x = floor(obj.newx)
+	}
+	
+	if !(lock_y) {
+		obj.newy = (obj.targety)- (obj.orbit_length * dsin(obj.orbit_angle + obj.offset_angle));
+		obj.y = floor(obj.newy)
+	}
 
 	if (obj.x > obj.xprevious)
 		dir=1;

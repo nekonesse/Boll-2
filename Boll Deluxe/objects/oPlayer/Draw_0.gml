@@ -1,6 +1,6 @@
 animate_player();
 
-//if (invincible_type == 1 && invincible_timer & 1) {exit;}
+if (invincible_type == 1 && invincible_timer mod 5 < 2.5) exit;
 
 if (CollageImageExists(oGameManager.PlayerColl.GetImageInfo(get_spriteindex()))) {
 	var palette = unreal(skin_setting(get_size() + " palette"), 0)

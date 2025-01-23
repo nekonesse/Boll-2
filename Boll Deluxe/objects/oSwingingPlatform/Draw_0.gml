@@ -4,19 +4,41 @@ if (is_blue)
 }
 else
 {
-	fr+=0.2
-	if floor(fr) >= 3
-	fr=0
 
 	xx=targetx
 	yy=targety
-
-	repeat ((chain_length)+1) {
-	    draw_sprite(spr_swingplatchain,0,floor(xx),floor(yy))
-	    xx+=lengthdir_x(16,orbit_angle) yy+=lengthdir_y(16,orbit_angle)
+	
+	var targetoverridex=targetx
+	var targetoverridey=targety
+	
+	if (lock_x) targetoverridex=x
+	
+	draw_sprite(spr_swingplatchain,1,floor(targetoverridex),floor(targetoverridey))
+	
+	if (lock_y) {
+		y_diff=0;
+		var i=1;
+		repeat (chain_length) {
+			xx=lerp(targetx,x,(i/chain_length))
+			draw_sprite(spr_swingplatchain,0,floor(xx),floor(yy))
+			i++;
+		}
+	} else if (lock_x) {
+		x_diff=0;
+		var i=1;
+		repeat (chain_length) {
+			yy=lerp(targety,y,(i/chain_length))
+			draw_sprite(spr_swingplatchain,0,floor(targetoverridex),floor(yy))
+			i++;
+		}
+	} else {
+		var i=1;
+		repeat ((chain_length)) {
+			xx=targetx+lengthdir_x(16*i,orbit_angle) yy=targety+lengthdir_y(16*i,orbit_angle)
+			draw_sprite(spr_swingplatchain,0,floor(xx),floor(yy))
+			i++;
+		}
 	}
-	draw_sprite(spr_swingplatchain,1,floor(targetx),floor(targety))
-
+		
 	draw_sprite_ext(sprite_index,image_index,floor(x),floor(y),image_xscale,image_yscale,image_angle,c_white,1)
 }
-

@@ -68,7 +68,9 @@ function object_get_properties(obj){
 				["swing_speed", "Swing Speed", 4, "number_input", 0],
 				["reverse", "Reverse", 0, "checkbox", 0],
 				["continuous", "Continuous", 0, "checkbox", 0],
-				["is_blue", "Weighted", 0, "checkbox", 0]
+				["lock_x", "Lock X Movement", 0, "checkbox", 0],
+				["lock_y", "Lock Y Movement", 0, "checkbox", 0]
+				//["is_blue", "Weighted", 0, "checkbox", 0] //uncomment when fixed
 			]
 			break;
 		case oDonutBlock:

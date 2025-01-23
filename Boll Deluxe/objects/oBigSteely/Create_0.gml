@@ -114,7 +114,7 @@ function ball_movement() {
 			i.gravity=-0.04;
 			
 			//bounce off a slope at an angle
-			get_angle_line(x-(hit_sizex-2),y+hit_sizey+5,x+(hit_sizex-2),y+hit_sizey+5)
+			get_angle_rect(x-(hit_sizex-2),y-hit_sizey,x+(hit_sizex-2),y+hit_sizey+5)
 			hsp += lengthdir_x(2,colangle+90) //the first value in lengthdir_x is the strength of a slope bounce
 		}
 	} else {

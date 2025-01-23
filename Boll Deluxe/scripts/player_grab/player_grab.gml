@@ -5,6 +5,7 @@ function player_grab(){
         var awesome = collision_line(x,y,x +((hit_sizex + 2) * move_dir),y, oGrabable, false, true) 
         if (awesome && variable_instance_exists(awesome, "grabbed")) {
             grabbed_obj = awesome
+			is_grabbing = true
             awesome.grabbed = true
         }
     }
@@ -13,6 +14,7 @@ function player_grab(){
         grabbed_obj.x = x + (xsc * (16))
         grabbed_obj.y = y
         grabbed_obj.grabbed = true
+		is_grabbing = true
         
         if (!bkey) {
             if (up) {
@@ -21,6 +23,7 @@ function player_grab(){
             } else if (down) {
                 grabbed_obj.vsp = 0
                 grabbed_obj.hsp = 0
+				bounce=true
             } else {
                 grabbed_obj.vsp = -1
                 grabbed_obj.hsp = (xsc * 3)
@@ -28,6 +31,7 @@ function player_grab(){
             
             grabbed_obj.grabbed = false
             grabbed_obj = noone
+			is_grabbing = false
         }
     }
 }

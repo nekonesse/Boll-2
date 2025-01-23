@@ -24,7 +24,7 @@ pounding_block = false;
 walljump = false;
 firing = 0;
 crouch = false;
-invincible_type = 0;                                                                                //0 is off, 1 is hurt frames and 2 is invincibility
+invincible_type = 0; //0 is off, 1 is hurt frames and 2 is invincibility
 invincible_timer = 0;
 
 #define stop
@@ -424,26 +424,37 @@ frspd=1
 if (state == "") {
 	if !(crouch) {
 		if (abs(gsp) == 0) {
-			wait_timer += 1
-			spriteEvent="idle"
-			if (wait_timer > 440) {
-				spriteEvent="wait"
-			}			
-			if (up) {
+			if !is_grabbing {
+				wait_timer += 1
+				spriteEvent="idle"
+				if (wait_timer > 440) {
+					spriteEvent="wait"
+				}
+				if (up) {
+					wait_timer = 0
+					spriteEvent="lookUp"
+				}
+			} else {
 				wait_timer = 0
-				spriteEvent="lookUp"
+				spriteEvent="carryIdle"
+				if (up) {
+					spriteEvent="carryLookUp"
+				}
 			}
 		} else {
 			wait_timer = 0
 			if (ceil(abs(gsp))>3.25) {
+				if !is_grabbing
 				spriteEvent="run"
+				else
+				spriteEvent="carryRun"
 			}
 			else {
-				frspd=abs(hsp)/4
-				if (frspd < 0.3) {
-					frspd = 0.3;
-				}
+				frspd=max(abs(hsp)/4,0.3)
+				if !is_grabbing
 				spriteEvent="walk"
+				else
+				spriteEvent="carryWalk"
 			}
 		}
 	} else {

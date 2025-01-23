@@ -12,6 +12,7 @@ sig.Connect( self, function(str_var) {
 
 greenmode=0
 grabbed_obj = noone;
+is_grabbing = false;
 ///// GENERAL /////
 
 pNum = 0; //player number (P1, P2, etc.)
@@ -103,7 +104,7 @@ colslope = 0;
 steep_slope = 0;
 slopesliding = 0;
 hurt=0;
-invincible_timer=intlib_make_u64(0);
+invincible_timer=0;
 invincible_type=0;
 image_speed=0
 depth=0;
