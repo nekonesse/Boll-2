@@ -1,4 +1,4 @@
-var col = noone;
+var col = noone, i = 0;
 if (state = 0) {
 	
 	frame = 0
@@ -16,18 +16,13 @@ if (state = 0) {
 if (state == 1) {
 	vsp = clamp(vsp + 0.25, 0, 4)
 	col = instance_place(x, y+vsp, [oCollider, oBrick])
-	if col {
-		if col.object_index == oBrick {
-			with col {
-				var j = noone;
-				j = instance_create(x-4,y+4,pDestruction) with (j) {image_index=0 hspeed=-1 vspeed=-2} //bottom left
-				j = instance_create(x-4,y-4,pDestruction) with (j) {image_index=0 hspeed=1 vspeed=-2} //bottom right
-				j = instance_create(x+4,y+4,pDestruction) with (j) {image_index=0 hspeed=-1 vspeed=-4} //top left
-				j = instance_create(x+4,y-4,pDestruction) with (j) {image_index=0 hspeed=1 vspeed=-4} //top right
-			
-				instance_destroy();
+	if (col) {
+		if (col.object_index == oBrick) {
+			while (col != noone && i < 10) {
+				instance_destroy(col);
+				col = collision_line(bbox_left,bbox_bottom+vsp,bbox_right,bbox_bottom+vsp,oBrick,false,true)
+				i += 1;
 			}
-			VinylPlay(snd_blockbreak)
 			exit;
 		}
 		state = 2

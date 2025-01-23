@@ -59,15 +59,12 @@ function ball_movement() {
 		var j = noone;
 		for (var i = 0; i < num; ++i) {
 			with(list[| i]) {
-				if object_is_ancestor(object_index, oHittable) {
-					blockHit.Emit(-1, id);
-				} else if object_index==oHardBlock {
-					if !VinylIsPlaying(snd_hardblockbreak) VinylPlay(snd_hardblockbreak);
+				if (object_index == oHardBlock || object_index == oItemBox) {
 					instance_destroy();
-					j = instance_create(x+4,y+12,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-2} //bottom left
-					j = instance_create(x+12,y+12,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-2} //bottom right
-					j = instance_create(x+4,y+4,pDestruction) with(j){image_index=4 hspeed=-1 vspeed=-4} //top left
-					j = instance_create(x+12,y+4,pDestruction) with(j){image_index=4 hspeed=1 vspeed=-4} //top right
+				} else if object_is_ancestor(object_index, oHittable) {
+					if (hit == 0) {
+						blockHit.Emit(esign(y - other.y, -1), id);
+					}
 				}
 			}
 		}

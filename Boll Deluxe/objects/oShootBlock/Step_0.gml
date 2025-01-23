@@ -24,12 +24,7 @@ if (goDirection != 0) {
 		
 		ds_list_destroy(blocklist);
 		
-		VinylPlay(snd_shootblockbreak)
 		instance_create(x,y+(sprite_height/2)*goDirection,pImpact)
 		instance_destroy();
-		var j=instance_create(x-4,y+4,pDestruction) with(j){image_index=7 hspeed=-1 vspeed=-2} //bottom left
-		var j=instance_create(x+4,y+4,pDestruction) with(j){image_index=7 hspeed=1 vspeed=-2} //bottom right
-		var j=instance_create(x-4,y-4,pDestruction) with(j){image_index=7 hspeed=-1 vspeed=-4} //top left
-		var j=instance_create(x+4,y-4,pDestruction) with(j){image_index=7 hspeed=1 vspeed=-4} //top right
 	}
 }
