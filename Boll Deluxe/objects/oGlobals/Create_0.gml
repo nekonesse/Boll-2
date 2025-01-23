@@ -79,6 +79,7 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_constant_add("oFireFlower",oFireFlower)
 		txr_constant_add("oThunderFlower",oThunderFlower)
         txr_constant_add("o1up",o1up)
+        txr_constant_add("o3up",o3up)
 		txr_constant_add("oCoin",oCoin)
 		txr_constant_add("oMysteryOrb",oMysteryOrb)
 		
@@ -117,6 +118,7 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_constant_add("pGlitter",pGlitter)
 		txr_constant_add("pSparkles1UP",pSparkles1UP)
 		txr_constant_add("p1UP",p1UP)
+		txr_constant_add("p3UP",p3UP)
 		txr_constant_add("pFireballExplosion",pFireballExplosion)
 		txr_constant_add("pFireballTrail",pFireballTrail)
 		txr_constant_add("pImpact",pImpact)

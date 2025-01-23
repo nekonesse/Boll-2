@@ -1198,6 +1198,12 @@ if keyboard_check_pressed(vk_enter) && !(is_typing) { //PLAYTEST
 	
 	global.nextlevel=game_save_id+"\save.jade" //the level the game will load
 	global.jade_testing = true;
+	
+	i = 0;
+	repeat(4) {
+		global.lives[i]=5
+		i++
+	}
 	room_goto(rGame)
 }
 

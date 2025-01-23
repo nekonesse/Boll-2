@@ -30,6 +30,12 @@ var _debugMess = function() {
 
 if (akey) {
 	if (instance_exists(oMainMenu))
+		var i = 0;
+		repeat(4) {
+		    global.lives[i]=5
+			i++
+		}
+		
 		room_goto(rGame);
 		global._playerChars = [oGlobals._charmList[_select]];
 	instance_destroy();

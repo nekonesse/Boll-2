@@ -133,6 +133,7 @@ global.VinylConfigSON = [
             mus_overworld_BG_loop,
 			mus_overworld_FG_head,
             mus_overworld_FG_loop,
+			mus_gameover,
         ],
     },
 	{
@@ -217,7 +218,7 @@ global.VinylConfigSON = [
             snd_1up,
             {
                 sound: snd_1up,
-                gain: 0.5
+                gain: 0.4
             },
 			snd_pipe,
 			{

@@ -24,7 +24,7 @@ pounding_block = false;
 walljump = false;
 firing = 0;
 crouch = false;
-invincible_type = 0; //0 is off, 1 is hurt frames and 2 is invincibility
+invincible_type = 0;                                                                                //0 is off, 1 is hurt frames and 2 is invincibility
 invincible_timer = 0;
 
 #define stop
@@ -424,37 +424,26 @@ frspd=1
 if (state == "") {
 	if !(crouch) {
 		if (abs(gsp) == 0) {
-			if !is_grabbing {
-				wait_timer += 1
-				spriteEvent="idle"
-				if (wait_timer > 440) {
-					spriteEvent="wait"
-				}
-				if (up) {
-					wait_timer = 0
-					spriteEvent="lookUp"
-				}
-			} else {
+			wait_timer += 1
+			spriteEvent="idle"
+			if (wait_timer > 440) {
+				spriteEvent="wait"
+			}			
+			if (up) {
 				wait_timer = 0
-				spriteEvent="carryIdle"
-				if (up) {
-					spriteEvent="carryLookUp"
-				}
+				spriteEvent="lookUp"
 			}
 		} else {
 			wait_timer = 0
 			if (ceil(abs(gsp))>3.25) {
-				if !is_grabbing
 				spriteEvent="run"
-				else
-				spriteEvent="carryRun"
 			}
 			else {
-				frspd=max(abs(hsp)/4,0.3)
-				if !is_grabbing
+				frspd=abs(hsp)/4
+				if (frspd < 0.3) {
+					frspd = 0.3;
+				}
 				spriteEvent="walk"
-				else
-				spriteEvent="carryWalk"
 			}
 		}
 	} else {
@@ -546,6 +535,7 @@ if spriteEvent=="crouchIdle" {
 #define on_kill
 stopsfx(charmName+"skid")
 playsfx(charmName+"die")
+give_lives(pNum, -1000, -1000, -1, -4, -4)
 dead=1
 deadtimer=240;
 deadgo=0;
@@ -601,6 +591,9 @@ invincible_timer = 510;
 
 #define 1up
 give_lives(pNum, x + (hit_sizex / 2), y - 8)
+
+#define 3up
+give_lives(pNum, x + (hit_sizex / 2), y - 8, 3, p3UP)
 
 #define ceil_bonk
 bonk = 12

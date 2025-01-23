@@ -463,6 +463,7 @@ if (hurt) {
 
 #define on_kill
 playsfx(charmName+"die")
+give_lives(pNum, -1000, -1000, -1, -4, -4)
 dead=1
 deadtimer=240;
 vspeed=-5;
@@ -502,6 +503,12 @@ grow = 60;
 VinylPlay(asset_get_index("snd_powerup"));
 invincible_type=2;
 invincible_timer=510;
+
+#define 1up
+give_lives(pNum, x + (hit_sizex / 2), y - 8)
+
+#define 3up
+give_lives(pNum, x + (hit_sizex / 2), y - 8, 3, p3UP)
 
 #define ceil_bonk
 bonk = 12

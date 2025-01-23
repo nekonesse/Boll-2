@@ -358,6 +358,18 @@ function animate_player() {
 }
 
 function finish_death() {
+	if (global.lives[0] < 1) { //game over. couldnt care less if player 2 has -4 lives You. Are. Not. Implemented!!
+		VinylStopAll();
+		VinylPlay(mus_gameover, 0, 0.4);
+		show_message("yeah you got the games over yeah. died alot and lost your lifes. its over  alright now GET OUTTA HERE");
+		if (!global.jade_testing)
+			room_goto(rIntro);
+		else {
+			global.jade_testing = false;
+			room_goto(rEditor);
+		}
+		exit;
+	}
 	room_restart();
 }	
 
@@ -437,8 +449,13 @@ function player_castlewalk() {
 }
 
 function give_lives(player = 0, _x = x, _y = y, amount = 1, part = p1UP, sound = "snd_1up") {
-    VinylStop(asset_get_index(sound));
-    VinylPlay(asset_get_index(sound));
-    global.lives[player]+=amount //change when multiplayer is implemented i havent checked how to know which player a player is yet
-    instance_create(_x, _y, part);
+	
+	if (part != -4) 
+		instance_create(_x, _y, part);
+    if (sound != -4) {
+		VinylStop(asset_get_index(sound));
+		VinylPlay(asset_get_index(sound));
+	}
+	
+	global.lives[player]+=amount
 }

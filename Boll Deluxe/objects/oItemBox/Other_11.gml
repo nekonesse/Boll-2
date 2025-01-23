@@ -21,6 +21,10 @@ switch (content) {
     case "1up": {
         j = o1up;
     } break;
+    
+    case "3up": {
+        j = o3up;
+    } break;
 	
 	default: exit; //assume that the box is empty and dont proceed with spawning the object
 }
