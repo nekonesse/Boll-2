@@ -1,7 +1,9 @@
 event_inherited();
 
 hit_sizex = 16;
-hit_sizey = sprite_height;
+hit_sizey = 16;
+//the initial position of the object being shot depends on these variables
+//change only when creating a new child object
 
 depth=1
 

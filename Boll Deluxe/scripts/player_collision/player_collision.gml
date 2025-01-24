@@ -77,12 +77,11 @@ function basic_step_move(iterations = 2){
         player_interactions();
         player_collision();
     }
-   
-    
 }
 
 
 function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,c = 0){
+	var loop_count = 0;
 	
 	var left, right, top, bottom;
 	
@@ -126,14 +125,26 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 			x++	
 			posx = x
 			colflags |= COL_LWALL;
+			loop_count+=1;
+			if (loop_count > 100000) {
+				show_debug_message("too many loops at line 124, aborting")
+				break;
+			}
 		}
+		loop_count=0
 		
 		//right wall
 		while check_collision_line(posx+right, posy-sign(vsp)+c+top+3,posx+right,posy-sign(vsp)+c,COL_WALL ){
 			x--
 			posx = x
 			colflags |= COL_RWALL;
+			loop_count+=1;
+			if (loop_count > 100000) {
+				show_debug_message("too many loops at line 137, aborting")
+				break;
+			}
 		}
+		loop_count=0
 	}
 	
 	//landing on solid ground
@@ -166,8 +177,13 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 			while (check_collision_line(posx+right, posy+top, posx+left, posy+top, COL_TOP)) {
 				y++
 				posy = y
-				
+				loop_count+=1;
+				if (loop_count > 100000) {
+					show_debug_message("too many loops at line 177, aborting")
+					break;
+				}
 			}
+			loop_count=0
 			
 			//bonking
 			if object_index == oPlayer{
@@ -242,7 +258,13 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 				y ++ 
 				posy = y
 				shove++;
+				loop_count+=1
+				if (loop_count > 100000) {
+					show_debug_message("too many loops at line 257, aborting")
+					break;
+				}
 			}
+			loop_count = 0
 		}
 		
 		//move up
@@ -250,7 +272,13 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 			y -- 
 			posy = y
 			shove--;
+			loop_count+=1
+			if (loop_count > 100000) {
+				show_debug_message("too many loops at line 271, aborting")
+				break;
+			}
 		}
+		loop_count = 0
 		
 		if object_index == oPlayer{
 			shove = 0;

@@ -1,4 +1,5 @@
 ///@description Animation Controller
+xsc = -esign(grounded?gsp:hsp, -1)
 sprite_index = spr_bobombwalk;
 
 if unshellable {

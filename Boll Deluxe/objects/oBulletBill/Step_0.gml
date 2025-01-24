@@ -14,3 +14,6 @@ if !rectangle_in_rectangle(
 ) {
 	instance_destroy();
 }
+
+x += hsp;
+y += vsp;
