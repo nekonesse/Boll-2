@@ -25,7 +25,7 @@ if (egg == "3") {
 	draw_circle_color(bollStruct.x,bollStruct.y + bolldive,bollStruct.z + 80,c_blue,c_blue,false)
 	
 	if (frame >= 1) {
-		draw_text_transformed(161,16,"MARIO & SONIC IN...\n  BOLL DELUXE!!!",1,1,0)
+		draw_text_transformed(161,16,"boll 2",1,1,0)
 	}
 	
 	

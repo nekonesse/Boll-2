@@ -12,15 +12,15 @@ if is_array(pathing) && (pathspd) && !(pathfallen) && (pathstarted) { //prevent 
 	if (arr[2]) && !(pathfallen)
 	{
 		// curved path, handle special behavior
-		var dir=point_direction(pathing[pathprenum][0],
+		var dir=point_direction(pathing[pathprenum][0]-8,
 								pathing[pathprenum][1],
-								arr[0],
+								arr[0]-8,
 								arr[1]);
 	
 		// first, get the x and y path distances
 		var pathx, pathy;
 		
-		pathx = arr[0] - pathing[pathprenum][0];
+		pathx = (arr[0]-8) - (pathing[pathprenum][0]-8);
 		pathy = arr[1] - pathing[pathprenum][1];
 	
 		show_debug_message(pathy);
@@ -29,12 +29,12 @@ if is_array(pathing) && (pathspd) && !(pathfallen) && (pathstarted) { //prevent 
 		targetx+=lengthdir_x(pathspd,dir);
 		
 		// prevent X from overshooting
-		targetx=median(targetx,pathing[pathprenum][0],arr[0]);
+		targetx=median(targetx,pathing[pathprenum][0]-8,arr[0]-8);
 		
 		// get the x difference
 		var xdiff;
 		
-		xdiff = abs(targetx - pathing[pathprenum][0]);
+		xdiff = abs(targetx - (pathing[pathprenum][0]-8));
 		
 		// do circular easing on the y movement
 		
@@ -52,15 +52,15 @@ if is_array(pathing) && (pathspd) && !(pathfallen) && (pathstarted) { //prevent 
 	}
 	else
 	{
-		var dir=point_direction(targetx,targety,arr[0],arr[1]);
+		var dir=point_direction(targetx,targety,arr[0]-8,arr[1]);
 		targetx+=lengthdir_x(pathspd,dir); //move towards the next node
 		targety+=lengthdir_y(pathspd,dir);
-		targetx=median(targetx,pathing[pathprenum][0],arr[0]); //prevent overshooting
+		targetx=median(targetx,pathing[pathprenum][0]-8,arr[0]-8); //prevent overshooting
 		targety=median(targety,pathing[pathprenum][1],arr[1]);
 	}
 	
-	if !floor(point_distance(targetx,targety,arr[0],arr[1])) && !(pathfallen) { //check if we've reached our destination
-		targetx=arr[0]; //snap to our destination just in case we misalign by a margin
+	if !floor(point_distance(targetx,targety,arr[0]-8,arr[1])) && !(pathfallen) { //check if we've reached our destination
+		targetx=arr[0]-8; //snap to our destination just in case we misalign by a margin
 		targety=arr[1];
 		pathprenum=pathnum;
 		if !(pathisrev) {
@@ -72,7 +72,7 @@ if is_array(pathing) && (pathspd) && !(pathfallen) && (pathstarted) { //prevent 
 					pathnum--; //we have reversed direction, go backwards in our pathing
 				} else if (pathcanfall) {
 					pathfallen=1
-					var dir=point_direction(pathing[max(pathprenum-1,0)][0],pathing[max(pathprenum-1,0)][1],arr[0],arr[1]);
+					var dir=point_direction(pathing[max(pathprenum-1,0)][0]-8,pathing[max(pathprenum-1,0)][1],arr[0]-8,arr[1]);
 					show_debug_message(dir)
 					targethsp=lengthdir_x(pathspd,dir)
 					targetvsp=lengthdir_y(pathspd,dir)
