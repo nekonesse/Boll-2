@@ -23,7 +23,7 @@ function player_grab(){
             } else if (down) {
                 grabbed_obj.vsp = 0
                 grabbed_obj.hsp = 0
-				bounce=true
+				grabbed_obj.bounce=false
             } else {
                 grabbed_obj.vsp = -1
                 grabbed_obj.hsp = (xsc * 3)

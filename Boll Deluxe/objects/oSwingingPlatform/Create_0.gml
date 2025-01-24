@@ -43,6 +43,9 @@ orbit_angle=0;
 spawn_orbit = 0;
 lock_x = false;
 lock_y = false;
+targethsp = 0;
+targetvsp = 0;
+targetgravity = 0;
 
 dir=0;
 ydir=0;

@@ -282,29 +282,35 @@ function thinker_swinging_platform(obj)
 	var dir = obj.reverse ? 1 : -1
 
 	if !(obj.continuous) {
-		obj.orbit_angle = -wave_val(obj.start_angle,obj.end_angle,obj.swing_speed * dir);
+		obj.orbit_angle = -wave_val(obj.start_angle,obj.end_angle,(16 / obj.swing_speed) * dir);
 	}
 	else {
 		//continuous movement, no swinging
-		obj.orbit_angle += -(obj.swing_speed/2) * dir;
+		obj.orbit_angle += (obj.swing_speed/2) * dir;
 		obj.orbit_angle = wrap_val(obj.orbit_angle,0,359);
 	}
 
 	obj.orbit_length = (obj.chain_length * 16)
 
 	var oldx, oldy
-
+	
 	oldx = floor(obj.newx)
 	oldy = floor(obj.newy)
 
-	if !(lock_x) {
+	if !(obj.lock_x) {
 		obj.newx = (obj.targetx) + (obj.orbit_length * dcos(obj.orbit_angle + obj.offset_angle));
 		obj.x = floor(obj.newx)
+	} else {
+		obj.x_diff = 0;
+		obj.x = obj.targetx
 	}
 	
-	if !(lock_y) {
+	if !(obj.lock_y) {
 		obj.newy = (obj.targety)- (obj.orbit_length * dsin(obj.orbit_angle + obj.offset_angle));
 		obj.y = floor(obj.newy)
+	} else {
+		obj.y_diff = 0;
+		obj.y = obj.targety
 	}
 
 	if (obj.x > obj.xprevious)
@@ -316,8 +322,4 @@ function thinker_swinging_platform(obj)
 		obj.ydir=1;
 	else if (obj.y < obj.xprevious)
 		obj.ydir=-1;
-
-
-	obj.x_diff = (obj.x - oldx);
-	obj.y_diff = (obj.y - oldy);
 }

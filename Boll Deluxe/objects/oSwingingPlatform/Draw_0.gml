@@ -16,7 +16,6 @@ else
 	draw_sprite(spr_swingplatchain,1,floor(targetoverridex),floor(targetoverridey))
 	
 	if (lock_y) {
-		y_diff=0;
 		var i=1;
 		repeat (chain_length) {
 			xx=lerp(targetx,x,(i/chain_length))
@@ -24,7 +23,6 @@ else
 			i++;
 		}
 	} else if (lock_x) {
-		x_diff=0;
 		var i=1;
 		repeat (chain_length) {
 			yy=lerp(targety,y,(i/chain_length))

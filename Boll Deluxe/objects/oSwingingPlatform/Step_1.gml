@@ -1,7 +1,15 @@
-if is_array(pathing) && (pathspd) { //prevent crashing & a slight optimization
+if !(pathstarted) {
+	with(oPlayer) {
+		if (grounded) && collision_line(x-hit_sizex+other.x_diff,y+hit_sizey+2+abs(other.y_diff),x+hit_sizex+other.x_diff,y+hit_sizey+2+abs(other.y_diff),other,false,true) {
+			other.pathstarted=true;
+		}
+	}
+}
+
+if is_array(pathing) && (pathspd) && !(pathfallen) && (pathstarted) { //prevent crashing & a slight optimization
 	var arr=pathing[pathnum];
 	
-	if (arr[2])
+	if (arr[2]) && !(pathfallen)
 	{
 		// curved path, handle special behavior
 		var dir=point_direction(pathing[pathprenum][0],
@@ -51,7 +59,7 @@ if is_array(pathing) && (pathspd) { //prevent crashing & a slight optimization
 		targety=median(targety,pathing[pathprenum][1],arr[1]);
 	}
 	
-	if !floor(point_distance(targetx,targety,arr[0],arr[1])) { //check if we've reached our destination
+	if !floor(point_distance(targetx,targety,arr[0],arr[1])) && !(pathfallen) { //check if we've reached our destination
 		targetx=arr[0]; //snap to our destination just in case we misalign by a margin
 		targety=arr[1];
 		pathprenum=pathnum;
@@ -62,6 +70,13 @@ if is_array(pathing) && (pathspd) { //prevent crashing & a slight optimization
 				if (pathcanrev) { //can we reverse our pathing?
 					pathisrev=true;
 					pathnum--; //we have reversed direction, go backwards in our pathing
+				} else if (pathcanfall) {
+					pathfallen=1
+					var dir=point_direction(pathing[max(pathprenum-1,0)][0],pathing[max(pathprenum-1,0)][1],arr[0],arr[1]);
+					show_debug_message(dir)
+					targethsp=lengthdir_x(pathspd,dir)
+					targetvsp=lengthdir_y(pathspd,dir)
+					targetgravity=0.15;
 				} else {
 					pathnum=0; //stop running the path code, because why would we? we've stopped.
 				}
@@ -75,4 +90,11 @@ if is_array(pathing) && (pathspd) { //prevent crashing & a slight optimization
 			}
 		}
 	}
+}
+
+if (pathfallen) {
+	targetvsp+=targetgravity;
+		
+	targetx+=targethsp
+	targety+=targetvsp
 }

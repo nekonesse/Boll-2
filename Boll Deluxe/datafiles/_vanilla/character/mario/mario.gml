@@ -1,5 +1,5 @@
 #define datalist
-spriteEvents=split_string("idle,walk,run,wait,lookUp,crouchIdle,crouchWalk,crouchJump,crouchFall,crouchFireToss,crouchBonk,crouchFireToss,victory,hurt,dead,brake,jump,fall,bonk,runJump,runJumpFall,doubleJump,doubleJumpFall,doubleJumpBonk,wallSlide,wallJump,groundPound,groundPoundFall,slopeSlide,carryIdle,carryWalk,carryRun,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,roll,swim,swimPaddle,carrySwim,carryPaddle,spinJump,pushing,balancing,dive,bellySlide,fireToss,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
+spriteEvents=split_string("idle,walk,run,wait,lookUp,crouchIdle,crouchWalk,crouchJump,crouchFall,crouchFireToss,crouchBonk,crouchFireToss,victory,hurt,dead,brake,jump,fall,bonk,runJump,runJumpFall,doubleJump,doubleJumpFall,doubleJumpBonk,wallSlide,wallJump,groundPound,groundPoundFall,slopeSlide,carryIdle,carryWalk,carryRun,carryLookUp,carryJump,carryFall,carryBonk,carryCrouchIdle,carryCrouchWalk,carryCrouchJump,carryCrouchFall,carryCrouchBonk,carryKick,carryAirKick,roll,swim,swimPaddle,carrySwim,carryPaddle,spinJump,pushing,balancing,dive,bellySlide,fireToss,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
 sound_list=split_string("select,damage,die,jump,win,step,bonk",",");
 
 #define create
@@ -26,6 +26,7 @@ firing = 0;
 crouch = false;
 invincible_type = 0;                                                                                //0 is off, 1 is hurt frames and 2 is invincibility
 invincible_timer = 0;
+found_block = false;
 
 #define stop
 hsp = 0;
@@ -216,15 +217,15 @@ if (state == "pound") && !piping {
 	//hittable block collision
 	if (grounded) && (pound_timer <= 0) {
 		var blocklist=ds_list_create();
-		var num=collision_line_list(x-hit_sizex,y+hit_sizey+vsp+2,x+hit_sizex,y+hit_sizey+vsp+2,oHittable, false, true, blocklist, true)
+		var num=collision_line_list(x-hit_sizex,y+hit_sizey+vsp+2,x+hit_sizex,y+hit_sizey+vsp+2, oHittable, false, true, blocklist, true)
 		
-		found_block=false;
 		if (num > 0) {
+			found_block = false;
 			for (var i = 0; i < num; i+=1) {
 				var blockcoll=ds_list_find_value(blocklist, i)
 				if !(blockcoll.no_hit) && (pounding_block == true) && (blockcoll.amount != 0) {
+					found_block=true;
 					if (blockcoll.hit == 0) {
-						found_block=true;
 						signal_emit(blockcoll.blockHit, 1, id)
 					}
 				}
@@ -232,7 +233,7 @@ if (state == "pound") && !piping {
 			pounding_block = false
 		}
 		
-		if !found_block {
+		if !(found_block) {
 			state = ""
 			vsp = 0
 			//create pound smoke
@@ -275,6 +276,7 @@ if (state == "jump" || state == "") && !(grounded) && !piped {
 	if (downpress) {
 		pound_timer = 10
 		state = "pound"
+		found_block = false;
 		playsfx(charmName+"pound")
 		pounding_block = true
 	}
@@ -301,7 +303,7 @@ if ((state == "" || state=="crouch") && apress && (canjump > 0 || underwater)) &
 		state = "jump"
 		vsp = -(5.25+min(1,abs(hsp)/10)+(bool(poundjump)+0.5)); //preform the actual jump
 		playsfx(charmName+"jump",1+(bool(poundjump)/4),0,1)
-		if ((run && abs(hsp)>3) && !wallsliding) {
+		if ((run && abs(hsp)>3) && !wallsliding) && !(is_grabbing) {
 			//visual maxspeed jump
 			runjump=1
 		}
@@ -423,43 +425,71 @@ frspd=1
 
 if (state == "") {
 	if !(crouch) {
-		if (abs(gsp) == 0) {
-			wait_timer += 1
-			spriteEvent="idle"
-			if (wait_timer > 440) {
-				spriteEvent="wait"
-			}			
-			if (up) {
+		if !(is_grabbing) {
+			if (abs(gsp) == 0) {
+				wait_timer += 1
+				spriteEvent="idle"
+				if (wait_timer > 440) {
+					spriteEvent="wait"
+				}			
+				if (up) {
+					wait_timer = 0
+					spriteEvent="lookUp"
+				}
+			} else {
 				wait_timer = 0
-				spriteEvent="lookUp"
+				if (ceil(abs(gsp))>3.25) {
+					spriteEvent="run"
+				}
+				else {
+					frspd=max(abs(hsp)/4,0.3)
+					spriteEvent="walk"
+				}
 			}
 		} else {
-			wait_timer = 0
-			if (ceil(abs(gsp))>3.25) {
-				spriteEvent="run"
-			}
-			else {
-				frspd=abs(hsp)/4
-				if (frspd < 0.3) {
-					frspd = 0.3;
+			if (abs(gsp) == 0) {
+				wait_timer = 0
+				spriteEvent="carryIdle"
+				if (up) {
+					wait_timer = 0
+					spriteEvent="carryLookUp"
 				}
-				spriteEvent="walk"
+			} else {
+				wait_timer = 0
+				if (ceil(abs(gsp))>3.25) {
+					spriteEvent="carryRun"
+				}
+				else {
+					frspd=max(abs(hsp)/4,0.3)
+					spriteEvent="carryWalk"
+				}
 			}
 		}
 	} else {
 		wait_timer = 0
 		if (abs(hsp) < 0.25) {
+			if !(is_grabbing)
 			spriteEvent="crouchIdle"
+			else spriteEvent="carryCrouchIdle"
 		}
 		else {
+			if !(is_grabbing)
 			spriteEvent="crouchWalk"
+			else spriteEvent="carryCrouchWalk"
 		}
 	}
 	
 	if (!grounded) {
 		if (vsp>0) {
-			if !(crouch)  spriteEvent="fall"
-			else spriteEvent="crouchFall"
+			if !(crouch) {
+				if !is_grabbing
+				spriteEvent="fall"
+				else spriteEvent="carryFall"
+			} else {
+				if !is_grabbing
+				spriteEvent="crouchFall"
+				else spriteEvent="carryCrouchFall"
+			}
 		}
 	}
 	
@@ -469,9 +499,15 @@ if (state == "") {
 	}
 	
 	if (in_water()) {
-		if !swim
-		spriteEvent="swim"
-		else spriteEvent="swimPaddle"
+		if !(swim) {
+			if !(is_grabbing)
+			spriteEvent="swim"
+			else spriteEvent="carrySwim"
+		} else {
+			if !(is_grabbing)
+			spriteEvent="paddle"
+			else spriteEvent="carryPaddle"
+		}
 	}
 
 	if (finish && posed && no_move) {
@@ -480,17 +516,42 @@ if (state == "") {
 } else {
 	wait_timer = 0
 }
+
 if (state == "jump") {
-	if !(crouch)  spriteEvent="jump"
-	else spriteEvent="crouchJump"
-	if (vsp>0) { 
-		if !(crouch)  spriteEvent="fall"
-		else spriteEvent="crouchFall"
+	if !(crouch) {
+		if !(is_grabbing)
+		spriteEvent="jump"
+		else spriteEvent="carryJump"
+	} else {
+		if !(is_grabbing)
+		spriteEvent="crouchJump"
+		else spriteEvent="carryCrouchJump"
 	}
-	if (runjump) && !(crouch) spriteEvent="runJump"
+	
+	if (vsp>0) {
+		if !(crouch) {
+			if !(is_grabbing)
+			spriteEvent="fall"
+			else spriteEvent="carryFall"
+		} else {
+			if !(is_grabbing)
+			spriteEvent="crouchFall"
+			else spriteEvent="carryCrouchFall"
+		}
+	}
+	
+	if (runjump) && !(crouch) && !(is_grabbing) spriteEvent="runJump"
+	
 	if (bonk) {
-		if !(crouch)  spriteEvent="bonk"
-		else spriteEvent="crouchBonk"
+		if !(crouch) {
+			if !(is_grabbing)
+			spriteEvent="bonk"
+			else spriteEvent="carryBonk"
+		} else {
+			if !(is_grabbing)
+			spriteEvent="crouchBonk"
+			else spriteEvent="carryCrouchBonk"
+		}
 	}
 }
 
@@ -506,7 +567,7 @@ if (state == "wallslide") {
 	spriteEvent="wallSlide"
 }
 
-if (firing) {
+if (firing) && !(is_grabbing) {
 	if !(crouch) {
 		spriteEvent="fireToss"
 	} else spriteEvent="crouchFireToss"
@@ -526,7 +587,12 @@ if (electrocuted) {
 
 #define upd_frame
 if spriteEvent=="crouchIdle" {
-	if oldSpriteEvent=="crouchWalk" || oldSpriteEvent=="crouchJump" || oldSpriteEvent=="crouchFall" || oldSpriteEvent=="crouchBonk" || oldSpriteEvent=="crouchFireToss" {
+	if oldSpriteEvent=="crouchWalk" || oldSpriteEvent=="crouchJump" || oldSpriteEvent=="crouchFall" || oldSpriteEvent=="crouchBonk" || oldSpriteEvent=="crouchFireToss" || oldSpriteEvent=="carryCrouchIdle"  || oldSpriteEvent=="carryCrouchWalk" || oldSpriteEvent=="carryCrouchJump"  || oldSpriteEvent=="carryCrouchFall" || oldSpriteEvent=="carryCrouchBonk" {
+		var spri = get_spritenum(spriteEvent)
+		frame = loops_list[spri]-1
+	}
+} else if spriteEvent=="carryCrouchIdle" {
+	if oldSpriteEvent=="crouchIdle" || oldSpriteEvent=="crouchWalk" || oldSpriteEvent=="crouchJump" || oldSpriteEvent=="crouchFall" || oldSpriteEvent=="crouchBonk" || oldSpriteEvent=="crouchFireToss" || oldSpriteEvent=="carryCrouchWalk" || oldSpriteEvent=="carryCrouchJump"  || oldSpriteEvent=="carryCrouchFall" || oldSpriteEvent=="carryCrouchBonk" {
 		var spri = get_spritenum(spriteEvent)
 		frame = loops_list[spri]-1
 	}

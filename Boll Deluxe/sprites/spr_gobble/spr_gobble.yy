@@ -25,7 +25,7 @@
   "nineSlice":{
     "$GMNineSliceData":"",
     "bottom":7,
-    "enabled":true,
+    "enabled":false,
     "guideColour":[4294902015,4294902015,4294902015,4294902015,],
     "highlightColour":1728023040,
     "highlightStyle":1,
@@ -37,7 +37,7 @@
       0,
       0,
       0,
-      1,
+      0,
       0,
     ],
     "top":8,

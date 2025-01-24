@@ -1,5 +1,6 @@
 with(oPlayer) {
-	if (grounded) && collision_rectangle(x-hit_sizex+other.x_diff,y-hit_sizey+abs(other.y_diff),x+hit_sizex+other.x_diff,y+hit_sizey+2+abs(other.y_diff),other.id,false,true) {
+	var platform=collision_rectangle(x-hit_sizex+other.x_diff,y-hit_sizey+abs(other.y_diff),x+hit_sizex+other.x_diff,y+hit_sizey+2+abs(other.y_diff),oSwingingPlatform,false,true)
+	if (platform) && (platform.id==other.id) && (grounded) {
 		x += other.x_diff;
 		y += other.y_diff;
 	}
