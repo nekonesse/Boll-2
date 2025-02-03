@@ -69,6 +69,7 @@
     {"name":"Objects","order":4,"path":"folders/Objects/Objects.yy",},
     {"name":"Springs","order":20,"path":"folders/Objects/Objects/Springs.yy",},
     {"name":"Switch Blocks","order":21,"path":"folders/Objects/Objects/Switch Blocks.yy",},
+    {"name":"Technical","order":24,"path":"folders/Objects/Objects/Technical.yy",},
     {"name":"JADE","order":1,"path":"folders/Objects/Out Of Game/JADE.yy",},
     {"name":"Particles","order":6,"path":"folders/Objects/Particles.yy",},
     {"name":"Projectiles","order":7,"path":"folders/Objects/Projectiles.yy",},

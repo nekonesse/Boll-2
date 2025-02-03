@@ -13,7 +13,7 @@ function txr_thread_resume(th/*:txr_thread*/, val = undefined) {
 		case txr_thread_status.finished:
 			return th[txr_thread.status];
 		case txr_thread_status.yield:
-			ds_stack_push(stack, val);
+			array_push(stack, val);
 			break;
 	}
 	th[@txr_thread.result] = val;
@@ -31,20 +31,20 @@ function txr_thread_resume(th/*:txr_thread*/, val = undefined) {
 		q = arr[pos++];
 		switch (q[0]) {
 			case txr_action.label: break;
-			case txr_action.number: ds_stack_push(stack, q[2]); break;
-			case txr_action._string: ds_stack_push(stack, q[2]); break;
+			case txr_action.number: array_push(stack, q[2]); break;
+			case txr_action._string: array_push(stack, q[2]); break;
 			case txr_action.unop:
-				var v = ds_stack_pop(stack);
+				var v = array_pop(stack);
 				if (q[2] == txr_unop.invert) {
-					ds_stack_push(stack, v ? false : true);
+					array_push(stack, v ? false : true);
 				} else if (is_string(v)) {
 					halt = "Can't apply unary - to a string";
 					continue;
-				} else ds_stack_push(stack, -v);
+				} else array_push(stack, -v);
 				break;
 			case txr_action.binop:
-				var b = ds_stack_pop(stack);
-				var a = ds_stack_pop(stack);
+				var b = array_pop(stack);
+				var a = array_pop(stack);
 				if (q[2] == txr_op.eq) {
 					a = (a == b);
 				}
@@ -86,28 +86,28 @@ function txr_thread_resume(th/*:txr_thread*/, val = undefined) {
 						global.txr_op_names[q[2]], a, typeof(a), b, typeof(b));
 					continue;
 				}
-				ds_stack_push(stack, a);
+				array_push(stack, a);
 				break;
 			case txr_action.ident:
-				ds_stack_push(stack, self[$ q[2]]);
+				array_push(stack, self[$ q[2]]);
 				break;
 			case txr_action.set_ident:
-				self[$ q[2]] = ds_stack_pop(stack);
+				self[$ q[2]] = array_pop(stack);
 				break;
 			case txr_action.get_field:
-				var v = ds_stack_pop(stack);
+				var v = array_pop(stack);
 				v = variable_instance_get(v, q[2]);
-				ds_stack_push(stack, v);
+				array_push(stack, v);
 				break;
 			case txr_action.set_field:
-				var v = ds_stack_pop(stack);
-				variable_instance_set(v, q[2], ds_stack_pop(stack));
+				var v = array_pop(stack);
+				variable_instance_set(v, q[2], array_pop(stack));
 				break;
 			case txr_action.get_local:
-				ds_stack_push(stack, locals[$ q[2]]);
+				array_push(stack, locals[$ q[2]]);
 				break;
 			case txr_action.set_local:
-				locals[$ q[2]] = ds_stack_pop(stack);
+				locals[$ q[2]] = array_pop(stack);
 				break;
 			case txr_action.call:
 			case txr_action.value_call:
@@ -116,10 +116,10 @@ function txr_thread_resume(th/*:txr_thread*/, val = undefined) {
 				ds_list_clear(args);
 				var argc = q[_is_value_call ? 2 : 3];
 				var i = argc, v;
-				while (--i >= 0) args[|i] = ds_stack_pop(stack);
+				while (--i >= 0) args[|i] = array_pop(stack);
 				txr_function_error = undefined;
 				th[@txr_thread.pos] = pos;
-				var fn = _is_value_call ? ds_stack_pop(stack) : q[2];
+				var fn = _is_value_call ? array_pop(stack) : q[2];
 				try {
 					switch (argc) {
 						case  0: v = fn(); break;
@@ -155,75 +155,75 @@ function txr_thread_resume(th/*:txr_thread*/, val = undefined) {
 					halt = th[txr_thread.status];
 					if (halt == txr_thread_status.jump) {
 						th[@txr_thread.status] = txr_thread_status.running;
-						ds_stack_push(stack, v);
+						array_push(stack, v);
 					}
 					continue;
 				}
-				ds_stack_push(stack, v);
+				array_push(stack, v);
 				break;
 			case txr_action.ret: pos = len; break;
 			case txr_action.discard:
-				if (ds_stack_empty(stack)) show_error("Discard on an empty stack! Suspicious.", 0);
-				ds_stack_pop(stack);
+				if !(array_length(stack)) show_error("Discard on an empty stack! Suspicious.", 0);
+				array_pop(stack);
 				break;
 			case txr_action.jump: pos = q[2]; break;
 			case txr_action.jump_unless:
-				if (ds_stack_pop(stack)) {
+				if (array_pop(stack)) {
 					// OK!
 				} else pos = q[2];
 				break;
 			case txr_action.jump_if:
-				if (ds_stack_pop(stack)) pos = q[2];
+				if (array_pop(stack)) pos = q[2];
 				break;
 			case txr_action.band:
-				if (ds_stack_top(stack)) {
-					ds_stack_pop(stack);
+				if (stack[array_length(stack)-1]) {
+					array_pop(stack);
 				} else pos = q[2];
 				break;
 			case txr_action.bor:
-				if (ds_stack_top(stack)) {
+				if (stack[array_length(stack)-1]) {
 					pos = q[2];
-				} else ds_stack_pop(stack);
+				} else array_pop(stack);
 				break;
 			case txr_action.jump_push:
-				ds_stack_push(th[txr_thread.jumpstack], pos);
+				array_push(th[txr_thread.jumpstack], pos);
 				pos = q[2];
 				break;
 			case txr_action.jump_pop:
-				pos = ds_stack_pop(th[txr_thread.jumpstack]);
+				pos = array_push(th[txr_thread.jumpstack]);
 				break;
 			case txr_action._select:
-				var v = ds_stack_pop(stack);
+				var v = array_push(stack);
 				var posx = q[2];
 				if (txr_is_number(v) && v >= 0 && v < array_length(posx)) {
 					pos = posx[v];
 				} else pos = q[3];
 				break;
 			case txr_action.dup:
-				ds_stack_push(stack, ds_stack_top(stack));
+				array_push(stack, stack[array_length(stack)-1]);
 				break;
 			case txr_action._switch:
-				var v = ds_stack_pop(stack);
-				if (v == ds_stack_top(stack)) {
-					ds_stack_pop(stack);
+				var v = array_pop(stack);
+				if (v == stack[array_length(stack)-1]) {
+					array_pop(stack);
 					pos = q[2];
 				}
 				break;
 			case txr_action.get_array:
-				var i = ds_stack_pop(stack);
-				var a = ds_stack_pop(stack);
+				var i = array_pop(stack);
+				var a = array_pop(stack);
 				if (is_array(a)) {
 					if (txr_is_number(i)) {
 						if (i >= 0 && i < array_length(a)) {
-							ds_stack_push(stack, a[i]);
+							array_push(stack, a[i]);
 						} else halt = txr_sfmt("Index `%` is out of range (0...% excl.) for get", i, array_length(a));
 					} else halt = txr_sfmt("`%` (%) is not an index for get", i, typeof(i));
 				} else halt = txr_sfmt("`%` (%) is not an array for get", a, typeof(a));
 				break;
 			case txr_action.set_array:
-				var i = ds_stack_pop(stack);
-				var a = ds_stack_pop(stack);
-				var v = ds_stack_pop(stack);
+				var i = array_pop(stack);
+				var a = array_pop(stack);
+				var v = array_pop(stack);
 				if (is_array(a)) {
 					if (txr_is_number(i)) {
 						if (i >= 0 && i < 32000) {
@@ -235,17 +235,17 @@ function txr_thread_resume(th/*:txr_thread*/, val = undefined) {
 			case txr_action.array_literal:
 				var i = q[2];
 				var a = array_create(i);
-				while (--i >= 0) a[i] = ds_stack_pop(stack);
-				ds_stack_push(stack, a);
+				while (--i >= 0) a[i] = array_pop(stack);
+				array_push(stack, a);
 				break;
 			case txr_action.object_literal:
 				var _keys = q[2];
 				var i = array_length(_keys);
 				var o = {};
 				while (--i >= 0) {
-					o[$ _keys[i]] = ds_stack_pop(stack);
+					o[$ _keys[i]] = array_pop(stack);
 				}
-				ds_stack_push(stack, o);
+				array_push(stack, o);
 				break;
 			default:
 				halt = txr_sfmt("Can't run action ID %", q[0]);
@@ -254,9 +254,9 @@ function txr_thread_resume(th/*:txr_thread*/, val = undefined) {
 	}
 	if (halt == undefined) {
 		th[@txr_thread.status] = txr_thread_status.finished;
-		if (ds_stack_empty(stack)) {
+		if !(array_length(stack)) {
 			th[@txr_thread.result] = 0;
-		} else th[@txr_thread.result] = ds_stack_pop(stack);
+		} else th[@txr_thread.result] = array_pop(stack);
 	} else if (is_string(halt)) {
 		th[@txr_thread.status] = txr_thread_status.error;
 		th[@txr_thread.result] = halt + " at " + txr_print_pos(q[1]);

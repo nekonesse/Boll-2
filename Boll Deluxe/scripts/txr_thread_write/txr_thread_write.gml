@@ -8,25 +8,25 @@ function txr_thread_write(argument0, argument1) {
 	txr_value_write(th[txr_thread.result], b);
 	//show_debug_message(txr_sfmt("stack@%", b.tell()));
 	var s = th[txr_thread.stack];
-	var n = ds_stack_size(s), i;
+	var n = array_length(s), i;
 	var w = array_create(n), v;
 	buffer_write(b, buffer_u32, n);
-	for (i = 0; i < n; i++) w[i] = ds_stack_pop(s);
+	for (i = 0; i < n; i++) w[i] = array_pop(s);
 	while (--i >= 0) {
 		v = w[i];
 		txr_value_write(v, b);
-		ds_stack_push(s, v);
+		array_push(s, v);
 	}
 	//
 	s = th[txr_thread.jumpstack];
-	n = ds_stack_size(s);
+	n = array_length(s);
 	w = array_create(n);
 	buffer_write(b, buffer_u32, n);
-	for (i = 0; i < n; i++) w[i] = ds_stack_pop(s);
+	for (i = 0; i < n; i++) w[i] = array_pop(s);
 	while (--i >= 0) {
 		v = w[i];
 		buffer_write(b, buffer_s32, v);
-		ds_stack_push(s, v);
+		array_push(s, v);
 	}
 	//show_debug_message(txr_sfmt("locals@%", b.tell()));
 	var m = th[txr_thread.locals];
