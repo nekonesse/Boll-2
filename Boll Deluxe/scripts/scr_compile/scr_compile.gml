@@ -1,5 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function compile_code(){
 	var index = 0
 	var _compiled = ds_map_create();
@@ -106,12 +104,23 @@ function get_sprite_frames(dir, arr) {
 }
 
 function import_sheets() {
-	show_debug_message("BEGIN SPRITE COMPLATION...")
+	show_debug_message("BEGIN SPRITE COMPILATION...")
 	oGameManager.PlayerColl.StartBatch();
 	var i=0;
 	repeat(array_length(global._playerChars)) {
 		var _name = global._playerChars[i]; 
 		var dir=$"{working_directory}\\_vanilla\\character\\{_name}"
+		
+		var _name = global._playerChars[i];
+		global.animdat[i]=[];
+		var dir=$"{working_directory}\\_vanilla\\character\\{_name}"
+		var buffer = buffer_load($"{dir}\\config.ini");
+		var _string = buffer_read(buffer,buffer_string);
+		buffer_delete(buffer);
+		var retrieved_dat=json_parse(_string)
+		global.animdat[i]=retrieved_dat;
+		show_debug_message($"got animation data: {global.animdat[i]}")
+		
 		if file_exists($"{dir}\\sprites\\_HUDicon.png") {
 			oGameManager.PlayerColl.AddFile($"{dir}\\sprites\\_HUDicon.png",$"spr_{_name}_HUDicon",1,false,false,CollageOrigin.CENTER,CollageOrigin.CENTER)
 		} else throw $"SORRY! NO HUD ICON IN CHARACTER \"{_name}\" EXISTS! CHECK YOUR SPRITES!"
@@ -119,26 +128,27 @@ function import_sheets() {
 		if file_exists($"{dir}\\pal.png") {
 			oGameManager.playerPalettes[i]=sprite_add($"{dir}\\pal.png",0,0,0,0,0)
 		}
-		
-
+	
 		get_sprite_frames(dir, global.player_spritelists[i])
 		
+		var spritedat=global.animdat[i][0]
+		var framedat=global.animdat[i][1]
 		var array=global.player_spritelists[i]
 		var j=0;
 		repeat(array_length(global.powerups)) {
 			var sprite_yank = global.powerups[j]
-			if config_getstring(global.powerups[j] + " override", dir) != "" {
-					sprite_yank = config_getstring(global.powerups[j] + " override", dir)		
+			if spritedat[$ $"{global.powerups[j]} override"] != undefined {
+					sprite_yank = spritedat[$ $"{global.powerups[j]} override"]
 			}
-			show_debug_message(sprite_yank)
 			var g=0;
 			repeat (array_length(array)) {
 				if (array[g]!="_HUDicon") && file_exists($"{dir}\\sprites\\{sprite_yank}\\{array[g]}.png") { //make sure they arent trying to overwrite our HUD icon that we imported
-					var frames=nozerounreal(config_setting(sprite_yank+" "+array[g]+" frames", dir),config_setting(array[g]+" frames", dir))
-					var org_x=nozerounreal(config_setting(sprite_yank+" "+array[g]+" orgx", dir),nozerounreal(config_setting(array[g]+" orgx", dir), nozerounreal(config_setting("origin x", dir), CollageOrigin.CENTER)))
-					var org_y=nozerounreal(config_setting(sprite_yank+" "+array[g]+" orgy", dir),nozerounreal(config_setting(array[g]+" orgy", dir), nozerounreal(config_setting("origin y", dir), CollageOrigin.CENTER)))
-						oGameManager.PlayerColl.AddFile($"{dir}\\sprites\\{sprite_yank}\\{array[g]}.png",$"spr_{_name}_{global.powerups[j]}_{array[g]}",frames,false,false,org_x,org_y)
+					var frames=nozerounreal(framedat[$ $"{sprite_yank} {array[g]} frames"], framedat[$ $"{array[g]} frames"])
+					var org_x=nozerounreal(framedat[$ $"{sprite_yank} {array[g]} orgx"],nozerounreal(framedat[$ $"{array[g]} orgx"], nozerounreal(framedat[$ "origin x"], CollageOrigin.CENTER)))
+					var org_y=nozerounreal(framedat[$ $"{sprite_yank} {array[g]} orgy"],nozerounreal(framedat[$ $"{array[g]} orgy"], nozerounreal(framedat[$ "origin y"], CollageOrigin.CENTER)))
+					oGameManager.PlayerColl.AddFile($"{dir}\\sprites\\{sprite_yank}\\{array[g]}.png",$"spr_{_name}_{global.powerups[j]}_{array[g]}",frames,false,false,org_x,org_y)
 				}
+				show_debug_message($"adding sprite {array[g]}")
 				g++;
 			}
 			j++;
@@ -147,20 +157,5 @@ function import_sheets() {
 		i++;
 	}
 	oGameManager.PlayerColl.FinishBatch();
-	show_debug_message("Sprite have finished being compiled")
-}
-
-function delete_sheets() {
-	var i=0;
-	repeat(array_length(oGlobals._charmList)) {
-		var j=0;
-		repeat(array_length(global.powerups)) {
-			if sprite_exists(global.player_sheets[i][j]) {
-				show_debug_message($"Deleting sprite cache index of {j} for charm: {oGlobals._charmList[i]}")
-				sprite_delete(global.player_sheets[i][j])
-			}
-			j++
-		}
-		i++
-	}
+	show_debug_message("Sprites have finished being compiled")
 }

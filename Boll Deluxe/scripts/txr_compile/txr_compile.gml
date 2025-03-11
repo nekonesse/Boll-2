@@ -26,7 +26,11 @@ function txr_compile(argument0) {
 	//
 	var n = ds_list_size(out);
 	var arr = array_create(n);
-	for (var i = 0; i < n; i++) arr[i] = out[|i];
+	var i=0;
+	repeat (n) {
+		arr[i] = out[|i];
+		i++;
+	}
 	ds_list_clear(out);
 	return arr;
 }

@@ -12,13 +12,15 @@ if (goDirection != 0) {
 		var blocklist=ds_list_create();
 		var num=collision_line_list(bbox_left+1,y+(sprite_height/2)*goDirection,bbox_right-1,y+(sprite_height/2)*goDirection,oHittable, false, true, blocklist, true)
 		if (num > 0) {
-			for (var i = 0; i < num; i+=1) {
+			var i=0;
+			repeat (num) {
 				var blockcoll=ds_list_find_value(blocklist, i)
 				if !(blockcoll.no_hit) && (blockcoll.amount != 0) {
 					if (blockcoll.hit == 0) {
 						blockcoll.blockHit.Emit(goDirection, id)
 					}
 				}
+				i++;
 			}
 		}
 		

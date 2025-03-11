@@ -11,7 +11,11 @@ function txr_thread_write(argument0, argument1) {
 	var n = array_length(s), i;
 	var w = array_create(n), v;
 	buffer_write(b, buffer_u32, n);
-	for (i = 0; i < n; i++) w[i] = array_pop(s);
+	var i=0;
+	repeat (n) {
+		w[i] = array_pop(s);
+		i++;
+	}
 	while (--i >= 0) {
 		v = w[i];
 		txr_value_write(v, b);
@@ -22,7 +26,11 @@ function txr_thread_write(argument0, argument1) {
 	n = array_length(s);
 	w = array_create(n);
 	buffer_write(b, buffer_u32, n);
-	for (i = 0; i < n; i++) w[i] = array_pop(s);
+	var i=0;
+	repeat(n) {
+		w[i] = array_pop(s);
+		i++;
+	}
 	while (--i >= 0) {
 		v = w[i];
 		buffer_write(b, buffer_s32, v);
@@ -42,7 +50,9 @@ function txr_thread_write(argument0, argument1) {
 	w = th[txr_thread.actions];
 	n = array_length(w);
 	buffer_write(b, buffer_u32, n);
-	for (i = 0; i < n; i++) {
+	var i=0;
+	repeat (n) {
 		txr_action_write(w[i], b);
+		i++;
 	}
 }

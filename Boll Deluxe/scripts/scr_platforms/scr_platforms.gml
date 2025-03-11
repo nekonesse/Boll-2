@@ -53,7 +53,8 @@ function blue_plat_check_playercol(obj,param_1,param_2)
 										oPlayer, false, true, plist, false);
 	if pnum > 0
 	{
-	    for (var i = 0; i < pnum; ++i;)
+		var i=0;
+	    repeat (pnum)
 	    {
 			p = (plist[| i]);
 			stopconveyor = false;
@@ -127,6 +128,7 @@ function blue_plat_check_playercol(obj,param_1,param_2)
 					}
                 }
             }
+			i++;
 	    }
 	}
 	else

@@ -42,7 +42,11 @@ function txr_action_read(argument0) {
 		case txr_action._select:
 			var n = buffer_read(b, buffer_u32);
 			var w = array_create(n);
-			for (var i = 0; i < n; i++) w[i] = buffer_read(b, buffer_s32);
+			var i=0
+			repeat (n) {
+				w[i] = buffer_read(b, buffer_s32);
+				i++;
+			}
 			return [t, p, w, buffer_read(b, buffer_s32)];
 			//
 			//

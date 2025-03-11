@@ -73,6 +73,7 @@ function JADE_initializeobj() {
 	registerobj(object_get_name(oIceBlock), spr_iceblockJADE, -sprite_get_xoffset(spr_iceblockJADE), -sprite_get_yoffset(spr_iceblockJADE), sprite_get_width(spr_iceblockJADE), sprite_get_height(spr_iceblockJADE), true, true, OBJECT_MODE, 0, object_get_properties("oIceBlock"))
 	registerobj(object_get_name(oPollenFlower), spr_pollenflower, -sprite_get_xoffset(spr_pollenflower), -sprite_get_yoffset(spr_pollenflower), sprite_get_width(spr_pollenflower), sprite_get_height(spr_pollenflower), false, false, OBJECT_MODE, 0, object_get_properties("oPollenFlower"))
 	registerobj(object_get_name(oWater), spr_water, 0, 0, 16, 16, true, true, OBJECT_MODE, 0, object_get_properties("oWater"), "Water", false, 0.25, 0.5)
+	registerobj(object_get_name(oPolyCollider), spr_collider_poly, -sprite_get_xoffset(spr_collider_poly), -sprite_get_yoffset(spr_collider_poly), sprite_get_width(spr_collider_poly), sprite_get_height(spr_collider_poly), true, true, OBJECT_MODE, 0, object_get_properties("oPolyCollider"), "Poly Collider")
 	
 	registerobj(object_get_name(oTerrainSpreng), spr_yellowterrainspring, -sprite_get_xoffset(spr_yellowterrainspring), -sprite_get_yoffset(spr_yellowterrainspring), sprite_get_width(spr_yellowterrainspring), sprite_get_height(spr_yellowterrainspring), false, false, OBJECT_MODE, 3, object_get_properties("oTerrainSpreng"))
 	registerobj(object_get_name(oTerrainSpring), spr_redterrainspring, -8, -16, 16, 16, false, false, OBJECT_MODE, 3, object_get_properties("oTerrainSpring"))
@@ -127,11 +128,13 @@ function JADE_initializeobj() {
 }
 
 function register_array(array, category) {
-	for (var i = 0; i < array_length(array); ++i) {
+	var i=0;
+	repeat (array_length(array)) {
 		var _name = object_get_name(array[i])
 		var _sprite = object_get_sprite(array[i])
 		var _properties = object_get_properties(_name)
 	    registerobj(_name, _sprite, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), sprite_get_width(_sprite), sprite_get_height(_sprite), true, true, OBJECT_MODE, category, _properties, false)
+		i++;
 	}	
 }
 

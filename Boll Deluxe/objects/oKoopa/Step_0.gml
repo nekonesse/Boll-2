@@ -43,7 +43,8 @@ var num=collision_line_list(x+(hit_sizex*-xsc)+hsp,y-(hit_sizey-1),x+(hit_sizex*
 
 var found_block=false;
 if (num > 0) {
-	for (var i = 0; i < num; i+=1) {
+	var i=0;
+	repeat (num) {
 		var blockcoll=ds_list_find_value(blocklist, i)
 		if !(blockcoll.no_hit) && (blockcoll.amount != 0) {
 			if (blockcoll.hit == 0) {
@@ -51,6 +52,7 @@ if (num > 0) {
 				blockcoll.blockHit.Emit(-1, id)
 			}
 		}
+		i++;
 	}
 	if (found_block) {
 		enemyTurnAround.Emit();

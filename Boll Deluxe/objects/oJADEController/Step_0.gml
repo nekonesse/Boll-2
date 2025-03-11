@@ -201,22 +201,25 @@ switch(selected_mode) {
 		//selection box deleting
 		if keyboard_check_pressed(vk_delete) && selected_tool==SELECT_TOOL {
 			if (selected_mode==OBJECT_MODE) {
-				for (var i = 0; i < ds_list_size(object_layer_map); ++i) {
+				var i=0;
+				repeat (ds_list_size(object_layer_map)) {
 					var obj = ds_list_find_value(object_layer_map, i)
 					var sprite = ds_map_find_value(obj_data,obj[0])
 					if (sprite[7]==selected_mode) && (obj[5]) {
 						ds_list_delete(object_layer_map, i)
 						i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
 					} 
+					i++;
 				}
 			} else if (selected_mode==NODE_MODE) {
-				for (var i = 0; i < ds_list_size(node_layer_map); ++i) {
+				repeat(ds_list_size(node_layer_map)) {
 					var obj = ds_list_find_value(node_layer_map, i)
 					var sprite = ds_map_find_value(obj_data,obj[0])
 					if (sprite[7]==selected_mode) && (obj[5]) {
 						ds_list_delete(node_layer_map, i)
 						i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
 					} 
+					i++
 				}
 			}
 		}
@@ -267,9 +270,11 @@ if (mbleftpress) {
 		room_goto(rMainMenu)
 	}
 	if mouse_in_setting_slot(4) { //new file
-		for (var i = 0; i < array_length(tile_layer); ++i) {
+		var i=0;
+		repeat (array_length(tile_layer)) {
 			ds_list_clear(tile_layer_map[i]);
-			tilemap_clear(tile_layer[i],0)
+			tilemap_clear(tile_layer[i],0);
+			i++;
 		}
 		ds_list_clear(object_layer_map);
 		ds_list_clear(node_layer_map);

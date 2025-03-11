@@ -10,7 +10,7 @@
   "option_gameguid":"a6375d43-104f-493f-9ea3-7aaee6b2faba",
   "option_gameid":"0",
   "option_game_speed":60,
-  "option_legacy_json_parsing":true,
+  "option_legacy_json_parsing":false,
   "option_legacy_number_conversion":true,
   "option_legacy_other_behaviour":true,
   "option_mips_for_3d_textures":false,

@@ -21,8 +21,10 @@ function txr_value_write(argument0, argument1) {
 		buffer_write(b, buffer_u8, 6);
 		var n = array_length(v);
 		buffer_write(b, buffer_u32, n);
-		for (var i = 0; i < n; i++) {
+		var i=0;
+		repeat (n) {
 			txr_value_write(v[i], b);
+			i++;
 		}
 	} else {
 		buffer_write(b, buffer_u8, 0);

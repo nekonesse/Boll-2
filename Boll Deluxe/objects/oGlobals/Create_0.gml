@@ -581,10 +581,6 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_function_add("esign", esign, -1);
 		txr_function_add("unreal", unreal, -1);
 		txr_function_add("nozerounreal", nozerounreal, -1);
-		txr_function_add("instance_valid_at_place", instance_valid_at_place, -1);
-		txr_function_add("instance_valid_at_position", instance_valid_at_position, -1);
-		txr_function_add("obj_get_coll", obj_get_coll, -1);
-		txr_function_add("obj_place_meeting", obj_place_meeting, -1);
 		txr_function_add("modulo", modulo, -1);
 		txr_function_add("nearestplayer", nearestplayer, -1);
 		txr_function_add("split_string", split_string, -1);

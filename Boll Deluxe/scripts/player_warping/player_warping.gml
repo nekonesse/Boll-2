@@ -19,7 +19,8 @@ function warp_in_pipe(obj,spd,dir) {
 			var found = noone;
 			var pipe = noone;
 			instance_activate_object(oPipe)
-			for (var i = 0; i < instance_number(oPipe); ++i;)
+			var i=0;
+			repeat (instance_number(oPipe))
 			{
 				pipe = instance_find(oPipe,i);
 				if pipe.warpname == warptarget {
@@ -27,6 +28,7 @@ function warp_in_pipe(obj,spd,dir) {
 					found=pipe
 					break;
 				}
+				i++;
 			}
 			if found != noone { //warp to found pipe
 				other.x=found.x

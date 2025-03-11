@@ -43,7 +43,11 @@ function txr_action_write(argument0, argument1) {
 			var w = a[2];
 			var n = array_length(w);
 			buffer_write(b, buffer_u32, n);
-			for (var i = 0; i < n; i++) buffer_write(b, buffer_s32, w[i]);
+			var i=0
+			repeat (n) {
+				buffer_write(b, buffer_s32, w[i]);
+				i++;
+			}
 			buffer_write(b, buffer_s32, a[3]);
 			break;
 		default:

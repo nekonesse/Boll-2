@@ -445,7 +445,8 @@ function __CollageBuilderClass() constructor {
 		
 		
 		var _spriteArrayLen = array_length(_normalSprites);
-		for(var _ii = 0; _ii < _spriteArrayLen; ++_ii) {
+		var _ii = 0;
+		repeat(_spriteArrayLen) {
 			var _spriteStruct = _normalSprites[_ii];
 			var _spriteData = _spriteStruct.spriteData;
 				var _spriteID = _spriteStruct.spriteID;
@@ -567,10 +568,12 @@ function __CollageBuilderClass() constructor {
 						var _tempBboxPoints = array_create(array_length(bboxPoints));
 						array_copy(_tempBboxPoints, 0, bboxPoints, 0, array_length(bboxPoints));
 						var _skipSprite = false;
-						for(var _sub = 0; _sub < _subImages; ++_sub) {
+						var _sub=0;
+						repeat(_subImages) {
 							var _ktEmptySpaceSize = 0xFFFFFF;
 							var _ktEmptySpaceID = -1;
-							for(var _ktn = 0; _ktn < array_length(_tempBboxPoints); ++_ktn) {
+							var _ktn = 0; 
+							repeat (array_length(_tempBboxPoints)) {
 								if( _bbWidth <= _tempBboxPoints[_ktn].right && _bbHeight <= _tempBboxPoints[_ktn].bottom) {
 									var _resolve = (_tempBboxPoints[_ktn].right + _tempBboxPoints[_ktn].bottom ) / 2;
 									if (_resolve < _ktEmptySpaceSize) {
@@ -578,6 +581,7 @@ function __CollageBuilderClass() constructor {
 										_ktEmptySpaceID = _ktn;
 								    } 
 								}
+								++_ktn;
 							}
 							
 							// We weren't able to find that all of them fit together
@@ -625,6 +629,8 @@ function __CollageBuilderClass() constructor {
 						}
 						
 						if (_skipSprite) break;
+						
+						_sub++;
 					}
 					
 					if (_skipSprite) {
@@ -647,14 +653,16 @@ function __CollageBuilderClass() constructor {
 					var _emptySpaceID = -1;
 					if (!__forceNewTexturePage) {
 						var _len = array_length(bboxPoints);
-						for(var _n = 0; _n < _len; ++_n) {
-						     if( _bbWidth <= bboxPoints[_n].right && _bbHeight <= bboxPoints[_n].bottom) {
+						var _n = 0;
+						repeat (_len) {
+						    if( _bbWidth <= bboxPoints[_n].right && _bbHeight <= bboxPoints[_n].bottom) {
 						         var _resolve = (bboxPoints[_n].right + bboxPoints[_n].bottom ) / 2;
 								 if (_resolve < _emptySpaceSize) {
 						             _emptySpaceSize = _resolve;
 						             _emptySpaceID = _n;
 						        } 
 						    }
+							_n++;
 						}
 					}
 					
@@ -758,7 +766,7 @@ function __CollageBuilderClass() constructor {
 						--_sub;
 					}
 				}
-					
+			_ii++;
 		}
 		
 		// Finished
@@ -782,7 +790,8 @@ function __CollageBuilderClass() constructor {
 		
 		#region 3D texture pages
 		var _spriteArrayLen = array_length(_3DSprites);
-		for(var _ii = 0; _ii < _spriteArrayLen; ++_ii) {
+		var _ii = 0;
+		repeat(_spriteArrayLen) {
 			var _spriteStruct = _3DSprites[_ii];
 			var _spriteData = _spriteStruct.spriteData;
 			var _spriteID = _spriteStruct.spriteID;
@@ -923,6 +932,7 @@ function __CollageBuilderClass() constructor {
 					if (__COLLAGE_VERBOSE) __CollageTrace(_collageName + "\"" + _spriteData.__name + "\"" + " has been processed...");	
 				}
 			} 
+			_ii++;
 		}	
 		#endregion
         

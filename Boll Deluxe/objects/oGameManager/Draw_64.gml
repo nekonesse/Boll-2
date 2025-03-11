@@ -6,13 +6,15 @@ draw_clear_alpha(c_black,0);
 
 draw_set_font(global.smallBoldFont)
 draw_set_halign(fa_left)
-for (var i = 0; i < array_length(global._playerChars); ++i) {
+var i=0;
+repeat (array_length(global._playerChars)) {
 	var spr=oGameManager.PlayerColl.GetImageInfo($"spr_{global._playerChars[i]}_HUDicon")
     if CollageIsImage(spr)
 	CollageDrawImage(spr,0,16+18*i,27)
 	var _lives=string_repeat("0", 2-string_length(string(global.lives[i]))) + string(global.lives[i])
 	draw_text(24+24*i,25,$"*{_lives}")
 	draw_text(10+24*i,8,string_lower(global._playerChars[i]))
+	i++;
 }
 draw_sprite(spr_coinhudicon,0,16,46)
 var _coins=string_repeat("0", 3-string_length(string(global.coins_collected))) + string(global.coins_collected)

@@ -1,6 +1,8 @@
 surface_free(HUDsurface)
-for (var i = 0; i < array_length(playerPalettes); ++i) {
+var i=0;
+repeat (array_length(playerPalettes)) {
 	sprite_delete(playerPalettes[i]);
+	i++;
 }
 instance_destroy(oBackgroundManager);
 PlayerColl.Clear();

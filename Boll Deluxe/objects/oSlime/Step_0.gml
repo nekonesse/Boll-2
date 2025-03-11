@@ -207,7 +207,8 @@ if (deleteflag)
         var new_part;
         var launchang, phsp, pvsp;
         
-        for (var i = 0; i < part_num; i++)
+		var i=0;
+        repeat (part_num)
         {
             launchang = (ang_factor * max(1, i + 1));
             phsp = (crush_vsp / 2) * cos(degtorad(launchang - ang_offset));
@@ -215,6 +216,7 @@ if (deleteflag)
             new_part = instance_create_depth(x, y - 24, depth - 1, pSlimeParticle);
             new_part.hsp = phsp;
             new_part.vsp = pvsp;
+			i++;
         }
     }
     

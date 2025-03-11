@@ -26,7 +26,11 @@ function txr_action_print(argument0) {
 		default:
 			s = txr_sfmt("% A%", s, q[0]);
 			n = array_length(q);
-			for (i = 2; i < n; i++) s += " " + string(q[i]);
+			var i=2
+			repeat (n-2) {
+				s += " " + string(q[i]);
+				i++
+			}
 			return s;
 	}
 }

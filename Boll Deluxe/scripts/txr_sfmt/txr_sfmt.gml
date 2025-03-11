@@ -22,13 +22,15 @@ function txr_sfmt() {
 	buffer_seek(b, buffer_seek_start, 0);
 	buffer_write(b, buffer_text, w[0]);
 	var m = argument_count;
-	for (i = 1; i < n; i++) {
+	var i=1
+	repeat (n-1) {
 		if (i < m) {
 			f = string(argument[i]);
 			if (f != "") buffer_write(b, buffer_text, f);
 		}
 		f = w[i];
 		if (f != "") buffer_write(b, buffer_text, f);
+		i++
 	}
 	buffer_write(b, buffer_u8, 0);
 	buffer_seek(b, buffer_seek_start, 0);

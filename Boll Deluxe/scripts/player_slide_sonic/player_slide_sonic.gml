@@ -1,5 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function player_slide_sonic(slope_influence, rolling, roll_up_influence = 0, roll_down_influence = 0) {
 	
 	var slope = 0

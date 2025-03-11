@@ -7,7 +7,8 @@ function txr_program_print(argument0) {
 	var nn = string_length(string(n));
 	var b/*:Buffer*/ = global.txr_program_print_buf;
 	buffer_seek(b, 0, 0);
-	for (var i = 0; i < n; i++) {
+	var i=0;
+	repeat (n) {
 		var ist = string(i);
 		repeat (nn - string_length(ist)) buffer_write(b, buffer_u8, ord(" "));
 		buffer_write(b, buffer_text, ist);
@@ -15,6 +16,7 @@ function txr_program_print(argument0) {
 		buffer_write(b, buffer_text, txr_action_print(pg[i]));
 		buffer_write(b, buffer_u8, 13);
 		buffer_write(b, buffer_u8, 10);
+		i++;
 	}
 	buffer_write(b, buffer_u8, 0);
 	buffer_seek(b, 0, 0);

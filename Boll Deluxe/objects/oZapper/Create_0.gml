@@ -24,14 +24,15 @@ findConnectedObjects = function(obj) {
     with obj {
         collision_circle_list(x, y, other.radius, global.conductive_array, false, true, list, false);
     }
-    for(var i = 0, len = ds_list_size(list); i < len; i++;) { 
+	var i=0;
+	repeat(ds_list_size(list)) { 
         var obj2 = list[| i];
         if !array_contains(connectedObjects, obj2) {
             array_push(connectedObjects, obj2);
             findConnectedObjects(obj2);
         }
-    }
-
+		i++;
+	}
     ds_list_destroy(list);
 }
 fr=0;

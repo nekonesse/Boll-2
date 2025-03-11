@@ -154,11 +154,15 @@ object_list_area_x = (guiw-object_list_area_width/3)
 object_list_area_y = ((guih/2)-(object_list_area_height/3)/2)
 object_list_area_surface = surface_create(object_list_area_width, object_list_area_height)
 
-for (var i = 0; i <= NODE_MODE; ++i) {
-    for (var j = 0; j < array_length(jade_cats); j++) {
+var i=0;
+repeat (NODE_MODE+1) {
+    var j=0;
+	repeat (array_length(jade_cats)) {
 		object_list_scroll_pos[i][j] = 0
 		current_obj_id[i][j] = 0
+		j++;
 	}
+	i++;
 }
 current_cat = 0
 #endregion
@@ -185,14 +189,15 @@ is_typing=0;
 temptypingstring="";
 open_dropmenu=0;
 
-for (var i = 0; i < array_length(tile_layer); ++i) {
-	
+var i=0;
+repeat (array_length(tile_layer)) {
 	tile_layer_map[i]=ds_list_create();
 	layer_script_begin(layers[i], tile_layer_alpha_check);
 	var shadreset = function() {
 		shader_reset()
 	}
 	layer_script_end(layers[i], shadreset);
+	i++;
 }
 
 //add preset layout
@@ -211,7 +216,8 @@ place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 		obj[11] = []
 		obj[12] = [2,false,0,false,true,true] //node properties
 		if is_array(sprite[8]) && array_length(sprite[8]) {
-			for (var o = 0; o < array_length(sprite[8]); o++) { //god Damn.
+			var o=0;
+			repeat (o < array_length(sprite[8])) { //god Damn.
 				if is_array(sprite[8][o]) {
 					obj[10][o] = array_create(1,0)
 					array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
@@ -220,6 +226,7 @@ place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 						array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
 					}
 				}
+				o++;
 			}
 		}
 	}

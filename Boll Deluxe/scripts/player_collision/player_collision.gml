@@ -1,6 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
 //#macro COL oCollider
 
 // run this in end step, clipping stupidity happens otherwise
@@ -193,11 +190,13 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 				var _list = ds_list_create();
 				var _num = collision_line_list(posx+left, posy+top-1+vsp, posx+right, posy+top-1+vsp, oHittable, false, true, _list, true);
 				if (_num > 0) {
-					for (var i = 0; i < _num; ++i;) {
+					var i=0;
+					repeat (_num) {
 						with(_list[| i]) if !(no_hit) {
 							dummyTimer = dummyTimerReset;
 							blockHit.Emit(-1, other.id)
 						}
+						i++;
 					}
 				}
 				ds_list_destroy(_list);

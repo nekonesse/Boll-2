@@ -10,8 +10,10 @@ function txr_value_read(argument0) {
 		case 6:
 			var n = buffer_read(b, buffer_u32);
 			var r = array_create(n);
-			for (var i = 0; i < n; i++) {
+			var i=0;
+			repeat (n) {
 				r[i] = txr_value_read(b);
+				i++;
 			}
 			return r;
 		default: return undefined;

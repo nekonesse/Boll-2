@@ -25,8 +25,10 @@ function txr_thread_read(argument0) {
 	//show_debug_message(txr_sfmt("actions@%", b.tell()));
 	var n = buffer_read(b, buffer_u32);
 	var w = array_create(n);
-	for (var i = 0; i < n; i++) {
+	var i=0;
+	repeat (n) {
 		w[i] = txr_action_read(b);
+		i++;
 	}
 	th[@txr_thread.actions] = w;
 	//

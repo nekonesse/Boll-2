@@ -135,7 +135,8 @@ function fx_1up_sparkles(obj, spr = spr_pSparkles1UP)
     }
 
     // spawn at least 5 sparkles
-    for (var i = 4; i > -1; i--)
+	var i=4;
+    repeat (4)
     {
         idx = (i & 0xff);
         manip_time = (obj.timer - (sparkle_timeroffset[idx] & 0xFF)) + 10;
@@ -153,6 +154,7 @@ function fx_1up_sparkles(obj, spr = spr_pSparkles1UP)
 
             // and now to draw the sprite
             draw_sprite(spr, drawframe, draw_x, draw_y);
-        }
+		}
+		i--;
     }
 }

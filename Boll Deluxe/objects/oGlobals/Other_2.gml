@@ -7,6 +7,7 @@ if file_exists(game_save_id+"\keybinds.ini")
 global.roomTimer = 0;
 global.freezeframe = false;
 global.camera_x = 0;
+global.animdat[0]=[];
 
 window_set_size(480*3,270*3);
 window_center();

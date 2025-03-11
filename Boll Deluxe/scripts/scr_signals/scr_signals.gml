@@ -1,5 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function SigConnector( c = undefined,f = function(){} ) constructor{
     _alive = true;
     static SetDead = function(){ _alive = false; }
@@ -67,7 +65,12 @@ function Signal() constructor{
         var cur = slotsHead.prev;
         while( cur != slotsHead ){ array_push(remove,cur); cur = cur.prev; }
         var len = array_length(remove);
-        for(var i=0; i<len; ++i ){ remove[i].Remove(); delete remove[i]; }
+		var i=0;
+        repeat(len) {
+			remove[i].Remove() 
+			delete remove[i] 
+			i++
+		}
     }
 
     static Count = function(){
@@ -85,7 +88,8 @@ function Signal() constructor{
         var funcRet = undefined;
 
         var args = array_create(argument_count);
-        for( var i=0; i<argument_count; ++i ){ args[i] = argument[i]; }
+        var i=0;
+		repeat(argument_count){ args[i] = argument[i] i++;}
         if( argument_count<1 ){ args = [undefined]; }//debug for script_execute_ext
         while( cur != head ){
             if( !cur.IsAlive() ){ array_push(remove,cur); }
@@ -100,7 +104,12 @@ function Signal() constructor{
         }
 
         var len = array_length(remove);
-        for(var i=0; i<len; ++i ){ remove[i].Remove(); delete remove[i]; }
+		var i=0;
+        repeat(len){ 
+			remove[i].Remove(); 
+			delete remove[i]; 
+			i++;
+		}
     }
 }
 

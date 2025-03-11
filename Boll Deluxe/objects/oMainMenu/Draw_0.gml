@@ -9,13 +9,15 @@ switch (crMenu) {
 	case "mainmenu":
 		_displayOPS = ["level selector", "keybinds", "editor", "title screen", "exit game"];
 		var _yPos = (_rmHei/2)-(32*(array_length(_displayOPS)-1)/2);
-		for (var i=0; i<array_length(_displayOPS); i++;) { // Looping through options to draw them on screen
+		var i=0;
+		repeat (array_length(_displayOPS)) { // Looping through options to draw them on screen
 			if (option=i)
 				draw_text_scribble(_xPos,_yPos,$"{_startStr}>> {_displayOPS[i]} <<");
 			else
 				draw_text_scribble(_xPos,_yPos,$"{_startStr}{_displayOPS[i]}");
 				
 			_yPos+=32;
+			i++;
 		}
 	break;
 	
@@ -26,13 +28,15 @@ switch (crMenu) {
 		_displayOPS = global.levellist;
 		var _xPos = 56,
 			_yPos = (_rmHei/2)-(16*(array_length(_displayOPS)-1)/2);
-		for (var i=0; i<array_length(_displayOPS); i++;) { // Looping through options to draw them on screen
+		var i=0;
+		repeat (array_length(_displayOPS)) { // Looping through options to draw them on screen
 			if (option=i)
 				draw_text_scribble(_xPos,_yPos,$"{_startStr} -- {_displayOPS[i]}");
 			else
 				draw_text_scribble(_xPos,_yPos,$"{_startStr}{_displayOPS[i]}");
 				
 			_yPos+=16;
+			i++;
 		}
 	break;
 	
@@ -46,7 +50,8 @@ switch (crMenu) {
 		_displayOPS = ["right","left","up","down","a","b","c","reset"];
 		var _yPos = (_rmHei/2)-(16*(array_length(_displayOPS)-1)/2),
 			_bindShow = "";
-		for (var i=0; i<array_length(_displayOPS); i++;) { // Looping through options to draw them on screen
+		var i=0;
+		repeat (array_length(_displayOPS)) { // Looping through options to draw them on screen
 			if (i!=7) _bindShow=$" : {input_binding_get_icon(input_binding_get(_displayOPS[i]))}";
 			else _bindShow = "";
 			if (option=i)
@@ -55,6 +60,7 @@ switch (crMenu) {
 				draw_text_scribble(_xPos,_yPos,$"{_startStr}{_displayOPS[i]}{_bindShow} ");
 				
 			_yPos+=16;
+			i++;
 		}
 	break;
 }

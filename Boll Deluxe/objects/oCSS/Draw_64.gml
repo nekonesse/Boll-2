@@ -11,7 +11,8 @@ var _x=0,
 	_y=0,
 	_arr=oGlobals._charmList;
 	
-for (var i=0; i<_charCount; i++;) {
+var i=0;
+repeat (_charCount) {
 	draw_sprite(spr_rostercard,0,_startX+_x,_startY+_y);
 	if (_select=i) {
 		draw_sprite(spr_rostercard,5,_startX+_x,_startY+_y);
@@ -19,8 +20,9 @@ for (var i=0; i<_charCount; i++;) {
 	draw_text_scribble(_startX+_x, _startY+_y-4, $"[spr_omifont][fa_middle][fa_center]{_arr[i]}");
 	
 	_x+=_cardSizeW+_spacing;
-	if ((i+1)%_rowLimit=0) {
+	if (i+1 mod _rowLimit==0) {
 		_x=0;
 		_y+=_cardSizeW+_spacing;
 	}
+	i++;
 }

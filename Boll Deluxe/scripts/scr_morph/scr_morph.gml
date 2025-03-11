@@ -120,9 +120,11 @@ function morph_struct(_parent = noone) constructor{
 	
 	//shader_data[1] = empty_morpharray;
 	
-	for (var i = 1; i < 256; i++)
+	var i=1;
+	repeat (255)
     {
         shader_data[1][i] = 0xFFFF - (i);
+		i++;
     }
 
     // debug stuff, comment out when done

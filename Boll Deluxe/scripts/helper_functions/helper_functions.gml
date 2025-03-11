@@ -49,116 +49,16 @@ function check_signs_matching_zero(a, b)
     return check;
 }
 
-function obj_place_meeting(src,x,y,obj)
-{
-	var meet = false;
-	
-	with(src)
-	{
-		meet = place_meeting(x,y,obj);
-	}
-	
-	return meet;
-}
-
-function obj_get_coll(src,_x,_y)
-{
-	var walls, wnum, wall, whit;
-	
-	whit = noone;
-	
-	walls = ds_list_create();
-	
-	with(src)
-		wnum = instance_place_list(_x, _y, oCollider,walls,false);
-	
-	if (wnum > 0)
-	{
-	    for (var i = 0; i < wnum; ++i;)
-	    {
-	        wall = (walls[| i]);
-			
-			if (wall.no_collide)
-				continue;
-			
-			whit = wall;
-			break;
-		}
-	}
-	
-	// avoid memleaks
-	ds_list_destroy(walls);
-	
-	return whit;
-}
-
-function instance_valid_at_position(_x,_y,obj,src = self)
-{
-	var objs, onum, o, ohit;
-	
-	ohit = noone;
-	
-	objs = ds_list_create();
-	
-	with (src)
-		onum = instance_position_list(_x, _y, oCollider,objs,false);
-	
-	if (onum > 0)
-	{
-	    for (var i = 0; i < onum; ++i;)
-	    {
-	        o = (objs[| i]);
-			
-			if (o.no_collide)
-				continue;
-			
-			ohit = o;
-			break;
-		}
-	}
-	
-	// avoid memleaks
-	ds_list_destroy(objs);
-	
-	return ohit;
-}
-
-function instance_valid_at_place(_x,_y,obj,src = self)
-{
-	var objs, onum, o, ohit;
-	
-	ohit = noone;
-	
-	objs = ds_list_create();
-	
-	with (src)
-		onum = instance_place_list(_x, _y, oCollider,objs,false);
-	
-	if (onum > 0)
-	{
-	    for (var i = 0; i < onum; ++i;)
-	    {
-	        o = (objs[| i]);
-			
-			if (o.no_collide)
-				continue;
-			
-			ohit = o;
-			break;
-		}
-	}
-	
-	// avoid memleaks
-	ds_list_destroy(objs);
-	
-	return ohit;
-}
-
 function unreal(str, defaultval) {
 	var res,l,c,i,valid,dot;
-	res="" valid=0 dot=0 l=string_length(str)
-	for (i=1;i<=l;i+=1) {
+	res="" 
+	valid=0 
+	dot=0 
+	l=string_length(str)
+	var i=1;
+	repeat(l) {
 	    c=string_char_at(str,i)
+		i++;
 	    if (c="," || c=".") {res+="." if (dot) {valid=0 break} dot=1}
 	    else if (string_pos(c,"0123456789")) {res+=c valid=1}
 	    else if (res="" && c="-") res="-"
@@ -170,11 +70,13 @@ function unreal(str, defaultval) {
 function nozerounreal(str, defaultval) {
 	var res,l,c,i,valid,dot;
 	res="" valid=0 dot=0 l=string_length(str)
-	for (i=1;i<=l;i+=1) {
+	var i=1;
+	repeat(l) {
 	    c=string_char_at(str,i)
 	    if (c="," || c=".") {res+="." if (dot) {valid=0 break} dot=1}
 	    else if (string_pos(c,"0123456789")) {res+=c valid=1}
 	    else if (res="" && c="-") res="-"
+		i++;
 	}
 	if (valid && (real(res)!=0)) return real(res)
 	return defaultval
@@ -186,7 +88,8 @@ function split_string(str, divider){
 	var subStr = "";
 	var arrIndex = 0;
 	var arr=[];
-	for (var i = 1; i <= len; i++)
+	var i=1;
+	repeat (len)
 	{
 		var char = string_char_at(str, i);
 		if (char != divider)
@@ -206,12 +109,13 @@ function split_string(str, divider){
 				subStr = "";
 			}
 		}
+		i++
 	}
-		//Add final substring to array
-		if(string_length(subStr) > 0)
-		{
-			arr[arrIndex] = subStr;
-		}
+	//Add final substring to array
+	if(string_length(subStr) > 0)
+	{
+		arr[arrIndex] = subStr;
+	}
 	if arr == undefined
 	return 1
 	else
@@ -281,7 +185,6 @@ function LoadJSONFromFile(_fileName) {
 
     var _json = json_parse(_string);
     return _json;
-
 }
 
 function SaveStringToFile(_fileName, _string) {

@@ -1,6 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-
 #macro COL_TOP 1
 #macro COL_WALL 2
 #macro COL_BOTTOM 3
@@ -149,7 +146,8 @@ function check_hitbox_on_hitbox(object1, object2){
 	y1 = floor(object1.y)
 	
 	if (instance_number(object2) > 0) {
-	    for (var i = 0; i < instance_number(object2); ++i) {    
+		var i=0;
+	    repeat (instance_number(object2)) {    
 	        var found = instance_find(object2, i);
 			x2 = floor(found.x)
 			y2 = floor(found.y)
@@ -158,6 +156,7 @@ function check_hitbox_on_hitbox(object1, object2){
 	        if rectangle_in_rectangle(x1 - hit_sizex,y1 - hit_sizey,x1 + hit_sizex,y1 + hit_sizey, x2 - hit_sizex2, y2 - hit_sizey2, x2 + hit_sizex2, y2 + hit_sizey2) {
 	            return found;
 			}
+			i++;
 	    }
     }
 	return noone;
@@ -170,7 +169,8 @@ function check_rectangle_in_hitbox(x1, y1, x2, y2, object){
 	var x3, y3, hit_sizex2, hit_sizey2
 	
 	if (instance_number(object) > 0) {
-	    for (var i = 0; i < instance_number(object); ++i) {    
+		var i=0;
+	    repeat (instance_number(object)) {    
 	        var found = instance_find(object, i);
 			x3 = floor(found.x)
 			y3 = floor(found.y)
@@ -179,6 +179,7 @@ function check_rectangle_in_hitbox(x1, y1, x2, y2, object){
 	        if rectangle_in_rectangle(x1,y1,x2,y2, x3 - hit_sizex2, y3 - hit_sizey2, x3 + hit_sizex2, y3 + hit_sizey2) {
 	            return found;
 			}
+			i++;
 	    }
     }
 	return noone;
@@ -333,9 +334,11 @@ function find_camera_bound(x1, y1, x2, y2)
 	    var found_list = ds_list_create();
 	    var found_size = collision_rectangle_list(floor(x1),floor(y1),floor(x2),floor(y2),oCameraBoundary,true,true,found_list,false);
     
-	    for (var i = 0; i < found_size; ++i)
+		var i=0;
+	    repeat (found_size)
 		{    
 	        found = found_list[| i];
+			i++;
 	    }
         ds_list_destroy(found_list);
     }

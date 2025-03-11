@@ -142,10 +142,12 @@ function GetTransformedVertices(obj = self,doOffset, xoff, yoff, forceCenter = f
 		
 		var transform = new GMTransform(newx, newy, obj.polyangle);
 		
-		for (var i = 0; i < array_length(obj.vertices); i++)
+		var i=0;
+		repeat (array_length(obj.vertices))
 		{
 			var v = obj.vertices[i];
 			obj.transformedVertices[i] = VT_Transform(v, transform);
+			i++;
 		}
 	}
 	
@@ -211,7 +213,8 @@ function IntersectPolygons(obj = self,verticesA, verticesB)
 	var normal = new GMVector(0,0);
 	var pdepth = INT_MAX;
 	
-	for (var i = 0; i < array_length(verticesA); i++)
+	var i=0;
+	repeat (array_length(verticesA))
 	{
 		
 		var va = verticesA[i];
@@ -245,9 +248,11 @@ function IntersectPolygons(obj = self,verticesA, verticesB)
 			pdepth = axisDepth;
 			normal = axis;
 		}
+		i++;
 	}
 	
-	for (var j = 0; j < array_length(verticesB); j++)
+	var j=0;
+	repeat (array_length(verticesB))
 	{
 		var va = verticesB[j];
 		var vb = verticesB[(j + 1) % array_length(verticesB)];
@@ -282,6 +287,7 @@ function IntersectPolygons(obj = self,verticesA, verticesB)
 			pdepth = axisDepth;
 			normal = axis;
 		}
+		j++;
 	}
 	
 	//pdepth /= vector_get_length(normal);
@@ -310,11 +316,13 @@ function FindArithmeticMean(vertices)
 	var sumX = 0;
 	var sumY = 0;
 	
-	for (var i = 0; i < array_length(vertices); i++)
+	var i=0;
+	repeat (array_length(vertices))
 	{
 		var v = vertices[i];
 		sumX += v.X;
 		sumY += v.Y;
+		i++;
 	}
 	
 	return new GMVector(sumX / array_length(vertices), sumY / array_length(vertices));
@@ -325,7 +333,8 @@ function ProjectVertices(vertices, axis)
 	var _min = INT_MAX;
 	var _max = -INT_MAX;
 	
-	for (var i = 0; i < array_length(vertices); i++)
+	var i=0;
+	repeat (array_length(vertices))
 	{
 		var v = vertices[i];
 		var proj = vector_dot(v, axis);
@@ -335,7 +344,7 @@ function ProjectVertices(vertices, axis)
 		
 		if (proj > _max)
 			_max = proj;
-		
+		i++;
 	}
 	
 	

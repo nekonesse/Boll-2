@@ -1,5 +1,7 @@
 ///@description Electrocute Player
-for(var i = 0, len = array_length(connections); i < len; i++;) {
+var i=0;
+var len = array_length(connections)
+repeat(len) {
 	var px1 = connections[i][0]
 	var py1	= connections[i][1]
 	var px2 = connections[i][2]
@@ -13,4 +15,5 @@ for(var i = 0, len = array_length(connections); i < len; i++;) {
 			sig.Emit("electrocute");
 		}
 	}
+	i++;
 }

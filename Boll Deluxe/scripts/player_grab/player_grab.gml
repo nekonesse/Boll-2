@@ -1,5 +1,3 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
 function player_grab(){
     if (bkey && grabbed_obj == noone) {
         var awesome = collision_line(x,y,x +((hit_sizex + 2) * move_dir),y, oGrabable, false, true) 

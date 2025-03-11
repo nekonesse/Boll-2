@@ -72,10 +72,12 @@ if instance_exists(oSlime) {
 	var len = ds_list_size(shinecoords);
 	var pos;
 	
-	for (var i = 0; i < len; i++)
+	var i=0;
+	repeat (len)
 	{
 		pos = shinecoords[|i];
 		draw_sprite(spr_slime_shine,0,pos[0]-camera_x,pos[1] + pos[2]);
+		i++;
 	}
 	
 	surface_reset_target();

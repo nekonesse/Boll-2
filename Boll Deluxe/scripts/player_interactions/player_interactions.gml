@@ -38,7 +38,8 @@ function player_interactions(){
 	var num=collision_line_list(x-(hit_sizex),y+hit_sizey+1,x+(hit_sizex),y+hit_sizey+1, oHittable, false, true, list, true)
 	if (num > 0) {
 		var totaldy=0;
-		for (var i = 0; i < num; ++i) {
+		var i=0;
+		repeat (num) {
 			var hittable=list[| i]
 			if !(hurt) && !(dead)  {
 				if(abs(hittable.dy) > abs(totaldy)) {
@@ -54,6 +55,7 @@ function player_interactions(){
 					}
 				}
 			}
+			i++;
 		}
 		dy=totaldy
 	} else dy=0

@@ -43,8 +43,10 @@ function txr_compile_expr(q) {
 			if (_is_value_call) if (txr_compile_expr(q[2])) return true;
 			var args = q[3];
 			var argc = array_length(args);
-			for (var i = 0; i < argc; i++) {
+			var i=0;
+			repeat (argc) {
 				if (txr_compile_expr(args[i])) return true;
+				i++;
 			}
 			if (_is_value_call) {
 				ds_list_add(out, [txr_action.value_call, q[1], argc])
@@ -53,8 +55,10 @@ function txr_compile_expr(q) {
 		case txr_node.block:
 			var nodes = q[2];
 			var n = array_length(nodes);
-			for (var i = 0; i < n; i++) {
+			var i=0;
+			repeat (n) {
 				if (txr_compile_expr(nodes[i])) return true;
+				i++;
 			}
 			break;
 		case txr_node.ret:
@@ -98,12 +102,14 @@ function txr_compile_expr(q) {
 			var _sel = [txr_action._select, q[1], sel_jmps, 0];
 			ds_list_add(out, _sel);
 			// options:
-			for (var i = 0; i < optc; i++) {
+			var i=0;
+			repeat (optc) {
 				sel_jmps[@i] = ds_list_size(out);
 				if (txr_compile_expr(opts[i])) return true;
 				var jmp = [txr_action.jump, q[1], 0];
 				opt_jmps[@i] = jmp;
 				ds_list_add(out, jmp);
+				i++
 			}
 			// default;
 			_sel[@3] = ds_list_size(out);
@@ -111,9 +117,11 @@ function txr_compile_expr(q) {
 				if (txr_compile_expr(q[4])) return true;
 			}
 			// point end-of-option jumps to the end of select:
-			for (var i = 0; i < optc; i++) {
+			var i=0
+			repeat (optc) {
 				var jmp = opt_jmps[i];
 				jmp[@2] = ds_list_size(out);
+				i++;
 			}
 			break;
 		case txr_node._switch:
@@ -123,11 +131,13 @@ function txr_compile_expr(q) {
 			var arg_jmps = array_create(optc);
 			// header:
 			if (txr_compile_expr(q[2])) return true;
-			for (var i = 0; i < optc; i++) { // value; switchjump <case label>
+			var i=0;
+			repeat (optc) { // value; switchjump <case label>
 				if (txr_compile_expr(args[i])) return true;
 				var jmp = [txr_action._switch, q[1], 0];
 				arg_jmps[@i] = jmp;
 				ds_list_add(out, jmp);
+				i++;
 			}
 			//
 			ds_list_add(out, [txr_action.discard, q[1]]);
@@ -135,10 +145,12 @@ function txr_compile_expr(q) {
 			ds_list_add(out, def_jmp);
 			//
 			var pos_start = ds_list_size(out);
-			for (var i = 0; i < optc; i++) {
+			var i=0;
+			repeat (optc) {
 				var jmp = arg_jmps[i];
 				jmp[@2] = ds_list_size(out);
 				if (txr_compile_expr(opts[i])) return true;
+				i++;
 			}
 			//
 			def_jmp[@2] = ds_list_size(out);
@@ -253,8 +265,10 @@ function txr_compile_expr(q) {
 		case txr_node.array_literal:
 			var args = q[2];
 			var argc = array_length(args);
-			for (var i = 0; i < argc; i++) {
+			var i=0;
+			repeat (argc) {
 				if (txr_compile_expr(args[i])) return true;
+				i++;
 			}
 			ds_list_add(out, [txr_action.array_literal, q[1], argc]);
 			break;
@@ -262,8 +276,10 @@ function txr_compile_expr(q) {
 			var _keys = q[2];
 			var _values = q[3];
 			var n = array_length(_keys);
-			for (var i = 0; i < n; i++) {
+			var i=0;
+			repeat (n) {
 				if (txr_compile_expr(_values[i])) return true;
+				i++;
 			}
 			ds_list_add(out, [txr_action.object_literal, q[1], _keys]);
 			break;

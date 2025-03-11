@@ -56,8 +56,8 @@ function ball_movement() {
 	var num=collision_ellipse_list(x-24+hsp,y-24+vsp,x+24+hsp,y+24+vsp, oCollider, true, true, list, true)
 	
 	if (num > 0) {
-		var j = noone;
-		for (var i = 0; i < num; ++i) {
+		var i=0;
+		repeat (num) {
 			with(list[| i]) {
 				if (object_index == oHardBlock || object_index == oItemBox) {
 					instance_destroy();
@@ -67,6 +67,7 @@ function ball_movement() {
 					}
 				}
 			}
+			i++;
 		}
 	}
 	

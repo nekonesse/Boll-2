@@ -123,11 +123,13 @@ function config_getarray(_sett, dir) {
 
 function get_spriteindex() { //returns the sprite name of the player's current sprite
 	var ind=0;
-	for (var i = 0; i < array_length(spriteEvents); ++i) {
+	var i=0;
+	repeat (array_length(spriteEvents)) {
 	    if (spriteEvents[i]==spriteEvent) {
 			ind=i;
 			break;
 		}
+		i++;
 	}
 	var mem=size;
 	
@@ -162,57 +164,103 @@ function get_size() { //returns the array index of the player's current sprite
 function skin_animationdata(slot,name,list) {
 	var t,spr;
 
-	for (var j = 0; j < array_length(global.powerups); ++j) {
+	var j=0;
+	repeat (array_length(global.powerups)) {
 		var sprite_yank = global.powerups[j]
-		if skin_getstring(global.powerups[j] + " override") != "" {
-			sprite_yank = skin_getstring(global.powerups[j] + " override")			
+		var spritedat = global.animdat[pNum][0]
+		var animdat = global.animdat[pNum][1]
+		if spritedat[$ $"{global.powerups[j]} override"] != undefined {
+			sprite_yank = spritedat[$ $"{global.powerups[j]} override"]
 		}
-		for (var g = 0; g < array_length(spriteEvents); ++g) {
-			var _getspr=skin_getstring($"{sprite_yank} {spriteEvents[g]}")
-			if (_getspr=="") {
-				_getspr=string(skin_getstring($"{spriteEvents[g]}"))
+		var g=0;
+		repeat (array_length(spriteEvents)) {
+			var _getspr=spritedat[$ $"{sprite_yank} {spriteEvents[g]}"]
+			if is_undefined(_getspr) {
+				_getspr=spritedat[$ $"{spriteEvents[g]}"]
 			}
-			if !(_getspr=="") {
+			if !is_undefined(_getspr) {
 				show_debug_message(_getspr)
-				ds_map_add(spriteMap,$"{global.powerups[j]} {spriteEvents[g]}",_getspr)
+				ds_map_add(spriteMap, $"{global.powerups[j]} {spriteEvents[g]}", _getspr)
 			}
+			g++;
 		}
-		for (var i=0;i<array_length(list);i+=1) {
+		var i=0;
+		repeat (array_length(list)) {
 		    spr=list[i]
 		    //read frame count list
 		    //the below code was mega simplified since we don't have to deal with the commas for different sizes.
 		    //I'm utilizing the defaults of nozerounreal here so that in the case that it doesn't actually find the tag it just goes for a non size specific version. i.e, one without a tag.s  ||  lazy 8am moster here Thank You.		
-			frames_list[i]=nozerounreal(skin_setting(global.powerups[j]+" "+string(spr)+" frames"),skin_setting(string(spr)+" frames"))
-	    
+			if !is_undefined(animdat[$ $"{global.powerups[j]} {spr} frames"])
+			frames_list[i]=animdat[$ $"{global.powerups[j]} {spr} frames"]
+			else if !is_undefined(animdat[$ $"{spr} frames"])
+			frames_list[i]=animdat[$ $"{spr} frames"]
+			else frames_list[i]=1
 			//read animation speed
-		    t=nozerounreal(skin_setting(global.powerups[j]+" "+string(spr)+" speed"),skin_setting(string(spr)+" speed")) 
+		    if !is_undefined(animdat[$ $"{global.powerups[j]} {spr} speed"])
+			t=animdat[$ $"{global.powerups[j]} {spr} speed"]
+			else if !is_undefined(animdat[$ $"{spr} speed"])
+			t=animdat[$ $"{spr} speed"]
+			else t=1
 		    if !(ceil(t)) t=1
 	    
 			speed_list[i]=t
 		
 		    //read animation loop
-		    loops_list[i]=max(1,nozerounreal(skin_setting(global.powerups[j]+" "+string(spr)+" loop"),skin_setting(string(spr)+" loop")))
+			var loop;
+			if !is_undefined(animdat[$ $"{global.powerups[j]} {spr} loop"])
+			loop=animdat[$ $"{global.powerups[j]} {spr} loop"]
+			else if !is_undefined(animdat[$ $"{spr} loop"])
+			loop=animdat[$ $"{spr} loop"]
+			else loop=1
+		    loops_list[i]=max(1,loop)
       
-
-			//read frametimes
-			if is_array(skin_getarray(string(spr)+" frametimes"))
-			times_list[i]=skin_getarray(string(spr)+" frametimes")
-			else
-			times_list[i]=array_create(frames_list[i],1)
+			if !is_undefined(animdat[$ $"{global.powerups[j]} {spr} frametimes"]) && is_array(animdat[$ $"{global.powerups[j]} {spr} frametimes"])
+			times_list[i]=animdat[$ $"{global.powerups[j]} {spr} frametimes"]
+			else if !is_undefined(animdat[$ $"{spr} frametimes"]) && is_array(animdat[$ $"{spr} frametimes"])
+			times_list[i]=animdat[$ $"{spr} frametimes"]
+			else times_list[i]=array_create(frames_list[i],1)
+			i++;
 		}
-	
-		offset_x_list[j]=nozerounreal(skin_setting(global.powerups[j]+" offset x"),skin_setting("offset x"))
-		offset_y_list[j]=nozerounreal(skin_setting(global.powerups[j]+" offset y"),skin_setting("offset y"))
-		animspd_list[j]=median(0,nozerounreal(skin_setting(global.powerups[j]+" animation speed"),skin_setting("animation speed")))
-		poleoffx[j]=nozerounreal(skin_setting(global.powerups[j]+" pole center offset"),skin_setting("pole center offset"))
+		
+		if !is_undefined(spritedat[$ $"{global.powerups[j]} offset x"])
+		offset_x_list[j]=spritedat[$ $"{global.powerups[j]} offset x"]
+		else if !is_undefined(spritedat[$ "offset x"])
+		offset_x_list[j]=spritedat[$ "offset x"]
+		else offset_x_list[j]=0
+		
+		if !is_undefined(spritedat[$ $"{global.powerups[j]} offset y"])
+		offset_y_list[j]=spritedat[$ $"{global.powerups[j]} offset y"]
+		else if spritedat[$ "offset y"]!=undefined
+		offset_y_list[j]=spritedat[$ "offset y"]
+		else offset_y_list[j]=0
+		
+		if !is_undefined(spritedat[$ $"{global.powerups[j]} animation speed"])
+		animspd_list[j]=spritedat[$ $"{global.powerups[j]} animation speed"]
+		else if spritedat[$ "animation speed"]!=undefined
+		animspd_list[j]=spritedat[$ "animation speed"]
+		else animspd_list[j]=1
+		
+		if !is_undefined(spritedat[$ $"{global.powerups[j]} pole center offset"])
+		poleoffx_list[j]=spritedat[$ $"{global.powerups[j]} pole center offset"]
+		else if spritedat[$ "pole center offset"]!=undefined
+		poleoffx_list[j]=spritedat[$ "pole center offset"]
+		else poleoffx_list[j]=0
+		
+		if !is_undefined(spritedat[$ $"{global.powerups[j]} palette"])
+		my_palletes[j]=spritedat[$ $"{global.powerups[j]} palette"]
+		else my_palletes[j]=1
+		
+		j++;
 	}
 }
 
 function init_sounds() {
 	var dir=$"{working_directory}\\_vanilla\\character\\{charmName}\\sfx\\"
 	audioExtWavScan(dir)
-	for (var i=0; i < array_length(sound_list); ++i;) {
-		if file_exists(dir+$"{charmName}{sound_list[i]}.wav") {
+	audioExtOggScan(dir)
+	var i=0;
+	repeat (array_length(sound_list)) {
+		if file_exists(dir+$"{charmName}{sound_list[i]}.wav") || file_exists(dir+$"{charmName}{sound_list[i]}.ogg") {
 			var snd=audioExtSoundGet($"{charmName}{sound_list[i]}")
 			VinylSetupSound(audioExtSoundGetSoundID(snd))
 			
@@ -253,6 +301,7 @@ function init_player() { //make this load animation data later
 	offset_x_list[0]=0;
 	offset_y_list[0]=0;
 	animspd_list[0]=0;
+	my_palletes[0]=0;
 	animf=1;
 	offset_x=0;
 	offset_y=0;
@@ -268,9 +317,6 @@ function init_player() { //make this load animation data later
 	top_margin=120;
 	dy=0;
 	oldSpriteEvent="idle";
-	show_debug_message(spriteEvents)
-	
-	
 	skin_animationdata(pNum,charmName,global.player_spritelists[pNum]);
 	init_sounds();
 }
@@ -291,20 +337,6 @@ function draw_player() {
 			alpha
 		)
 	}
-	/*draw_sprite_general(
-		sheet,0,
-		8+floor(frame)*(box_width+1)+margin,
-		top_margin+8+fry*(box_height+1)+(margin*2),
-		box_width-margin*2,
-		box_height-margin*2, //might need to add some lengthdir bullshit to make it rotate on offset properly
-		//kms -moster
-		floor(x) + lengthdir_x(((margin - offset_x - cx) * xsc), sprite_angle * xsc) + lengthdir_x(((margin + dy - (5 + offset_y + cy)) * ysc), (sprite_angle - 90) * ysc) - floor(offset_x) * -xsc,
-		floor(y) + lengthdir_y(((margin - offset_x - cx) * xsc), sprite_angle * xsc) + lengthdir_y(((margin + dy - (5 + offset_y + cy)) * ysc), (sprite_angle - 90) * ysc) - floor(offset_y) - (11) - (hit_sizey) * -ysc,
-		xsc,ysc,
-		sprite_angle*xsc,
-		col,col,col,col,
-		alpha
-	)			*/
 }
 
 function animate_player() {
@@ -344,14 +376,11 @@ function animate_player() {
 		if (frame<0) frame+=frn
 		if (frame>=frn) {frame=frame-frn if (frl<frn) frame=frl}
 		frame=modulo(frame,0,frn)
-		for (var sizeNum = 0; sizeNum < array_length(global.powerups); sizeNum += 1) { //temporary size count, could replace with better method later maybe? works for now though -moster
-			if global.powerups[sizeNum]==size {
-				offset_x=offset_x_list[sizeNum]
-				offset_y=offset_y_list[sizeNum]
-				animf=animspd_list[sizeNum]
-				break
-			}
-		}
+		var sizeNum = array_get_index(global.powerups, size); //not sure why this was a loop before. theres literally this same method above to get spri LOL
+		offset_x=offset_x_list[sizeNum]
+		offset_y=offset_y_list[sizeNum]
+		animf=animspd_list[sizeNum]
+		palette=my_palletes[sizeNum]
 	}
 	
 	txr_exec(global.scripts[? $"{charmName}_upd_frame"]);

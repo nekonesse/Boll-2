@@ -71,7 +71,8 @@ if (global.debug)
 	{
 		var len = array_length(morph.debug_col);
 		
-		for (var i = 0; i < len; i++)
+		var i=0;
+		repeat (len)
 		{
 			if (!is_array(morph.debug_col[i]))
 			{
@@ -81,6 +82,7 @@ if (global.debug)
 			line = morph.debug_col[i];
 			
 			draw_line(line[0], camera_y + line[1], line[2], camera_y + line[1]);
+			i++;
 		}
 	}
 	
