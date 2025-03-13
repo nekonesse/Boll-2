@@ -65,11 +65,13 @@ repeat(tb_length) //draw Editor icons
 if selected_mode = TILE_MODE {
 	if show_tileset && surface_exists(object_list_area_surface) {
 		//window
-		draw_sprite_stretched(spr_JADEwindow,0,tileset_picker_x-2,tileset_picker_y-6,(sprite_get_width(spr_TilesetMain)/(3 / tile_zoom))+2,(sprite_get_height(spr_TilesetMain)/(3 / tile_zoom))+8)
+		var t_width = sprite_get_width(tilesets[selected_tileset][0])
+		var t_height = sprite_get_height(tilesets[selected_tileset][0])
+		draw_sprite_stretched(spr_JADEwindow,0,tileset_picker_x-2,tileset_picker_y-6,(t_width/(3 / tile_zoom))+2,(t_height/(3 / tile_zoom))+8)
 		draw_set_font(global.omiFont)
 		//window text
 		draw_set_halign(fa_left)
-		draw_text_transformed(tileset_picker_x+2,tileset_picker_y-4,$"tile picker - {layer_get_name(layers[selected_tile_layer])}",0.66,0.66,0)
+		draw_text_transformed(tileset_picker_x+2,tileset_picker_y-4,$"{tilesets[selected_tileset][2]} - {layer_get_name(layers[selected_tile_layer])}",0.66,0.66,0)
 		
 		surface_set_target(object_list_area_surface)
 		draw_clear_alpha(c_black, 0)
@@ -78,12 +80,10 @@ if selected_mode = TILE_MODE {
 		surface_reset_target();
 		
 		//tile picker
-		var tilelapmap = tileset_get_info(tTilesetMain)
-		draw_sprite_ext(spr_TilesetMain, 0, tileset_picker_x,tileset_picker_y, 0.33 * tile_zoom, 0.33 * tile_zoom, 0, c_white, 1)	
-		var t_width = sprite_get_width(spr_TilesetMain)
+		draw_sprite_ext(tilesets[selected_tileset][0], 0, tileset_picker_x,tileset_picker_y, 0.33 * tile_zoom, 0.33 * tile_zoom, 0, c_white, 1)	
 		var t_x,t_y,t_w,t_h;
 		t_x = tileset_picker_x+((current_tile_id[0][0] mod (t_width / 16))* (16*(0.33 * tile_zoom)))
-		t_y = tileset_picker_y+(floor(current_tile_id[0][0]/(t_width/16))* (16*(0.33 * tile_zoom)))
+		t_y = tileset_picker_y+(floor(current_tile_id[0][0] / (t_width/16))* (16*(0.33 * tile_zoom)))
 		t_w = (tile_sel_width + 1)* 16 * (0.33 * tile_zoom)
 		t_h = (tile_sel_height + 1) * 16 * (0.33 * tile_zoom)
 		

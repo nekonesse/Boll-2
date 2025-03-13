@@ -81,16 +81,29 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 	}
 	#endregion
 } else if (selected_mode == TILE_MODE) {
-	var layerdir = keyboard_check_pressed(vk_left) - keyboard_check_pressed(vk_right)
-	if (layerdir != 0 && !keyboard_check(vk_alt)) {
+	var layerdir = keyboard_check_pressed(vk_right) - keyboard_check_pressed(vk_left)
+	var tilesetdir = keyboard_check_pressed(vk_down) - keyboard_check_pressed(vk_up)
+	if (layerdir != 0) {
 		ui_opacity = 10;
-		selected_tile_layer += dir
+		selected_tile_layer += layerdir
 		if (selected_tile_layer < 0) {
 			selected_tile_layer = (array_length(tile_layer) - 1)
 		} else if (selected_tile_layer >= array_length(tile_layer)) {
 			selected_tile_layer = 0	
 		}
 		tilemap=tile_layer[selected_tile_layer]
+	}
+	if (tilesetdir != 0) {
+		ui_opacity = 10;
+		selected_tileset += tilesetdir
+		if (selected_tileset < 0) {
+			selected_tileset = (array_length(tilesets) - 1)
+		} else if (selected_tileset >= array_length(tilesets)) {
+			selected_tileset = 0	
+		}
+		tilemap_tileset(tile_layer[selected_tile_layer], tilesets[selected_tileset][1]);
+		tileset_picker_x = (guiw-(sprite_get_width(tilesets[selected_tileset][0]) / 3))
+		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[selected_tileset][0]) / 3) /2) - 8
 	}
 	if (ui_opacity > 0.4) {ui_opacity -= 0.05}
 }
@@ -116,7 +129,7 @@ if keyboard_check_pressed(vk_escape) room_goto(rMainMenu)
 //half temp cycling object/tile behavior
 switch(selected_mode) {
 	case TILE_MODE:
-		if selected_tool = BRUSH_TOOL {
+		/*if selected_tool = BRUSH_TOOL {
 			if (mwheel == 1 || keyboard_check_pressed(vk_pagedown)) {
 				if !keyboard_check(vk_control) {
 					var i=0
@@ -164,7 +177,7 @@ switch(selected_mode) {
 					}
 				}
 			}
-		}
+		}*/
 		
 		if keyboard_check_pressed(vk_tab) {
 			show_tileset = !show_tileset
@@ -642,9 +655,8 @@ if show_tileset {
 		
 	
 	if (selected_mode = TILE_MODE && on_tile_picker) {
-		var tilelapmap = tileset_get_info(tTilesetMain)
-		var t_width = sprite_get_width(spr_TilesetMain)
-		var t_height  = sprite_get_height(spr_TilesetMain)
+		var t_width = sprite_get_width(tilesets[selected_tileset][0])
+		var t_height  = sprite_get_height(tilesets[selected_tileset][0])
 		var t_size = 16 * (0.33 * tile_zoom)
 		if (mbleftpress && !tile_drag) {
 			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
@@ -669,13 +681,11 @@ if show_tileset {
 		if (mbleftrel && tile_drag) {
 			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
 			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
-			//show_debug_message("{0}, {1}", tile_sel_width, tile_sel_height)
 			var i=0;
-			repeat(tile_sel_width+1) {
+			repeat(tile_sel_width) {
 				var j=0;
-			    repeat(tile_sel_height+1) {
+			    repeat(tile_sel_height) {
 				    current_tile_id[i][j] = (clamp(floor(sel_x / t_size), 0, t_width/ 16) + i - tile_sel_width) + ((clamp(floor(sel_y / t_size), 0, t_height/ 16) + j - tile_sel_height) * (t_width/16))
-					show_debug_message($"{i}, {j}: {current_tile_id[i][j]}")
 					j++;
 				}
 				i++;
@@ -1008,9 +1018,9 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 						exit;	
 					}
 					var i=0;
-					repeat(tile_sel_width+1) {
+					repeat(array_length(current_tile_id)) {
 						var j=0;
-						repeat(tile_sel_height+1) {
+						repeat(array_length(current_tile_id[i])) {
 							var data = tilemap_get_at_pixel(tilemap, mouse_x + (i *16), mouse_y+ (j *16)); //set tile at place
 							if tile_get_index(data) != current_tile_id[i][j] { //prevent tile overlapping (mainly a problem with the list)
 								show_debug_message($"Placed tile of index {current_tile_id[i][j]} at {mouse_x + (i *16)} {mouse_y+ (j *16)}")

@@ -27,10 +27,6 @@ repeat(len) {
 	with (obj) {
 		onConducted.Emit();
 	}
-	/*for (var j = 0; j < array_length(connections); ++j) {
-	    if array_contains(connections[j], obj.id)
-		array_delete(connections, i, 1)
-	}*/
 	array_push(connections, [x, y, obj.x, obj.y, obj.id]);
     if !array_contains(connectedObjects, obj) {
         array_push(connectedObjects, obj);

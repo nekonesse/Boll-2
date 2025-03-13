@@ -59,6 +59,11 @@ toolbar[4][4]=REFERENCE_TOOL
 
 JADE_initializeobj();
 
+tilesets[0]=[spr_TilesetMain, tTilesetMain, "Floragrande Tiles"]
+tilesets[1]=[spr_TilesetMainDeco, tTilesetMainDeco, "Floragrande Decoration"]
+tilesets[2]=[spr_TilesetWorld5, tTilesetWorld5, "Frigid Dark Tiles"]
+selected_tileset=0;
+
 layers[0]=layer_create(-200,"EditorTiles_FG")
 layers[1]=layer_create(-100,"EditorTiles_FGDeco")
 layers[2]=layer_create(100,"EditorTiles_Main")
@@ -136,8 +141,8 @@ var guih=display_get_gui_height()
 show_tileset = false
 on_tile_picker = false
 tile_zoom = 1;
-tileset_picker_x = (guiw-(sprite_get_width(spr_TilesetMain) / 3))
-tileset_picker_y = ((guih/2) - (sprite_get_width(spr_TilesetMain) / 3) /2) - 8
+tileset_picker_x = (guiw-(sprite_get_width(tilesets[selected_tileset][0]) / 3))
+tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[selected_tileset][0]) / 3) /2) - 8
 #endregion
 
 object_list = ds_list_create();
