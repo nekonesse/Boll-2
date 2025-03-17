@@ -59,10 +59,13 @@ toolbar[4][4]=REFERENCE_TOOL
 
 JADE_initializeobj();
 
-tilesets[0]=[spr_TilesetMain, tTilesetMain, "Floragrande Tiles"]
-tilesets[1]=[spr_TilesetMainDeco, tTilesetMainDeco, "Floragrande Decoration"]
-tilesets[2]=[spr_TilesetWorld5, tTilesetWorld5, "Frigid Dark Tiles"]
+tilesets={}
+tilesets[$ "tTilesetMain"]=[spr_TilesetMain, tTilesetMain, "Floragrande Tiles"]
+tilesets[$ "tTilesetPipes"]=[spr_TilesetPipes, tTilesetPipes, "Pipe Tiles"]
+tilesets[$ "tTilesetMainDeco"]=[spr_TilesetMainDeco, tTilesetMainDeco, "Floragrande Decoration"]
+tilesets[$ "tTilesetWorld5"]=[spr_TilesetWorld5, tTilesetWorld5, "Frigid Dark Tiles"]
 selected_tileset=0;
+current_tileset="tTilesetMain"
 
 layers[0]=layer_create(-200,"EditorTiles_FG")
 layers[1]=layer_create(-100,"EditorTiles_FGDeco")
@@ -72,15 +75,14 @@ layers[4]=layer_create(200,"EditorTiles_Deco")
 layers[5]=layer_create(300,"EditorTiles_Semi")
 layers[6]=layer_create(400,"EditorTiles_BG")
 
-tile_layer[0] = layer_tilemap_create(layers[0],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
-tile_layer[1] = layer_tilemap_create(layers[1],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
-tile_layer[2] = layer_tilemap_create(layers[2],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
-tile_layer[3] = layer_tilemap_create(layers[3],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
-tile_layer[4] = layer_tilemap_create(layers[4],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
-tile_layer[5] = layer_tilemap_create(layers[5],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
-tile_layer[6] = layer_tilemap_create(layers[6],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[0] = layer_tilemap_create(layers[0],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+tile_layer[1] = layer_tilemap_create(layers[1],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+tile_layer[2] = layer_tilemap_create(layers[2],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+tile_layer[3] = layer_tilemap_create(layers[3],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+tile_layer[4] = layer_tilemap_create(layers[4],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+tile_layer[5] = layer_tilemap_create(layers[5],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+tile_layer[6] = layer_tilemap_create(layers[6],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
 selected_tile_layer=2;
-//tileset = tTilesetMain
 tilemap = tile_layer[2]
 object_layer_map = ds_list_create()
 node_layer_map = ds_list_create()
@@ -141,8 +143,8 @@ var guih=display_get_gui_height()
 show_tileset = false
 on_tile_picker = false
 tile_zoom = 1;
-tileset_picker_x = (guiw-(sprite_get_width(tilesets[selected_tileset][0]) / 3))
-tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[selected_tileset][0]) / 3) /2) - 8
+tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
+tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
 #endregion
 
 object_list = ds_list_create();

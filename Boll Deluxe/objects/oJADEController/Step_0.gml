@@ -23,7 +23,7 @@ var guih=display_get_gui_height()
 var tb_length = array_length(toolbar[selected_mode])
 on_list_top = (point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y-20,object_list_area_x+object_list_area_width/3,object_list_area_y) || point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y-20,object_list_area_x+object_list_area_width/3,object_list_area_y))
 on_object_list = (point_in_rectangle(curs_x,curs_y,object_list_area_x-2,object_list_area_y-24,object_list_area_x+object_list_area_width/3,object_list_area_y+object_list_area_height/3) && (show_object_list || object_list_active))
-on_tile_picker = (point_in_rectangle(curs_x,curs_y,tileset_picker_x-2,tileset_picker_y-6,tileset_picker_x + (sprite_get_width(tilesets[selected_tileset][0]) / (3 / tile_zoom)), tileset_picker_y + (sprite_get_height(tilesets[selected_tileset][0]) / (3 / tile_zoom))) && (show_tileset))
+on_tile_picker = (point_in_rectangle(curs_x,curs_y,tileset_picker_x-2,tileset_picker_y-6,tileset_picker_x + (sprite_get_width(tilesets[$ current_tileset][0]) / (3 / tile_zoom)), tileset_picker_y + (sprite_get_height(tilesets[$ current_tileset][0]) / (3 / tile_zoom))) && (show_tileset))
 if (!on_object_list && object_list_active && show_object_list) on_object_list = keyboard_check_direct(vk_alt)
 
 not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
@@ -92,18 +92,24 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 			selected_tile_layer = 0	
 		}
 		tilemap=tile_layer[selected_tile_layer]
+		current_tileset = tileset_get_name(tilemap_get_tileset(tilemap));
+		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
+		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
 	}
 	if (tilesetdir != 0) {
 		ui_opacity = 10;
 		selected_tileset += tilesetdir
 		if (selected_tileset < 0) {
-			selected_tileset = (array_length(tilesets) - 1)
-		} else if (selected_tileset >= array_length(tilesets)) {
+			selected_tileset = (variable_struct_names_count(tilesets) - 1)
+		} else if (selected_tileset >= variable_struct_names_count(tilesets)) {
 			selected_tileset = 0	
 		}
-		tilemap_tileset(tile_layer[selected_tile_layer], tilesets[selected_tileset][1]);
-		tileset_picker_x = (guiw-(sprite_get_width(tilesets[selected_tileset][0]) / 3))
-		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[selected_tileset][0]) / 3) /2) - 8
+		var arr=variable_struct_get_names(tilesets)
+		current_tileset = arr[selected_tileset];
+		
+		tilemap_tileset(tile_layer[selected_tile_layer], tilesets[$ current_tileset][1]);
+		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
+		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
 	}
 	if (ui_opacity > 0.4) {ui_opacity -= 0.05}
 }
@@ -649,14 +655,14 @@ if show_tileset {
 	if (dir != 0 && keyboard_check(vk_alt)) {
 		tile_zoom = (tile_zoom == 2 ? 1 : 2)
 			
-		tileset_picker_x = (guiw-((sprite_get_width(tilesets[selected_tileset][0]) / 3) * tile_zoom)) - 8
-		tileset_picker_y = ((guih/2) - ((sprite_get_width(tilesets[selected_tileset][0]) / 3) * tile_zoom) /2) - 8
+		tileset_picker_x = (guiw-((sprite_get_width(tilesets[$ current_tileset][0]) / 3) * tile_zoom)) - 8
+		tileset_picker_y = ((guih/2) - ((sprite_get_width(tilesets[$ current_tileset][0]) / 3) * tile_zoom) /2) - 8
 	}
 		
 	
 	if (selected_mode = TILE_MODE && on_tile_picker) {
-		var t_width = sprite_get_width(tilesets[selected_tileset][0])
-		var t_height  = sprite_get_height(tilesets[selected_tileset][0])
+		var t_width = sprite_get_width(tilesets[$ current_tileset][0])
+		var t_height  = sprite_get_height(tilesets[$ current_tileset][0])
 		var t_size = 16 * (0.33 * tile_zoom)
 		if (mbleftpress && !tile_drag) {
 			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
@@ -797,14 +803,20 @@ if (mbright && not_on_gui) {
 	switch(selected_mode) {
 		case TILE_MODE: {
 			if (selected_tool==BRUSH_TOOL) {
-				var data = tilemap_get(tilemap, gridx, gridy);
-					
-				if tile_get_index(data)!= 0 {
-					show_debug_message($"Deleted tile of index {tile_get_index(data)} at {mouse_x} {mouse_y}")
-					data = tile_set_empty(data)
-					tilemap_set(tilemap, data, gridx, gridy); //delete tile at place lol
-					tile_update_properties();
+				var i=0;
+				repeat(tile_sel_width+1) {
+					var j=0;
+					repeat(tile_sel_height+1) {
+						var data = tilemap_get(tilemap, gridx+i, gridy+j);
+						if tile_get_index(data)!= 0 {
+							data = tile_set_empty(data)
+							tilemap_set(tilemap, data, gridx+i, gridy+j); //delete tile at place lol
+						}
+						j++;
+					}
+					i++;
 				}
+				tile_update_properties();
 			}
 		}
 	}
@@ -1049,12 +1061,12 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 								show_debug_message(data)
 								var tiledata = tilemap_get(tilemap, gridx + i, gridy + j)
 								ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,gridx+i,gridy+j]) //add tile  to list at place
-								tile_update_properties();
 							}
 							j++;
 						}
 						i++;
 					}
+					tile_update_properties();
 				break;
 			}
 		break;

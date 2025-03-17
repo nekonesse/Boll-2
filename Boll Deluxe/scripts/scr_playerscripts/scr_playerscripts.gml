@@ -122,33 +122,21 @@ function config_getarray(_sett, dir) {
 }
 
 function get_spriteindex() { //returns the sprite name of the player's current sprite
-	var ind=0;
-	var i=0;
-	repeat (array_length(spriteEvents)) {
-	    if (spriteEvents[i]==spriteEvent) {
-			ind=i;
-			break;
-		}
-		i++;
-	}
 	var mem=size;
 	
 	if (grow && (global.roomTimer mod 6 > 3)) {
 		size = oldsize;
 	}
 	
-	var key=ds_map_find_value(spriteMap,$"{size} {spriteEvents[i]}")
-	var spr = $"spr_{charmName}_{size}_{key}"
+	var spritedat = global.animdat[pNum][0]
+	var _getspr=spritedat[$ $"{size} {spriteEvent}"]
+	var spr=$"spr_{charmName}_{size}_{_getspr}"
 	
 	if (size != mem) {
 		size = mem;
 	}
 	
 	return spr
-}
-
-function get_spritenum(sprite_event) { //returns the array index of the player's current sprite
-	return array_get_index(global.player_spritelists[pNum], ds_map_find_value(spriteMap,string(size)+" "+string(sprite_event)))
 }
 
 function get_size() { //returns the array index of the player's current sprite
@@ -180,7 +168,7 @@ function skin_animationdata(slot,name,list) {
 			}
 			if !is_undefined(_getspr) {
 				show_debug_message(_getspr)
-				ds_map_add(spriteMap, $"{global.powerups[j]} {spriteEvents[g]}", _getspr)
+				spriteMap[$ $"{global.powerups[j]} {spriteEvents[g]}"]=_getspr
 			}
 			g++;
 		}
@@ -291,7 +279,7 @@ function stopsfx(sound) {
 
 function init_player() { //make this load animation data later
 	spriteEvents=["idle"];
-	spriteMap=ds_map_create();
+	spriteMap={};
 	sound_list=[]; //failsafe
 	txr_exec(global.scripts[? $"{charmName}_datalist"]); //sprite list
 	frames_list=[1];
@@ -342,24 +330,22 @@ function draw_player() {
 function animate_player() {
 	//animation manager specifically for player characters
 	
-	oldspr=get_spriteindex()
+	var oldspr=get_spriteindex()
 	oldSpriteEvent=spriteEvent;
 
 	txr_exec(global.scripts[? $"{charmName}_draw"]);
-	
-	//this one handles drawing order inside multiplayer, or rather, the way it switches so that both are flashing when on top of one another.
-	//if ((depth=0 || depth=1) && pNum=gamemanager.plrsort) depth=!depth
 	 
 	//Growing and hurting size changes.
 	
-	var spri=array_get_index(global.player_spritelists[pNum], ds_map_find_value(spriteMap,$"{size} {spriteEvent}"))
+	var spri=array_get_index(global.player_spritelists[pNum], spriteMap[$ $"{size} {spriteEvent}"])
 	
 	var myspr=get_spriteindex()
 	if myspr=-1 myspr=oldspr
 	
 	if (myspr!=oldspr) {
 		frame=0
-		show_debug_message(ds_map_find_value(spriteMap,$"{size} {spriteEvent}"))
+		show_debug_message(spriteEvent)
+		show_debug_message(spriteMap[$ $"{size} {spriteEvent}"])
 		show_debug_message(spri)
 	}
 	

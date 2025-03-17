@@ -513,7 +513,7 @@ if (state == "") {
 			else spriteEvent="carrySwim"
 		} else {
 			if !(is_grabbing)
-			spriteEvent="paddle"
+			spriteEvent="swimPaddle"
 			else spriteEvent="carryPaddle"
 		}
 	}

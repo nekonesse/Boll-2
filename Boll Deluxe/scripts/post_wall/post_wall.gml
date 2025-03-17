@@ -8,7 +8,7 @@ function post_wall(){
 			gsp = 0	
 		}
 		
-		if (oldhsp != 0) {
+		if (object_index==oPlayer) && (oldhsp != 0) {
 			sig.Emit("wall_hit")
 		}
 	}
