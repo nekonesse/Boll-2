@@ -44,7 +44,7 @@ repeat(len) {
     var connectObj = connectedObjects[i];
     ds_list_clear(list);
     with connectObj {
-        collision_circle_list(x, y, other.radius, global.conductive_array, false, true, list, false);    
+        collision_circle_list(x, y, radius, global.conductive_array, false, true, list, false);    
     }
 	var n=0;
 	var len2=ds_list_size(list);

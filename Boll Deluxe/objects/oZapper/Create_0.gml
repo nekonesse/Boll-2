@@ -17,7 +17,7 @@ buftimer=0;
 connections = [];
 connectedObjects = [];
 connectedObjectsBefore = [];
-radius = 48;
+radius = 64;
 
 findConnectedObjects = function(obj) {
     var list = ds_list_create();

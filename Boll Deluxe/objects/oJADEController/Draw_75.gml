@@ -23,9 +23,9 @@ if (not_on_gui) {
 				var _tile = tilemap_get_tileset(tilemap)
 				var _data = tilemap_get(tilemap, 0,0)
 				var i=0;
-				repeat(tile_sel_width) {
+				repeat(tile_sel_width+1) {
 					var j=0;
-					repeat(tile_sel_height) {
+					repeat(tile_sel_height+1) {
 						_data = tile_set_index(_data, current_tile_id[i][j])
 						draw_set_alpha(0.25)
 						draw_tile(_tile, _data, 0, (gridx + i)*16-cam_x, (gridy + j)*16-cam_y)

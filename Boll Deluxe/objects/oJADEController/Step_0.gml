@@ -682,9 +682,9 @@ if show_tileset {
 			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
 			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
 			var i=0;
-			repeat(tile_sel_width) {
+			repeat(tile_sel_width+1) {
 				var j=0;
-			    repeat(tile_sel_height) {
+			    repeat(tile_sel_height+1) {
 				    current_tile_id[i][j] = (clamp(floor(sel_x / t_size), 0, t_width/ 16) + i - tile_sel_width) + ((clamp(floor(sel_y / t_size), 0, t_height/ 16) + j - tile_sel_height) * (t_width/16))
 					j++;
 				}
@@ -790,6 +790,23 @@ if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 			i++;
 		}
 		tile_fill = false
+	}
+}
+
+if (mbright && not_on_gui) {
+	switch(selected_mode) {
+		case TILE_MODE: {
+			if (selected_tool==BRUSH_TOOL) {
+				var data = tilemap_get(tilemap, gridx, gridy);
+					
+				if tile_get_index(data)!= 0 {
+					show_debug_message($"Deleted tile of index {tile_get_index(data)} at {mouse_x} {mouse_y}")
+					data = tile_set_empty(data)
+					tilemap_set(tilemap, data, gridx, gridy); //delete tile at place lol
+					tile_update_properties();
+				}
+			}
+		}
 	}
 }
 
@@ -1018,9 +1035,9 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 						exit;	
 					}
 					var i=0;
-					repeat(tile_sel_width) {
+					repeat(tile_sel_width+1) {
 						var j=0;
-						repeat(tile_sel_height) {
+						repeat(tile_sel_height+1) {
 							var data = tilemap_get_at_pixel(tilemap, mouse_x + (i *16), mouse_y+ (j *16)); //set tile at place
 							if tile_get_index(data) != current_tile_id[i][j] { //prevent tile overlapping (mainly a problem with the list)
 								show_debug_message($"Placed tile of index {current_tile_id[i][j]} at {mouse_x + (i *16)} {mouse_y+ (j *16)}")

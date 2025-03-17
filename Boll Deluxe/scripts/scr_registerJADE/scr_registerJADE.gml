@@ -3,7 +3,7 @@
 #macro TILE_MODE 2
 #macro BACKGROUND_MODE 3
 #macro NODE_MODE 4
-#macro JADE_VERSION 1
+#macro JADE_VERSION 2
 
 
 function JADE_initializeobj() {	
@@ -152,7 +152,7 @@ function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,m
 function JADE_save(file=game_save_id+"\save.jade") {
 	file_delete(file)
 	show_debug_message($"Saving JADE file to: {file}")
-	var array = [];
+	var struct = {};
 	var arrayObjects=[];
 	var i;
 	i=0;
@@ -183,13 +183,12 @@ function JADE_save(file=game_save_id+"\save.jade") {
 	    array_push(arrayTileLayers, [layer_get_name(layers[i]), layer_get_depth(layers[i]), tileset_get_name(tilemap_get_tileset(tile_layer[i]))])
 		i++;
 	}
-	array_push(array, JADE_VERSION)
-	array_push(array, arrayObjects)
-	array_push(array, arrayTiles)
-	array_push(array, arrayNodeObjects)
-	array_push(array, arrayTileLayers)
-	show_debug_message(array)
-	var _json=json_stringify(array); //compile all saved things
+	struct[$ "version"]=JADE_VERSION
+	struct[$ "objects"]=arrayObjects
+	struct[$ "tiles"]=arrayTiles
+	struct[$ "node_objects"]=arrayNodeObjects
+	struct[$ "tile_layers"]=arrayTileLayers
+	var _json=json_stringify(struct); //compile all saved things
 	var save_file = buffer_create(string_byte_length(_json), buffer_grow, 1);
 	buffer_write(save_file, buffer_string, _json); //save compilation into a buffer
 	var compressed = buffer_compress(save_file, 0, buffer_tell(save_file))
@@ -203,67 +202,107 @@ function JADE_load(file=game_save_id+"\save.jade") {
 	if !file_exists(file) exit;
 	var loaded = buffer_load(file)
 	var save_file = buffer_decompress(loaded)
-	var array = json_parse(buffer_read(save_file,buffer_string))
+	var level_data = json_parse(buffer_read(save_file,buffer_string))
 	show_debug_message($"Loading JADE file from: {file}")
-	var object_arr_index=1;
-	var tile_arr_index=2;
-	var node_arr_index=3;
-	var has_version=true;
-	if array_length(array) < 5 { //legacy conversion
-		has_version=false;
-		object_arr_index=0;
-		tile_arr_index=1;
-		node_arr_index=2;
-	}
-	var size = array_length(array[object_arr_index]) //read amount of objects
-	var nodesize = array_length(array[node_arr_index]) //read amount of objects
-	var tilesize = array_length(array[tile_arr_index]) //read amount of tiles
-	ds_list_clear(object_layer_map) //erase object map beforehand
-	var i;
+	if !is_array(level_data) && is_struct(level_data) {
+		var objects = level_data[$ "objects"] //read amount of objects
+		var node_objects = level_data[$ "node_objects"] //read amount of node objects
+		var tiles = level_data[$ "tiles"] //read amount of tiles
+		ds_list_clear(object_layer_map) //erase object map beforehand
+		var i;
 	
-	i=0;
-	repeat(size) { //load objects
-        var data = array[object_arr_index][i]
-		data[5] = 0
-		if array_length(data) >= 13 && array_length(data[12]) < 5 {
-			data[12][5]=true
+		i=0;
+		repeat(array_length(objects)) { //load objects
+	        var data = objects[i]
+			data[5] = 0
+			if array_length(data) >= 13 && array_length(data[12]) < 5 {
+				data[12][5]=true
+			}
+			ds_list_add(object_layer_map,data)
+			i++
 		}
-		ds_list_add(object_layer_map,data)
-		i++
-	}
-	if array_length(array) >= 4 {
-	    i=0;
-		repeat(tilesize) { //loading tiles
+		i=0;
+		repeat(array_length(tiles)) { //loading tiles
 			tilemap_clear(tile_layer[i], 0) //erase tilemap beforehand
 			ds_list_clear(tile_layer_map[i]) //erase tile map beforehand
 			var j=0;
-			repeat (array_length(array[tile_arr_index][i])) {
-				var data = array[tile_arr_index][i][j]
-			    tilemap_set(tile_layer[i],data[0],data[1],data[2])
+			repeat (array_length(tiles[i])) {
+				var data = tiles[i][j]
+				tilemap_set(tile_layer[i],data[0],data[1],data[2])
 				ds_list_add(tile_layer_map[i], [data[0], data[1], data[2]]) //add tile to list at place
 				j++;
 			}
 			i++
 		}
-	} else { //legacy tile conversion
-		tilemap_clear(tile_layer[2], 0) //erase tilemap beforehand
-		ds_list_clear(tile_layer_map[2]) //erase tile map beforehand
-		var j=0;
-		repeat (array_length(array[tile_arr_index])) {
-			var data = array[tile_arr_index][j]
-			tilemap_set(tile_layer[2],data[0],data[1],data[2])
-			ds_list_add(tile_layer_map[2], [data[0], data[1], data[2]]) //add tile to list at place
-			j++;
+		ds_list_clear(node_layer_map)
+		i=0;
+		repeat (array_length(node_objects)) { //load node object
+			var data = node_objects[i]
+			data[5] = 0
+			ds_list_add(node_layer_map,data)
+			i++;
 		}
-	}
-	ds_list_clear(node_layer_map)
-	i=0;
-	repeat (nodesize) { //load node objects
-        var data = array[node_arr_index][i]
-		data[5] = 0
-		ds_list_add(node_layer_map,data)
-		i++;
-	}
+	} else { #region Legacy Level Loading
+		var object_arr_index=1;
+		var tile_arr_index=2;
+		var node_arr_index=3;
+		var has_version=true;
+		if array_length(level_data) < 5 { //legacy conversion
+			has_version=false;
+			object_arr_index=0;
+			tile_arr_index=1;
+			node_arr_index=2;
+		}
+		var size = array_length(level_data[object_arr_index]) //read amount of objects
+		var nodesize = array_length(level_data[node_arr_index]) //read amount of objects
+		var tilesize = array_length(level_data[tile_arr_index]) //read amount of tiles
+		ds_list_clear(object_layer_map) //erase object map beforehand
+		var i;
+	
+		i=0;
+		repeat(size) { //load objects
+	        var data = level_data[object_arr_index][i]
+			data[5] = 0
+			if array_length(data) >= 13 && array_length(data[12]) < 5 {
+				data[12][5]=true
+			}
+			ds_list_add(object_layer_map,data)
+			i++
+		}
+		if array_length(level_data) >= 4 {
+		    i=0;
+			repeat(tilesize) { //loading tiles
+				tilemap_clear(tile_layer[i], 0) //erase tilemap beforehand
+				ds_list_clear(tile_layer_map[i]) //erase tile map beforehand
+				var j=0;
+				repeat (array_length(level_data[tile_arr_index][i])) {
+					var data = level_data[tile_arr_index][i][j]
+				    tilemap_set(tile_layer[i],data[0],data[1],data[2])
+					ds_list_add(tile_layer_map[i], [data[0], data[1], data[2]]) //add tile to list at place
+					j++;
+				}
+				i++
+			}
+		} else { //legacy tile conversion
+			tilemap_clear(tile_layer[2], 0) //erase tilemap beforehand
+			ds_list_clear(tile_layer_map[2]) //erase tile map beforehand
+			var j=0;
+			repeat (array_length(level_data[tile_arr_index])) {
+				var data = level_data[tile_arr_index][j]
+				tilemap_set(tile_layer[2],data[0],data[1],data[2])
+				ds_list_add(tile_layer_map[2], [data[0], data[1], data[2]]) //add tile to list at place
+				j++;
+			}
+		}
+		ds_list_clear(node_layer_map)
+		i=0;
+		repeat (nodesize) { //load node objects
+	        var data = level_data[node_arr_index][i]
+			data[5] = 0
+			ds_list_add(node_layer_map,data)
+			i++;
+		}
+	} #endregion
 	buffer_delete(loaded)
 	buffer_delete(save_file)
 	show_debug_message($"Successfully loaded JADE file from: {file}!")

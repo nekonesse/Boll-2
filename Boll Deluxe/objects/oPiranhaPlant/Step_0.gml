@@ -23,12 +23,13 @@ if (parent_pipe == noone) {
 	exit;
 }
 
+var nearplayer=instance_nearest(x,y,oPlayer)
 if (go == 0) {
 	timer = clamp(timer - 1,0,120)
 	if (timer == 0) {
 		if (exposed) {
 			go = -0.5
-		} else if !(collision_rectangle(x-24,0,x+24,room_height,oPlayer,true,true)) { //turns out i didnt need to do anything fancy here LOL
+		} else if (point_distance(x,0,nearplayer.x,0)) > 12 {
 			go = 0.5
 		}
 		exit;

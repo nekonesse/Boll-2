@@ -1,2 +1,2 @@
 event_inherited();
-spring_power=14;
+spring_power=11;

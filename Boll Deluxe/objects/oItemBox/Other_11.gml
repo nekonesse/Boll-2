@@ -30,6 +30,12 @@ switch (content) {
 }
 
 i = instance_create_depth(x,y,0,j);
-i.going = hit;
+if place_meeting(x,y+1,oCollider) {
+	i.going = -1;
+} else if place_meeting(x,y-1,oCollider) {
+	i.going = 1;
+} else {
+	i.going = hit;
+}
 i.parentblock = id;
 VinylPlay(snd_itemappear);
