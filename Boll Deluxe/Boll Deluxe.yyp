@@ -145,6 +145,7 @@
     {"$GMFolder":"","%Name":"Spiked","folderPath":"folders/Sprites/Enemies/Goombas/Spiked.yy","name":"Spiked","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Koopas","folderPath":"folders/Sprites/Enemies/Koopas.yy","name":"Koopas","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Green (Regular)","folderPath":"folders/Sprites/Enemies/Koopas/Green (Regular).yy","name":"Green (Regular)","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Skating","folderPath":"folders/Sprites/Enemies/Koopas/Skating.yy","name":"Skating","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Red","folderPath":"folders/Sprites/Enemies/Koopas/Red.yy","name":"Red","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Yellow","folderPath":"folders/Sprites/Enemies/Koopas/Yellow.yy","name":"Yellow","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Piranha Plants","folderPath":"folders/Sprites/Enemies/Piranha Plants.yy","name":"Piranha Plants","resourceType":"GMFolder","resourceVersion":"2.0",},

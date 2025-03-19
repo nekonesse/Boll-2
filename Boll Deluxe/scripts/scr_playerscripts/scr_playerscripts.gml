@@ -331,6 +331,17 @@ function draw_player() {
 	}
 }
 
+function sprite_arrposition() {
+	var spritedat = global.animdat[pNum][0]
+	var curr_size = get_size();
+	var sprite_yank = curr_size
+	if !is_undefined(spritedat[$ $"{curr_size} override"])
+	sprite_yank = spritedat[$ $"{curr_size} override"]
+	var spri=array_get_index(global.player_spritelists[pNum], spriteMap[$ $"{sprite_yank} {spriteEvent}"])
+	
+	return spri 
+}
+
 function animate_player() {
 	//animation manager specifically for player characters
 	

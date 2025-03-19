@@ -13,9 +13,11 @@ delete enemyCollidePlayer;
 enemyCollidePlayer = new Signal();
 
 enemyStomped.Connect( self, function(hit_p) {
-	myBalloon.owner=noone;
-	with(myBalloon) {
-		hsp=-other.constantspd;
+	if instance_exists(myBalloon) {
+		myBalloon._owner=noone;
+		with(myBalloon) {
+			hsp=-other.constantspd;
+		}
 	}
 	myBalloon=noone;
 	passive=false;
@@ -42,9 +44,11 @@ enemyCollidePlayer.Connect( self, function(hit_p) {
 		hsp=2*-xsc;
 		vsp=-3;
 		dashcooldown=60;
-		myBalloon.owner=noone;
-		with(myBalloon) {
-			hsp=other.constantspd;
+		if instance_exists(myBalloon) {
+			myBalloon._owner=noone;
+			with(myBalloon) {
+				hsp=-other.constantspd;
+			}
 		}
 		myBalloon=noone;
 		grounded=false;

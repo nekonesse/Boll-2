@@ -126,6 +126,7 @@
     {"name":"Spiked","order":1,"path":"folders/Sprites/Enemies/Goombas/Spiked.yy",},
     {"name":"Koopas","order":1,"path":"folders/Sprites/Enemies/Koopas.yy",},
     {"name":"Green (Regular)","order":2,"path":"folders/Sprites/Enemies/Koopas/Green (Regular).yy",},
+    {"name":"Skating","order":5,"path":"folders/Sprites/Enemies/Koopas/Skating.yy",},
     {"name":"Red","order":3,"path":"folders/Sprites/Enemies/Koopas/Red.yy",},
     {"name":"Yellow","order":4,"path":"folders/Sprites/Enemies/Koopas/Yellow.yy",},
     {"name":"Piranha Plants","order":3,"path":"folders/Sprites/Enemies/Piranha Plants.yy",},

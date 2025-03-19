@@ -1,11 +1,11 @@
-if owner!=noone {
+if _owner!=noone {
 	instance_activate_region(x-16,y-16,32,(lineheight+4)*16, true)
 }
 
-if instance_exists(owner) {
-	x=lerp(x,owner.x-8*owner.xsc,0.1)+wave_val(-0.5,0.5,2)
-	y=lerp(y,owner.y-16-lineheight*16,0.1)
-} else if owner==noone {
+if instance_exists(_owner) {
+	x=lerp(x,_owner.x-8*_owner.xsc,0.1)+wave_val(-0.5,0.5,2)
+	y=lerp(y,_owner.y-16-lineheight*16,0.1)
+} else {
 	vsp+=0.05;
 	
 	x+=hsp;

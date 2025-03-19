@@ -617,12 +617,12 @@ if (electrocuted) {
 #define upd_frame
 if spriteEvent=="crouchIdle" {
 	if oldSpriteEvent=="crouchWalk" || oldSpriteEvent=="crouchJump" || oldSpriteEvent=="crouchFall" || oldSpriteEvent=="crouchBonk" || oldSpriteEvent=="crouchFireToss" || oldSpriteEvent=="carryCrouchIdle"  || oldSpriteEvent=="carryCrouchWalk" || oldSpriteEvent=="carryCrouchJump"  || oldSpriteEvent=="carryCrouchFall" || oldSpriteEvent=="carryCrouchBonk" {
-		var spri = get_spritenum(spriteEvent)
+		var spri = sprite_arrposition(spriteEvent)
 		frame = loops_list[spri]-1
 	}
 } else if spriteEvent=="carryCrouchIdle" {
 	if oldSpriteEvent=="crouchIdle" || oldSpriteEvent=="crouchWalk" || oldSpriteEvent=="crouchJump" || oldSpriteEvent=="crouchFall" || oldSpriteEvent=="crouchBonk" || oldSpriteEvent=="crouchFireToss" || oldSpriteEvent=="carryCrouchWalk" || oldSpriteEvent=="carryCrouchJump"  || oldSpriteEvent=="carryCrouchFall" || oldSpriteEvent=="carryCrouchBonk" {
-		var spri = get_spritenum(spriteEvent)
+		var spri = sprite_arrposition(spriteEvent)
 		frame = loops_list[spri]-1
 	}
 }

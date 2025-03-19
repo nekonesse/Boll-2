@@ -1,53 +1,46 @@
 var col = noone, i = 0;
 if state == 128 {
 	y += vsp
-	x += killhsp
 	vsp += 0.2
-	if !on_screen() {
-		instance_destroy()
+	if !on_screen(32,32) {
+		instance_destroy();
 	}
 	exit;
 }
-x -= (x % 16);
+
 if (state = 0) {
 	frame = 0
 	
-	col = collision_rectangle(x-90,y,x+90,y+255,oPlayer,false,true)
+	col = check_rectangle_in_hitbox(x-90,y,x+90,y+255,oPlayer)
 	if col!=noone {
-		frame = 1
+		if esign(x-col.x, 1) == -1 { //face left
+			frame = 1
+		} else if esign(x-col.x, 1) == 1 { //face right
+			frame = 2
+		}
 	}
 	
-	col = collision_rectangle(x-40,y,x+40,y+255,oPlayer,false,true)
+	col = check_rectangle_in_hitbox(x-40,y,x+40,y+255,oPlayer)
 	if col!=noone {
-		frame = 2
+		frame = 3
 		state = 1
 	}
 }
 
 if (state == 1) {
 	vsp = clamp(vsp + 0.25, 0, 5)
-	col = instance_place(x, y + vsp, oEnemy)
-	while col != noone && col.hp > 0 {
-		if (col.sprite_width < sprite_width) {
-			col.hp = 0;
-			col.killtype="stomp";
-		}
-		col = instance_place(x, y + vsp, oEnemy)
+	var enemy = check_hitbox_on_hitbox(id, oEnemy) 
+	if (enemy) {
+		enemy.hp = 0;
+		enemy.killtype="stomp";
 	}
-	col = instance_place(x, y+vsp, [oCollider, oBrick])
-	if (col) {
-		if (col.object_index == oBrick) {
-			while (col != noone && i < 10) {
-				instance_destroy(col);
-				col = collision_line(bbox_left,bbox_bottom+vsp,bbox_right,bbox_bottom+vsp,oBrick,false,true)
-				i += 1;
-			}
-			exit;
-		}
+	if check_collision_line(x-hit_sizex,y+hit_sizey+vsp,x+hit_sizex,y+hit_sizey+vsp,COL_BOTTOM,collision_array) {
 		state = 2
 		vsp = 0
+		while check_collision_line(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey,COL_BOTTOM,collision_array) {
+			y--;
+		}
 		timer_offset = 90
-		y = col.bbox_top - 15
 		VinylPlay(snd_enemyexplode)
 		with(oCamera) {
 			shakeoffset=4
@@ -61,6 +54,12 @@ if (state == 1) {
 			state = 0
 		}
 		exit;
+	} else {
+		var enemy = check_hitbox_on_hitbox(id, oEnemy) 
+		if (enemy) {
+			enemy.hp = 0;
+			enemy.killtype="stomp";
+		}
 	}
 	timer_offset -= 1
 }
