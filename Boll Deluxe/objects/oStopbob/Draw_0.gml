@@ -1,8 +1,13 @@
-// Inherit the parent event
-if (state==2 && flare_frame > 4) {
-	draw_sprite_stretched(spr_stopboblaser,0, x-12, y+hit_sizey, 24, laserlength-12)
-	if global.roomTimer mod 4 < 2
-	draw_sprite(spr_stopboblaser, 1, x, y+hit_sizey+laserlength-12-16)
+if (laserlength!=0) {
+	if state==2 {
+		draw_sprite_stretched(spr_stopboblaser,0, x-12, y+hit_sizey, 24, laserlength-12)
+	}
+	else {
+		draw_sprite_stretched(spr_stopboblaser,0, x-12, y+hit_sizey+(maxlaserlength-laserlength), 24, laserlength-12)
+	}
+	
+	if (laserlength==maxlaserlength && global.roomTimer mod 4 < 2) || (state!=2)
+	draw_sprite(spr_stopboblaser, 1, x, y+hit_sizey+maxlaserlength-12-16)
 }
 
 draw_line_color(x-1,y-hit_sizey,x-1,y-hit_sizey-(linelength-10), c_black, c_black)

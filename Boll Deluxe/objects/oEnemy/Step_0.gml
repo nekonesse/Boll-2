@@ -11,7 +11,7 @@ if !on_screen(32,32) && !origin_on_screen(xstart,ystart,32,32) {
 
 if !(in_shell) && (edgeturn) && (grounded)
 {
-	if !check_collision_line(x + (-xsc * (hit_sizex-4)),y,x + (-xsc * (hit_sizex-4)),y+hit_sizey+16, COL_BOTTOM){
+	if !!check_collision_rectangle(x + (-xsc * (hit_sizex+1)),y,x + (-xsc * (hit_sizex-4)),y+hit_sizey+16, COL_BOTTOM) {
 		if !(turned) {
 			turned=1
 			_direction *= -1;

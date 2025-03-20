@@ -1,3 +1,3 @@
 JADE_load();
-VinylMixVoicesStop("music")
-VinylMixVoicesStop("sound effects")
+VinylStopAll();
+editorMusic=VinylPlay("editor bgm", true, 0.2);

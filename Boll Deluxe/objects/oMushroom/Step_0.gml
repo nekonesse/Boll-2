@@ -30,11 +30,6 @@ if !is_array(pathing) {
 	node_path_movement();
 }
 
-if (place_meeting(x,y,oPlayer)) {
-	oPlayer.sig.Emit("mushroom")
-	instance_destroy();
-}
-
-if place_meeting(x,y,oDeactivationRegion) && !on_screen_xy(sprite_width,sprite_height) {
+if place_meeting(x,y,oDeactivationRegion) && !on_screen(sprite_width,sprite_height) {
 	instance_destroy();
 }

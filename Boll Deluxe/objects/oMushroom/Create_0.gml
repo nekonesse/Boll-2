@@ -10,6 +10,9 @@ piped = false
 
 hit_sizex = 6
 hit_sizey = 6
+phase_leeway = 0;
+phaseid = noone;
+
 collision_array=[oCollider, oEnemyGround];
 
 depth=2
@@ -27,5 +30,14 @@ pathfallen=false;
 pathcanfall=false;
 pathdraw=true;
 pathstarted=true;
+
+itemType="mushroom"
+
+itemCollected = new Signal();
+
+itemCollected.Connect( self, function(hit_p, obj) {
+	oPlayer.sig.Emit(itemType)
+	instance_destroy();
+});
 
 setup_box_poly(id);

@@ -12,8 +12,8 @@
   "duration":65.604,
   "name":"mus_overworld_BG_loop",
   "parent":{
-    "name":"Music",
-    "path":"folders/Sounds/Music.yy",
+    "name":"Floragrande",
+    "path":"folders/Sounds/Music/Floragrande.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

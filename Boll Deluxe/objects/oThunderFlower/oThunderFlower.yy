@@ -2,7 +2,6 @@
   "$GMObject":"",
   "%Name":"oThunderFlower",
   "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
@@ -14,8 +13,8 @@
     "path":"folders/Objects/Items.yy",
   },
   "parentObjectId":{
-    "name":"oMushroom",
-    "path":"objects/oMushroom/oMushroom.yy",
+    "name":"oFireFlower",
+    "path":"objects/oFireFlower/oFireFlower.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

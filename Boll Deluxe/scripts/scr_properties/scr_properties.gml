@@ -15,6 +15,16 @@ function object_get_properties(obj){
 				["eject", "Is Dispenser", 0, "checkbox", 0]
 			]
 			break;
+		case oCrate:
+			properties = [
+				["content", "Contents", "coin", "dropdown", ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]]
+			]
+			break;
+		case oMonitor:
+			properties = [
+				["content", "Contents", "coin", "dropdown", ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]]
+			]
+			break;
 		case oSemiSlope:
 		case oSlopeCollider:
 		case oRoundedSlope3x3:
@@ -97,6 +107,11 @@ function object_get_properties(obj){
 		case oPolarBear:
 			properties = [
 				["bheight", "Balloon Height", 2, "number_input", 0]
+			]
+			break;
+		case oStopbob:
+			properties = [
+				["timer_offset", "Timer Offset", 0, "number_input", 0]
 			]
 			break;
 		//NODE MODE

@@ -706,11 +706,9 @@ if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 		fill_circle = false
 		tile_fill_last_x = gridx
 		tile_fill_last_y = gridy
-		show_debug_message("testA")
 		tile_fill = true
 	}
 	if (mbleftrel && tile_fill && !fill_circle) {
-		show_debug_message("testB")
 		var start_x = tile_fill_last_x 
 		var start_y = tile_fill_last_y 
 		var size_x = (gridx - tile_fill_last_x)

@@ -134,6 +134,8 @@ global.VinylConfigSON = [
 			mus_overworld_FG_head,
             mus_overworld_FG_loop,
 			mus_gameover,
+			mus_editor_head,
+			mus_editor_loop,
         ],
     },
 	{
@@ -145,6 +147,12 @@ global.VinylConfigSON = [
         hlt: "overworld bgm BG",
         head: mus_overworld_BG_head,
         loop: mus_overworld_BG_loop,
+       
+    },
+	{
+        hlt: "editor bgm",
+        head: mus_editor_head,
+        loop: mus_editor_loop,
        
     },
     {

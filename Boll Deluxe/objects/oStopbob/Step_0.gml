@@ -17,7 +17,7 @@ if !light_timer {
 	flare_fading=false;
 	switch(state) {
 		case 0:
-		light_timer=60*2;
+		light_timer=(60*2)+timer_offset;
 		lasering=false;
 		break;
 		case 1:
@@ -26,7 +26,7 @@ if !light_timer {
 		break;
 		case 2:
 		elec_frame=0;
-		light_timer=60*3;
+		light_timer=(60*3)+timer_offset;
 		lasering=true;
 		break;
 	}
@@ -34,16 +34,30 @@ if !light_timer {
 
 if (lasering) {
 	damage_on_contact=true
-	var laserbboxleft = x-3;
-	var laserbboxtop = y+hit_sizey;
-	var laserbboxright = x+3;
-	var laserbboxbottom = y+hit_sizey+laserlength-12;
+	laserlength=approach_val(laserlength,maxlaserlength,6)
+} else {
+	damage_on_contact=false
+	laserlength=approach_val(laserlength,0,6)
+}
+
+if (laserlength) {
+	if (state==2) {
+		var laserbboxleft = x-3;
+		var laserbboxtop = y+hit_sizey;
+		var laserbboxright = x+3;
+		var laserbboxbottom = y+hit_sizey+laserlength-12;
+	} else {
+		var laserbboxleft = x-3;
+		var laserbboxtop = y+hit_sizey+(maxlaserlength-laserlength);
+		var laserbboxright = x+3;
+		var laserbboxbottom = y+hit_sizey+maxlaserlength-12;
+	}
 	with(oPlayer) {
 		if rectangle_in_rectangle(laserbboxleft,laserbboxtop,laserbboxright,laserbboxbottom, x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey) {
 			if !(electrocuted) && !(hurt) && !(dead)
 			sig.Emit("electrocute");
 		}
 	}
-} else damage_on_contact=false
+}
 
 image_index=state

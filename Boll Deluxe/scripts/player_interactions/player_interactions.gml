@@ -109,8 +109,29 @@ function player_interactions(){
 	
 	var bearballoon=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oPolarBearBalloon, false, true)
 	if (bearballoon) && !(hurt) && !(dead) {
-		if vsp >= 0 vsp=-(2+akey);
+		if vsp >= 0 vsp=-(2.5+akey*1.5);
+		sig.Emit("sprung");
 		instance_create_depth(bearballoon.x,bearballoon.y,2,pImpact)
 		instance_destroy(bearballoon);
+	}
+	
+	var crate=collision_line(x-(hit_sizex-1),y+hit_sizey+vsp,x+(hit_sizex-1),y+hit_sizey+vsp, oCrate, false, true) 
+	if (crate) && (vsp>=0) && !(hurt) && !(dead) {
+		vsp = -(2.5+akey*1.5);
+		sig.Emit("sprung");
+		crate.blockHit.Emit();
+	}
+	
+	var coin=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oCoin, false, true)
+	if (coin) && !(hurt) && !(dead) {
+		global.coins_collected++;
+		VinylPlay(snd_itemcoin);
+		instance_create_depth(coin.x,coin.y,0,pGlitter);
+		instance_destroy(coin);
+	}
+	
+	var item=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oMushroom, false, true)
+	if (item) && !(hurt) && !(dead) {
+		item.itemCollected.Emit(id);
 	}
 }

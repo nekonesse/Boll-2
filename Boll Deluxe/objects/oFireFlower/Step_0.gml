@@ -12,18 +12,15 @@ if !is_array(pathing) {
 	if !grounded {
 		vsp += grav
 	} else {
-		vsp = 0	
+		vsp = 0
+		gsp = 0;
+		hsp = 0;
 	}
 
 	x += hsp;
 	y += vsp;
 
-	player_collision()
+	player_collision();
 } else {
 	node_path_movement();
-}
-
-if (place_meeting(x,y,oPlayer)) {
-	oPlayer.sig.Emit("fireflower")
-	instance_destroy();
 }

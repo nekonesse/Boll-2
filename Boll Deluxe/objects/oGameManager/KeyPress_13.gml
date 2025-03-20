@@ -5,10 +5,6 @@ if (global.jade_testing || global.debug) { // need to be testing the level to st
 	global.checkpointY = no_checkpoint;
 
     VinylStopAll();
-	VinylStop(fgMusic);
-	VinylStop(bgMusic);
-	VinylMixVoicesStop("music");
-	VinylMixVoicesStop("sound effects");
     
 	room_goto(rEditor)
 }

@@ -16,16 +16,16 @@ while !check_collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y-hit_sizey
 }
 
 loopcount=0;
-while !check_collision_rectangle(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey+laserlength,COL_BOTTOM) {
-	laserlength+=16
+while !check_collision_rectangle(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey+maxlaserlength,COL_BOTTOM) {
+	maxlaserlength+=16
 	loopcount++;
 	if loopcount > 50 {
-		show_debug_message("couldnt find laser length!")
 		laserlength=0;
 		break;
 	}
 	
-	if check_collision_rectangle(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey+laserlength,COL_BOTTOM)
+	if check_collision_rectangle(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey+maxlaserlength,COL_BOTTOM)
 	break;
 }
-show_debug_message("stopbob laser length! {0}", laserlength)
+
+light_timer=120+timer_offset

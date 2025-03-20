@@ -1,8 +1,3 @@
-if (place_meeting(x,y,oPlayer)) {
-	oPlayer.sig.Emit("star")
-	instance_destroy();
-}
-
 if (global.roomTimer & 7 == 0) {
 	instance_create(x + random_range(-8, 8), y + random_range(-8, 8), pShine);
 }
