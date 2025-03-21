@@ -41,15 +41,25 @@ enemyCollidePlayer.Connect( self, function(hit_p) {
 		}
 		phaseid=hit_p
 		phase_leeway=7;
+		targeted_player=noone;
+		xsc=-xsc;
+		dashduration=0;
+		dashcooldown=60;
+		_direction=-xsc;
+		hurt=false;
 	} else {
 		passive=false;
 		phaseid=hit_p
 		phase_leeway=7;
-		xsc=esign(hit_p.x-x,hit_p.xsc);
-		hsp=2*-xsc;
+		xsc=-esign(hit_p.x-x,hit_p.xsc);
+		hsp=2*xsc;
 		vsp=-3;
 		hurt=true;
+		constantspd=0;
+		_direction=0;
+		overridexsc=true;
 		dashcooldown=60;
+		upset_walk=false;
 		if instance_exists(myBalloon) {
 			myBalloon._owner=noone;
 			with(myBalloon) {

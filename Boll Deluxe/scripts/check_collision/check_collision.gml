@@ -63,7 +63,7 @@ function check_collision_line(x1, y1, x2, y2, type = 0, object = collision_array
 	    }
         ds_list_destroy(found_list)
     }
-
+	return false;
 }
 
 function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_array){
@@ -87,6 +87,7 @@ function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_
 	    }
         ds_list_destroy(found_list)
     }
+	return false;
 }
 
  function get_angle_rect(x1, y1, x2, y2){
@@ -133,7 +134,7 @@ function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_
 	    }
         ds_list_destroy(found_list)
     }
-
+	return false;
 }
 
 

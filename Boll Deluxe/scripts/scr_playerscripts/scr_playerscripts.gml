@@ -367,7 +367,6 @@ function animate_player() {
 		show_debug_message(spriteMap[$ $"{sprite_yank} {spriteEvent}"])
 		
 	}
-	show_debug_message(spri)
 	
 	if spri!=-1 {
 		frn=frames_list[spri] //frame number

@@ -135,61 +135,9 @@ if keyboard_check_pressed(vk_escape) room_goto(rMainMenu)
 //half temp cycling object/tile behavior
 switch(selected_mode) {
 	case TILE_MODE:
-		/*if selected_tool = BRUSH_TOOL {
-			if (mwheel == 1 || keyboard_check_pressed(vk_pagedown)) {
-				if !keyboard_check(vk_control) {
-					var i=0
-					repeat(tile_sel_width+1) {
-						var j=0;
-						repeat(tile_sel_height+1) {
-							current_tile_id[i][j] --
-							j++;
-						}
-						i++;
-					}
-				}
-				else {
-					var i=0
-					repeat(tile_sel_width+1) {
-						var j=0;
-						repeat(tile_sel_height+1) {
-							current_tile_id[i][j] += (sprite_get_width(spr_TilesetMain)/16)
-						}
-						i++;
-					}
-				}
-			}
-
-			if (mwheel == -1 || keyboard_check_pressed(vk_pageup)) {
-				if !keyboard_check(vk_control) {
-					var i=0
-					repeat(tile_sel_width+1) {
-						var j=0;
-						repeat(tile_sel_height+1) {
-							current_tile_id[i][j] ++
-							j++;
-						}
-						i++;
-					}
-				}
-				else {
-					var i=0
-					repeat(tile_sel_width+1) {
-						var j=0;
-						repeat(tile_sel_height+1) {
-							current_tile_id[i][j] -= (sprite_get_width(spr_TilesetMain)/16)
-						}
-						i++;
-					}
-				}
-			}
-		}*/
-		
 		if keyboard_check_pressed(vk_tab) {
 			show_tileset = !show_tileset
 		}
-	
-		//current_tile_id[0][0] = wrap_val(current_tile_id[0][0], 0, 255) //todo, get tileset size lol
 
 		selected_tile=current_tile_id[0][0]
 	break;
@@ -286,6 +234,7 @@ selected_tool=toolbar[selected_mode][selected_toolbar]
 
 if (mbleftpress) {
 	if mouse_in_setting_slot(0) { //exit button
+		JADE_save();
 		room_goto(rMainMenu)
 	}
 	if mouse_in_setting_slot(4) { //new file
