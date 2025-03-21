@@ -1,5 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
 if ramp {
 	
 	var player = collision_rectangle(x-2*sign(image_xscale), y-2, x+sprite_width+2*sign(image_xscale), y + sprite_height + 2, oPlayer, false, false) 

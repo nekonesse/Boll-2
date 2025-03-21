@@ -15,6 +15,14 @@ function object_get_properties(obj){
 				["eject", "Is Dispenser", 0, "checkbox", 0]
 			]
 			break;
+		case oLongItemBox:
+			properties = [
+				["content", "Contents", "coin", "dropdown", ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]],
+				["amount", "Amount", 1, "number_input", 50],
+				["hidden", "Is Hidden", 0, "checkbox", 0],
+				["eject", "Is Dispenser", 0, "checkbox", 0]
+			]
+			break;
 		case oCrate:
 			properties = [
 				["content", "Contents", "coin", "dropdown", ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]]

@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":1,
   "conversionMode":0,
-  "duration":163.921,
+  "duration":133.35,
   "name":"mus_editor_loop",
   "parent":{
     "name":"Editor",
