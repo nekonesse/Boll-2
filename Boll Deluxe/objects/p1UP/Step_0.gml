@@ -1,1 +1,0 @@
-fx_1up_thinker(self);

@@ -1,5 +1,0 @@
-AbutX=480-64
-AbutY=270-64
-
-PadX=16
-PadY=192

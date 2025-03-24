@@ -17,7 +17,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"JADE",
-    "path":"folders/Objects/Out Of Game/JADE.yy",
+    "path":"folders/Objects/JADE.yy",
   },
   "parentObjectId":null,
   "persistent":false,

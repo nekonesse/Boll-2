@@ -1,10 +1,7 @@
 {
   "$GMObject":"",
   "%Name":"oKoopaYellow",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":10,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":2,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"oKoopaYellow",
   "overriddenProperties":[
@@ -13,7 +10,7 @@
   ],
   "parent":{
     "name":"Koopas",
-    "path":"folders/Objects/Enemies/Koopas.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Enemies/Koopas.yy",
   },
   "parentObjectId":{
     "name":"oKoopa",

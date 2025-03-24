@@ -1,10 +1,7 @@
 {
   "$GMObject":"",
   "%Name":"oGoomba",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":1,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":10,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"oGoomba",
   "overriddenProperties":[
@@ -13,7 +10,7 @@
   ],
   "parent":{
     "name":"Goombas",
-    "path":"folders/Objects/Enemies/Goombas.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Enemies/Goombas.yy",
   },
   "parentObjectId":{
     "name":"oEnemy",
@@ -40,9 +37,6 @@
     "name":"spr_goombawalk",
     "path":"sprites/spr_goombawalk/spr_goombawalk.yy",
   },
-  "spriteMaskId":{
-    "name":"spr_goombahitbox",
-    "path":"sprites/spr_goombahitbox/spr_goombahitbox.yy",
-  },
+  "spriteMaskId":null,
   "visible":true,
 }

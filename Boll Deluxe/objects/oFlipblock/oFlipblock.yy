@@ -12,7 +12,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
-    "path":"folders/Objects/Objects.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Objects.yy",
   },
   "parentObjectId":{
     "name":"oHittable",

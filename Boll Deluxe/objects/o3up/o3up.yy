@@ -1,15 +1,13 @@
 {
   "$GMObject":"",
   "%Name":"o3up",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"o3up",
   "overriddenProperties":[],
   "parent":{
     "name":"Items",
-    "path":"folders/Objects/Items.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Items.yy",
   },
   "parentObjectId":{
     "name":"oFireFlower",

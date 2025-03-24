@@ -1,1 +1,0 @@
-node_path_movement();

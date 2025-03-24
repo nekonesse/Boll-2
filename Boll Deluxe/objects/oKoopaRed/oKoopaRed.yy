@@ -1,9 +1,7 @@
 {
   "$GMObject":"",
   "%Name":"oKoopaRed",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":10,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"oKoopaRed",
   "overriddenProperties":[
@@ -12,7 +10,7 @@
   ],
   "parent":{
     "name":"Koopas",
-    "path":"folders/Objects/Enemies/Koopas.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Enemies/Koopas.yy",
   },
   "parentObjectId":{
     "name":"oKoopa",
@@ -39,9 +37,6 @@
     "name":"spr_koopawalk_r",
     "path":"sprites/spr_koopawalk_r/spr_koopawalk_r.yy",
   },
-  "spriteMaskId":{
-    "name":"spr_koopahitbox",
-    "path":"sprites/spr_koopahitbox/spr_koopahitbox.yy",
-  },
+  "spriteMaskId":null,
   "visible":true,
 }

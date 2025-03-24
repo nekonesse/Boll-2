@@ -1,17 +1,13 @@
 {
   "$GMObject":"",
   "%Name":"oTerrainSpring",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":7,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":25,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"oTerrainSpring",
   "overriddenProperties":[],
   "parent":{
     "name":"Springs",
-    "path":"folders/Objects/Objects/Springs.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Objects/Springs.yy",
   },
   "parentObjectId":null,
   "persistent":false,

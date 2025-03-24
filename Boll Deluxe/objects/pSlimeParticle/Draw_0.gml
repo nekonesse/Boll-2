@@ -1,1 +1,0 @@
-draw_sprite(sprite_index, sprite & 0b111, x div 1, y div 1)

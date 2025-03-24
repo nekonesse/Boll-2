@@ -7,7 +7,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Collision",
-    "path":"folders/Objects/Objects/Collision.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Objects/Collision.yy",
   },
   "parentObjectId":{
     "name":"oRoundedSlope1x1",

@@ -1,9 +1,7 @@
 {
   "$GMObject":"",
   "%Name":"oGoombrat",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":1,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"oGoombrat",
   "overriddenProperties":[
@@ -13,7 +11,7 @@
   ],
   "parent":{
     "name":"Goombas",
-    "path":"folders/Objects/Enemies/Goombas.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Enemies/Goombas.yy",
   },
   "parentObjectId":{
     "name":"oEnemy",

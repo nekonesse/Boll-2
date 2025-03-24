@@ -20,35 +20,6 @@
 // ideally, the uncapped FPS should *never* drop below this
 #macro FPS_TARGET 300
 
-globalvar camera_x, camera_y;
-camera_x = 0;
-camera_y = camera_x;
-
-function check_signs_matching(a, b)
-{
-    var fa = intlib_make_fixedpoint(a);
-    var fb = intlib_make_fixedpoint(b);
-
-    var asign, bsign;
-
-    asign = ((fa >= 0) ? 1 : 0);
-    bsign = ((fb >= 0) ? 1 : 0);
-
-    return (asign == bsign);
-}
-
-function check_signs_matching_zero(a, b)
-{
-	//function that calls check_signs_matching and then performs an additional check for if either value is zero
-	//used for replicating old engine accel bug
-    var check = check_signs_matching(a, b)
-	
-	if (a == 0 || b == 0) {
-		check = 0	
-	}
-    return check;
-}
-
 function unreal(str, defaultval) {
 	var res,l,c,i,valid,dot;
 	res="" 
@@ -166,16 +137,6 @@ function draw_text_outline(_x,_y,str,outwidth,outcol,outfidelity,xscale,yscale,a
 	draw_text_transformed(_x,_y,str,xscale,yscale,angle);
 }
 
-function nearestplayer(){
-	//returns nearest player instance
-	var ret,xp;
-	xp=x
-	x=-999999999
-	ret=instance_nearest(xp,y,oPlayer)
-	x=xp
-	return ret;
-}
-
 function LoadJSONFromFile(_fileName) {
     //@desc load json from file
 
@@ -225,15 +186,6 @@ function is_range_onscreen_horizontal(left, right, wport = undefined)
 	
 	// there's not even a camera, return false by default
 	return false;
-}
-
-function update_camerapos()
-{
-	if (view_camera[0] != undefined)
-	{
-		camera_x = camera_get_view_x(view_camera[0]) div 1;
-		camera_y = camera_get_view_y(view_camera[0]) div 1;
-	}
 }
 
 function chance(percent){
@@ -365,25 +317,4 @@ function call_func_from_table(obj, A, idx)
     var func = A[max(0, min(array_length(A) - 1, idx))];
 
     func(obj);
-}
-
-// gets cost of morphing sprites
-function get_morph_cost()
-{
-	var raw, pct;
-	
-	raw = -1;
-	pct = -1;
-	
-	if (variable_global_exists("drawcost") && variable_global_exists("drawcost_pct"))
-	{
-		raw = global.drawcost;
-		pct = global.drawcost_pct;
-	}
-	
-	return [ raw, pct ];
-}
-
-function in_water() {
-	return bool(collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey,oWater,false,true));
 }

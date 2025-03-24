@@ -1,15 +1,13 @@
 {
   "$GMObject":"",
   "%Name":"oYellowSwitch",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"oYellowSwitch",
   "overriddenProperties":[],
   "parent":{
     "name":"Switch Blocks",
-    "path":"folders/Objects/Objects/Switch Blocks.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Objects/Switch Blocks.yy",
   },
   "parentObjectId":{
     "name":"oHittable",

@@ -1,11 +1,7 @@
 {
   "$GMObject":"",
   "%Name":"oBanzaiBill",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":40,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"oBanzaiBill",
   "overriddenProperties":[
@@ -13,7 +9,7 @@
   ],
   "parent":{
     "name":"Bullet Bills",
-    "path":"folders/Objects/Enemies/Bullet Bills.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Enemies/Bullet Bills.yy",
   },
   "parentObjectId":{
     "name":"oEnemy",
@@ -40,9 +36,6 @@
     "name":"spr_banzaibill",
     "path":"sprites/spr_banzaibill/spr_banzaibill.yy",
   },
-  "spriteMaskId":{
-    "name":"spr_banzaimask",
-    "path":"sprites/spr_banzaimask/spr_banzaimask.yy",
-  },
+  "spriteMaskId":null,
   "visible":true,
 }

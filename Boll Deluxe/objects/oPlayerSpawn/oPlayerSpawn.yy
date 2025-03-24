@@ -1,15 +1,13 @@
 {
   "$GMObject":"",
   "%Name":"oPlayerSpawn",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"oPlayerSpawn",
   "overriddenProperties":[],
   "parent":{
     "name":"Control",
-    "path":"folders/Objects/Control.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Control.yy",
   },
   "parentObjectId":null,
   "persistent":false,

@@ -1,12 +1,7 @@
 {
   "$GMObject":"",
   "%Name":"oKoopa",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":10,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":1,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"oKoopa",
   "overriddenProperties":[
@@ -17,7 +12,7 @@
   ],
   "parent":{
     "name":"Koopas",
-    "path":"folders/Objects/Enemies/Koopas.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Enemies/Koopas.yy",
   },
   "parentObjectId":{
     "name":"oEnemy",
@@ -44,9 +39,6 @@
     "name":"spr_koopawalk_g",
     "path":"sprites/spr_koopawalk_g/spr_koopawalk_g.yy",
   },
-  "spriteMaskId":{
-    "name":"spr_koopahitbox",
-    "path":"sprites/spr_koopahitbox/spr_koopahitbox.yy",
-  },
+  "spriteMaskId":null,
   "visible":true,
 }

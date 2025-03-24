@@ -6,6 +6,11 @@ function object_get_properties(obj){
 	var properties = [];
 	
 	switch (asset_get_index(obj)){
+		case oCollider:
+			properties = [
+				["is_ice", "Slippery", 0, "checkbox", 0]
+			]
+			break;
 		case oItemBox:
 			properties = [
 				["content", "Contents", "coin", "dropdown", ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]],
@@ -25,12 +30,12 @@ function object_get_properties(obj){
 			break;
 		case oCrate:
 			properties = [
-				["content", "Contents", "coin", "dropdown", ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]]
+				["content", "Contents", "coin", "dropdown", ["none","coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]]
 			]
 			break;
 		case oMonitor:
 			properties = [
-				["content", "Contents", "coin", "dropdown", ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]]
+				["content", "Contents", "coin", "dropdown", ["none","coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]]
 			]
 			break;
 		case oSemiSlope:
@@ -40,7 +45,8 @@ function object_get_properties(obj){
 		case oRoundedSlope1x1:
 			properties = [
 				["hflip", "Flip", 0, "checkbox", 0],
-				["ramp", "Is Ramp", 0, "checkbox", 0]
+				["ramp", "Is Ramp", 0, "checkbox", 0],
+				["vflip", "Is Ceiling", 0, "checkbox", 0]
 			]
 			break;
 		case oPipe:
@@ -98,23 +104,10 @@ function object_get_properties(obj){
 			]
 			break;
 		//ENEMIES
-		case oSlime:
-			properties = [
-				["snap_to_ceiling", "Ceiling Offset", 0, "checkbox", 0],
-				["skip_spawn_anim", "Skip Spawn", 1, "checkbox", 0],
-				["spawn_huge", "Larger", 0, "checkbox", 0],
-				["spawn_tall", "Taller", 0, "checkbox", 0]
-			]
-			break;
 		case oBobOmb:
 			properties = [
 				["unshellable", "Panic", false, "checkbox", 0],
 				["in_shell", "Lit", false, "checkbox", 0]
-			]
-			break;
-		case oPolarBear:
-			properties = [
-				["bheight", "Balloon Height", 2, "number_input", 0]
 			]
 			break;
 		case oStopbob:

@@ -18,7 +18,7 @@ repeat(ds_list_size(object_layer_map)) {
 	
 	//for some reason applying camera x and camera y to the second rectangle just doesnt work for some reason 
 	
-	if !rectangle_in_rectangle(
+	if rectangle_in_rectangle(
 		obj[1]*16,
 		obj[2]*16,
 		(obj[1]*16)+(sprite[3]*obj[3]),
@@ -27,9 +27,6 @@ repeat(ds_list_size(object_layer_map)) {
 		camera_get_view_x(view_camera[0])+camera_get_view_width(view_camera[0]),
 		camera_get_view_y(view_camera[0])+camera_get_view_height(view_camera[0])
 	) {
-		i++;
-		continue;
-	}
 	
 	var objalpha=1
 	if !(selected_mode==OBJECT_MODE || ((selected_tool==NODE_TOOL && sprite[9] && (drawing_node==-1 || drawing_node==i)) || (selected_tool==ROTATOR_TOOL && sprite[9] && (drawing_rotator==-1 || drawing_rotator==i)))) {
@@ -54,6 +51,7 @@ repeat(ds_list_size(object_layer_map)) {
 		var posy = (obj[2]*16)
 		draw_rect(posx, posy, 16, 16, c_white, 1, true)
 	}
+	}
 	
 	i++;
 }
@@ -67,7 +65,7 @@ repeat(ds_list_size(node_layer_map)) {
 	
 	//for some reason applying camera x and camera y to the second rectangle just doesnt work for some reason 
 	
-	if !rectangle_in_rectangle(
+	if rectangle_in_rectangle(
 		obj[1]*16,
 		obj[2]*16,
 		(obj[1]*16)+(sprite[3]*obj[3]),
@@ -76,9 +74,6 @@ repeat(ds_list_size(node_layer_map)) {
 		camera_get_view_x(view_camera[0])+camera_get_view_width(view_camera[0]),
 		camera_get_view_y(view_camera[0])+camera_get_view_height(view_camera[0])
 	) {
-		i++;
-		continue;
-	}
 	
 	var objalpha=1
 	if (selected_mode!=NODE_MODE) || (selected_tool==NODE_TOOL) {
@@ -95,7 +90,7 @@ repeat(ds_list_size(node_layer_map)) {
 		var posy = (obj[2]*16)
 		draw_rect(posx, posy, 16, 16, c_white, 1, true)
 	}
-	
+	}
 	
 	i++;
 }

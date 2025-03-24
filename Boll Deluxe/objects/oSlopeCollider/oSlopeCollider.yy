@@ -1,17 +1,13 @@
 {
   "$GMObject":"",
   "%Name":"oSlopeCollider",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":25,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "eventList":[],
   "managed":true,
   "name":"oSlopeCollider",
   "overriddenProperties":[],
   "parent":{
     "name":"Collision",
-    "path":"folders/Objects/Objects/Collision.yy",
+    "path":"folders/Objects/NOT IMPORTANT/Objects/Collision.yy",
   },
   "parentObjectId":{
     "name":"oCollider",
