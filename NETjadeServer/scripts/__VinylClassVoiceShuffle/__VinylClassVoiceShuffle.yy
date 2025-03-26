@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__VinylClassVoiceShuffle",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__VinylClassVoiceShuffle",
+  "parent":{
+    "name":"Voice",
+    "path":"folders/Vinyl/(Internals)/Classes/Voice.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

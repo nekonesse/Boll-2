@@ -1,0 +1,25 @@
+{
+  "$GMSound":"",
+  "%Name":"mus_editor_loop",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "bitRate":128,
+  "compression":1,
+  "conversionMode":0,
+  "duration":133.35,
+  "name":"mus_editor_loop",
+  "parent":{
+    "name":"Editor",
+    "path":"folders/Sounds/Music/Editor.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"mus_editor_loop.ogg",
+  "type":0,
+  "volume":1.0,
+}

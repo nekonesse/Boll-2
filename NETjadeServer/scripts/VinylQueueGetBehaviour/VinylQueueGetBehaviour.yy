@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"VinylQueueGetBehaviour",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"VinylQueueGetBehaviour",
+  "parent":{
+    "name":"Queues",
+    "path":"folders/Vinyl/Queues.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

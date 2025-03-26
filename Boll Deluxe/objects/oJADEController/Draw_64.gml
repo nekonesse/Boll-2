@@ -7,7 +7,7 @@ draw_sprite_stretched(spr_JADEtab_left,0,0,(guih/4)-10,32,(32*5)+4)
 var i;
 
 i=0;
-repeat(5) //draw Mode icons
+repeat(3) //draw Mode icons
 {
 	draw_sprite(spr_JADEicon_bg,0,0,((guih/4)-8)+32*i) //bg square
    
@@ -17,23 +17,6 @@ repeat(5) //draw Mode icons
 		draw_sprite(spr_JADEicon_bg,1,0,((guih/4)-8)+32*i)
 	} else if mouse_in_mode_slot(i) {
 		draw_sprite(spr_JADEicon_bg,2,0,((guih/4)-8)+32*i) //hover overlay
-	}
-	i++;
-}
-#endregion
-
-#region Editor Icons
-draw_sprite_stretched(spr_JADEtab_top,0,(guiw)-(32*6),0,(32*6)+4,34)
-
-i=0;
-repeat(6) //draw Editor icons
-{
-	draw_sprite(spr_JADEicon_bg,0,(guiw-32)-(32*i),0) //bg square
-   
-	draw_sprite(spr_JADEicons,17-i,(guiw-28)-(32*i),4) //icon
-   
-	if mouse_in_setting_slot(i) {
-		draw_sprite(spr_JADEicon_bg,2,(guiw-32)-(32*i),0) //hover overlay
 	}
 	i++;
 }
@@ -1045,125 +1028,6 @@ if selected_mode == OBJECT_MODE {
 							}
 						}
 					}
-				} else if selected_tool==ROTATOR_TOOL && drawing_rotator!=-1 {
-					
-				var obj=ds_list_find_value(object_layer_map, drawing_rotator)
-				var proparr=obj[14]
-				var objname=string(obj[0])
-				
-				var sprite=ds_map_find_value(obj_data,obj[0])
-				var ysize=64
-				if sprite_get_height(sprite[0])*4 < 64
-				ysize=sprite_get_height(sprite[0])
-				
-				//icon border
-				draw_rect(13,13,70,70,$65555c,1,true)
-				draw_rect(14,14,68,68,$65555c,1,true)
-				draw_rect(15,15,66,66,$65555c,1,true)
-				//draw object icon
-				draw_sprite_stretched(sprite[0],0,16,16,64,ysize)
-				//draw object name
-				ScribblejrFit(objname, fa_left, fa_middle, global.omiFont, 3, object_list_area_width-104, 32).Draw(96,48)
-				//draw divider
-				draw_rect(12,96,object_list_area_width-24,3,$65555c,1,false)
-					if is_array(proparr) { 
-						ScribblejrFit($"Lock Angle:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*2)
-						draw_sprite_stretched(spr_JADEcheckbox,bool(proparr[1]),96+16,(112+32*2)-12,8*3,8*3)
-								
-						//toggle variable
-						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*2,object_list_area_x+44,object_list_area_y+40+(32/3)*2)&&(!open_dropmenu||open_dropmenu-1==2)
-								
-						if (mbleftpress) {
-							if (incheck) {
-								proparr[1]=!proparr[1]
-							}
-						}
-						
-						//number inputs
-						ScribblejrFit($"Rotation Speed:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*1)
-						
-						draw_sprite_stretched(spr_JADEnumberinput,0,96+16,(112+32*1)-12,8*3,8*3)
-						if !(is_typing-1==2)
-						ScribblejrFit(string(proparr[0]), fa_middle, fa_top, global.omiFont, 2, 19, 19).Draw(96+29,(112+32*1)-6)
-						else
-						ScribblejrFit(temptypingstring, fa_middle, fa_top, global.omiFont, 2, 19, 19).Draw(96+29,(112+32*1)-6)
-						
-						//check if clicking on box
-						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*1,object_list_area_x+44,object_list_area_y+40+(32/3)*1)&&(!open_dropmenu||open_dropmenu-1==1)
-									
-						if (mbleftpress) {
-							//start typing
-							if (incheck) && !is_typing {
-								is_typing=3
-							}
-										
-							//if clicking off of the box, finish typing
-							if !(incheck) && (is_typing-1==2) {
-								//set the variable to our typed number, if its blank reset back to the value it was before
-								proparr[0]=unreal(temptypingstring,proparr[0])
-								temptypingstring=""
-								is_typing=0;
-							}
-						}
-									
-						//if pressed enter and typing, finish typing aswell
-						if keyboard_check_pressed(vk_enter) && (is_typing-1==0) {
-							proparr[0]=floor(unreal(temptypingstring,proparr[0]))
-							temptypingstring=""
-							is_typing=0;
-						}
-									
-						if (is_typing) {
-							//simple typing script
-							if string_length(keyboard_lastchar) && keyboard_check_pressed(vk_anykey) {
-								switch (keyboard_lastkey) { //forbidden keys, these can create unnessecary letters that are unwanted
-									case ord("0"):
-									case ord("1"):
-									case ord("2"): 
-									case ord("3"): 
-									case ord("4"): 
-									case ord("5"): 
-									case ord("6"): 
-									case ord("7"): 
-									case ord("8"): 
-									case ord("9"): 
-									case 190: {
-										temptypingstring+=keyboard_lastchar;
-										break;
-									}
-									default: {
-										break;
-									}
-								}
-							}
-							if keyboard_check_pressed(vk_backspace) {
-								temptypingstring=string_copy(temptypingstring,0,string_length(temptypingstring)-1)
-							}
-						}
-						
-						ScribblejrFit($"Lock X:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*3)
-						draw_sprite_stretched(spr_JADEcheckbox,bool(proparr[2]),96+16,(112+32*3)-12,8*3,8*3)
-								
-						//toggle variable
-						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*3,object_list_area_x+44,object_list_area_y+40+(32/3)*3)&&(!open_dropmenu||open_dropmenu-1==3)
-								
-						if (mbleftpress) {
-							if (incheck) {
-								proparr[2]=!proparr[2]
-							}
-						}
-						
-						ScribblejrFit($"Lock Y:", fa_left, fa_middle, global.omiFont, 3, 96, 32).Draw(16,112+32*4)
-						draw_sprite_stretched(spr_JADEcheckbox,bool(proparr[3]),96+16,(112+32*4)-12,8*3,8*3)
-								
-						//toggle variable
-						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*4,object_list_area_x+44,object_list_area_y+40+(32/3)*4)&&(!open_dropmenu||open_dropmenu-1==4)
-								
-						if (mbleftpress) {
-							if (incheck) {
-								proparr[3]=!proparr[3]
-							}
-						}
 				}
 			} else {
 				temptypingstring=""

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"VinylSetLoop",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"VinylSetLoop",
+  "parent":{
+    "name":"Playback",
+    "path":"folders/Vinyl/Playback.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

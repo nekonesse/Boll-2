@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__VinylClassPatternHLT",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__VinylClassPatternHLT",
+  "parent":{
+    "name":"Patterns",
+    "path":"folders/Vinyl/(Internals)/Classes/Patterns.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

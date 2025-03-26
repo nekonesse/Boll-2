@@ -3,6 +3,8 @@ var cam_x = camera_get_view_x(view_camera[0])
 var cam_y = camera_get_view_y(view_camera[0])
 var cam_w = camera_get_view_width(view_camera[0])
 var cam_h = camera_get_view_height(view_camera[0])
+var guiw=display_get_gui_width()
+var guih=display_get_gui_height()
 
 draw_set_font(global.omiFont)
 if (not_on_gui) {
@@ -46,7 +48,7 @@ if (not_on_gui) {
 }
 
 if (selected_mode == TILE_MODE) {
-	draw_sprite_ext(spr_JADEShowSelLayer,selected_tile_layer,0,RESOLUTION_Y,1,1,0,#FFFFFF,ui_opacity)
+	draw_sprite_ext(spr_JADEShowSelLayer,selected_tile_layer,0,guih,1,1,0,#FFFFFF,ui_opacity)
 }
 
 if global.debug {

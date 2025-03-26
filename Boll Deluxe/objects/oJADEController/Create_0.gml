@@ -12,7 +12,6 @@
 #macro FLIP_TOOL 9 //tile, background
 #macro COLOR_TOOL 10 //tile, background
 #macro NODE_TOOL 11 //node
-#macro ROTATOR_TOOL 12 //region
 
 ///Modes:
 //0: Region
@@ -37,31 +36,12 @@ toolbar[1][4]=ROTATE_TOOL
 toolbar[1][5]=MIRROR_TOOL
 toolbar[1][6]=FLIP_TOOL
 toolbar[1][7]=REFERENCE_TOOL
-//Background
+//Node
 toolbar[2][0]=SELECT_TOOL
 toolbar[2][1]=BRUSH_TOOL
-toolbar[2][2]=ERASE_TOOL
-toolbar[2][3]=PICKER_TOOL
-toolbar[2][4]=MIRROR_TOOL
-toolbar[2][5]=FLIP_TOOL
-toolbar[2][6]=COLOR_TOOL
-toolbar[2][7]=REFERENCE_TOOL
-//Asset
-toolbar[3][0]=SELECT_TOOL
-toolbar[3][1]=BRUSH_TOOL
-toolbar[3][2]=ERASE_TOOL
-toolbar[3][3]=PICKER_TOOL
-toolbar[3][4]=MIRROR_TOOL
-toolbar[3][5]=FLIP_TOOL
-toolbar[3][6]=COLOR_TOOL
-toolbar[3][7]=REFERENCE_TOOL
-//Node
-toolbar[4][0]=SELECT_TOOL
-toolbar[4][1]=BRUSH_TOOL
-toolbar[4][2]=NODE_TOOL
-toolbar[4][3]=ROTATOR_TOOL
-toolbar[4][4]=ERASE_TOOL
-toolbar[4][5]=REFERENCE_TOOL
+toolbar[2][2]=NODE_TOOL
+toolbar[2][3]=ERASE_TOOL
+toolbar[2][3]=REFERENCE_TOOL
 
 JADE_initializeobj();
 
@@ -206,17 +186,6 @@ is_typing=0;
 temptypingstring="";
 open_dropmenu=0;
 
-var i=0;
-repeat (array_length(tile_layer)) {
-	tile_layer_map[i]=ds_list_create();
-	layer_script_begin(layers[i], tile_layer_alpha_check);
-	var shadreset = function() {
-		shader_reset()
-	}
-	layer_script_end(layers[i], shadreset);
-	i++;
-}
-
 //add preset layout
 camera_set_view_pos(view_camera[0],0,room_height-camera_get_view_height(view_camera[0]))
 
@@ -225,8 +194,8 @@ place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 	var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
 	var sprite = ds_map_find_value(obj_data,obj[0])
 	if !is_undefined(obj) {
-		obj[6] = sprite[3]*xscale //set correct hitbox for the collider
-		obj[7] = sprite[4]*yscale //set correct hitbox for the collider
+		obj[6] = sprite[3]*xscale
+		obj[7] = sprite[4]*yscale
 		obj[8] = 0
 		obj[9] = 0
 		obj[10] = []
@@ -249,24 +218,32 @@ place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 	}
 }
 
-tile_update_properties = function() {
-	var i=0;
-	var list=tile_layer_map[selected_tile_layer]
-	while (i < ds_list_size(list)) {
-		var data=list[| i]
-		if data==undefined {
-			ds_list_delete(list,i) 
-			continue
+place_node_object = function(uuid,_x,_y,xscale=1,yscale=1) { 
+	ds_list_add(node_layer_map, [uuid, _x, _y, xscale, yscale, 0])//add object to list at place
+	var obj = ds_list_find_value(node_layer_map, ds_list_size(node_layer_map)-1)
+	var sprite = ds_map_find_value(obj_data,obj[0])
+	if !is_undefined(obj) {
+		obj[6] = sprite[3]*xscale
+		obj[7] = sprite[4]*yscale
+		obj[8] = 0
+		obj[9] = 0
+		obj[10] = []
+		obj[11] = []
+		obj[12] = [2,false,0,false,true,true] //node properties
+		if is_array(sprite[8]) && array_length(sprite[8]) {
+			var o=0;
+			repeat (o < array_length(sprite[8])) { //god Damn.
+				if is_array(sprite[8][o]) {
+					obj[10][o] = array_create(1,0)
+					array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
+					if is_array(sprite[8][o][4]) {
+						obj[10][o][4] = array_create(1,0)
+						array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
+					}
+				}
+				o++;
+			}
 		}
-		
-		var fetched=tilemap_get(tilemap,data[1],data[2])
-		show_debug_message($"checked: {data[0]} got: {fetched}")
-		
-		if (data[0]!=fetched) { //If data does not match the tile at place
-			ds_list_delete(list, i) //remove if tile has changed
-			continue
-		}
-		i++;
 	}
 }
 

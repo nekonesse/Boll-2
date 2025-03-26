@@ -1,0 +1,1 @@
+throw("JADE Controller was destroyed!")
