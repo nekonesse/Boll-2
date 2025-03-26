@@ -53,21 +53,21 @@ tilesets[$ "tTilesetWorld5"]=[spr_TilesetWorld5, tTilesetWorld5, "Frigid Dark Ti
 selected_tileset=0;
 current_tileset="tTilesetMain"
 
-layers[0]=layer_create(-200,"EditorTiles_FG")
-layers[1]=layer_create(-100,"EditorTiles_FGDeco")
+layers[0]=layer_create(-100,"EditorTiles_FGDeco")
+layers[1]=layer_create(-200,"EditorTiles_FG")
 layers[2]=layer_create(100,"EditorTiles_Main")
 layers[3]=layer_create(150,"EditorTiles_Misc")
 layers[4]=layer_create(200,"EditorTiles_Deco")
 layers[5]=layer_create(300,"EditorTiles_Semi")
 layers[6]=layer_create(400,"EditorTiles_BG")
 
-tile_layer[0] = layer_tilemap_create(layers[0],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[1] = layer_tilemap_create(layers[1],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[2] = layer_tilemap_create(layers[2],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[3] = layer_tilemap_create(layers[3],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[4] = layer_tilemap_create(layers[4],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[5] = layer_tilemap_create(layers[5],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[6] = layer_tilemap_create(layers[6],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+tile_layer[0] = layer_tilemap_create(layers[0],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[1] = layer_tilemap_create(layers[1],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[2] = layer_tilemap_create(layers[2],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[3] = layer_tilemap_create(layers[3],0,0,tTilesetPipes,ceil(room_width/16),ceil(room_height/16))
+tile_layer[4] = layer_tilemap_create(layers[4],0,0,tTilesetMainDeco,ceil(room_width/16),ceil(room_height/16))
+tile_layer[5] = layer_tilemap_create(layers[5],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[6] = layer_tilemap_create(layers[6],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
 selected_tile_layer=2;
 tilemap = tile_layer[2]
 object_layer_map = ds_list_create()
@@ -93,7 +93,7 @@ selection_box_y = 0
 temp_mode=0;
 temp_toolbar=0;
 
-current_tile_id[0][0] = 0
+current_tile_id = 0
 tile_drag = false;
 tile_sel_width = 0
 tile_sel_height = 0
@@ -164,11 +164,6 @@ repeat (NODE_MODE+1) {
 current_cat = 0
 #endregion
 
-mouse_in_setting_slot = function(numb) {
-	var guiw=display_get_gui_width();
-	return point_in_rectangle(curs_x,curs_y,(guiw-28)-(32*numb),4,(guiw-28)-(32*numb)+24,28)
-}
-
 mouse_in_toolbar_slot = function(numb) {
 	var guiw=display_get_gui_width();
 	if toolbar[selected_mode][numb] != EMPTY_SLOT
@@ -185,6 +180,16 @@ selection_box_fr=0
 is_typing=0;
 temptypingstring="";
 open_dropmenu=0;
+
+var i=0;
+repeat (array_length(tile_layer)) {
+	layer_script_begin(layers[i], tile_layer_alpha_check);
+	var shadreset = function() {
+		shader_reset();
+	}
+	layer_script_end(layers[i], shadreset);
+	i++;
+}
 
 //add preset layout
 camera_set_view_pos(view_camera[0],0,room_height-camera_get_view_height(view_camera[0]))
@@ -247,5 +252,13 @@ place_node_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 	}
 }
 
-place_object("oCollider",0,167,30,2)
-place_object("oPlayerSpawn",3,166)
+place_tile = function(_id,_layer,_x,_y) {
+	var data = tilemap_get(tile_layer[_layer], _x, _y)
+	if tile_get_index(data) != _id { //prevent tile overlapping (mainly a problem with the list)
+		data = tile_set_index(data, _id)
+		data = tile_set_flip(data, 0)
+		data = tile_set_mirror(data, 0)
+		data = tile_set_rotate(data, 0)
+		tilemap_set(tile_layer[_layer], data, _x, _y);
+	}
+}

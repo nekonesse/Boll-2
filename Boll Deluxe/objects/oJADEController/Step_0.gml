@@ -96,21 +96,6 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
 		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
 	}
-	if (tilesetdir != 0) {
-		ui_opacity = 10;
-		selected_tileset += tilesetdir
-		if (selected_tileset < 0) {
-			selected_tileset = (variable_struct_names_count(tilesets) - 1)
-		} else if (selected_tileset >= variable_struct_names_count(tilesets)) {
-			selected_tileset = 0	
-		}
-		var arr=variable_struct_get_names(tilesets)
-		current_tileset = arr[selected_tileset];
-		
-		tilemap_tileset(tile_layer[selected_tile_layer], tilesets[$ current_tileset][1]);
-		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
-		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
-	}
 	if (ui_opacity > 0.4) {ui_opacity -= 0.05}
 }
 #region Camera Zooming
@@ -137,7 +122,7 @@ switch(selected_mode) {
 			show_tileset = !show_tileset
 		}
 
-		selected_tile=current_tile_id[0][0]
+		selected_tile=current_tile_id
 	break;
 	case NODE_MODE:
 	case OBJECT_MODE:
@@ -186,10 +171,19 @@ if (mbleftpress) {
 		case FLIP_TOOL:
 			switch(selected_mode) {
 				case TILE_MODE:
-					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
-					data = tile_set_flip(data, 1 - tile_get_flip(data))
-					tilemap_set(tilemap, data, gridx, gridy);
-					var tiledata = tilemap_get(tilemap, gridx, gridy)
+					if tile_get_index(data)!= 0 {
+						var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
+						data = tile_set_flip(data, 1 - tile_get_flip(data))
+						tilemap_set(tilemap, data, gridx, gridy);
+						var tiledata = tilemap_get(tilemap, gridx, gridy)
+						var network_struct = {
+							type: "tile_fl",
+							_layer: selected_tile_layer,
+							_x: gridx,
+							_y: gridy
+						}	
+						send_struct(network_struct, global.socket)
+					}
 				break;
 			}
 		break;
@@ -197,9 +191,18 @@ if (mbleftpress) {
 			switch(selected_mode) {
 				case TILE_MODE:
 					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
-					data = tile_set_mirror(data, 1 - tile_get_mirror(data))
-					tilemap_set(tilemap, data, gridx, gridy);
-					var tiledata = tilemap_get(tilemap, gridx, gridy)
+					if tile_get_index(data)!= 0 {
+						data = tile_set_mirror(data, 1 - tile_get_mirror(data))
+						tilemap_set(tilemap, data, gridx, gridy);
+						var tiledata = tilemap_get(tilemap, gridx, gridy)
+						var network_struct = {
+							type: "tile_mi",
+							_layer: selected_tile_layer,
+							_x: gridx,
+							_y: gridy
+						}	
+						send_struct(network_struct, global.socket)
+					}
 				break;
 			}
 		break;
@@ -207,9 +210,18 @@ if (mbleftpress) {
 			switch(selected_mode) {
 				case TILE_MODE:
 					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
-					data = tile_set_rotate(data, 1 - tile_get_rotate(data))
-					tilemap_set(tilemap, data, gridx, gridy);
-					var tiledata = tilemap_get(tilemap, gridx, gridy)
+					if tile_get_index(data)!= 0 {
+						data = tile_set_rotate(data, 1 - tile_get_rotate(data))
+						tilemap_set(tilemap, data, gridx, gridy);
+						var tiledata = tilemap_get(tilemap, gridx, gridy)
+						var network_struct = {
+							type: "tile_rot",
+							_layer: selected_tile_layer,
+							_x: gridx,
+							_y: gridy
+						}	
+						send_struct(network_struct, global.socket)
+					}
 				break;
 			}
 		break;
@@ -268,132 +280,17 @@ if show_tileset {
 		var t_width = sprite_get_width(tilesets[$ current_tileset][0])
 		var t_height  = sprite_get_height(tilesets[$ current_tileset][0])
 		var t_size = 16 * (0.33 * tile_zoom)
-		if (mbleftpress && !tile_drag) {
+		if (mbleftpress) {
 			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
 			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
 			//show_debug_message(string(floor(mouse_x / t_size)) + " : "+ string(tilelapmap.width/ 16))
 			current_tile_id = -1
-			current_tile_id = []
-			current_tile_id[0][0] = clamp(floor(sel_x / t_size), 0, t_width/ 16) + (clamp(floor(sel_y / t_size), 0, t_height/ 16) * (t_width/16))
+			current_tile_id = clamp(floor(sel_x / t_size), 0, t_width/ 16) + (clamp(floor(sel_y / t_size), 0, t_height/ 16) * (t_width/16))
 			tile_sel_height = 0
 			tile_sel_width = 0
 			tile_sel_last_x = clamp(floor(sel_x / t_size), 0, t_width/ 16)
 			tile_sel_last_y = clamp(floor(sel_y / t_size), 0, t_height/ 16)
-			tile_drag = true
 		}
-		if (mbleft && tile_drag) {
-			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
-			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
-			tile_sel_width = max(clamp(floor(sel_x / t_size), 0, t_width/ 16) - tile_sel_last_x, 0 )
-			tile_sel_height = max(clamp(floor(sel_y / t_size), 0, t_height/ 16) - tile_sel_last_y, 0)
-		}
-		
-		if (mbleftrel && tile_drag) {
-			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
-			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
-			var i=0;
-			repeat(tile_sel_width+1) {
-				var j=0;
-			    repeat(tile_sel_height+1) {
-				    current_tile_id[i][j] = (clamp(floor(sel_x / t_size), 0, t_width/ 16) + i - tile_sel_width) + ((clamp(floor(sel_y / t_size), 0, t_height/ 16) + j - tile_sel_height) * (t_width/16))
-					j++;
-				}
-				i++;
-			}
-			tile_drag = false
-		}
-	}
-}
-	
-if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
-	if (mbleftpress && !tile_fill) {
-		fill_circle = false
-		tile_fill_last_x = gridx
-		tile_fill_last_y = gridy
-		tile_fill = true
-	}
-	if (mbleftrel && tile_fill && !fill_circle) {
-		var start_x = tile_fill_last_x 
-		var start_y = tile_fill_last_y 
-		var size_x = (gridx - tile_fill_last_x)
-		var size_y = (gridy - tile_fill_last_y) 
-		
-		if size_x < 0 {
-			start_x = gridx
-			size_x = abs(size_x)
-		}
-		if size_y < 0 {
-			start_y = gridy
-			size_y = abs(size_y)
-		}
-		
-		var i=0;
-		repeat(size_x) {
-			var j=0;
-			repeat (size_y){
-				var data = tilemap_get(tilemap, tile_fill_last_x + (i *16), tile_fill_last_y+ (j *16)); //get tile to change data
-				
-				data = tile_set_index(data, current_tile_id[i mod (tile_sel_width+1)][j mod (tile_sel_height+1)])
-				//set tile to a mosaic of the current tile 'brush'
-				
-				data = tile_set_flip(data, 0)
-				data = tile_set_mirror(data, 0)
-				data = tile_set_rotate(data, 0)
-				tilemap_set(tilemap, data, start_x + i, start_y + j);
-
-				var tiledata = tilemap_get(tilemap, start_x + i, start_y + j)
-				
-				j++;
-			}
-			i++;
-		}
-		tile_fill = false	
-	}
-	if (mbrightpress && !tile_fill) {
-		fill_circle = true
-		tile_fill_last_x = gridx
-		tile_fill_last_y = gridy
-		show_debug_message("testA")
-		tile_fill = true
-	}
-	if (mbrightrel && tile_fill && fill_circle) {
-		var start_x = tile_fill_last_x 
-		var start_y = tile_fill_last_y 
-		var size_x = (gridx - tile_fill_last_x)
-		var size_y = (gridy - tile_fill_last_y) 
-		
-		if size_x < 0 {
-			start_x = gridx
-			size_x = abs(size_x)
-		}
-		if size_y < 0 {
-			start_y = gridy
-			size_y = abs(size_y)
-		}
-		
-		var i=0;
-		repeat(size_x) {
-			var j=0;
-			repeat (size_y){
-				if !point_in_ellipse(((start_x + i) * 16)+8, ((start_y + j) * 16)+8, (size_x*16)-8, (size_y*16)-8, (start_x + size_x/2) * 16, (start_y + size_y/2) * 16) {
-				
-					var data = tilemap_get(tilemap, tile_fill_last_x + (i *16), tile_fill_last_y+ (j *16)); //get tile to change data
-				
-					data = tile_set_index(data, current_tile_id[i mod (tile_sel_width + 1)][j mod (tile_sel_height + 1)])
-					//set tile to a mosaic of the current tile 'brush'
-				
-					data = tile_set_flip(data, 0)
-					data = tile_set_mirror(data, 0)
-					data = tile_set_rotate(data, 0)
-					tilemap_set(tilemap, data, start_x + i, start_y + j);
-
-					var tiledata = tilemap_get(tilemap, start_x + i, start_y + j)
-				}
-				j++;	
-			}
-			i++;
-		}
-		tile_fill = false
 	}
 }
 
@@ -401,18 +298,17 @@ if (mbright && not_on_gui) {
 	switch(selected_mode) {
 		case TILE_MODE: {
 			if (selected_tool==BRUSH_TOOL) {
-				var i=0;
-				repeat(tile_sel_width+1) {
-					var j=0;
-					repeat(tile_sel_height+1) {
-						var data = tilemap_get(tilemap, gridx+i, gridy+j);
-						if tile_get_index(data)!= 0 {
-							data = tile_set_empty(data)
-							tilemap_set(tilemap, data, gridx+i, gridy+j); //delete tile at place lol
-						}
-						j++;
+				var data = tilemap_get(tilemap, gridx, gridy);
+				if tile_get_index(data)!= 0 {
+					data = tile_set_empty(data)
+					tilemap_set(tilemap, data, gridx, gridy); //delete tile at place lol
+					var network_struct = {
+						type: "tile_del",
+						_layer: selected_tile_layer,
+						_x: gridx,
+						_y: gridy
 					}
-					i++;
+					send_struct(network_struct, global.socket)
 				}
 			}
 		}
@@ -666,24 +562,23 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 					if show_tileset && on_tile_picker {
 						exit;	
 					}
-					var i=0;
-					repeat(tile_sel_width+1) {
-						var j=0;
-						repeat(tile_sel_height+1) {
-							var data = tilemap_get_at_pixel(tilemap, mouse_x + (i *16), mouse_y+ (j *16)); //set tile at place
-							if tile_get_index(data) != current_tile_id[i][j] { //prevent tile overlapping (mainly a problem with the list)
-								show_debug_message($"Placed tile of index {current_tile_id[i][j]} at {mouse_x + (i *16)} {mouse_y+ (j *16)}")
-								data = tile_set_index(data, current_tile_id[i][j])
-								data = tile_set_flip(data, 0)
-								data = tile_set_mirror(data, 0)
-								data = tile_set_rotate(data, 0)
-								tilemap_set(tilemap, data, gridx + i, gridy + j);
-								show_debug_message(data)
-								var tiledata = tilemap_get(tilemap, gridx + i, gridy + j)
-							}
-							j++;
+					var data = tilemap_get(tilemap, gridx, gridy)
+					if tile_get_index(data) != current_tile_id { //prevent tile overlapping (mainly a problem with the list)
+						show_debug_message($"Placed tile of index {current_tile_id} at {gridx} {gridy}")
+						data = tile_set_index(data, current_tile_id)
+						data = tile_set_flip(data, 0)
+						data = tile_set_mirror(data, 0)
+						data = tile_set_rotate(data, 0)
+						tilemap_set(tilemap, data, gridx, gridy);
+						show_debug_message(data)
+						var network_struct = {
+							type: "tile_pl",
+							uuid: current_tile_id,
+							_layer: selected_tile_layer,
+							_x: gridx,
+							_y: gridy,
 						}
-						i++;
+						send_struct(network_struct, global.socket)
 					}
 				break;
 			}
@@ -729,7 +624,6 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 								}	
 								send_struct(network_struct, global.socket)
 								break;
-								break;
 							}
 						}
 						i++;
@@ -739,11 +633,11 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 					var data = tilemap_get(tilemap, gridx, gridy);
 					
 					if tile_get_index(data)!= 0 {
-						show_debug_message($"Deleted tile of index {tile_get_index(data)} at {mouse_x} {mouse_y}")
 						data = tile_set_empty(data)
 						tilemap_set(tilemap, data, gridx, gridy); //delete tile at place lol
 						var network_struct = {
-							type: "obj_del",
+							type: "tile_del",
+							_layer: selected_tile_layer,
 							_x: gridx,
 							_y: gridy
 						}	
@@ -757,10 +651,9 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 			switch(selected_mode) {
 				case TILE_MODE:
 					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
-					if tile_get_index(data) != current_tile_id[0][0] && not_on_gui {
+					if tile_get_index(data) != current_tile_id && not_on_gui {
 						current_tile_id = -1
-						current_tile_id = []
-						current_tile_id[0][0] = tile_get_index(data)
+						current_tile_id = tile_get_index(data)
 						tile_sel_height = 0
 						tile_sel_width = 0
 						selected_toolbar = 0
@@ -856,71 +749,6 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 				drawing_node=-1;
 			} else {
 				drawing_node=-1
-			}
-		}
-	}
-}
-
-if (selected_tool==ROTATOR_TOOL) && (not_on_gui) { //drawing nodes
-	if (mbleftpress) {
-		if (drawing_rotator==-1) {
-			var size = ds_list_size(object_layer_map)
-	
-			var i=0;
-			repeat(size) {
-				//is place matching cursor?
-				var obj = ds_list_find_value(object_layer_map, i)
-		
-				if !is_undefined(obj) {
-					var over = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7] - 1)
-					
-					var sprite = ds_map_find_value(obj_data,obj[0])
-					var xoff = -sprite[1];
-					var yoff = -sprite[2];
-					
-					if (over) && (sprite[9]) {
-						drawing_rotator=i;
-						draw_rotator_x=(obj[1]*16)-((obj[6]-16)/2)+xoff
-						draw_rotator_y=(obj[2]*16)-((obj[7]-16)/2)+yoff
-					}
-				}
-				i++;
-			}
-		} else {
-			var obj = ds_list_find_value(object_layer_map, drawing_rotator)
-			
-			var sprite = ds_map_find_value(obj_data,obj[0])
-			var xoff = -sprite[1];
-			var yoff = -sprite[2];
-			
-			obj[13]=[(gridx*16)-((obj[6]-16)/2)+xoff,(gridy*16)-((obj[7]-16)/2)+yoff,false]
-			show_debug_message(obj[13])
-		}
-	}
-	
-	if (mbrightpress) {
-		if (drawing_rotator!=-1) {
-			var obj = ds_list_find_value(object_layer_map, drawing_rotator)
-			var size = array_length(obj[13])
-			if (size) {
-				var sprite = ds_map_find_value(obj_data,obj[0])
-				var xoff = -sprite[1];
-				var yoff = -sprite[2];
-			
-				var deleted=false;
-				var i=0;
-				var over = point_in_rectangle(mouse_x, mouse_y, obj[13][0]+((obj[6]-16)/2)-xoff, obj[13][1]+((obj[7]-16)/2)-yoff, obj[13][0]+15+((obj[6]-16)/2)-xoff, obj[13][1]+15+((obj[7]-16)/2)-yoff)
-					
-				if (over) {
-					obj[13]=[];
-					draw_rotator_x=(obj[1]*16)-((obj[6]-16)/2)+xoff
-					draw_rotator_y=(obj[2]*16)-((obj[7]-16)/2)+yoff
-					deleted=true;
-				}
-				if !(deleted)
-				drawing_rotator=-1;
-			} else {
-				drawing_rotator=-1
 			}
 		}
 	}

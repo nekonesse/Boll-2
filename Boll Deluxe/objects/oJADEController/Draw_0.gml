@@ -29,7 +29,7 @@ repeat(ds_list_size(object_layer_map)) {
 	) {
 	
 	var objalpha=1
-	if !(selected_mode==OBJECT_MODE || ((selected_tool==NODE_TOOL && sprite[9] && (drawing_node==-1 || drawing_node==i)) || (selected_tool==ROTATOR_TOOL && sprite[9] && (drawing_rotator==-1 || drawing_rotator==i)))) {
+	if !(selected_mode==OBJECT_MODE || ((selected_tool==NODE_TOOL && sprite[9] && (drawing_node==-1 || drawing_node==i)))) {
 		objalpha=0.33
 	}
     draw_sprite_ext(sprite[0], 0, (obj[1]*16)- sprite[1] + obj[8] , (obj[2]*16)- sprite[2] + obj[9], obj[3], obj[4], 0, c_white, objalpha)
@@ -39,10 +39,6 @@ repeat(ds_list_size(object_layer_map)) {
 	
 	if (selected_tool==NODE_TOOL && sprite[9]) && drawing_node==-1 && (gridx==obj[1] && gridy==obj[2]) {
 		draw_rect((obj[1]*16), (obj[2]*16), round(obj[6]/16)*16, round(obj[7]/16)*16, $54b9fb, 1, true)
-	}
-	
-	if (selected_tool==ROTATOR_TOOL && sprite[9]) && drawing_rotator==-1 && (gridx==obj[1] && gridy==obj[2]) {
-		draw_rect((obj[1]*16), (obj[2]*16), round(obj[6]/16)*16, round(obj[7]/16)*16, $88695a, 1, true)
 	}
 	
 	//draw eraser rectangle

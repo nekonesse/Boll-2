@@ -24,21 +24,21 @@ tilesets[$ "tTilesetWorld5"]=[spr_TilesetWorld5, tTilesetWorld5, "Frigid Dark Ti
 selected_tileset=0;
 current_tileset="tTilesetMain"
 
-layers[0]=layer_create(-200,"EditorTiles_FG")
-layers[1]=layer_create(-100,"EditorTiles_FGDeco")
+layers[0]=layer_create(-100,"EditorTiles_FGDeco")
+layers[1]=layer_create(-200,"EditorTiles_FG")
 layers[2]=layer_create(100,"EditorTiles_Main")
 layers[3]=layer_create(150,"EditorTiles_Misc")
 layers[4]=layer_create(200,"EditorTiles_Deco")
 layers[5]=layer_create(300,"EditorTiles_Semi")
 layers[6]=layer_create(400,"EditorTiles_BG")
 
-tile_layer[0] = layer_tilemap_create(layers[0],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[1] = layer_tilemap_create(layers[1],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[2] = layer_tilemap_create(layers[2],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[3] = layer_tilemap_create(layers[3],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[4] = layer_tilemap_create(layers[4],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[5] = layer_tilemap_create(layers[5],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[6] = layer_tilemap_create(layers[6],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+tile_layer[0] = layer_tilemap_create(layers[0],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[1] = layer_tilemap_create(layers[1],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[2] = layer_tilemap_create(layers[2],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[3] = layer_tilemap_create(layers[3],0,0,tTilesetPipes,ceil(room_width/16),ceil(room_height/16))
+tile_layer[4] = layer_tilemap_create(layers[4],0,0,tTilesetMainDeco,ceil(room_width/16),ceil(room_height/16))
+tile_layer[5] = layer_tilemap_create(layers[5],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
+tile_layer[6] = layer_tilemap_create(layers[6],0,0,tTilesetMain,ceil(room_width/16),ceil(room_height/16))
 selected_tile_layer=2;
 tilemap = tile_layer[2]
 object_layer_map = ds_list_create()
@@ -129,17 +129,30 @@ place_node_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 	}
 }
 
-tile_update_properties = function() {
+place_tile = function(_id,_layer,_x,_y) {
+	var data = tilemap_get(tile_layer[_layer], _x, _y)
+	if tile_get_index(data) != _id { //prevent tile overlapping (mainly a problem with the list)
+		data = tile_set_index(data, _id)
+		data = tile_set_flip(data, 0)
+		data = tile_set_mirror(data, 0)
+		data = tile_set_rotate(data, 0)
+		tilemap_set(tile_layer[_layer], data, _x, _y);
+		ds_list_add(tile_layer_map[_layer], [data, _x, _y])
+		tile_update_properties(_layer);
+	}
+}
+
+tile_update_properties = function(_layer) {
 	var i=0;
-	var list=tile_layer_map[selected_tile_layer]
+	var list=tile_layer_map[_layer]
 	while (i < ds_list_size(list)) {
-		var data=list[| i]
+		var data=list[| i];
 		if data==undefined {
 			ds_list_delete(list,i) 
 			continue
 		}
 		
-		var fetched=tilemap_get(tilemap,data[1],data[2])
+		var fetched=tilemap_get(tile_layer[_layer],data[1],data[2])
 		show_debug_message($"checked: {data[0]} got: {fetched}")
 		
 		if (data[0]!=fetched) { //If data does not match the tile at place

@@ -1,5 +1,5 @@
 #macro PORT 4126
-global.onlinebuffer = buffer_create(16384, buffer_grow, 1)
+room_goto(rEditor)
 
 name=""
 while string_length(string_lettersdigits(name))<3 {
@@ -9,6 +9,4 @@ while string_length(string_lettersdigits(name))<3 {
 global.client = true;
 global.socket = network_create_socket(network_socket_tcp);
 	
-network_connect(global.socket, "127.0.0.1", PORT)
-
-room_goto(rEditor)
+network_connect(global.socket, "68.10.90.59", PORT)

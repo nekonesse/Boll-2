@@ -65,10 +65,10 @@ if selected_mode = TILE_MODE {
 		//tile picker
 		draw_sprite_ext(tilesets[$ current_tileset][0], 0, tileset_picker_x,tileset_picker_y, 0.33 * tile_zoom, 0.33 * tile_zoom, 0, c_white, 1)	
 		var t_x,t_y,t_w,t_h;
-		t_x = tileset_picker_x+((current_tile_id[0][0] mod (t_width / 16))* (16*(0.33 * tile_zoom)))
-		t_y = tileset_picker_y+(floor(current_tile_id[0][0] / (t_width/16))* (16*(0.33 * tile_zoom)))
-		t_w = (tile_sel_width + 1)* 16 * (0.33 * tile_zoom)
-		t_h = (tile_sel_height + 1) * 16 * (0.33 * tile_zoom)
+		t_x = tileset_picker_x+((current_tile_id mod (t_width / 16))* (16*(0.33 * tile_zoom)))
+		t_y = tileset_picker_y+(floor(current_tile_id / (t_width/16))* (16*(0.33 * tile_zoom)))
+		t_w = 16 * (0.33 * tile_zoom)
+		t_h = 16 * (0.33 * tile_zoom)
 		
 		draw_rectangle(t_x,t_y,t_x + t_w-1,t_y + t_h-1,true)
 	}
@@ -862,7 +862,6 @@ if selected_mode == OBJECT_MODE {
 					}
 					i--;
 				}
-			}
 			} else if selected_tool==NODE_TOOL && drawing_node!=-1 {
 				var obj=ds_list_find_value(object_layer_map, drawing_node)
 				var proparr=obj[12]

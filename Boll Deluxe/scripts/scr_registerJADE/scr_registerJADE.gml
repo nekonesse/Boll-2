@@ -150,13 +150,9 @@ function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,m
 	}
 }
 
-function JADE_load(file=game_save_id+"\save.jade") {
-	if !file_exists(file) exit;
-	var loaded = buffer_load(file)
-	var save_file = buffer_decompress(loaded)
-	var level_data = json_parse(buffer_read(save_file,buffer_string))
-	show_debug_message($"Loading JADE file from: {file}")
-	if !is_array(level_data) && is_struct(level_data) {
+function JADE_load(_struct) {
+	var level_data=_struct;
+	if is_struct(_struct) {
 		var objects = level_data[$ "objects"] //read amount of objects
 		var node_objects = level_data[$ "node_objects"] //read amount of node objects
 		var tile_layers = level_data[$ "tile_layers"]
@@ -197,69 +193,7 @@ function JADE_load(file=game_save_id+"\save.jade") {
 			ds_list_add(node_layer_map,data)
 			i++;
 		}
-	} else { #region Legacy Level Loading
-		var object_arr_index=1;
-		var tile_arr_index=2;
-		var node_arr_index=3;
-		var tile_layer_arr_index=4;
-		var has_version=true;
-		if array_length(level_data) < 5 { //legacy conversion
-			has_version=false;
-			object_arr_index=0;
-			tile_arr_index=1;
-			node_arr_index=2;
-			tile_layer_arr_index=3;
-		}
-		var size = array_length(level_data[object_arr_index]) //read amount of objects
-		var nodesize = array_length(level_data[node_arr_index]) //read amount of objects
-		var tilesize = array_length(level_data[tile_arr_index]) //read amount of tiles
-		ds_list_clear(object_layer_map) //erase object map beforehand
-		var i;
-	
-		i=0;
-		repeat(size) { //load objects
-	        var data = level_data[object_arr_index][i]
-			data[5] = 0
-			if array_length(data) >= 13 && array_length(data[12]) < 5 {
-				data[12][5]=true
-			}
-			ds_list_add(object_layer_map,data)
-			i++
-		}
-		if array_length(level_data) >= 4 {
-		    i=0;
-			repeat(tilesize) { //loading tiles
-				tilemap_clear(tile_layer[i], 0) //erase tilemap beforehand
-				var j=0;
-				tilemap_tileset(tile_layer[i], asset_get_index(level_data[tile_layer_arr_index][i][2]))
-				repeat (array_length(level_data[tile_arr_index][i])) {
-					var data = level_data[tile_arr_index][i][j]
-				    tilemap_set(tile_layer[i],data[0],data[1],data[2])
-					j++;
-				}
-				i++
-			}
-		} else { //legacy tile conversion
-			tilemap_clear(tile_layer[2], 0) //erase tilemap beforehand
-			var j=0;
-			repeat (array_length(level_data[tile_arr_index])) {
-				var data = level_data[tile_arr_index][j]
-				tilemap_set(tile_layer[2],data[0],data[1],data[2])
-				j++;
-			}
-		}
-		ds_list_clear(node_layer_map)
-		i=0;
-		repeat (nodesize) { //load node objects
-	        var data = level_data[node_arr_index][i]
-			data[5] = 0
-			ds_list_add(node_layer_map,data)
-			i++;
-		}
-	} #endregion
-	buffer_delete(loaded)
-	buffer_delete(save_file)
-	show_debug_message($"Successfully loaded JADE file from: {file}!")
+	}
 }
 
 function tile_layer_alpha_check() {

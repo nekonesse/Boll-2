@@ -605,7 +605,6 @@
     {"id":{"name":"helper_functions","path":"scripts/helper_functions/helper_functions.yy",},},
     {"id":{"name":"scr_load_boll_stuff","path":"scripts/scr_load_boll_stuff/scr_load_boll_stuff.yy",},},
     {"id":{"name":"scr_network","path":"scripts/scr_network/scr_network.yy",},},
-    {"id":{"name":"scr_parseJADE","path":"scripts/scr_parseJADE/scr_parseJADE.yy",},},
     {"id":{"name":"scr_properties","path":"scripts/scr_properties/scr_properties.yy",},},
     {"id":{"name":"scr_registerJADE","path":"scripts/scr_registerJADE/scr_registerJADE.yy",},},
     {"id":{"name":"scribble_add_macro","path":"scripts/scribble_add_macro/scribble_add_macro.yy",},},

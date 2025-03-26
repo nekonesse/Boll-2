@@ -6,6 +6,9 @@ if server == event_id {
 	
 	if (type == network_type_connect) {
 		//initialize client here
+		with(oJADEController) {
+			JADE_transer_save(sock)
+		}
 		ds_list_add(sockets, sock)
 	}
 	
@@ -17,18 +20,16 @@ if server == event_id {
 	global.onlinebuffer = async_load[? "buffer"]
 	buffer_seek(global.onlinebuffer, buffer_seek_start, 0)
 	var _json=buffer_read(global.onlinebuffer, buffer_text);
+	var _struct=json_parse(_json)
 	
-	var p = clients[? sock]
 	var i=0;
-	var key = ds_map_find_first(clients);
-	repeat(ds_map_size(clients)) {
-		if key!=p {
-			send_struct(_json, clients[? key])
+	repeat(ds_list_size(sockets)) {
+		var p=sockets[| i]
+		if sock!=p {
+			send_struct(_struct, p)
 		}
-		key = ds_map_find_next(clients, key);
 		i++;
 	}
-	var _struct=json_parse(_json)
 	show_debug_message(_struct);
 	if !is_undefined(_struct[$ "type"]) {
 		var _type=_struct[$ "type"]
@@ -73,6 +74,54 @@ if server == event_id {
 					}
 					i++;
 				}
+			}
+			break;
+			case "tile_pl":
+			with(oJADEController) {
+				place_tile(_struct.uuid,_struct._layer,_struct._x,_struct._y);
+			}
+			break;
+			case "tile_del":
+			with(oJADEController) {
+				var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
+				if tile_get_index(data)!= 0 {
+					data = tile_set_empty(data)
+					tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
+				}
+				tile_update_properties(_struct._layer);
+			}
+			break;
+			case "tile_fl":
+			with(oJADEController) {
+				var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
+				if tile_get_index(data)!= 0 {
+					data = tile_set_flip(data, 1 - tile_get_flip(data))
+					tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
+					ds_list_add(tile_layer_map[_struct._layer], [data, _struct._x, _struct._y])
+				}
+				tile_update_properties(_struct._layer);
+			}
+			break;
+			case "tile_mi":
+			with(oJADEController) {
+				var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
+				if tile_get_index(data)!= 0 {
+					data = tile_set_mirror(data, 1 - tile_get_mirror(data))
+					tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
+					ds_list_add(tile_layer_map[_struct._layer], [data, _struct._x, _struct._y])
+				}
+				tile_update_properties(_struct._layer);
+			}
+			break;
+			case "tile_rot":
+			with(oJADEController) {
+				var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
+				if tile_get_index(data)!= 0 {
+					data = tile_set_rotate(data, 1 - tile_get_rotate(data))
+					tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
+					ds_list_add(tile_layer_map[_struct._layer], [data, _struct._x, _struct._y])
+				}
+				tile_update_properties(_struct._layer);
 			}
 			break;
 		}

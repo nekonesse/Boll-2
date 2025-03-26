@@ -315,11 +315,15 @@ function JADE_load(file=game_save_id+"\save.jade") {
 	show_debug_message($"Successfully loaded JADE file from: {file}!")
 }
 
+
+
 function tile_layer_alpha_check() {
 	//This makes the tile layer transparent if you arent in tile mode by using layer scripts
-	if oJADEController.selected_mode!=TILE_MODE || layer!=oJADEController.layers[oJADEController.selected_tile_layer] {
-		shader_set(shd_alpha)
-		var alpha = shader_get_uniform(shd_alpha, "alpha");
-		shader_set_uniform_f(alpha,0.33)
+	if instance_exists(oJADEController) {
+		if layer!=oJADEController.layers[oJADEController.selected_tile_layer] {
+			shader_set(shd_alpha)
+			var alpha = shader_get_uniform(shd_alpha, "alpha");
+			shader_set_uniform_f(alpha,0.33)
+		}
 	}
 }
