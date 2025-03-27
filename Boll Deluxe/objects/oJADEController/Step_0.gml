@@ -27,7 +27,6 @@ on_tile_picker = (point_in_rectangle(curs_x,curs_y,tileset_picker_x-2,tileset_pi
 if (!on_object_list && object_list_active && show_object_list) on_object_list = keyboard_check_direct(vk_alt)
 
 not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
-&&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
 &&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
 &&!(((on_object_list && show_object_list) || on_list_top) && (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE))
 &&!(on_tile_picker && selected_mode==TILE_MODE)
@@ -403,6 +402,14 @@ if (mbleftpress && not_on_gui) {
 				case NODE_MODE:
 					if is_string(selected_obj) {
 						var i=0;
+						repeat(ds_list_size(node_layer_map)) {
+							//is place matching cursor?
+							var obj = ds_list_find_value(node_layer_map, i)
+							if !is_undefined(obj) {
+									obj[5] = 0
+							}
+							i++;
+						}
 						repeat(ds_list_size(node_layer_map)) {
 							//is place matching cursor?
 							var obj = ds_list_find_value(node_layer_map, i)

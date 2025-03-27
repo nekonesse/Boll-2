@@ -5,7 +5,6 @@ var guih=display_get_gui_height()
 #region Mode Icons
 draw_sprite_stretched(spr_JADEtab_left,0,0,(guih/4)-10,32,(32*5)+4)
 var i;
-
 i=0;
 repeat(3) //draw Mode icons
 {
@@ -634,7 +633,6 @@ if selected_mode == OBJECT_MODE {
 			draw_set_halign(fa_left)
 			
 			var objname=""
-			if selected_tool!=NODE_TOOL {
 			
 			var size = ds_list_size(node_layer_map)
 			var properties_group = -4;
@@ -653,10 +651,10 @@ if selected_mode == OBJECT_MODE {
 			
 			if (properties_group != -4) {
 				var proparr=properties_group
-				objname=proparr
 				
 				var arr=ds_map_find_value(obj_data,proparr[0])
 				var sprite=arr[0]
+				objname=arr[10]
 				var ysize=64
 				if sprite_get_height(sprite)*4 < 64
 				ysize=sprite_get_height(sprite)
@@ -917,6 +915,7 @@ if selected_mode == OBJECT_MODE {
 				}
 			} else if selected_tool==NODE_TOOL && drawing_node!=-1 {
 				var obj=ds_list_find_value(object_layer_map, drawing_node)
+				show_debug_message(obj)
 				var proparr=obj[12]
 				var objname=string(obj[0])
 				
@@ -1152,7 +1151,6 @@ if selected_mode == OBJECT_MODE {
 							}
 						}
 					}
-				}
 			} else {
 				temptypingstring=""
 				is_typing=0;

@@ -177,11 +177,13 @@ if global.socket == event_id {
 					if !is_undefined(obj) {
 						if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
 							array_delete(obj[11],_struct._slot,1);
+							if array_length(obj[11]) {
 							if drawing_node==i {
 								var length = array_length(obj[11])-1;
 								draw_node_x=obj[11][length][0]+((obj[6]-16)/2);
 								draw_node_y=obj[11][length][1]+((obj[7]-16)/2);
 							}
+							} else drawing_node=-1;
 							break;
 						}
 					}
