@@ -152,9 +152,9 @@ object_list_area_y = ((guih/2)-(object_list_area_height/3)/2)
 object_list_area_surface = surface_create(object_list_area_width, object_list_area_height)
 
 var i=0;
-repeat (NODE_MODE+1) {
+repeat (3) {
     var j=0;
-	repeat (array_length(jade_cats)) {
+	repeat (array_length(jade_cats[j])) {
 		object_list_scroll_pos[i][j] = 0
 		current_obj_id[i][j] = 0
 		j++;
@@ -208,7 +208,7 @@ place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 		obj[12] = [2,false,0,false,true,true] //node properties
 		if is_array(sprite[8]) && array_length(sprite[8]) {
 			var o=0;
-			repeat (o < array_length(sprite[8])) { //god Damn.
+			repeat(array_length(sprite[8])) { //god Damn.
 				if is_array(sprite[8][o]) {
 					obj[10][o] = array_create(1,0)
 					array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
@@ -237,7 +237,7 @@ place_node_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 		obj[12] = [2,false,0,false,true,true] //node properties
 		if is_array(sprite[8]) && array_length(sprite[8]) {
 			var o=0;
-			repeat (o < array_length(sprite[8])) { //god Damn.
+			repeat(array_length(sprite[8])) { //god Damn.
 				if is_array(sprite[8][o]) {
 					obj[10][o] = array_create(1,0)
 					array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))

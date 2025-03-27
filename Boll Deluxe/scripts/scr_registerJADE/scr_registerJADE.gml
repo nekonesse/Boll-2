@@ -163,10 +163,7 @@ function JADE_load(_struct) {
 		repeat(array_length(objects)) { //load objects
 	        var data = objects[i]
 			data[5] = 0
-			if array_length(data) >= 13 && array_length(data[12]) < 5 {
-				data[12][5]=true
-			}
-			ds_list_add(object_layer_map,data)
+			ds_list_add(object_layer_map, data)
 			i++
 		}
 		i=0;

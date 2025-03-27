@@ -85,7 +85,7 @@ place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 		obj[12] = [2,false,0,false,true,true] //node properties
 		if is_array(sprite[8]) && array_length(sprite[8]) {
 			var o=0;
-			repeat (o < array_length(sprite[8])) { //god Damn.
+			repeat (array_length(sprite[8])) { //god Damn.
 				if is_array(sprite[8][o]) {
 					obj[10][o] = array_create(1,0)
 					array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
@@ -114,7 +114,7 @@ place_node_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 		obj[12] = [2,false,0,false,true,true] //node properties
 		if is_array(sprite[8]) && array_length(sprite[8]) {
 			var o=0;
-			repeat (o < array_length(sprite[8])) { //god Damn.
+			repeat(array_length(sprite[8])) { //god Damn.
 				if is_array(sprite[8][o]) {
 					obj[10][o] = array_create(1,0)
 					array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
@@ -153,7 +153,6 @@ tile_update_properties = function(_layer) {
 		}
 		
 		var fetched=tilemap_get(tile_layer[_layer],data[1],data[2])
-		show_debug_message($"checked: {data[0]} got: {fetched}")
 		
 		if (data[0]!=fetched) { //If data does not match the tile at place
 			ds_list_delete(list, i) //remove if tile has changed

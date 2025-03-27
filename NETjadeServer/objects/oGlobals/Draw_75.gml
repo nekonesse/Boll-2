@@ -58,11 +58,6 @@ else if (global.fps_display)
 		fps_color = #D8FFD8;	
 	}
 	
-	if (morph_costs[0] >= 0)
-	{
-		ext = $"MORPH COST: {morph_costs[0] / 1000}MS ({morph_costs[1]}%)";
-	}
-	
 	draw_set_alpha(0.35)
 	draw_rectangle_color(0,0,102,32,c_black,c_black,c_black,c_black,false);
 	draw_set_alpha(1)

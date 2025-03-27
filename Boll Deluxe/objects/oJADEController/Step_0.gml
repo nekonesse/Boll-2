@@ -70,6 +70,7 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 
 	#region Category Switching
 	if (dir != 0) && (on_object_list) {
+		show_debug_message(array_length(jade_cats[selected_mode]) )
 		current_cat += dir
 		if (current_cat < 0) {
 			current_cat = (array_length(jade_cats[selected_mode]) - 1)
@@ -82,7 +83,6 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 	#endregion
 } else if (selected_mode == TILE_MODE) {
 	var layerdir = keyboard_check_pressed(vk_right) - keyboard_check_pressed(vk_left)
-	var tilesetdir = keyboard_check_pressed(vk_down) - keyboard_check_pressed(vk_up)
 	if (layerdir != 0) {
 		ui_opacity = 10;
 		selected_tile_layer += layerdir
@@ -171,8 +171,8 @@ if (mbleftpress) {
 		case FLIP_TOOL:
 			switch(selected_mode) {
 				case TILE_MODE:
+					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
 					if tile_get_index(data)!= 0 {
-						var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
 						data = tile_set_flip(data, 1 - tile_get_flip(data))
 						tilemap_set(tilemap, data, gridx, gridy);
 						var tiledata = tilemap_get(tilemap, gridx, gridy)
@@ -295,31 +295,86 @@ if show_tileset {
 }
 
 if (mbright && not_on_gui) {
-	switch(selected_mode) {
-		case TILE_MODE: {
-			if (selected_tool==BRUSH_TOOL) {
-				var data = tilemap_get(tilemap, gridx, gridy);
-				if tile_get_index(data)!= 0 {
-					data = tile_set_empty(data)
-					tilemap_set(tilemap, data, gridx, gridy); //delete tile at place lol
-					var network_struct = {
-						type: "tile_del",
-						_layer: selected_tile_layer,
-						_x: gridx,
-						_y: gridy
+	switch(selected_tool) {
+		case BRUSH_TOOL: {
+			switch(selected_mode) {
+				case OBJECT_MODE:
+					var size = ds_list_size(object_layer_map)
+					var i=0;
+					repeat(size) {
+						//is place matching cursor?
+						var obj = ds_list_find_value(object_layer_map, i)
+						if !is_undefined(obj) {
+						    if obj[1] == gridx && obj[2] == gridy {
+								ds_list_delete(object_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
+								var network_struct = {
+									type: "obj_del",
+									_x: gridx,
+									_y: gridy
+								}	
+								send_struct(network_struct, global.socket)
+								break;
+							}
+						}
+						i++;
 					}
-					send_struct(network_struct, global.socket)
-				}
+				break;
+				case NODE_MODE:
+					var size = ds_list_size(node_layer_map)
+					var i=0;
+					repeat(size) {
+						//is place matching cursor?
+						var obj = ds_list_find_value(node_layer_map, i)
+						if !is_undefined(obj) {
+						    if obj[1] == gridx && obj[2] == gridy {
+								ds_list_delete(node_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
+								var network_struct = {
+									type: "node_del",
+									_x: gridx,
+									_y: gridy
+								}	
+								send_struct(network_struct, global.socket)
+								break;
+							}
+						}
+						i++;
+					}
+				break;
+				case TILE_MODE: {
+					if (selected_tool==BRUSH_TOOL) {
+						var data = tilemap_get(tilemap, gridx, gridy);
+						if tile_get_index(data)!= 0 {
+							data = tile_set_empty(data)
+							tilemap_set(tilemap, data, gridx, gridy); //delete tile at place lol
+							var network_struct = {
+								type: "tile_del",
+								_layer: selected_tile_layer,
+								_x: gridx,
+								_y: gridy
+							}
+							send_struct(network_struct, global.socket)
+						}
+					}
+				} break;
 			}
 		}
+		break;
 	}
 }
 
-if (mbrightpress && not_on_gui) {
-	switch(selected_tool) {
-		case SELECT_TOOL:
+if (mbleftpress && not_on_gui) {
+	if (selected_tool == SELECT_TOOL) {
 			switch(selected_mode) {
 				case OBJECT_MODE:
+					var i=0;
+					repeat(ds_list_size(object_layer_map)) {
+						//is place matching cursor?
+						var obj = ds_list_find_value(object_layer_map, i)
+						if !is_undefined(obj) {
+								obj[5] = 0
+						}
+						i++;
+					}
 					if is_string(selected_obj) {
 						var i=0;
 						repeat(ds_list_size(object_layer_map)) {
@@ -331,6 +386,7 @@ if (mbrightpress && not_on_gui) {
 								var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]- 1)
 								if !red_box && white_box { 
 									obj[5] = 1
+									show_debug_message(obj[10])
 									temptypingstring=""
 									is_typing=0;
 									open_dropmenu=0;
@@ -370,42 +426,6 @@ if (mbrightpress && not_on_gui) {
 					}
 				break;
 			}
-		break;
-		case BRUSH_TOOL: {
-			switch(selected_mode) {
-				case OBJECT_MODE:
-					var size = ds_list_size(object_layer_map)
-					var i=0;
-					repeat(size) {
-						//is place matching cursor?
-						var obj = ds_list_find_value(object_layer_map, i)
-						if !is_undefined(obj) {
-						    if obj[1] == gridx && obj[2] == gridy {
-								ds_list_delete(object_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
-								break;
-							}
-						}
-						i++;
-					}
-				break;
-				case NODE_MODE:
-					var size = ds_list_size(node_layer_map)
-					var i=0;
-					repeat(size) {
-						//is place matching cursor?
-						var obj = ds_list_find_value(node_layer_map, i)
-						if !is_undefined(obj) {
-						    if obj[1] == gridx && obj[2] == gridy {
-								ds_list_delete(node_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
-								break;
-							}
-						}
-						i++;
-					}
-				break;
-			}
-		}
-		break;
 	}
 }
 
@@ -594,7 +614,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 						if !is_undefined(obj) {
 						    if obj[1] == gridx && obj[2] == gridy {
 								show_debug_message("deleted object: {0}", obj[0])
-								ds_list_delete(object_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
+								ds_list_delete(object_layer_map, i) //delete first object it finds there (probably bottom top? i don rembr)
 								var network_struct = {
 									type: "obj_del",
 									_x: gridx,
@@ -711,6 +731,15 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 			var yoff = -sprite[2];
 			
 			array_push(obj[11], [(gridx*16)-((obj[6]-16)/2)+xoff,(gridy*16)-((obj[7]-16)/2)+yoff,false])
+			var _struct = {
+				type: "obj_node_make",
+				uuid: obj[0],
+				_x: obj[1],
+				_y: obj[2],
+				_slot: array_length(obj[11])-1,
+				_value: [(gridx*16)-((obj[6]-16)/2)+xoff,(gridy*16)-((obj[7]-16)/2)+yoff,false]
+			}
+			send_struct(_struct, global.socket);
 			show_debug_message(obj[11])
 			draw_node_x=(gridx*16)+xoff
 			draw_node_y=(gridy*16)+yoff
@@ -735,6 +764,14 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 					
 					if (over) {
 						array_delete(obj[11],i,1)
+						var _struct = {
+							type: "obj_node_del",
+							uuid: obj[0],
+							_x: obj[1],
+							_y: obj[2],
+							_slot: i,
+						}
+						send_struct(_struct, global.socket);
 						var size = array_length(obj[11])
 						if (size) {
 							draw_node_x=obj[11][size-1][0]+((obj[6]-16)/2);
@@ -777,7 +814,6 @@ if keyboard_check_pressed(ord("3")) || keyboard_check_pressed(vk_numpad3)  {
 if keyboard_check_pressed(ord("D")) && !keyboard_check(vk_control) {
 	switch (selected_mode) {
 		case OBJECT_MODE:
-		case BACKGROUND_MODE:
 		case NODE_MODE: {
 			selected_toolbar=1;
 			break;
@@ -792,8 +828,6 @@ if keyboard_check_pressed(ord("D")) && !keyboard_check(vk_control) {
 if keyboard_check_pressed(ord("S")) && !keyboard_check(vk_control) {
 	switch (selected_mode) {
 		case NODE_MODE:
-		case BACKGROUND_MODE:
-		case REGION_MODE:
 		case OBJECT_MODE: {
 			selected_toolbar=0;
 			break;
@@ -822,8 +856,7 @@ if keyboard_check_pressed(ord("E")) && !keyboard_check(vk_control) {
 			break;
 		}
 		case BACKGROUND_MODE:
-		case TILE_MODE:
-		case REGION_MODE: {
+		case TILE_MODE: {
 			selected_toolbar=2;
 			break;
 		}
@@ -832,8 +865,7 @@ if keyboard_check_pressed(ord("E")) && !keyboard_check(vk_control) {
 
 if keyboard_check_pressed(ord("I")) && !keyboard_check(vk_control) {
 	switch (selected_mode) {
-		case TILE_MODE:
-		case BACKGROUND_MODE: {
+		case TILE_MODE: {
 			selected_toolbar=3;
 			break;
 		}

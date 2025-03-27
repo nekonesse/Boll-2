@@ -197,25 +197,24 @@ if selected_mode == OBJECT_MODE {
 			draw_set_halign(fa_left)
 			
 			var size = ds_list_size(object_layer_map)
-			var properties_group = [-4];
+			var properties_group = -4
 			
 			i=0;
 			repeat(size) {
 				var obj = ds_list_find_value(object_layer_map, i)
 				var sprite = ds_map_find_value(obj_data,obj[0])
 				if (obj[5] = 1) {
-					if (properties_group[0] = -4) {
-						properties_group[0] = obj
-					} else if (properties_group[0][0] == obj[0]) {
-						array_push(properties_group,obj)
+					if (properties_group = -4) {
+						properties_group = obj
 					}
+					break;
 				}
 				i++;
 			}
 			
 			var objname=""
-			if (properties_group[0] != -4) {
-				var proparr=properties_group[0]
+			if (properties_group != -4) {
+				var proparr=properties_group
 				
 				var arr=ds_map_find_value(obj_data,proparr[0])
 				var sprite=arr[0]
@@ -252,11 +251,15 @@ if selected_mode == OBJECT_MODE {
 										if (incheck) {
 											show_debug_message(proparr[10][i][2])
 											proparr[10][i][2]=!bool(proparr[10][i][2])
-											var k=1
-											repeat (array_length(properties_group)-1) {
-												properties_group[k][10][i][2]=proparr[10][i][2]
-												k++
+											var _struct = {
+												type: "obj_prop_change",
+												uuid: proparr[0],
+												_x: proparr[1],
+												_y: proparr[2],
+												_slot: i,
+												_value: proparr[10][i][2]
 											}
+											send_struct(_struct, global.socket);
 										}
 									}
 								} else break
@@ -293,11 +296,16 @@ if selected_mode == OBJECT_MODE {
 								
 										if (insubcheck) && (mbleftpress) {
 											//set selected object to selected variable
-											var k=0
-											repeat (array_length(properties_group)) {
-											    properties_group[k][10][i][2]=menuarr[j];
-												k++
+											properties_group[10][i][2]=menuarr[j];
+											var _struct = {
+												type: "obj_prop_change",
+												uuid: proparr[0],
+												_x: proparr[1],
+												_y: proparr[2],
+												_slot: i,
+												_value: properties_group[10][i][2]
 											}
+											send_struct(_struct, global.socket);
 											open_dropmenu=0;
 										}
 										j++;
@@ -325,11 +333,16 @@ if selected_mode == OBJECT_MODE {
 										//if clicking off of the box, finish typing
 										if !(incheck) && (is_typing-1==i) {
 											//set the variable to our typed number, if its blank reset back to the value it was before
-											var k=0
-											repeat (array_length(properties_group)) {
-											    properties_group[k][10][i][2]=unreal(temptypingstring,properties_group[k][10][i][2])
-												k++
+											properties_group[10][i][2]=unreal(temptypingstring,properties_group[10][i][2])
+											var _struct = {
+												type: "obj_prop_change",
+												uuid: proparr[0],
+												_x: proparr[1],
+												_y: proparr[2],
+												_slot: i,
+												_value: properties_group[10][i][2]
 											}
+											send_struct(_struct, global.socket);
 											temptypingstring=""
 											is_typing=0;
 										}
@@ -337,11 +350,16 @@ if selected_mode == OBJECT_MODE {
 									
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
-										var k=0
-										repeat (array_length(properties_group)) {
-											properties_group[k][10][i][2]=unreal(temptypingstring,properties_group[k][10][i][2])
-											k++
+										properties_group[10][i][2]=unreal(temptypingstring,properties_group[10][i][2])
+										var _struct = {
+											type: "obj_prop_change",
+											uuid: proparr[0],
+											_x: proparr[1],
+											_y: proparr[2],
+											_slot: i,
+											_value: properties_group[10][i][2]
 										}
+										send_struct(_struct, global.socket);
 										temptypingstring=""
 										is_typing=0;
 									}
@@ -396,11 +414,16 @@ if selected_mode == OBJECT_MODE {
 										
 										//if clicking off of the box, finish typing
 										if !(incheck) && (is_typing-1==i) {
-											var k=0
-											repeat (array_length(properties_group)) {
-												properties_group[k][10][i][2]=string(temptypingstring)
-												k++
+											properties_group[10][i][2]=string(temptypingstring)
+											var _struct = {
+												type: "obj_prop_change",
+												uuid: proparr[0],
+												_x: proparr[1],
+												_y: proparr[2],
+												_slot: i,
+												_value: properties_group[10][i][2]
 											}
+											send_struct(_struct, global.socket);
 											temptypingstring=""
 											is_typing=0;
 										}
@@ -408,11 +431,16 @@ if selected_mode == OBJECT_MODE {
 									
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
-										var k=0
-										repeat (array_length(properties_group)) {
-											properties_group[k][10][i][2]=string(temptypingstring)
-											k++
+										properties_group[10][i][2]=string(temptypingstring)
+										var _struct = {
+											type: "obj_prop_change",
+											uuid: proparr[0],
+											_x: proparr[1],
+											_y: proparr[2],
+											_slot: i,
+											_value: properties_group[10][i][2]
 										}
+										send_struct(_struct, global.socket);
 										temptypingstring=""
 										is_typing=0;
 									}
@@ -423,7 +451,6 @@ if selected_mode == OBJECT_MODE {
 											switch (keyboard_lastkey) {
 												case vk_tab: //forbidden keys, these can create unnessecary letters that are unwanted
 												case vk_backspace:
-												case vk_capslock:
 												case vk_control:
 												case vk_rcontrol:
 												case vk_shift:
@@ -610,25 +637,23 @@ if selected_mode == OBJECT_MODE {
 			if selected_tool!=NODE_TOOL {
 			
 			var size = ds_list_size(node_layer_map)
-			var properties_group = [-4];
+			var properties_group = -4;
 			
 			var i=0;
 			repeat(size) {
 				var obj = ds_list_find_value(node_layer_map, i)
 				var sprite = ds_map_find_value(obj_data,obj[0])
 				if (obj[5] = 1) {
-					if (properties_group[0] = -4) {
-						properties_group[0] = obj
-					} else if (properties_group[0][0] == obj[0]) {
-						array_push(properties_group,obj)
+					if (properties_group = -4) {
+						properties_group = obj
 					}
 				}
 				i++;
 			}
 			
-			if (properties_group[0] != -4) {
-				var proparr=properties_group[0]
-				objname=proparr[0]
+			if (properties_group != -4) {
+				var proparr=properties_group
+				objname=proparr
 				
 				var arr=ds_map_find_value(obj_data,proparr[0])
 				var sprite=arr[0]
@@ -664,11 +689,15 @@ if selected_mode == OBJECT_MODE {
 										if (incheck) {
 											show_debug_message(proparr[10][i][2])
 											proparr[10][i][2]=!bool(proparr[10][i][2])
-											var k=1
-											repeat (array_length(properties_group)-1) {
-												properties_group[k][10][i][2]=proparr[10][i][2]
-												k++
+											var _struct = {
+												type: "node_prop_change",
+												uuid: proparr[0],
+												_x: proparr[1],
+												_y: proparr[2],
+												_slot: i,
+												_value: properties_group[10][i][2]
 											}
+											send_struct(_struct, global.socket);
 										}
 									}
 								} else break
@@ -705,11 +734,16 @@ if selected_mode == OBJECT_MODE {
 								
 										if (insubcheck) && (mbleftpress) {
 											//set selected object to selected variable
-											var k=0
-											repeat (array_length(properties_group)) {
-											    properties_group[k][10][i][2]=menuarr[j];
-												k++
+											properties_group[10][i][2]=menuarr[j];
+											var _struct = {
+												type: "node_prop_change",
+												uuid: proparr[0],
+												_x: proparr[1],
+												_y: proparr[2],
+												_slot: i,
+												_value: properties_group[10][i][2]
 											}
+											send_struct(_struct, global.socket);
 											open_dropmenu=0;
 										}
 										j++;
@@ -737,11 +771,16 @@ if selected_mode == OBJECT_MODE {
 										//if clicking off of the box, finish typing
 										if !(incheck) && (is_typing-1==i) {
 											//set the variable to our typed number, if its blank reset back to the value it was before
-											var k=0
-											repeat (array_length(properties_group)) {
-											    properties_group[k][10][i][2]=unreal(temptypingstring,properties_group[k][10][i][2])
-												k++
+											properties_group[10][i][2]=unreal(temptypingstring,properties_group[10][i][2])
+											var _struct = {
+												type: "node_prop_change",
+												uuid: proparr[0],
+												_x: proparr[1],
+												_y: proparr[2],
+												_slot: i,
+												_value: properties_group[10][i][2]
 											}
+											send_struct(_struct, global.socket);
 											temptypingstring=""
 											is_typing=0;
 										}
@@ -749,11 +788,16 @@ if selected_mode == OBJECT_MODE {
 									
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
-										var k=0
-										repeat (array_length(properties_group)) {
-											properties_group[k][10][i][2]=unreal(temptypingstring,properties_group[k][10][i][2])
-											k++
+										properties_group[10][i][2]=unreal(temptypingstring,properties_group[10][i][2])
+										var _struct = {
+											type: "node_prop_change",
+											uuid: proparr[0],
+											_x: proparr[1],
+											_y: proparr[2],
+											_slot: i,
+											_value: properties_group[10][i][2]
 										}
+										send_struct(_struct, global.socket);
 										temptypingstring=""
 										is_typing=0;
 									}
@@ -808,11 +852,16 @@ if selected_mode == OBJECT_MODE {
 										
 										//if clicking off of the box, finish typing
 										if !(incheck) && (is_typing-1==i) {
-											var k=0
-											repeat (array_length(properties_group)) {
-												properties_group[k][10][i][2]=string(temptypingstring)
-												k++
+											properties_group[10][i][2]=string(temptypingstring)
+											var _struct = {
+												type: "node_prop_change",
+												uuid: proparr[0],
+												_x: proparr[1],
+												_y: proparr[2],
+												_slot: i,
+												_value: properties_group[10][i][2]
 											}
+											send_struct(_struct, global.socket);
 											temptypingstring=""
 											is_typing=0;
 										}
@@ -820,11 +869,16 @@ if selected_mode == OBJECT_MODE {
 									
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
-										var k=0
-										repeat (array_length(properties_group)) {
-											properties_group[k][10][i][2]=string(temptypingstring)
-											k++
+										properties_group[10][i][2]=string(temptypingstring)
+										var _struct = {
+											type: "node_prop_change",
+											uuid: proparr[0],
+											_x: proparr[1],
+											_y: proparr[2],
+											_slot: i,
+											_value: properties_group[10][i][2]
 										}
+										send_struct(_struct, global.socket);
 										temptypingstring=""
 										is_typing=0;
 									}
@@ -835,7 +889,6 @@ if selected_mode == OBJECT_MODE {
 											switch (keyboard_lastkey) {
 												case vk_tab: //forbidden keys, these can create unnessecary letters that are unwanted
 												case vk_backspace:
-												case vk_capslock:
 												case vk_control:
 												case vk_rcontrol:
 												case vk_shift:
@@ -892,6 +945,15 @@ if selected_mode == OBJECT_MODE {
 						if (mbleftpress) {
 							if (incheck) {
 								proparr[1]=!proparr[1]
+								var _struct = {
+									type: "node_var_change",
+									uuid: obj[0],
+									_x: obj[1],
+									_y: obj[2],
+									_slot: 1,
+									_value: proparr[1]
+								}
+								send_struct(_struct, global.socket);
 							}
 						}
 						
@@ -917,6 +979,15 @@ if selected_mode == OBJECT_MODE {
 							if !(incheck) && (is_typing-1==0) {
 								//set the variable to our typed number, if its blank reset back to the value it was before
 								proparr[0]=unreal(temptypingstring,proparr[0])
+								var _struct = {
+									type: "node_var_change",
+									uuid: obj[0],
+									_x: obj[1],
+									_y: obj[2],
+									_slot: 0,
+									_value: proparr[0]
+								}
+								send_struct(_struct, global.socket);
 								temptypingstring=""
 								is_typing=0;
 							}
@@ -925,6 +996,15 @@ if selected_mode == OBJECT_MODE {
 						//if pressed enter and typing, finish typing aswell
 						if keyboard_check_pressed(vk_enter) && (is_typing-1==0) {
 							proparr[0]=unreal(temptypingstring,proparr[0])
+							var _struct = {
+								type: "node_var_change",
+								uuid: obj[0],
+								_x: obj[1],
+								_y: obj[2],
+								_slot: 0,
+								_value: proparr[0]
+							}
+							send_struct(_struct, global.socket);
 							temptypingstring=""
 							is_typing=0;
 						}
@@ -950,7 +1030,16 @@ if selected_mode == OBJECT_MODE {
 							//if clicking off of the box, finish typing
 							if !(incheck) && (is_typing-1==2) {
 								//set the variable to our typed number, if its blank reset back to the value it was before
-								proparr[0]=unreal(temptypingstring,proparr[2])
+								proparr[2]=unreal(temptypingstring,proparr[2])
+								var _struct = {
+									type: "node_var_change",
+									uuid: obj[0],
+									_x: obj[1],
+									_y: obj[2],
+									_slot: 2,
+									_value: proparr[2]
+								}
+								send_struct(_struct, global.socket);
 								temptypingstring=""
 								is_typing=0;
 							}
@@ -959,6 +1048,15 @@ if selected_mode == OBJECT_MODE {
 						//if pressed enter and typing, finish typing aswell
 						if keyboard_check_pressed(vk_enter) && (is_typing-1==2) {
 							proparr[2]=floor(unreal(temptypingstring,proparr[2]))
+							var _struct = {
+								type: "node_var_change",
+								uuid: obj[0],
+								_x: obj[1],
+								_y: obj[2],
+								_slot: 2,
+								_value: proparr[2]
+							}
+							send_struct(_struct, global.socket);
 							temptypingstring=""
 							is_typing=0;
 						}
@@ -1000,6 +1098,15 @@ if selected_mode == OBJECT_MODE {
 						if (mbleftpress) {
 							if (incheck) {
 								proparr[3]=!proparr[3]
+								var _struct = {
+									type: "node_var_change",
+									uuid: obj[0],
+									_x: obj[1],
+									_y: obj[2],
+									_slot: 3,
+									_value: proparr[3]
+								}
+								send_struct(_struct, global.socket);
 							}
 						}
 						
@@ -1012,6 +1119,15 @@ if selected_mode == OBJECT_MODE {
 						if (mbleftpress) {
 							if (incheck) {
 								proparr[4]=!proparr[4]
+								var _struct = {
+									type: "node_var_change",
+									uuid: obj[0],
+									_x: obj[1],
+									_y: obj[2],
+									_slot: 4,
+									_value: proparr[4]
+								}
+								send_struct(_struct, global.socket);
 							}
 						}
 						
@@ -1024,6 +1140,15 @@ if selected_mode == OBJECT_MODE {
 						if (mbleftpress) {
 							if (incheck) {
 								proparr[5]=!proparr[5]
+								var _struct = {
+									type: "node_var_change",
+									uuid: obj[0],
+									_x: obj[1],
+									_y: obj[2],
+									_slot: 5,
+									_value: proparr[5]
+								}
+								send_struct(_struct, global.socket);
 							}
 						}
 					}
