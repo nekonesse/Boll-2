@@ -3,6 +3,7 @@ var event_id = async_load[? "id"]
 if server == event_id {
 	var type = async_load[? "type"]
 	var sock = async_load[? "socket"]
+	var ip = async_load[? "ip"]
 	
 	if (type == network_type_connect) {
 		//initialize client here
@@ -10,10 +11,24 @@ if server == event_id {
 			JADE_transer_save(sock)
 		}
 		ds_list_add(sockets, sock)
+		if ds_map_exists(clients, ip) {
+			var _struct = {
+				type: "ip_already_connected"
+			}
+			send_struct(_struct,sock);
+			network_destroy(sock);
+			ds_list_delete(sockets,ds_list_find_index(sockets,sock))
+		} else {
+			ds_map_add(clients, ip, sock)
+			cursors[$ ds_list_find_index(sockets, sock)]=[0,0,0,""]
+		}
 	}
 	
 	if (type == network_type_disconnect) {
+		network_destroy(sock);
 		ds_list_delete(sockets,ds_list_find_index(sockets,sock))
+		ds_map_delete(clients, ip)
+		struct_remove(cursors,ds_list_find_index(sockets, sock))
 	}
 } else {
 	var sock = async_load[? "id"]
@@ -22,18 +37,13 @@ if server == event_id {
 	var _json=buffer_read(global.onlinebuffer, buffer_string);
 	var _struct=json_parse(_json)
 	
-	var i=0;
-	repeat(ds_list_size(sockets)) {
-		var p=sockets[| i]
-		if sock!=p {
-			send_struct(_struct, p)
-		}
-		i++;
-	}
 	show_debug_message(_struct);
 	if !is_undefined(_struct[$ "type"]) {
 		var _type=_struct[$ "type"]
 		switch(_type) {
+			case "curs_upd":
+				cursors[$ ds_list_find_index(sockets, sock)]=[floor(_struct._x),floor(_struct._y),_struct._tool,_struct._name];
+			break;
 			case "obj_pl":
 			with(oJADEController) {
 				place_object(_struct.uuid,_struct._x,_struct._y,_struct._xscale,_struct._yscale);
@@ -204,6 +214,30 @@ if server == event_id {
 				}
 			}
 			break;
+		}
+		if _struct[$ "type"]!="curs_upd" {
+			var i=0;
+			repeat(ds_list_size(sockets)) {
+				var p=sockets[| i]
+				if sock!=p {
+					send_struct(_struct, p)
+				}
+				i++;
+			}
+		} else {
+			var _newstruct = {
+				type: "curs_upd",
+				cursorstruct: cursors
+			}
+			var i=0;
+			repeat(ds_list_size(sockets)) {
+				var p=sockets[| i]
+				if sock!=p {
+					_newstruct[$ "exclusion"]=ds_list_find_index(sockets, p);
+					send_struct(_newstruct, p)
+				}
+				i++;
+			}
 		}
 	}
 }

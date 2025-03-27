@@ -111,6 +111,20 @@ zoom_level=clamp(zoom_level,0.125, 5)
 camera_set_view_size(view_camera[0], floor(480*zoom_level), floor(270*zoom_level))*/
 #endregion
 
+if (floor(mouse_x)!=mouse_x_prev || floor(mouse_y)!=mouse_y_prev || selected_tool!=tool_previous) {
+	var _struct = {
+		type: "curs_upd",
+		_x: floor(mouse_x),
+		_y: floor(mouse_y),
+		_tool: selected_tool,
+		_name: global.username
+	}
+	send_struct(_struct, global.socket);
+}
+mouse_x_prev=mouse_x;
+mouse_y_prev=mouse_y;
+tool_previous=selected_tool;
+
 gridx = floor(mouse_x/16)
 gridy = floor(mouse_y/16)
 
@@ -733,23 +747,25 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 		} else {
 			var obj = ds_list_find_value(object_layer_map, drawing_node)
 			
-			var sprite = ds_map_find_value(obj_data,obj[0])
-			var xoff = -sprite[1];
-			var yoff = -sprite[2];
+			if is_array(obj) {
+				var sprite = ds_map_find_value(obj_data,obj[0])
+				var xoff = -sprite[1];
+				var yoff = -sprite[2];
 			
-			array_push(obj[11], [(gridx*16)-((obj[6]-16)/2)+xoff,(gridy*16)-((obj[7]-16)/2)+yoff,false])
-			var _struct = {
-				type: "obj_node_make",
-				uuid: obj[0],
-				_x: obj[1],
-				_y: obj[2],
-				_slot: array_length(obj[11])-1,
-				_value: [(gridx*16)-((obj[6]-16)/2)+xoff,(gridy*16)-((obj[7]-16)/2)+yoff,false]
-			}
-			send_struct(_struct, global.socket);
-			show_debug_message(obj[11])
-			draw_node_x=(gridx*16)+xoff
-			draw_node_y=(gridy*16)+yoff
+				array_push(obj[11], [(gridx*16)-((obj[6]-16)/2)+xoff,(gridy*16)-((obj[7]-16)/2)+yoff,false])
+				var _struct = {
+					type: "obj_node_make",
+					uuid: obj[0],
+					_x: obj[1],
+					_y: obj[2],
+					_slot: array_length(obj[11])-1,
+					_value: [(gridx*16)-((obj[6]-16)/2)+xoff,(gridy*16)-((obj[7]-16)/2)+yoff,false]
+				}
+				send_struct(_struct, global.socket);
+				show_debug_message(obj[11])
+				draw_node_x=(gridx*16)+xoff
+				draw_node_y=(gridy*16)+yoff
+			} else drawing_node=-1;
 		}
 	}
 	
@@ -862,7 +878,6 @@ if keyboard_check_pressed(ord("E")) && !keyboard_check(vk_control) {
 			selected_toolbar=3;
 			break;
 		}
-		case BACKGROUND_MODE:
 		case TILE_MODE: {
 			selected_toolbar=2;
 			break;
@@ -886,5 +901,3 @@ if keyboard_check_pressed(ord("I")) && !keyboard_check(vk_control) {
 }
 
 #endregion
-
-//keyboard_check

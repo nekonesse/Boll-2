@@ -23,25 +23,20 @@
 //Object
 toolbar[0][0]=SELECT_TOOL
 toolbar[0][1]=BRUSH_TOOL
-toolbar[0][2]=FILL_TOOL
-toolbar[0][3]=ERASE_TOOL
-toolbar[0][4]=PICKER_TOOL
-toolbar[0][5]=REFERENCE_TOOL
+toolbar[0][2]=ERASE_TOOL
+toolbar[0][3]=PICKER_TOOL
 //Tile
 toolbar[1][0]=BRUSH_TOOL
-toolbar[1][1]=FILL_TOOL
-toolbar[1][2]=ERASE_TOOL
-toolbar[1][3]=PICKER_TOOL
-toolbar[1][4]=ROTATE_TOOL
-toolbar[1][5]=MIRROR_TOOL
-toolbar[1][6]=FLIP_TOOL
-toolbar[1][7]=REFERENCE_TOOL
+toolbar[1][1]=ERASE_TOOL
+toolbar[1][2]=PICKER_TOOL
+toolbar[1][3]=ROTATE_TOOL
+toolbar[1][4]=MIRROR_TOOL
+toolbar[1][5]=FLIP_TOOL
 //Node
 toolbar[2][0]=SELECT_TOOL
 toolbar[2][1]=BRUSH_TOOL
 toolbar[2][2]=NODE_TOOL
 toolbar[2][3]=ERASE_TOOL
-toolbar[2][3]=REFERENCE_TOOL
 
 JADE_initializeobj();
 
@@ -83,15 +78,12 @@ selected_toolbar=0;
 selected_tool=SELECT_TOOL;
 
 selected_obj=ds_list_find_value(obj_name, 0)
-selection = false
 selection_id = NaN
 selection_x = [0]
 selection_y = [0]
 selection_box = false
 selection_box_x = 0
 selection_box_y = 0
-temp_mode=0;
-temp_toolbar=0;
 
 current_tile_id = 0
 tile_drag = false;
@@ -262,3 +254,7 @@ place_tile = function(_id,_layer,_x,_y) {
 		tilemap_set(tile_layer[_layer], data, _x, _y);
 	}
 }
+
+mouse_x_prev=mouse_x;
+mouse_y_prev=mouse_y;
+tool_previous=selected_tool;

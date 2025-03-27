@@ -52,7 +52,6 @@ repeat(ds_list_size(object_layer_map)) {
 	i++;
 }
 
-
 i=0;
 repeat(ds_list_size(node_layer_map)) {
 	var obj = ds_list_find_value(node_layer_map, i)

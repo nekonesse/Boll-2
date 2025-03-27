@@ -45,7 +45,61 @@ function JADE_transer_save(_socket) {
 	struct[$ "tile_layers"]=arrayTileLayers
 	var _json=json_stringify(struct); //compile all saved things
 	var save_file = buffer_create(string_byte_length(_json), buffer_grow, 1);
+	buffer_seek(save_file, buffer_seek_start, 0);
 	buffer_write(save_file, buffer_string, _json); //save compilation into a buffer
 	network_send_packet(_socket, save_file, buffer_tell(save_file));
 	buffer_delete(save_file)
 }
+
+//The Horror
+global.chatBannedWords = [
+	"cock",
+	"penis",
+	"vagina",
+	"masturbate",
+	"masterbate",
+	"goaste",
+	"chink",
+	"masterbating",
+	"masturbating",
+	"retard",
+	"retarded",
+	"tard",
+	"tarded",
+	"masturbation",
+	"masterbation",
+	"nigga",
+	"niggar",
+	"nigger",
+	"masterbat",
+	"fap",
+	"r-tard",
+	"rtard",
+	"nagger",
+	"retart",
+	"fag",
+	"faggot",
+	"pussy",
+	"jism",
+	"jizm",
+	"tits",
+	"titties",
+	"clit",
+	"cunt",
+	"dildo",
+	"pussies",
+	"wigger",
+	"wigga",
+	"gook",
+	"jizz",
+	"titty",
+	"ngger",
+	"nggr",
+	"huntard",
+	"retardin",
+	"ritard",
+	"wiitard",
+	"tranny",
+	"rape",
+	"rapist"
+]

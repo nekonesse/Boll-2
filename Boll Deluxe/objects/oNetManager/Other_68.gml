@@ -5,13 +5,26 @@ if global.socket == event_id {
 	buffer_seek(buff, buffer_seek_start, 0)
 	
 	var _json=buffer_read(buff, buffer_string);
-	show_debug_message(_json);
+	//show_debug_message(_json);
 	var _struct=json_parse(_json)
-	show_debug_message(is_struct(_struct));
 	if !is_undefined(_struct[$ "type"]) {
 		var _type=_struct[$ "type"]
 		switch(_type) {
+			case "ip_already_connected": {
+				show_message("You were kicked:\nIP already connected to server.")
+				game_end();
+			} break;
+			case "server_disconnect": {
+				show_message("The experiment has been concluded.\nThank you for participating.")
+				game_end();
+			} break;
+			case "curs_upd":
+			cursors = _struct[$ "cursorstruct"];
+			cursorexclusion=_struct[$ "exclusion"];
+			break;
 			case "level_sync":
+			connected=true;
+			show_message("Connected!");
 			with(oJADEController) {
 				JADE_load(_struct);
 			}

@@ -48,7 +48,7 @@ if keyboard_check_pressed(vk_f10) {
 	
 		i++;
 	}
-	i=0;
+	i=array_length(tile_layer_map)-1;
 	repeat(array_length(tile_layer_map)) {
 		var list=tile_layer_map[i]
 		var j=0;
@@ -56,7 +56,7 @@ if keyboard_check_pressed(vk_f10) {
 			var arr=list[| j]
 			draw_tile(tilemap_get_tileset(tile_layer[i]), arr[0], 0, arr[1]*16, arr[2]*16)
 		}
-		i++;
+		i--;
 	}
 	surface_reset_target();
 	surface_save(surf, get_save_filename_ext("screenshot|*.png", "", working_directory, "Save a screenshot here"))
