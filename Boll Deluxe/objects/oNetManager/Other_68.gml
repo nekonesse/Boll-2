@@ -4,7 +4,7 @@ if global.socket == event_id {
 	var buff = async_load[? "buffer"]
 	buffer_seek(buff, buffer_seek_start, 0)
 	
-	var _json=buffer_read(buff, buffer_text);
+	var _json=buffer_read(buff, buffer_string);
 	show_debug_message(_json);
 	var _struct=json_parse(_json)
 	show_debug_message(is_struct(_struct));

@@ -1,7 +1,7 @@
 function send_struct(_struct, _socket) {
 	var buff = buffer_create(16384, buffer_grow, 1)
 	buffer_seek(buff, buffer_seek_start, 0);
-	buffer_write(buff, buffer_text, json_stringify(_struct));
+	buffer_write(buff, buffer_string, json_stringify(_struct));
 	network_send_packet(_socket, buff, buffer_tell(buff));
 	buffer_delete(buff)
 }
@@ -45,7 +45,7 @@ function JADE_transer_save(_socket) {
 	struct[$ "tile_layers"]=arrayTileLayers
 	var _json=json_stringify(struct); //compile all saved things
 	var save_file = buffer_create(string_byte_length(_json), buffer_grow, 1);
-	buffer_write(save_file, buffer_text, _json); //save compilation into a buffer
+	buffer_write(save_file, buffer_string, _json); //save compilation into a buffer
 	network_send_packet(_socket, save_file, buffer_tell(save_file));
 	buffer_delete(save_file)
 }

@@ -19,7 +19,7 @@ if server == event_id {
 	var sock = async_load[? "id"]
 	global.onlinebuffer = async_load[? "buffer"]
 	buffer_seek(global.onlinebuffer, buffer_seek_start, 0)
-	var _json=buffer_read(global.onlinebuffer, buffer_text);
+	var _json=buffer_read(global.onlinebuffer, buffer_string);
 	var _struct=json_parse(_json)
 	
 	var i=0;
