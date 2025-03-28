@@ -3,19 +3,19 @@ var guih=display_get_gui_height()
 
 //i am so sorry for this random math its just trial and error honestly
 #region Mode Icons
-draw_sprite_stretched(spr_JADEtab_left,0,0,(guih/4)-10,32,(32*5)+4)
+draw_sprite_stretched(spr_JADEtab_left,0,0,(guih/3)-10,32,(32*3)+4)
 var i;
 i=0;
 repeat(3) //draw Mode icons
 {
-	draw_sprite(spr_JADEicon_bg,0,0,((guih/4)-8)+32*i) //bg square
+	draw_sprite(spr_JADEicon_bg,0,0,((guih/3)-8)+32*i) //bg square
    
-	draw_sprite(spr_JADEicons,18+i,4,((guih/4)-4)+32*i) //icon
+	draw_sprite(spr_JADEicons,18+i,4,((guih/3)-4)+32*i) //icon
    
 	if (selected_mode == i) { //selection overlay
-		draw_sprite(spr_JADEicon_bg,1,0,((guih/4)-8)+32*i)
+		draw_sprite(spr_JADEicon_bg,1,0,((guih/3)-8)+32*i)
 	} else if mouse_in_mode_slot(i) {
-		draw_sprite(spr_JADEicon_bg,2,0,((guih/4)-8)+32*i) //hover overlay
+		draw_sprite(spr_JADEicon_bg,2,0,((guih/3)-8)+32*i) //hover overlay
 	}
 	i++;
 }

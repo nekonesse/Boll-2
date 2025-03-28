@@ -165,7 +165,7 @@ mouse_in_toolbar_slot = function(numb) {
 
 mouse_in_mode_slot = function(numb) {
 	var guih=display_get_gui_height();
-	return point_in_rectangle(curs_x,curs_y,4,((guih/4)-4)+32*numb,28,(((guih/4)-4)+32*numb)+24)
+	return point_in_rectangle(curs_x,curs_y,4,((guih/3)-4)+32*numb,28,((guih/3)-4+24)+32*numb)
 }
 
 selection_box_fr=0

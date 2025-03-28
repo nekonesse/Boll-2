@@ -206,6 +206,7 @@ if server == event_id {
 					var obj = ds_list_find_value(object_layer_map, i)
 					if !is_undefined(obj) {
 						if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
+							if array_length(obj[11])
 							array_delete(obj[11],_struct._slot,1);
 							break;
 						}

@@ -27,7 +27,7 @@ on_tile_picker = (point_in_rectangle(curs_x,curs_y,tileset_picker_x-2,tileset_pi
 if (!on_object_list && object_list_active && show_object_list) on_object_list = keyboard_check_direct(vk_alt)
 
 not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
-&&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
+&&!point_in_rectangle(curs_x,curs_y,0,(guih/3)-10,32,(guih/3)-10+(32*3)+4)
 &&!(((on_object_list && show_object_list) || on_list_top) && (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE))
 &&!(on_tile_picker && selected_mode==TILE_MODE)
 
