@@ -7,35 +7,48 @@ if server == event_id {
 	
 	if (type == network_type_connect) {
 		//initialize client here
-		with(oJADEController) {
-			JADE_transer_save(sock)
-		}
-		ds_list_add(sockets, sock)
-		if ds_map_exists(clients, ip) {
+		
+		if ds_map_exists(current_clients, ip) {
 			var _struct = {
 				type: "ip_already_connected"
 			}
 			send_struct(_struct,sock);
 			network_destroy(sock);
-			ds_list_delete(sockets,ds_list_find_index(sockets,sock))
 		} else {
+			ds_list_add(sockets, sock)
+			if !ds_map_exists(clients, ip) {
+				ds_map_add(action_timers, ip, -1);
+				ds_map_add(action_amounts, ip, 5);
+			}
 			ds_map_add(clients, ip, sock)
+			ds_map_add(current_clients, ip, sock);
 			cursors[$ ds_list_find_index(sockets, sock)]=[0,0,0,""]
+			with(oJADEController) {
+				JADE_transer_save(sock)
+			}
+			var _newstruct = {
+				type: "sync_actions",
+				time: action_timers[? ip],
+				actions: action_amounts[? ip]
+			}
+			send_struct(_newstruct, sock);
 		}
 	}
 	
 	if (type == network_type_disconnect) {
 		network_destroy(sock);
 		ds_list_delete(sockets,ds_list_find_index(sockets,sock))
-		ds_map_delete(clients, ip)
+		ds_map_delete(current_clients, ip)
 		struct_remove(cursors,ds_list_find_index(sockets, sock))
 	}
 } else {
 	var sock = async_load[? "id"]
+	var ip = async_load[? "ip"]
 	global.onlinebuffer = async_load[? "buffer"]
 	buffer_seek(global.onlinebuffer, buffer_seek_start, 0)
 	var _json=buffer_read(global.onlinebuffer, buffer_string);
 	var _struct=json_parse(_json)
+	var _DONTSENDSTRUCT=false;
 	
 	show_debug_message(_struct);
 	if !is_undefined(_struct[$ "type"]) {
@@ -45,46 +58,96 @@ if server == event_id {
 				cursors[$ ds_list_find_index(sockets, sock)]=[floor(_struct._x),floor(_struct._y),_struct._tool,_struct._name];
 			break;
 			case "obj_pl":
-			with(oJADEController) {
-				place_object(_struct.uuid,_struct._x,_struct._y,_struct._xscale,_struct._yscale);
-			}
+			if (action_amounts[? ip]) { //this is alot of security for a single april fools joke But i will not let them use cheat engine.
+				show_debug_message(action_timers[? ip]);
+				if (action_timers[? ip]==-1) {
+					show_debug_message("resetting!")
+					action_timers[? ip]=(60*60);
+				}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					place_object(_struct.uuid,_struct._x,_struct._y,_struct._xscale,_struct._yscale);
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "obj_del":
-			with(oJADEController) {
-				var size = ds_list_size(object_layer_map)
-				var i=0;
-				repeat(size) {
-					var obj = ds_list_find_value(object_layer_map, i)
-					if !is_undefined(obj) {
-						if obj[1] == _struct._x && obj[2] == _struct._y {
-							ds_list_delete(object_layer_map, i)
-							break;
-						}
-					}
-					i++;
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
 				}
-			}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					var size = ds_list_size(object_layer_map)
+					var i=0;
+					repeat(size) {
+						var obj = ds_list_find_value(object_layer_map, i)
+						if !is_undefined(obj) {
+							if obj[1] == _struct._x && obj[2] == _struct._y {
+								ds_list_delete(object_layer_map, i)
+								break;
+							}
+						}
+						i++;
+					}
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "node_pl":
-			with(oJADEController) {
-				place_node_object(_struct.uuid,_struct._x,_struct._y,_struct._xscale,_struct._yscale);
-			}
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
+				}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					place_node_object(_struct.uuid,_struct._x,_struct._y,_struct._xscale,_struct._yscale);
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "node_del":
-			with(oJADEController) {
-				var size = ds_list_size(node_layer_map)
-				var i=0;
-				repeat(size) {
-					var obj = ds_list_find_value(node_layer_map, i)
-					if !is_undefined(obj) {
-						if obj[1] == _struct._x && obj[2] == _struct._y {
-							ds_list_delete(node_layer_map, i)
-							break;
-						}
-					}
-					i++;
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
 				}
-			}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					var size = ds_list_size(node_layer_map)
+					var i=0;
+					repeat(size) {
+						var obj = ds_list_find_value(node_layer_map, i)
+						if !is_undefined(obj) {
+							if obj[1] == _struct._x && obj[2] == _struct._y {
+								ds_list_delete(node_layer_map, i)
+								break;
+							}
+						}
+						i++;
+					}
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "tile_pl":
 			with(oJADEController) {
@@ -216,28 +279,30 @@ if server == event_id {
 			}
 			break;
 		}
-		if _struct[$ "type"]!="curs_upd" {
-			var i=0;
-			repeat(ds_list_size(sockets)) {
-				var p=sockets[| i]
-				if sock!=p {
-					send_struct(_struct, p)
+		if !_DONTSENDSTRUCT {
+			if _struct[$ "type"]!="curs_upd" {
+				var i=0;
+				repeat(ds_list_size(sockets)) {
+					var p=sockets[| i]
+					if sock!=p {
+						send_struct(_struct, p)
+					}
+					i++;
 				}
-				i++;
-			}
-		} else {
-			var _newstruct = {
-				type: "curs_upd",
-				cursorstruct: cursors
-			}
-			var i=0;
-			repeat(ds_list_size(sockets)) {
-				var p=sockets[| i]
-				if sock!=p {
-					_newstruct[$ "exclusion"]=ds_list_find_index(sockets, p);
-					send_struct(_newstruct, p)
+			} else {
+				var _newstruct = {
+					type: "curs_upd",
+					cursorstruct: cursors
 				}
-				i++;
+				var i=0;
+				repeat(ds_list_size(sockets)) {
+					var p=sockets[| i]
+					if sock!=p {
+						_newstruct[$ "exclusion"]=ds_list_find_index(sockets, p);
+						send_struct(_newstruct, p)
+					}
+					i++;
+				}
 			}
 		}
 	}

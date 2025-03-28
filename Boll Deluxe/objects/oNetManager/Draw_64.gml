@@ -1,4 +1,4 @@
-/*var guiw=display_get_gui_width()
+var guiw=display_get_gui_width()
 var guih=display_get_gui_height()
 
 var steps = time;
@@ -13,6 +13,9 @@ while secs > 60 {mins+=1; secs-=60;}
 
 if secs<10 secs="0"+string(secs)
 draw_set_font(global.smallBoldFont);
+draw_set_halign(fa_middle);
 if (time>=0) {
-	draw_text(200,200,$"{mins}:{secs}");
-}*/
+	draw_text_outline(guiw/2,guih-32,$"{mins}:{secs}", 1, c_black, 8, 1, 1, 0);
+}
+draw_text_outline(guiw/2,guih-16,$"actions left: {global.actions_left}", 1, c_black, 8, 1, 1, 0);
+draw_set_halign(fa_left);

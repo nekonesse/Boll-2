@@ -18,6 +18,7 @@ while string_length(string_lettersdigits(global.username))<3 || string_length(st
 }
 global.client = true;
 global.socket = network_create_socket(network_socket_tcp);
+global.actions_left = 5;
 
 connected=false;
 cursors={};
@@ -26,4 +27,4 @@ levelstruct={};
 
 server=network_connect(global.socket, "68.10.90.59", PORT)
 alarm[1]=500;
-time=(60*60)
+time=-1;

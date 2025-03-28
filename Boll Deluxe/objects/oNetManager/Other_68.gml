@@ -7,6 +7,7 @@ if global.socket == event_id {
 	var _json=buffer_read(buff, buffer_string);
 	//show_debug_message(_json);
 	var _struct=json_parse(_json)
+	show_debug_message(_struct);
 	if !is_undefined(_struct[$ "type"]) {
 		var _type=_struct[$ "type"]
 		switch(_type) {
@@ -25,10 +26,13 @@ if global.socket == event_id {
 			case "level_sync":
 			room_goto(rEditor)
 			connected=true;
-			show_message("Connected!");
 			levelstruct=_struct;
 			alarm[1]=-1;
 			alarm[0]=2;
+			break;
+			case "sync_actions":
+			time=_struct[$ "time"];
+			global.actions_left=_struct[$ "actions"];
 			break;
 			case "obj_pl":
 			with(oJADEController) {
