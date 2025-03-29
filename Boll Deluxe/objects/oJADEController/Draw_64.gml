@@ -246,7 +246,7 @@ if selected_mode == OBJECT_MODE {
 									//toggle variable
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*i,object_list_area_x+44,object_list_area_y+40+(32/3)*i)&&(!open_dropmenu||open_dropmenu-1==i)
 								
-									if (mbleftpress) {
+									if (mbleftpress) && (global.actions_left) {
 										if (incheck) {
 											show_debug_message(proparr[10][i][2])
 											proparr[10][i][2]=!bool(proparr[10][i][2])
@@ -293,7 +293,7 @@ if selected_mode == OBJECT_MODE {
 										
 										var insubcheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+40+(32/3)*i+8*j,object_list_area_x+34+56,object_list_area_y+48+(32/3)*i+8*j)&&(!open_dropmenu||open_dropmenu-1==i)
 								
-										if (insubcheck) && (mbleftpress) {
+										if (insubcheck) && (mbleftpress) && (global.actions_left) {
 											//set selected object to selected variable
 											properties_group[10][i][2]=menuarr[j];
 											var _struct = {
@@ -323,7 +323,7 @@ if selected_mode == OBJECT_MODE {
 									//check if clicking on box
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*i,object_list_area_x+44,object_list_area_y+40+(32/3)*i)&&(!open_dropmenu||open_dropmenu-1==i)
 									
-									if (mbleftpress) {
+									if (mbleftpress) && (global.actions_left) {
 										//start typing
 										if (incheck) && !is_typing {
 											is_typing=i+1
@@ -348,7 +348,7 @@ if selected_mode == OBJECT_MODE {
 									}
 									
 									//if pressed enter and typing, finish typing aswell
-									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
+									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) && (global.actions_left) {
 										properties_group[10][i][2]=unreal(temptypingstring,properties_group[10][i][2])
 										var _struct = {
 											type: "obj_prop_change",
@@ -405,7 +405,7 @@ if selected_mode == OBJECT_MODE {
 									//check if clicking on box
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+11*i,object_list_area_x+133,object_list_area_y+40+11*i)&&(!open_dropmenu||open_dropmenu-1==i)
 									
-									if (mbleftpress) {
+									if (mbleftpress) && (global.actions_left) {
 										//start typing
 										if (incheck) && !is_typing {
 											is_typing=i+1
@@ -429,7 +429,7 @@ if selected_mode == OBJECT_MODE {
 									}
 									
 									//if pressed enter and typing, finish typing aswell
-									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
+									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) && (global.actions_left) {
 										properties_group[10][i][2]=string(temptypingstring)
 										var _struct = {
 											type: "obj_prop_change",
@@ -683,7 +683,7 @@ if selected_mode == OBJECT_MODE {
 									//toggle variable
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*i,object_list_area_x+44,object_list_area_y+40+(32/3)*i)&&(!open_dropmenu||open_dropmenu-1==i)
 								
-									if (mbleftpress) {
+									if (mbleftpress) && (global.actions_left) {
 										if (incheck) {
 											show_debug_message(proparr[10][i][2])
 											proparr[10][i][2]=!bool(proparr[10][i][2])
@@ -709,7 +709,7 @@ if selected_mode == OBJECT_MODE {
 								//toggle variable
 								var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*i,object_list_area_x+34+56,object_list_area_y+40+(32/3)*i)&&(!open_dropmenu||open_dropmenu-1==i)
 								
-								if (incheck) && (mbleftpress) {
+								if (incheck) && (mbleftpress) && (global.actions_left) {
 									if !(open_dropmenu) {
 										open_dropmenu=i+1;
 									} else {
@@ -730,7 +730,7 @@ if selected_mode == OBJECT_MODE {
 										
 										var insubcheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+40+(32/3)*i+8*j,object_list_area_x+34+56,object_list_area_y+48+(32/3)*i+8*j)&&(!open_dropmenu||open_dropmenu-1==i)
 								
-										if (insubcheck) && (mbleftpress) {
+										if (insubcheck) && (mbleftpress) && (global.actions_left) {
 											//set selected object to selected variable
 											properties_group[10][i][2]=menuarr[j];
 											var _struct = {
@@ -760,7 +760,7 @@ if selected_mode == OBJECT_MODE {
 									//check if clicking on box
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*i,object_list_area_x+44,object_list_area_y+40+(32/3)*i)&&(!open_dropmenu||open_dropmenu-1==i)
 									
-									if (mbleftpress) {
+									if (mbleftpress) && (global.actions_left) {
 										//start typing
 										if (incheck) && !is_typing {
 											is_typing=i+1
@@ -785,7 +785,7 @@ if selected_mode == OBJECT_MODE {
 									}
 									
 									//if pressed enter and typing, finish typing aswell
-									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
+									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) && (global.actions_left) {
 										properties_group[10][i][2]=unreal(temptypingstring,properties_group[10][i][2])
 										var _struct = {
 											type: "node_prop_change",
@@ -842,7 +842,7 @@ if selected_mode == OBJECT_MODE {
 									//check if clicking on box
 									var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+11*i,object_list_area_x+133,object_list_area_y+40+11*i)&&(!open_dropmenu||open_dropmenu-1==i)
 									
-									if (mbleftpress) {
+									if (mbleftpress) && (global.actions_left) {
 										//start typing
 										if (incheck) && !is_typing {
 											is_typing=i+1
@@ -866,7 +866,7 @@ if selected_mode == OBJECT_MODE {
 									}
 									
 									//if pressed enter and typing, finish typing aswell
-									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) {
+									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) && (global.actions_left) {
 										properties_group[10][i][2]=string(temptypingstring)
 										var _struct = {
 											type: "node_prop_change",
@@ -941,7 +941,7 @@ if selected_mode == OBJECT_MODE {
 						//toggle variable
 						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*1,object_list_area_x+44,object_list_area_y+40+(32/3)*1)&&(!open_dropmenu||open_dropmenu-1==1)
 								
-						if (mbleftpress) {
+						if (mbleftpress) && (global.actions_left) {
 							if (incheck) {
 								proparr[1]=!proparr[1]
 								var _struct = {
@@ -968,7 +968,7 @@ if selected_mode == OBJECT_MODE {
 						//check if clicking on box
 						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34,object_list_area_x+44,object_list_area_y+40)&&(!open_dropmenu||open_dropmenu-1==0)
 									
-						if (mbleftpress) {
+						if (mbleftpress) && (global.actions_left) {
 							//start typing
 							if (incheck) && !is_typing {
 								is_typing=1
@@ -993,7 +993,7 @@ if selected_mode == OBJECT_MODE {
 						}
 									
 						//if pressed enter and typing, finish typing aswell
-						if keyboard_check_pressed(vk_enter) && (is_typing-1==0) {
+						if keyboard_check_pressed(vk_enter) && (is_typing-1==0) && (global.actions_left) {
 							proparr[0]=unreal(temptypingstring,proparr[0])
 							var _struct = {
 								type: "node_var_change",
@@ -1020,7 +1020,7 @@ if selected_mode == OBJECT_MODE {
 						//check if clicking on box
 						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*2,object_list_area_x+44,object_list_area_y+40+(32/3)*2)&&(!open_dropmenu||open_dropmenu-1==2)
 									
-						if (mbleftpress) {
+						if (mbleftpress) && (global.actions_left) {
 							//start typing
 							if (incheck) && !is_typing {
 								is_typing=3
@@ -1045,7 +1045,7 @@ if selected_mode == OBJECT_MODE {
 						}
 									
 						//if pressed enter and typing, finish typing aswell
-						if keyboard_check_pressed(vk_enter) && (is_typing-1==2) {
+						if keyboard_check_pressed(vk_enter) && (is_typing-1==2) && (global.actions_left) {
 							proparr[2]=floor(unreal(temptypingstring,proparr[2]))
 							var _struct = {
 								type: "node_var_change",
@@ -1094,7 +1094,7 @@ if selected_mode == OBJECT_MODE {
 						//toggle variable
 						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*3,object_list_area_x+44,object_list_area_y+40+(32/3)*3)&&(!open_dropmenu||open_dropmenu-1==3)
 								
-						if (mbleftpress) {
+						if (mbleftpress) && (global.actions_left) {
 							if (incheck) {
 								proparr[3]=!proparr[3]
 								var _struct = {
@@ -1115,7 +1115,7 @@ if selected_mode == OBJECT_MODE {
 						//toggle variable
 						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*4,object_list_area_x+44,object_list_area_y+40+(32/3)*4)&&(!open_dropmenu||open_dropmenu-1==4)
 								
-						if (mbleftpress) {
+						if (mbleftpress) && (global.actions_left) {
 							if (incheck) {
 								proparr[4]=!proparr[4]
 								var _struct = {
@@ -1136,7 +1136,7 @@ if selected_mode == OBJECT_MODE {
 						//toggle variable
 						var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*5,object_list_area_x+44,object_list_area_y+40+(32/3)*5)&&(!open_dropmenu||open_dropmenu-1==5)
 								
-						if (mbleftpress) {
+						if (mbleftpress) && (global.actions_left) {
 							if (incheck) {
 								proparr[5]=!proparr[5]
 								var _struct = {

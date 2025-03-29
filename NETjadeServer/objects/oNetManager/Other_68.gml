@@ -20,8 +20,8 @@ if server == event_id {
 				ds_map_add(action_timers, ip, -1);
 				ds_map_add(action_amounts, ip, 5);
 			}
-			ds_map_add(clients, ip, sock)
-			ds_map_add(current_clients, ip, sock);
+			ds_map_set(clients, ip, sock)
+			ds_map_set(current_clients, ip, sock);
 			cursors[$ ds_list_find_index(sockets, sock)]=[0,0,0,""]
 			with(oJADEController) {
 				JADE_transer_save(sock)

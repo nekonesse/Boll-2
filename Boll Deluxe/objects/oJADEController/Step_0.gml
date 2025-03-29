@@ -166,20 +166,7 @@ switch(selected_mode) {
 
 if (mbleftpress) {
 	if (not_on_gui) {
-		if (selected_tool == PICKER_TOOL) {
-			switch(selected_mode) {
-				case OBJECT_MODE:
-					//todo, redo picker based on new object system
-				break;
-			}
-		}
-	
-		if (selected_tool == BRUSH_TOOL) {
-			switch(selected_mode) {
-				case OBJECT_MODE:
-				break;
-			}
-		}
+		if (global.actions_left)
 		switch(selected_tool) {
 		case FLIP_TOOL:
 			switch(selected_mode) {
@@ -307,7 +294,7 @@ if show_tileset {
 	}
 }
 
-if (mbright && not_on_gui) {
+if (mbright && not_on_gui && global.actions_left) {
 	switch(selected_tool) {
 		case BRUSH_TOOL: {
 			switch(selected_mode) {
@@ -376,7 +363,33 @@ if (mbright && not_on_gui) {
 }
 
 if (mbleftpress && not_on_gui) {
-	if (selected_tool == SELECT_TOOL) {
+	if (selected_tool == PICKER_TOOL) {
+		var i=0;
+		repeat(ds_list_size(object_layer_map)) {
+			//is place matching cursor?
+			var obj = ds_list_find_value(object_layer_map, i)
+			if !is_undefined(obj) {
+				if (obj[1]==gridx && obj[2]==gridy) {
+					var j=0;
+					repeat (array_length(jade_cats[selected_mode])) {
+						var k=0;
+						repeat(ds_list_size(jade_cats[selected_mode][j])) {
+							var arr=ds_list_find_value(jade_cats[selected_mode][j], k)
+							if (arr[0]==obj[0]) {
+								current_obj_id[selected_mode][j]=k
+								selected_obj = arr[0]
+								break;
+							}
+							k++;
+						}
+						j++;
+					}
+					break
+				}
+			}
+			i++;
+		}
+	} else if (selected_tool == SELECT_TOOL) {
 			switch(selected_mode) {
 				case OBJECT_MODE:
 					var i=0;
@@ -450,7 +463,7 @@ if (mbleftpress && not_on_gui) {
 	}
 }
 
-if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
+if (mbleft && not_on_gui && !keyboard_check(vk_space) && global.actions_left) {
 		switch(selected_tool) {
 		case BRUSH_TOOL:
 			switch(selected_mode) {
@@ -468,7 +481,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 							i++;
 						}
 						if !is_undefined(selected_obj) {
-							var sprite = ds_map_find_value(obj_data,selected_obj)
+							var sprite = ds_map_find_value(obj_data, selected_obj)
 							if sprite[7]!=OBJECT_MODE exit;
 							ds_list_add(object_layer_map, [selected_obj, gridx, gridy, sprite[11], sprite[12], 0])//add object to list at place
 							show_debug_message("created object: {0}", selected_obj)
@@ -702,17 +715,11 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 				break;
 			}
 		break;
-		case FILL_TOOL:
-			switch(selected_mode) {
-				case TILE_MODE:
-					
-				break;
-			}
 		}
 	
 }
 	
-if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
+if (selected_tool==NODE_TOOL) && (not_on_gui) && (global.actions_left) { //drawing nodes
 	if (mbleftpress) {
 		if (drawing_node==-1) {
 			var size = ds_list_size(object_layer_map)

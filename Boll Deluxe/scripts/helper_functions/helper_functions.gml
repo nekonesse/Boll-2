@@ -1,4 +1,4 @@
-/// global helper functions
+ /// global helper functions
 
 //
 // shove camera macros in here, I have no idea where else to put them
