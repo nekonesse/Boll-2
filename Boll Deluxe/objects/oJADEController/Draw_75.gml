@@ -35,6 +35,7 @@ if (not_on_gui) {
 						var yoff=(arr[2] = 0) ? 0 : arr[2] + (arr[4]/2) * box_h
 						if arr[7] == selected_mode
 						draw_sprite_ext(arr[0],0,drawing_object_x*16+xoff-arr[1]-cam_x,drawing_object_y*16+yoff-arr[2]-cam_y,((box_w*16)/arr[3])*arr[11],((box_h*16)/arr[4])*arr[12],0,c_white,0.25)
+						draw_sprite(spr_JADE4scaler,3,(drawing_object_x*16)+(box_w*16)+xoff-arr[1]-cam_x,(drawing_object_y*16)+(box_h*16)+yoff-arr[2]-cam_y)
 					}
 				}
 			break;

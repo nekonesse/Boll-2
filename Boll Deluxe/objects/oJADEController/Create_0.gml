@@ -189,7 +189,7 @@ repeat (array_length(tile_layer)) {
 //add preset layout
 camera_set_view_pos(view_camera[0],0,room_height-camera_get_view_height(view_camera[0]))
 
-place_object = function(uuid,_x,_y,xscale=1,yscale=1) { 
+place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 	var sprite = ds_map_find_value(obj_data,uuid)
 	ds_list_add(object_layer_map, [uuid, _x, _y, xscale*sprite[11], yscale*sprite[12], 0])//add object to list at place
 	var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
@@ -203,7 +203,7 @@ place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 		obj[12] = [2,false,0,false,true,true] //node properties
 		if is_array(sprite[8]) && array_length(sprite[8]) {
 			var o=0;
-			repeat(array_length(sprite[8])) { //god Damn.
+			repeat (array_length(sprite[8])) { //god Damn.
 				if is_array(sprite[8][o]) {
 					obj[10][o] = array_create(1,0)
 					array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
@@ -219,14 +219,16 @@ place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 }
 
 place_node_object = function(uuid,_x,_y,xscale=1,yscale=1) { 
-	var sprite = ds_map_find_value(obj_data,uuid)
 	ds_list_add(node_layer_map, [uuid, _x, _y, xscale*sprite[11], yscale*sprite[12], 0])//add object to list at place
 	var obj = ds_list_find_value(node_layer_map, ds_list_size(node_layer_map)-1)
+	var sprite = ds_map_find_value(obj_data,uuid)
 	if !is_undefined(obj) {
 		obj[6] = sprite[3]*xscale
 		obj[7] = sprite[4]*yscale
-		obj[8] = 0
-		obj[9] = 0
+		obj[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj[3] 
+		obj[9] = (sprite[2] = 0) ? 0 : sprite[2] + (sprite[4]/2) * obj[4]
+		obj[3] = obj[8]
+		obj[4] = obj[9]
 		obj[10] = []
 		obj[11] = []
 		obj[12] = [2,false,0,false,true,true] //node properties

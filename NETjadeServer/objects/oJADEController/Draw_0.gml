@@ -1,7 +1,7 @@
 //draw awesome objects!!! yay!!!!!
 //draw out of bounds border
 var int32l=2147483647
-draw_rect(-int32l, -int32l, room_width+int32l, int32l, c_black, 0.5)
+draw_rect(-int32l, -int32l, room_width+int32l*2, int32l, c_black, 0.5)
 draw_rect(-int32l, 0, int32l, room_height, c_black, 0.5)
 draw_rect(-int32l, room_height, room_width+int32l*2, int32l, c_black, 0.5)
 draw_rect(room_width, 0, int32l, room_height, c_black, 0.5)

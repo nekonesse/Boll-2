@@ -18,7 +18,7 @@ repeat (size) {
 					var _struct = {
 						type: "sync_actions",
 						time: -1,
-						actions: action_amounts[? key]
+						actions: 5
 					}
 					send_struct(_struct, sockets[| i])
 					break;

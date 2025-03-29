@@ -103,7 +103,6 @@ function JADE_initializeobj() {
 	registerobj(object_get_name(oBobOmb), spr_bobombwalk, -8, -8, 21, 22, false, false, OBJECT_MODE, 1, object_get_properties("oBobOmb"))
 	registerobj(object_get_name(oBigSteely), spr_bigsteely, -24, -24, 48, 48, false, false, OBJECT_MODE, 1, object_get_properties("oBigSteely"), "Big Steely")
 	registerobj(object_get_name(oBillBlaster), spr_billblasterJADE, 0, 0, 16, 32, false, true, OBJECT_MODE, 1, object_get_properties("oBillBlaster"), "Bill Blaster")
-	registerobj(object_get_name(oBanzaiBlaster), spr_banzaiblasterJADE, -32, -32, 64, 64, false, true, OBJECT_MODE, 1, object_get_properties("oBanzaiBlaster"), "Banzai Blaster")
 	registerobj(object_get_name(oPiranhaPlant), spr_piranhaplant, 4, -6, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oPiranhaPlant"), "Piranha Plant")
 	registerobj(object_get_name(oJumpingPiranha), spr_jumpingpiranhaJADE, -16, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oJumpingPiranha"), "Jumping Piranha")
 	registerobj(object_get_name(oStopbob), spr_stopbob, -8, -16, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oStopbob"), "Stopbob")
