@@ -26,9 +26,6 @@ if server == event_id {
 			with(oJADEController) {
 				JADE_transer_save(sock, ip)
 			}
-			show_debug_message(ip);
-			show_debug_message(action_timers[? ip]);
-			show_debug_message(action_amounts[? ip]);
 		}
 	}
 	
