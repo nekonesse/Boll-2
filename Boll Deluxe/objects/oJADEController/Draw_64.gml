@@ -250,6 +250,7 @@ if selected_mode == OBJECT_MODE {
 										if (incheck) {
 											show_debug_message(proparr[10][i][2])
 											proparr[10][i][2]=!bool(proparr[10][i][2])
+											global.actions_left=max(global.actions_left-1,0);
 											var _struct = {
 												type: "obj_prop_change",
 												uuid: proparr[0],
@@ -296,6 +297,7 @@ if selected_mode == OBJECT_MODE {
 										if (insubcheck) && (mbleftpress) && (global.actions_left) {
 											//set selected object to selected variable
 											properties_group[10][i][2]=menuarr[j];
+											global.actions_left=max(global.actions_left-1,0);
 											var _struct = {
 												type: "obj_prop_change",
 												uuid: proparr[0],
@@ -333,6 +335,7 @@ if selected_mode == OBJECT_MODE {
 										if !(incheck) && (is_typing-1==i) {
 											//set the variable to our typed number, if its blank reset back to the value it was before
 											properties_group[10][i][2]=unreal(temptypingstring,properties_group[10][i][2])
+											global.actions_left=max(global.actions_left-1,0);
 											var _struct = {
 												type: "obj_prop_change",
 												uuid: proparr[0],
@@ -350,6 +353,7 @@ if selected_mode == OBJECT_MODE {
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) && (global.actions_left) {
 										properties_group[10][i][2]=unreal(temptypingstring,properties_group[10][i][2])
+										global.actions_left=max(global.actions_left-1,0);
 										var _struct = {
 											type: "obj_prop_change",
 											uuid: proparr[0],
@@ -414,6 +418,7 @@ if selected_mode == OBJECT_MODE {
 										//if clicking off of the box, finish typing
 										if !(incheck) && (is_typing-1==i) {
 											properties_group[10][i][2]=string(temptypingstring)
+											global.actions_left=max(global.actions_left-1,0);
 											var _struct = {
 												type: "obj_prop_change",
 												uuid: proparr[0],
@@ -431,6 +436,7 @@ if selected_mode == OBJECT_MODE {
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) && (global.actions_left) {
 										properties_group[10][i][2]=string(temptypingstring)
+										global.actions_left=max(global.actions_left-1,0);
 										var _struct = {
 											type: "obj_prop_change",
 											uuid: proparr[0],
@@ -687,6 +693,7 @@ if selected_mode == OBJECT_MODE {
 										if (incheck) {
 											show_debug_message(proparr[10][i][2])
 											proparr[10][i][2]=!bool(proparr[10][i][2])
+											global.actions_left=max(global.actions_left-1,0);
 											var _struct = {
 												type: "node_prop_change",
 												uuid: proparr[0],
@@ -733,6 +740,7 @@ if selected_mode == OBJECT_MODE {
 										if (insubcheck) && (mbleftpress) && (global.actions_left) {
 											//set selected object to selected variable
 											properties_group[10][i][2]=menuarr[j];
+											global.actions_left=max(global.actions_left-1,0);
 											var _struct = {
 												type: "node_prop_change",
 												uuid: proparr[0],
@@ -770,6 +778,7 @@ if selected_mode == OBJECT_MODE {
 										if !(incheck) && (is_typing-1==i) {
 											//set the variable to our typed number, if its blank reset back to the value it was before
 											properties_group[10][i][2]=unreal(temptypingstring,properties_group[10][i][2])
+											global.actions_left=max(global.actions_left-1,0);
 											var _struct = {
 												type: "node_prop_change",
 												uuid: proparr[0],
@@ -787,6 +796,7 @@ if selected_mode == OBJECT_MODE {
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) && (global.actions_left) {
 										properties_group[10][i][2]=unreal(temptypingstring,properties_group[10][i][2])
+										global.actions_left=max(global.actions_left-1,0);
 										var _struct = {
 											type: "node_prop_change",
 											uuid: proparr[0],
@@ -851,6 +861,7 @@ if selected_mode == OBJECT_MODE {
 										//if clicking off of the box, finish typing
 										if !(incheck) && (is_typing-1==i) {
 											properties_group[10][i][2]=string(temptypingstring)
+											global.actions_left=max(global.actions_left-1,0);
 											var _struct = {
 												type: "node_prop_change",
 												uuid: proparr[0],
@@ -868,6 +879,7 @@ if selected_mode == OBJECT_MODE {
 									//if pressed enter and typing, finish typing aswell
 									if keyboard_check_pressed(vk_enter) && (is_typing-1==i) && (global.actions_left) {
 										properties_group[10][i][2]=string(temptypingstring)
+										global.actions_left=max(global.actions_left-1,0);
 										var _struct = {
 											type: "node_prop_change",
 											uuid: proparr[0],
@@ -944,6 +956,7 @@ if selected_mode == OBJECT_MODE {
 						if (mbleftpress) && (global.actions_left) {
 							if (incheck) {
 								proparr[1]=!proparr[1]
+								global.actions_left=max(global.actions_left-1,0);
 								var _struct = {
 									type: "node_var_change",
 									uuid: obj[0],
@@ -978,6 +991,7 @@ if selected_mode == OBJECT_MODE {
 							if !(incheck) && (is_typing-1==0) {
 								//set the variable to our typed number, if its blank reset back to the value it was before
 								proparr[0]=unreal(temptypingstring,proparr[0])
+								global.actions_left=max(global.actions_left-1,0);
 								var _struct = {
 									type: "node_var_change",
 									uuid: obj[0],
@@ -995,6 +1009,7 @@ if selected_mode == OBJECT_MODE {
 						//if pressed enter and typing, finish typing aswell
 						if keyboard_check_pressed(vk_enter) && (is_typing-1==0) && (global.actions_left) {
 							proparr[0]=unreal(temptypingstring,proparr[0])
+							global.actions_left=max(global.actions_left-1,0);
 							var _struct = {
 								type: "node_var_change",
 								uuid: obj[0],
@@ -1030,6 +1045,7 @@ if selected_mode == OBJECT_MODE {
 							if !(incheck) && (is_typing-1==2) {
 								//set the variable to our typed number, if its blank reset back to the value it was before
 								proparr[2]=unreal(temptypingstring,proparr[2])
+								global.actions_left=max(global.actions_left-1,0);
 								var _struct = {
 									type: "node_var_change",
 									uuid: obj[0],
@@ -1047,6 +1063,7 @@ if selected_mode == OBJECT_MODE {
 						//if pressed enter and typing, finish typing aswell
 						if keyboard_check_pressed(vk_enter) && (is_typing-1==2) && (global.actions_left) {
 							proparr[2]=floor(unreal(temptypingstring,proparr[2]))
+							global.actions_left=max(global.actions_left-1,0);
 							var _struct = {
 								type: "node_var_change",
 								uuid: obj[0],
@@ -1097,6 +1114,7 @@ if selected_mode == OBJECT_MODE {
 						if (mbleftpress) && (global.actions_left) {
 							if (incheck) {
 								proparr[3]=!proparr[3]
+								global.actions_left=max(global.actions_left-1,0);
 								var _struct = {
 									type: "node_var_change",
 									uuid: obj[0],
@@ -1118,6 +1136,7 @@ if selected_mode == OBJECT_MODE {
 						if (mbleftpress) && (global.actions_left) {
 							if (incheck) {
 								proparr[4]=!proparr[4]
+								global.actions_left=max(global.actions_left-1,0);
 								var _struct = {
 									type: "node_var_change",
 									uuid: obj[0],
@@ -1139,6 +1158,7 @@ if selected_mode == OBJECT_MODE {
 						if (mbleftpress) && (global.actions_left) {
 							if (incheck) {
 								proparr[5]=!proparr[5]
+								global.actions_left=max(global.actions_left-1,0);
 								var _struct = {
 									type: "node_var_change",
 									uuid: obj[0],

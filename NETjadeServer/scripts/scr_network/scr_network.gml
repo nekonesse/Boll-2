@@ -40,7 +40,6 @@ function JADE_transer_save(_socket, ip) {
 	}
 	struct[$ "type"]="level_sync"
 	struct[$ "time"]=oNetManager.action_timers[? ip]
-	struct[$ "actions"]=oNetManager.action_amounts[? ip]
 	struct[$ "version"]=JADE_VERSION
 	struct[$ "objects"]=arrayObjects
 	struct[$ "node_objects"]=arrayNodeObjects

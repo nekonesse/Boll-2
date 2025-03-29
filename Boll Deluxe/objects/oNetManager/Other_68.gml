@@ -34,7 +34,9 @@ if global.socket == event_id {
 			break;
 			case "sync_actions":
 			time=_struct[$ "time"];
-			global.actions_left=_struct[$ "actions"];
+			if !time == -1 {
+				global.actions_left=5;
+			}
 			break;
 			case "obj_pl":
 			with(oJADEController) {

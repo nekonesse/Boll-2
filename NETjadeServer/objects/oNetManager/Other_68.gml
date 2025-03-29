@@ -18,7 +18,6 @@ if server == event_id {
 			ds_list_add(sockets, sock)
 			if !ds_map_exists(clients, ip) {
 				ds_map_add(action_timers, ip, -1);
-				ds_map_add(action_amounts, ip, 5);
 			}
 			ds_map_add(clients, ip, sock)
 			ds_map_add(current_clients, ip, sock);
@@ -51,33 +50,26 @@ if server == event_id {
 				cursors[$ ds_list_find_index(sockets, sock)]=[floor(_struct._x),floor(_struct._y),_struct._tool,_struct._name];
 			break;
 			case "obj_pl":
-			if (action_amounts[? ip]) { //this is alot of security for a single april fools joke But i will not let them use cheat engine.
 				show_debug_message(action_timers[? ip]);
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
 					place_object(_struct.uuid,_struct._x,_struct._y,_struct._xscale,_struct._yscale);
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "obj_del":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -94,35 +86,27 @@ if server == event_id {
 						i++;
 					}
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "node_pl":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
 					place_node_object(_struct.uuid,_struct._x,_struct._y,_struct._xscale,_struct._yscale);
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "node_del":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -139,35 +123,27 @@ if server == event_id {
 						i++;
 					}
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "tile_pl":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
 					place_tile(_struct.uuid,_struct._layer,_struct._x,_struct._y);
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "tile_del":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -178,18 +154,14 @@ if server == event_id {
 					}
 					tile_update_properties(_struct._layer);
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "tile_fl":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -201,18 +173,14 @@ if server == event_id {
 					}
 					tile_update_properties(_struct._layer);
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "tile_mi":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -224,18 +192,14 @@ if server == event_id {
 					}
 					tile_update_properties(_struct._layer);
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "tile_rot":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -247,18 +211,14 @@ if server == event_id {
 					}
 					tile_update_properties(_struct._layer);
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "obj_prop_change":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -275,18 +235,14 @@ if server == event_id {
 						i++;
 					}
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "node_prop_change":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -303,18 +259,14 @@ if server == event_id {
 						i++;
 					}
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "node_var_change":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -331,18 +283,14 @@ if server == event_id {
 						i++;
 					}
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "obj_node_make":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -359,18 +307,14 @@ if server == event_id {
 						i++;
 					}
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 			case "obj_node_del":
-			if (action_amounts[? ip]) {
 				if (action_timers[? ip]==-1) {
 					action_timers[? ip]=(60*60);
 				}
-				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? ip],
-					actions: action_amounts[? ip]
+					time: action_timers[? ip]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -388,7 +332,6 @@ if server == event_id {
 						i++;
 					}
 				}
-			} else _DONTSENDSTRUCT=true;
 			break;
 		}
 		if !_DONTSENDSTRUCT {
