@@ -142,133 +142,253 @@ if server == event_id {
 			} else _DONTSENDSTRUCT=true;
 			break;
 			case "tile_pl":
-			with(oJADEController) {
-				place_tile(_struct.uuid,_struct._layer,_struct._x,_struct._y);
-			}
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
+				}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					place_tile(_struct.uuid,_struct._layer,_struct._x,_struct._y);
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "tile_del":
-			with(oJADEController) {
-				var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
-				if tile_get_index(data)!= 0 {
-					data = tile_set_empty(data)
-					tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
 				}
-				tile_update_properties(_struct._layer);
-			}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
+					if tile_get_index(data)!= 0 {
+						data = tile_set_empty(data)
+						tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
+					}
+					tile_update_properties(_struct._layer);
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "tile_fl":
-			with(oJADEController) {
-				var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
-				if tile_get_index(data)!= 0 {
-					data = tile_set_flip(data, 1 - tile_get_flip(data))
-					tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
-					ds_list_add(tile_layer_map[_struct._layer], [data, _struct._x, _struct._y])
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
 				}
-				tile_update_properties(_struct._layer);
-			}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
+					if tile_get_index(data)!= 0 {
+						data = tile_set_flip(data, 1 - tile_get_flip(data))
+						tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
+						ds_list_add(tile_layer_map[_struct._layer], [data, _struct._x, _struct._y])
+					}
+					tile_update_properties(_struct._layer);
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "tile_mi":
-			with(oJADEController) {
-				var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
-				if tile_get_index(data)!= 0 {
-					data = tile_set_mirror(data, 1 - tile_get_mirror(data))
-					tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
-					ds_list_add(tile_layer_map[_struct._layer], [data, _struct._x, _struct._y])
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
 				}
-				tile_update_properties(_struct._layer);
-			}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
+					if tile_get_index(data)!= 0 {
+						data = tile_set_mirror(data, 1 - tile_get_mirror(data))
+						tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
+						ds_list_add(tile_layer_map[_struct._layer], [data, _struct._x, _struct._y])
+					}
+					tile_update_properties(_struct._layer);
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "tile_rot":
-			with(oJADEController) {
-				var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
-				if tile_get_index(data)!= 0 {
-					data = tile_set_rotate(data, 1 - tile_get_rotate(data))
-					tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
-					ds_list_add(tile_layer_map[_struct._layer], [data, _struct._x, _struct._y])
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
 				}
-				tile_update_properties(_struct._layer);
-			}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					var data = tilemap_get(tile_layer[_struct._layer], _struct._x, _struct._y);
+					if tile_get_index(data)!= 0 {
+						data = tile_set_rotate(data, 1 - tile_get_rotate(data))
+						tilemap_set(tile_layer[_struct._layer], data, _struct._x, _struct._y);
+						ds_list_add(tile_layer_map[_struct._layer], [data, _struct._x, _struct._y])
+					}
+					tile_update_properties(_struct._layer);
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "obj_prop_change":
-			with(oJADEController) {
-				var size = ds_list_size(object_layer_map)
-				var i=0;
-				repeat(size) {
-					var obj = ds_list_find_value(object_layer_map, i)
-					if !is_undefined(obj) {
-						if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
-							obj[10][_struct._slot][2]=_struct._value;
-							break;
-						}
-					}
-					i++;
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
 				}
-			}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					var size = ds_list_size(object_layer_map)
+					var i=0;
+					repeat(size) {
+						var obj = ds_list_find_value(object_layer_map, i)
+						if !is_undefined(obj) {
+							if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
+								obj[10][_struct._slot][2]=_struct._value;
+								break;
+							}
+						}
+						i++;
+					}
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "node_prop_change":
-			with(oJADEController) {
-				var size = ds_list_size(node_layer_map)
-				var i=0;
-				repeat(size) {
-					var obj = ds_list_find_value(node_layer_map, i)
-					if !is_undefined(obj) {
-						if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
-							obj[10][_struct._slot][2]=_struct._value;
-							break;
-						}
-					}
-					i++;
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
 				}
-			}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					var size = ds_list_size(node_layer_map)
+					var i=0;
+					repeat(size) {
+						var obj = ds_list_find_value(node_layer_map, i)
+						if !is_undefined(obj) {
+							if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
+								obj[10][_struct._slot][2]=_struct._value;
+								break;
+							}
+						}
+						i++;
+					}
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "node_var_change":
-			with(oJADEController) {
-				var size = ds_list_size(object_layer_map)
-				var i=0;
-				repeat(size) {
-					var obj = ds_list_find_value(object_layer_map, i)
-					if !is_undefined(obj) {
-						if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
-							obj[12][_struct._slot]=_struct._value;
-							break;
-						}
-					}
-					i++;
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
 				}
-			}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					var size = ds_list_size(object_layer_map)
+					var i=0;
+					repeat(size) {
+						var obj = ds_list_find_value(object_layer_map, i)
+						if !is_undefined(obj) {
+							if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
+								obj[12][_struct._slot]=_struct._value;
+								break;
+							}
+						}
+						i++;
+					}
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "obj_node_make":
-			with(oJADEController) {
-				var size = ds_list_size(object_layer_map)
-				var i=0;
-				repeat(size) {
-					var obj = ds_list_find_value(object_layer_map, i)
-					if !is_undefined(obj) {
-						if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
-							obj[11][_struct._slot]=_struct._value;
-							break;
-						}
-					}
-					i++;
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
 				}
-			}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					var size = ds_list_size(object_layer_map)
+					var i=0;
+					repeat(size) {
+						var obj = ds_list_find_value(object_layer_map, i)
+						if !is_undefined(obj) {
+							if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
+								obj[11][_struct._slot]=_struct._value;
+								break;
+							}
+						}
+						i++;
+					}
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 			case "obj_node_del":
-			with(oJADEController) {
-				var size = ds_list_size(object_layer_map)
-				var i=0;
-				repeat(size) {
-					var obj = ds_list_find_value(object_layer_map, i)
-					if !is_undefined(obj) {
-						if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
-							if array_length(obj[11])
-							array_delete(obj[11],_struct._slot,1);
-							break;
-						}
-					}
-					i++;
+			if (action_amounts[? ip]) {
+				if (action_timers[? ip]==-1) {
+					action_timers[? ip]=(60*60);
 				}
-			}
+				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
+				var _newstruct = {
+					type: "sync_actions",
+					time: action_timers[? ip],
+					actions: action_amounts[? ip]
+				}
+				send_struct(_newstruct, sock);
+				with(oJADEController) {
+					var size = ds_list_size(object_layer_map)
+					var i=0;
+					repeat(size) {
+						var obj = ds_list_find_value(object_layer_map, i)
+						if !is_undefined(obj) {
+							if obj[0] == _struct.uuid && obj[1] == _struct._x && obj[2] == _struct._y {
+								if array_length(obj[11])
+								array_delete(obj[11],_struct._slot,1);
+								break;
+							}
+						}
+						i++;
+					}
+				}
+			} else _DONTSENDSTRUCT=true;
 			break;
 		}
 		if !_DONTSENDSTRUCT {

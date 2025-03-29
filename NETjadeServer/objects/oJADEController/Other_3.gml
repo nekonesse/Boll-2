@@ -1,1 +1,1 @@
-JADE_save(game_save_id+"\afd2025.jade");
+JADE_save(game_save_id+"/afd2025.jade");
