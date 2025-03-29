@@ -84,6 +84,9 @@ selection_y = [0]
 selection_box = false
 selection_box_x = 0
 selection_box_y = 0
+drawing_object=-1;
+drawing_object_x=0;
+drawing_object_y=0;
 
 current_tile_id = 0
 tile_drag = false;
@@ -193,8 +196,8 @@ place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 	if !is_undefined(obj) {
 		obj[6] = sprite[3]*xscale
 		obj[7] = sprite[4]*yscale
-		obj[8] = 0
-		obj[9] = 0
+		obj[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj[3] 
+		obj[9] = (sprite[2] = 0) ? 0 : sprite[2] + (sprite[4]/2) * obj[4]
 		obj[10] = []
 		obj[11] = []
 		obj[12] = [2,false,0,false,true,true] //node properties

@@ -29,6 +29,8 @@ if global.socket == event_id {
 			levelstruct=_struct;
 			alarm[1]=-1;
 			alarm[0]=2;
+			time=_struct[$ "time"];
+			global.actions_left=_struct[$ "actions"];
 			break;
 			case "sync_actions":
 			time=_struct[$ "time"];

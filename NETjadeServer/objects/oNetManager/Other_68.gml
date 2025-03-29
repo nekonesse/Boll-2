@@ -20,18 +20,15 @@ if server == event_id {
 				ds_map_add(action_timers, ip, -1);
 				ds_map_add(action_amounts, ip, 5);
 			}
-			ds_map_set(clients, ip, sock)
-			ds_map_set(current_clients, ip, sock);
+			ds_map_add(clients, ip, sock)
+			ds_map_add(current_clients, ip, sock);
 			cursors[$ ds_list_find_index(sockets, sock)]=[0,0,0,""]
 			with(oJADEController) {
-				JADE_transer_save(sock)
+				JADE_transer_save(sock, ip)
 			}
-			var _newstruct = {
-				type: "sync_actions",
-				time: action_timers[? ip],
-				actions: action_amounts[? ip]
-			}
-			send_struct(_newstruct, sock);
+			show_debug_message(ip);
+			show_debug_message(action_timers[? ip]);
+			show_debug_message(action_amounts[? ip]);
 		}
 	}
 	
@@ -50,7 +47,6 @@ if server == event_id {
 	var _struct=json_parse(_json)
 	var _DONTSENDSTRUCT=false;
 	
-	show_debug_message(_struct);
 	if !is_undefined(_struct[$ "type"]) {
 		var _type=_struct[$ "type"]
 		switch(_type) {
@@ -61,7 +57,6 @@ if server == event_id {
 			if (action_amounts[? ip]) { //this is alot of security for a single april fools joke But i will not let them use cheat engine.
 				show_debug_message(action_timers[? ip]);
 				if (action_timers[? ip]==-1) {
-					show_debug_message("resetting!")
 					action_timers[? ip]=(60*60);
 				}
 				action_amounts[? ip]=max(action_amounts[? ip]-1,0);
@@ -289,6 +284,7 @@ if server == event_id {
 					}
 					i++;
 				}
+				show_debug_message(_struct);
 			} else {
 				var _newstruct = {
 					type: "curs_upd",

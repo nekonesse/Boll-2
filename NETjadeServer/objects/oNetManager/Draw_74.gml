@@ -12,6 +12,7 @@ repeat(ds_list_size(sockets)) {
 	draw_sprite(spr_JADEcursor,0,curs[0]-cam_x,curs[1]-cam_y)
 	draw_sprite_ext(spr_JADEicons,curs[2]-1,curs[0]+4-cam_x,curs[1]+4-cam_y,0.5,0.5,0,c_white,1)
 	draw_text_outline(curs[0]+6-cam_x, curs[1]+16-cam_y, curs[3], 1, c_black, 8, 1, 1, 0)
+	draw_text_outline(curs[0]+6-cam_x, curs[1]+24-cam_y, curs[3], 1, c_black, 8, 1, 1, 0)
 	}
 	i++;
 }

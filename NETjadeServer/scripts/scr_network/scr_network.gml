@@ -6,7 +6,7 @@ function send_struct(_struct, _socket) {
 	buffer_delete(buff)
 }
 
-function JADE_transer_save(_socket) {
+function JADE_transer_save(_socket, ip) {
 	var struct = {};
 	var arrayObjects=[];
 	var i;
@@ -39,6 +39,8 @@ function JADE_transer_save(_socket) {
 		i++;
 	}
 	struct[$ "type"]="level_sync"
+	struct[$ "time"]=oNetManager.action_timers[? ip]
+	struct[$ "actions"]=oNetManager.action_amounts[? ip]
 	struct[$ "version"]=JADE_VERSION
 	struct[$ "objects"]=arrayObjects
 	struct[$ "node_objects"]=arrayNodeObjects

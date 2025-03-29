@@ -466,6 +466,7 @@ if (mbleftpress && not_on_gui) {
 if (mbleft && not_on_gui && !keyboard_check(vk_space) && global.actions_left) {
 		switch(selected_tool) {
 		case BRUSH_TOOL:
+			if (drawing_object==-1)
 			switch(selected_mode) {
 				case OBJECT_MODE:
 					if is_string(selected_obj) {
@@ -481,63 +482,10 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space) && global.actions_left) {
 							i++;
 						}
 						if !is_undefined(selected_obj) {
-							var sprite = ds_map_find_value(obj_data, selected_obj)
-							if sprite[7]!=OBJECT_MODE exit;
-							ds_list_add(object_layer_map, [selected_obj, gridx, gridy, sprite[11], sprite[12], 0])//add object to list at place
-							show_debug_message("created object: {0}", selected_obj)
-							var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
-							obj[6] = sprite[3]
-							obj[7] = sprite[4]
-							obj[8] = 0
-							obj[9] = 0	
-							obj[10] = [] //properties
-							obj[11] = [] //node array
-							obj[12] = [2,false,0,false,true,true] //node properties
-							obj[13] = [] //rotator array
-							obj[14] = [2,false,false,false] //rotator properties
-							if is_array(sprite[8]) && array_length(sprite[8]) {
-								var o=0;
-								repeat(array_length(sprite[8])) { //god Damn.
-									if is_array(sprite[8][o]) {
-										obj[10][o] = array_create(1,0)
-										array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
-										if is_array(sprite[8][o][4]) {
-											obj[10][o][4] = array_create(1,0)
-											array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
-										}
-									}
-									o++;
-								}
-							}
-							
-							var network_struct = {
-								type: "obj_pl",
-								uuid: selected_obj,
-								_x: gridx,
-								_y: gridy,
-								_xscale: 1,
-								_yscale: 1 //add the dragged xscale and yscale values here laters
-							}	
-							send_struct(network_struct, global.socket)
+							drawing_object=selected_obj;
+							drawing_object_x=gridx;
+							drawing_object_y=gridy;
 						}
-						
-						/*OBJECT STAT LIST
-						 0: name
-						 1: grid x
-						 2: grid y
-						 3: scale x
-						 4: scale y
-						 5: selected
-						 6: box x
-						 7: box y
-						 8: offset x
-						 9: offset y
-						 10: properties array
-						*/
-						
-						/*SPRITE STAT LIST
-						 just look in JADE_initializeobj() lol
-						*/
 					}
 				break;
 				case NODE_MODE:
@@ -553,63 +501,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space) && global.actions_left) {
 							}
 							i++;
 						}
-						if !is_undefined(selected_obj) {
-							var sprite = ds_map_find_value(obj_data,selected_obj)
-							if sprite[7]!=NODE_MODE exit;
-							ds_list_add(node_layer_map, [selected_obj, gridx, gridy, 1, 1, 0])//add object to list at place
-							show_debug_message("created object: {0}", selected_obj)
-							var obj = ds_list_find_value(node_layer_map, ds_list_size(node_layer_map)-1)
-							obj[6] = sprite[3]
-							obj[7] = sprite[4]
-							obj[8] = 0
-							obj[9] = 0	
-							obj[10] = []
-							obj[11] = []
-							obj[12] = []
-							obj[13] = []
-							obj[14] = []
-							if is_array(sprite[8]) && array_length(sprite[8]) {
-								var o=0;
-								repeat(array_length(sprite[8])) { //god Damn.
-									if is_array(sprite[8][o]) {
-										obj[10][o] = array_create(1,0)
-										array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
-										if is_array(sprite[8][o][4]) {
-											obj[10][o][4] = array_create(1,0)
-											array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
-										}
-									}
-									o++;
-								}
-							}
-							var network_struct = {
-								type: "node_pl",
-								uuid: selected_obj,
-								_x: gridx,
-								_y: gridy,
-								_xscale: 1,
-								_yscale: 1 //add the dragged xscale and yscale values here laters
-							}	
-							send_struct(network_struct, global.socket)
-						}
 						
-						/*OBJECT STAT LIST
-						 0: name
-						 1: grid x
-						 2: grid y
-						 3: scale x
-						 4: scale y
-						 5: selected
-						 6: box x
-						 7: box y
-						 8: offset x
-						 9: offset y
-						 10: properties array
-						*/
-						
-						/*SPRITE STAT LIST
-						 just look in JADE_initializeobj() lol
-						*/
 					}
 				break;
 				case TILE_MODE:
@@ -716,7 +608,103 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space) && global.actions_left) {
 			}
 		break;
 		}
-	
+}
+
+if (drawing_object!=-1) && (mbleftrel) {
+	if (selected_mode==OBJECT_MODE) {
+		var sprite = ds_map_find_value(obj_data, drawing_object)
+		if sprite[7]!=OBJECT_MODE exit;
+		var box_w, box_h;
+		if sprite[5]
+		box_w = clamp(max(floor(gridx - drawing_object_x)+1, 1),1,11)
+		else box_w = 1
+		if sprite[6]
+		box_h = clamp(max(floor(gridy - drawing_object_y)+1, 1),1,11)
+		else box_h = 1
+		ds_list_add(object_layer_map, [drawing_object, drawing_object_x, drawing_object_y, ((box_w*16)/sprite[3])*sprite[11], ((box_h*16)/sprite[4])*sprite[12], 0])//add object to list at place
+		show_debug_message("created object: {0}", drawing_object)
+		var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
+		obj[6] = sprite[3]
+		obj[7] = sprite[4]
+		obj[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj[3] 
+		obj[9] = (sprite[2] = 0) ? 0 : sprite[2] + (sprite[4]/2) * obj[4]
+		obj[10] = [] //properties
+		obj[11] = [] //node array
+		obj[12] = [2,false,0,false,true,true] //node properties
+		obj[13] = [] //rotator array
+		obj[14] = [2,false,false,false] //rotator properties
+		if is_array(sprite[8]) && array_length(sprite[8]) {
+			var o=0;
+			repeat(array_length(sprite[8])) { //god Damn.
+				if is_array(sprite[8][o]) {
+					obj[10][o] = array_create(1,0)
+					array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
+					if is_array(sprite[8][o][4]) {
+						obj[10][o][4] = array_create(1,0)
+						array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
+					}
+				}
+				o++;
+			}
+		}		
+		var network_struct = {
+			type: "obj_pl",
+			uuid: drawing_object,
+			_x: drawing_object_x,
+			_y: drawing_object_y,
+			_xscale: box_w,
+			_yscale: box_h
+		}	
+		send_struct(network_struct, global.socket)
+		drawing_object=-1;
+		drawing_object_x=0;
+		drawing_object_y=0;
+	} else {
+		var sprite = ds_map_find_value(obj_data,drawing_object)
+		if sprite[7]!=NODE_MODE exit;
+		var box_w, box_h;
+		if sprite[5]
+		box_w = clamp(max(floor(gridx - drawing_object_x)+1, 1),1,11)
+		else box_w = 1
+		if sprite[6]
+		box_h = clamp(max(floor(gridy - drawing_object_y)+1, 1),1,11)
+		else box_h = 1
+		ds_list_add(node_layer_map, [drawing_object, drawing_object_x, drawing_object_y, ((box_w*16)/sprite[3])*sprite[11], ((box_h*16)/sprite[4])*sprite[12], 0])//add object to list at place
+		show_debug_message("created object: {0}", drawing_object)
+		var obj = ds_list_find_value(node_layer_map, ds_list_size(node_layer_map)-1)
+		obj[6] = sprite[3]
+		obj[7] = sprite[4]
+		obj[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj[3] 
+		obj[9] = (sprite[2] = 0) ? 0 : sprite[2] + (sprite[4]/2) * obj[4]
+		obj[10] = []
+		obj[11] = []
+		obj[12] = []
+		obj[13] = []
+		obj[14] = []
+		if is_array(sprite[8]) && array_length(sprite[8]) {
+			var o=0;
+			repeat(array_length(sprite[8])) { //god Damn.
+				if is_array(sprite[8][o]) {
+					obj[10][o] = array_create(1,0)
+					array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
+					if is_array(sprite[8][o][4]) {
+						obj[10][o][4] = array_create(1,0)
+						array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
+					}
+				}
+				o++;
+			}
+		}
+		var network_struct = {
+			type: "node_pl",
+			uuid: drawing_object,
+			_x: drawing_object_x,
+			_y: drawing_object_y,
+			_xscale: box_w,
+			_yscale: box_h //add the dragged xscale and yscale values here laters
+		}	
+		send_struct(network_struct, global.socket)
+	}
 }
 	
 if (selected_tool==NODE_TOOL) && (not_on_gui) && (global.actions_left) { //drawing nodes
