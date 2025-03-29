@@ -8,7 +8,6 @@ function send_struct(_struct, _socket) {
 
 //The Horror
 global.chatBannedWords = [
-	"cock",
 	"penis",
 	"vagina",
 	"masturbate",
