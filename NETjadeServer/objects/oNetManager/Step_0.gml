@@ -6,18 +6,11 @@ repeat (size) {
 		action_timers[? key]=max(action_timers[? key]-1,0);
 		if !(action_timers[? key]) {
 			action_timers[? key]=-1;
-			var j=0;
-			repeat (ds_list_size(sockets)){
-			    if (ds_map_find_value(clients,key)==sockets[| j]) {
-					var _struct = {
-						type: "sync_actions",
-						time: -1
-					}
-					send_struct(_struct, sockets[| j])
-					break;
-				}
-				j++
+			var _struct = {
+				type: "sync_actions",
+				time: -1
 			}
+			send_struct(_struct, clients[? key])
 		}
 	}
 	key = ds_map_find_next(action_timers, key);
