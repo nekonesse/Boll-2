@@ -73,7 +73,7 @@ camera_set_view_pos(view_camera[0],0,room_height-camera_get_view_height(view_cam
 
 place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 	var sprite = ds_map_find_value(obj_data,uuid)
-	ds_list_add(object_layer_map, [uuid, _x, _y, ((xscale*16)/sprite[3])*sprite[11], ((yscale*16)/sprite[4])*sprite[12], 0])//add object to list at place
+	ds_list_add(object_layer_map, [uuid, _x, _y, xscale, yscale, 0])//add object to list at place
 	var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
 	if !is_undefined(obj) {
 		obj[6] = sprite[3]*xscale

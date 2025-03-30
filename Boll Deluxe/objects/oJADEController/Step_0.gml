@@ -625,13 +625,22 @@ if (drawing_object!=-1) && (mbleftrel) {
 		var sprite = ds_map_find_value(obj_data, drawing_object)
 		if sprite[7]!=OBJECT_MODE exit;
 		var box_w, box_h;
-		if sprite[5]
-		box_w = clamp(max(floor(gridx - drawing_object_x)+1, 1),1,11)
-		else box_w = 1
-		if sprite[6]
-		box_h = clamp(max(floor(gridy - drawing_object_y)+1, 1),1,11)
-		else box_h = 1
-		ds_list_add(object_layer_map, [drawing_object, drawing_object_x, drawing_object_y, ((box_w*16)/sprite[3])*sprite[11], ((box_h*16)/sprite[4])*sprite[12], 0])//add object to list at place
+		var x_scale, y_scale;
+		if sprite[5] {
+			box_w = clamp(max(floor(gridx - drawing_object_x)+1, 1),1,11)
+			x_scale = ((box_w*16)/sprite[3])*sprite[11];
+		} else {
+			box_w = 1
+			x_scale = 1
+		} 
+		if sprite[6] {
+			box_h = clamp(max(floor(gridy - drawing_object_y)+1, 1),1,11)
+			y_scale = ((box_h*16)/sprite[4])*sprite[12]
+		} else {
+			box_h = 1
+			y_scale = 1
+		}
+		ds_list_add(object_layer_map, [drawing_object, drawing_object_x, drawing_object_y, x_scale,y_scale, 0])//add object to list at place
 		show_debug_message("created object: {0}", drawing_object)
 		var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
 		obj[6] = sprite[3]
@@ -663,8 +672,8 @@ if (drawing_object!=-1) && (mbleftrel) {
 			uuid: drawing_object,
 			_x: drawing_object_x,
 			_y: drawing_object_y,
-			_xscale: box_w,
-			_yscale: box_h
+			_xscale: obj[3],
+			_yscale: obj[4]
 		}	
 		send_struct(network_struct, global.socket)
 		drawing_object=-1;
@@ -674,13 +683,22 @@ if (drawing_object!=-1) && (mbleftrel) {
 		var sprite = ds_map_find_value(obj_data,drawing_object)
 		if sprite[7]!=NODE_MODE exit;
 		var box_w, box_h;
-		if sprite[5]
-		box_w = clamp(max(floor(gridx - drawing_object_x)+1, 1),1,11)
-		else box_w = 1
-		if sprite[6]
-		box_h = clamp(max(floor(gridy - drawing_object_y)+1, 1),1,11)
-		else box_h = 1
-		ds_list_add(node_layer_map, [drawing_object, drawing_object_x, drawing_object_y, ((box_w*16)/sprite[3])*sprite[11], ((box_h*16)/sprite[4])*sprite[12], 0])//add object to list at place
+		var x_scale, y_scale;
+		if sprite[5] {
+			box_w = clamp(max(floor(gridx - drawing_object_x)+1, 1),1,11)
+			x_scale = ((box_w*16)/sprite[3])*sprite[11];
+		} else {
+			box_w = 1
+			x_scale = 1
+		} 
+		if sprite[6] {
+			box_h = clamp(max(floor(gridy - drawing_object_y)+1, 1),1,11)
+			y_scale = ((box_h*16)/sprite[4])*sprite[12]
+		} else {
+			box_h = 1
+			y_scale = 1
+		}
+		ds_list_add(node_layer_map, [drawing_object, drawing_object_x, drawing_object_y, x_scale, y_scale, 0])//add object to list at place
 		show_debug_message("created object: {0}", drawing_object)
 		var obj = ds_list_find_value(node_layer_map, ds_list_size(node_layer_map)-1)
 		obj[6] = sprite[3]
@@ -712,8 +730,8 @@ if (drawing_object!=-1) && (mbleftrel) {
 			uuid: drawing_object,
 			_x: drawing_object_x,
 			_y: drawing_object_y,
-			_xscale: box_w,
-			_yscale: box_h //add the dragged xscale and yscale values here laters
+			_xscale: x_scale,
+			_yscale: y_scale //add the dragged xscale and yscale values here laters
 		}	
 		send_struct(network_struct, global.socket)
 	}
