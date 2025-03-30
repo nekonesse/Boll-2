@@ -5,3 +5,4 @@ window_center();
 
 //TODO: validate connection to master server here, then go to JADE
 instance_create_depth(0,0,0,oNetManager)
+

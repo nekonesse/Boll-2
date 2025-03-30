@@ -5,3 +5,7 @@ time=max(time-1,0);
 		global.actions_left=5;
 	}
 }
+
+if doing_ping {
+	ping_time++	
+}

@@ -9,3 +9,27 @@ action_timers = ds_map_create();
 sockets = ds_list_create();
 cursors = {};
 room_goto(rEditor)
+
+exception_unhandled_handler(function(ex)
+{
+	VinylPlay(snd_gamecrash)
+	
+	var key = ds_map_find_first(clients);
+	for (var i = 0; i < ds_map_size(clients); ++i) {
+	    var _struct = {
+				type: "server_crash"		
+		}
+		send_struct(_struct, clients[? key])
+		key = ds_map_find_first(clients);
+	}
+	
+    // Print some messages to the output log
+    show_debug_message( "--------------------------------------------------------------");
+    show_debug_message( "Unhandled exception " + string(ex) );
+    show_debug_message( "--------------------------------------------------------------");
+	
+    // Show the error message (for debug purposes only)
+    show_message(ex.longMessage);
+	
+    return 0;
+});

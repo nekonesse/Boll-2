@@ -163,6 +163,11 @@ global.VinylConfigSON = [
 				sound: snd_itemappear,
 				gain: 0.25
 			},
+			snd_gamecrash, //items
+			{
+				sound: snd_gamecrash,
+				gain: 1
+			},
 			snd_blockbump, //objects
 			{
 				sound: snd_blockbump,

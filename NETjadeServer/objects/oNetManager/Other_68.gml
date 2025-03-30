@@ -49,6 +49,12 @@ if server == event_id {
 			case "curs_upd":
 				cursors[$ ds_list_find_index(sockets, sock)]=[floor(_struct._x),floor(_struct._y),_struct._tool,_struct._name];
 			break;
+			case "ping":
+				var _newstruct = {
+					type: "ping",
+				}
+				send_struct(_newstruct, sock);
+			break;
 			case "obj_pl":
 				show_debug_message(action_timers[? ip]);
 				if (action_timers[? ip]==-1) {

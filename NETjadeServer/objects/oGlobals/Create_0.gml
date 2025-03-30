@@ -12,3 +12,4 @@ global.debug = false;
 global.fps_display = 0;
 global.netgame = false; // top 10 boll deluxe things that will never happen:
 global.nextlevel = game_save_id+"\save.jade"
+

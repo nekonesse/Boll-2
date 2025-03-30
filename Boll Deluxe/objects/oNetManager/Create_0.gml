@@ -25,6 +25,11 @@ cursors={};
 cursorexclusion=0;
 levelstruct={};
 
-server=network_connect(global.socket, "68.10.90.59", PORT)
+doing_ping = false
+ping_time = 0
+last_ping_time = 0
+
+server=network_connect(global.socket, "localhost", PORT)
 alarm[1]=500;
+alarm[2]=60;
 time=-1;

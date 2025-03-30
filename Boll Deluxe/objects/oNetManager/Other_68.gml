@@ -23,6 +23,15 @@ if global.socket == event_id {
 			cursors = _struct[$ "cursorstruct"];
 			cursorexclusion=_struct[$ "exclusion"];
 			break;
+			case "ping":
+				doing_ping = false
+				last_ping_time = ping_time
+			break;
+			case "server_crash":
+				VinylPlay(snd_gamecrash);
+				show_message("The server has crashed. oopies.")
+				game_end();
+			break;
 			case "level_sync":
 			room_goto(rEditor)
 			connected=true;

@@ -520,6 +520,7 @@
     {"id":{"name":"snd_enemyspinjump","path":"sounds/snd_enemyspinjump/snd_enemyspinjump.yy",},},
     {"id":{"name":"snd_enemystomp","path":"sounds/snd_enemystomp/snd_enemystomp.yy",},},
     {"id":{"name":"snd_fireball","path":"sounds/snd_fireball/snd_fireball.yy",},},
+    {"id":{"name":"snd_gamecrash","path":"sounds/snd_gamecrash/snd_gamecrash.yy",},},
     {"id":{"name":"snd_hardblockbreak","path":"sounds/snd_hardblockbreak/snd_hardblockbreak.yy",},},
     {"id":{"name":"snd_hydrocityturbine","path":"sounds/snd_hydrocityturbine/snd_hydrocityturbine.yy",},},
     {"id":{"name":"snd_itemappear","path":"sounds/snd_itemappear/snd_itemappear.yy",},},
