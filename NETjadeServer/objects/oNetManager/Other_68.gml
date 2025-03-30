@@ -3,21 +3,25 @@ var event_id = async_load[? "id"]
 if server == event_id {
 	var type = async_load[? "type"]
 	var sock = async_load[? "socket"]
+	var ip = async_load[? "ip"]
 	
 	if (type == network_type_connect) {
 		//initialize client here
 		ds_list_add(sockets, sock)
+		ds_list_add(ips, ip)
 		cursors[$ ds_list_find_index(sockets, sock)]=[0,0,0,""]
 	}
 	
 	if (type == network_type_disconnect) {
 		network_destroy(sock);
 		ds_list_delete(sockets,ds_list_find_index(sockets,sock))
+		ds_list_delete(ips,ds_list_find_index(ips,ip))
 		ds_map_delete(current_clients, sock)
 		struct_remove(cursors,ds_list_find_index(sockets, sock))
 	}
 } else {
 	var sock = async_load[? "id"]
+	var ip = async_load[? "ip"]
 	global.onlinebuffer = async_load[? "buffer"]
 	buffer_seek(global.onlinebuffer, buffer_seek_start, 0)
 	var _json=buffer_read(global.onlinebuffer, buffer_string);
@@ -29,30 +33,35 @@ if server == event_id {
 		var _type=_struct[$ "type"]
 		switch(_type) {
 			case "join":
-			var _version=_struct[$ "_version"]
-			var _uuid=_struct[$ "_uuid"]
-			if _version=="afd2025" {
-				if _uuid=="" {
-					randomize();
-					_uuid=generate_uuidv4();
+				var _version=_struct[$ "_version"]
+				var _uuid=_struct[$ "_uuid"]
+				if _version=="afd2025" {
+					if _uuid=="" {
+						randomize();
+						_uuid=generate_uuidv4();
+						if ds_map_exists(clients, _uuid)
+						while ds_map_exists(clients, _uuid) {
+							randomize();
+							_uuid=generate_uuidv4();
+						}
+					}
+					if ds_list_find_index(current_clients, ip)!=-1 {
+						var _struct = {
+							type: "ip_already_connected"
+						}
+						send_struct(_struct,sock);
+						network_destroy(sock);
+					} else {
+						if !ds_map_exists(action_timers, _uuid) {
+							ds_map_add(action_timers, _uuid, -1);
+						}
+						ds_map_add(clients, _uuid, sock)
+						ds_map_add(current_clients, sock, _uuid);
+						with(oJADEController) {
+							JADE_transer_save(sock, _uuid)
+						}
+					}
 				}
-				if ds_map_exists(current_clients, _uuid) {
-					var _struct = {
-						type: "ip_already_connected"
-					}
-					send_struct(_struct,sock);
-					network_destroy(sock);
-				} else {
-					if !ds_map_exists(action_timers, _uuid) {
-						ds_map_add(action_timers, _uuid, -1);
-					}
-					ds_map_add(clients, _uuid, sock)
-					ds_map_add(current_clients, sock, _uuid);
-					with(oJADEController) {
-						JADE_transer_save(sock, _uuid)
-					}
-				}
-			}
 			break;
 			case "curs_upd":
 				cursors[$ ds_list_find_index(sockets, sock)]=[floor(_struct._x),floor(_struct._y),_struct._tool,_struct._name];
