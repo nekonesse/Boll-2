@@ -241,7 +241,7 @@ if (mbleftpress) {
 			i++;
 		}
 		i=0;
-		repeat(3)
+		repeat(2)
 		{
 			if mouse_in_mode_slot(i) {
 				if selected_mode != i {

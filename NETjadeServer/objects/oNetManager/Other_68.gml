@@ -45,7 +45,7 @@ if server == event_id {
 							_uuid=generate_uuidv4();
 						}
 					}
-					if ds_list_find_index(current_clients, ip)!=-1 {
+					if ds_list_find_index(ips, ip)!=-1 {
 						var _struct = {
 							type: "ip_already_connected"
 						}
