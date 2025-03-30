@@ -241,7 +241,7 @@ if (mbleftpress) {
 			i++;
 		}
 		i=0;
-		repeat(2)
+		repeat(3)
 		{
 			if mouse_in_mode_slot(i) {
 				if selected_mode != i {
@@ -260,6 +260,7 @@ if (mbleftpress) {
 						j++;
 					}
 				}
+				break;
 			}
 			i++
 		}

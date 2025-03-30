@@ -8,7 +8,6 @@ if server == event_id {
 	if (type == network_type_connect) {
 		//initialize client here
 		ds_list_add(sockets, sock)
-		ds_list_add(ips, ip)
 		cursors[$ ds_list_find_index(sockets, sock)]=[0,0,0,""]
 	}
 	
@@ -55,6 +54,7 @@ if server == event_id {
 						if !ds_map_exists(action_timers, _uuid) {
 							ds_map_add(action_timers, _uuid, -1);
 						}
+						ds_list_add(ips, ip)
 						ds_map_add(clients, _uuid, sock)
 						ds_map_add(current_clients, sock, _uuid);
 						with(oJADEController) {
