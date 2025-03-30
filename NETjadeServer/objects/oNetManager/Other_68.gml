@@ -35,15 +35,6 @@ if server == event_id {
 				var _version=_struct[$ "_version"]
 				var _uuid=_struct[$ "_uuid"]
 				if _version=="afd2025" {
-					if _uuid=="" {
-						randomize();
-						_uuid=generate_uuidv4();
-						if ds_map_exists(clients, _uuid)
-						while ds_map_exists(clients, _uuid) {
-							randomize();
-							_uuid=generate_uuidv4();
-						}
-					}
 					if ds_list_find_index(ips, ip)!=-1 {
 						var _struct = {
 							type: "ip_already_connected"
@@ -51,8 +42,20 @@ if server == event_id {
 						send_struct(_struct,sock);
 						network_destroy(sock);
 					} else {
+						if _uuid=="" {
+							randomize();
+							_uuid=generate_uuidv4();
+							if ds_map_exists(clients, _uuid)
+							while ds_map_exists(clients, _uuid) {
+								randomize();
+								_uuid=generate_uuidv4();
+							}
+						}
 						if !ds_map_exists(action_timers, _uuid) {
 							ds_map_add(action_timers, _uuid, -1);
+						}
+						if !ds_map_exists(action_amounts, _uuid) {
+							ds_map_add(action_amounts, _uuid, 5);
 						}
 						ds_list_add(ips, ip)
 						ds_map_add(clients, _uuid, sock)
@@ -76,9 +79,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -89,9 +94,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -113,9 +120,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -126,9 +135,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -150,9 +161,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -163,9 +176,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -181,9 +196,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -200,9 +217,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -219,9 +238,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -238,9 +259,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -262,9 +285,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -286,9 +311,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -310,9 +337,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {
@@ -334,9 +363,11 @@ if server == event_id {
 				if (action_timers[? _myuuid]==-1) {
 					action_timers[? _myuuid]=(60*60);
 				}
+				action_amounts[? _myuuid]=max(action_amounts[? _myuuid]-1,0)
 				var _newstruct = {
 					type: "sync_actions",
-					time: action_timers[? _myuuid]
+					time: action_timers[? _myuuid],
+					actions: action_amounts[? _myuuid]
 				}
 				send_struct(_newstruct, sock);
 				with(oJADEController) {

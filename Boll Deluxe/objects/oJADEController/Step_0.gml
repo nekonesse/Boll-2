@@ -176,7 +176,7 @@ if (mbleftpress) {
 						data = tile_set_flip(data, 1 - tile_get_flip(data))
 						tilemap_set(tilemap, data, gridx, gridy);
 						var tiledata = tilemap_get(tilemap, gridx, gridy)
-						global.actions_left=max(global.actions_left-1,0);
+						
 						var network_struct = {
 							type: "tile_fl",
 							_layer: selected_tile_layer,
@@ -196,7 +196,7 @@ if (mbleftpress) {
 						data = tile_set_mirror(data, 1 - tile_get_mirror(data))
 						tilemap_set(tilemap, data, gridx, gridy);
 						var tiledata = tilemap_get(tilemap, gridx, gridy)
-						global.actions_left=max(global.actions_left-1,0);
+						
 						var network_struct = {
 							type: "tile_mi",
 							_layer: selected_tile_layer,
@@ -216,7 +216,7 @@ if (mbleftpress) {
 						data = tile_set_rotate(data, 1 - tile_get_rotate(data))
 						tilemap_set(tilemap, data, gridx, gridy);
 						var tiledata = tilemap_get(tilemap, gridx, gridy)
-						global.actions_left=max(global.actions_left-1,0);
+						
 						var network_struct = {
 							type: "tile_rot",
 							_layer: selected_tile_layer,
@@ -253,6 +253,16 @@ if (mbleftpress) {
 					var j=0;
 					repeat(size) {
 						var obj = ds_list_find_value(object_layer_map, j)
+		
+						if !is_undefined(obj) {
+							obj[5]=0;
+						}
+						j++;
+					}
+					var size = ds_list_size(node_layer_map)
+					var j=0;
+					repeat(size) {
+						var obj = ds_list_find_value(node_layer_map, j)
 		
 						if !is_undefined(obj) {
 							obj[5]=0;
@@ -311,7 +321,7 @@ if (mbright && not_on_gui && global.actions_left) {
 						if !is_undefined(obj) {
 						    if obj[1] == gridx && obj[2] == gridy {
 								ds_list_delete(object_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
-								global.actions_left=max(global.actions_left-1,0);
+								
 								var network_struct = {
 									type: "obj_del",
 									_x: gridx,
@@ -333,7 +343,7 @@ if (mbright && not_on_gui && global.actions_left) {
 						if !is_undefined(obj) {
 						    if obj[1] == gridx && obj[2] == gridy {
 								ds_list_delete(node_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
-								global.actions_left=max(global.actions_left-1,0);
+								
 								var network_struct = {
 									type: "node_del",
 									_x: gridx,
@@ -352,7 +362,7 @@ if (mbright && not_on_gui && global.actions_left) {
 						if tile_get_index(data)!= 0 {
 							data = tile_set_empty(data)
 							tilemap_set(tilemap, data, gridx, gridy); //delete tile at place lol
-							global.actions_left=max(global.actions_left-1,0);
+							
 							var network_struct = {
 								type: "tile_del",
 								_layer: selected_tile_layer,
@@ -524,7 +534,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space) && global.actions_left) {
 						data = tile_set_rotate(data, 0)
 						tilemap_set(tilemap, data, gridx, gridy);
 						show_debug_message(data)
-						global.actions_left=max(global.actions_left-1,0);
+						
 						var network_struct = {
 							type: "tile_pl",
 							uuid: current_tile_id,
@@ -549,7 +559,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space) && global.actions_left) {
 						    if obj[1] == gridx && obj[2] == gridy && obj[0]!="oPlayerSpawn" {
 								show_debug_message("deleted object: {0}", obj[0])
 								ds_list_delete(object_layer_map, i) //delete first object it finds there (probably bottom top? i don rembr)
-								global.actions_left=max(global.actions_left-1,0);
+								
 								var network_struct = {
 									type: "obj_del",
 									_x: gridx,
@@ -572,7 +582,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space) && global.actions_left) {
 						    if obj[1] == gridx && obj[2] == gridy {
 								show_debug_message("deleted object: {0}", obj[0])
 								ds_list_delete(node_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
-								global.actions_left=max(global.actions_left-1,0);
+								
 								var network_struct = {
 									type: "node_del",
 									_x: gridx,
@@ -591,7 +601,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space) && global.actions_left) {
 					if tile_get_index(data)!= 0 {
 						data = tile_set_empty(data)
 						tilemap_set(tilemap, data, gridx, gridy); //delete tile at place lol
-						global.actions_left=max(global.actions_left-1,0);
+						
 						var network_struct = {
 							type: "tile_del",
 							_layer: selected_tile_layer,
@@ -667,7 +677,7 @@ if (drawing_object!=-1) && (mbleftrel) {
 				o++;
 			}
 		}		
-		global.actions_left=max(global.actions_left-1,0);
+		
 		var network_struct = {
 			type: "obj_pl",
 			uuid: drawing_object,
@@ -725,7 +735,7 @@ if (drawing_object!=-1) && (mbleftrel) {
 				o++;
 			}
 		}
-		global.actions_left=max(global.actions_left-1,0);
+		
 		var network_struct = {
 			type: "node_pl",
 			uuid: drawing_object,
@@ -779,7 +789,7 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) && (global.actions_left) { //drawi
 				var yoff = -sprite[2];
 			
 				array_push(obj[11], [(gridx*16)-((obj[6]-16)/2)+xoff,(gridy*16)-((obj[7]-16)/2)+yoff,false])
-				global.actions_left=max(global.actions_left-1,0);
+				
 				var _struct = {
 					type: "obj_node_make",
 					uuid: obj[0],
@@ -814,7 +824,7 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) && (global.actions_left) { //drawi
 					
 					if (over) {
 						array_delete(obj[11],i,1)
-						global.actions_left=max(global.actions_left-1,0);
+						
 						var _struct = {
 							type: "obj_node_del",
 							uuid: obj[0],
