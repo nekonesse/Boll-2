@@ -8,4 +8,8 @@ time=max(time-1,0);
 
 if doing_ping {
 	ping_time++	
+	if (ping_time > (11 * 60)){
+		show_message("Connection timeout!")
+		game_end();	
+	}
 }

@@ -13,6 +13,10 @@ while string_length(string_lettersdigits(global.username))<3 || string_length(st
 		}
 		i++;
 	}
+	if string_length(string_lettersdigits(global.username)) == 0 {
+		game_end(); 
+		return;
+	}
 	if string_length(string_lettersdigits(global.username))<3 show_message("Username too short!")
 	if string_length(string_lettersdigits(global.username))>18 show_message("Username too long!")
 }
@@ -28,8 +32,8 @@ levelstruct={};
 doing_ping = false
 ping_time = 0
 last_ping_time = 0
+breaking_ping = 0
 
 server=network_connect(global.socket, "localhost", PORT)
-alarm[1]=500;
 alarm[2]=60;
 time=-1;

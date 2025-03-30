@@ -18,8 +18,8 @@ draw_set_font(global.omiFont);
 draw_set_halign(fa_left);
 	draw_text_outline(0,guih-32,$"ping: {ping}f", 1, c_black, 8, 1, 1, 0);
 	if ping_time >= 180 {
-		var last_p = floor(ping_time / 60)
-		draw_text_color(16, guih-24, $"WARNING: No responce from last ping {last_p} seconds ago", c_red, c_red, c_red, c_red,1)	
+		var last_p = (ping_time / 60) 
+		draw_text_color(16, guih-24, $"WARNING: No responce from last ping {last_p}", c_red, c_red, c_red, c_red,1)	
 	}
 draw_set_halign(fa_middle);
 draw_set_font(global.smallBoldFont);
