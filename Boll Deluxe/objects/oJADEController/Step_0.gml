@@ -545,7 +545,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space) && global.actions_left) {
 						//is place matching cursor?
 						var obj = ds_list_find_value(object_layer_map, i)
 						if !is_undefined(obj) {
-						    if obj[1] == gridx && obj[2] == gridy {
+						    if obj[1] == gridx && obj[2] == gridy && obj[0]!="oPlayerSpawn" {
 								show_debug_message("deleted object: {0}", obj[0])
 								ds_list_delete(object_layer_map, i) //delete first object it finds there (probably bottom top? i don rembr)
 								global.actions_left=max(global.actions_left-1,0);

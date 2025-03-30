@@ -7,9 +7,10 @@ if global.socket == event_id {
 	var _json=buffer_read(buff, buffer_string);
 	//show_debug_message(_json);
 	var _struct=json_parse(_json)
-	show_debug_message(_struct);
 	if !is_undefined(_struct[$ "type"]) {
 		var _type=_struct[$ "type"]
+		if _type!="ping"
+		show_debug_message(_struct);
 		switch(_type) {
 			case "ip_already_connected": {
 				show_message("You were kicked:\nIP already connected to server.")
@@ -38,12 +39,15 @@ if global.socket == event_id {
 			levelstruct=_struct;
 			alarm[1]=-1;
 			alarm[0]=2;
+			UUID=_struct[$ "uuid"]
 			time=_struct[$ "time"];
 			break;
 			case "sync_actions":
-			time=_struct[$ "time"];
-			if !time == -1 {
-				global.actions_left=5;
+			if !refreshed_actions {
+				time=_struct[$ "time"];
+				if (time == -1) {
+					global.actions_left=5;
+				}
 			}
 			break;
 			case "obj_pl":

@@ -6,7 +6,7 @@ function send_struct(_struct, _socket) {
 	buffer_delete(buff)
 }
 
-function JADE_transer_save(_socket, ip) {
+function JADE_transer_save(_socket, _uuid) {
 	var struct = {};
 	var arrayObjects=[];
 	var i;
@@ -39,7 +39,8 @@ function JADE_transer_save(_socket, ip) {
 		i++;
 	}
 	struct[$ "type"]="level_sync"
-	struct[$ "time"]=oNetManager.action_timers[? ip]
+	struct[$ "uuid"]=_uuid
+	struct[$ "time"]=oNetManager.action_timers[? _uuid]
 	struct[$ "version"]=JADE_VERSION
 	struct[$ "objects"]=arrayObjects
 	struct[$ "node_objects"]=arrayNodeObjects
@@ -52,9 +53,26 @@ function JADE_transer_save(_socket, ip) {
 	buffer_delete(save_file)
 }
 
+function generate_uuidv4() {
+    static hex = "0123456789abcdef";
+    static variant = "07fe";
+    static str = "xxxxxxxx-boll-2xxx-yxxx-xxxxxxxxxxxx";
+    var uuid = "";
+    for (var i=1;i<=string_length(str);i++) {
+        var c = string_char_at(str,i);
+        if (c == "x") {
+            uuid += string_char_at(hex,irandom_range(1,string_length(hex)));
+        } else if (c == "y") {
+            uuid += string_char_at(variant,irandom_range(1,string_length(variant)));
+        } else {
+            uuid += c;
+        }
+    }
+    return uuid;
+}
+
 //The Horror
 global.chatBannedWords = [
-	"cock",
 	"penis",
 	"vagina",
 	"masturbate",

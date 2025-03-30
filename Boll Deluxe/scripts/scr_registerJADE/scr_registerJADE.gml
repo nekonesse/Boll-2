@@ -142,6 +142,7 @@ function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,m
 	if !ds_map_exists(obj_data,uuid) {
 		ds_map_add(obj_data,uuid,[sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,properties,nodeable,name,sizex,sizey])
 		ds_list_add(obj_name,uuid)
+		if uuid!="oPlayerSpawn"
 		ds_list_add(jade_cats[mode][category],[uuid,name])
 		show_debug_message($"Successfully registered object id: {uuid} in JADE")
 	} else {
