@@ -1,2 +1,0 @@
-VinylStopAll();
-//VinylStop(editorMusic);

@@ -42,6 +42,7 @@ function JADE_transer_save(_socket, _uuid) {
 	struct[$ "uuid"]=_uuid
 	struct[$ "time"]=oNetManager.action_timers[? _uuid]
 	struct[$ "actions"]=oNetManager.action_amounts[? _uuid]
+	struct[$ "cursors"]=oNetManager.cursors
 	struct[$ "version"]=JADE_VERSION
 	struct[$ "objects"]=arrayObjects
 	struct[$ "node_objects"]=arrayNodeObjects

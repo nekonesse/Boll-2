@@ -36,11 +36,10 @@ if server == event_id {
 				var _uuid=_struct[$ "_uuid"]
 				if _version=="afd2025" {
 					if ds_list_find_index(ips, ip)!=-1 {
-						var _struct = {
+						var _newstruct = {
 							type: "ip_already_connected"
 						}
-						send_struct(_struct,sock);
-						network_destroy(sock);
+						send_struct(_newstruct, sock);
 					} else {
 						if _uuid=="" {
 							randomize();
@@ -389,6 +388,7 @@ if server == event_id {
 		}
 		if !_DONTSENDSTRUCT {
 			if _struct[$ "type"]!="curs_upd" && _struct[$ "type"]!="join" {
+				show_debug_message($"test {_struct[$ "type"]}");
 				var i=0;
 				repeat(ds_list_size(sockets)) {
 					var p=sockets[| i]
