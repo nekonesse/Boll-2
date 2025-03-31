@@ -80,6 +80,7 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_constant_add("oThunderFlower",oThunderFlower)
         txr_constant_add("o1up",o1up)
         txr_constant_add("o3up",o3up)
+        txr_constant_add("oPoisonShroom",oPoisonShroom)
 		txr_constant_add("oCoin",oCoin)
 		txr_constant_add("oMysteryOrb",oMysteryOrb)
 		
