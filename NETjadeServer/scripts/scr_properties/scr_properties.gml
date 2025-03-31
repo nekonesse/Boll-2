@@ -13,7 +13,7 @@ function object_get_properties(obj){
 			break;
 		case oItemBox:
 			properties = [
-				["content", "Contents", "coin", "dropdown", ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]],
+				["content", "Contents", "coin", "dropdown", ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"]],
 				["amount", "Amount", 1, "number_input", 50],
 				["bricked", "Is Brick", 0, "checkbox", 0],
 				["hidden", "Is Hidden", 0, "checkbox", 0],
@@ -22,7 +22,7 @@ function object_get_properties(obj){
 			break;
 		case oLongItemBox:
 			properties = [
-				["content", "Contents", "coin", "dropdown", ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]],
+				["content", "Contents", "coin", "dropdown", ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"]],
 				["amount", "Amount", 1, "number_input", 50],
 				["hidden", "Is Hidden", 0, "checkbox", 0],
 				["eject", "Is Dispenser", 0, "checkbox", 0]
@@ -30,12 +30,12 @@ function object_get_properties(obj){
 			break;
 		case oCrate:
 			properties = [
-				["content", "Contents", "coin", "dropdown", ["none","coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]]
+				["content", "Contents", "coin", "dropdown", ["none","coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"]]
 			]
 			break;
 		case oMonitor:
 			properties = [
-				["content", "Contents", "coin", "dropdown", ["none","coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up"]]
+				["content", "Contents", "coin", "dropdown", ["none","coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"]]
 			]
 			break;
 		case oSemiSlope:
