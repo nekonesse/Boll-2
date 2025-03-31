@@ -35,7 +35,7 @@ last_ping_time = 0
 breaking_ping = 0
 refreshed_actions = 0;
 
-server=network_connect(global.socket, "localhost", PORT)
+server=network_connect(global.socket, "68.10.90.59", PORT)
 alarm[2]=60;
 time=-1;
 UUID="";
