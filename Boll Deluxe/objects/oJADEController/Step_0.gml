@@ -295,15 +295,15 @@ if show_tileset {
 		var t_height  = sprite_get_height(tilesets[$ current_tileset][0])
 		var t_size = 16 * (0.33 * tile_zoom)
 		if (mbleftpress) {
-			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
-			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
+			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width-16)
+			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height-16)
 			//show_debug_message(string(floor(mouse_x / t_size)) + " : "+ string(tilelapmap.width/ 16))
 			current_tile_id = -1
-			current_tile_id = clamp(floor(sel_x / t_size), 0, t_width/ 16) + (clamp(floor(sel_y / t_size), 0, t_height/ 16) * (t_width/16))
+			current_tile_id = clamp(floor(sel_x / t_size), 0, (t_width/16)-1) + (clamp(floor(sel_y / t_size), 0, (t_height/ 16)-1) * (t_width/16))
 			tile_sel_height = 0
 			tile_sel_width = 0
-			tile_sel_last_x = clamp(floor(sel_x / t_size), 0, t_width/ 16)
-			tile_sel_last_y = clamp(floor(sel_y / t_size), 0, t_height/ 16)
+			tile_sel_last_x = clamp(floor(sel_x / t_size), 0, (t_width/ 16)-1)
+			tile_sel_last_y = clamp(floor(sel_y / t_size), 0, (t_height/ 16)-1)
 		}
 	}
 }
@@ -518,7 +518,11 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space) && global.actions_left) {
 							}
 							i++;
 						}
-						
+						if !is_undefined(selected_obj) {
+							drawing_object=selected_obj;
+							drawing_object_x=gridx;
+							drawing_object_y=gridy;
+						}
 					}
 				break;
 				case TILE_MODE:
@@ -690,7 +694,7 @@ if (drawing_object!=-1) && (mbleftrel) {
 		drawing_object=-1;
 		drawing_object_x=0;
 		drawing_object_y=0;
-	} else {
+	} else if (selected_mode==NODE_MODE) {
 		var sprite = ds_map_find_value(obj_data,drawing_object)
 		if sprite[7]!=NODE_MODE exit;
 		var box_w, box_h;
@@ -745,6 +749,9 @@ if (drawing_object!=-1) && (mbleftrel) {
 			_yscale: y_scale //add the dragged xscale and yscale values here laters
 		}	
 		send_struct(network_struct, global.socket)
+		drawing_object=-1;
+		drawing_object_x=0;
+		drawing_object_y=0;
 	}
 }
 	
