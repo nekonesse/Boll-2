@@ -55,6 +55,7 @@ if keyboard_check_pressed(vk_f10) {
 		repeat(ds_list_size(list)) {
 			var arr=list[| j]
 			draw_tile(tilemap_get_tileset(tile_layer[i]), arr[0], 0, arr[1]*16, arr[2]*16)
+			j++;
 		}
 		i--;
 	}

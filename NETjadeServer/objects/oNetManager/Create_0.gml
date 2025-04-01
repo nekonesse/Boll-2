@@ -11,9 +11,11 @@ sockets = ds_list_create();
 ips = ds_list_create();
 cursors = {};
 room_goto(rEditor)
+alarm[2]=1200;
 
 exception_unhandled_handler(function(ex)
 {
+	JADE_save(game_save_id+"/afd2025")
 	VinylPlay(snd_gamecrash)
 	
 	var key = ds_map_find_first(clients);

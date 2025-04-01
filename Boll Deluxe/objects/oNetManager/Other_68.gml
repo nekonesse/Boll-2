@@ -41,7 +41,6 @@ if global.socket == event_id {
 			alarm[0]=2;
 			UUID=_struct[$ "uuid"]
 			time=_struct[$ "time"];
-			cursors=_struct[$ "cursors"];
 			global.actions_left=_struct[$ "actions"];
 			break;
 			case "sync_actions":
