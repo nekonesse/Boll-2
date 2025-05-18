@@ -612,6 +612,25 @@ if !(instance_exists(input_controller_object)) instance_create_depth(0,0,16001,i
 		txr_function_add("finish_death", finish_death, -1);
 		txr_function_add("hit_block", hit_block, -1);
 		txr_function_add("make_particle", make_particle, -1);
+		
+		txr_function_add("component_common_timer_values", component_common_timer_values, -1);
+		txr_function_add("component_get_ground_friction", component_get_ground_friction, -1);
+		txr_function_add("component_gravity_coneyor", component_gravity_coneyor, -1);
+		txr_function_add("component_mario_crouch", component_mario_crouch, -1);
+		txr_function_add("component_mario_skid", component_mario_skid, -1);
+		txr_function_add("component_mario_skidding_fx", component_mario_skidding_fx, -1);
+		txr_function_add("component_mario_start_groundpound", component_mario_start_groundpound, -1);
+		txr_function_add("component_sonic_roll", component_sonic_roll, -1);
+		txr_function_add("component_sonic_spindash", component_sonic_spindash, -1);
+		txr_function_add("component_sonic_start_spindash", component_sonic_start_spindash, -1);
+		
+		txr_function_add("component_sonic_start_jump", component_sonic_start_jump, -1);
+		txr_function_add("component_mario_groundpound", component_mario_groundpound, -1);
+		txr_function_add("component_mario_start_dive", component_mario_start_dive, -1);
+		//txr_function_add("component_mario_start_jump", component_mario_start_jump, -1);
+		txr_function_add("component_mario_start_spinjump", component_mario_start_spinjump, -1);
+		txr_function_add("component_mario_wallslide", component_mario_wallslide, -1);
+
 	#endregion
 	
 	#region Audio

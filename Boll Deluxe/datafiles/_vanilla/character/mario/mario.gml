@@ -8,7 +8,7 @@ no_move = 0;
 fric = 0.07;
 friction_mult = 1;
 runvar = 0;
-runjump = 0;
+runjump = false;
 dusttimer = 1;
 skidding = 0;
 skiddir = 0;
@@ -121,30 +121,15 @@ if (state == "" || state == "jump" || state == "dive") && !piped && !electrocute
 	#endregion
 	
 	if (!grounded) {
-		vsp = min(5.75, vsp + grav);
-		canjump = max(0, canjump-1);
-		
-		// chearii: coneyor speed management
-		if (abs(chsp * 100))
-		{
-			chsp *= 0.95;
-			
-			if (((chsp * 100) / 1) == 0)
-			chsp = 0;
-		}
+		component_gravity_coneyor()
 
 		if (skidding) {
 			stopsfx(charmName+"skid")
 			skidding=0
 		}
 	} else {
-		if (state == "") && (down) && !(piped) && !(skidding) {
-			crouch=true;
-		} else {
-			if (!check_collision_line(x-hit_sizex,y-hit_sizey-8,x+hit_sizex,y-hit_sizey-8,COL_TOP) || size=="basic") {
-				crouch = false
-			}
-		}
+		
+		crouch=component_mario_crouch();
 		
 		if (hurt) {
 			hurt = false;
@@ -153,24 +138,13 @@ if (state == "" || state == "jump" || state == "dive") && !piped && !electrocute
 		}
 		
 		canjump = 5;  // Coyote frames
-		runjump = 0;
+		runjump = false
 	
 		//maximum speed when sliding, infulence when sliding, influence on steep slopes, add steep influence while sliding?
 		player_slide(12.5, 0.225, 0.32, false);
 		
 		//skidding
-		if (((abs(gsp) >= 3) || skidding) && move != 0 && !check_signs_matching(gsp,move) && !crouch && !carrying) {
-			if (!skidding) {
-				skiddir = esign(move,xsc)
-				dusttimer = 0;
-				playsfx(charmName+"skid",1,1,0.75)
-			}
-			skidding = 1;
-		}
-		else if (skidding) {
-			stopsfx(charmName+"skid")
-			skidding=0
-		}
+		component_mario_skid()
 	}
 }
 
@@ -185,58 +159,7 @@ if (state == "") && !(hurt) {
 
 #region Groundpound
 if (state == "pound") && !piping {
-	slopesliding = 0
-	pound_timer = max(0,pound_timer-1);
-	
-	if (up) {
-		state = "";
-		pound_timer = 0;
-	}
-	
-	if (pound_timer > 0) {
-		hsp=0;
-		grav=0;
-		vsp = 0;
-	} else {
-		grav = defaultgrav;
-		vsp = 7;
-		pound_severity = vsp;
-		hsp = 0;
-	}
-	
-	//hittable block collision
-	if (grounded) && (pound_timer <= 0) {
-		var blocklist=ds_list_create();
-		var num=collision_line_list(x-hit_sizex,y+hit_sizey+vsp+2,x+hit_sizex,y+hit_sizey+vsp+2, oHittable, false, true, blocklist, true)
-		
-		if (num > 0) {
-			found_block = false;
-			for (var i = 0; i < num; i+=1) {
-				var blockcoll=ds_list_find_value(blocklist, i)
-				if !(blockcoll.no_hit) && (pounding_block == true) && (blockcoll.amount != 0) {
-					found_block=true;
-					if (blockcoll.hit == 0) {
-						signal_emit(blockcoll.blockHit, 1, id)
-					}
-				}
-			}
-			pounding_block = false
-		}
-		
-		if !(found_block) {
-			state = ""
-			vsp = 0
-			//create pound smoke
-			make_particle(pSmoke, x-1, y + hit_sizey, depth + 5, 1, -3.25, -0.2, -0.04, 0.2);
-			make_particle(pSmoke, x-1, y + hit_sizey, depth + 5, -1, 3.25, -0.2, -0.04, 0.2);
-			pound_timer = 0;
-		}
-		
-		if (down) {
-			pounding_block = true
-		}
-		ds_list_destroy(blocklist)
-	}
+	component_mario_groundpound()
 }
 #endregion
 
@@ -258,12 +181,7 @@ if (state == "jump" || state == "") && !(grounded) && !piped {
 	}
 	
 	if (downpress) {
-		stopsfx(charmName+"jump")
-		pound_timer = 10
-		state = "pound"
-		found_block = false;
-		playsfx(charmName+"pound")
-		pounding_block = true
+		component_mario_start_groundpound()
 	}
 	
 	if (!alarm_get(2)) {
@@ -284,53 +202,29 @@ if ((state == "" || state=="crouch") && apress && (canjump > 0 || underwater) &&
 	if (slopesliding) {
 		crouch = false
 	}
-	if !in_water() {
-		state = "jump"
-		vsp = -(5.25+min(1,abs(hsp)/10)+(bool(poundjump)+0.5)); //preform the actual jump
-		playsfx(charmName+"jump",1+(bool(poundjump)/4),0,1)
-		if ((run && abs(hsp)>3) && !wallsliding) && !(is_grabbing) {
-			//visual maxspeed jump
-			runjump=1
-		}
-		canjump = 0;
-		//Jump Particles
-		if (poundjump) {
-			make_particle(pSmoke, x-10, y-8, depth + 5, 1, 0, -1);
-			make_particle(pSmoke, x+8, y-8, depth + 5, 1, 0, -1);
-		}
-		slopesliding = false;
-		
-		make_particle(pJumpDust, x, y + hit_sizey, depth + 5, 1, 0, (y-yprevious)/1.5, 0, 0.2);
-	} else { //swim
-		vsp = -(2.25); //preform the actual jump
-		playsfx(charmName+"swim",1,0,1)
-		swim=24
+	state = "jump"
+	vsp = -(4.65+(clamp(abs(hsp)/3.14,0.5,1.7) * 1.2)+(bool(poundjump)+0.5)); //preform the actual jump
+	playsfx(charmName+"jump",1+(bool(poundjump)/4),0,1)
+	if ((run && abs(hsp)>3) && !wallsliding) && !(is_grabbing) {
+		//visual maxspeed jump
+		runjump=1
 	}
+	canjump = 0;
+	//Jump Particles
+	if (poundjump) {
+		make_particle(pSmoke, x-10, y-8, depth + 5, 1, 0, -1);
+		make_particle(pSmoke, x+8, y-8, depth + 5, 1, 0, -1);
+	}
+	slopesliding = false;
+	
+	make_particle(pJumpDust, x, y + hit_sizey, depth + 5, 1, 0, (y-yprevious)/1.5, 0, 0.2);
 }
 #endregion
 
 #region Wallsliding
 
 if (state == "wallslide") && !piped {
-	vsp=1;
-	var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
-	
-	if (move == 0 || !coll){
-		state = "";
-	}
-	
-	if (apress) {
-		hsp=esign(move,xsc)*-2.5
-		frame=0;
-		vsp=-5
-		move=-move
-		xsc=esign(hsp,xsc)
-		no_move=true;
-		alarm_set(2,12);
-		playsfx(charmName+"jump",1,0,1)
-		state = "jump";
-		wallkick = true;
-	}
+	component_mario_wallslide()
 	
 }
 #endregion
@@ -339,28 +233,9 @@ if (state == "wallslide") && !piped {
 
 if (cpress && !is_grabbing) && !(stun) {
 	if (grounded) {
-		grounded=false;
-		spinjump=1
-		crouch=0
-		playsfx(charmName+"spinjump")
-		vsp=-(5.2+min(1,abs(hsp)/10))
-		state = "jump"
-		canstopjump=false
-		make_particle(pJumpDust, x, y + hit_sizey, depth + 5, 1, 0, (y-yprevious)/1.5, 0, 0.2);
+		component_mario_start_spinjump();
 	} else if (state != "dive" && !spinjump && !up && (!crouch || pound)) {
-		stopsfx(charmName+"jump")
-       	pound=0
-		spinjump=0
-		crouch=0
-		run=1.5
-		runvar=1.5
-		playsfx(charmName+"dive")
-		make_particle(pSmoke, x, y, depth + 5, 1, 0.5*-xsc);
-		vsp=-2.7
-		hsp=3.5*esign(move,xsc)
-		xsc=esign(move,xsc)
-		state = "dive"
-		canstopjump=false
+		component_mario_start_dive();
 	}
 }
 
@@ -381,22 +256,9 @@ player_movement();
 basic_step_move();
 post_wall();
 
-if (grounded) {
-	var i = instance_place(x, y + hit_sizey + 4,oCollider)
-	if !is_undefined(i.my_friction) {
-		friction_mult = i.my_friction;
-	}
-}
+component_get_ground_friction()
 
-if ((ceil(abs(hsp))>3 || skidding) && grounded && state == "") {
-	dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
-	if (dusttimer == 1) {
-		var part = pRunDust
-		if (skidding) part = pSkidDust
-
-		make_particle(part, x - (1 * xsc), y + hit_sizey, depth + 5, xsc, (2.25 - skidding) * -xsc, -0.1, -0.02, 0.2);
-	}
-}
+component_mario_skidding_fx()
 
 // check to see if we need to update the polybox
 if (sprindex_prev != sprite_index) {
@@ -410,16 +272,13 @@ if (left || right) && (state == "" || state == "jump") && !slopesliding && !pipe
 	xsc = esign(move, xsc)
 }
 
-bonk=max(0,bonk-1)
+component_common_timer_values()
+
 poundjump=max(0,poundjump-1)
 firing=max(0,firing-1)
 
 runvar = approach_val(runvar,run,0.05)
-
-grow = max(0, (grow - 1));
-
 damagespecial = max(0, pound_severity);
-
 swim = max(0, swim-1)
 
 #define step_end

@@ -1,4 +1,5 @@
 function component_gravity_coneyor(){
+	
 	vsp = min(5.75, vsp + grav);
 	canjump = max(0, canjump-1);
 		
@@ -13,6 +14,7 @@ function component_gravity_coneyor(){
 }
 
 function component_mario_crouch(){
+	
 	if (state == "") && (down) && !(piped) && !(skidding) {
 			return true;
 	} else {
@@ -23,6 +25,7 @@ function component_mario_crouch(){
 }
 
 function component_mario_skid(){
+	
 	if (((abs(gsp) >= 3) || skidding) && move != 0 && !check_signs_matching(gsp,move) && !crouch && !carrying) {
 		if (!skidding) {
 			skiddir = esign(move,xsc)
@@ -38,6 +41,7 @@ function component_mario_skid(){
 }
 
 function component_mario_skidding_fx(){
+	
 	if ((ceil(abs(hsp))>3 || skidding) && grounded && state == "") {
 	dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
 		if (dusttimer == 1) {
@@ -49,30 +53,8 @@ function component_mario_skidding_fx(){
 	}
 }
 
-function component_mario_start_jump(checkForPound = false, startingJumpValue = 5.25){
-	if checkForPound {
-		vsp = -(startingJumpValue+min(1,abs(hsp)/10)+(bool(poundjump)+0.5)); //preform the actual jump
-		playsfx(charmName+"jump",1+(bool(poundjump)/4),0,1)
-		if (poundjump) {
-			make_particle(pSmoke, x-10, y-8, depth + 5, 1, 0, -1);
-			make_particle(pSmoke, x+8, y-8, depth + 5, 1, 0, -1);
-		}
-	} else {
-		vsp = -(startingJumpValue+min(1,abs(hsp)/10))
-		playsfx(charmName+"jump",1,0,1)
-	}
-	state = "jump"
-	if ((run && abs(hsp)>3) && !wallsliding) && !(is_grabbing) {
-		//visual maxspeed jump
-		runjump=1
-	}
-	canjump = 0;
-	slopesliding = false;
-		
-	make_particle(pJumpDust, x, y + hit_sizey, depth + 5, 1, 0, (y-yprevious)/1.5, 0, 0.2);	
-}
-
 function component_mario_start_spinjump(startingJumpValue = 5.2){
+	
 	grounded=false;
 	spinjump=1
 	crouch=0
@@ -84,6 +66,7 @@ function component_mario_start_spinjump(startingJumpValue = 5.2){
 }
 
 function component_mario_start_dive(speedX = 3.5, speedY = -2.7){
+	
 	stopsfx(charmName+"jump")
 	crouch=0
 	run=1.5
@@ -98,6 +81,7 @@ function component_mario_start_dive(speedX = 3.5, speedY = -2.7){
 }
 
 function component_mario_wallslide(slideSpeed = 1, jumpVSpeed = -5, jumpHSpeed = -2.5){
+	
 	vsp=slideSpeed;
 	var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
 	
@@ -120,6 +104,7 @@ function component_mario_wallslide(slideSpeed = 1, jumpVSpeed = -5, jumpHSpeed =
 }
 
 function component_mario_start_groundpound(){
+	
 		stopsfx(charmName+"jump")
 		pound_timer = 10
 		state = "pound"
@@ -129,6 +114,7 @@ function component_mario_start_groundpound(){
 }
 
 function component_mario_groundpound(fallSpeed = 7){
+	
 	slopesliding = 0
 	pound_timer = max(0,pound_timer-1);
 	
@@ -184,12 +170,14 @@ function component_mario_groundpound(fallSpeed = 7){
 }
 
 function component_sonic_start_spindash(){
-		state = "spindash"
-		spindashTotal = 0
-		playsfx(charmName+"spindash",1+(spindashTotal/10))
+	
+	state = "spindash"
+	spindashTotal = 0
+	playsfx(charmName+"spindash",1+(spindashTotal/10))
 }
 
 function component_sonic_spindash(){
+	
 	no_move = true
 	spindashTotal -= spindashTotal / 32
 	if (apress || bpress || cpress) {
@@ -209,11 +197,12 @@ function component_sonic_spindash(){
 	}
 }
 
-function component_sonic_start_jump(){
+function component_sonic_start_jump(startingJumpValue = 6){
+	
 	state = "jump"
 	grounded = false
 	colangle = colangle * 0.9
-	vsp = -6
+	vsp = -startingJumpValue
 	
 	var vd=point_direction(0,0,hsp,vsp)+point_direction(0,0,1,colslope)
     var vm=point_distance(0,0,hsp,vsp)
@@ -227,6 +216,7 @@ function component_sonic_start_jump(){
 }
 
 function component_sonic_roll(){
+	
 	accel = 0
 	if (sign(gsp) == move_dir) {
 		if (sign(gsp) == -1){
@@ -244,6 +234,7 @@ function component_sonic_roll(){
 }
 
 function component_get_ground_friction(){
+	
 	if (grounded) {
 		var i = instance_place(x, y + hit_sizey + 4,oCollider)
 		if !is_undefined(i.my_friction) {
@@ -253,6 +244,7 @@ function component_get_ground_friction(){
 }
 
 function component_common_timer_values(){
+	
 	bonk=max(0,bonk-1)	
 	grow = max(0, (grow - 1));
 }

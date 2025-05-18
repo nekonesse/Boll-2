@@ -110,11 +110,6 @@ if (state == "jump" || state == "roll" || state == "spindash") && (size != "mini
 if (braking) xsc=brakedir
 topspd = 4 + ((size != "basic" || size != "mini") * 0.5);
 maxspd = 12.5;
-//add more checks here
-var rolling = false
-if (state == "roll") {
-	rolling = true
-}
 
 if !(control_lock > 0 || state == "wallrun" || electrocuted || walljump) no_move = false
 
@@ -128,20 +123,12 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 	
 // Fall off platform
 if (!grounded) {
-	vsp = min(5.75, vsp + grav);
-	canjump -= 1;
+	component_gravity_coneyor()
 	
 	if (vsp < 0 && vsp > -2 ) {
 		hsp -= hsp / 32
 	}
-	// chearii: coneyor speed management
-	if (abs(chsp * 100))
-	{
-		chsp *= 0.95;
-		
-		if (((chsp * 100) / 1) == 0)
-		chsp = 0;
-	}
+	
 	// Switch direction
 	//add more checks here to prevent left/right changing direction
 	if (left || right) && !(piped) {
@@ -167,36 +154,18 @@ if (!grounded) {
 		if (!down) state = ""
 		
 		if (apress || bpress || cpress) && (abs(gsp) <= 0.5) {
-			state = "spindash"
-			spindashTotal = 0
-			playsfx(charmName+"spindash",1+(spindashTotal/10))
+			component_sonic_start_spindash()
 		}
 	}
 	
 	if (state == "spindash") && !(piped) {
-		no_move = true
-		spindashTotal -= spindashTotal / 32
-		if (apress || bpress || cpress) {
-			frame = 0
-			spindashTotal = min(spindashTotal + 2, 8)
-			show_debug_message(spindashTotal)
-			stopsfx(charmName+"spindash")
-			playsfx(charmName+"spindash",1+(spindashTotal/10))
-		}
-		
-		if (!down || !(abs(gsp) <= 0.5)) {
-			state = "roll"
-			gsp = (4 + (floor(spindashTotal) / 2.5)) * xsc
-			//apply spindash speed based off amount of spindash presses
-			stopsfx(charmName+"spindash")
-			playsfx(charmName+"release")
-		}
+		component_sonic_spindash()
 	}
 
 	#endregion
 	//handles slope influence
 	if (state == "roll") && !(piped) {
-		player_slide_sonic(0.125, rolling, 0.078125, 0.3125);
+		player_slide_sonic(0.125, true, 0.078125, 0.3125);
 	}
 	
 	if (steep_slope) && (state == "" || state == "crouch" || state == "spindash") { //slide down steep slopes
@@ -234,20 +203,7 @@ if (state == "jump") && !(piped){
 }
 
 if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped){
-	state = "jump"
-	grounded = false
-	colangle = colangle * 0.9
-	vsp = -6
-	
-	var vd=point_direction(0,0,hsp,vsp)+point_direction(0,0,1,colslope)
-    var vm=point_distance(0,0,hsp,vsp)
-    hsp=lengthdir_x(vm,vd)
-    vsp=lengthdir_y(vm,vd)
-    //adjust vsp and hsp to slope angle influence
-	
-	playsfx(charmName+"jump",1,0,1)
-	canjump = 0;
-	control_lock = 0;
+	component_sonic_start_jump()
 }
 #endregion
 
@@ -316,20 +272,7 @@ if (state == "" || state == "crouch" || state == "spindash") && (grounded && dow
 }
 
 if (state == "roll" && grounded) && !(piped) {
-	accel = 0
-	if (sign(gsp) == move_dir) {
-		if (sign(gsp) == -1){
-			gsp = min(0, gsp + fric)
-		}else{
-			gsp = max(0, gsp - fric)
-		}
-	}
-	fastaccel = 0.125
-	fric = 0.0234375
-	//taken from the sonic physics guide
-	if abs(gsp) < 0.5 {
-		state = ""
-	}
+	component_sonic_roll()
 }
 #endregion
 
@@ -339,12 +282,7 @@ player_movement_sonic();
 basic_step_move();
 post_wall();
 
-if (grounded) {
-	var i = instance_place(x, y + hit_sizey + 4,oCollider)
-	if !is_undefined(i.my_friction) {
-		friction_mult = i.my_friction;
-	}
-}
+component_get_ground_friction()
 
 if ((ceil(abs(hsp))>3 && grounded && state == "")) {
 	dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
@@ -368,9 +306,7 @@ if (sprindex_prev != sprite_index) {
 	sprindex_prev = sprite_index;
 }
 
-bonk=max(bonk,bonk-1)
-
-grow = max(0, (grow - 1));
+component_common_timer_values()
 
 #define draw
 #region Sprite Manager
