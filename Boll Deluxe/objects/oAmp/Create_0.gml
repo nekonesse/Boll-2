@@ -10,16 +10,7 @@ vsp = 0; //fallin vsp
 grav = 0.15;
 radius = 64;
 
-pathing=-1;
-pathprenum=0;
-pathnum=1;
-pathspd=2;
-pathcanrev=false;
-pathisrev=false;
-pathfallen=false;
-pathcanfall=false;
-pathdraw=true;
-pathstarted=true;
+node_init_vars()
 
 dir=0;
 spd=0;

@@ -232,6 +232,8 @@ place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 		obj[10] = []
 		obj[11] = []
 		obj[12] = [2,false,0,false,true,true] //node properties
+		obj[13] = [];
+		obj[14] = [2,false,false,false] //rotator properties
 		if is_array(sprite[8]) && array_length(sprite[8]) {
 			var o=0;
 			repeat (o < array_length(sprite[8])) { //god Damn.

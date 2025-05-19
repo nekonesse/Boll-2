@@ -51,6 +51,12 @@ function parse_level(dir=game_save_id+"\save.jade") {
 					}
 					j++;
 				}
+				
+				if array_length(data[13]) {
+					var temparr = []
+					array_copy(temparr,0,data[13],0,array_length(data[13]))
+					variable_instance_set(obj, "rotdat", temparr);
+				}
 			}
 			/*OBJECT STAT LIST
 			 0: name
@@ -101,7 +107,6 @@ function parse_level(dir=game_save_id+"\save.jade") {
 					}
 					j++;
 				}
-				with(obj) {event_user(15)}
 			}
 			/*OBJECT STAT LIST
 			 0: name

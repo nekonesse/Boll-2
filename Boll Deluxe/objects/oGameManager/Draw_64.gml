@@ -1,24 +1,25 @@
 ///@description Game HUD
 if !surface_exists(HUDsurface) exit;
+var guiw=camera_get_view_width(view_camera[0]);
+var guih=camera_get_view_height(view_camera[0]);
 
 surface_set_target(HUDsurface);
 draw_clear_alpha(c_black,0);
 
 draw_set_font(global.smallBoldFont)
-draw_set_halign(fa_left)
 var i=0;
 repeat (array_length(global._playerChars)) {
 	var spr=oGameManager.PlayerColl.GetImageInfo($"spr_{global._playerChars[i]}_HUDicon")
-    if CollageIsImage(spr)
-	CollageDrawImage(spr,0,16+18*i,27)
+    if CollageIsImage(spr) {
+		CollageDrawImage(spr,0,16+32*i,guih-16)
+	}
 	var _lives=string_repeat("0", 2-string_length(string(global.lives[i]))) + string(global.lives[i])
-	draw_text(24+24*i,25,$"*{_lives}")
-	draw_text(10+24*i,8,string_lower(global._playerChars[i]))
+	draw_text(26+32*i,guih-16,$"*{_lives}")
 	i++;
 }
-draw_sprite(spr_coinhudicon,0,16,46)
+draw_sprite(spr_coinhudicon,0,16,16)
 var _coins=string_repeat("0", 3-string_length(string(global.coins_collected))) + string(global.coins_collected)
-draw_text(24,44,$"*{_coins}")
+draw_text(26,12,$"*{_coins}")
 
 surface_reset_target();
 

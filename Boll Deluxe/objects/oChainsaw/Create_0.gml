@@ -10,13 +10,4 @@ depth=-1;
 image_xscale=1;
 image_yscale=1;
 
-pathing=-1;
-pathprenum=0;
-pathnum=1;
-pathspd=2;
-pathcanrev=false;
-pathisrev=false;
-pathfallen=false;
-pathcanfall=false;
-pathdraw=true;
-pathstarted=true;
+node_init_vars()

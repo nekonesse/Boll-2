@@ -447,6 +447,7 @@
     {"$GMIncludedFile":"","%Name":"wallrun.png","CopyToMask":-1,"filePath":"datafiles/_vanilla/character/sonic/sprites/big","name":"wallrun.png","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"boll.buf","CopyToMask":-1,"filePath":"datafiles/_vanilla/media","name":"boll.buf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"customobject.gml","CopyToMask":-1,"filePath":"datafiles/_vanilla/scripts/objects","name":"customobject.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"customobject2.gml","CopyToMask":-1,"filePath":"datafiles/_vanilla/scripts/objects","name":"customobject2.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"test_functions.gml","CopyToMask":-1,"filePath":"datafiles/_vanilla/scripts/triggers","name":"test_functions.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"controllerblacklist.csv","CopyToMask":-1,"filePath":"datafiles","name":"controllerblacklist.csv","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"controllertypes.csv","CopyToMask":-1,"filePath":"datafiles","name":"controllertypes.csv","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -484,7 +485,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.13.1.193",
+    "IDEVersion":"2024.13.0.190",
   },
   "name":"Boll Deluxe",
   "resources":[
@@ -1196,6 +1197,7 @@
     {"id":{"name":"scr_load_boll_stuff","path":"scripts/scr_load_boll_stuff/scr_load_boll_stuff.yy",},},
     {"id":{"name":"scr_loadlevels","path":"scripts/scr_loadlevels/scr_loadlevels.yy",},},
     {"id":{"name":"scr_morph","path":"scripts/scr_morph/scr_morph.yy",},},
+    {"id":{"name":"scr_node_movement","path":"scripts/scr_node_movement/scr_node_movement.yy",},},
     {"id":{"name":"scr_on_screen","path":"scripts/scr_on_screen/scr_on_screen.yy",},},
     {"id":{"name":"scr_outline","path":"scripts/scr_outline/scr_outline.yy",},},
     {"id":{"name":"scr_parseJADE","path":"scripts/scr_parseJADE/scr_parseJADE.yy",},},

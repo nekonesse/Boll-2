@@ -2,7 +2,6 @@
 event_inherited();
 ramp=false
 hflip=false;
-;
 
 if hflip = true {
 	image_xscale *= -1;

@@ -1,5 +1,6 @@
 ///@description Empty Contents on finish
 var j, i = noone; //i dont know whats the empty resource id
+var pl=nearestplayer();
 switch (content) {
 	
 	case "mushroom": {
@@ -7,10 +8,16 @@ switch (content) {
 	} break;
 	
 	case "fireflower": {
+		if pl.size=="basic" || pl.size=="mini"
+		j = oMushroom;
+		else
 		j = oFireFlower;
 	} break;
 	
 	case "thunderflower": {
+		if pl.size=="basic" || pl.size=="mini"
+		j = oMushroom;
+		else
 		j = oThunderFlower;
 	} break;
     

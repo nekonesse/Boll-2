@@ -1,5 +1,4 @@
-/// @description Insert description here
-// You can write your code in this editor
+node_path_movement();
 
 if !grabbed {
     grab_delay = max(grab_delay--, 0)

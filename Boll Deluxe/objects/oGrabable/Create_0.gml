@@ -18,3 +18,5 @@ hit_sizex = 7
 hit_sizey = 7
 bounce_speed = vsp
 collision_array = [oCollider]
+
+node_init_vars()

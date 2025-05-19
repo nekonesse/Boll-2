@@ -1,3 +1,5 @@
+color_layer=layer_create(5000);
+color_bg=layer_background_create(color_layer,-1)
 sky_layer=layer_create(2000);
 sky_bg=layer_background_create(sky_layer,spr_plains_bg_sky)
 clouds_layer=layer_create(1900);
@@ -6,15 +8,11 @@ hills_layer=layer_create(1800);
 hills_bg=layer_background_create(hills_layer,spr_plains_bg_hills)
 hills2_layer=layer_create(1700);
 hills2_bg=layer_background_create(hills2_layer,spr_plains_bg_hills2)
-clouds3d_layer=layer_create(1850);
-clouds3d_bg=layer_background_create(clouds3d_layer,spr_plains_bg_3d_clouds)
 
-clouds_3d_surface=surface_create(480,270)
-
+layer_background_blend(color_bg,$d83d1e)
+layer_background_visible(color_bg,true)
 layer_background_htiled(clouds_bg,true)
 layer_background_visible(clouds_bg,true)
-layer_background_htiled(clouds3d_bg,true)
-layer_background_visible(clouds3d_bg,true)
 layer_background_htiled(sky_bg,true)
 layer_background_visible(sky_bg,true)
 layer_background_htiled(hills_bg,true)

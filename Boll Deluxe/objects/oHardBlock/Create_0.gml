@@ -2,13 +2,4 @@
 event_inherited();
 no_collide=false;
 
-pathing=-1;
-pathprenum=0;
-pathnum=1;
-pathspd=2;
-pathcanrev=false;
-pathisrev=false;
-pathfallen=false;
-pathcanfall=false;
-pathdraw=true;
-pathstarted=true;
+node_init_vars()

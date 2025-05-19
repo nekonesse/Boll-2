@@ -1,4 +1,9 @@
 global.player_spritelists[0]=[]
+var i=0;
+repeat (1000) {
+	global.channelid[i]=0
+	i++;
+}
 pal_swap_init_system(shd_pal_swapper);
 PlayerColl=new Collage("Players", 4096, 4096, false, 1, true)
 import_sheets();

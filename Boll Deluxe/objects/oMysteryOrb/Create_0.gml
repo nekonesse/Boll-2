@@ -4,13 +4,4 @@ part_system_depth(myPart,19)
 part_system_position(myPart,x+8,y+8)
 part_system_global_space(myPart,true)
 
-pathing=-1;
-pathprenum=0;
-pathnum=1;
-pathspd=2;
-pathcanrev=false;
-pathisrev=false;
-pathfallen=false;
-pathcanfall=false;
-pathdraw=true;
-pathstarted=true;
+node_init_vars()
