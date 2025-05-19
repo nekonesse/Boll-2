@@ -131,6 +131,15 @@ function object_get_properties(obj){
 				["lockon", "Lock Camera", 0, "checkbox", 0]
 			]
 			break;
+		case oScript:
+		properties = [
+				["script_onTrigger", "Trigger Script", "", "string_input", 0],
+				["script_onStep", "Step Script", "", "string_input", 0],
+				["script_onCreate", "Create Script", "", "string_input", 0],
+				["detection_type", "Detect Type", 0, "dropdown", [TRIGGER.NONE, TRIGGER.OVERLAP, TRIGGER.OVERLAP_ONCE, TRIGGER.ON_TOUCH]],
+				["detection_value", "Detect Value", 0, "number_input", 0]
+			]
+		break;
 		default: break;
 	}
 	return properties;

@@ -72,3 +72,4 @@ global._loopThrough = function(_lookfor, _filedir) { //Function to go through an
 }
 
 global.scripts = compile_code()
+global.scripts_level = compile_level_scripts()
