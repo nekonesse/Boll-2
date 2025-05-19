@@ -282,8 +282,11 @@ if selected_mode == OBJECT_MODE {
 							case "dropdown": {
 								draw_sprite_stretched(spr_JADEdropdown,0,96+16,(112+32*i)-12,8*20,8*3)
 								//draw selected variable
+								if array_length(proparr[10][i]) > 5
+								ScribblejrFit(string(proparr[10][i][5][array_get_index(proparr[10][i][4],proparr[10][i][2])]), fa_left, fa_top, global.omiFont, 2, 160-8, 20).Draw(96+24,(112+32*i)-6)
+								else
 								ScribblejrFit(string(proparr[10][i][2]), fa_left, fa_top, global.omiFont, 2, 160-8, 20).Draw(96+24,(112+32*i)-6)
-
+								
 								//toggle variable
 								var incheck=point_in_rectangle(curs_x,curs_y,object_list_area_x+37,object_list_area_y+34+(32/3)*i,object_list_area_x+34+56,object_list_area_y+40+(32/3)*i)&&(!open_dropmenu||open_dropmenu-1==i)
 								
@@ -296,13 +299,17 @@ if selected_mode == OBJECT_MODE {
 								}
 								
 								if (open_dropmenu-1 == i) {
-									var menuarr=proparr[10][i][4]
+									var menudat=proparr[10][i][4]
+									var menuarr=[]
+									if array_length(proparr[10][i]) > 5
+									menuarr=proparr[10][i][5]
+									else menuarr=menudat
 									if !is_array(menuarr) break;
 									
 									var j=0;
-									repeat(array_length(menuarr)) {
+									repeat(array_length(menudat)) {
 									    //draw dropdown menus
-										draw_sprite_stretched(spr_JADEdropdown,j == array_length(menuarr)-1 ? 2 : 1,96+16,(112+32*i+24*j)+12,8*20,8*3)
+										draw_sprite_stretched(spr_JADEdropdown,j == array_length(menudat)-1 ? 2 : 1,96+16,(112+32*i+24*j)+12,8*20,8*3)
 										//draw list of variables
 										ScribblejrFit(string(menuarr[j]), fa_left, fa_top, global.omiFont, 2, 160-8, 20).Draw(96+24,(112+32*i+24*j)+18)
 										
@@ -312,7 +319,7 @@ if selected_mode == OBJECT_MODE {
 											//set selected object to selected variable
 											var k=0
 											repeat (array_length(properties_group)) {
-											    properties_group[k][10][i][2]=menuarr[j];
+											    properties_group[k][10][i][2]=menudat[j];
 												k++
 											}
 											open_dropmenu=0;

@@ -94,7 +94,7 @@ function JADE_initializeobj() {
 	registerobj(object_get_name(oMagentaSwitchSlope), spr_magentaswitchslope, -sprite_get_xoffset(spr_magentaswitchslope), -sprite_get_yoffset(spr_magentaswitchslope), sprite_get_width(spr_magentaswitchslope), sprite_get_height(spr_magentaswitchslope), false, false, OBJECT_MODE, 3, object_get_properties("oMagentaSwitchSlope"))
 	registerobj(object_get_name(oZapper), spr_zapper, -sprite_get_xoffset(spr_zapper), -sprite_get_yoffset(spr_zapper), sprite_get_width(spr_zapper), sprite_get_height(spr_zapper), false, false, OBJECT_MODE, 3, object_get_properties("oZapper"), "Zapper", true)
 	
-	registerobj(object_get_name(oScript), spr_scripttrigger, 0, 0, 16, 16, true, true, OBJECT_MODE, 3, object_get_properties("oScriptBlock"), "Script", true)
+	registerobj(object_get_name(oScript), spr_scripttrigger, 0, 0, 16, 16, true, true, OBJECT_MODE, 3, object_get_properties("oScript"), "Script Block", true)
 	registerobj(object_get_name(oCustomObject), spr_customobject, 0, 0, 16, 16, false, false, OBJECT_MODE, 3, object_get_properties("oCustomObject"), "Custom Object", true)
 	
 	registerobj(object_get_name(oGoomba), spr_goombawalk, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oGoomba"), "Goomba")

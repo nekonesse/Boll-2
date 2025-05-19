@@ -1,6 +1,7 @@
 script_onTrigger = ""
 script_onStep = ""
 script_onCreate = ""
+script_onDraw = ""
 
 ran_create_event = false
 
