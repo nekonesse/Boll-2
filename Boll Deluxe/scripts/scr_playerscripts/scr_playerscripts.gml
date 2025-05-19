@@ -363,9 +363,6 @@ function animate_player() {
 	
 	if (myspr!=oldspr) {
 		frame=0
-		show_debug_message(spriteEvent)
-		show_debug_message(spriteMap[$ $"{sprite_yank} {spriteEvent}"])
-		
 	}
 	
 	if spri!=-1 {

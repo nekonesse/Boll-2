@@ -73,14 +73,14 @@ maxspd = 2 + runvar + ((size != "basic" && !crouch) * 0.5) - (1.25*(crouch && gr
 #region PreventMovement
 var no_move_prev = no_move;
 no_move = 0;
-
+//add more checks here
 if (state == "pound") || (state=="dive") || (alarm_get(2)) || (hurt) || (stun) || (finish && posed && no_move_prev) {
 	no_move = true;
 }
 
 #endregion
 
-
+#region Jump Out Of Water
 if in_water(){
 	if (!was_in_water) {
 		
@@ -89,16 +89,20 @@ if in_water(){
 		state = ""
 		swim = 0
 	}
-	call water;
+	call water; //this works correctly dont let gmedit gaslight you
 	return -1;
 } else {
 	if (was_in_water) {
-		if (!grounded) {
-			state = "jump"
-			if (up) {
-				vsp = -5
-			} else if (vsp > 0) {
-				vsp = -3
+		//if we are at the TOP of the water, not the bottom or side
+		if collision_line(x,y,x,y+hit_sizey+abs(vsp),asset_get_index("oWater"),false,true) {
+			if (!grounded) {
+				state = "jump"
+				if (up) {
+					vsp = -5
+				} else {
+					vsp = -3.5
+				}
+				canstopjump=true
 			}
 		}
 		accel = 0.09375; //how fast you gain speed
@@ -108,9 +112,10 @@ if in_water(){
 		friction_mult = 1; //multiplier for friction (e.g. ice blocks)
 		maxspd = 1.5
 		was_in_water = false
+		runjump = false
 	}
 }
-//add more checks here
+#endregion
 
 #region Normal
 if ((apress) && !(grounded)) && !piped {
@@ -234,7 +239,7 @@ if (state == "pound") && !piping {
 #region Jumping
 var underwater=in_water()
 if (state == "jump" || state == "") && !(grounded) && !piped {
-	if in_water() state=""
+	if underwater state=""
 	
 	if !(spinjump) {
 		if (!akey && vsp < -2 && !canstopjump) //Make player jump lower when jump is released
@@ -265,7 +270,7 @@ if (state == "jump" || state == "") && !(grounded) && !piped {
 	}
 }
 
-if ((state == "" || state=="crouch") && apress && (canjump > 0 || underwater) && !spinjump) && !piped {
+if ((state == "" || state=="crouch") && apress && canjump > 0 && !spinjump) && !piped && !(underwater) {
 	grounded = false
 	if (slopesliding) {
 		crouch = false
