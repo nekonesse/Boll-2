@@ -23,11 +23,10 @@ if (movedir!=-1) {
 	hsp=(right-left)*maxspd
 	vsp=(down-up)*maxspd
 	
-	if (up && grounded) y-=1
-	
 	repeat(2) {
 		x+=hsp/2
 		y+=vsp/2
+		grounded=false
 		player_collision()
 	}
 	post_wall();
