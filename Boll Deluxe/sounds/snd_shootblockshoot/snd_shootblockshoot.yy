@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":1.758042,
+  "duration":1.7580498,
   "name":"snd_shootblockshoot",
   "parent":{
     "name":"Objects",

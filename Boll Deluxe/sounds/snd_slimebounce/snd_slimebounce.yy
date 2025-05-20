@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.377188,
+  "duration":0.3771882,
   "name":"snd_slimebounce",
   "parent":{
     "name":"Hazards",

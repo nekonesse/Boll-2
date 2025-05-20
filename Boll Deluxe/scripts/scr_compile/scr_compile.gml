@@ -35,7 +35,6 @@ function compile_code(){
 			show_debug_message("SCRIPT FILE FOUND! `" + _file + "`");
 			
 			var _filepath = $"{working_directory}\\_vanilla\\" + found_folders[j] + "\\" + _file
-			//var _filepath2 = $"{working_directory}\\_vanilla\\scripts\\" + _folder 
 			show_debug_message(_filepath)
 			//show_debug_message(_filepath2)
 			_file = string_delete(_file, string_length(_file) -3, 4)
@@ -118,6 +117,7 @@ function import_sheets() {
 		var framedat=global.animdat[i][1]
 		var array=global.player_spritelists[i]
 		var j=0;
+		
 		repeat(array_length(global.powerups)) {
 			var sprite_yank = global.powerups[j]
 			if spritedat[$ $"{global.powerups[j]} override"] != undefined {
@@ -151,7 +151,7 @@ function compile_level_scripts(){
 	
 	show_debug_message("BEGIN SCRIPT (LEVEL) COMPLATION...")
 	
-	var _folder = file_find_first($"{working_directory}\\_vanilla\\scripts\\triggers\\*.gml", fa_none)
+	var _folder = file_find_first($"{working_directory}\\mods\\scripts\\triggers\\*.gml", fa_none)
 	while(_folder != "") {
 		
 		show_debug_message("SCRIPT FILE FOUND! `" + _folder + "`");
@@ -171,13 +171,12 @@ function compile_level_scripts(){
 	var j=0;
 	repeat(array_length(found_folders)) {
 		
-		var _file = file_find_first($"{working_directory}\\_vanilla\\" + found_folders[j], fa_none)
+		var _file = file_find_first($"{working_directory}\\mods\\" + found_folders[j], fa_none)
 		show_debug_message("BEGIN SCRIPT COMPILE IN `" + found_folders[j] + "`");
 	
 		while(_file != "") {
 			
-			var _filepath = $"{working_directory}\\_vanilla\\" + found_folders[j]
-			//var _filepath2 = $"{working_directory}\\_vanilla\\scripts\\" + _folder 
+			var _filepath = $"{working_directory}\\mods\\" + found_folders[j]
 			
 			//show_debug_message(_filepath2)
 			_file = string_delete(_file, string_length(_file) -3, 4)
@@ -222,7 +221,7 @@ function compile_object_scripts(){
 	
 	show_debug_message("BEGIN SCRIPT (OBJECT) COMPLATION...")
 	
-	var _folder = file_find_first($"{working_directory}\\_vanilla\\scripts\\objects\\*.gml", fa_none)
+	var _folder = file_find_first($"{working_directory}\\mods\\scripts\\objects\\*.gml", fa_none)
 	while(_folder != "") {
 		
 		show_debug_message("SCRIPT FILE FOUND! `" + _folder + "`");
@@ -242,12 +241,12 @@ function compile_object_scripts(){
 	var j=0;
 	repeat(array_length(found_folders)) {
 		
-		var _file = file_find_first($"{working_directory}\\_vanilla\\scripts\\objects\\" + found_folders[j], fa_none)
+		var _file = file_find_first($"{working_directory}\\mods\\scripts\\objects\\" + found_folders[j], fa_none)
 		show_debug_message("BEGIN SCRIPT COMPILE IN `" + found_folders[j] + "`");
 	
 		while(_file != "") {
 			
-			var _filepath = $"{working_directory}\\_vanilla\\scripts\\objects\\{_file}"
+			var _filepath = $"{working_directory}\\mods\\scripts\\objects\\{_file}"
 
 			_file = string_delete(_file, string_length(_file) -3, 4)
 			def_names = global._findDefine( _filepath)

@@ -34,16 +34,11 @@ if check_collision_line(x+(hit_sizex+1)*-xsc, y+hit_sizey-3,x+(hit_sizex+1)*-xsc
 }
 
 if (enemycoll) {
-	var coll = instance_place(x+hsp, y, oEnemy)
-
-	if !(no_interaction) && (coll != noone && object_get_parent(coll.object_index) == oEnemy) { 
-		// i will eat my shoes. make sure the object is an enemy before checking variables that not enemies dont have
-		if !(coll.no_interaction) && !(flipped) {
-			flipped = 1;
-			_direction *= -1;
-			turning = 10;
-			prevsprite_index=sprite_index
-		}
+	var coll = check_rectangle_in_hitbox(x+(hit_sizex+1)*-xsc,y+hit_sizey-3,x+(hit_sizex+1)*-xsc,y-hit_sizey+3,oEnemy)
+	
+	if (coll) {
+		enemyTurnAround.Emit();
+		with(coll) if xsc!=other.xsc enemyTurnAround.Emit();
 	}
 }
 

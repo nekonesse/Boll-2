@@ -165,6 +165,36 @@ function check_hitbox_on_hitbox(object1, object2){
 	return noone;
 }
 
+function check_hitbox_on_hitbox_list(object1, object2, list){
+	//var found = noone
+	if !instance_exists(object1) || !instance_exists(object2) exit;
+	
+	var x1, x2, y1, y2, hit_sizex2, hit_sizey2
+	x1 = floor(object1.x)
+	y1 = floor(object1.y)
+	
+	var amountfound=0;
+	
+	if (instance_number(object2) > 0) {
+		var i=0;
+	    repeat (instance_number(object2)) {    
+	        var found = instance_find(object2, i);
+			if found.id != id {
+				x2 = floor(found.x)
+				y2 = floor(found.y)
+				hit_sizex2 = found.hit_sizex
+				hit_sizey2 = found.hit_sizey
+		        if rectangle_in_rectangle(x1 - hit_sizex,y1 - hit_sizey,x1 + hit_sizex,y1 + hit_sizey, x2 - hit_sizex2, y2 - hit_sizey2, x2 + hit_sizex2, y2 + hit_sizey2) {
+		            ds_list_add(list,found.id)
+					amountfound++
+				}
+			}
+			i++;
+	    }
+    }
+	return amountfound;
+}
+
 function check_rectangle_in_hitbox(x1, y1, x2, y2, object){
 	//var found = noone
 	if !instance_exists(object) exit;
@@ -175,17 +205,48 @@ function check_rectangle_in_hitbox(x1, y1, x2, y2, object){
 		var i=0;
 	    repeat (instance_number(object)) {    
 	        var found = instance_find(object, i);
-			x3 = floor(found.x)
-			y3 = floor(found.y)
-			hit_sizex2 = found.hit_sizex
-			hit_sizey2 = found.hit_sizey
-	        if rectangle_in_rectangle(x1,y1,x2,y2, x3 - hit_sizex2, y3 - hit_sizey2, x3 + hit_sizex2, y3 + hit_sizey2) {
-	            return found;
+			if found.id!=id {
+				x3 = floor(found.x)
+				y3 = floor(found.y)
+				hit_sizex2 = found.hit_sizex
+				hit_sizey2 = found.hit_sizey
+		        if rectangle_in_rectangle(x1,y1,x2,y2, x3 - hit_sizex2, y3 - hit_sizey2, x3 + hit_sizex2, y3 + hit_sizey2) {
+		            return found;
+				}
 			}
 			i++;
 	    }
     }
 	return noone;
+}
+
+function check_rectangle_in_hitbox_list(x1, y1, x2, y2, object, list){
+	//var found = noone
+	if !instance_exists(object) exit;
+	
+	var x3, y3, hit_sizex2, hit_sizey2
+	
+	var amountfound = 0;
+	
+	if (instance_number(object) > 0) {
+		var i=0;
+	    repeat (instance_number(object)) {    
+	        var found = instance_find(object, i);
+			if found.id!=id {
+				x3 = floor(found.x)
+				y3 = floor(found.y)
+				hit_sizex2 = found.hit_sizex
+				hit_sizey2 = found.hit_sizey
+		        if rectangle_in_rectangle(x1,y1,x2,y2, x3 - hit_sizex2, y3 - hit_sizey2, x3 + hit_sizex2, y3 + hit_sizey2) {
+		            ds_list_add(list,found.id)
+					amountfound++
+				}
+			}
+			i++;
+	    }
+    }
+	
+	return amountfound;
 }
 
 // polygon collision

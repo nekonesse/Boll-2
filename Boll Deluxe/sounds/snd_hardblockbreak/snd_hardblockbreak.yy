@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.513333,
+  "duration":0.5133333,
   "name":"snd_hardblockbreak",
   "parent":{
     "name":"Objects",

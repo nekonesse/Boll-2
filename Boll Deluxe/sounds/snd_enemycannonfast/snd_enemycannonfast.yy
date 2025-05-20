@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.803991,
+  "duration":0.8039909,
   "name":"snd_enemycannonfast",
   "parent":{
     "name":"Hazards",

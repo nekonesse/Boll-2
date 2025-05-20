@@ -130,7 +130,10 @@ camera_set_view_size(view_camera[0], floor(480*zoom_level), floor(270*zoom_level
 gridx = floor(mouse_x/16)
 gridy = floor(mouse_y/16)
 
-if keyboard_check_pressed(vk_escape) room_goto(rMainMenu)
+if keyboard_check_pressed(vk_escape) {
+	room_goto(rMainMenu)
+	global.jade_testing=false
+}
 
 //half temp cycling object/tile behavior
 switch(selected_mode) {

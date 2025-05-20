@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.131927,
+  "duration":0.13192743,
   "name":"snd_enemykick",
   "parent":{
     "name":"Hazards",

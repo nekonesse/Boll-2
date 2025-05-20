@@ -870,3 +870,5 @@ if (coll) && !(slopesliding) && !(invincible_type && invincible_timer) {
 	}
 	grow = 60;
 
+#define enter_pipe
+stopsfx(charmName+"skid")

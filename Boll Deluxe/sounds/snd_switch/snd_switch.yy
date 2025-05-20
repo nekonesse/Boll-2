@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.266259,
+  "duration":0.2662585,
   "name":"snd_switch",
   "parent":{
     "name":"Objects",

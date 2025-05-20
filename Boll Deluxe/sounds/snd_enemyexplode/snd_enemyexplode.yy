@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.379501,
+  "duration":0.37950113,
   "name":"snd_enemyexplode",
   "parent":{
     "name":"Hazards",

@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.131111,
+  "duration":0.13111112,
   "name":"snd_enemystomp",
   "parent":{
     "name":"Hazards",

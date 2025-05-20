@@ -5,7 +5,7 @@ function warp_in_pipe(obj,spd,dir) {
 	depth=610; //behind all main tiles
 		
 	warp_timer=approach_val(warp_timer,0,1)
-	if warp_timer <= 30 {
+	if warp_timer <= 60 {
 		visible=0
 	}
 	/*switch (obj.image_angle) {
@@ -87,6 +87,8 @@ function warp_out_pipe(obj,spd,dir) {
 		warp_out=false;
 		depth=0;
 		visible=1;
+		VinylPlay(snd_pipe)
+		sig.Emit("exit_pipe")
 	}
 }
 
@@ -97,9 +99,13 @@ function player_warping(){
 		if (down) && !(piped) && (grounded) && !(warp_coll) {
 			piped=true
 			warp_type="enter_pipe"
-			warp_timer=60;
+			warp_timer=90;
 			warp_coll=pipecoll
 			x=pipecoll.x
+			VinylPlay(snd_pipe)
+			hsp=0
+			vsp=0
+			sig.Emit("enter_pipe")
 		}
 	}
 	pipecoll=collision_line(x+hit_sizex+1,y-hit_sizey,x+hit_sizex+1,y+hit_sizey,oPipe,false,true)
@@ -107,9 +113,13 @@ function player_warping(){
 		if (right) && !(piped) && (grounded) && !(warp_coll) {
 			piped=true
 			warp_type="enter_pipe"
-			warp_timer=60;
+			warp_timer=90;
 			warp_coll=pipecoll
 			y=pipecoll.y+4
+			VinylPlay(snd_pipe)
+			hsp=0
+			vsp=0
+			sig.Emit("enter_pipe")
 		}
 	}
 	pipecoll=collision_line(x-hit_sizex-1,y-hit_sizey,x-hit_sizex-1,y+hit_sizey,oPipe,false,true)
@@ -117,9 +127,13 @@ function player_warping(){
 		if (left) && !(piped) && (grounded) && !(warp_coll) {
 			piped=true
 			warp_type="enter_pipe"
-			warp_timer=60;
+			warp_timer=90;
 			warp_coll=pipecoll
 			y=pipecoll.y+4
+			VinylPlay(snd_pipe)
+			hsp=0
+			vsp=0
+			sig.Emit("enter_pipe")
 		}
 	}
 	pipecoll=collision_line(x-hit_sizex,y-hit_sizey-1,x+hit_sizex,y-hit_sizey-1,oPipe,false,true)
@@ -127,9 +141,13 @@ function player_warping(){
 		if (up) && !(piped) && !(grounded) && !(warp_coll) {
 			piped=true
 			warp_type="enter_pipe"
-			warp_timer=60;
+			warp_timer=120;
 			warp_coll=pipecoll
 			x=pipecoll.x
+			VinylPlay(snd_pipe)
+			hsp=0
+			vsp=0
+			sig.Emit("enter_pipe")
 		}
 	}
 	if (warp_coll) && (warp_timer) && (piped) {
@@ -149,6 +167,7 @@ function player_warping(){
 				break;
 			}
 		} else {
+			instance_activate_object(warp_coll)
 			warp_out_pipe(warp_coll,0.5,warp_coll.image_angle+90)
 		}
 	}
