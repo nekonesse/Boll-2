@@ -1,19 +1,3 @@
-///@description Intialize
-///Tools:
-#macro EMPTY_SLOT -1
-#macro SELECT_TOOL 1 //region, object, background, node
-#macro BRUSH_TOOL 2 //object, tile, background
-#macro FILL_TOOL 3 //object, tile
-#macro ERASE_TOOL 4 //object, tile, background, node
-#macro PICKER_TOOL 5 //object, tile, background
-#macro REFERENCE_TOOL 6 //object, tile, background, node
-#macro ROTATE_TOOL 7 //tile, background
-#macro MIRROR_TOOL 8 //tile, background
-#macro FLIP_TOOL 9 //tile, background
-#macro COLOR_TOOL 10 //tile, background
-#macro NODE_TOOL 11 //node
-#macro ROTATOR_TOOL 12 //region
-
 ///Modes:
 //0: Region
 //1: Objects
@@ -63,7 +47,7 @@ toolbar[4][3]=ROTATOR_TOOL
 toolbar[4][4]=ERASE_TOOL
 toolbar[4][5]=REFERENCE_TOOL
 
-JADE_initializeobj();
+WM_initializeobj();
 
 tilesets={}
 tilesets[$ "tTilesetMain"]=[spr_TilesetMain, tTilesetMain, "Floragrande Tiles"]
@@ -92,7 +76,6 @@ selected_tile_layer=2;
 tilemap = tile_layer[2]
 object_layer_map = ds_list_create()
 node_layer_map = ds_list_create()
-
 
 not_on_gui = false
 
@@ -124,7 +107,7 @@ tile_fill_last_y = 0
 tile_fill = false
 fill_circle = false
 
-gotoroom=rGame
+gotoroom=rWorldMap
 
 curs_x=mouse_x
 curs_y=mouse_y
@@ -271,6 +254,3 @@ tile_update_properties = function() {
 		i++;
 	}
 }
-
-place_object("oCollider",0,167,30,2)
-place_object("oPlayerSpawn",3,166)

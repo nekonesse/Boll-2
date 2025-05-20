@@ -184,7 +184,7 @@ function component_sonic_start_jump(startingJumpValue = 6){
 function component_sonic_roll(){
 	
 	accel = 0
-	if (sign(gsp) == move_dir) {
+	if (sign(gsp) == move) {
 		if (sign(gsp) == -1){
 			gsp = min(0, gsp + fric)
 		}else{

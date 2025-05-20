@@ -1,0 +1,3 @@
+VinylStopAll();
+
+room_restart();

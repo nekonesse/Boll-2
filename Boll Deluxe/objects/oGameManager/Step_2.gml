@@ -11,6 +11,8 @@ instance_activate_region(camx,camy,camwidth,camheight,true)
 instance_activate_object(oBackgroundManager)
 instance_activate_object(oNodeManager)
 instance_activate_object(oDrawingManager)
+instance_activate_object(oPlayer)
+instance_activate_object(oWMPlayer)
 instance_activate_object(oGlobals)
 instance_activate_object(oCamera)
 instance_activate_object(oPlayer)
@@ -24,5 +26,9 @@ with(oActivationRegion) {
 with(oPlayer) {
 	instance_activate_region(floor(x)-hit_sizex-32,floor(y)-hit_sizey-32, hit_sizex+64, hit_sizey+64, true)
 }
+with(oWMPlayer) {
+	instance_activate_region(floor(x)-hit_sizex-32,floor(y)-hit_sizey-32, hit_sizex+64, hit_sizey+64, true)
+}
+
 
 update_camerapos();

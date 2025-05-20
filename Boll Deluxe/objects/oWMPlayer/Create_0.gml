@@ -85,9 +85,6 @@ can_break_bricks=false;
 has_fired=0;
 wait_timer=0;	//wait animation
 
-pollenated=false;
-pollenPart=-1;
-
 //warping stuff
 warp_timer = 0;
 warp_dir = 0;

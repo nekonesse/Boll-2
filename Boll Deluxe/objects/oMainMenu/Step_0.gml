@@ -35,8 +35,9 @@ if (!optionLock) {
 					case 0: crMenu="levelselectm" option=0 break;
 					case 1: crMenu="keybindsm" option=0 break;
 					case 2: global.save_dir="" room_goto(rEditor) option=0 break;
-					case 3: room_goto(rIntro) option=0 break;
-					case 4: game_end(); break;
+					case 3: global.save_dir="" room_goto(rWMEditor) option=0 break;
+					case 4: room_goto(rIntro) option=0 break;
+					case 5: game_end(); break;
 				}
 				safe = 1
 			}

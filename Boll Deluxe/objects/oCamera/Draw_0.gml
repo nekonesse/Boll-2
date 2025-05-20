@@ -14,7 +14,6 @@ draw_rect(x - xsensor,y - 16,xsensor * 2,24,#FF0000,0.125)
 draw_rect(x-8,y-ysensor,16,ysensor,#FFFF00,0.125)
 draw_self()
 draw_text(x,y,string(state)+"\n"+string(xdist)+"\n"+string(xsc)+"\n"+string(ydist))
-if (oPlayer.grounded) {draw_text(x,y-32,"oPlayer is grounded")}
 if (xcorrect)
 {
 	draw_text(x,y-48,"Correcting X position")

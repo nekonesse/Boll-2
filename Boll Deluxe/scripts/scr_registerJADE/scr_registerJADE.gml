@@ -137,6 +137,33 @@ function JADE_initializeobj() {
 	registerobj(object_get_name(oDeathPit), spr_deathpit, -sprite_get_xoffset(spr_deathpit), -sprite_get_yoffset(spr_deathpit), sprite_get_width(spr_deathpit), sprite_get_height(spr_deathpit), true, false, NODE_MODE, 0, object_get_properties("oDeathPit"), "Death Pit")
 }
 
+function WM_initializeobj() {	
+	obj_data = ds_map_create();
+	obj_name = ds_list_create();
+	
+	#region Categories
+		cat_blocks = ds_list_create();
+		cat_tech = ds_list_create();
+		cat_node = ds_list_create();
+		
+		jade_cats[OBJECT_MODE] = [cat_blocks, cat_tech];
+		jade_cats[NODE_MODE] = [cat_node];
+	#endregion
+
+
+	show_debug_message("Registering JADE object list...")
+	registerobj(object_get_name(oPlayerSpawn), spr_spawner, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), false, false, OBJECT_MODE, 0, object_get_properties("oPlayerSpawn"), "Player Spawn")
+	registerobj(object_get_name(oCollider), spr_collider, -sprite_get_xoffset(spr_collider), -sprite_get_yoffset(spr_collider), sprite_get_width(spr_collider), sprite_get_height(spr_collider), true, true, OBJECT_MODE, 0, object_get_properties("oCollider"), "Collider")
+	registerobj(object_get_name(oSlopeCollider), spr_slopesolid, -sprite_get_xoffset(spr_slopesolid), -sprite_get_yoffset(spr_slopesolid), sprite_get_width(spr_slopesolid), sprite_get_height(spr_slopesolid), true, true, OBJECT_MODE, 0, object_get_properties("oSlopeCollider"), "Solid Slope")
+	
+	registerobj(object_get_name(oScript), spr_scripttrigger, 0, 0, 16, 16, true, true, OBJECT_MODE, 1, object_get_properties("oScript"), "Script Block", true)
+	registerobj(object_get_name(oCustomObject), spr_customobject, 0, 0, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oCustomObject"), "Custom Object", true)
+	
+	//NODE MODE
+	registerobj(object_get_name(oCameraRegion), spr_cameraregion, -sprite_get_xoffset(spr_cameraregion), -sprite_get_yoffset(spr_cameraregion), sprite_get_width(spr_cameraregion), sprite_get_height(spr_cameraregion), true, true, NODE_MODE, 0, object_get_properties("oCameraRegion"), "Camera Region")
+	registerobj(object_get_name(oCameraBoundary), spr_cameraboundary, -sprite_get_xoffset(spr_cameraboundary), -sprite_get_yoffset(spr_cameraboundary), sprite_get_width(spr_cameraboundary), sprite_get_height(spr_cameraboundary), true, true, NODE_MODE, 0, object_get_properties("oCameraBoundary"), "Camera Boundary")
+}
+
 function register_array(array, category) {
 	var i=0;
 	repeat (array_length(array)) {

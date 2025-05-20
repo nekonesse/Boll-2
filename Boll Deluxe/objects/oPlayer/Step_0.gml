@@ -26,13 +26,6 @@ if !finish {
 	cpress = input_check_pressed("c");
 }
 
-if left{
-	move_dir = -1	
-}
-if right {
-	move_dir = 1	
-}
-
 player_castlewalk()
 
 steep_slope = false

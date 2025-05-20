@@ -1271,7 +1271,7 @@ if keyboard_check_pressed(vk_enter) && !(is_typing) { //PLAYTEST
 		global.lives[i]=5
 		i++
 	}
-	room_goto(rGame)
+	room_goto(gotoroom)
 }
 
 if (keyboard_check(vk_control)) && keyboard_check_pressed(ord("S")) { //saving
