@@ -21,7 +21,6 @@ var enemy=check_hitbox_on_hitbox(id,oEnemy)
 if (enemy) { //make sure shell is actually colliding with an enemy before trying to kill the enemy it collided with???
 	if (in_shell) && (abs(hsp)) {
 		if !(enemy.unshellable) {
-			VinylPlay(snd_enemykick)
 			enemy.killtype="spin";
 			enemy.killhsp = sign(hsp);
 			instance_create_depth(x+hit_sizex*xsc,y,2,pImpact)
@@ -30,7 +29,7 @@ if (enemy) { //make sure shell is actually colliding with an enemy before trying
 			kickedplayer=nearestplayer()
 			
 			kickCombo=min(kickCombo+1,8)
-			VinylPlay(snd_enemystomp,false,1,0.9+(kickCombo/10))
+			VinylPlay(snd_enemykick,false,1,0.9+(kickCombo/10))
 			
 			if (kickCombo==8)
 			give_lives(kickedplayer.pNum, x + (hit_sizex / 2), y - 8)
