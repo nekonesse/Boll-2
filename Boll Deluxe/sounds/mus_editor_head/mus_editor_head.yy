@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":1,
   "conversionMode":0,
-  "duration":30.571,
+  "duration":30.57102,
   "name":"mus_editor_head",
   "parent":{
     "name":"Editor",

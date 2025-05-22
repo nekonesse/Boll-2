@@ -58,9 +58,16 @@ setup_box_poly(id);
 
 enemyStomped.Connect( self, function(hit_p) {
 	if (!no_stomping) {
-		VinylPlay(snd_enemystomp)
 		hp-=1
 		with(hit_p) {
+			stompCombo=min(stompCombo+1,8)
+			VinylPlay(snd_enemystomp,false,1,0.9+(stompCombo/10))
+			
+			if (stompCombo==8)
+			give_lives(pNum, x + (hit_sizex / 2), y - 8)
+			else
+			instance_create_depth(other.x,other.y,5,pScoreText,{image_index : stompCombo})
+			
 			sig.Emit("enemy_stomped")
 			instance_create_depth(x,y+hit_sizey,2,pImpact)
 		}

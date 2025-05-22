@@ -255,7 +255,7 @@ if (state == "wallrun") && !piped {
 
 #region Rolling
 if (state != "roll" || !grounded) && !(piped) {
-	accel = 0.046875
+	accel = 0.07
 	if (!grounded) {
 		accel = 0.09375
 		fastaccel = 0.09375
@@ -433,6 +433,7 @@ if !(deadtimer) {
 }
 
 #define mushroom
+VinylPlay(asset_get_index("snd_powerup"))
 if (size == "basic" || size == "mini") {
 	oldsize = size;
 	size = "big";
@@ -440,19 +441,21 @@ if (size == "basic" || size == "mini") {
 }
 
 #define fireflower
+VinylPlay(asset_get_index("snd_powerup"))
 oldsize = size;
 size = "fire";
 grow = 60;
 
 #define thunderflower
+VinylPlay(asset_get_index("snd_powerup"))
 oldsize = size;
 size = "thunder";
 grow = 60;
 
 #define star
 VinylPlay(asset_get_index("snd_powerup"));
-invincible_type=2;
-invincible_timer=510;
+invincible_type = 2;                                                                               
+invincible_timer = 510;
 
 #define 1up
 give_lives(pNum, x + (hit_sizex / 2), y - 8)

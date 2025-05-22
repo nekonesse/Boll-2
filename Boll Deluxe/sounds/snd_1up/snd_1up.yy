@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.870004,
+  "duration":0.87002265,
   "name":"snd_1up",
   "parent":{
     "name":"Items",
@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"snd_1up.wav",
   "type":0,
-  "volume":1.0,
+  "volume":0.4,
 }

@@ -33,7 +33,6 @@ vsp=0;
 hsp=0;
 gsp=0;
 
-
 // chearii: we SRB2 in this house (conveyor speeds for moving platforms)
 chsp = 0;
 cvsp = 0;
@@ -87,6 +86,8 @@ wait_timer=0;	//wait animation
 
 pollenated=false;
 pollenPart=-1;
+
+stompCombo=0;
 
 //warping stuff
 warp_timer = 0;

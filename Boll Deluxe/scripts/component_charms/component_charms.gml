@@ -152,6 +152,21 @@ function component_sonic_spindash(){
 		show_debug_message(spindashTotal)
 		stopsfx(charmName+"spindash")
 		playsfx(charmName+"spindash",1+(spindashTotal/10))
+		
+		var blocklist=ds_list_create();
+		var num=collision_line_list(x-hit_sizex,y+hit_sizey+2,x+hit_sizex,y+hit_sizey+2, oHittable, false, true, blocklist, true)
+		
+		if (num > 0) {
+			for (var i = 0; i < num; i+=1) {
+				var blockcoll=ds_list_find_value(blocklist, i)
+				if !(blockcoll.no_hit) && (blockcoll.amount != 0) {
+					if (blockcoll.hit == 0) {
+						blockcoll.blockHit.Emit(1, id)
+					}
+				}
+			}
+		}
+		ds_list_destroy(blocklist)
 	}
 		
 	if (!down || !(abs(gsp) <= 0.5)) {
@@ -197,6 +212,22 @@ function component_sonic_roll(){
 	if abs(gsp) < 0.5 {
 		state = ""
 	}
+	
+	var blocklist=ds_list_create();
+	var num=collision_line_list(x-((hit_sizex*2)*xsc),y+hit_sizey+2,x-(hit_sizex*xsc),y+hit_sizey+2, oHittable, false, true, blocklist, true)
+		
+	if (num > 0) {
+		for (var i = 0; i < num; i++) {
+			var blockcoll=ds_list_find_value(blocklist, i)
+			if !(blockcoll.no_hit) && (blockcoll.amount != 0) {
+				if (blockcoll.hit == 0) {
+					blockcoll.blockHit.Emit(1, id)
+				}
+			}
+		}
+	}
+	
+	ds_list_destroy(blocklist)
 }
 
 function component_get_ground_friction(){
