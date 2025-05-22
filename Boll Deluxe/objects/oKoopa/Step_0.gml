@@ -26,6 +26,17 @@ if (enemy) { //make sure shell is actually colliding with an enemy before trying
 			enemy.killhsp = sign(hsp);
 			instance_create_depth(x+hit_sizex*xsc,y,2,pImpact)
 			enemy.hp-=1;
+			if (kickedplayer==noone) || (kickedplayer.object_index != oPlayer) 
+			kickedplayer=nearestplayer()
+			
+			kickCombo=min(kickCombo+1,8)
+			VinylPlay(snd_enemystomp,false,1,0.9+(kickCombo/10))
+			
+			if (kickCombo==8)
+			give_lives(kickedplayer.pNum, x + (hit_sizex / 2), y - 8)
+			else
+			instance_create_depth(enemy.x,enemy.y,5,pScoreText,{image_index : kickCombo})
+				
 		} else {
 			instance_destroy();
 			killtype="spin";
@@ -34,7 +45,7 @@ if (enemy) { //make sure shell is actually colliding with an enemy before trying
 }
 
 var blocklist=ds_list_create();
-var num=collision_line_list(x+(hit_sizex*-xsc)+hsp,y-(hit_sizey-1),x+(hit_sizex*-xsc)+hsp,y+(hit_sizey-1),oHittable, false, true, blocklist, true)
+var num=collision_line_list(x+(hit_sizex*-xsc)+hsp,y-(hit_sizey-2),x+(hit_sizex*-xsc)+hsp,y+(hit_sizey-2),oHittable, false, true, blocklist, true)
 
 var found_block=false;
 if (num > 0) {

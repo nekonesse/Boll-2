@@ -14,9 +14,7 @@ if !(in_shell) && (edgeturn) && (grounded)
 	if !check_collision_rectangle(x + (-xsc * (hit_sizex+1)),y,x + (-xsc * (hit_sizex-4)),y+hit_sizey+16, COL_BOTTOM) {
 		if !(turned) {
 			turned=1
-			_direction *= -1;
-			turning = 10;
-			prevsprite_index=sprite_index
+			enemyTurnAround.Emit();
 		}
 	} else {
 		turned=0
@@ -29,7 +27,7 @@ if (steely) && (abs(steely.hsp)>0) {
 	hp=0
 }
 
-if check_collision_line(x+(hit_sizex+1)*-xsc, y+hit_sizey-3,x+(hit_sizex+1)*-xsc, y-hit_sizey+3, COL_WALL) {
+if check_collision_line(x+(hit_sizex+1)*-xsc, y+(hit_sizey-2),x+(hit_sizex+1)*-xsc, y-(hit_sizey-2), COL_WALL) {
 	enemyTurnAround.Emit();
 }
 

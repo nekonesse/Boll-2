@@ -6,6 +6,8 @@ shell_time = 60*5;
 no_stomping = 0;
 shell_move = true
 can_break_bricks = true
+kickedplayer = noone;
+kickCombo = 0;
 
 delete enemyStomped;
 enemyStomped = new Signal();
@@ -31,13 +33,22 @@ enemyStomped.Connect( self, function(hit_p) {
 				phase_leeway=7;
 			}
 		}
-		VinylPlay(snd_enemystomp)
 		with(hit_p) {
+			stompCombo=min(stompCombo+1,8)
+			VinylPlay(snd_enemystomp,false,1,0.9+(stompCombo/10))
+			
+			if (stompCombo==8)
+			give_lives(pNum, x + (hit_sizex / 2), y - 8)
+			else
+			instance_create_depth(other.x,other.y,5,pScoreText,{image_index : stompCombo})
+			
 			sig.Emit("enemy_stomped")
 			instance_create_depth(x,y+hit_sizey,2,pImpact)
 		}
 		phaseid=hit_p
 		phase_leeway=7;
+		kickedplayer = noone;
+		kickCombo = 0;
 	}
 	hp=1;
 });
@@ -56,6 +67,7 @@ enemyCollidePlayer.Connect( self, function(hit_p) {
 			shell_move = true
 			in_shell = shell_time
 			no_stomping = false
+			kickedplayer = hit_p
 		}
 	}
 });
