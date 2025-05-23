@@ -1,9 +1,4 @@
-if !natural {
-	draw_sprite_ext(sprite_index,image_index,floor(x),floor(y),image_xscale,image_yscale,0,image_blend,image_alpha)
-} else {
-	draw_sprite_ext(spr_bigsteelyClone,1,floor(x),floor(y),image_xscale,image_yscale,image_angle,image_blend,image_alpha)
-	draw_sprite_ext(spr_bigsteelyClone,0,floor(x),floor(y),image_xscale,image_yscale,0,image_blend,image_alpha)
-}
+draw_sprite_ext(sprite_index,image_index,floor(x),floor(y),image_xscale,image_yscale,0,image_blend,image_alpha)
 
 
 if global.debug {

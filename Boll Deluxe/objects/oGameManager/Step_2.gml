@@ -15,11 +15,11 @@ instance_activate_object(oPlayer)
 instance_activate_object(oWMPlayer)
 instance_activate_object(oGlobals)
 instance_activate_object(oCamera)
-instance_activate_object(oPlayer)
 instance_activate_object(input_controller_object)
 instance_activate_object(oCameraBoundary)
 instance_activate_object(pSmoke)
 instance_activate_object(oDeactivationRegion)
+instance_activate_object(oMonitorPopup)
 with(oActivationRegion) {
 	instance_activate_region(x,y,sprite_width,sprite_height,true)
 }

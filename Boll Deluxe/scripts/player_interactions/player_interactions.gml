@@ -148,9 +148,4 @@ function player_interactions(){
 	if (item) && !(hurt) && !(dead) {
 		item.itemCollected.Emit(id);
 	}
-	
-	var monitor=collision_line(x-hit_sizex,y+hit_sizey+vsp,x+hit_sizex,y+hit_sizey+vsp, oMonitor, false, true)
-	if (monitor) && !(hurt) && !(dead) {
-		monitor.blockHit.Emit(-1, id);
-	}
 }
