@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"GMLspeakLexer",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GMLspeakLexer",
+  "parent":{
+    "name":"Internal",
+    "path":"folders/GMLspeak/Internal.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

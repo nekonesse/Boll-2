@@ -34,10 +34,10 @@ if abs(colangle) > 60 && abs(colangle) < 300 {
 }
 
 if !dead && !no_step {
-	txr_exec(global.scripts[? $"{charmName}_step"]);
+	catspeak_execute(global.scripts[? $"{charmName}_step"]);
 }
 else {
-	txr_exec(global.scripts[? $"{charmName}_death"]);
+	catspeak_execute(global.scripts[? $"{charmName}_death"]);
 }
 
 if (electrocuted) {

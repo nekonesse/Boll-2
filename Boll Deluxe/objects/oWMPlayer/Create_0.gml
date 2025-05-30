@@ -3,7 +3,7 @@
 sig = new Signal();
 updateBox = new Signal();
 sig.Connect( self, function(str_var) {
-	txr_exec(global.scripts[? $"{charmName}_{str_var}"]);
+	catspeak_execute(global.scripts[? $"{charmName}_{str_var}"]);
 });
 
 // Palette
@@ -131,7 +131,7 @@ spriteEvent="idle"
 
 ///// EVENT SETUP /////
 
-txr_exec(global.scripts[? $"{charmName}_create"]);
+catspeak_execute(global.scripts[? $"{charmName}_create"]);
 start_hit_sizex = hit_sizex
 start_hit_sizey = hit_sizey
 

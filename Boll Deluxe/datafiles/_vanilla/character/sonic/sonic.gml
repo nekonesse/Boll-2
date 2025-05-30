@@ -28,6 +28,7 @@ max_dropdash_spd = 9;
 dropdash = 0;
 dropdash_timer = 0;
 real_sprite_angle = 0;
+walljump = false;
 
 // wallrun junk
 
@@ -107,11 +108,12 @@ if (state == "jump" || state == "roll" || state == "spindash") && (size != "mini
 	hit_sizey = 6
 }
 
-if (braking) xsc=brakedir
 topspd = 4 + ((size != "basic" || size != "mini") * 0.5);
 maxspd = 12.5;
 
-if !(control_lock > 0 || state == "wallrun" || electrocuted || walljump) no_move = false
+if !(control_lock > 0 || state == "wallrun" || electrocuted || walljump) {
+	no_move = false
+}
 
 if (hurt) {
 	no_move = true;
@@ -120,77 +122,80 @@ if (hurt) {
 control_lock = max(0,control_lock - 1)
 
 if !(piped) && !(electrocuted) && !(electrocution_timer) {
-	
-// Fall off platform
-if (!grounded) {
-	component_gravity_coneyor()
-	
-	if (vsp < 0 && vsp > -2 ) {
-		hsp -= hsp / 32
-	}
-	
-	// Switch direction
-	//add more checks here to prevent left/right changing direction
-	if (left || right) && !(piped) {
-		xsc = esign(move, xsc)
-	}
-} else {
-	walljump = false
-	hurt = false
-	canjump = 5;  // Coyote frames
-	if !(hurt) canstopjump = false
-	//add more checks here to prevent left/right changing direction
-	if (left || right) && !(state == "spindash") {
-		xsc = esign(gsp, xsc)
-	}
-	
-	#region Crouch, Spindash
-	if (state == "") && (down) && (abs(gsp) <= 0.5) && !(piped){
-		state = "crouch"
-	}
-	
-	if (state == "crouch") && !(piped) {
-		no_move = true
-		if (!down) state = ""
+	// Fall off platform
+	if (!grounded) {
+		component_gravity_coneyor()
 		
-		if (apress || bpress || cpress) && (abs(gsp) <= 0.5) {
-			component_sonic_start_spindash()
+		if (vsp < 0 && vsp > -2 ) {
+			hsp -= hsp / 32
+		}
+		
+		// Switch direction
+		//add more checks here to prevent left/right changing direction
+		if (left || right) && !(piped) {
+			xsc = esign(move, xsc)
+		}
+	} else {
+		walljump = false
+		hurt = false
+		canjump = 5;  // Coyote frames
+		
+		if !(hurt) {
+			canstopjump = false
+		}
+		
+		//add more checks here to prevent left/right changing direction
+		if (left || right) && !(state == "spindash") {
+			xsc = esign(gsp, xsc)
+		}
+		
+		#region Crouch, Spindash
+		if (state == "" && down && abs(gsp) <= 0.5 && !piped) {
+			state = "crouch"
+		}
+		
+		if (state == "crouch") && !(piped) {
+			no_move = true
+			if (!down) {
+				state = ""
+			}
+			
+			if (apress || bpress || cpress && abs(gsp) <= 0.5) {
+				component_sonic_start_spindash()
+			}
+		}
+		
+		if (state == "spindash") && !(piped) {
+			component_sonic_spindash()
+		}
+		#endregion
+		
+		//handles slope influence
+		if (state == "roll") && !(piped) {
+			player_slide_sonic(0.125, true, 0.078125, 0.3125);
+		}
+		
+		if (steep_slope) && (state == "" || state == "crouch" || state == "spindash") { //slide down steep slopes
+			gsp -= (0.225 * dsin(colangle))
+			no_move = 1
 		}
 	}
-	
-	if (state == "spindash") && !(piped) {
-		component_sonic_spindash()
-	}
-
-	#endregion
-	//handles slope influence
-	if (state == "roll") && !(piped) {
-		player_slide_sonic(0.125, true, 0.078125, 0.3125);
-	}
-	
-	if (steep_slope) && (state == "" || state == "crouch" || state == "spindash") { //slide down steep slopes
-		gsp -= (0.225 * dsin(colangle))
-		no_move = 1
-	}
-}
-
 }
 	
 #region Jumping
-if (state == "jump") && !(piped){
+if (state == "jump") && !(piped) {
 	slopesliding = 0
-	if (!akey && vsp < -2 && !canstopjump) //Make player jump lower when jump is released
-	{
+	if (!akey && vsp < -2 && !canstopjump) { //Make player jump lower when jump is released
 		vsp *= 0.6;
 	}
-
-	if (vsp >= -2 && apress && dropdash == 0) {
+	
+	if (cpress && dropdash == 0) {
 		dropdash = 1
 	}
 
 	if (dropdash == 1) {
-		if (akey){
-			dropdash_timer++
+		if (ckey) {
+			dropdash_timer += 1
 			if (dropdash_timer == 18) {
 				playsfx("sonicdropdash")
 			}
@@ -202,7 +207,7 @@ if (state == "jump") && !(piped){
 	}
 }
 
-if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped){
+if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped) {
 	component_sonic_start_jump()
 }
 #endregion
@@ -220,7 +225,7 @@ if (state == "wallrun") && !piped {
 	} else {
 		var wallfric=0.15
 		yvol=max(-7, yvol-wallfric)
-		vsp=-yvol
+		vsp= -yvol
 	}
 	
 	if !(check_collision_dot(x+(hit_sizex+3)*xsc,y,COL_WALL)) || (grounded) || !(wallrunperiod) {
@@ -235,9 +240,9 @@ if (state == "wallrun") && !piped {
 		walljump=true;
 		control_lock=15;
 		wallrundata[6] *= 0.75;
-		hsp=-3.5*esign(move,xsc)
-		vsp=-5.5
-		move=-move
+		hsp = -3.5*esign(move,xsc)
+		vsp = -5.5
+		move=  -move
 		canstopjump=true;
 		xsc=esign(hsp,xsc)
 		no_move=true;
@@ -288,15 +293,17 @@ if ((ceil(abs(hsp))>3 && grounded && state == "")) {
 	dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
 	if (dusttimer == 1) {
 		var part = pRunDust
-		if (skidding) part = pSkidDust
+		if (skidding) {
+			part = pSkidDust
+		}
 
 		var i=instance_create_depth(x - (1 * xsc), y + hit_sizey, 0, part);
 		i.depth = (depth + 5);
 		i.image_xscale = xsc;
-		i.hspeed=2.25 * -xsc;
-		i.friction=0.2;
-		i.vspeed=-0.1;
-		i.gravity=-0.02;
+		i.hspeed = 2.25 * -xsc;
+		i.friction =0.2;
+		i.vspeed = -0.1;
+		i.gravity = -0.02;
 	}
 }
 
@@ -331,7 +338,7 @@ switch (state) {
 			}
 		} else {
 			wait_timer = 0;
-			if ((abs(gsp) > 1.5) && (move_dir == -sign(gsp)) && grounded) {
+			if ((abs(gsp) > 1.5) && (move == -sign(gsp)) && grounded) {
 				if (spriteEvent != "brake"){
 					playsfx(charmName+"skid",1,0,1)
 				}
@@ -339,7 +346,7 @@ switch (state) {
 			}
 			
 			if (spriteEvent=="brake") {
-				if (move_dir == sign(gsp)) {
+				if (move == sign(gsp)) {
 					spriteEvent = "walk"
 				}
 				
@@ -416,8 +423,8 @@ playsfx(charmName+"die")
 give_lives(pNum, -1000, -1000, -1, -4, -4)
 dead=1
 deadtimer=240;
-vspeed=-5;
-gravity=0.15;
+vspeed = -5;
+gravity = 0.15;
 
 #define death
 deadtimer=max(0,deadtimer-1);
@@ -467,25 +474,24 @@ give_lives(pNum, x + (hit_sizex / 2), y - 8, 3, p3UP)
 if !(invincible_type && invincible_timer) {
 	stopsfx(charmName+"damage")
 	hurt=1
-	hsp=2.25*-xsc
-	vsp=-4
+	hsp= 2.25*-xsc
+	vsp= -4
 	canstopjump=true
 	state=""
 	grounded=false
 	oldsize = size;
 	switch (size) {
-		case "basic":
-		case "mini":
+		case "basic": {
 			signal_emit(sig, "on_kill", charmName)
-			break;
-		case "big":
+		} break
+		case "big": {
 			size = "basic";
 			playsfx(charmName+"damage")
-			break;
-		default:
+		} break
+		default: {
 			size = "big";
 			playsfx(charmName+"damage")
-			break;
+		} break
 	}
 	grow = 60;
 }
@@ -495,7 +501,9 @@ bonk = 12
 
 #define floor_land
 canstopjump = false;
-if state!="wallrun" state = "";
+if state!="wallrun" {
+	state = "";
+}
 bonk = 0;
 gsp = hsp
 wallrundata[0]=0;
@@ -503,21 +511,22 @@ wallrundata[0]=0;
 var i=instance_create_depth(x - 1, y + hit_sizey, 0, pSkidDust); //should prooobably get some kind of particle spawning function in later. too many giant blocks of particle here.
 i.depth = (depth + 5);
 i.image_xscale = 1;
-i.hspeed=-2.25
+i.hspeed= -2.25
 i.friction=0.2;
-i.vspeed=-0.1;
-i.gravity=-0.02;
+i.vspeed= -0.1;
+i.gravity= -0.02;
 var i=instance_create_depth(x + 1, y + hit_sizey, 0, pSkidDust);
 i.depth = (depth + 5);
 i.image_xscale = -1;
 i.hspeed=2.25
 i.friction=0.2;
-i.vspeed=-0.1;
-i.gravity=-0.02;
+i.vspeed= -0.1;
+i.gravity= -0.02;
 
 //landing speed lol
-if (colangle < 0) colangle += 360
-show_debug_message(colangle)
+if (colangle < 0) {
+	colangle += 360
+}
 
 if (colangle >= 24 && colangle <= 90)
 {
@@ -551,13 +560,13 @@ if (colangle <= 336 && colangle >= 270)
 if (dropdash && dropdash_timer >= 18) {
 	stopsfx("sonicdropdash")
 	playsfx("sonicrelease")
-	if (sign(hsp) == move_dir) {
-		gsp = (gsp / 4) + (dropdash_spd * move_dir)
+	if (sign(hsp) == move) {
+		gsp = (gsp / 4) + (dropdash_spd * move)
 	} else {
 		if (colangle == 0) {
-			gsp = dropdash_spd * move_dir
+			gsp = dropdash_spd * move
 		} else {
-			gsp = (gsp / 2) + (dropdash_spd * move_dir)
+			gsp = (gsp / 2) + (dropdash_spd * move)
 		}
 	}
 	state = "roll";
@@ -574,7 +583,7 @@ canstopjump = true;
 state = "";
 
 #define enemy_stomped
-vsp=-4-akey*1.5
+vsp= -(4+akey*1.5)
 
 #define collide_with_enemy
 var coll=check_hitbox_on_hitbox(id, oEnemy)
@@ -583,36 +592,35 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 if (coll) && (state != "roll") && (state != "jump") && !(invincible_type && invincible_timer) {
 	stopsfx(charmName+"damage")
 	hurt=1
-	hsp=2.25*-xsc
-	vsp=-4
+	hsp = 2.25*-xsc
+	vsp = -4
 	canstopjump=true
 	state=""
 	grounded=false
 	oldsize = size;
 	switch (size) {
-		case "basic":
-		case "mini":
+		case "basic": {
 			signal_emit(sig, "on_kill", charmName)
-			break;
-		case "big":
+		} break
+		case "big": {
 			size = "basic";
 			playsfx(charmName+"damage")
-			break;
-		default:
+		} break
+		default: {
 			size = "big";
 			playsfx(charmName+"damage")
-			break;
+		} break
 	}
 	grow = 60;
 } else if (coll) && (!(invincible_type) || (invincible_type == 2)) {
 	make_particle(pImpact,coll.x+coll.xsc,coll.y,2)
-	coll.hp-=1
-	coll.phaseid=id
-	coll.killdir=esign(coll.x-x,1)
-	coll.killhsp=max(abs(hsp)/1.75,2)
-	coll.xsc=esign(hsp,xsc)
-	coll.killvsp=-max(2,abs(hsp)/1.5)
-	coll.killtype="spin"
+	coll.hp-= 1
+	coll.phaseid= id
+	coll.killdir= esign(coll.x-x,1)
+	coll.killhsp= max(abs(hsp)/1.75,2)
+	coll.xsc= esign(hsp,xsc)
+	coll.killvsp= -max(2,abs(hsp)/1.5)
+	coll.killtype= "spin"
 }
 }
 
@@ -620,27 +628,26 @@ if (coll) && (state != "roll") && (state != "jump") && !(invincible_type && invi
 #define hurt_by_spike
 
 stopsfx(charmName+"damage")
-hurt=1
-hsp=2.25*-xsc
-vsp=-4
+hurt= 1
+hsp= 2.25*-xsc
+vsp= -4
 canstopjump=true
 state=""
 grounded=false
 oldsize = size;
 switch (size) {
-	case "basic":
-	case "mini":
+	case "basic": {
 		signal_emit(sig, "on_kill", charmName)
-		break;
-	case "big":
+	} break
+	case "big": {
 		size = "basic";
 		playsfx(charmName+"damage")
-		break;
-	default:
+	} break
+	default: {
 		size = "big";
 		playsfx(charmName+"damage")
-	break;	
-}	
+	} break
+}
 grow = 60;
 
 
@@ -655,27 +662,23 @@ electrocution_timer=60;
 stopsfx(charmName+"damage")
 electrocuted = false;
 hurt=1
-hsp=2.25*-xsc
-vsp=-4
+hsp= 2.25*-xsc
+vsp= -4
 canstopjump=true
 state=""
 grounded=false
 oldsize = size;
 switch (size) {
-	case "basic":
-	case "mini":
+	case "basic": {
 		signal_emit(sig, "on_kill", charmName)
-		break;
-	case "big":
+	} break
+	case "big": {
 		size = "basic";
 		playsfx(charmName+"damage")
-		break;
-	default:
+	} break
+	default: {
 		size = "big";
 		playsfx(charmName+"damage")
-		break;
+	} break
 }
 grow = 60;
-
-#define stomp_failed
-show_debug_message("stomp_failed called")

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"GMLspeakEnvironment",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"GMLspeakEnvironment",
+  "parent":{
+    "name":"GMLspeak",
+    "path":"folders/GMLspeak.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

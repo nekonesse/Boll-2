@@ -24,13 +24,64 @@ pounding_block = false;
 walljump = false;
 firing = 0;
 crouch = false;
-invincible_type = 0;                                                                                //0 is off, 1 is hurt frames and 2 is invincibility
+invincible_type = 0; //0 is off, 1 is hurt frames and 2 is invincibility
 invincible_timer = 0;
 found_block = false;
 spinjump = false;
 stun = false;
 wallkick = false;
 was_in_water = false;
+
+	//we do this in create because its a function, and we only need to do it once
+	#region Water Handling Setup
+	water = function() {
+	
+	grav = defaultgrav / 5
+	no_move = false
+	steep_slope = false
+	move_lock = false
+	accel = 0.05
+	fastaccel = 0.05
+	if (grounded) {
+	maxspd = 0.98
+	} else {
+		maxspd = 1.52	
+	}
+	
+	xsc = esign(move, xsc)
+	
+	
+	component_gravity_coneyor()
+	
+	if grounded {
+		vsp = 0
+	}
+	//fric = fric * friction_mult;
+	
+	#region Swimming
+		if (apress) {
+			grounded = false
+			var v_move = (down - up)
+			if (vsp > 0 || down) {
+				vsp = 0;
+			}
+			vsp -= 1.1 - (0.5 * bool(down)) + (0.6 * bool(up))
+			vsp = max(vsp, -1.5 - (0.8 * bool(up)));
+			playsfx(charmName+"swim",1,0,1)
+			swim=24
+		}
+	#endregion
+	
+	was_in_water = true
+	
+	player_movement();
+	basic_step_move();
+	post_wall();
+	
+	swim = max(0, swim-1)
+	
+	}
+	#endregion
 
 #define stop
 hsp = 0;
@@ -59,12 +110,13 @@ switch (size) {
 	} break
 	default: {
 		can_break_bricks=true
-		if !(crouch) hit_sizey = 12
-		else hit_sizey = 6
+		if !(crouch) {
+			hit_sizey = 12
+		} else {
+			hit_sizey = 6
+		}
 	} break
 }
-
-if (braking) xsc=brakedir
 
 maxspd = 2 + runvar + ((size != "basic" && !crouch) * 0.5) - (1.25*(crouch && grounded))
 
@@ -89,8 +141,8 @@ if in_water(){
 		state = ""
 		swim = 0
 	}
-	call water; //this works correctly dont let gmedit gaslight you
-	return -1;
+	water();
+	exit
 } else {
 	if (was_in_water) {
 		//if we are at the TOP of the water, not the bottom or side
@@ -134,7 +186,9 @@ if ((alarm_get(0) > 0) && (grounded)) {
 if (state == "" || state == "jump" || state == "dive") && !piped && !electrocuted && !electrocution_timer {
 	if in_water() {
 		grav=defaultgrav/4
-	} else grav=defaultgrav
+	} else {
+		grav=defaultgrav
+	}
 	
 	if (bkey) && !(crouch) {
 		run=1.5;
@@ -197,7 +251,7 @@ if (state == "") && !(hurt) {
 #endregion
 
 #region Groundpound
-if (state == "pound") && !piping {
+if (state == "pound") && !piped {
 	component_mario_groundpound()
 	
 	//hittable block collision
@@ -207,7 +261,8 @@ if (state == "pound") && !piping {
 		
 		if (num > 0) {
 			found_block = false;
-			for (var i = 0; i < num; i+=1) {
+			var i = 0;
+			repeat (num) {
 				var blockcoll=ds_list_find_value(blocklist, i)
 				if !(blockcoll.no_hit) && (pounding_block == true) && (blockcoll.amount != 0) {
 					found_block=true;
@@ -215,6 +270,7 @@ if (state == "pound") && !piping {
 						signal_emit(blockcoll.blockHit, 1, id)
 					}
 				}
+				i+=1;
 			}
 			pounding_block = false
 		}
@@ -239,16 +295,16 @@ if (state == "pound") && !piping {
 #region Jumping
 var underwater=in_water()
 if (state == "jump" || state == "") && !(grounded) && !piped {
-	if underwater state=""
+	if (underwater) {
+		state=""
+	}
 	
 	if !(spinjump) {
-		if (!akey && vsp < -2 && !canstopjump) //Make player jump lower when jump is released
-		{
+		if (!akey && vsp < -2 && !canstopjump) {//Make player jump lower when jump is released
 			vsp *= 0.6;
 		}
 	} else {
-		if (!ckey && vsp < -2 && !canstopjump) //Make player jump lower when jump is released
-		{
+		if (!ckey && vsp < -2 && !canstopjump) { //Make player jump lower when jump is released
 			vsp *= 0.6;
 		}
 	}
@@ -264,7 +320,7 @@ if (state == "jump" || state == "") && !(grounded) && !piped {
 	if (move != 0) && !(crouch) {
 		//wall sliding
 		var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
-		if (!grounded) && (coll) && (vsp > 0){
+		if (!grounded) && (coll) && (vsp > 0) {
 			state = "wallslide"
 		}
 	}
@@ -278,7 +334,7 @@ if ((state == "" || state=="crouch") && apress && canjump > 0 && !spinjump) && !
 	state = "jump"
 	vsp = -(4.65+(clamp(abs(hsp)/3.14,0.5,1.7) * 1.2)+(bool(poundjump)+0.5)); //preform the actual jump
 	playsfx(charmName+"jump",1+(bool(poundjump)/4),0,1)
-	if ((run && abs(hsp)>3) && !wallsliding) && !(is_grabbing) {
+	if (run && abs(hsp)>3) && !(is_grabbing) {
 		//visual maxspeed jump
 		runjump=1
 	}
@@ -356,62 +412,6 @@ damagespecial = max(0, pound_severity);
 bonk=max(0,bonk-1)	
 grow = max(0, (grow - 1));
 
-return -1;
-
-show_debug_message("if this runs then we are in trouble");
-
-#region Water
-label water: {
-
-grav = defaultgrav / 5
-no_move = false
-steep_slope = false
-move_lock = false
-accel = 0.05
-fastaccel = 0.05
-if (grounded) {
-maxspd = 0.98
-} else {
-	maxspd = 1.52	
-}
-
-xsc = esign(move, xsc)
-
-
-component_gravity_coneyor()
-
-if grounded {
-	vsp = 0
-}
-//fric = fric * friction_mult;
-
-#region Swimming
-	if (apress) {
-		grounded = false
-		var v_move = (down - up)
-		if (vsp > 0 || down) {
-			vsp = 0;
-		}
-		vsp -= 1.1 - (0.5 * bool(down)) + (0.6 * bool(up))
-		vsp = max(vsp, -1.5 - (0.8 * bool(up)));
-		playsfx(charmName+"swim",1,0,1)
-		swim=24
-	}
-#endregion
-
-was_in_water = true
-
-player_movement();
-basic_step_move();
-post_wall();
-
-swim = max(0, swim-1)
-
-//return 0;
-}
-#endregion
-
-
 #define step_end
 
 //player_grab();
@@ -430,7 +430,7 @@ if (state == "") {
 				spriteEvent="idle"
 				if (wait_timer > 440) {
 					spriteEvent="wait"
-				}			
+				}
 				if (up) {
 					wait_timer = 0
 					spriteEvent="lookUp"
@@ -439,8 +439,7 @@ if (state == "") {
 				wait_timer = 0
 				if (ceil(abs(gsp))>3.25) {
 					spriteEvent="run"
-				}
-				else {
+				} else {
 					frspd=max(abs(hsp)/4,0.3)
 					spriteEvent="walk"
 				}
@@ -457,8 +456,7 @@ if (state == "") {
 				wait_timer = 0
 				if (ceil(abs(gsp))>3.25) {
 					spriteEvent="carryRun"
-				}
-				else {
+				} else {
 					frspd=max(abs(hsp)/4,0.3)
 					spriteEvent="carryWalk"
 				}
@@ -467,27 +465,35 @@ if (state == "") {
 	} else {
 		wait_timer = 0
 		if (abs(hsp) < 0.25) {
-			if !(is_grabbing)
-			spriteEvent="crouchIdle"
-			else spriteEvent="carryCrouchIdle"
+			if !(is_grabbing) {
+				spriteEvent="crouchIdle"
+			} else {
+				spriteEvent="carryCrouchIdle"
+			}
 		}
 		else {
-			if !(is_grabbing)
-			spriteEvent="crouchWalk"
-			else spriteEvent="carryCrouchWalk"
+			if !(is_grabbing) {
+				spriteEvent="crouchWalk"
+			} else {
+				spriteEvent="carryCrouchWalk"
+			}
 		}
 	}
 	
 	if (!grounded) {
 		if (vsp>0) {
 			if !(crouch) {
-				if !is_grabbing
-				spriteEvent="fall"
-				else spriteEvent="carryFall"
+				if !is_grabbing {
+					spriteEvent="fall"
+				} else {
+					spriteEvent="carryFall"
+				}
 			} else {
-				if !is_grabbing
-				spriteEvent="crouchFall"
-				else spriteEvent="carryCrouchFall"
+				if !is_grabbing {
+					spriteEvent="crouchFall"
+				} else {
+					spriteEvent="carryCrouchFall"
+				}
 			}
 		}
 	}
@@ -499,14 +505,18 @@ if (state == "") {
 	
 	if (in_water()) {
 		if !(swim) {
-			if !(is_grabbing)
-			spriteEvent="swim"
-			else spriteEvent="carrySwim"
+			if !(is_grabbing) {
+				spriteEvent="swim"
+			} else { 
+				spriteEvent="carrySwim"
+			}
 			frspd=1
 		} else {
-			if !(is_grabbing)
-			spriteEvent="swimPaddle"
-			else spriteEvent="carryPaddle"
+			if !(is_grabbing) {
+				spriteEvent="swimPaddle"
+			} else {
+				spriteEvent="carryPaddle"
+			}
 			frspd=1.2
 		}
 	}
@@ -520,50 +530,68 @@ if (state == "") {
 
 if (state == "jump") {
 	if !(crouch) {
-		if !(is_grabbing)
-		spriteEvent="jump"
-		else spriteEvent="carryJump"
+		if !(is_grabbing) {
+			spriteEvent="jump"
+		} else {
+			spriteEvent="carryJump"
+		}
 	} else {
-		if !(is_grabbing)
-		spriteEvent="crouchJump"
-		else spriteEvent="carryCrouchJump"
+		if !(is_grabbing) {
+			spriteEvent="crouchJump"
+		} else {
+			spriteEvent="carryCrouchJump"
+		}
 	}
 	
 	if (vsp>0) {
 		if !(crouch) {
-			if !(is_grabbing)
-			spriteEvent="fall"
-			else spriteEvent="carryFall"
+			if !(is_grabbing) {
+				spriteEvent="fall"
+			} else {
+				spriteEvent="carryFall"
+			}
 		} else {
-			if !(is_grabbing)
-			spriteEvent="crouchFall"
-			else spriteEvent="carryCrouchFall"
+			if !(is_grabbing) {
+				spriteEvent="crouchFall"
+			} else {
+				spriteEvent="carryCrouchFall"
+			}
 		}
 	}
 	
-	if (runjump) && !(crouch) && !(is_grabbing) spriteEvent="runJump"
+	if (runjump) && !(crouch) && !(is_grabbing) {
+		spriteEvent="runJump"
+	}
 	
 	if (bonk) {
 		if !(crouch) {
-			if !(is_grabbing)
-			spriteEvent="bonk"
-			else spriteEvent="carryBonk"
+			if !(is_grabbing) {
+				spriteEvent="bonk"
+			} else {
+				spriteEvent="carryBonk"
+			}
 		} else {
-			if !(is_grabbing)
-			spriteEvent="crouchBonk"
-			else spriteEvent="carryCrouchBonk"
+			if !(is_grabbing) {
+				spriteEvent="crouchBonk"
+			} else {
+				spriteEvent="carryCrouchBonk"
+			}
 		}
 	}
 	
 	if (spinjump) {
 		if !(vsp>1) {
-			if !(is_grabbing)
-			spriteEvent="spinJump"
-			else spriteEvent="carrySpinJump"
+			if !(is_grabbing) {
+				spriteEvent="spinJump"
+			} else {
+				spriteEvent="carrySpinJump"
+			}
 		} else {
-			if !(is_grabbing)
-			spriteEvent="spinJumpFall"
-			else spriteEvent="carrySpinJumpFall"
+			if !(is_grabbing) {
+				spriteEvent="spinJumpFall"
+			} else {
+				spriteEvent="carrySpinJumpFall"
+			}
 		}
 	}
 	
@@ -581,7 +609,11 @@ if (slopesliding) {
 }
 
 if (state == "pound") {
-	if (pound_timer > 0) spriteEvent="groundPound" else spriteEvent="groundPoundFall"
+	if (pound_timer > 0) {
+		spriteEvent="groundPound" 
+	} else {
+		spriteEvent="groundPoundFall"
+	}
 }
 
 if (state == "wallslide") {
@@ -591,7 +623,9 @@ if (state == "wallslide") {
 if (firing) && !(is_grabbing) {
 	if !(crouch) {
 		spriteEvent="fireToss"
-	} else spriteEvent="crouchFireToss"
+	} else {
+		spriteEvent="crouchFireToss"
+	}
 }
 
 if (hurt || stun) {
@@ -610,18 +644,19 @@ if (electrocuted) {
 
 
 #define upd_frame
-if spriteEvent=="crouchIdle" {
-	if oldSpriteEvent=="crouchWalk" || oldSpriteEvent=="crouchJump" || oldSpriteEvent=="crouchFall" || oldSpriteEvent=="crouchBonk" || oldSpriteEvent=="crouchFireToss" || oldSpriteEvent=="carryCrouchIdle"  || oldSpriteEvent=="carryCrouchWalk" || oldSpriteEvent=="carryCrouchJump"  || oldSpriteEvent=="carryCrouchFall" || oldSpriteEvent=="carryCrouchBonk" {
+//this is because the crouch animation has a transition frame, and if we reset back to idle the transition frame will play again, we dont want that
+if (spriteEvent=="crouchIdle") {
+	if (oldSpriteEvent=="crouchWalk" || oldSpriteEvent=="crouchJump" || oldSpriteEvent=="crouchFall" || oldSpriteEvent=="crouchBonk" || oldSpriteEvent=="crouchFireToss" || oldSpriteEvent=="carryCrouchIdle"  || oldSpriteEvent=="carryCrouchWalk" || oldSpriteEvent=="carryCrouchJump"  || oldSpriteEvent=="carryCrouchFall" || oldSpriteEvent=="carryCrouchBonk") {
 		var spri = sprite_arrposition(spriteEvent)
 		frame = loops_list[spri]-1
 	}
-} else if spriteEvent=="carryCrouchIdle" {
-	if oldSpriteEvent=="crouchIdle" || oldSpriteEvent=="crouchWalk" || oldSpriteEvent=="crouchJump" || oldSpriteEvent=="crouchFall" || oldSpriteEvent=="crouchBonk" || oldSpriteEvent=="crouchFireToss" || oldSpriteEvent=="carryCrouchWalk" || oldSpriteEvent=="carryCrouchJump"  || oldSpriteEvent=="carryCrouchFall" || oldSpriteEvent=="carryCrouchBonk" {
+} else if (spriteEvent=="carryCrouchIdle") {
+	if (oldSpriteEvent=="crouchIdle" || oldSpriteEvent=="crouchWalk" || oldSpriteEvent=="crouchJump" || oldSpriteEvent=="crouchFall" || oldSpriteEvent=="crouchBonk" || oldSpriteEvent=="crouchFireToss" || oldSpriteEvent=="carryCrouchWalk" || oldSpriteEvent=="carryCrouchJump"  || oldSpriteEvent=="carryCrouchFall" || oldSpriteEvent=="carryCrouchBonk") {
 		var spri = sprite_arrposition(spriteEvent)
 		frame = loops_list[spri]-1
 	}
 } else if (spriteEvent=="swimPaddle" || spriteEvent=="carryPaddle") {
-	if swim >= 23 {
+	if (swim >= 23) {
 		frame = 0
 	}
 }
@@ -634,8 +669,8 @@ dead=1
 deadtimer=240;
 deadgo=0;
 gotimer=30;
-vspeed=0;
-gravity=0;
+vspeed = 0;
+gravity = 0;
 
 #define death
 gotimer=max(0,gotimer-1);
@@ -644,8 +679,8 @@ deadtimer=max(0,deadtimer-1);
 //wait for 'stun' animation and then start falling
 if !(gotimer) && !(deadgo) {
 	deadgo=1;
-	vspeed=-4.5;
-	gravity=0.15;
+	vspeed = -4.5;
+	gravity = 0.15;
 }
 
 //so the camera doesnt move
@@ -693,25 +728,24 @@ give_lives(pNum, x + (hit_sizex / 2), y - 8, 3, p3UP)
 if !(invincible_type && invincible_timer) {
 	stopsfx(charmName+"damage")
 	hurt=1
-	hsp=2.25*-xsc
-	vsp=-4
+	hsp= 2.25*-xsc
+	vsp= -4
 	canstopjump=true
 	state=""
 	grounded=false
 	oldsize = size;
 	switch (size) {
-		case "basic":
-		case "mini":
+		case "basic": {
 			signal_emit(sig, "on_kill", charmName)
-			break;
-		case "big":
+		} break
+		case "big": {
 			size = "basic";
 			playsfx(charmName+"damage")
-			break;
-		default:
+		} break
+		default: {
 			size = "big";
 			playsfx(charmName+"damage")
-			break;
+		} break
 	}
 	grow = 60;
 }
@@ -724,8 +758,8 @@ if (state == "dive") {
 	VinylPlay(asset_get_index("snd_blockbump"))
 	make_particle(pImpact, x + hit_sizex*xsc, y)
 	hit_block(x+(hit_sizex+1)*xsc,y-hit_sizey+2,x+(hit_sizex+1)*xsc,y+hit_sizey-2)
-	hsp=1*-xsc
-	vsp=-2
+	hsp= 1*-xsc
+	vsp= -2
 	canstopjump=true
 	state=""
 	stun=1
@@ -766,73 +800,69 @@ canstopjump = true
 
 #define enemy_stomped
 if (state != "groundpound") {
-	vsp=-4-akey*1.5
+	vsp= -(4+akey*1.5)
 }
 
 #define collide_with_enemy
 var coll=check_hitbox_on_hitbox(id, oEnemy)
 if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
-	
-if (coll) && !(slopesliding) && !(invincible_type && invincible_timer) {
-	stopsfx(charmName+"damage")
-	hurt=1
-	hsp=2.25*-xsc
-	vsp=-4
-	canstopjump=true
-	state=""
-	grounded=false
-	oldsize = size;
-	switch (size) {
-		case "basic":
-		case "mini":
+	if (coll) && !(slopesliding) && !(invincible_type && invincible_timer) {
+		stopsfx(charmName+"damage")
+		hurt=1
+		hsp= 2.25*-xsc
+		vsp= -4
+		canstopjump=true
+		state=""
+		grounded=false
+		oldsize = size;
+		switch (size) {
+			case "basic": {
 			signal_emit(sig, "on_kill", charmName)
-			break;
-		case "big":
-			size = "basic";
-			playsfx(charmName+"damage")
-			break;
-		default:
-			size = "big";
-			playsfx(charmName+"damage")
-			break;
+			} break
+			case "big": {
+				size = "basic";
+				playsfx(charmName+"damage")
+			} break
+			default: {
+				size = "big";
+				playsfx(charmName+"damage")
+			} break
+		}
+		grow = 60;
+	} else if (coll) && (!(invincible_type) || (invincible_type == 2)) {
+		make_particle(pImpact,coll.x+coll.xsc,coll.y,2)
+		coll.hp-=1
+		coll.phaseid=id
+		coll.killdir= esign(coll.x-x,1)
+		coll.killhsp= max(abs(hsp)/1.75,2)
+		coll.xsc= esign(hsp,xsc)
+		coll.killvsp= -max(2,abs(hsp)/1.5)
+		coll.killtype="spin"
 	}
-	grow = 60;
-} else if (coll) && (!(invincible_type) || (invincible_type == 2)) {
-	make_particle(pImpact,coll.x+coll.xsc,coll.y,2)
-	coll.hp-=1
-	coll.phaseid=id
-	coll.killdir=esign(coll.x-x,1)
-	coll.killhsp=max(abs(hsp)/1.75,2)
-	coll.xsc=esign(hsp,xsc)
-	coll.killvsp=-max(2,abs(hsp)/1.5)
-	coll.killtype="spin"
-}
 }
 
 #define hurt_by_spike
-
 	stopsfx(charmName+"damage")
 	hurt=1
-	hsp=2.25*-xsc
-	vsp=-4
+	hsp= 2.25*-xsc
+	vsp= -4
 	canstopjump=true
 	state=""
 	grounded=false
 	oldsize = size;
 	switch (size) {
-		case "basic":
-		case "mini":
+		case "basic": {
 			signal_emit(sig, "on_kill", charmName)
-			break;
-		case "big":
+		} break
+		case "big": {
 			size = "basic";
 			playsfx(charmName+"damage")
-			break;
-		default:
+		} break
+		default: {
 			size = "big";
 			playsfx(charmName+"damage")
-		break;	
-	}	
+		} break
+	}
 	grow = 60;
 
 
@@ -844,29 +874,27 @@ if (coll) && !(slopesliding) && !(invincible_type && invincible_timer) {
 
 
 #define hurt_by_electrocution
-
 	stopsfx(charmName+"damage")
 	electrocuted = false;
 	hurt=1
 	hsp=2.25*-xsc
-	vsp=-4
+	vsp= -4
 	canstopjump=true
 	state=""
 	grounded=false
 	oldsize = size;
 	switch (size) {
-		case "basic":
-		case "mini":
+		case "basic": {
 			signal_emit(sig, "on_kill", charmName)
-			break;
-		case "big":
+		} break
+		case "big": {
 			size = "basic";
 			playsfx(charmName+"damage")
-			break;
-		default:
+		} break
+		default: {
 			size = "big";
 			playsfx(charmName+"damage")
-			break;
+		} break
 	}
 	grow = 60;
 

@@ -31,4 +31,4 @@ if (movedir!=-1) {
 	}
 	post_wall();
 }
-txr_exec(global.scripts[? $"{charmName}_worldmap"]);
+catspeak_execute(global.scripts[? $"{charmName}_worldmap"]);

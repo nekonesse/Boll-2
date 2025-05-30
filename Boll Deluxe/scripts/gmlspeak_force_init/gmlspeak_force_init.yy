@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"gmlspeak_force_init",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"gmlspeak_force_init",
+  "parent":{
+    "name":"GMLspeak",
+    "path":"folders/GMLspeak.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

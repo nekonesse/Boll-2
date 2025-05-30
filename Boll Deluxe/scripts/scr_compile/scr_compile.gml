@@ -49,11 +49,10 @@ function compile_code(){
 				if !is_undefined(_compiled[? store]) {
 					show_message("WARNING: `" + store + "` already has a script compiled.")
 				}
-			
-				_compiled[? store] = txr_compile(global._loopThrough(def_names[i], _filepath));
-				if (_compiled[? store] == undefined) {
-					show_message("ERROR IN `" + _file + "`: "+ def_names[i] + ": " + txr_error);
-				} 
+				
+				var ast = GMLspeak.parseString(global._loopThrough(def_names[i], _filepath));
+				_compiled[? store] = GMLspeak.compileGML(ast);
+				
 				i++;
 			}
 			
@@ -191,10 +190,8 @@ function compile_level_scripts(){
 					show_message("WARNING: `" + store + "` already has a script compiled.")
 				}
 			
-				_compiled[? store] = txr_compile(global._loopThrough(def_names[i], _filepath));
-				if (_compiled[? store] == undefined) {
-					show_message("ERROR IN `" + _file + "`: "+ def_names[i] + ": " + txr_error);
-				} 
+				var ast = GMLspeak.parseString(global._loopThrough(def_names[i], _filepath));
+				_compiled[? store] = GMLspeak.compileGML(ast);
 				i++;
 			}
 			
@@ -260,10 +257,8 @@ function compile_object_scripts(){
 					show_message("WARNING: `" + store + "` already has a script compiled.")
 				}
 				
-				_compiled[? store] = txr_compile(global._loopThrough(def_names[i], _filepath));
-				if (_compiled[? store] == undefined) {
-					show_message("ERROR IN `" + _file + "`: "+ def_names[i] + ": " + txr_error);
-				} 
+				var ast = GMLspeak.parseString(global._loopThrough(def_names[i], _filepath));
+				_compiled[? store] = GMLspeak.compileGML(ast);
 				i++;
 			}
 			

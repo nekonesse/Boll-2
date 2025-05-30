@@ -1337,7 +1337,6 @@ if keyboard_check_pressed(ord("S")) && !keyboard_check(vk_control) {
 	switch (selected_mode) {
 		case NODE_MODE:
 		case BACKGROUND_MODE:
-		case REGION_MODE:
 		case OBJECT_MODE: {
 			selected_toolbar=0;
 			break;
@@ -1366,8 +1365,7 @@ if keyboard_check_pressed(ord("E")) && !keyboard_check(vk_control) {
 			break;
 		}
 		case BACKGROUND_MODE:
-		case TILE_MODE:
-		case REGION_MODE: {
+		case TILE_MODE: {
 			selected_toolbar=2;
 			break;
 		}

@@ -116,7 +116,7 @@ function Signal() constructor{
 function signal_create(variable, obj=id) {
 	var test_signal = new Signal();
 	test_signal.Connect( self, function(str_var, code_id) {
-		txr_exec(global.scripts[? $"{code_id}_{str_var}"]);
+		catspeak_execute(global.scripts[? $"{code_id}_{str_var}"]);
 	});
 	variable_instance_set(obj, variable, variable_clone(test_signal))
 }

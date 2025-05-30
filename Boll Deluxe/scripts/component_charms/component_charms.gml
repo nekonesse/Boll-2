@@ -178,7 +178,7 @@ function component_sonic_spindash(){
 	}
 }
 
-function component_sonic_start_jump(startingJumpValue = 6){
+function component_sonic_start_jump(startingJumpValue = 6) {
 	
 	state = "jump"
 	grounded = false

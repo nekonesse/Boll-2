@@ -8,7 +8,7 @@ if script_onTrigger != "" {
 						other.is_triggered = true	
 					}	
 				}
-				if is_triggered txr_exec(global.scripts_level[? $"{script_onTrigger}"]);
+				if is_triggered catspeak_execute(global.scripts_level[? $"{script_onTrigger}"]);
 			} else {
 				with (oPlayer) {
 					if !rectangle_in_rectangle(other.bbox_left,other.bbox_top,other.bbox_right-1,other.bbox_bottom-1,x - hit_sizex, y- hit_sizey, x + hit_sizex, y+ hit_sizey ){
@@ -24,7 +24,7 @@ if script_onTrigger != "" {
 						other.only_once = true	
 					}	
 				}
-				if only_once txr_exec(global.scripts_level[? $"{script_onTrigger}"]);
+				if only_once catspeak_execute(global.scripts_level[? $"{script_onTrigger}"]);
 			}
 		break;
 		case TRIGGER.OVERLAP:
@@ -34,13 +34,13 @@ if script_onTrigger != "" {
 					other.is_triggered = true	
 				}
 			}
-			if is_triggered txr_exec(global.scripts_level[? $"{script_onTrigger}"]);
+			if is_triggered catspeak_execute(global.scripts_level[? $"{script_onTrigger}"]);
 		break;
 	}
 }
 
 if script_onStep != "" {	
-	txr_exec(global.scripts_level[? $"{script_onStep}"]);	
+	catspeak_execute(global.scripts_level[? $"{script_onStep}"]);	
 }
 
 node_path_movement()

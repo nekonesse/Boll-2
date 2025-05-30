@@ -285,7 +285,7 @@ function init_player() { //make this load animation data later
 	spriteEvents=["idle"];
 	spriteMap={};
 	sound_list=[]; //failsafe
-	txr_exec(global.scripts[? $"{charmName}_datalist"]); //sprite list
+	catspeak_execute(global.scripts[? $"{charmName}_datalist"]); //sprite list
 	frames_list=[1];
 	loops_list=[1];
 	times_list[0]=1;
@@ -348,7 +348,7 @@ function animate_player() {
 	var oldspr=get_spriteindex()
 	oldSpriteEvent=spriteEvent;
 
-	txr_exec(global.scripts[? $"{charmName}_draw"]);
+	catspeak_execute(global.scripts[? $"{charmName}_draw"]);
 	 
 	//Growing and hurting size changes.
 	var spritedat = global.animdat[pNum][0]
@@ -385,7 +385,7 @@ function animate_player() {
 		palette=my_palletes[sizeNum]
 	}
 	
-	txr_exec(global.scripts[? $"{charmName}_upd_frame"]);
+	catspeak_execute(global.scripts[? $"{charmName}_upd_frame"]);
 }
 
 function finish_death() {
@@ -431,7 +431,7 @@ function player_castlewalk() {
 	            right=(x<p.x-4)
 	            left=(x>p.x+4)
 	            if (abs(x-p.x)<=4 && !jump && !posed) {
-	                txr_exec(global.scripts[? $"{charmName}_stop"]);
+	                catspeak_execute(global.scripts[? $"{charmName}_stop"]);
 	                no_move=1
 					no_step=1
 	                posed=1
@@ -453,7 +453,7 @@ function player_castlewalk() {
 	            if (!posed) {
 	                if (viclength) {
 	                    if (!jump) {
-	                        txr_exec(global.scripts[? $"{charmName}_stop"]);
+	                        catspeak_execute(global.scripts[? $"{charmName}_stop"]);
 	                        no_move=1
 							no_step=1
 	                        posed=1  
