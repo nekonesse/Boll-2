@@ -31,11 +31,8 @@ real_sprite_angle = 0;
 walljump = false;
 
 // wallrun junk
-
-// put this all in some Dumb Array
-wallrundata = [ 0, 0, 0,
-				0, 0, 0,
-				0, 0, 0 ];
+wallrunstored_hsp = 0;
+wallrunstored_gsp = 0;
 
 storeddir=0;
 yvol=0;
@@ -48,28 +45,17 @@ wallrunperiod=0;
 sprite_angle = real_sprite_angle;
 
 // chearii: do speed updates BEFORE we hit a wall
-// might lead to inconsistencies, but who cares?
-wallrundata[0] = abs(hsp);
-wallrundata[1] = abs((x - xprevious) div 1);
-wallrundata[2] = sign(hsp);
-
-wallrundata[3] = abs(vsp);
-wallrundata[4] = abs((y - yprevious) div 1);
-wallrundata[5] = sign(vsp);
 
 // get the distance in total of the horizontal speed
-wallrundata[6] = hsp;
-
-// do the same for difference
-wallrundata[7] = sqrt(wallrundata[1] * wallrundata[1]);
+wallrunstored_hsp = hsp;
 
 //ground speed
 if (grounded) {
-	wallrundata[8] = gsp;
+	wallrunstored_gsp = gsp;
 }
 
 #region Start Wallrunning
-if (move!=0) && (vsp < 0) && (state!="wallrun") && (abs(wallrundata[8]) > 1) {
+if (move!=0) && (vsp < 0) && (state!="wallrun") && (abs(wallrunstored_gsp) > 1) {
 	//wall sliding
 	var coll=check_collision_line(x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
 	if (!grounded)
@@ -79,7 +65,7 @@ if (move!=0) && (vsp < 0) && (state!="wallrun") && (abs(wallrundata[8]) > 1) {
 			storeddir=move;
 			var maxsp = 8;
 			var minsp = 4;
-			yvol=median(abs(wallrundata[6]), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
+			yvol=median(abs(wallrunstored_hsp), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
 			state = "wallrun"
 			no_move=true;
 			wallrunperiod=5;
@@ -230,7 +216,6 @@ if (state == "wallrun") && !piped {
 	
 	if !(check_collision_dot(x+(hit_sizex+3)*xsc,y,COL_WALL)) || (grounded) || !(wallrunperiod) {
 		state = "";
-		//wallrundata[0]=0;
 		storedvsp=0;
 		storeddir=0;
 		walljump=false;
@@ -239,7 +224,7 @@ if (state == "wallrun") && !piped {
 	if (apress) {
 		walljump=true;
 		control_lock=15;
-		wallrundata[6] *= 0.75;
+		wallrunstored_hsp *= 0.75;
 		hsp = -3.5*esign(move,xsc)
 		vsp = -5.5
 		move=  -move
@@ -506,7 +491,6 @@ if state!="wallrun" {
 }
 bonk = 0;
 gsp = hsp
-wallrundata[0]=0;
 
 var i=instance_create_depth(x - 1, y + hit_sizey, 0, pSkidDust); //should prooobably get some kind of particle spawning function in later. too many giant blocks of particle here.
 i.depth = (depth + 5);
