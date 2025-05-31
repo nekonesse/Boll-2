@@ -150,7 +150,7 @@ function compile_level_scripts(){
 	
 	show_debug_message("BEGIN SCRIPT (LEVEL) COMPLATION...")
 	
-	var _folder = file_find_first($"{working_directory}\\mods\\scripts\\triggers\\*.gml", fa_none)
+	var _folder = file_find_first($"{working_directory}\\mods\\scripts\\*.gml", fa_none)
 	while(_folder != "") {
 		
 		show_debug_message("SCRIPT FILE FOUND! `" + _folder + "`");
@@ -159,7 +159,7 @@ function compile_level_scripts(){
 			show_debug_message("WARNING: Terminate symbol found in `" + _folder + "`. Ignoring...");
 			_folder = file_find_next();
 		}else {
-			found_folders[index++] = "scripts\\triggers\\" + _folder
+			found_folders[index++] = "scripts\\" + _folder
 			_folder = file_find_next();
 		}
 	}
@@ -218,10 +218,10 @@ function compile_object_scripts(){
 	
 	show_debug_message("BEGIN SCRIPT (OBJECT) COMPLATION...")
 	
-	var _folder = file_find_first($"{working_directory}\\mods\\scripts\\objects\\*.gml", fa_none)
+	var _folder = file_find_first($"{working_directory}\\mods\\objects\\*", fa_directory)
 	while(_folder != "") {
 		
-		show_debug_message("SCRIPT FILE FOUND! `" + _folder + "`");
+		show_debug_message("SCRIPT FOLDER FOUND! `" + _folder + "`");
 		
 		if string_starts_with(_folder, "!") {
 			show_debug_message("WARNING: Terminate symbol found in `" + _folder + "`. Ignoring...");
@@ -231,21 +231,21 @@ function compile_object_scripts(){
 			_folder = file_find_next();
 		}
 	}
-	show_debug_message("END SCRIPT FILE SEARCH");
+	show_debug_message("END SCRIPT FOLDER SEARCH");
 	
 	_folder = file_find_close();
 	
 	var j=0;
 	repeat(array_length(found_folders)) {
 		
-		var _file = file_find_first($"{working_directory}\\mods\\scripts\\objects\\" + found_folders[j], fa_none)
+		var _file = file_find_first($"{working_directory}\\mods\\objects\\{found_folders[j]}\\*.gml", fa_none)
 		show_debug_message("BEGIN SCRIPT COMPILE IN `" + found_folders[j] + "`");
 	
 		while(_file != "") {
+			var _filepath = $"{working_directory}\\mods\\objects\\{found_folders[j]}\\{_file}"
 			
-			var _filepath = $"{working_directory}\\mods\\scripts\\objects\\{_file}"
-
 			_file = string_delete(_file, string_length(_file) -3, 4)
+			
 			def_names = global._findDefine( _filepath)
 			var i=0;
 			repeat(array_length(def_names)) {
