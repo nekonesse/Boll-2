@@ -242,6 +242,5 @@ function component_get_ground_friction(){
 
 function component_common_timer_values(){
 	
-	//txr try not to break when i add an identical function challenge 
 }
 	

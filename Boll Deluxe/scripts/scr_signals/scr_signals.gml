@@ -49,18 +49,18 @@ function SigConnector( c = undefined,f = function(){} ) constructor{
 
 function SigDisconnect(wref){ if( weak_ref_alive(wref) ){ wref.ref.SetDead(); } }
 
-function Signal() constructor{
+function Signal() constructor {
     slotsHead = new SigConnector();
     slotsHead.prev = slotsHead;
     slotsHead.next = slotsHead;
 
-    static Connect = function(ctx,func){
+    static Connect = function(ctx,func) {
          var cn = weak_ref_create( new SigConnector(ctx,func) );
          cn.ref.Attach(slotsHead);
          return cn;//need return connector for delete external
     };
 
-    static Destroy = function(){
+    static Destroy = function() {
         var remove = [];
         var cur = slotsHead.prev;
         while( cur != slotsHead ){ array_push(remove,cur); cur = cur.prev; }
@@ -73,14 +73,14 @@ function Signal() constructor{
 		}
     }
 
-    static Count = function(){
+    static Count = function() {
         var cnt = 0;
         var cur = slotsHead.prev;
         while( cur != slotsHead ){ ++cnt; cur = cur.prev; }
         return cnt;
     }
 
-    static Emit = function(){
+    static Emit = function() {
         var head = slotsHead;
         var cur = head.prev;
         if( cur == head ){ return; }
@@ -113,10 +113,19 @@ function Signal() constructor{
     }
 }
 
-function signal_create(variable, obj=id) {
+function signal_create(obj=id) {
+	if obj.object_index == oScript
+	return -1;
+	
 	var test_signal = new Signal();
-	test_signal.Connect( self, function(str_var, code_id) {
-		catspeak_execute(global.scripts[? $"{code_id}_{str_var}"]);
-	});
-	variable_instance_set(obj, variable, variable_clone(test_signal))
+	if (obj.object_index == oCustomObject) {
+		test_signal.Connect( self, function(str_var, code_id) {
+			catspeak_execute(global.scripts_object[? $"{code_id}_{str_var}"]);
+		});	
+	} else {
+		test_signal.Connect( self, function(str_var, code_id) {
+			catspeak_execute(global.scripts[? $"{code_id}_{str_var}"]);
+		});
+	}
+	return test_signal
 }

@@ -8,6 +8,10 @@ instance_destroy(oBackgroundManager);
 PlayerColl.Clear();
 PlayerColl.Destroy();
 delete PlayerColl;
+CustomColl.Clear();
+CustomColl.Destroy();
+delete CustomColl;
 
+audioExtSoundClear()
 VinylMixVoicesStop("music")
 VinylMixVoicesStop("sound effects")

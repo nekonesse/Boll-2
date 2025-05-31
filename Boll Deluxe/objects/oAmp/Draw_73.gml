@@ -1,0 +1,1 @@
+draw_sprite(spr_blockcurrent,(global.roomTimer/4) mod 3,x,y)

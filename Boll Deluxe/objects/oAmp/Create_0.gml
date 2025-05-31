@@ -1,8 +1,10 @@
 onConducted=new Signal();
 
 onConducted.Connect( self, function(conductor) {
-
+	conducted = true
 });
+
+conducted = false;
 
 reverse = 0; //should the platform read regular dir or reverse dir
 fallen = 0; //whether or not the platform has fallen
