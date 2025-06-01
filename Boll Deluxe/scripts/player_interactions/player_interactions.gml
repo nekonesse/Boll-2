@@ -154,7 +154,7 @@ function player_interactions(){
 		}
 	}
 	
-	var item=check_hitbox_on_hitbox(oMushroom)
+	var item=check_hitbox_on_hitbox(id, oMushroom)
 	if (item) && !(hurt) && !(dead) {
 		item.itemCollected.Emit(id);
 	}
@@ -164,8 +164,11 @@ function player_interactions(){
 		if !(invincible_type && invincible_timer) {
 			sig.Emit("hurt_by_spike")
 		}
-		with(icicle) {
-			instance_destroy();
+		
+		if !(icicle.can_fall) || (invincible_type == 2) && (invincible_type != 1) {
+			with(icicle) {
+				instance_destroy();
+			}
 		}
 	}
 }

@@ -1,7 +1,7 @@
 if (can_fall) {
 	if !(fallgo) && check_rectangle_in_hitbox(x-4,y-4,x+20,y+255,oPlayer) {
 		fallgo = true;
-		alarm[0]=7;
+		alarm[0]=20;
 	}
 
 	if (fall) {
@@ -19,6 +19,20 @@ if (can_fall) {
 				x += other.x_diff;
 				y += other.y_diff;
 			}
+		}
+		
+		var enemy=check_rectangle_in_hitbox(bbox_left,bbox_top+2,bbox_right-1,bbox_bottom-1,oEnemy)
+		if (enemy) {
+			enemy.hp=0
+			enemy.killtype="spin";
+			enemy.killhsp = sign(hsp);
+			instance_create_depth(enemy.x,enemy.y,2,pImpact)
+		}
+		
+		var coll=instance_place(x,y+1,oHittable) 
+		if (coll) && !(coll.ceiling_only) {
+			coll.blockHit.Emit(1, id);
+			instance_destroy();
 		}
 	
 		if check_collision_line(bbox_left,bbox_bottom-1,bbox_right-1,bbox_bottom-1,COL_BOTTOM,oCollider) {
