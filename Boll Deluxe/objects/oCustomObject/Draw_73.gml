@@ -1,0 +1,1 @@
+catspeak_execute(global.scripts_object[? $"{script_name}_draw_end"]);

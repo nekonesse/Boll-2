@@ -287,7 +287,7 @@ if ((ceil(abs(hsp))>3 && grounded && state == "")) {
 		var i=instance_create_depth(x - (1 * xsc), y + hit_sizey, 0, part);
 		i.depth = (depth + 5);
 		i.image_xscale = xsc;
-		i.hspeed = 2.25 * -xsc;
+		i.hspeed = -2.25 * xsc;
 		i.friction =0.2;
 		i.vspeed = -0.1;
 		i.gravity = -0.02;
@@ -461,7 +461,7 @@ give_lives(pNum, x + (hit_sizex / 2), y - 8, 3, p3UP)
 if !(invincible_type && invincible_timer) {
 	stopsfx(charmName+"damage")
 	hurt=1
-	hsp= 2.25*-xsc
+	hsp= -2.25 * xsc
 	vsp= -4
 	canstopjump=true
 	state=""
@@ -547,12 +547,12 @@ if (dropdash && dropdash_timer >= 18) {
 	stopsfx("sonicdropdash")
 	playsfx("sonicrelease")
 	if (sign(hsp) == move) {
-		gsp = (gsp / 4) + (dropdash_spd * move)
+		gsp = (gsp / 4) + (dropdash_spd * xsc)
 	} else {
 		if (colangle == 0) {
-			gsp = dropdash_spd * move
+			gsp = dropdash_spd * xsc
 		} else {
-			gsp = (gsp / 2) + (dropdash_spd * move)
+			gsp = (gsp / 2) + (dropdash_spd * xsc)
 		}
 	}
 	state = "roll";
@@ -574,40 +574,40 @@ vsp= -(4+akey*1.5)
 #define collide_with_enemy
 var coll=check_hitbox_on_hitbox(id, oEnemy)
 if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
-	
-if (coll) && (state != "roll") && (state != "jump") && !(invincible_type && invincible_timer) {
-	stopsfx(charmName+"damage")
-	hurt=1
-	hsp = 2.25*-xsc
-	vsp = -4
-	canstopjump=true
-	state=""
-	grounded=false
-	oldsize = size;
-	switch (size) {
-		case "basic": {
-			signal_emit(sig, "on_kill", charmName)
-		} break
-		case "big": {
-			size = "basic";
-			playsfx(charmName+"damage")
-		} break
-		default: {
-			size = "big";
-			playsfx(charmName+"damage")
-		} break
+	if (coll) && (state != "roll") && (state != "jump") && !(invincible_type && invincible_timer) && (state != "spindash") {
+		stopsfx(charmName+"damage")
+		hurt=1
+		hsp = -2.25 * xsc
+		vsp = -4
+		canstopjump=true
+		state=""
+		grounded=false
+		oldsize = size;
+		switch (size) {
+			case "basic": {
+				signal_emit(sig, "on_kill", charmName)
+			} break
+			case "big": {
+				size = "basic";
+				playsfx(charmName+"damage")
+			} break
+			default: {
+				size = "big";
+				playsfx(charmName+"damage")
+			} break
+		}
+		grow = 60;
+	} else if (coll) && (!(invincible_type) || (invincible_type == 2) || (state == "spindash")) {
+		make_particle(pImpact,coll.x+coll.xsc,coll.y,2)
+		VinylPlay(snd_enemykick)
+		coll.hp-= 1
+		coll.phaseid= id
+		coll.killdir= esign(coll.x-x,1)
+		coll.killhsp= max(abs(hsp)/1.75,2)
+		coll.xsc= esign(hsp,xsc)
+		coll.killvsp= -max(2,abs(hsp)/1.5)
+		coll.killtype= "spin"
 	}
-	grow = 60;
-} else if (coll) && (!(invincible_type) || (invincible_type == 2)) {
-	make_particle(pImpact,coll.x+coll.xsc,coll.y,2)
-	coll.hp-= 1
-	coll.phaseid= id
-	coll.killdir= esign(coll.x-x,1)
-	coll.killhsp= max(abs(hsp)/1.75,2)
-	coll.xsc= esign(hsp,xsc)
-	coll.killvsp= -max(2,abs(hsp)/1.5)
-	coll.killtype= "spin"
-}
 }
 
 
@@ -615,7 +615,7 @@ if (coll) && (state != "roll") && (state != "jump") && !(invincible_type && invi
 
 stopsfx(charmName+"damage")
 hurt= 1
-hsp= 2.25*-xsc
+hsp= -2.25 * xsc
 vsp= -4
 canstopjump=true
 state=""
@@ -648,7 +648,7 @@ electrocution_timer=60;
 stopsfx(charmName+"damage")
 electrocuted = false;
 hurt=1
-hsp= 2.25*-xsc
+hsp= -2.25 * xsc
 vsp= -4
 canstopjump=true
 state=""

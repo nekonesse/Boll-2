@@ -313,7 +313,7 @@ if (state == "jump" || state == "") && !(grounded) && !piped {
 		}
 	}
 	
-	if (downpress) {
+	if (downpress) && !(hurt) && !(stun) {
 		component_mario_start_groundpound()
 	}
 	
@@ -324,13 +324,13 @@ if (state == "jump" || state == "") && !(grounded) && !piped {
 	if (move != 0) && !(crouch) {
 		//wall sliding
 		var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
-		if (!grounded) && (coll) && (vsp > 0) {
+		if (!grounded) && !(stun) && !(hurt) && (coll) && (vsp > 0) {
 			state = "wallslide"
 		}
 	}
 }
 
-if ((state == "" || state=="crouch") && apress && canjump > 0 && !spinjump) && !piped && !(underwater) {
+if ((state == "" || state=="crouch") && !hurt && !stun && apress && canjump > 0 && !spinjump) && !piped && !(underwater) {
 	grounded = false
 	if (slopesliding) {
 		crouch = false
@@ -358,7 +358,6 @@ if ((state == "" || state=="crouch") && apress && canjump > 0 && !spinjump) && !
 
 if (state == "wallslide") && !piped {
 	component_mario_wallslide()
-	
 }
 #endregion
 
@@ -367,7 +366,7 @@ if (state == "wallslide") && !piped {
 if (cpress && !is_grabbing) && !(stun) {
 	if (grounded) {
 		component_mario_start_spinjump();
-	} else if (state != "dive" && !spinjump && !up && (!crouch || pound)) {
+	} else if (state != "dive" && !stun && !hurt && !spinjump && !up && (!crouch || state == "pound")) {
 		component_mario_start_dive();
 	}
 }
@@ -732,7 +731,7 @@ give_lives(pNum, x + (hit_sizex / 2), y - 8, 3, p3UP)
 if !(invincible_type && invincible_timer) {
 	stopsfx(charmName+"damage")
 	hurt=1
-	hsp= 2.25*-xsc
+	hsp= -2.25 * xsc
 	vsp= -4
 	canstopjump=true
 	state=""
@@ -762,7 +761,7 @@ if (state == "dive") {
 	VinylPlay(asset_get_index("snd_blockbump"))
 	make_particle(pImpact, x + hit_sizex*xsc, y)
 	hit_block(x+(hit_sizex+1)*xsc,y-hit_sizey+2,x+(hit_sizex+1)*xsc,y+hit_sizey-2)
-	hsp= 1*-xsc
+	hsp= -1 * xsc
 	vsp= -2
 	canstopjump=true
 	state=""
@@ -804,7 +803,7 @@ canstopjump = true
 
 #define enemy_stomped
 if (state != "groundpound") {
-	vsp= -(4+akey*1.5)
+	vsp= -(4 + akey*1.5)
 }
 
 #define collide_with_enemy
@@ -813,7 +812,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 	if (coll) && !(slopesliding) && !(invincible_type && invincible_timer) {
 		stopsfx(charmName+"damage")
 		hurt=1
-		hsp= 2.25*-xsc
+		hsp= -2.25 * xsc
 		vsp= -4
 		canstopjump=true
 		state=""
@@ -821,7 +820,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 		oldsize = size;
 		switch (size) {
 			case "basic": {
-			signal_emit(sig, "on_kill", charmName)
+				signal_emit(sig, "on_kill", charmName)
 			} break
 			case "big": {
 				size = "basic";
@@ -835,6 +834,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 		grow = 60;
 	} else if (coll) && (!(invincible_type) || (invincible_type == 2)) {
 		make_particle(pImpact,coll.x+coll.xsc,coll.y,2)
+		VinylPlay(snd_enemykick)
 		coll.hp-=1
 		coll.phaseid=id
 		coll.killdir= esign(coll.x-x,1)
@@ -848,7 +848,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 #define hurt_by_spike
 	stopsfx(charmName+"damage")
 	hurt=1
-	hsp= 2.25*-xsc
+	hsp= -2.25 * xsc
 	vsp= -4
 	canstopjump=true
 	state=""
@@ -881,7 +881,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 	stopsfx(charmName+"damage")
 	electrocuted = false;
 	hurt=1
-	hsp=2.25*-xsc
+	hsp= -2.25 * xsc
 	vsp= -4
 	canstopjump=true
 	state=""

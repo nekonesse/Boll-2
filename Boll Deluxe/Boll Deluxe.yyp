@@ -449,7 +449,6 @@
     {"$GMIncludedFile":"","%Name":"INTLIB_README.txt","CopyToMask":-1,"filePath":"datafiles","name":"INTLIB_README.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"licenses.txt","CopyToMask":-1,"filePath":"datafiles","name":"licenses.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"b4messesaround.jade","CopyToMask":-1,"filePath":"datafiles/mods/level","name":"b4messesaround.jade","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
-    {"$GMIncludedFile":"","%Name":"beartest.jade","CopyToMask":-1,"filePath":"datafiles/mods/level","name":"beartest.jade","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"big asf wall.jade","CopyToMask":-1,"filePath":"datafiles/mods/level","name":"big asf wall.jade","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"breezethroughtheflowers-smm2.jade","CopyToMask":-1,"filePath":"datafiles/mods/level","name":"breezethroughtheflowers-smm2.jade","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"collisiontest.jade","CopyToMask":-1,"filePath":"datafiles/mods/level","name":"collisiontest.jade","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
