@@ -109,7 +109,7 @@ function object_get_properties(obj){
 				["dir", "Flip", 0, "checkbox", 0]
 			]
 			break;
-		//ENEMIES
+		//HAZARDS
 		case oSlime:
 			properties = [
 				["snap_to_ceiling", "Ceiling Offset", 0, "checkbox", 0],
@@ -132,6 +132,11 @@ function object_get_properties(obj){
 		case oStopbob:
 			properties = [
 				["timer_offset", "Timer Offset", 0, "number_input", 0]
+			]
+			break;
+		case oIcicle:
+			properties = [
+				["can_fall", "Can Fall", 1, "checkbox", 0]
 			]
 			break;
 		//TECHNICAL

@@ -113,6 +113,7 @@ function JADE_initializeobj() {
 	registerobj(object_get_name(oJumpingPiranha), spr_jumpingpiranhafall, -16, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oJumpingPiranha"), "Jumping Piranha")
 	registerobj(object_get_name(oPolarBear), spr_polarbear, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oPolarBear"), "Polar Bear")
 	registerobj(object_get_name(oStopbob), spr_stopbob, -8, -16, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oStopbob"), "Stopbob")
+	registerobj(object_get_name(oIcicle), spr_icicle, 0, 0, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oIcicle"), "Icicle")
 	
 	registerobj(object_get_name(oCoin), spr_coin, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oCoin"), "Coin", true)
 	registerobj(object_get_name(oDottedCoin), spr_dottedcoin, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oDottedCoin"), "Dotted Coin", true)

@@ -1,12 +1,4 @@
 var col = noone, i = 0;
-if state == 128 {
-	y += vsp
-	vsp += 0.2
-	if !on_screen(32,32) {
-		instance_destroy();
-	}
-	exit;
-}
 
 if (state = 0) {
 	frame = 0
@@ -56,7 +48,7 @@ if (state == 1) {
 		exit;
 	} else {
 		var _list = ds_list_create();
-		var _num = check_hitbox_in_hitbox_list(bbox_left,bbox_top,bbox_right-1,bbox_bottom-1, oEnemy, _list) ;
+		var _num = check_hitbox_on_hitbox_list(bbox_left,bbox_top,bbox_right-1,bbox_bottom-1, oEnemy, _list) ;
 
 		if (_num > 0) {
 			var i=0;

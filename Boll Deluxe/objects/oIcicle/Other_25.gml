@@ -1,0 +1,1 @@
+if !(can_fall) sprite_index = spr_iciclesolid

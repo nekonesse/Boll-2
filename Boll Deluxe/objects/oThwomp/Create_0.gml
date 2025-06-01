@@ -1,8 +1,7 @@
 event_inherited();
 
-enemyFireballed.Connect( self, function(proj, hit_p) {
-	instance_destroy(proj);
-});
+delete enemyFireballed
+enemyFireballed = new Signal();
 
 state = 0;
 frame = 0;

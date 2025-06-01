@@ -101,15 +101,15 @@ function pal_swap_set(_pal_sprite, _pal_index, _is_surface) {
     
 		var _tex = surface_get_texture(_pal_sprite);
     
-	  texture_set_stage(_swapper.texture[_mode], _tex);
+		texture_set_stage(_swapper.texture[_mode], _tex);
     
-	  var _texel_x = texture_get_texel_width(_tex),
+		var _texel_x = texture_get_texel_width(_tex),
 	      _texel_y = texture_get_texel_height(_tex),
 	      _texel_hx = _texel_x * 0.5,
 	      _texel_hy = _texel_y * 0.5;
 		shader_set_uniform_f(_swapper.texel_size[_mode], _texel_x, _texel_y);
-	  shader_set_uniform_f(_swapper.uvs[_mode], _texel_hx, _texel_hy, 1.0 + _texel_hx, 1.0 + _texel_hy);
-	  shader_set_uniform_f(_swapper.index[_mode], _pal_index);
+		shader_set_uniform_f(_swapper.uvs[_mode], _texel_hx, _texel_hy, 1.0 + _texel_hx, 1.0 + _texel_hy);
+		shader_set_uniform_f(_swapper.index[_mode], _pal_index);
 	}
 }
 

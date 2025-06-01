@@ -154,8 +154,18 @@ function player_interactions(){
 		}
 	}
 	
-	var item=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oMushroom, false, true)
+	var item=check_hitbox_on_hitbox(oMushroom)
 	if (item) && !(hurt) && !(dead) {
 		item.itemCollected.Emit(id);
+	}
+	
+	var icicle=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey-2-max(0,vsp),oIcicle,true,true)
+	if (icicle) && !(hurt) && !(dead) {
+		if !(invincible_type && invincible_timer) {
+			sig.Emit("hurt_by_spike")
+		}
+		with(icicle) {
+			instance_destroy();
+		}
 	}
 }
