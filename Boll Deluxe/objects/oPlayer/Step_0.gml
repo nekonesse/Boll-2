@@ -35,8 +35,7 @@ if abs(colangle) > 60 && abs(colangle) < 300 {
 
 if !dead && !no_step {
 	catspeak_execute(global.scripts[? $"{charmName}_step"]);
-}
-else {
+} else if (dead) {
 	catspeak_execute(global.scripts[? $"{charmName}_death"]);
 }
 
