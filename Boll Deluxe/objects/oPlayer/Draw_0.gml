@@ -21,6 +21,9 @@ if (CollageImageExists(oGameManager.PlayerColl.GetImageInfo(get_spriteindex())))
 		pal_swap_reset()
 	}
 	shader_reset();
+	if (state == "frozen") {
+		draw_sprite(spr_playericecube,5-frozen_health,floor(x),floor(y))
+	}
 }
 
 if (global.debug) {

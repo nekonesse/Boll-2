@@ -103,6 +103,7 @@ pound_severity = -1;
 
 //Change hitbox size based on powerup
 //your hitbox is in the center so the hitbox variables should be HALF of the total box size.
+hit_sizex = 6;
 switch (size) {
 	case "basic": {
 		can_break_bricks=false
@@ -631,7 +632,7 @@ if (firing) && !(is_grabbing) {
 	}
 }
 
-if (hurt || stun) {
+if (hurt || stun || state == "frozen") {
 	spriteEvent="hurt"
 	if (dead) {
 		spriteEvent="dead"
@@ -784,11 +785,11 @@ if (state == "pound") {
 		gsp = (-8 * dsin(colangle)) 
 	}
 	playsfx(charmName+"stomp");
-} else {
+} else if state != "frozen"{
 	state = ""
-	vsp = 0
 }
 #endregion
+vsp = 0
 
 canstopjump = false
 spinjump = false
@@ -901,6 +902,12 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 		} break
 	}
 	grow = 60;
+
+#define on_freeze
+state = "frozen"
+while (check_collision_line(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey,COL_BOTTOM)) {
+	y-=1
+}
 
 #define enter_pipe
 stopsfx(charmName+"skid")

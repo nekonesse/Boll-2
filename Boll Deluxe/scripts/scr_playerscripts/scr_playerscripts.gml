@@ -315,13 +315,17 @@ function init_player() { //make this load animation data later
 
 function draw_player() {
 	//if (flash) exit
+	var yoff=0;
+	
+	if (state == "frozen") yoff=8
+	
 	var spr=oGameManager.PlayerColl.GetImageInfo(get_spriteindex())
 	if CollageImageExists(spr) {
 		CollageDrawImageExt(
 			spr, 
 			floor(frame),
 			floor(x) - (lengthdir_x(offset_x,(sprite_angle-90)*xsc)) * -xsc, 
-			floor(y) - (lengthdir_y(offset_y,(sprite_angle-90)*ysc) - dy - (6) - (12-hit_sizey)) * -ysc,
+			floor(y) - (lengthdir_y(offset_y,(sprite_angle-90)*ysc) - dy - (6) - (12-hit_sizey) - yoff) * -ysc,
 			xsc,
 			ysc,
 			sprite_angle*xsc,
@@ -504,7 +508,9 @@ function make_particle(obj,_x,_y,_depth=depth+5,xsc=1,hsp=0,vsp=0,grav=0,fric=0,
 	i.image_xscale = xsc;
 	i.image_yscale = ysc;
 	i.hspeed=hsp
-	i.friction=fric;
 	i.vspeed=vsp;
+	i.friction=fric;
 	i.gravity=grav;
+	
+	return i
 }

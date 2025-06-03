@@ -25,7 +25,6 @@ if !finish {
 	ckey = input_check("c");
 	cpress = input_check_pressed("c");
 }
-
 player_castlewalk()
 
 steep_slope = false
@@ -33,10 +32,55 @@ if abs(colangle) > 60 && abs(colangle) < 300 {
 	steep_slope = true	
 }
 
-if !dead && !no_step {
-	catspeak_execute(global.scripts[? $"{charmName}_step"]);
-} else if (dead) {
-	catspeak_execute(global.scripts[? $"{charmName}_death"]);
+if (state != "frozen") {
+	if !dead && !no_step {
+		catspeak_execute(global.scripts[? $"{charmName}_step"]);
+	} else if (dead) {
+		catspeak_execute(global.scripts[? $"{charmName}_death"]);
+	}
+} else {
+	state = "frozen"
+	
+	hit_sizex=15;
+	hit_sizey=15;
+	
+	gsp -= (0.25 * dsin(colangle)) //regular slope speed
+	
+	no_move = true
+	
+	if in_water() {
+		grav=defaultgrav/4
+	} else {
+		grav=defaultgrav
+	}
+	
+	fric = 0
+	
+	maxspd=5
+	
+	component_gravity_coneyor();
+	
+	player_movement();
+	basic_step_move();
+	post_wall();
+	
+	if (apress) {
+		frozen_health-=1
+		var j=noone
+		j = instance_create(x-8,y+8,pDestruction) with(j){image_index=10 hspeed=-1+other.hsp/2 vspeed=-2} //bottom left
+		j = instance_create(x-8,y-8,pDestruction) with(j){image_index=10 hspeed=1+other.hsp/2 vspeed=-2} //bottom right
+		j = instance_create(x+8,y+8,pDestruction) with(j){image_index=10 hspeed=-1+other.hsp/2 vspeed=-4} //top left
+		j = instance_create(x+8,y-8,pDestruction) with(j){image_index=10 hspeed=1+other.hsp/2 vspeed=-4} //top right
+		if !(frozen_health) {
+			state="jump"
+			vsp=-2;
+			grounded=false;
+			y-=8
+			VinylPlay(snd_iceshatter)
+			exit
+		}
+		VinylPlay(snd_icestruggle)
+	}
 }
 
 if (electrocuted) {
