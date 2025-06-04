@@ -10,3 +10,5 @@ vsp = 0;
 
 fall = false;
 fallgo = false;
+
+visible = 1;

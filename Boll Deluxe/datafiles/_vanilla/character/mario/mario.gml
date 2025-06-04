@@ -804,6 +804,7 @@ wallkick = false;
 if state != "frozen" {
 	state = "jump";
 }
+runjump = 0;
 crouch = false
 slopesliding = false
 canstopjump = true

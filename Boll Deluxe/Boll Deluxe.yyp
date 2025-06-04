@@ -1441,6 +1441,7 @@
     {"id":{"name":"snd_shootblockshoot","path":"sounds/snd_shootblockshoot/snd_shootblockshoot.yy",},},
     {"id":{"name":"snd_slimebounce","path":"sounds/snd_slimebounce/snd_slimebounce.yy",},},
     {"id":{"name":"snd_switch","path":"sounds/snd_switch/snd_switch.yy",},},
+    {"id":{"name":"snd_terrainspring","path":"sounds/snd_terrainspring/snd_terrainspring.yy",},},
     {"id":{"name":"VinylFallbackSound","path":"sounds/VinylFallbackSound/VinylFallbackSound.yy",},},
     {"id":{"name":"scribble_fallback_bulletpoint","path":"sprites/scribble_fallback_bulletpoint/scribble_fallback_bulletpoint.yy",},},
     {"id":{"name":"spr_16x16hitbox","path":"sprites/spr_16x16hitbox/spr_16x16hitbox.yy",},},

@@ -140,6 +140,11 @@ function object_get_properties(obj){
 			]
 			break;
 		//TECHNICAL
+		case oTerrainSpring:
+			properties = [
+				["image_angle", "Rotation", 0, "dropdown", [0,90,270,180], ["Up", "Left", "Right", "Down"]]
+			]
+		break;
 		case oScript:
 			properties = [
 				["detection_type", "Detect Type", 0, "dropdown", [TRIGGER.NONE, TRIGGER.OVERLAP, TRIGGER.OVERLAP_ONCE, TRIGGER.ON_TOUCH, TRIGGER.PASS_X, TRIGGER.PASS_Y, TRIGGER.CHANNEL_ID], ["None", "While Overlap", "Overlap Once", "On Touch", "Pass X", "Pass Y", "Channel ID"]],

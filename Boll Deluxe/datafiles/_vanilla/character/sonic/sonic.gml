@@ -568,6 +568,7 @@ vsp = 0
 
 #define sprung
 canstopjump = true;
+crouch = false;
 if state != "frozen" {
 	state = "";
 }

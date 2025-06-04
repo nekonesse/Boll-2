@@ -14,10 +14,30 @@ function player_interactions(){
 	
 	var spring = collision_line(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey, oTerrainSpring, false, true)
 	if (spring) && !(hurt) && !(dead)  {
-		vsp=min(-spring.spring_power,vsp) //dont set vsp if it exceeds power
-		grounded = false
+		switch(spring.image_angle) {
+			case 0:
+			vsp=min(-spring.spring_power,vsp) //dont set vsp if it exceeds power
+			grounded = false
+			sig.Emit("sprung")
+			break;
+			
+			case 180:
+			vsp=max(spring.spring_power,vsp)
+			break;
+			
+			case 90:
+			hsp=min(-spring.spring_power,hsp)
+			if (grounded) gsp=hsp
+			xsc = -1
+			break;
+			
+			case 270:
+			hsp=max(spring.spring_power,hsp)
+			if (grounded) gsp=hsp
+			xsc = 1
+			break;
+		}
 		spring.image_speed=1
-		sig.Emit("sprung")
 		if (spring.object_index == oPollenFlower) {
 			pollenated=true
 			if !part_system_exists(pollenPart) {
@@ -26,6 +46,8 @@ function player_interactions(){
 				part_system_position(pollenPart,x+8,y+8)
 				part_system_global_space(pollenPart,true)
 			}
+		} else {
+			VinylPlay(snd_terrainspring)
 		}
 	}
 	
@@ -160,14 +182,27 @@ function player_interactions(){
 	}
 	
 	var icicle=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey-2-max(0,vsp),oIcicle,true,true)
-	if (icicle) && !(hurt) && !(dead) {
+	if (icicle) && !(icicle.no_collide) && !(hurt) && !(dead) {
 		if !(invincible_type && invincible_timer) {
 			sig.Emit("hurt_by_spike")
 		}
 		
 		if !(icicle.can_fall) || (invincible_type == 2) && (invincible_type != 1) {
 			with(icicle) {
-				instance_destroy();
+				var j=noone
+				j = instance_create(x+4,y+24,pDestruction) with(j){image_index=10 hspeed=-1 vspeed=-2} //bottom left
+				j = instance_create(x+4,y+20,pDestruction) with(j){image_index=10 hspeed=1 vspeed=-2} //bottom right
+				j = instance_create(x+8,y+24,pDestruction) with(j){image_index=10 hspeed=-1 vspeed=-4} //top left
+				j = instance_create(x+8,y+20,pDestruction) with(j){image_index=10 hspeed=1 vspeed=-4} //top right
+				VinylPlay(snd_iceshatter)
+				y=ystart
+				visible=0;
+				respawn_timer=120;
+				no_collide = true;
+				fallgo=false;
+				fall=false;
+				vsp=0;
+				alarm[0]=-1;
 			}
 		}
 	}
