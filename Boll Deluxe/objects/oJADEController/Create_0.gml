@@ -12,10 +12,9 @@
 #macro FLIP_TOOL 9 //tile, background
 #macro COLOR_TOOL 10 //tile, background
 #macro NODE_TOOL 11 //node
-#macro ROTATOR_TOOL 12 //region
+#macro ROTATOR_TOOL 12 //node
 
 ///Modes:
-//0: Region
 //1: Objects
 //2: Tiles
 //3: Backgrounds
@@ -136,6 +135,9 @@ initial_viewx=0;
 initial_viewy=0;
 
 zoom_level = 1;
+zoom_goto = 1;
+zoom_x = 0;
+zoom_y = 0;
 ui_opacity = 0.5;
 
 drawing_node=-1;

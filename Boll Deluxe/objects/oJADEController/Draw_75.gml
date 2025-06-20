@@ -16,30 +16,32 @@ if (not_on_gui) {
 					var xoff=arr[1]
 					var yoff=arr[2]
 					if arr[7] == selected_mode
-					draw_sprite_ext(arr[0],0,gridx*16-xoff-cam_x,gridy*16-yoff-cam_y,arr[11],arr[12],0,c_white,0.25)
+					draw_sprite_ext(arr[0],0,(gridx*16-xoff-cam_x)/zoom_level,(gridy*16-yoff-cam_y)/zoom_level,arr[11]/zoom_level,arr[12]/zoom_level,0,c_white,0.25)
 				}
 			break;
 			case TILE_MODE:
-				var _tile = tilemap_get_tileset(tilemap)
-				var _data = tilemap_get(tilemap, 0,0)
+				var t_width = sprite_get_width(tilesets[$ current_tileset][0])
+				var t_height = sprite_get_height(tilesets[$ current_tileset][0])
 				var i=0;
 				repeat(tile_sel_width+1) {
 					var j=0;
 					repeat(tile_sel_height+1) {
-						_data = tile_set_index(_data, current_tile_id[i][j])
-						draw_set_alpha(0.25)
-						draw_tile(_tile, _data, 0, (gridx + i)*16-cam_x, (gridy + j)*16-cam_y)
+						var _data = current_tile_id[i][j]
+						if _data != 0 {
+							var t_x = ((_data mod (t_width / 16)) * 16)
+							var t_y = (floor(_data / (t_width/16)) * 16)
+							draw_sprite_part_ext(tilesets[$ current_tileset][0], 0, t_x, t_y, 16, 16, ((gridx+i)*16-cam_x)/zoom_level,((gridy+j)*16-cam_y)/zoom_level, 1/zoom_level, 1/zoom_level, c_white, 0.25)	
+						}
 						j++;
 					}
 					i++;
-				} 
-				draw_set_alpha(1)
+				}
 			break;
 		}
 		break;
 		case ERASE_TOOL:
 		case PICKER_TOOL:
-			draw_sprite(spr_JADEerase_overlay,0,gridx*16-cam_x,gridy*16-cam_y)
+			draw_sprite(spr_JADEerase_overlay,0,gridx*(16*zoom_level)-cam_x,gridy*(16*zoom_level)-cam_y)
 		break;
 
 	}
@@ -50,7 +52,7 @@ if (selected_mode == TILE_MODE) {
 }
 
 if global.debug {
-	draw_text(curs_x,curs_y+16,$"{gridx} {gridy}\n\n{view_grab}\n\n{cam_x} {cam_y}\n\n{selection_box}\n\n{cam_w} {cam_h}\n\n{zoom_level}\n\n{not_on_gui}")
+	draw_text(curs_x,curs_y+16,$"{gridx} {gridy}\n\n{curs_x} {curs_y}\n\n{zoom_goto}")
 }
 
 draw_sprite(spr_JADEcursor,0,curs_x,curs_y)

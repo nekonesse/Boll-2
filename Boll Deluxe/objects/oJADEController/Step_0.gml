@@ -15,8 +15,8 @@ mbrightrel=mouse_check_button_released(mb_right)
 mbright=mouse_check_button(mb_right)
 mbmiddle = (mouse_check_button(mb_middle) || (keyboard_check(vk_space) && mouse_check_button(mb_left))) //this scroll wheel is Pissing me off... i'm the original        keywalker
 
-curs_x=mouse_x-cam_x
-curs_y=mouse_y-cam_y
+curs_x=(mouse_x-cam_x)/zoom_level
+curs_y=(mouse_y-cam_y)/zoom_level
 
 var guiw=display_get_gui_width()
 var guih=display_get_gui_height()
@@ -46,8 +46,7 @@ if (not_on_gui) && (mbmiddle) {
 }
 
 if (view_grab) { //update camera position
-    camera_set_view_pos(view_camera[0],floor(initial_viewx+(view_grabx-curs_x)),floor(initial_viewy+(view_graby-curs_y)))
-	//divide by zoom later
+    camera_set_view_pos(view_camera[0],floor(initial_viewx+(view_grabx-curs_x)*zoom_level),floor(initial_viewy+(view_graby-curs_y)*zoom_level))
 }
 #endregion
 
@@ -113,21 +112,35 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 	}
 	if (ui_opacity > 0.4) {ui_opacity -= 0.05}
 }
-#region Camera Zooming
-//THIS SHIT KILLS MY COMBO!!!!!!
-/*
-if (mwheel != 0) {
-	zoom_level += 0.125*mwheel
-	
-	cam_x -= floor(cam_w/2);
-	cam_y -= floor(cam_h/2);
-}
-zoom_level=clamp(zoom_level,0.125, 5)
 
-camera_set_view_size(view_camera[0], floor(480*zoom_level), floor(270*zoom_level))*/
+#region Camera Zooming
+if (mwheel != 0) && keyboard_check(vk_control) && (not_on_gui) {
+	zoom_goto += 0.125*mwheel
+	zoom_x = window_views_mouse_get_x();
+    zoom_y = window_views_mouse_get_y();
+}
+zoom_goto=clamp(zoom_goto,0.125, 5)
+var oldzoom=zoom_level
+zoom_level=approach_val(zoom_level,zoom_goto,0.025)
+
+camera_set_view_size(view_camera[0], floor(480*zoom_level), floor(270*zoom_level))
+
+if (zoom_level!=oldzoom) {
+	cam_x = camera_get_view_x(view_camera[0])
+	cam_y = camera_get_view_y(view_camera[0])
+	cam_w = camera_get_view_width(view_camera[0])
+	cam_h = camera_get_view_height(view_camera[0])
+	
+	var old_cam_w = floor(480*oldzoom)
+	var old_cam_h = floor(270*oldzoom)
+	cam_x += floor(old_cam_w/2 - cam_w/2)
+	cam_y += floor(old_cam_h/2 - cam_h/2)
+	
+	camera_set_view_pos(view_camera[0],cam_x,cam_y)
+}
 #endregion
 
-gridx = floor(mouse_x/16)
+gridx = floor(mouse_x/16) 
 gridy = floor(mouse_y/16)
 
 if keyboard_check_pressed(vk_escape) {
