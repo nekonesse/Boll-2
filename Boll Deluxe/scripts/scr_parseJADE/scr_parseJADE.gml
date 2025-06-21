@@ -12,136 +12,278 @@ function parse_level(dir=game_save_id+"\save.jade") {
 	show_debug_message($"Loading JADE level from: {file}")
 	show_debug_message(level_data)
 	if !is_array(level_data) && is_struct(level_data) {
-		var objects=level_data[$ "objects"]
-		var node_objects=level_data[$ "node_objects"]
-		var tile_layers=level_data[$ "tile_layers"]
-		var i=0;
-		repeat(array_length(objects)) { //load objects
-	        var data = objects[i]
-			show_debug_message($"Parsing JADE object with name: {data[0]}")
-			var obj = instance_create_depth((data[1]*16), (data[2]*16), 0, asset_get_index(data[0]))
-			if instance_exists(obj) {
-				obj.image_xscale=data[3]
-				obj.image_yscale=data[4]
-				obj.xstart+=sprite_get_xoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_xscale;
-				obj.ystart+=sprite_get_yoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_yscale;
-				obj.x=obj.xstart
-				obj.y=obj.ystart
-				if array_length(data[11]) {
-					var temparr = []
-					array_copy(temparr,0,data[11],0,array_length(data[11]))
-					variable_instance_set(obj, "pathing", temparr);
-					if is_array(data[12]) {
-						variable_instance_set(obj, "pathspd", data[12][0]);
-						variable_instance_set(obj, "pathcanrev", data[12][1]);
-						variable_instance_set(obj, "pathnum", data[12][2]);
-						variable_instance_set(obj, "pathcanfall", data[12][3]);
-						variable_instance_set(obj, "pathdraw", data[12][4]);
-						if array_length(data[12]) > 5
-						variable_instance_set(obj, "pathstarted", data[12][5]);
-						else variable_instance_set(obj, "pathstarted", true);
-					}	
-				}
-			
-				var j=0;
-				repeat (array_length(data[10])) {
-					if is_array(data[10][j]) {
-						variable_instance_set(obj, data[10][j][0], data[10][j][2]);
-						//show_debug_message($"set object {obj} ({object_get_name(obj.object_index)})'s variable '{data[10][j][0]}' to '{data[10][j][2]}'.");
-					}
-					j++;
-				}
-				
-				if (array_length(data) > 13) {
-					if array_length(data[13]) {
+		var jadeversion = level_data[$ "version"]
+		if jadeversion < 3 {
+			var objects=level_data[$ "objects"]
+			var node_objects=level_data[$ "node_objects"]
+			var tile_layers=level_data[$ "tile_layers"]
+			var i=0;
+			repeat(array_length(objects)) { //load objects
+		        var data = objects[i]
+				show_debug_message($"Parsing JADE object with name: {data[0]}")
+				var obj = instance_create_depth((data[1]*16), (data[2]*16), 0, asset_get_index(data[0]))
+				if instance_exists(obj) {
+					obj.image_xscale=data[3]
+					obj.image_yscale=data[4]
+					obj.xstart+=sprite_get_xoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_xscale;
+					obj.ystart+=sprite_get_yoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_yscale;
+					obj.x=obj.xstart
+					obj.y=obj.ystart
+					if array_length(data[11]) {
 						var temparr = []
-						array_copy(temparr,0,data[13],0,array_length(data[13]))
-						variable_instance_set(obj, "rotdat", temparr);
+						array_copy(temparr,0,data[11],0,array_length(data[11]))
+						variable_instance_set(obj, "pathing", temparr);
+						if is_array(data[12]) {
+							variable_instance_set(obj, "pathspd", data[12][0]);
+							variable_instance_set(obj, "pathcanrev", data[12][1]);
+							variable_instance_set(obj, "pathnum", data[12][2]);
+							variable_instance_set(obj, "pathcanfall", data[12][3]);
+							variable_instance_set(obj, "pathdraw", data[12][4]);
+							if array_length(data[12]) > 5
+							variable_instance_set(obj, "pathstarted", data[12][5]);
+							else variable_instance_set(obj, "pathstarted", true);
+						}	
 					}
-				}
-			}
-			/*OBJECT STAT LIST
-			 0: name
-			 1: grid x
-			 2: grid y
-			 3: scale x
-			 4: scale y
-			 5: selected
-			 6: box x
-			 7: box y
-			 8: offset x
-			 9: offset y
-			 10: properties array
-			*/
-			i++;
-		}
-		i=0;
-		repeat (array_length(node_objects)) { //load objects
-	        var data = node_objects[i]
-			show_debug_message($"Parsing JADE object with name: {data[0]}")
-			var obj = instance_create_depth((data[1]*16), (data[2]*16), 0, asset_get_index(data[0]))
-			if instance_exists(obj) {
-				obj.image_xscale=data[3]
-				obj.image_yscale=data[4]
-				obj.x+=sprite_get_xoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_xscale;
-				obj.y+=sprite_get_yoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_yscale;
-				if array_length(data[11]) {
-					var temparr = []
-					array_copy(temparr,0,data[11],0,array_length(data[11]))
-					variable_instance_set(obj, "pathing", temparr);
-					if is_array(data[12]) {
-						variable_instance_set(obj, "pathspd", data[12][0]);
-						variable_instance_set(obj, "pathcanrev", data[12][1]);
-						variable_instance_set(obj, "pathnum", data[12][2]);
-						variable_instance_set(obj, "pathcanfall", data[12][3]);
-						variable_instance_set(obj, "pathdraw", data[12][4]);
-						if array_length(data[12]) > 5
-						variable_instance_set(obj, "pathstarted", data[12][5]);
-						else variable_instance_set(obj, "pathstarted", true);
-					}	
-				}
 			
-				var j=0;
-				repeat(array_length(data[10])) {
-					if is_array(data[10][j]) {
-						variable_instance_set(obj, data[10][j][0], data[10][j][2]);
-						//show_debug_message($"set object {obj} ({object_get_name(obj.object_index)})'s variable '{data[10][j][0]}' to '{data[10][j][2]}'.");
+					var j=0;
+					repeat (array_length(data[10])) {
+						if is_array(data[10][j]) {
+							variable_instance_set(obj, data[10][j][0], data[10][j][2]);
+							//show_debug_message($"set object {obj} ({object_get_name(obj.object_index)})'s variable '{data[10][j][0]}' to '{data[10][j][2]}'.");
+						}
+						j++;
 					}
-					j++;
+				
+					if (array_length(data) > 13) {
+						if array_length(data[13]) {
+							var temparr = []
+							array_copy(temparr,0,data[13],0,array_length(data[13]))
+							variable_instance_set(obj, "rotdat", temparr);
+						}
+					}
 				}
+				/*OBJECT STAT LIST
+				 0: name
+				 1: grid x
+				 2: grid y
+				 3: scale x
+				 4: scale y
+				 5: selected
+				 6: box x
+				 7: box y
+				 8: offset x
+				 9: offset y
+				 10: properties array
+				*/
+				i++;
 			}
-			/*OBJECT STAT LIST
-			 0: name
-			 1: grid x
-			 2: grid y
-			 3: scale x
-			 4: scale y
-			 5: selected
-			 6: box x
-			 7: box y
-			 8: offset x
-			 9: offset y
-			 10: properties array
-			*/
-			i++;
-		}
-		with(all) {event_user(15)}
-		var i=0;
-		repeat (array_length(tile_layers)) {
-			tile_layer[i] = layer_create(tile_layers[i][1],tile_layers[i][0])
-			tilemap[i] = layer_tilemap_create(tile_layer[i],0,0,asset_get_index(tile_layers[i][2]),ceil(room_width/16),ceil(room_height/16))
-			var tiles=tile_layers[i][3]
-			if array_length(tiles) { // does it actually contain any tiles?
-				var j=0;
-				repeat (array_length(tiles)) { //loading tiles
-					var data = tiles[j]
-					var tiledata = tilemap_get(tilemap[i], data[1], data[2]);
-					tiledata = tile_set_index(tiledata, data[0])
-					tilemap_set(tilemap[i], tiledata, data[1], data[2]) //set tile at place
-					j++;
+			i=0;
+			repeat (array_length(node_objects)) { //load objects
+		        var data = node_objects[i]
+				show_debug_message($"Parsing JADE object with name: {data[0]}")
+				var obj = instance_create_depth((data[1]*16), (data[2]*16), 0, asset_get_index(data[0]))
+				if instance_exists(obj) {
+					obj.image_xscale=data[3]
+					obj.image_yscale=data[4]
+					obj.x+=sprite_get_xoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_xscale;
+					obj.y+=sprite_get_yoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_yscale;
+					if array_length(data[11]) {
+						var temparr = []
+						array_copy(temparr,0,data[11],0,array_length(data[11]))
+						variable_instance_set(obj, "pathing", temparr);
+						if is_array(data[12]) {
+							variable_instance_set(obj, "pathspd", data[12][0]);
+							variable_instance_set(obj, "pathcanrev", data[12][1]);
+							variable_instance_set(obj, "pathnum", data[12][2]);
+							variable_instance_set(obj, "pathcanfall", data[12][3]);
+							variable_instance_set(obj, "pathdraw", data[12][4]);
+							if array_length(data[12]) > 5
+							variable_instance_set(obj, "pathstarted", data[12][5]);
+							else variable_instance_set(obj, "pathstarted", true);
+						}	
+					}
+			
+					var j=0;
+					repeat(array_length(data[10])) {
+						if is_array(data[10][j]) {
+							variable_instance_set(obj, data[10][j][0], data[10][j][2]);
+							//show_debug_message($"set object {obj} ({object_get_name(obj.object_index)})'s variable '{data[10][j][0]}' to '{data[10][j][2]}'.");
+						}
+						j++;
+					}
 				}
+				/*OBJECT STAT LIST
+				 0: name
+				 1: grid x
+				 2: grid y
+				 3: scale x
+				 4: scale y
+				 5: selected
+				 6: box x
+				 7: box y
+				 8: offset x
+				 9: offset y
+				 10: properties array
+				*/
+				i++;
 			}
-			i++;
+			var i=0;
+			repeat (array_length(tile_layers)) {
+				tile_layer[i] = layer_create(tile_layers[i][1],tile_layers[i][0])
+				tilemap[i] = layer_tilemap_create(tile_layer[i],0,0,asset_get_index(tile_layers[i][2]),ceil(room_width/16),ceil(room_height/16))
+				var tiles=tile_layers[i][3]
+				if array_length(tiles) { // does it actually contain any tiles?
+					var j=0;
+					repeat (array_length(tiles)) { //loading tiles
+						var data = tiles[j]
+						var tiledata = tilemap_get(tilemap[i], data[1], data[2]);
+						tiledata = tile_set_index(tiledata, data[0])
+						tilemap_set(tilemap[i], tiledata, data[1], data[2]) //set tile at place
+						j++;
+					}
+				}
+				i++;
+			}
+		} else {
+			var roomstartwidth=room_width;
+			room_width *= 4 //4 regions
+			room_width += 64*4 //padding inbetween
+			
+			var g=0;
+			repeat(4) {
+				var rg=level_data[$ $"region{g}"]
+				var objects = rg[$ "objects"] //read amount of objects
+				var node_objects = rg[$ "node_objects"] //read amount of node objects
+				var tile_layers = rg[$ "tile_layers"]
+				var i=0;
+				repeat(array_length(objects)) { //load objects
+			        var data = objects[i]
+					show_debug_message($"Parsing JADE object with name: {data[0]}")
+					var obj = instance_create_depth((data[1]*16)+(roomstartwidth+64)*g, (data[2]*16), 0, asset_get_index(data[0]))
+					if instance_exists(obj) {
+						obj.image_xscale=data[3]
+						obj.image_yscale=data[4]
+						obj.xstart+=sprite_get_xoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_xscale;
+						obj.ystart+=sprite_get_yoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_yscale;
+						obj.x=obj.xstart
+						obj.y=obj.ystart
+						if array_length(data[11]) {
+							var temparr = []
+							array_copy(temparr,0,data[11],0,array_length(data[11]))
+							variable_instance_set(obj, "pathing", temparr);
+							if is_array(data[12]) {
+								variable_instance_set(obj, "pathspd", data[12][0]);
+								variable_instance_set(obj, "pathcanrev", data[12][1]);
+								variable_instance_set(obj, "pathnum", data[12][2]);
+								variable_instance_set(obj, "pathcanfall", data[12][3]);
+								variable_instance_set(obj, "pathdraw", data[12][4]);
+								if array_length(data[12]) > 5
+								variable_instance_set(obj, "pathstarted", data[12][5]);
+								else variable_instance_set(obj, "pathstarted", true);
+							}	
+						}
+			
+						var j=0;
+						repeat (array_length(data[10])) {
+							if is_array(data[10][j]) {
+								variable_instance_set(obj, data[10][j][0], data[10][j][2]);
+								//show_debug_message($"set object {obj} ({object_get_name(obj.object_index)})'s variable '{data[10][j][0]}' to '{data[10][j][2]}'.");
+							}
+							j++;
+						}
+				
+						if (array_length(data) > 13) {
+							if array_length(data[13]) {
+								var temparr = []
+								array_copy(temparr,0,data[13],0,array_length(data[13]))
+								variable_instance_set(obj, "rotdat", temparr);
+							}
+						}
+					}
+					/*OBJECT STAT LIST
+					 0: name
+					 1: grid x
+					 2: grid y
+					 3: scale x
+					 4: scale y
+					 5: selected
+					 6: box x
+					 7: box y
+					 8: offset x
+					 9: offset y
+					 10: properties array
+					*/
+					i++;
+				}
+				i=0;
+				repeat (array_length(node_objects)) { //load objects
+			        var data = node_objects[i]
+					show_debug_message($"Parsing JADE object with name: {data[0]}")
+					var obj = instance_create_depth((data[1]*16)+(roomstartwidth+64)*g, (data[2]*16), 0, asset_get_index(data[0]))
+					if instance_exists(obj) {
+						obj.image_xscale=data[3]
+						obj.image_yscale=data[4]
+						obj.x+=sprite_get_xoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_xscale;
+						obj.y+=sprite_get_yoffset(object_get_sprite(asset_get_index(data[0])))*obj.image_yscale;
+						if array_length(data[11]) {
+							var temparr = []
+							array_copy(temparr,0,data[11],0,array_length(data[11]))
+							variable_instance_set(obj, "pathing", temparr);
+							if is_array(data[12]) {
+								variable_instance_set(obj, "pathspd", data[12][0]);
+								variable_instance_set(obj, "pathcanrev", data[12][1]);
+								variable_instance_set(obj, "pathnum", data[12][2]);
+								variable_instance_set(obj, "pathcanfall", data[12][3]);
+								variable_instance_set(obj, "pathdraw", data[12][4]);
+								if array_length(data[12]) > 5
+								variable_instance_set(obj, "pathstarted", data[12][5]);
+								else variable_instance_set(obj, "pathstarted", true);
+							}	
+						}
+			
+						var j=0;
+						repeat(array_length(data[10])) {
+							if is_array(data[10][j]) {
+								variable_instance_set(obj, data[10][j][0], data[10][j][2]);
+								//show_debug_message($"set object {obj} ({object_get_name(obj.object_index)})'s variable '{data[10][j][0]}' to '{data[10][j][2]}'.");
+							}
+							j++;
+						}
+					}
+					/*OBJECT STAT LIST
+					 0: name
+					 1: grid x
+					 2: grid y
+					 3: scale x
+					 4: scale y
+					 5: selected
+					 6: box x
+					 7: box y
+					 8: offset x
+					 9: offset y
+					 10: properties array
+					*/
+					i++;
+				}
+				var i=0;
+				repeat (array_length(tile_layers)) {
+					tile_layer[i] = layer_create(tile_layers[i][1],tile_layers[i][0])
+					tilemap[i] = layer_tilemap_create(tile_layer[i],0,0,asset_get_index(tile_layers[i][2]),ceil(room_width/16),ceil(room_height/16))
+					var tiles=tile_layers[i][3]
+					if array_length(tiles) { // does it actually contain any tiles?
+						var j=0;
+						repeat (array_length(tiles)) { //loading tiles
+							var data = tiles[j]
+							var tiledata = tilemap_get(tilemap[i], data[1], data[2]);
+							tiledata = tile_set_index(tiledata, data[0])
+							tilemap_set(tilemap[i], tiledata, data[1]+floor(((roomstartwidth+64)*g)/16), data[2]) //set tile at place
+							j++;
+						}
+					}
+					i++;
+				}
+				g++
+			}
 		}
 	} else {
 		#region Legacy Level Loading
@@ -193,8 +335,6 @@ function parse_level(dir=game_save_id+"\save.jade") {
 					}
 					j++;
 				}
-			
-				with(obj) {event_user(15)}
 			}
 			/*OBJECT STAT LIST
 			 0: name
@@ -245,7 +385,6 @@ function parse_level(dir=game_save_id+"\save.jade") {
 					}
 					j++;
 				}
-				with(obj) {event_user(15)}
 			}
 			/*OBJECT STAT LIST
 			 0: name
@@ -293,6 +432,7 @@ function parse_level(dir=game_save_id+"\save.jade") {
 			}
 		}
 	} #endregion
+	with(all) {event_user(15)}
 	buffer_delete(loaded)
 	buffer_delete(save_file)
 	show_debug_message($"Successfully loaded JADE level from: {file}!")

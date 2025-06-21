@@ -10,7 +10,7 @@ if (global.debug)
 	var morph_costs = get_morph_cost();
 
 	if (room == rEditor) && instance_exists(oJADEController) {
-		ext=$"EDITOR OBJECTS: {ds_list_size(oJADEController.object_layer_map)+ds_list_size(oJADEController.node_layer_map)}\nEDITOR TILES: {ds_list_size(oJADEController.tile_layer_map[oJADEController.selected_tile_layer])}"
+		ext=$"EDITOR OBJECTS: {ds_list_size(oJADEController.object_layer_map[oJADEController.selected_region])+ds_list_size(oJADEController.node_layer_map[oJADEController.selected_region])}\nEDITOR TILES: {ds_list_size(oJADEController.tile_layer_map[oJADEController.selected_region][oJADEController.selected_tile_layer])}"
 	}
 	else if (morph_costs[0] >= 0)
 	{

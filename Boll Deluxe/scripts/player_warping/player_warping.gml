@@ -20,6 +20,7 @@ function warp_in_pipe(obj,spd,dir) {
 			var pipe = noone;
 			instance_activate_object(oPipe)
 			var i=0;
+			show_debug_message(instance_number(oPipe))
 			repeat (instance_number(oPipe))
 			{
 				pipe = instance_find(oPipe,i);

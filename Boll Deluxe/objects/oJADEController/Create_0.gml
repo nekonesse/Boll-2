@@ -72,26 +72,38 @@ tilesets[$ "tTilesetWorld5"]=[spr_TilesetWorld5, tTilesetWorld5, "Frigid Dark Ti
 selected_tileset=0;
 current_tileset="tTilesetMain"
 
-layers[0]=layer_create(-200,"EditorTiles_FG")
-layers[1]=layer_create(-100,"EditorTiles_FGDeco")
-layers[2]=layer_create(100,"EditorTiles_Main")
-layers[3]=layer_create(150,"EditorTiles_Misc")
-layers[4]=layer_create(200,"EditorTiles_Deco")
-layers[5]=layer_create(300,"EditorTiles_Semi")
-layers[6]=layer_create(400,"EditorTiles_BG")
+var i=0;
+repeat(4) {
+	layers[i][0]=layer_create(-200,$"EditorTiles_FG_Region{i}")
+	layers[i][1]=layer_create(-100,$"EditorTiles_FGDeco_Region{i}")
+	layers[i][2]=layer_create(100,$"EditorTiles_Main_Region{i}")
+	layers[i][3]=layer_create(150,$"EditorTiles_Misc_Region{i}")
+	layers[i][4]=layer_create(200,$"EditorTiles_Deco_Region{i}")
+	layers[i][5]=layer_create(300,$"EditorTiles_Semi_Region{i}")
+	layers[i][6]=layer_create(400,$"EditorTiles_BG_Region{i}")
+	
+	tile_layer[i][0] = layer_tilemap_create(layers[i][0],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+	tile_layer[i][1] = layer_tilemap_create(layers[i][1],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+	tile_layer[i][2] = layer_tilemap_create(layers[i][2],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+	tile_layer[i][3] = layer_tilemap_create(layers[i][3],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+	tile_layer[i][4] = layer_tilemap_create(layers[i][4],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+	tile_layer[i][5] = layer_tilemap_create(layers[i][5],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+	tile_layer[i][6] = layer_tilemap_create(layers[i][6],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+	object_layer_map[i] = ds_list_create()
+	node_layer_map[i] = ds_list_create()
+	
+	var j=0;
+	repeat (array_length(tile_layer[i])) {
+		tile_layer_map[i][j]=ds_list_create();
+		layer_script_begin(layers[i][j], tile_layer_alpha_check);
+		layer_script_end(layers[i][j], function() {shader_reset()});
+		j++;
+	}
+	i++;
+}
 
-tile_layer[0] = layer_tilemap_create(layers[0],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[1] = layer_tilemap_create(layers[1],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[2] = layer_tilemap_create(layers[2],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[3] = layer_tilemap_create(layers[3],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[4] = layer_tilemap_create(layers[4],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[5] = layer_tilemap_create(layers[5],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
-tile_layer[6] = layer_tilemap_create(layers[6],0,0,asset_get_index(current_tileset),ceil(room_width/16),ceil(room_height/16))
+tilemap = tile_layer[0][2]
 selected_tile_layer=2;
-tilemap = tile_layer[2]
-object_layer_map = ds_list_create()
-node_layer_map = ds_list_create()
-
 
 not_on_gui = false
 
@@ -122,6 +134,8 @@ tile_fill_last_x = 0
 tile_fill_last_y = 0
 tile_fill = false
 fill_circle = false
+
+selected_region = 0;
 
 gotoroom=rGame
 
@@ -203,28 +217,23 @@ mouse_in_mode_slot = function(numb) {
 	return point_in_rectangle(curs_x,curs_y,4,((guih/4)-4)+32*numb,28,(((guih/4)-4)+32*numb)+24)
 }
 
+mouse_in_region_slot = function(numb) {
+	var guih=display_get_gui_height();
+	var guiw=display_get_gui_width();
+	return point_in_rectangle(curs_x,curs_y,guiw-(24*4)+24*numb+2,guih-30,guiw-(24*4)+24*numb+24,guih-2)
+}
+
 selection_box_fr=0
 is_typing=0;
 temptypingstring="";
 open_dropmenu=0;
 
-var i=0;
-repeat (array_length(tile_layer)) {
-	tile_layer_map[i]=ds_list_create();
-	layer_script_begin(layers[i], tile_layer_alpha_check);
-	var shadreset = function() {
-		shader_reset()
-	}
-	layer_script_end(layers[i], shadreset);
-	i++;
-}
-
 //add preset layout
 camera_set_view_pos(view_camera[0],0,room_height-camera_get_view_height(view_camera[0]))
 
 place_object = function(uuid,_x,_y,xscale=1,yscale=1) { 
-	ds_list_add(object_layer_map, [uuid, _x, _y, xscale, yscale, 0])//add object to list at place
-	var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
+	ds_list_add(object_layer_map[selected_region], [uuid, _x, _y, xscale, yscale, 0])//add object to list at place
+	var obj = ds_list_find_value(object_layer_map[selected_region], ds_list_size(object_layer_map[selected_region])-1)
 	var sprite = ds_map_find_value(obj_data,obj[0])
 	if !is_undefined(obj) {
 		obj[6] = sprite[3]*xscale //set correct hitbox for the collider
@@ -255,7 +264,7 @@ place_object = function(uuid,_x,_y,xscale=1,yscale=1) {
 
 tile_update_properties = function() {
 	var i=0;
-	var list=tile_layer_map[selected_tile_layer]
+	var list=tile_layer_map[selected_region][selected_tile_layer]
 	while (i < ds_list_size(list)) {
 		var data=list[| i]
 		if data==undefined {

@@ -29,6 +29,7 @@ if (!on_object_list && object_list_active && show_object_list) on_object_list = 
 not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
 &&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
 &&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
+&&!point_in_rectangle(curs_x,curs_y,guiw-(24*4)-4,guih-32,guiw,guih)
 &&!(((on_object_list && show_object_list) || on_list_top) && (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE))
 &&!(on_tile_picker && selected_mode==TILE_MODE)
 
@@ -86,11 +87,11 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 		ui_opacity = 10;
 		selected_tile_layer += layerdir
 		if (selected_tile_layer < 0) {
-			selected_tile_layer = (array_length(tile_layer) - 1)
-		} else if (selected_tile_layer >= array_length(tile_layer)) {
+			selected_tile_layer = (array_length(tile_layer[selected_region]) - 1)
+		} else if (selected_tile_layer >= array_length(tile_layer[selected_region])) {
 			selected_tile_layer = 0	
 		}
-		tilemap=tile_layer[selected_tile_layer]
+		tilemap=tile_layer[selected_region][selected_tile_layer]
 		current_tileset = tileset_get_name(tilemap_get_tileset(tilemap));
 		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
 		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
@@ -106,7 +107,7 @@ if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
 		var arr=variable_struct_get_names(tilesets)
 		current_tileset = arr[selected_tileset];
 		
-		tilemap_tileset(tile_layer[selected_tile_layer], tilesets[$ current_tileset][1]);
+		tilemap_tileset(tile_layer[selected_region][selected_tile_layer], tilesets[$ current_tileset][1]);
 		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
 		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
 	}
@@ -185,21 +186,21 @@ switch(selected_mode) {
 		if keyboard_check_pressed(vk_delete) && selected_tool==SELECT_TOOL {
 			if (selected_mode==OBJECT_MODE) {
 				var i=0;
-				repeat (ds_list_size(object_layer_map)) {
-					var obj = ds_list_find_value(object_layer_map, i)
+				repeat (ds_list_size(object_layer_map[selected_region])) {
+					var obj = ds_list_find_value(object_layer_map[selected_region], i)
 					var sprite = ds_map_find_value(obj_data,obj[0])
 					if (sprite[7]==selected_mode) && (obj[5]) {
-						ds_list_delete(object_layer_map, i)
+						ds_list_delete(object_layer_map[selected_region], i)
 						i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
 					} 
 					i++;
 				}
 			} else if (selected_mode==NODE_MODE) {
-				repeat(ds_list_size(node_layer_map)) {
-					var obj = ds_list_find_value(node_layer_map, i)
+				repeat(ds_list_size(node_layer_map[selected_region])) {
+					var obj = ds_list_find_value(node_layer_map[selected_region], i)
 					var sprite = ds_map_find_value(obj_data,obj[0])
 					if (sprite[7]==selected_mode) && (obj[5]) {
-						ds_list_delete(node_layer_map, i)
+						ds_list_delete(node_layer_map[selected_region], i)
 						i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
 					} 
 					i++
@@ -220,10 +221,20 @@ repeat(5)
 			selected_mode=i
 			selection = false
 			current_cat = 0
-			var size = ds_list_size(object_layer_map)
+			var size = ds_list_size(object_layer_map[selected_region])
 			var j=0;
 			repeat(size) {
-				var obj = ds_list_find_value(object_layer_map, j)
+				var obj = ds_list_find_value(object_layer_map[selected_region], j)
+		
+				if !is_undefined(obj) {
+					obj[5]=0;
+				}
+				j++;
+			}
+			size = ds_list_size(node_layer_map[selected_region])
+			j=0;
+			repeat(size) {
+				var obj = ds_list_find_value(node_layer_map[selected_region], j)
 		
 				if !is_undefined(obj) {
 					obj[5]=0;
@@ -242,7 +253,50 @@ repeat(tb_length)
 {
 	if (mbleftpress) && mouse_in_toolbar_slot(i) {
 		selected_toolbar=i
-		//show_message(selected_toolbar)
+	}
+	i++;
+}
+
+i=0;
+repeat(4) {
+	if (mbleftpress) && mouse_in_region_slot(i) {
+		//deselect previous region
+		var size = ds_list_size(object_layer_map[selected_region])
+		var j=0;
+		repeat(size) {
+			var obj = ds_list_find_value(object_layer_map[selected_region], j)
+		
+			if !is_undefined(obj) {
+				obj[5]=0;
+			}
+			j++;
+		}
+		size = ds_list_size(node_layer_map[selected_region])
+		j=0;
+		repeat(size) {
+			var obj = ds_list_find_value(node_layer_map[selected_region], j)
+		
+			if !is_undefined(obj) {
+				obj[5]=0;
+			}
+			j++;
+		}
+		
+		selected_region=i
+		
+		ui_opacity = 10;
+		selected_tile_layer = 2
+		/*if (selected_tile_layer < 0) {
+			selected_tile_layer = (array_length(tile_layer[selected_region]) - 1)
+		} else if (selected_tile_layer >= array_length(tile_layer[selected_region])) {
+			selected_tile_layer = 0	
+		}*/
+		tilemap=tile_layer[selected_region][selected_tile_layer]
+		current_tileset = tileset_get_name(tilemap_get_tileset(tilemap));
+		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
+		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
+		
+		selection = false
 	}
 	i++;
 }
@@ -262,14 +316,18 @@ if (mbleftpress) {
 		room_goto(rMainMenu)
 	}
 	if mouse_in_setting_slot(4) { //new file
-		var i=0;
-		repeat (array_length(tile_layer)) {
-			ds_list_clear(tile_layer_map[i]);
-			tilemap_clear(tile_layer[i],0);
-			i++;
+		var j=0;
+		repeat(4) {
+			var i=0;
+			repeat (array_length(tile_layer[j])) {
+				ds_list_clear(tile_layer_map[j][i]);
+				tilemap_clear(tile_layer[j][i],0);
+				i++;
+			}
+			ds_list_clear(object_layer_map[j]);
+			ds_list_clear(node_layer_map[j]);
+			j++;
 		}
-		ds_list_clear(object_layer_map);
-		ds_list_clear(node_layer_map);
 		
 		place_object("oCollider",0,167,30,2)
 		place_object("oPlayerSpawn",3,166)
@@ -296,11 +354,11 @@ if (mbleftpress) {
 		if (selected_tool == PICKER_TOOL) {
 			switch(selected_mode) {
 				case OBJECT_MODE:
-					var size = ds_list_size(object_layer_map)
+					var size = ds_list_size(object_layer_map[selected_region])
 					var i=0;
 					repeat(size) {
 						//is place matching cursor?
-						var obj = ds_list_find_value(object_layer_map, i)
+						var obj = ds_list_find_value(object_layer_map[selected_region], i)
 						if !is_undefined(obj) {
 						    if obj[1] == gridx && obj[2] == gridy {
 								selected_obj=obj[0];
@@ -339,7 +397,7 @@ if (mbleftpress) {
 					data = tile_set_flip(data, 1 - tile_get_flip(data))
 					tilemap_set(tilemap, data, gridx, gridy);
 					var tiledata = tilemap_get(tilemap, gridx, gridy)
-					ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
+					ds_list_add(tile_layer_map[selected_region][selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
 					tile_update_properties();
 				break;
 			}
@@ -351,7 +409,7 @@ if (mbleftpress) {
 					data = tile_set_mirror(data, 1 - tile_get_mirror(data))
 					tilemap_set(tilemap, data, gridx, gridy);
 					var tiledata = tilemap_get(tilemap, gridx, gridy)
-					ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
+					ds_list_add(tile_layer_map[selected_region][selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
 					tile_update_properties();
 				break;
 			}
@@ -363,7 +421,7 @@ if (mbleftpress) {
 					data = tile_set_rotate(data, 1 - tile_get_rotate(data))
 					tilemap_set(tilemap, data, gridx, gridy);
 					var tiledata = tilemap_get(tilemap, gridx, gridy)
-					ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
+					ds_list_add(tile_layer_map[selected_region][selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
 					tile_update_properties();
 				break;
 			}
@@ -379,12 +437,12 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 	var overlap = 0
 	
 	if (selected_mode == OBJECT_MODE) { //should probably be using a switch statement but its 3am im too lazy to do that rn
-		var size = ds_list_size(object_layer_map)
+		var size = ds_list_size(object_layer_map[selected_region])
 		
 		var i=0;
 		repeat(size) {
 			//is place matching cursor?
-			var obj = ds_list_find_value(object_layer_map, i)
+			var obj = ds_list_find_value(object_layer_map[selected_region], i)
 		
 			if !is_undefined(obj) {
 				var sprite = ds_map_find_value(obj_data,obj[0])
@@ -423,7 +481,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 	
 		var i=0;
 		repeat(size) {
-			var obj = ds_list_find_value(object_layer_map, i)
+			var obj = ds_list_find_value(object_layer_map[selected_region], i)
 			var sprite = ds_map_find_value(obj_data,obj[0])
 			var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
 			var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]-1)
@@ -464,9 +522,9 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 					}
 					if selection = 1 && mbleftrel {
 				
-						obj = ds_list_find_value(object_layer_map, selection_id) //object you resized
+						obj = ds_list_find_value(object_layer_map[selected_region], selection_id) //object you resized
 						sprite = ds_map_find_value(obj_data, obj[0])
-						var obj_other = ds_list_find_value(object_layer_map, i) //every other object selected
+						var obj_other = ds_list_find_value(object_layer_map[selected_region], i) //every other object selected
 						var sprite_other = ds_map_find_value(obj_data, obj_other[0])
 						
 						
@@ -512,12 +570,12 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 			i++;
 		}
 	} else if (selected_mode==NODE_MODE) {
-		var size = ds_list_size(node_layer_map)
+		var size = ds_list_size(node_layer_map[selected_region])
 		
 		var i=0;
 		repeat(size) {
 			//is place matching cursor?
-			var obj = ds_list_find_value(node_layer_map, i)
+			var obj = ds_list_find_value(node_layer_map[selected_region], i)
 		
 			if !is_undefined(obj) {
 				var sprite = ds_map_find_value(obj_data,obj[0])
@@ -556,7 +614,7 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 		
 		var i=0;
 		repeat(size) {
-			var obj = ds_list_find_value(node_layer_map, i)
+			var obj = ds_list_find_value(node_layer_map[selected_region], i)
 			var sprite = ds_map_find_value(obj_data,obj[0])
 			var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
 			var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
@@ -598,8 +656,8 @@ if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
 					}
 					if (selection = 1 && mbleftrel) {
 				
-						obj = ds_list_find_value(node_layer_map, selection_id) //object you resized
-						var obj_other = ds_list_find_value(node_layer_map, i) //every other object selected
+						obj = ds_list_find_value(node_layer_map[selected_region], selection_id) //object you resized
+						var obj_other = ds_list_find_value(node_layer_map[selected_region], i) //every other object selected
 					
 						obj[6] = round(obj[6] /16) * 16 //rounding box to grid
 						obj[7] = round(obj[7] /16) * 16
@@ -738,7 +796,7 @@ if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
 				tilemap_set(tilemap, data, start_x + i, start_y + j);
 
 				var tiledata = tilemap_get(tilemap, start_x + i, start_y + j)
-				ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,start_x + i,start_y + j]) //add tile  to list at place
+				ds_list_add(tile_layer_map[selected_region][selected_tile_layer],[tiledata,start_x + i,start_y + j]) //add tile  to list at place
 				
 				j++;
 			}
@@ -827,9 +885,9 @@ if (mbrightpress && not_on_gui) {
 				case OBJECT_MODE:
 					if is_string(selected_obj) {
 						var i=0;
-						repeat(ds_list_size(object_layer_map)) {
+						repeat(ds_list_size(object_layer_map[selected_region])) {
 							//is place matching cursor?
-							var obj = ds_list_find_value(object_layer_map, i)
+							var obj = ds_list_find_value(object_layer_map[selected_region], i)
 							if !is_undefined(obj) {
 								var sprite = ds_map_find_value(obj_data,obj[0])
 								var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
@@ -852,9 +910,9 @@ if (mbrightpress && not_on_gui) {
 				case NODE_MODE:
 					if is_string(selected_obj) {
 						var i=0;
-						repeat(ds_list_size(node_layer_map)) {
+						repeat(ds_list_size(node_layer_map[selected_region])) {
 							//is place matching cursor?
-							var obj = ds_list_find_value(node_layer_map, i)
+							var obj = ds_list_find_value(node_layer_map[selected_region], i)
 							if !is_undefined(obj) {
 								var sprite = ds_map_find_value(obj_data,obj[0])
 								var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
@@ -879,11 +937,11 @@ if (mbrightpress && not_on_gui) {
 		case BRUSH_TOOL: {
 			switch(selected_mode) {
 				case OBJECT_MODE:
-					var size = ds_list_size(object_layer_map)
+					var size = ds_list_size(object_layer_map[selected_region])
 					var i=0;
 					repeat(size) {
 						//is place matching cursor?
-						var obj = ds_list_find_value(object_layer_map, i)
+						var obj = ds_list_find_value(object_layer_map[selected_region], i)
 						if !is_undefined(obj) {
 						    if obj[1] == gridx && obj[2] == gridy {
 								ds_list_delete(object_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
@@ -894,14 +952,14 @@ if (mbrightpress && not_on_gui) {
 					}
 				break;
 				case NODE_MODE:
-					var size = ds_list_size(node_layer_map)
+					var size = ds_list_size(node_layer_map[selected_region])
 					var i=0;
 					repeat(size) {
 						//is place matching cursor?
-						var obj = ds_list_find_value(node_layer_map, i)
+						var obj = ds_list_find_value(node_layer_map[selected_region], i)
 						if !is_undefined(obj) {
 						    if obj[1] == gridx && obj[2] == gridy {
-								ds_list_delete(node_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
+								ds_list_delete(node_layer_map[selected_region], i)//delete first object it finds there (probably bottom top? i don rembr)
 								break;
 							}
 						}
@@ -921,9 +979,9 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 				case OBJECT_MODE:
 					if is_string(selected_obj) {
 						var i=0;
-						repeat(ds_list_size(object_layer_map)) {
+						repeat(ds_list_size(object_layer_map[selected_region])) {
 							//is place matching cursor?
-							var obj = ds_list_find_value(object_layer_map, i)
+							var obj = ds_list_find_value(object_layer_map[selected_region], i)
 							if !is_undefined(obj) {
 							    if obj[1] == gridx && obj[2] == gridy {
 									exit;
@@ -934,9 +992,9 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 						if !is_undefined(selected_obj) {
 							var sprite = ds_map_find_value(obj_data,selected_obj)
 							if sprite[7]!=OBJECT_MODE exit;
-							ds_list_add(object_layer_map, [selected_obj, gridx, gridy, sprite[11], sprite[12], 0])//add object to list at place
+							ds_list_add(object_layer_map[selected_region], [selected_obj, gridx, gridy, sprite[11], sprite[12], 0])//add object to list at place
 							show_debug_message("created object: {0}", selected_obj)
-							var obj = ds_list_find_value(object_layer_map, ds_list_size(object_layer_map)-1)
+							var obj = ds_list_find_value(object_layer_map[selected_region], ds_list_size(object_layer_map[selected_region])-1)
 							obj[6] = sprite[3]
 							obj[7] = sprite[4]
 							obj[8] = 0
@@ -984,9 +1042,9 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 				case NODE_MODE:
 					if is_string(selected_obj) {
 						var i=0;
-						repeat(ds_list_size(node_layer_map)) {
+						repeat(ds_list_size(node_layer_map[selected_region])) {
 							//is place matching cursor?
-							var obj = ds_list_find_value(node_layer_map, i)
+							var obj = ds_list_find_value(node_layer_map[selected_region], i)
 							if !is_undefined(obj) {
 							    if obj[1] == gridx && obj[2] == gridy {
 									exit;
@@ -997,9 +1055,9 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 						if !is_undefined(selected_obj) {
 							var sprite = ds_map_find_value(obj_data,selected_obj)
 							if sprite[7]!=NODE_MODE exit;
-							ds_list_add(node_layer_map, [selected_obj, gridx, gridy, 1, 1, 0])//add object to list at place
+							ds_list_add(node_layer_map[selected_region], [selected_obj, gridx, gridy, 1, 1, 0])//add object to list at place
 							show_debug_message("created object: {0}", selected_obj)
-							var obj = ds_list_find_value(node_layer_map, ds_list_size(node_layer_map)-1)
+							var obj = ds_list_find_value(node_layer_map[selected_region], ds_list_size(node_layer_map[selected_region])-1)
 							obj[6] = sprite[3]
 							obj[7] = sprite[4]
 							obj[8] = 0
@@ -1062,7 +1120,7 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 								tilemap_set(tilemap, data, gridx + i, gridy + j);
 								show_debug_message(data)
 								var tiledata = tilemap_get(tilemap, gridx + i, gridy + j)
-								ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,gridx+i,gridy+j]) //add tile  to list at place
+								ds_list_add(tile_layer_map[selected_region][selected_tile_layer],[tiledata,gridx+i,gridy+j]) //add tile  to list at place
 							}
 							j++;
 						}
@@ -1075,15 +1133,15 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 		case ERASE_TOOL:
 			switch(selected_mode) {
 				case OBJECT_MODE:
-					var size = ds_list_size(object_layer_map)
+					var size = ds_list_size(object_layer_map[selected_region])
 					var i=0;
 					repeat(size) {
 						//is place matching cursor?
-						var obj = ds_list_find_value(object_layer_map, i)
+						var obj = ds_list_find_value(object_layer_map[selected_region], i)
 						if !is_undefined(obj) {
 						    if obj[1] == gridx && obj[2] == gridy {
 								show_debug_message("deleted object: {0}", obj[0])
-								ds_list_delete(object_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
+								ds_list_delete(object_layer_map[selected_region], i)//delete first object it finds there (probably bottom top? i don rembr)
 								break;
 							}
 						}
@@ -1091,15 +1149,15 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 					}
 				break;
 				case NODE_MODE:
-					var size = ds_list_size(node_layer_map)
+					var size = ds_list_size(node_layer_map[selected_region])
 					var i=0;
 					repeat(size){
 						//is place matching cursor?
-						var obj = ds_list_find_value(node_layer_map, i)
+						var obj = ds_list_find_value(node_layer_map[selected_region], i)
 						if !is_undefined(obj) {
 						    if obj[1] == gridx && obj[2] == gridy {
 								show_debug_message("deleted object: {0}", obj[0])
-								ds_list_delete(node_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
+								ds_list_delete(node_layer_map[selected_region], i)//delete first object it finds there (probably bottom top? i don rembr)
 								break;
 							}
 						}
@@ -1131,12 +1189,12 @@ if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
 if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 	if (mbleftpress) {
 		if (drawing_node==-1) {
-			var size = ds_list_size(object_layer_map)
+			var size = ds_list_size(object_layer_map[selected_region])
 	
 			var i=0;
 			repeat(size) {
 				//is place matching cursor?
-				var obj = ds_list_find_value(object_layer_map, i)
+				var obj = ds_list_find_value(object_layer_map[selected_region], i)
 		
 				if !is_undefined(obj) {
 					var over = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7] - 1)
@@ -1148,12 +1206,12 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 					if (over) && (sprite[9]) {
 						drawing_node=i;
 						if !array_length(obj[11]) {
-							draw_node_x=(obj[1]*16)-((obj[6]-16)/2)+xoff
+							draw_node_x=(obj[1]*16)-((obj[6]-16)/2)+xoff-(room_width+64)*selected_region
 							draw_node_y=(obj[2]*16)-((obj[7]-16)/2)+yoff
 						} else {
 							var length = array_length(obj[11])-1;
-							draw_node_x=obj[11][length][0]+((obj[6]-16)/2);
-							draw_node_y=obj[11][length][1]+((obj[7]-16)/2);
+							draw_node_x=obj[11][length][0]+((obj[6]-16)/2)-(room_width+64)*selected_region
+							draw_node_y=obj[11][length][1]+((obj[7]-16)/2)
 						}
 						break;
 					}
@@ -1161,13 +1219,13 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 				i++;
 			}
 		} else {
-			var obj = ds_list_find_value(object_layer_map, drawing_node)
+			var obj = ds_list_find_value(object_layer_map[selected_region], drawing_node)
 			
 			var sprite = ds_map_find_value(obj_data,obj[0])
 			var xoff = -sprite[1];
 			var yoff = -sprite[2];
 			
-			array_push(obj[11], [(gridx*16)-((obj[6]-16)/2)+xoff,(gridy*16)-((obj[7]-16)/2)+yoff,false])
+			array_push(obj[11], [(gridx*16)-((obj[6]-16)/2)+xoff+(room_width+64)*selected_region,(gridy*16)-((obj[7]-16)/2)+yoff,false])
 			show_debug_message(obj[11])
 			draw_node_x=(gridx*16)+xoff
 			draw_node_y=(gridy*16)+yoff
@@ -1176,7 +1234,7 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 	
 	if (mbrightpress) {
 		if (drawing_node!=-1) {
-			var obj = ds_list_find_value(object_layer_map, drawing_node)
+			var obj = ds_list_find_value(object_layer_map[selected_region], drawing_node)
 			var size = array_length(obj[11])
 			if (size) {
 				var sprite = ds_map_find_value(obj_data,obj[0])
@@ -1188,14 +1246,14 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 				repeat(size) {
 					//is place matching cursor?
 				
-					var over = point_in_rectangle(mouse_x, mouse_y, obj[11][i][0]+((obj[6]-16)/2)-xoff, obj[11][i][1]+((obj[7]-16)/2)-yoff, obj[11][i][0]+15+((obj[6]-16)/2)-xoff, obj[11][i][1]+15+((obj[7]-16)/2)-yoff)
+					var over = point_in_rectangle(mouse_x, mouse_y, obj[11][i][0]+((obj[6]-16)/2)-xoff-(room_width+64)*selected_region, obj[11][i][1]+((obj[7]-16)/2)-yoff, obj[11][i][0]+15+((obj[6]-16)/2)-xoff-(room_width+64)*selected_region, obj[11][i][1]+15+((obj[7]-16)/2)-yoff)
 					
 					if (over) {
 						array_delete(obj[11],i,1)
 						var size = array_length(obj[11])
 						if (size) {
-							draw_node_x=obj[11][size-1][0]+((obj[6]-16)/2);
-							draw_node_y=obj[11][size-1][1]+((obj[7]-16)/2);
+							draw_node_x=obj[11][size-1][0]+((obj[6]-16)/2)-(room_width+64)*selected_region
+							draw_node_y=obj[11][size-1][1]+((obj[7]-16)/2)
 						}
 						deleted=true;
 						break
@@ -1214,12 +1272,12 @@ if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
 if (selected_tool==ROTATOR_TOOL) && (not_on_gui) { //drawing nodes
 	if (mbleftpress) {
 		if (drawing_rotator==-1) {
-			var size = ds_list_size(object_layer_map)
+			var size = ds_list_size(object_layer_map[selected_region])
 	
 			var i=0;
 			repeat(size) {
 				//is place matching cursor?
-				var obj = ds_list_find_value(object_layer_map, i)
+				var obj = ds_list_find_value(object_layer_map[selected_region], i)
 		
 				if !is_undefined(obj) {
 					var over = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7] - 1)
@@ -1237,20 +1295,20 @@ if (selected_tool==ROTATOR_TOOL) && (not_on_gui) { //drawing nodes
 				i++;
 			}
 		} else {
-			var obj = ds_list_find_value(object_layer_map, drawing_rotator)
+			var obj = ds_list_find_value(object_layer_map[selected_region], drawing_rotator)
 			
 			var sprite = ds_map_find_value(obj_data,obj[0])
 			var xoff = -sprite[1];
 			var yoff = -sprite[2];
 			
-			obj[13]=[(gridx*16)-((obj[6]-16)/2)+xoff,(gridy*16)-((obj[7]-16)/2)+yoff,false]
+			obj[13]=[(gridx*16)-((obj[6]-16)/2)+xoff+(room_width+64)*selected_region,(gridy*16)-((obj[7]-16)/2)+yoff,false]
 			show_debug_message(obj[13])
 		}
 	}
 	
 	if (mbrightpress) {
 		if (drawing_rotator!=-1) {
-			var obj = ds_list_find_value(object_layer_map, drawing_rotator)
+			var obj = ds_list_find_value(object_layer_map[selected_region], drawing_rotator)
 			var size = array_length(obj[13])
 			if (size) {
 				var sprite = ds_map_find_value(obj_data,obj[0])
@@ -1259,7 +1317,7 @@ if (selected_tool==ROTATOR_TOOL) && (not_on_gui) { //drawing nodes
 			
 				var deleted=false;
 				var i=0;
-				var over = point_in_rectangle(mouse_x, mouse_y, obj[13][0]+((obj[6]-16)/2)-xoff, obj[13][1]+((obj[7]-16)/2)-yoff, obj[13][0]+15+((obj[6]-16)/2)-xoff, obj[13][1]+15+((obj[7]-16)/2)-yoff)
+				var over = point_in_rectangle(mouse_x, mouse_y, obj[13][0]+((obj[6]-16)/2)-xoff-(room_width+64)*selected_region, obj[13][1]+((obj[7]-16)/2)-yoff, obj[13][0]+15+((obj[6]-16)/2)-xoff-(room_width+64)*selected_region, obj[13][1]+15+((obj[7]-16)/2)-yoff)
 					
 				if (over) {
 					obj[13]=[];

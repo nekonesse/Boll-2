@@ -1,6 +1,8 @@
 var guiw=display_get_gui_width()
 var guih=display_get_gui_height()
 
+draw_set_font(global.omiFont)
+
 //i am so sorry for this random math its just trial and error honestly
 #region Mode Icons
 draw_sprite_stretched(spr_JADEtab_left,0,0,(guih/4)-10,32,(32*5)+4)
@@ -17,6 +19,24 @@ repeat(5) //draw Mode icons
 		draw_sprite(spr_JADEicon_bg,1,0,((guih/4)-8)+32*i)
 	} else if mouse_in_mode_slot(i) {
 		draw_sprite(spr_JADEicon_bg,2,0,((guih/4)-8)+32*i) //hover overlay
+	}
+	i++;
+}
+#endregion
+
+#region Region Icons
+draw_sprite_stretched(spr_JADEtab_right,0,guiw-(24*4)-4,guih-32,(24*4)+4,32)
+var i;
+
+i=0;
+repeat(4) //draw region icons
+{
+	draw_sprite(spr_JADEregion_bg,0,guiw-(24*4)+24*i,guih-32) //bg square
+	draw_text(guiw-(24*4)+(24*i)+8,guih-16,i+1)
+	if (selected_region == i) { //selection overlay
+		draw_sprite(spr_JADEregion_bg,1,guiw-(24*4)+24*i,guih-32) //bg square
+	} else if mouse_in_region_slot(i) {
+		draw_sprite(spr_JADEregion_bg,2,guiw-(24*4)+24*i,guih-32) //bg square
 	}
 	i++;
 }
@@ -44,7 +64,7 @@ var tb_length = array_length(toolbar[selected_mode])
 draw_sprite_stretched(spr_JADEtab_top,0,(guiw-16)-(32*14)-2,0,(32*tb_length)+4,34)
 
 i=0;
-repeat(tb_length) //draw Editor icons
+repeat(tb_length) //draw toolbar icons
 {
 	if toolbar[selected_mode][i] != EMPTY_SLOT {
 		draw_sprite(spr_JADEicon_bg,0,(guiw-16)-(32*14)+(32*i),0) //bg square
@@ -68,10 +88,9 @@ if selected_mode = TILE_MODE {
 		var t_width = sprite_get_width(tilesets[$ current_tileset][0])
 		var t_height = sprite_get_height(tilesets[$ current_tileset][0])
 		draw_sprite_stretched(spr_JADEwindow,0,tileset_picker_x-2,tileset_picker_y-6,(t_width/(3 / tile_zoom))+2,(t_height/(3 / tile_zoom))+8)
-		draw_set_font(global.omiFont)
 		//window text
 		draw_set_halign(fa_left)
-		draw_text_transformed(tileset_picker_x+2,tileset_picker_y-4,$"{tilesets[$ current_tileset][2]} - {layer_get_name(layers[selected_tile_layer])}",0.66,0.66,0)
+		draw_text_transformed(tileset_picker_x+2,tileset_picker_y-4,$"{tilesets[$ current_tileset][2]} - {layer_get_name(layers[selected_region][selected_tile_layer])}",0.66,0.66,0)
 		
 		surface_set_target(object_list_area_surface)
 		draw_clear_alpha(c_black, 0)
@@ -133,7 +152,6 @@ if selected_mode == OBJECT_MODE {
 
 			//window
 			draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
-			draw_set_font(global.omiFont)
 			//window text
 			var window_name = ["blocks", "baddies", "items", "tech"]
 			draw_set_halign(fa_left)
@@ -213,12 +231,12 @@ if selected_mode == OBJECT_MODE {
 			draw_clear_alpha(c_black, 0)
 			draw_set_halign(fa_left)
 			
-			var size = ds_list_size(object_layer_map)
+			var size = ds_list_size(object_layer_map[selected_region])
 			var properties_group = [-4];
 			
 			i=0;
 			repeat(size) {
-				var obj = ds_list_find_value(object_layer_map, i)
+				var obj = ds_list_find_value(object_layer_map[selected_region], i)
 				var sprite = ds_map_find_value(obj_data,obj[0])
 				if (obj[5] = 1) {
 					if (properties_group[0] = -4) {
@@ -549,8 +567,6 @@ if selected_mode == OBJECT_MODE {
 
 			//window
 			draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
-			draw_set_font(global.omiFont)
-			
 			//window text
 			draw_set_halign(fa_left)
 			draw_text_transformed(object_list_area_x+2,object_list_area_y-4,$"gizmo list",0.66,0.66,0)
@@ -619,7 +635,6 @@ if selected_mode == OBJECT_MODE {
 		
 			//window
 			draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,(object_list_area_height/3)+8)
-			draw_set_font(global.omiFont)
 		
 			//tab text
 			draw_set_halign(fa_center)
@@ -633,12 +648,12 @@ if selected_mode == OBJECT_MODE {
 			var objname=""
 			if selected_tool!=NODE_TOOL {
 			
-			var size = ds_list_size(node_layer_map)
+			var size = ds_list_size(node_layer_map[selected_region])
 			var properties_group = [-4];
 			
 			var i=0;
 			repeat(size) {
-				var obj = ds_list_find_value(node_layer_map, i)
+				var obj = ds_list_find_value(node_layer_map[selected_region], i)
 				var sprite = ds_map_find_value(obj_data,obj[0])
 				if (obj[5] = 1) {
 					if (properties_group[0] = -4) {
@@ -888,7 +903,7 @@ if selected_mode == OBJECT_MODE {
 				}
 			}
 			} else if selected_tool==NODE_TOOL && drawing_node!=-1 {
-				var obj=ds_list_find_value(object_layer_map, drawing_node)
+				var obj=ds_list_find_value(object_layer_map[selected_region], drawing_node)
 				var proparr=obj[12]
 				var objname=string(obj[0])
 				
@@ -1054,7 +1069,7 @@ if selected_mode == OBJECT_MODE {
 					}
 				} else if selected_tool==ROTATOR_TOOL && drawing_rotator!=-1 {
 					
-				var obj=ds_list_find_value(object_layer_map, drawing_rotator)
+				var obj=ds_list_find_value(object_layer_map[selected_region], drawing_rotator)
 				var proparr=obj[14]
 				var objname=string(obj[0])
 				
@@ -1180,7 +1195,6 @@ if selected_mode == OBJECT_MODE {
 			surface_reset_target();
 			
 			//window text
-			draw_set_font(global.omiFont)
 			draw_text_transformed(object_list_area_x+2,object_list_area_y-4,$"properties - {objname}",0.66,0.66,0)
 		}
 		
@@ -1193,7 +1207,6 @@ if selected_mode == OBJECT_MODE {
 		//window
 		draw_sprite_stretched(spr_JADEwindow,0,object_list_area_x-2,object_list_area_y-6,(object_list_area_width/3)+2,8)
 		
-		draw_set_font(global.omiFont)
 		draw_set_halign(fa_left)
 		
 		//window text
@@ -1211,7 +1224,6 @@ if selected_mode == OBJECT_MODE {
 
 if (savetextdur) && (global.save_dir!="") {
 	savetextdur=max(0,savetextdur-1)
-	draw_set_font(global.omiFont)
 	draw_set_halign(fa_center)
 	draw_set_alpha(savetextdur/30)
 	draw_text_outline(guiw/2,guih-24,$"Saved to: {global.save_dir}!", 1, c_black, 8, 1, 1, 0)

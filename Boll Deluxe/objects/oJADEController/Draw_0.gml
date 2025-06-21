@@ -11,8 +11,8 @@ draw_rect(-2, -2, room_width+4, room_height+4, c_white, 0.75, true)
 
 var i=0;
 
-repeat(ds_list_size(object_layer_map)) {
-	var obj = ds_list_find_value(object_layer_map, i)
+repeat(ds_list_size(object_layer_map[selected_region])) {
+	var obj = ds_list_find_value(object_layer_map[selected_region], i)
 	
 	var sprite = ds_map_find_value(obj_data,obj[0])
 	
@@ -60,8 +60,8 @@ repeat(ds_list_size(object_layer_map)) {
 
 
 i=0;
-repeat(ds_list_size(node_layer_map)) {
-	var obj = ds_list_find_value(node_layer_map, i)
+repeat(ds_list_size(node_layer_map[selected_region])) {
+	var obj = ds_list_find_value(node_layer_map[selected_region], i)
 	
 	var sprite = ds_map_find_value(obj_data,obj[0])
 	
