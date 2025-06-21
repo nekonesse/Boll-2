@@ -304,6 +304,7 @@ if (mbleftpress) {
 						if !is_undefined(obj) {
 						    if obj[1] == gridx && obj[2] == gridy {
 								selected_obj=obj[0];
+								selected_toolbar=0;
 								break;
 							}
 						}
