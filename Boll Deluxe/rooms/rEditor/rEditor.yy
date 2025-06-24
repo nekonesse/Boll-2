@@ -22,7 +22,7 @@
         {"name":"g_RipplesWidth","type":0,"value":"55",},
         {"name":"g_RipplesAmplitude","type":0,"value":"0.175",},
         {"name":"g_RipplesRadius","type":0,"value":"0",},
-      ],"resourceType":"GMRBackgroundLayer","resourceVersion":"2.0","spriteId":{"name":"spr_mm_bggrid","path":"sprites/spr_mm_bggrid/spr_mm_bggrid.yy",},"stretch":false,"userdefinedAnimFPS":false,"userdefinedDepth":false,"visible":true,"vspeed":0.05,"vtiled":true,"x":0,"y":0,},
+      ],"resourceType":"GMRBackgroundLayer","resourceVersion":"2.0","spriteId":{"name":"spr_mm_bggrid","path":"sprites/spr_mm_bggrid/spr_mm_bggrid.yy",},"stretch":false,"userdefinedAnimFPS":false,"userdefinedDepth":false,"visible":false,"vspeed":0.05,"vtiled":true,"x":0,"y":0,},
     {"$GMRBackgroundLayer":"","%Name":"BG_Color","animationFPS":15.0,"animationSpeedType":0,"colour":4280291094,"depth":1500,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"hspeed":0.0,"htiled":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"BG_Color","properties":[],"resourceType":"GMRBackgroundLayer","resourceVersion":"2.0","spriteId":null,"stretch":false,"userdefinedAnimFPS":false,"userdefinedDepth":false,"visible":true,"vspeed":0.0,"vtiled":false,"x":0,"y":0,},
   ],
   "name":"rEditor",

@@ -1,7 +1,19 @@
-var cam_x = camera_get_view_x(view_camera[0])
-var cam_y = camera_get_view_y(view_camera[0])
-var cam_w = camera_get_view_width(view_camera[0])
-var cam_h = camera_get_view_height(view_camera[0])
+cam_x = camera_get_view_x(view_camera[0])
+cam_y = camera_get_view_y(view_camera[0])
+cam_w = camera_get_view_width(view_camera[0])
+cam_h = camera_get_view_height(view_camera[0])
+guiw = window_get_width();
+guih = window_get_height();
+
+if !os_is_paused() && guiw>0 && guih>0 {
+	if !surface_exists(GUIcanvas) {
+		GUIcanvas=surface_create(guiw,guih);
+	} else {
+		if (guiw!=surface_get_width(GUIcanvas) || guih!=surface_get_height(GUIcanvas)) {
+			surface_resize(GUIcanvas,guiw,guih);
+		}
+	}
+}
 
 if !surface_exists(object_list_area_surface) {
 	object_list_area_surface = surface_create(object_list_area_width, object_list_area_height)
@@ -15,23 +27,14 @@ mbrightrel=mouse_check_button_released(mb_right)
 mbright=mouse_check_button(mb_right)
 mbmiddle = (mouse_check_button(mb_middle) || (keyboard_check(vk_space) && mouse_check_button(mb_left))) //this scroll wheel is Pissing me off... i'm the original        keywalker
 
+#region GUI Input Handler
+if (mbleftpress) {
+	topbuttons.update();
+}
+#endregion
+
 curs_x=(mouse_x-cam_x)/zoom_level
 curs_y=(mouse_y-cam_y)/zoom_level
-
-var guiw=display_get_gui_width()
-var guih=display_get_gui_height()
-var tb_length = array_length(toolbar[selected_mode])
-on_list_top = (point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y-20,object_list_area_x+object_list_area_width/3,object_list_area_y) || point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y-20,object_list_area_x+object_list_area_width/3,object_list_area_y))
-on_object_list = (point_in_rectangle(curs_x,curs_y,object_list_area_x-2,object_list_area_y-24,object_list_area_x+object_list_area_width/3,object_list_area_y+object_list_area_height/3) && (show_object_list || object_list_active))
-on_tile_picker = (point_in_rectangle(curs_x,curs_y,tileset_picker_x-2,tileset_picker_y-6,tileset_picker_x + (sprite_get_width(tilesets[$ current_tileset][0]) / (3 / tile_zoom)), tileset_picker_y + (sprite_get_height(tilesets[$ current_tileset][0]) / (3 / tile_zoom))) && (show_tileset))
-if (!on_object_list && object_list_active && show_object_list) on_object_list = keyboard_check_direct(vk_alt)
-
-not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
-&&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
-&&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
-&&!point_in_rectangle(curs_x,curs_y,guiw-(24*4)-4,guih-32,guiw,guih)
-&&!(((on_object_list && show_object_list) || on_list_top) && (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE))
-&&!(on_tile_picker && selected_mode==TILE_MODE)
 
 #region Camera Panning
 if (not_on_gui) && (mbmiddle) {
@@ -56,63 +59,11 @@ if (mwheel == 0) {
 	mwheel = keyboard_check_direct(vk_down) - keyboard_check_direct(vk_up)
 }
 
-var dir = (keyboard_check_pressed(vk_right) || mouse_check_button_pressed(mb_side1)) - (mouse_check_button_pressed(mb_side2) || keyboard_check_pressed(vk_left)) 
-//peopne who dont have a fancy gaming mouse or whatever finally getting a taste of the button Not Existing
+//var dir = (keyboard_check_pressed(vk_right) || mouse_check_button_pressed(mb_side1)) - (mouse_check_button_pressed(mb_side2) || keyboard_check_pressed(vk_left)) 
 
-if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
-	#region Object List Scrolling
-	if (mwheel != 0) && (on_object_list) {
-		object_list_scroll_pos[selected_mode][current_cat]+=24*mwheel
-	}
+//object_list_scroll_pos[selected_mode][current_cat]+=24*mwheel
 
-	object_list_scroll_pos[selected_mode][current_cat] = clamp(object_list_scroll_pos[selected_mode][current_cat], 0, (ds_list_size(jade_cats[selected_mode][current_cat])*32)-object_list_area_height)
-	#endregion
-
-	#region Category Switching
-	if (dir != 0) && (on_object_list) {
-		current_cat += dir
-		if (current_cat < 0) {
-			current_cat = (array_length(jade_cats[selected_mode]) - 1)
-		} else if (current_cat >= array_length(jade_cats[selected_mode])) {
-			current_cat = 0	
-		}
-	
-		show_debug_message($"switched to category {current_cat}")
-	}
-	#endregion
-} else if (selected_mode == TILE_MODE) {
-	var layerdir = keyboard_check_pressed(vk_right) - keyboard_check_pressed(vk_left)
-	var tilesetdir = keyboard_check_pressed(vk_down) - keyboard_check_pressed(vk_up)
-	if (layerdir != 0) {
-		ui_opacity = 10;
-		selected_tile_layer += layerdir
-		if (selected_tile_layer < 0) {
-			selected_tile_layer = (array_length(tile_layer[selected_region]) - 1)
-		} else if (selected_tile_layer >= array_length(tile_layer[selected_region])) {
-			selected_tile_layer = 0	
-		}
-		tilemap=tile_layer[selected_region][selected_tile_layer]
-		current_tileset = tileset_get_name(tilemap_get_tileset(tilemap));
-		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
-		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
-	}
-	if (tilesetdir != 0) {
-		ui_opacity = 10;
-		selected_tileset += tilesetdir
-		if (selected_tileset < 0) {
-			selected_tileset = (variable_struct_names_count(tilesets) - 1)
-		} else if (selected_tileset >= variable_struct_names_count(tilesets)) {
-			selected_tileset = 0	
-		}
-		var arr=variable_struct_get_names(tilesets)
-		current_tileset = arr[selected_tileset];
-		
-		tilemap_tileset(tile_layer[selected_region][selected_tile_layer], tilesets[$ current_tileset][1]);
-		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
-		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
-	}
-	if (ui_opacity > 0.4) {ui_opacity -= 0.05}
-}
+//object_list_scroll_pos[selected_mode][current_cat] = clamp(object_list_scroll_pos[selected_mode][current_cat], 0, (ds_list_size(jade_cats[selected_mode][current_cat])*32)-object_list_area_height)
 
 #region Camera Zooming
 if (mwheel != 0) && keyboard_check(vk_control) && (not_on_gui) {
@@ -123,7 +74,6 @@ if (mwheel != 0) && keyboard_check(vk_control) && (not_on_gui) {
 zoom_goto=clamp(zoom_goto,0.125, 5)
 var oldzoom=zoom_level
 zoom_level=approach_val(zoom_level,zoom_goto,0.025)
-
 camera_set_view_size(view_camera[0], floor(480*zoom_level), floor(270*zoom_level))
 
 if (zoom_level!=oldzoom) {
@@ -144,163 +94,6 @@ if (zoom_level!=oldzoom) {
 gridx = floor(mouse_x/16) 
 gridy = floor(mouse_y/16)
 
-if keyboard_check_pressed(vk_escape) {
-	room_goto(rMainMenu)
-	global.jade_testing=false
-}
-
-//half temp cycling object/tile behavior
-switch(selected_mode) {
-	case TILE_MODE:
-		if keyboard_check_pressed(vk_tab) {
-			show_tileset = !show_tileset
-		}
-
-		selected_tile=current_tile_id[0][0]
-	break;
-	case NODE_MODE:
-	case OBJECT_MODE:
-		if keyboard_check_pressed(vk_tab) {
-			show_object_list = !show_object_list
-		}
-		
-		var switch_obj = 0;
-		
-		if (keyboard_check_pressed(vk_pagedown)) {
-			current_obj_id[selected_mode][current_cat] ++
-			switch_obj = 1;
-		}
-
-		if (keyboard_check_pressed(vk_pageup)) {
-			current_obj_id[selected_mode][current_cat] --
-			switch_obj = 1;
-		}
-
-		current_obj_id[selected_mode][current_cat] = wrap_val(current_obj_id[selected_mode][current_cat], 0, ds_list_size(jade_cats[selected_mode][current_cat])- 1)
-
-		if (switch_obj) { //keeps object through category switch until you scroll through the list for convenience
-			selected_obj = ds_list_find_value(jade_cats[selected_mode][current_cat], current_obj_id[selected_mode][current_cat])
-		}
-		
-		//selection box deleting
-		if keyboard_check_pressed(vk_delete) && selected_tool==SELECT_TOOL {
-			if (selected_mode==OBJECT_MODE) {
-				var i=0;
-				repeat (ds_list_size(object_layer_map[selected_region])) {
-					var obj = ds_list_find_value(object_layer_map[selected_region], i)
-					var sprite = ds_map_find_value(obj_data,obj[0])
-					if (sprite[7]==selected_mode) && (obj[5]) {
-						ds_list_delete(object_layer_map[selected_region], i)
-						i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
-					} 
-					i++;
-				}
-			} else if (selected_mode==NODE_MODE) {
-				repeat(ds_list_size(node_layer_map[selected_region])) {
-					var obj = ds_list_find_value(node_layer_map[selected_region], i)
-					var sprite = ds_map_find_value(obj_data,obj[0])
-					if (sprite[7]==selected_mode) && (obj[5]) {
-						ds_list_delete(node_layer_map[selected_region], i)
-						i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
-					} 
-					i++
-				}
-			}
-		}
-	break;
-}
-
-var i;
-i=0;
-repeat(5)
-{
-	if (mbleftpress) && mouse_in_mode_slot(i) {
-		if selected_mode != i {
-			ui_opacity = 10
-			selected_toolbar=0
-			selected_mode=i
-			selection = false
-			current_cat = 0
-			var size = ds_list_size(object_layer_map[selected_region])
-			var j=0;
-			repeat(size) {
-				var obj = ds_list_find_value(object_layer_map[selected_region], j)
-		
-				if !is_undefined(obj) {
-					obj[5]=0;
-				}
-				j++;
-			}
-			size = ds_list_size(node_layer_map[selected_region])
-			j=0;
-			repeat(size) {
-				var obj = ds_list_find_value(node_layer_map[selected_region], j)
-		
-				if !is_undefined(obj) {
-					obj[5]=0;
-				}
-				j++;
-			}
-		}
-	}
-	i++
-}
-
-//change toolbar 
-var tb_length = array_length(toolbar[selected_mode])
-i=0;
-repeat(tb_length)
-{
-	if (mbleftpress) && mouse_in_toolbar_slot(i) {
-		selected_toolbar=i
-	}
-	i++;
-}
-
-i=0;
-repeat(4) {
-	if (mbleftpress) && mouse_in_region_slot(i) {
-		//deselect previous region
-		var size = ds_list_size(object_layer_map[selected_region])
-		var j=0;
-		repeat(size) {
-			var obj = ds_list_find_value(object_layer_map[selected_region], j)
-		
-			if !is_undefined(obj) {
-				obj[5]=0;
-			}
-			j++;
-		}
-		size = ds_list_size(node_layer_map[selected_region])
-		j=0;
-		repeat(size) {
-			var obj = ds_list_find_value(node_layer_map[selected_region], j)
-		
-			if !is_undefined(obj) {
-				obj[5]=0;
-			}
-			j++;
-		}
-		
-		selected_region=i
-		
-		ui_opacity = 10;
-		selected_tile_layer = 2
-		/*if (selected_tile_layer < 0) {
-			selected_tile_layer = (array_length(tile_layer[selected_region]) - 1)
-		} else if (selected_tile_layer >= array_length(tile_layer[selected_region])) {
-			selected_tile_layer = 0	
-		}*/
-		tilemap=tile_layer[selected_region][selected_tile_layer]
-		current_tileset = tileset_get_name(tilemap_get_tileset(tilemap));
-		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
-		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
-		
-		selection = false
-	}
-	i++;
-}
-
 selected_tool=toolbar[selected_mode][selected_toolbar]
 
 droppedfiles=file_dropper_get_files(".jade")
@@ -311,7 +104,7 @@ if array_length(droppedfiles) {
 }
 
 if (mbleftpress) {
-	if mouse_in_setting_slot(0) { //exit button
+	/*if mouse_in_setting_slot(0) { //exit button
 		JADE_save();
 		room_goto(rMainMenu)
 	}
@@ -349,7 +142,7 @@ if (mbleftpress) {
 			global.save_dir=file
 			JADE_load(file)
 		}
-	}
+	}*/
 	if (not_on_gui) {
 		if (selected_tool == PICKER_TOOL) {
 			switch(selected_mode) {
@@ -427,7 +220,7 @@ if (mbleftpress) {
 			}
 		break;
 		}
-	} else if !(not_on_gui) && !((on_object_list && show_object_list) || on_list_top) {
+	} else if !(not_on_gui) {
 		drawing_node=-1;
 		drawing_rotator=-1;
 	}

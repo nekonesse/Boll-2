@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_load_boll_stuff",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Sprites",
+    "path":"folders/Sprites.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

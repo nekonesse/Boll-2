@@ -3,7 +3,7 @@
 #macro BACKGROUND_MODE 2
 #macro ASSET_MODE 3
 #macro NODE_MODE 4
-#macro JADE_VERSION 3
+#macro JADE_VERSION 4
 
 
 function JADE_initializeobj() {	

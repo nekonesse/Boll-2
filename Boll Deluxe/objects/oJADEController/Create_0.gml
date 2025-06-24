@@ -14,7 +14,66 @@
 #macro NODE_TOOL 11 //node
 #macro ROTATOR_TOOL 12 //node
 
-///Modes:
+camera = view_camera[0]
+
+camera_set_view_pos(camera,0,room_height-camera_get_view_height(camera))
+
+cam_x = camera_get_view_x(view_camera[0])
+cam_y = camera_get_view_y(view_camera[0])
+cam_w = camera_get_view_width(view_camera[0])
+cam_h = camera_get_view_height(view_camera[0])
+guiw = window_get_width();
+guih = window_get_height();
+
+themeaccent1=scribble_rgb_to_bgr($0d1128)
+themeaccent2=scribble_rgb_to_bgr($1c2348)
+themeaccent3=scribble_rgb_to_bgr($3a4466)
+themeaccent4=scribble_rgb_to_bgr($67739a)
+themehighlight=c_white
+
+selected_button=[-1, -1];
+
+GUIcanvas = surface_create(guiw,guih);
+
+topbuttons = new JADEsmallbuttons(4,4,52,16)
+topbuttons.add("File", function() {
+	JADEdropdown(4,4+16,["New", "Open", "Open Recent", "Save", "Save As", "Exit"], function(name,ind) {
+		switch(ind) {
+			case 0:
+			//new file
+			break;
+			case 1:
+			//open file
+			break;
+			case 2:
+			//open recent file
+			break;
+			case 3:
+			//save file
+			break;
+			case 4:
+			//save file as
+			break;
+			case 5:
+			//exit editor
+			room_goto(rMainMenu);
+			break;
+		}
+	})
+});
+topbuttons.add("Edit", function() {
+
+});
+topbuttons.add("View", function() {
+
+});
+topbuttons.add("Region", function() {
+
+});
+
+cursor_sprite = spr_JADEcursor;
+
+//Modes:
 //1: Objects
 //2: Tiles
 //3: Backgrounds
@@ -163,8 +222,6 @@ draw_rotator_x=0;
 draw_rotator_y=0;
 
 #region tileset picker variables
-var guiw=display_get_gui_width()
-var guih=display_get_gui_height()
 
 show_tileset = false
 on_tile_picker = false
@@ -200,36 +257,10 @@ repeat (NODE_MODE+1) {
 current_cat = 0
 #endregion
 
-mouse_in_setting_slot = function(numb) {
-	var guiw=display_get_gui_width();
-	return point_in_rectangle(curs_x,curs_y,(guiw-28)-(32*numb),4,(guiw-28)-(32*numb)+24,28)
-}
-
-mouse_in_toolbar_slot = function(numb) {
-	var guiw=display_get_gui_width();
-	if toolbar[selected_mode][numb] != EMPTY_SLOT
-	return point_in_rectangle(curs_x,curs_y,(guiw-12)-(32*14)+(32*numb),4,(guiw-12)-(32*14)+(32*numb)+32,28)
-	else return 0
-}
-
-mouse_in_mode_slot = function(numb) {
-	var guih=display_get_gui_height();
-	return point_in_rectangle(curs_x,curs_y,4,((guih/4)-4)+32*numb,28,(((guih/4)-4)+32*numb)+24)
-}
-
-mouse_in_region_slot = function(numb) {
-	var guih=display_get_gui_height();
-	var guiw=display_get_gui_width();
-	return point_in_rectangle(curs_x,curs_y,guiw-(24*4)+24*numb+2,guih-30,guiw-(24*4)+24*numb+24,guih-2)
-}
-
 selection_box_fr=0
 is_typing=0;
 temptypingstring="";
 open_dropmenu=0;
-
-//add preset layout
-camera_set_view_pos(view_camera[0],0,room_height-camera_get_view_height(view_camera[0]))
 
 place_object = function(uuid,_x,_y,xscale=1,yscale=1) { 
 	ds_list_add(object_layer_map[selected_region], [uuid, _x, _y, xscale, yscale, 0])//add object to list at place

@@ -22,3 +22,4 @@ repeat(4) {
 }
 
 surface_free(object_list_area_surface)
+surface_free(GUIcanvas);

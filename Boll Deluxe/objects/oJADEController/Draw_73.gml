@@ -111,3 +111,45 @@ if selected_tool == FILL_TOOL && tile_fill && fill_circle {
 }
 draw_set_halign(fa_left)
 draw_set_valign(fa_left)
+
+if (not_on_gui) {
+	switch (selected_tool) {
+		case BRUSH_TOOL:
+		switch (selected_mode) {
+			case NODE_MODE:
+			case OBJECT_MODE:
+				if is_string(selected_obj) {
+					var arr=ds_map_find_value(obj_data,selected_obj)
+					var xoff=arr[1]
+					var yoff=arr[2]
+					if arr[7] == selected_mode
+					draw_sprite_ext(arr[0],0,(gridx*16-xoff)/zoom_level,(gridy*16-yoff)/zoom_level,arr[11],arr[12],0,c_white,0.25)
+				}
+			break;
+			case TILE_MODE:
+				var t_width = sprite_get_width(tilesets[$ current_tileset][0])
+				var t_height = sprite_get_height(tilesets[$ current_tileset][0])
+				var i=0;
+				repeat(tile_sel_width+1) {
+					var j=0;
+					repeat(tile_sel_height+1) {
+						var _data = current_tile_id[i][j]
+						if _data != 0 {
+							var t_x = ((_data mod (t_width / 16)) * 16)
+							var t_y = (floor(_data / (t_width/16)) * 16)
+							draw_sprite_part_ext(tilesets[$ current_tileset][0], 0, t_x, t_y, 16, 16, ((gridx+i)*16),((gridy+j)*16), 1, 1, c_white, 0.25)	
+						}
+						j++;
+					}
+					i++;
+				}
+			break;
+		}
+		break;
+		case ERASE_TOOL:
+		case PICKER_TOOL:
+			draw_sprite(spr_JADEerase_overlay,0,gridx*(16*zoom_level),gridy*(16*zoom_level))
+		break;
+
+	}
+}
