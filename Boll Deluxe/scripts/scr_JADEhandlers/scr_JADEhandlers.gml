@@ -166,6 +166,8 @@ function JADElisthandler(_x, _y, _width, _height, _checkvar) constructor {
 	listheight = 0;
 	scroll_x = 0;
 	scroll_y = 0;
+	handle_y = 0;
+	mouse_offset_y = 0;
 	is_scrolling_x=0;
 	is_scrolling_y=0;
 	
@@ -257,7 +259,7 @@ function JADElisthandler(_x, _y, _width, _height, _checkvar) constructor {
 		var bar_height = max(6,(height/total_height)*height)
 		
 		draw_gui(x+width+4,y,6,height,oJADEController.themeaccent2,1)
-		draw_gui(x+width+4,y-scroll_y,6,bar_height,oJADEController.themeaccent4,1)
+		draw_gui(x+width+4,y+handle_y,6,bar_height,oJADEController.themeaccent4,1)
 		
 		var over = point_in_rectangle(curs_x,curs_y,x,y,x+width,y+height);
 		var mwheel = mouse_wheel_down() - mouse_wheel_up();
@@ -268,12 +270,20 @@ function JADElisthandler(_x, _y, _width, _height, _checkvar) constructor {
 		if (over) && (mwheel != 0) {
 			if !keyboard_check(vk_control) {
 				scroll_y+=12*-mwheel
+				scroll_y=clamp(scroll_y,-listheight,0)
+				
+				handle_y = 0 - ((height - bar_height) * scroll_y / (listheight))
 			} else {
 				scroll_x+=8*mwheel
 			}
 		}
 		
+		var handle_middle = bar_height/ 2
+		
 		if (over_vert_scrollbar) && (mbleft) {
+			if !is_scrolling_y {
+				mouse_offset_y = (curs_y - (y + handle_y))	
+			}
 			is_scrolling_y=true
 		}
 		
@@ -283,8 +293,13 @@ function JADElisthandler(_x, _y, _width, _height, _checkvar) constructor {
 		}
 		
 		if (is_scrolling_y) {
-			var y_normalized = y - curs_y + (bar_height/2);
-			scroll_y = (y_normalized / (height - bar_height)) * listheight
+			//var y_normalized = y - curs_y + (bar_height/2);
+			//scroll_y = (y_normalized / (height - bar_height)) * listheight
+			handle_y = curs_y - y - mouse_offset_y;
+			handle_y = clamp( handle_y, 0, height - bar_height);
+			
+			scroll_y = 0 - ((listheight) * handle_y / (height - bar_height));
+			show_debug_message(mouse_offset_y)
 		}
 		
 		//scroll_y=clamp(scroll_y,-listheight,0)
