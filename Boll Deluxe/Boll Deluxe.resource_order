@@ -1006,6 +1006,7 @@
     {"name":"snd_enemykick","order":5,"path":"sounds/snd_enemykick/snd_enemykick.yy",},
     {"name":"snd_enemyspinjump","order":6,"path":"sounds/snd_enemyspinjump/snd_enemyspinjump.yy",},
     {"name":"snd_enemystomp","order":4,"path":"sounds/snd_enemystomp/snd_enemystomp.yy",},
+    {"name":"snd_flagpoleraise","order":14,"path":"sounds/snd_flagpoleraise/snd_flagpoleraise.yy",},
     {"name":"snd_hardblockbreak","order":2,"path":"sounds/snd_hardblockbreak/snd_hardblockbreak.yy",},
     {"name":"snd_hydrocityturbine","order":8,"path":"sounds/snd_hydrocityturbine/snd_hydrocityturbine.yy",},
     {"name":"snd_iceshatter","order":11,"path":"sounds/snd_iceshatter/snd_iceshatter.yy",},
