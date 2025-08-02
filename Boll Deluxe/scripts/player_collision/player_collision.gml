@@ -147,7 +147,7 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 	
 	//landing on solid ground
 	if !grounded && vsp >= 0 {
-		if check_collision_rectangle(posx+left,posy,posx+right,posy+bottom, COL_BOTTOM) && !check_collision_rectangle(posx+left,posy-2,posx+right,posy+bottom-2, COL_BOTTOM){
+		if check_collision_rectangle(posx+left,posy,posx+right,posy+bottom, COL_BOTTOM) && !check_collision_rectangle(posx+left,posy-2-vsp,posx+right,posy+bottom-2-vsp, COL_BOTTOM){
 			grounded = true
 			colflags |= COL_FLOOR;
 			get_angle_rect(posx+left,posy+bottom-2,posx+right,posy+bottom + 3)
