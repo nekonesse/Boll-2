@@ -216,8 +216,12 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 		{
 			colflags |= COL_FLOOR;
 		}
+		
+
 		//gets angle so it doesnt jitter
 		get_angle_rect(posx+left,posy+bottom-2,posx+right,posy+bottom + 3)
+		
+		
 		
 		var offsetx, offsety, nopoly;
 		
@@ -241,6 +245,7 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 					hsp = gsp * dcos(colangle)
 					grounded = false
 					colflags &= ~(COL_FLOOR);
+					
 					colangle = 0
 					colslope = 0
 				}

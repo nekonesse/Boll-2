@@ -114,14 +114,20 @@ function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_
                         var new_rise=point_distance(x,y,x,found.bbox_bottom)
                         var new_run=point_distance(x,y,found.x,y)
                         var new_slope_factor=new_rise/new_run
-                        colslope = new_slope_factor * (-1 + (found.hflip * 2))
-						if !found.hflip {
-							colangle = 360-point_direction(x,y,found.x,found.y) //basically we have to flip it diagonally, so we minus the angle by 360 to get the 'reverse' angle
-						} else {
-							colangle = 360-(point_direction(x,y,found.x,found.y)+180)
+						
+                        
+						if found_size>1 && !(i==(found_size-1)) && abs(new_slope_factor * (-1 + (found.hflip * 2)))>2 {
+							//Within rounded slopes, there should not be a point above 2, like, ever. So if there is, throw it out.
+						}else {
+							colslope = new_slope_factor * (-1 + (found.hflip * 2))
+							if !found.hflip {
+								colangle = 360-point_direction(x,y,found.x,found.y) //basically we have to flip it diagonally, so we minus the angle by 360 to get the 'reverse' angle
+							} else {
+								colangle = 360-(point_direction(x,y,found.x,found.y)+180)
+							}
+	                        ds_list_destroy(found_list) 
+	                        return true;
 						}
-                        ds_list_destroy(found_list) 
-                        return true;
 					}
 	            }else{
                     colslope = 0

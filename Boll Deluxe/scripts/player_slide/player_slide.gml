@@ -2,12 +2,10 @@ function player_slide(max_speed, slide_influence, steep_influence, do_steep_whil
 	static slope_timer = 0
 	if (steep_slope) {
 		if !slopesliding {
-			//Only make this happen if you're going against the slope.
-			
-			if !(colangle>=90 && colslope<0) && !(colangle<=90 && colslope>0){			
+						
 				gsp -= (steep_influence * dsin(colangle))
 				no_move = 1
-			}
+			
 		}
 		//slopesliding = 1;
 	} else if (down && ceil(abs(colslope))) {
