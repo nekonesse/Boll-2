@@ -23,5 +23,18 @@ draw_text(26,12,$"*{_coins}")
 
 surface_reset_target();
 
+if enable_app_surf_redraw {
+	shader_set(shd_bluefade)
+	shader_set_uniform_f(bluefadeprog, fadeprog);
+	shader_set_uniform_i(bluefadeinflag, fadein)
+	draw_surface_ext(application_surface,0,0,1,1,0,c_white,0)
+	shader_reset()
+}
+
 draw_surface_ext(HUDsurface,1,1,1,1,0,c_black,0.66)
+
+shader_set(shd_bluefade)
+shader_set_uniform_f(bluefadeprog, fadeprog);
+shader_set_uniform_i(bluefadeinflag, fadein)
 draw_surface(HUDsurface,0,0)
+shader_reset()

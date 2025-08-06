@@ -9,6 +9,7 @@ var camwidth=camera_get_view_width(view_camera[0])+128
 var camheight=camera_get_view_height(view_camera[0])+128
 instance_activate_region(camx,camy,camwidth,camheight,true)
 instance_activate_object(oBackgroundManager)
+instance_activate_object(oTitlecard)
 instance_activate_object(oNodeManager)
 instance_activate_object(oDrawingManager)
 instance_activate_object(oPlayer)
@@ -21,7 +22,9 @@ instance_activate_object(pSmoke)
 instance_activate_object(oDeactivationRegion)
 instance_activate_object(oMonitorPopup)
 with(oActivationRegion) {
-	instance_activate_region(x,y,sprite_width,sprite_height,true)
+	if (other.fadeprog > 3.0 && other.fadein = false) {
+		instance_activate_region(x,y,sprite_width,sprite_height,true)
+	}
 }
 with(oPlayer) {
 	instance_activate_region(floor(x)-hit_sizex-32,floor(y)-hit_sizey-32, hit_sizex+64, hit_sizey+64, true)

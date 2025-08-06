@@ -7,6 +7,14 @@ global.smallBoldFont=font_add_sprite_ext(spr_smallboldfont,"0123456789abcdefghij
 ScribblejrAttachSpritefont(global.smallBoldFont,true,1)
 global.omiFont=font_add_sprite_ext(spr_omifont,"0123456789:;.,<=>}%/"+chr(92)+"-_!?*+#'"+chr(34)+"~@][&abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ",true,1)
 ScribblejrAttachSpritefont(global.omiFont,true,1)
+global.matosseFont = font_add_sprite_ext(spr_matossefont,"ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!?&.,;:()"+chr(34)+"'/abcdefghijklmnopqrstuvwxyz",true,0)
+ScribblejrAttachSpritefont(global.matosseFont,true,1)
+global.titlesmallFont = font_add_sprite_ext(spr_titlesmallfont,"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",true,0)
+ScribblejrAttachSpritefont(global.matosseFont,true,1)
+global.titlebigFont = font_add_sprite_ext(spr_titlebigfont,"ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!?()-/&:.,'",true,0)
+ScribblejrAttachSpritefont(global.matosseFont,true,1)
+global.titlelivesFont = font_add_sprite_ext(spr_livesfont,"x1234567890",true,0)
+ScribblejrAttachSpritefont(global.titlelivesFont,true,1)
 
 global.debug=0
 global.fps_display = 0;
@@ -309,6 +317,7 @@ global.zoom_on_start = false; // does this level have the starting zoom-in?
 
 //// General data ////
 global._playerChars = [];
+
 
 //global.touchscreen = 1
 global.touchscreen = os_android

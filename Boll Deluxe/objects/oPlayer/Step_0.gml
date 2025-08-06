@@ -12,18 +12,20 @@ if collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey,oDeathPit
 
 
 // chearii: guessing these are a buncha quickvars
-right = input_check("right");
-left = input_check("left");
-up = input_check("up");
-down = input_check("down");
-downpress = input_check_pressed("down");
-if !finish {
-	akey = input_check("a");
-	apress = input_check_pressed("a");
-	bkey = input_check("b");
-	bpress = input_check_pressed("b");
-	ckey = input_check("c");
-	cpress = input_check_pressed("c");
+if (input_enable) {
+	right = input_check("right");
+	left = input_check("left");
+	up = input_check("up");
+	down = input_check("down");
+	downpress = input_check_pressed("down");
+	if !finish {
+		akey = input_check("a");
+		apress = input_check_pressed("a");
+		bkey = input_check("b");
+		bpress = input_check_pressed("b");
+		ckey = input_check("c");
+		cpress = input_check_pressed("c");
+	}
 }
 player_castlewalk()
 
@@ -124,5 +126,30 @@ if (invincible_timer) {
 			invincible_timer = 0;
 			//visible = true;
 		} break;
+	}
+}
+
+if death_time {
+	oGameManager.fadein = true
+	oGameManager.fadeprog += 0.082
+	if (death_time_counter == 0) oGameManager.fadeprog = 0
+	
+	death_time_counter++
+	
+	
+	if death_time_counter > 60 {
+		if (global.lives[0] < 1) { //game over. couldnt care less if player 2 has -4 lives You. Are. Not. Implemented!!
+			VinylStopAll();
+			VinylPlay(mus_gameover, 0, 0.4);
+			show_message("yeah you got the games over yeah. died alot and lost your lifes. its over  alright now GET OUTTA HERE");
+			if (!global.jade_testing)
+				room_goto(rIntro);
+			else {
+				global.jade_testing = false;
+				room_goto(rEditor);
+			}
+			exit;
+		}
+		room_restart();
 	}
 }

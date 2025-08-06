@@ -13,6 +13,7 @@ sig.Connect( self, function(str_var) {
 greenmode=0
 grabbed_obj = noone;
 is_grabbing = false;
+input_enable = false
 ///// GENERAL /////
 
 pNum = 0; //player number (P1, P2, etc.)
@@ -143,6 +144,22 @@ start_hit_sizex = hit_sizex
 start_hit_sizey = hit_sizey
 
 init_player();
+
+right = false
+left = false
+up = false
+down = false
+downpress = false
+
+akey = false
+apress = false
+bkey = false
+bpress = false
+ckey = false
+cpress = false
+
+death_time = false
+death_time_counter = 0
 
 if (global.checkpointX != no_checkpoint && global.checkpointY != no_checkpoint) {
 	x = global.checkpointX + 32 - (8 * global.checkpointDir)
