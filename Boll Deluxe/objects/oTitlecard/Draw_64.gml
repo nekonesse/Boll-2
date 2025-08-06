@@ -94,6 +94,9 @@ if (counter < 180){
 
 asset_x[2] = (asset_x[2] - 1) % string_width(charm_text)
 
+draw_sprite_ext(spr_titlecard_checkerboard, 0,floor(asset_x[4]),0,1,1,0,c_white,0.4)
+draw_sprite_ext(spr_titlecard_checkerboard, 0,floor(asset_x[5]),0,1,1,0,c_white,0.4)
+
 draw_sprite(spr_titlecard_2,0,0,floor(asset_y[2]))
 
 pal_swap_set(spr_matossepal,2,false)
@@ -102,9 +105,6 @@ for (var i = 1; i < round(guiw/string_width(charm_text)) + 1; ++i) {
     draw_text(asset_x[2] + (string_width(charm_text) * i),floor(asset_y[2]) - 16, charm_text)
 }
 pal_swap_reset();
-
-draw_sprite_ext(spr_titlecard_checkerboard, 0,floor(asset_x[4]),0,1,1,0,c_white,0.4)
-draw_sprite_ext(spr_titlecard_checkerboard, 0,floor(asset_x[5]),0,1,1,0,c_white,0.4)
 
 draw_sprite(spr_worldicon,0,floor(asset_x[3]),32)
 draw_sprite_ext(spr_titlecard_levelnamebacking,0,floor(asset_x[3]),58, scribble(stage_name_text).get_width()/sprite_get_width(spr_titlecard_levelnamebacking),1,0,c_white,1)
