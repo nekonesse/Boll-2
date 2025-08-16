@@ -53,9 +53,9 @@
 //Adds extra error checking to spritefont glyph caching. Set this macro to `true` to help identify
 //the nature of errors when using spritefonts. Setting this macro to `true` carries a performance
 //penalty so should typically be left as `false`.
-#macro SCRIBBLEJR_SAFE_SPRITEFONTS  true
+#macro SCRIBBLEJR_SAFE_SPRITEFONTS  false
 
 //Functions to call when Scribblejr emits messages. Change these if you want to redirect Scribblejr
 //messages to something other than the console / native error handler.
 #macro SCRIBBLEJR_SHOW_DEBUG_MESSAGE  show_debug_message //Warnings and general information
-#macro SCRIBBLEJR_SHOW_ERROR          show_error
+#macro SCRIBBLEJR_SHOW_ERROR          show_error         //Fatal errors

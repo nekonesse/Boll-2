@@ -1,6 +1,3 @@
-// Inherit the parent event
-event_inherited();
-
 if mouse_check_button_pressed(mb_left) {
 	var curs_x = window_mouse_get_x()
 	var curs_y = window_mouse_get_y()
@@ -13,6 +10,7 @@ if mouse_check_button_pressed(mb_left) {
 			oJADEController.selected_button=[-1,-1]
 			func(names[i], i);
 			oJADEController.pressed_dropdown=1;
+			show_debug_message("PRESSED BUTTON")
 			instance_destroy(id,false);
 		}
 		i++;

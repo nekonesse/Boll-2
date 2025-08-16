@@ -1,9 +1,6 @@
 #macro OBJECT_MODE 0
 #macro DECO_MODE 1
-#macro TILE_MODE 3
-#macro NODE_MODE 4
-#macro BACKGROUND_MODE 5
-#macro ASSET_MODE 6
+#macro NODE_MODE 2
 #macro JADE_VERSION 4
 
 function JADE_initializeobj() {
@@ -38,6 +35,12 @@ function JADE_initializeobj() {
 	registerobj(oMonitor, spr_monitor, 8, 8, 16, 16, false, false, blockcategory, "Monitor")
 	
 	objectlist.add(blockcategory) //we added the items to the category, but we still need to apply the category to the main list
+
+	//add tilesets
+	tilesets[$ "tTilesetMain"]=[spr_TilesetMain, tTilesetMain, "Floragrande Tiles"]
+	tilesets[$ "tTilesetPipes"]=[spr_TilesetPipes, tTilesetPipes, "Pipe Tiles"]
+	tilesets[$ "tTilesetMainDeco"]=[spr_TilesetMainDeco, tTilesetMainDeco, "Floragrande Decoration"]
+	tilesets[$ "tTilesetWorld5"]=[spr_TilesetWorld5, tTilesetWorld5, "Frigid Dark Tiles"]
 }
 
 function WM_initializeobj() {	
@@ -324,7 +327,7 @@ function tile_layer_alpha_check() {
 		shader_set(shd_alpha)
 		var alpha = shader_get_uniform(shd_alpha, "alpha");
 		shader_set_uniform_f(alpha,0)
-	} else if oJADEController.selected_mode!=TILE_MODE || layer!=oJADEController.layers[oJADEController.selected_region][oJADEController.selected_tile_layer] {
+	} else if oJADEController.selected_mode!=DECO_MODE || layer!=oJADEController.layers[oJADEController.selected_region][oJADEController.selected_tile_layer] {
 		shader_set(shd_alpha)
 		var alpha = shader_get_uniform(shd_alpha, "alpha");
 		shader_set_uniform_f(alpha,0.33)

@@ -26,8 +26,16 @@ mbmiddle = (mouse_check_button(mb_middle) || (keyboard_check(vk_space) && mouse_
 #region GUI Input Handler
 if (mbleftpress) {
 	topbuttons.update();
+	modebuttons.update();
 	toolbarbuttons.update();
 	list_tabbuttons.update();
+	if selected_mode==DECO_MODE {
+		layeraddbutton.update();
+	}
+}
+
+if (selected_mode == DECO_MODE && deco_mode_type == "tile") {
+	tilepicker.update();
 }
 #endregion
 

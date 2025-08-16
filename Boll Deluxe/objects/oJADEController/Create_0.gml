@@ -14,6 +14,10 @@
 #macro NODE_TOOL 10 //node
 #macro ROTATOR_TOOL 11 //node
 
+selected_mode=OBJECT_MODE;
+selected_toolbar=0;
+selected_tool=SELECT_TOOL;
+
 camera = view_camera[0]
 
 camera_set_view_pos(camera,0,room_height-camera_get_view_height(camera))
@@ -30,6 +34,13 @@ themeaccent2=scribble_rgb_to_bgr($1c2348)
 themeaccent3=scribble_rgb_to_bgr($3a4466)
 themeaccent4=scribble_rgb_to_bgr($67739a)
 themehighlight=c_white
+
+tilesets={}
+JADE_initializeobj();
+
+selected_tileset=0;
+current_tileset="tTilesetMain"
+deco_mode_type="tile";
 
 GUIcanvas = surface_create(guiw,guih);
 
@@ -69,6 +80,85 @@ topbuttons.add("View", function() {
 topbuttons.add("Region", function() {
 
 });
+
+modebuttons = new JADEsmallbuttons(272,4,86,16,8)
+modebuttons.add("Object Mode", function() {
+	selected_mode = OBJECT_MODE
+});
+modebuttons.add("Deco Mode", function() {
+	selected_mode = DECO_MODE
+});
+modebuttons.add("Gizmo Mode", function() {
+	selected_mode = NODE_MODE
+});
+
+selected_layer=""
+layerlist = new JADElayerlisthandler(8,56,192-24,640, "selected_layer") 
+layerlist.add(new JADElistunselectable("Objects"))
+array_push(layerlist.listcontents,new JADEtilelayer("Main Tiles", current_tileset))
+selected_layer=layerlist.listcontents[1]
+
+update_layer = function(_layer) {
+	var type="tile"
+	if is_instanceof(_layer,JADEtilelayer) {
+		current_tileset = _layer.tileset
+		var info = tileset_get_info(_layer.tileset_info[1])
+		default_grid_size = info.tile_width
+		current_grid_size = default_grid_size
+	} else if is_instanceof(_layer, JADEassetlayer) {
+		type="asset";
+	} else if is_instanceof(_layer, JADEbackgroundlayer) {
+		type="background";
+	}
+	deco_mode_type=type;
+}
+
+layeraddbutton = new JADEiconbutton(layerlist.x,layerlist.y+layerlist.height+16,spr_JADEaddicon,function() {
+	JADEdropdown(layeraddbutton.x,layeraddbutton.y+layeraddbutton.height,["Add Tile Layer", "Add Asset Layer", "Add Background Layer"], function(optname,ind) {
+		show_debug_message(ind)
+		switch(ind) {
+			case 0:
+				var name = "New Layer 0"
+				var i=0;
+				var src=layerlist.get_contents();
+				repeat (array_length(src)) {
+					if layer_get_id(name)!=-1 {
+						var name = "New Layer "+string(i)
+					}
+					i++;
+				}
+				oJADEController.layerlist.add(new JADEtilelayer(name,tilesets[$ current_tileset]))
+			break;
+			case 1:
+				var name = "New Layer 0"
+				var i=0;
+				var src=layerlist.get_contents();
+				repeat (array_length(src)) {
+					if layer_get_id(name)!=-1 {
+						var name = "New Layer "+string(i)
+					}
+					i++;
+				}
+				oJADEController.layerlist.add(new JADEassetlayer(name))
+			break;
+			case 2:
+				var name = "New Layer 0"
+				var i=0;
+				var src=layerlist.get_contents();
+				repeat (array_length(src)) {
+					if layer_get_id(name)!=-1 {
+						var name = "New Layer "+string(i)
+					}
+					i++;
+				}
+				oJADEController.layerlist.add(new JADEbackgroundlayer(name,spr_BGtest))
+			break;
+		}
+		with(oJADEController) layeraddbutton.reset();
+	})
+});
+
+tilepicker = new JADEtilepicker(1196,56, 228, 320)
 
 //Modes:
 //1: Objects
@@ -122,16 +212,6 @@ toolbarbuttons = new JADEtoolbar(196,26)
 
 toolbarbuttons.set(toolbar[0])
 
-JADE_initializeobj();
-
-tilesets={}
-tilesets[$ "tTilesetMain"]=[spr_TilesetMain, tTilesetMain, "Floragrande Tiles"]
-tilesets[$ "tTilesetPipes"]=[spr_TilesetPipes, tTilesetPipes, "Pipe Tiles"]
-tilesets[$ "tTilesetMainDeco"]=[spr_TilesetMainDeco, tTilesetMainDeco, "Floragrande Decoration"]
-tilesets[$ "tTilesetWorld5"]=[spr_TilesetWorld5, tTilesetWorld5, "Frigid Dark Tiles"]
-selected_tileset=0;
-current_tileset="tTilesetMain"
-
 var i=0;
 repeat(4) {
 	layers[i][0]=layer_create(-200,$"EditorTiles_FG_Region{i}")
@@ -173,10 +253,6 @@ is_typing = -1;
 
 default_grid_size = 16;
 current_grid_size = default_grid_size;
-
-selected_mode=OBJECT_MODE;
-selected_toolbar=0;
-selected_tool=SELECT_TOOL;
 
 selection_grab = false;
 selection_grab_x = 0;

@@ -18,13 +18,24 @@ not_on_gui=
 !point_in_rectangle(curs_x,curs_y,0,56,192,guih-56)
 
 topbuttons.draw();
+modebuttons.draw();
 toolbarbuttons.draw();
-list_tabbuttons.draw();
 
-if !properties_tab_active {
-	objectlist.draw();
+if (selected_mode != DECO_MODE) || (selected_mode == DECO_MODE && deco_mode_type != "tile") {
+	list_tabbuttons.draw();
+	
+	if !properties_tab_active {
+		objectlist.draw();
+	} else {
+		propertylist.draw(selected_array);
+	}
 } else {
-	propertylist.draw(selected_array);
+	tilepicker.draw();
+}
+
+if selected_mode == DECO_MODE {
+	layerlist.draw();
+	layeraddbutton.draw();
 }
 
 with(oJADEDropDown) {
