@@ -944,7 +944,7 @@ if (mbrightpress && not_on_gui) {
 						var obj = ds_list_find_value(object_layer_map[selected_region], i)
 						if !is_undefined(obj) {
 						    if obj[1] == gridx && obj[2] == gridy {
-								ds_list_delete(object_layer_map, i)//delete first object it finds there (probably bottom top? i don rembr)
+								ds_list_delete(object_layer_map[selected_region], i)//delete first object it finds there (probably bottom top? i don rembr)
 								break;
 							}
 						}

@@ -91,7 +91,8 @@ function object_get_properties(obj){
 			break;
 		case oDonutBlock:
 			properties = [
-				["collapsing", "Collapsing", 0, "checkbox", 0]
+				["collapsing", "Collapsing", 0, "checkbox", 0],
+				["slippery", "Is Icy", 0, "checkbox", 0]
 			]
 			break;
 		case oSolidSpike:
