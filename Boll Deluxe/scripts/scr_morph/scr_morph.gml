@@ -1,38 +1,34 @@
 /// \file  scr_morph.gml
 /// \brief Handling of variables relevant to the morph shader
 
-globalvar morph_xoffsets, morph_yoffsets, u_morph_xoffsets, u_morph_yoffsets;
-globalvar morph_uv_top, morph_uv_bottom, morph_uv_left, morph_uv_right,
-globalvar u_morph_uv, u_morph_uv_x;
+global.morph_yoffsets = array_create(256,0.91);
+global.morph_xoffsets = array_create(256,0.0);
 
-morph_yoffsets = array_create(256,0.91);
-morph_xoffsets = array_create(256,0.0);
+global.morph_uv_left = 0.0;
+global.morph_uv_right = 1.0;
 
-morph_uv_left = 0.0;
-morph_uv_right = 1.0;
+global.morph_uv_top = 0.0;
+global.morph_uv_bottom = 1.0;
 
-morph_uv_top = 0.0;
-morph_uv_bottom = 1.0;
-
-u_morph_yoffsets = shader_get_uniform(shd_morphing,"array_yOffsets");
-u_morph_xoffsets = shader_get_uniform(shd_morphing,"array_xOffsets");
-u_morph_uv = shader_get_uniform(shd_morphing,"u_uv");
-u_morph_uv_x = shader_get_uniform(shd_morphing,"u_uv_x");
+global.u_morph_yoffsets = shader_get_uniform(shd_morphing,"array_yOffsets");
+global.u_morph_xoffsets = shader_get_uniform(shd_morphing,"array_xOffsets");
+global.u_morph_uv = shader_get_uniform(shd_morphing,"u_uv");
+global.u_morph_uv_x = shader_get_uniform(shd_morphing,"u_uv_x");
 
 function morph_set_shader_data(morph)
 {
-	shader_set_uniform_f_array(u_morph_xoffsets,morph.shader_data[0]);
-	shader_set_uniform_f_array(u_morph_yoffsets,morph.shader_data[1]);
-	shader_set_uniform_f(u_morph_uv, morph_uv_top, morph_uv_bottom);
-	shader_set_uniform_f(u_morph_uv_x, morph_uv_left, morph_uv_right);
+	shader_set_uniform_f_array(global.u_morph_xoffsets,morph.shader_data[0]);
+	shader_set_uniform_f_array(global.u_morph_yoffsets,morph.shader_data[1]);
+	shader_set_uniform_f(global.u_morph_uv, global.morph_uv_top, global.morph_uv_bottom);
+	shader_set_uniform_f(global.u_morph_uv_x, global.morph_uv_left, global.morph_uv_right);
 }
 
 function morph_set_shader_data_ex()
 {
-	shader_set_uniform_f_array(u_morph_xoffsets,morph_xoffsets);
-	shader_set_uniform_f_array(u_morph_yoffsets,morph_yoffsets);
-	shader_set_uniform_f(u_morph_uv, morph_uv_top, morph_uv_bottom);
-	shader_set_uniform_f(u_morph_uv_x, morph_uv_left, morph_uv_right);
+	shader_set_uniform_f_array(global.u_morph_xoffsets,global.morph_xoffsets);
+	shader_set_uniform_f_array(global.u_morph_yoffsets,global.morph_yoffsets);
+	shader_set_uniform_f(global.u_morph_uv, global.morph_uv_top, global.morph_uv_bottom);
+	shader_set_uniform_f(global.u_morph_uv_x, global.morph_uv_left, global.morph_uv_right);
 }
 
 // morph struct setup

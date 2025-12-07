@@ -8,10 +8,8 @@
 
 #macro RADFRACDIV 10430.378
 
-globalvar bluechainplat_distances;
-globalvar bluechainplat_xdiffs;
-bluechainplat_distances = [0x10, 0x20, 0x30, 0x40, 0x50, 0x50, 0x50, 0x50, 0x50, 0x50];
-bluechainplat_xdiffs = [0, 86, 336, 512, 16, 86];
+global.bluechainplat_distances = [0x10, 0x20, 0x30, 0x40, 0x50, 0x50, 0x50, 0x50, 0x50, 0x50];
+global.bluechainplat_xdiffs = [0, 86, 336, 512, 16, 86];
 
 
 // complete overhaul to support multiple players
@@ -265,7 +263,7 @@ function blue_plat_interact_with_objects(obj)
 
     obj.collideactive =
         (((global.freezeframe) ? 1 : 0) |
-        (port < ( (((sin_x * 0x10000 >> 0x10) - intlib_make_u32(camera_x)) + 0x10) div 1) ));
+        (port < ( (((sin_x * 0x10000 >> 0x10) - intlib_make_u32(global.camera_x)) + 0x10) div 1) ));
     
     if (obj.collideactive == 0) // if we're active...
     {

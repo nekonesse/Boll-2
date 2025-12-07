@@ -686,21 +686,21 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 				
 				switch (item[$ "type"]) {
 					case "checkbox": {
-						arrvar[i][1]=JADEcheckbox(x+16,y+144+32*i, item[$ "name"], arrvar[i][1])
+						obj[5][i][1]=JADEcheckbox(x+16,y+144+32*i, item[$ "name"], obj[5][i][1])
 					} break;
 					case "number_input": {
 						if !item[$ "absolute"]
-						arrvar[i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], arrvar[i][1],102+i)
-						else arrvar[i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], arrvar[i][1],102+i,0)
+						obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i)
+						else obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i,0)
 					} break;
 					case "number_range_input": {
-						arrvar[i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], arrvar[i][1],102+i,item[$ "minimum"],item[$ "maximum"])
+						obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i,item[$ "minimum"],item[$ "maximum"])
 					} break;
 					case "string_input": {
-						arrvar[i][1]=JADEstringinput(x+16,y+144+32*i, item[$ "name"], arrvar[i][1],102+i)
+						obj[5][i][1]=JADEstringinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i)
 					} break;
 					case "dropdown": {
-						JADEdropdownproperty(x+16,y+144+32*i, item[$ "name"], arrvar[i][1], i, objarr[0], item[$ "dropdowndata"], item[$ "dropdownnames"])
+						JADEdropdownproperty(x+16,y+144+32*i, item[$ "name"], obj[5][i][1], i, objarr[0], item[$ "dropdowndata"], item[$ "dropdownnames"])
 					} break;
 				}
 				
@@ -786,10 +786,9 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 		
 		var obj = oJADEController.object_map[| objind]
 		var arr = oJADEController.properties.property_data[$ obj[0]]
-		var arrvar = oJADEController.properties.property_values[$ obj[0]]
 		var item = arr[propind]
 		
-		arrvar[oJADEController.property_dropdown_index][1]=item[$ "dropdowndata"][ind]
+		obj[5][oJADEController.property_dropdown_index][1]=item[$ "dropdowndata"][ind]
 	}
 }
 

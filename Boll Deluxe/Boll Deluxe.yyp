@@ -1239,7 +1239,6 @@
     {"id":{"name":"scr_catspeak_lexer","path":"scripts/scr_catspeak_lexer/scr_catspeak_lexer.yy",},},
     {"id":{"name":"scr_catspeak_parser","path":"scripts/scr_catspeak_parser/scr_catspeak_parser.yy",},},
     {"id":{"name":"scr_catspeak_presets","path":"scripts/scr_catspeak_presets/scr_catspeak_presets.yy",},},
-    {"id":{"name":"scr_cleanedge","path":"scripts/scr_cleanedge/scr_cleanedge.yy",},},
     {"id":{"name":"scr_compile","path":"scripts/scr_compile/scr_compile.yy",},},
     {"id":{"name":"scr_draw_scripts","path":"scripts/scr_draw_scripts/scr_draw_scripts.yy",},},
     {"id":{"name":"scr_fx","path":"scripts/scr_fx/scr_fx.yy",},},

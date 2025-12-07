@@ -90,7 +90,6 @@ layerlist = new JADElayerlisthandler(8,56,192-24,640, "selected_layer")
 layerlist.add(new JADElistunselectable("Objects"))
 layerlist.add(new JADEtilelayer("Main Tiles", current_tileset))
 layerlist.update_depths();
-selected_layer=layerlist.listcontents[1]
 
 update_layer = function(_layer) {
 	var type="tile"
@@ -431,6 +430,8 @@ object_place = function(_uuid, _x, _y, _xscale, _yscale) {
 	var obj = [_uuid, _x, _y, _xscale, _yscale]
 	var data = obj_data[$ obj[0]]
 	obj[5] = properties.getDefaultValues(_uuid);
+	obj[6] = data.xoff;
+	obj[7] = data.yoff;
 	//add other data stuff here later
 	ds_list_add(object_map, obj)
 }
@@ -442,7 +443,7 @@ asset_place = function(_uuid, _x, _y, _xscale, _yscale, _layer=selected_layer) {
 	layer_sprite_yscale(inst,_yscale);
 	layer_sprite_speed(inst, 0);
 	var obj = [_uuid, inst];
-	obj[3] = properties.getDefaultValues(_uuid);
+	obj[2] = properties.getDefaultValues(_uuid);
 	//add other data stuff here later
 	ds_list_add(_layer.assetmap, obj);
 }

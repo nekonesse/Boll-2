@@ -837,7 +837,6 @@
     {"name":"scr_catspeak_ir","order":1,"path":"scripts/scr_catspeak_ir/scr_catspeak_ir.yy",},
     {"name":"scr_catspeak_lexer","order":2,"path":"scripts/scr_catspeak_lexer/scr_catspeak_lexer.yy",},
     {"name":"scr_catspeak_parser","order":3,"path":"scripts/scr_catspeak_parser/scr_catspeak_parser.yy",},
-    {"name":"scr_cleanedge","order":3,"path":"scripts/scr_cleanedge/scr_cleanedge.yy",},
     {"name":"scr_compile","order":3,"path":"scripts/scr_compile/scr_compile.yy",},
     {"name":"scr_draw_scripts","order":8,"path":"scripts/scr_draw_scripts/scr_draw_scripts.yy",},
     {"name":"scr_fx","order":7,"path":"scripts/scr_fx/scr_fx.yy",},

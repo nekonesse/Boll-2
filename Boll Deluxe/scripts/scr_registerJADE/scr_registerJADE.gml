@@ -287,7 +287,7 @@ function JADE_load(file=game_save_id+"\save.jade") {
 
 function tile_layer_alpha_check() {
 	//This makes the tile layer transparent if you arent in tile mode by using layer scripts
-	if (oJADEController.selected_mode!=DECO_MODE || layer!=oJADEController.selected_layer.my_layer) {
+	if (oJADEController.selected_mode!=DECO_MODE || oJADEController.selected_layer == noone || layer!=oJADEController.selected_layer.my_layer) {
 		shader_set(shd_alpha)
 		var alpha = shader_get_uniform(shd_alpha, "alpha");
 		shader_set_uniform_f(alpha,0.33)

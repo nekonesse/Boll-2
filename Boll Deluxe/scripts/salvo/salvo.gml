@@ -88,9 +88,7 @@ function get_slime_width(_x)
 
 
 // EWRAM vars
-globalvar EWR_SprYRelToCamY;
-
-EWR_SprYRelToCamY = 0; // Y relative to the camera, (obj.y - camera_y)
+global.EWR_SprYRelToCamY = 0; // Y relative to the camera, (obj.y - camera_y)
 
 // morph.y2 is used for so many things that I can't bother to think of a better name
 
@@ -222,7 +220,7 @@ function SlimeSpawn(obj = self)
     obj.intro_ypos = int64(obj.y * FRACUNIT) + 8;
     obj.intro_ypos2 = obj.intro_ypos;
 
-    obj.y_rel = make_s16(obj.ystart2 - camera_y)
+    obj.y_rel = make_s16(obj.ystart2 - global.camera_y)
                 + 22; // this allows the camera to move freely while slimes spawn
 
     obj.rebound = 0;
@@ -282,8 +280,8 @@ function Slime_HandleBGRender(obj = self)
 
     morph.y_rel = (obj.y_rel div 1);
 
-    morph.x1 = ((obj.x div 1) + 8) - camera_x;
-    morph.y1 = (obj.y div 1) - camera_y;
+    morph.x1 = ((obj.x div 1) + 8) - global.camera_x;
+    morph.y1 = (obj.y div 1) - global.camera_y;
 
     morph.bottom = obj.morph_bottom;
 
@@ -733,7 +731,7 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
         offset = 6;
     }
 
-    sVar1 = floor((obj.y - obj.hit_sizey) - camera_y);
+    sVar1 = floor((obj.y - obj.hit_sizey) - global.camera_y);
     exceed = max(0, sVar1 - (CAMERA_MAX_HEIGHT + 8));
     
     var index = 0;
@@ -758,7 +756,7 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
             uVar5 *= 2;
 
             // 0x030069fc = dataptr[cycle] + yoshi's relative X
-            morph.rel_offset[0] = SlimePosOffsetTable[offset] + (obj.x - camera_x);
+            morph.rel_offset[0] = SlimePosOffsetTable[offset] + (obj.x - global.camera_x);
             // uVar2 = dataptr[cycle + 1] + yoshi's relative Y
             uVar2 = make_u32(SlimePosOffsetTable[offset + 1] + ycam);
 
@@ -915,7 +913,7 @@ function CheckMorphCollision(obj, morph, xpos = 0, yoff = 0)
             return;
         }
 
-        sVar1 = floor((obj.y - obj.hit_sizey) - camera_y);
+        sVar1 = floor((obj.y - obj.hit_sizey) - global.camera_y);
         exceed = max(0, sVar1 - (CAMERA_MAX_HEIGHT - 8));
 
         // if we get no collision, run the loop a second time
@@ -934,7 +932,7 @@ function MorphHandleObjectCollisions(morph, obj)
 
     var collide_p = instance_nearest(obj.x, obj.y, oPlayer);
     
-    var exceed = max(0, (obj.y - camera_y) - (CAMERA_MAX_HEIGHT - 8));
+    var exceed = max(0, (obj.y - global.camera_y) - (CAMERA_MAX_HEIGHT - 8));
 
     if (collide_p)
     {
@@ -946,7 +944,7 @@ function MorphHandleObjectCollisions(morph, obj)
         if (morph.col_height > -1)
         {
             var hit_height = min(CAMERA_MAX_HEIGHT - 8, morph.col_height + collide_p.hit_sizey);
-            var real_height = max(0, obj.y - (hit_height + exceed + camera_y));
+            var real_height = max(0, obj.y - (hit_height + exceed + global.camera_y));
             
             var heightpct = max(0, min(100, ((real_height) / (morph.vis_height)) * 100)) div 1;
             
@@ -1695,11 +1693,9 @@ function SlimeStartBossBattle(obj = self)
     }
 }
 
-globalvar particle_hspds, particle_vspds;
-
-particle_hspds =
+global.particle_hspds =
     [128, 1, 2, 4, -128, -256, -512, -1024, -128, -256, -512, -1024, 192, -192];
-particle_vspds = [-128, -256, -512, -1024, 192, -192, -192];
+global.particle_vspds = [-128, -256, -512, -1024, 192, -192, -192];
 
 // handles death; shrinks the slime until it's incredibly small, then destroys it
 function SlimeHandleDeath(obj)
@@ -1760,9 +1756,7 @@ function SlimeCrushed(obj = self)
     }
 }
 
-globalvar SlimeFuncs;
-
-SlimeFuncs = [SlimeGeneric,          // 0
+global.SlimeFuncs = [SlimeGeneric,          // 0
               Slime_MoveOnGround,    // 1
               SlimeChase,            // 2
               SlimeDefend,           // 3
