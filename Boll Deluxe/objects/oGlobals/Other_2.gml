@@ -13,6 +13,9 @@ global.animdat[0]=[];
 window_set_size(432*3,248*3);
 window_center();
 
+//application_surface_draw_enable(false); 
+
+
 global._findDefine = function(_filedir){
 	var _code		=file_text_open_read(_filedir);
 	var _str		="",

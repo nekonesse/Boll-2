@@ -4,3 +4,6 @@ gfx_y = -144
 reward = 0
 bbox_height = bbox_bottom - bbox_top
 player = noone;
+playerNum = 0;
+sound = VinylPlay(snd_flagpoleraise,false,0);
+VinylStop(sound);

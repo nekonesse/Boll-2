@@ -615,18 +615,21 @@ if (mbleftrel) {
 						}
 						i++;
 					}
-					tile_update_properties();
-					//since the tile update refreshes the ds list, 
-					//we must update our selected array to match the new positions
-					selected_array=[];
-					i=0;
-					repeat(ds_list_size(tilemap)) {
-						var tile = ds_list_find_value(tilemap,i)
-						var j=0;
-						repeat(array_length(temp_select_array)) {
-							if array_equals(temp_select_array[j],tile) {
-								array_push(selected_array,i)
-								break
+				break;
+			}
+		break;
+		case BRUSH_TOOL: {
+			switch(selected_mode) {
+				case OBJECT_MODE:
+					var size = ds_list_size(object_layer_map[selected_region])
+					var i=0;
+					repeat(size) {
+						//is place matching cursor?
+						var obj = ds_list_find_value(object_layer_map[selected_region], i)
+						if !is_undefined(obj) {
+						    if obj[1] == gridx && obj[2] == gridy {
+								ds_list_delete(object_layer_map[selected_region], i)//delete first object it finds there (probably bottom top? i don rembr)
+								break;
 							}
 							j++;
 						}

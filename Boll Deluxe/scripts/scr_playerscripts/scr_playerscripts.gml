@@ -393,19 +393,8 @@ function animate_player() {
 }
 
 function finish_death() {
-	if (global.lives[0] < 1) { //game over. couldnt care less if player 2 has -4 lives You. Are. Not. Implemented!!
-		VinylStopAll();
-		VinylPlay(mus_gameover, 0, 0.4);
-		show_message("yeah you got the games over yeah. died alot and lost your lifes. its over  alright now GET OUTTA HERE");
-		if (!global.jade_testing)
-			room_goto(rIntro);
-		else {
-			global.jade_testing = false;
-			room_goto(rEditor);
-		}
-		exit;
-	}
-	room_restart();
+	oGameManager.enable_app_surf_redraw = true
+	death_time = true
 }	
 
 function player_castlewalk() {
@@ -443,8 +432,13 @@ function player_castlewalk() {
 	                    alarm[6]=viclength
 	                } else alarm[6]=1
 	                playsfx(charmName+"win")        
-					with (oGameManager)
+					with (oGameManager) {
+						fadein = true
+						enable_app_surf_redraw = true
+						fadeprog = 0
+						alarm[1]=240
 						alarm[11]=400
+					}
 	            }
 	        }
 	        //}
@@ -463,11 +457,19 @@ function player_castlewalk() {
 	                        posed=1  
 	                        alarm[2]=viclength
 							alarm[4]=viclength
-							with (oGameManager)
+							with (oGameManager) {
+								fadein = true
+								enable_app_surf_redraw = true
+								fadeprog = 0
+								alarm[1]=240
 								alarm[11]=400
+							}
 	                        playsfx(charmName+"win") 
 	                    }
-	                } else posed=1
+	                } else {
+						posed=1
+						//fadeprog += 0.042
+					}
 	            } else {
 					right=(x<room_width)	
 				}
