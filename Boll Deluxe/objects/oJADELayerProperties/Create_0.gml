@@ -10,6 +10,8 @@ tilesetlist=[
 "tTilesetPipes",
 "tTilesetMainDeco",
 "tTilesetWorld5",
+"tTilesetWorld5Deco",
+"tTilesetBowserLand",
 ]
 
 exitbutton = new JADEiconbutton(x+image_xscale-16,y+1,spr_JADEexiticon, function() {

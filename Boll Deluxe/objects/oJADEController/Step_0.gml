@@ -149,6 +149,7 @@ if keyboard_check_pressed(vk_delete) {
 				selected_array=[];
 				tile_update_properties();
 			} else if deco_mode_type == "asset" {
+				if selected_layer == noone break;
 				if !ds_exists(selected_layer.assetmap,ds_type_list) break;
 				
 				array_sort(selected_array,false)
@@ -455,6 +456,7 @@ if (mbleft && not_on_gui) {
 									array_push(selected_array,col-1)
 									break;
 								} else if !keyboard_check(vk_shift) {
+									if selected_layer == noone break;
 									if !ds_exists(selected_layer.assetmap,ds_type_list) break;
 							
 									draggingobject = true;
@@ -615,30 +617,11 @@ if (mbleftrel) {
 						}
 						i++;
 					}
-				break;
-			}
-		break;
-		case BRUSH_TOOL: {
-			switch(selected_mode) {
-				case OBJECT_MODE:
-					var size = ds_list_size(object_layer_map[selected_region])
-					var i=0;
-					repeat(size) {
-						//is place matching cursor?
-						var obj = ds_list_find_value(object_layer_map[selected_region], i)
-						if !is_undefined(obj) {
-						    if obj[1] == gridx && obj[2] == gridy {
-								ds_list_delete(object_layer_map[selected_region], i)//delete first object it finds there (probably bottom top? i don rembr)
-								break;
-							}
-							j++;
-						}
-						i++;
-					}
 				}
 			break;
 			case "asset":
 				if (selection_box) {
+					if selected_layer == noone exit;
 					if !ds_exists(selected_layer.assetmap,ds_type_list) exit;
 					
 					var box_w = (mouse_x - selection_box_x)

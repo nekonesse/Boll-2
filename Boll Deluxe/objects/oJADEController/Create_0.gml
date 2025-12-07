@@ -408,6 +408,7 @@ check_colliding_tile = function(_x, _y) {
 }
 
 check_colliding_asset = function(_x, _y) {
+	if selected_layer == noone exit;
 	if !ds_exists(selected_layer.assetmap,ds_type_list) exit;
 	
 	var i=0;
