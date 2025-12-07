@@ -33,22 +33,38 @@ function JADE_initializeobj() {
 	
 	registerobj(oPlayerSpawn, spr_spawner, 8, 8, 16, 16, false, false, objectlist, "Player Spawn")
 	registerobj(oCollider, spr_collider, 0, 0, 16, 16, true, true, objectlist, "Collider")
+	properties.addCheckbox(oCollider, "Is Slippery", "slippery", false)
 	registerobj(oSlopeCollider, spr_slopesolid, 0, 0, 16, 16, true, true, objectlist, "Slope Collider")
+	properties.addCheckbox(oSlopeCollider, "Flipped", "hflip", false)
+	properties.addCheckbox(oSlopeCollider, "Is Ramp", "ramp", false)
+	properties.addCheckbox(oSlopeCollider, "Is Slippery", "slippery", false)
 	registerobj(oSemilider, spr_semilider, 0, 0, 16, 16, true, true, objectlist, "Semisolid")
+	properties.addCheckbox(oSemilider, "Is Slippery", "slippery", false)
 	registerobj(oSemiSlope, spr_slopesemi, 0, 0, 16, 16, true, true, objectlist, "Semisolid Slope")
+	properties.addCheckbox(oSemiSlope, "Flipped", "hflip", false)
+	properties.addCheckbox(oSemiSlope, "Is Ramp", "ramp", false)
+	properties.addCheckbox(oSemiSlope, "Is Slippery", "slippery", false)
 	
 	var blockcategory = new JADElistcategory("Blocks")
 	registerobj(oBrick, spr_brick, 8, 8, 16, 16, false, false, blockcategory, "Brick Block")
-	registerobj(oItemBox, spr_itembox, 8, 8, 16, 16, false, false, blockcategory, "Item Box")
+	
+	var hittables = new JADElistcategory("Containers")
+	registerobj(oItemBox, spr_itembox, 8, 8, 16, 16, false, false, hittables, "Item Box")
 	properties.addDropdown(oItemBox, "Content", "content", "coin", ["Single Coin", "Multiple Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom"], ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"])
 	properties.addNumberInput(oItemBox, "Amount", "amount", 1, true)
 	properties.addCheckbox(oItemBox, "Is Brick", "bricked", false)
 	properties.addCheckbox(oItemBox, "Is Hidden", "hidden", false)
 	properties.addCheckbox(oItemBox, "Is Dispenser", "eject", false)
-	registerobj(oLongItemBox, spr_longitembox, 24, 8, 48, 16, false, false, blockcategory, "Long Item Box")
-	registerobj(oMonitor, spr_monitor, 8, 8, 16, 16, false, false, blockcategory, "Monitor")
+	registerobj(oLongItemBox, spr_longitembox, 24, 8, 48, 16, false, false, hittables, "Long Item Box")
+	properties.addDropdown(oLongItemBox, "Content", "content", "coin", ["Single Coin", "Multiple Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom"], ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"])
+	properties.addNumberInput(oLongItemBox, "Amount", "amount", 1, true)
+	properties.addCheckbox(oLongItemBox, "Is Hidden", "hidden", false)
+	properties.addCheckbox(oLongItemBox, "Is Dispenser", "eject", false)
+	registerobj(oMonitor, spr_monitor, 8, 8, 16, 16, false, false, hittables, "Monitor")
+	properties.addDropdown(oMonitor, "Content", "content", "coin", ["10 Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"])
+	blockcategory.add(hittables);
 	
-	objectlist.add(blockcategory) //we added the items to the category, but we still need to apply the category to the main list
+	objectlist.add(blockcategory); //we added the items to the category, but we still need to apply the category to the main list
 	
 	var stagecomp = new JADElistcategory("Stage Components")
 	
@@ -57,13 +73,7 @@ function JADE_initializeobj() {
 	registerobj(oFlagpole, spr_JADEflagpole, 8, 160, 48, 160, false, false, stagecomp, "Flag Pole")
 	registerobj(oMysteryOrb, spr_mysteryorb, 8, 8, 16, 16, false, false, stagecomp, "Mystery Orb")
 	
-	objectlist.add(stagecomp)
-	
-	var test = new JADElistcategory("Test")
-	
-	registerobj(oHardBlock, spr_pipe, 0, 0, 16, 16, false, false, test, "Hard Block")
-	
-	objectlist.add(test)
+	objectlist.add(stagecomp);
 	
 	//NODE MODE
 	registerobj(oCameraRegion, spr_cameraregion, 0, 0, 16, 16, false, false, gizmolist, "Camera Region")

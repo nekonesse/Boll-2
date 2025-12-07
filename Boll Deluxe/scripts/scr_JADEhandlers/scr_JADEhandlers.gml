@@ -339,7 +339,6 @@ function JADElisthandler(_x, _y, _width, _height, _checkvar) constructor {
 			array_delete(currarr,0,1);
 			if is_instanceof(item, JADElistcategory) {
 				var over_button = point_in_rectangle(curs_x,curs_y,x+indent+scroll_x,y+(24*i)+scroll_y,x+width+indent+scroll_x,y+24+(24*i)+scroll_y) && over
-				draw_rectangle(x+indent+scroll_x,y+(24*i)+scroll_y,x+width+indent+scroll_x,y+24+(24*i)+scroll_y,true)
 				if (mbleft) && (over_button) {
 					item.collapsed = !item.collapsed;
 					scroll_x=clamp(scroll_x,-listwidth,0)
@@ -352,18 +351,15 @@ function JADElisthandler(_x, _y, _width, _height, _checkvar) constructor {
 				
 				if !(item.collapsed) {
 
-					var j = 0;
+					var j = array_length(item.listcontents)-1;
 					repeat(array_length(item.listcontents)){
 						array_insert(currarr,0,item.listcontents[j])
 						array_push(indarr,indent + 16)
-						j++;
+						j--;
 					}
 					listwidth+=16;
 				}
-			}
-			
-			
-			if (is_instanceof(item, JADEobj) || is_instanceof(item, JADEasset)) {
+			} else if (is_instanceof(item, JADEobj) || is_instanceof(item, JADEasset)) {
 				var over_button = point_in_rectangle(curs_x,curs_y,x+indent+scroll_x,y+(24*i)+scroll_y,x+width+indent+scroll_x,y+24+(24*i)+scroll_y) && over
 				if (mbleft) && (over_button) {
 					variable_instance_set(oJADEController, checkvar, item)
