@@ -16,7 +16,7 @@
   "exportToGame":true,
   "extensionVersion":"0.0.1",
   "files":[
-    {"$GMExtensionFile":"","%Name":"intlib.dll","constants":[],"copyToTargets":3035426170322550894,"filename":"intlib.dll","final":"","functions":[
+    {"$GMExtensionFile":"v1","%Name":"intlib.dll","constants":[],"copyToTargets":3035426170322550894,"filename":"intlib.dll","final":"","functions":[
         {"$GMExtensionFunction":"","%Name":"intlib_make_u8","argCount":0,"args":[2,],"documentation":"","externalName":"uint8_convert","help":"intlib_make_u8(value)","hidden":false,"kind":1,"name":"intlib_make_u8","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
         {"$GMExtensionFunction":"","%Name":"intlib_make_s8","argCount":0,"args":[2,],"documentation":"","externalName":"sint8_convert","help":"intlib_make_s8(value)","hidden":false,"kind":1,"name":"intlib_make_s8","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
         {"$GMExtensionFunction":"","%Name":"intlib_compare","argCount":0,"args":[2,2,],"documentation":"","externalName":"compare_int_signed","help":"intlib_compare(a, b)","hidden":false,"kind":1,"name":"intlib_compare","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
@@ -30,17 +30,7 @@
         {"$GMExtensionFunction":"","%Name":"intlib_make_s32","argCount":0,"args":[2,],"documentation":"","externalName":"sint32_convert","help":"intlib_make_u32(value)","hidden":false,"kind":1,"name":"intlib_make_s32","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
         {"$GMExtensionFunction":"","%Name":"intlib_make_u64","argCount":0,"args":[2,],"documentation":"","externalName":"uint64_convert","help":"intlib_make_u64(value)","hidden":false,"kind":1,"name":"intlib_make_u64","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
         {"$GMExtensionFunction":"","%Name":"intlib_make_s64","argCount":0,"args":[2,],"documentation":"","externalName":"sint64_convert","help":"intlib_make_s64(value)","hidden":false,"kind":1,"name":"intlib_make_s64","resourceType":"GMExtensionFunction","resourceVersion":"2.0","returnType":2,},
-      ],"init":"","kind":1,"name":"intlib.dll","order":[
-        {"name":"intlib_make_u8","path":"extensions/intlib/intlib.yy",},
-        {"name":"intlib_make_u8_and_store","path":"extensions/intlib/intlib.yy",},
-        {"name":"intlib_make_s8","path":"extensions/intlib/intlib.yy",},
-        {"name":"intlib_make_u16","path":"extensions/intlib/intlib.yy",},
-        {"name":"intlib_make_s16","path":"extensions/intlib/intlib.yy",},
-        {"name":"intlib_compare","path":"extensions/intlib/intlib.yy",},
-        {"name":"intlib_compare_unsigned","path":"extensions/intlib/intlib.yy",},
-        {"name":"intlib_make_fixedpoint","path":"extensions/intlib/intlib.yy",},
-        {"name":"intlib_make_fixedpoint_unsigned","path":"extensions/intlib/intlib.yy",},
-      ],"origname":"","ProxyFiles":[
+      ],"init":"","kind":1,"name":"intlib.dll","origname":"","ProxyFiles":[
         {"$GMProxyFile":"","%Name":"intlib_x64.dll","name":"intlib_x64.dll","resourceType":"GMProxyFile","resourceVersion":"2.0","TargetMask":6,},
         {"$GMProxyFile":"","%Name":"intlib_linux.so","name":"intlib_linux.so","resourceType":"GMProxyFile","resourceVersion":"2.0","TargetMask":7,},
       ],"resourceType":"GMExtensionFile","resourceVersion":"2.0","uncompress":false,"usesRunnerInterface":false,},

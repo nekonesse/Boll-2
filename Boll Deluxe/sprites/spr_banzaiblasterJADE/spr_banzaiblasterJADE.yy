@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_banzaiblasterJADE",
   "bboxMode":0,
   "bbox_bottom":63,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"9bda704f-061a-4ac3-8396-57bb9e6d3912","name":"9bda704f-061a-4ac3-8396-57bb9e6d3912","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"9bda704f-061a-4ac3-8396-57bb9e6d3912","name":"9bda704f-061a-4ac3-8396-57bb9e6d3912","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

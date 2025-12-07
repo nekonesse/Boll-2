@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_swingingplatform",
   "bboxMode":0,
   "bbox_bottom":8,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"f6e71d6f-364d-4a3f-857e-17a9e8cfe579","name":"f6e71d6f-364d-4a3f-857e-17a9e8cfe579","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"f6e71d6f-364d-4a3f-857e-17a9e8cfe579","name":"f6e71d6f-364d-4a3f-857e-17a9e8cfe579","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

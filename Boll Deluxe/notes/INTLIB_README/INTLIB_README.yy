@@ -1,5 +1,5 @@
 {
-  "$GMNotes":"",
+  "$GMNotes":"v1",
   "%Name":"INTLIB_README",
   "name":"INTLIB_README",
   "parent":{

@@ -1,147 +1,76 @@
 #macro OBJECT_MODE 0
-#macro TILE_MODE 1
-#macro BACKGROUND_MODE 2
-#macro ASSET_MODE 3
-#macro NODE_MODE 4
-#macro JADE_VERSION 3
+#macro DECO_MODE 1
+#macro NODE_MODE 2
+#macro JADE_VERSION 4
 
+global.tilesets={}
+//add tilesets
+global.tilesets[$ "tTilesetMain"]=[spr_TilesetMain, tTilesetMain, "Floragrande Tiles"]
+global.tilesets[$ "tTilesetPipes"]=[spr_TilesetPipes, tTilesetPipes, "Pipe Tiles"]
+global.tilesets[$ "tTilesetMainDeco"]=[spr_TilesetMainDeco, tTilesetMainDeco, "Floragrande Decoration"]
+global.tilesets[$ "tTilesetWorld5"]=[spr_TilesetWorld5, tTilesetWorld5, "Frigid Dark Tiles"]
 
-function JADE_initializeobj() {	
-	obj_data = ds_map_create();
-	obj_name = ds_list_create();
+function JADE_initializeobj() {
+	obj_data = {};
+	properties = new JADEproperties()
+	objectlist = new JADElisthandler(1296-216-14,56, 216, 640, "selected_obj")
+	gizmolist = new JADElisthandler(1296-216-14,56, 216, 640, "selected_obj")
+	decolist = new JADElisthandler(1296-216-14,56, 216, 640, "selected_deco_obj")
+	bglist = new JADEbglisthandler(1296-216-14,56, 216, 480)
+	propertylist = new JADEpropertylisthandler(1296-216-14,56, 216, 640);
 	
-	#region Categories
-		cat_blocks = ds_list_create();
-		cat_baddies = ds_list_create();	
-		cat_items = ds_list_create();
-		cat_tech = ds_list_create();
-		cat_node = ds_list_create();
-		
-		jade_cats[OBJECT_MODE] = [cat_blocks, cat_baddies, cat_items, cat_tech];
-		jade_cats[NODE_MODE] = [cat_node];
-	#endregion
+	list_tabbuttons=new JADEsmallbuttons(1296-216-14,38,96,20,8,false, true)
 	
-	/*
-		hey so let me explain how this works:
-		uuid is the 'id' for an object, its used for accessing everything. preferrably a string. 
-		DO NOT USE AN INSTANCE ID.
-		gamemaker instance ids are dynamic and will regenerate when the game compiles,
-		meaning if you try and save that and load it later, it will error, because it doesnt exist!
-		
-		instead use a string for a name like "brick" or "red_koopa"
-	*/
-	//1. uuid
-	//2. sprite
-	//3. placement x offset
-	//4. placement y offset
-	//5. placement xscale
-	//6. placement yscale
-	//7. scalable horizontally (bool)
-	//8. scalable vertically (bool)
-	//9. what editor mode object list to appear in
-	//10. object properties (check scr_properties)
-	//11. list display name (will use uuid if not set)
-	//12. is nodeable in node mode (bool)
-	//13. x scale override when placed
-	//14. y scale override when place
-	show_debug_message("Registering JADE object list...")
-	registerobj(object_get_name(oPlayerSpawn), spr_spawner, -sprite_get_xoffset(spr_spawner), -sprite_get_yoffset(spr_spawner), sprite_get_width(spr_spawner), sprite_get_height(spr_spawner), false, false, OBJECT_MODE, 0, object_get_properties("oPlayerSpawn"), "Player Spawn")
-	registerobj(object_get_name(oCollider), spr_collider, -sprite_get_xoffset(spr_collider), -sprite_get_yoffset(spr_collider), sprite_get_width(spr_collider), sprite_get_height(spr_collider), true, true, OBJECT_MODE, 0, object_get_properties("oCollider"), "Collider")
-	registerobj(object_get_name(oSlopeCollider), spr_slopesolid, -sprite_get_xoffset(spr_slopesolid), -sprite_get_yoffset(spr_slopesolid), sprite_get_width(spr_slopesolid), sprite_get_height(spr_slopesolid), true, true, OBJECT_MODE, 0, object_get_properties("oSlopeCollider"), "Solid Slope")
-	registerobj(object_get_name(oRoundedSlope1x1), spr_rslope1, -sprite_get_xoffset(spr_rslope1), -sprite_get_yoffset(spr_rslope1), sprite_get_width(spr_rslope1), sprite_get_height(spr_rslope1), true, true, OBJECT_MODE, 0, object_get_properties("oRoundedSlope1x1"), "Rounded Slope 1x1")
-	registerobj(object_get_name(oRoundedSlope2x2), spr_rslope2, -sprite_get_xoffset(spr_rslope2), -sprite_get_yoffset(spr_rslope2), sprite_get_width(spr_rslope2), sprite_get_height(spr_rslope2), true, true, OBJECT_MODE, 0, object_get_properties("oRoundedSlope2x2"), "Rounded Slope 2x2")
-	registerobj(object_get_name(oRoundedSlope3x3), spr_rslope3, -sprite_get_xoffset(spr_rslope3), -sprite_get_yoffset(spr_rslope3), sprite_get_width(spr_rslope3), sprite_get_height(spr_rslope3), true, true, OBJECT_MODE, 0, object_get_properties("oRoundedSlope3x3"), "Rounded Slope 3x3")
-	registerobj(object_get_name(oSemilider), spr_semilider, -sprite_get_xoffset(spr_semilider), -sprite_get_yoffset(spr_semilider), sprite_get_width(spr_semilider), sprite_get_height(spr_semilider), true, true, OBJECT_MODE, 0, object_get_properties("oSemilider"), "Semisolid")
-	registerobj(object_get_name(oSemiSlope), spr_slopesemi, -sprite_get_xoffset(spr_slopesemi), -sprite_get_yoffset(spr_slopesemi), sprite_get_width(spr_slopesemi), sprite_get_height(spr_slopesemi), true, true, OBJECT_MODE, 0, object_get_properties("oSemiSlope"), "Semisolid Slope")
-    //registerobj(object_get_name(oGrabable), spr_gobble, -sprite_get_xoffset(spr_gobble), -sprite_get_yoffset(spr_gobble), sprite_get_width(spr_gobble), sprite_get_height(spr_gobble), true, true, OBJECT_MODE, 0, object_get_properties("oGrabable"), "Grabable Object")
-	registerobj(object_get_name(oPipe), spr_pipe, -sprite_get_xoffset(spr_pipe), -sprite_get_yoffset(spr_pipe), sprite_get_width(spr_pipe), sprite_get_height(spr_pipe), false, false, OBJECT_MODE, 0, object_get_properties("oPipe"), "Pipe")
-	registerobj(object_get_name(oItemBox), spr_itembox, -sprite_get_xoffset(spr_itembox), -sprite_get_yoffset(spr_itembox), sprite_get_width(spr_itembox), sprite_get_height(spr_itembox), false, false, OBJECT_MODE, 0, object_get_properties("oItemBox"), "Item Box", true)
-	registerobj(object_get_name(oLongItemBox), spr_longitembox, -sprite_get_xoffset(spr_longitembox), -sprite_get_yoffset(spr_longitembox), sprite_get_width(spr_longitembox), sprite_get_height(spr_longitembox), false, false, OBJECT_MODE, 0, object_get_properties("oLongItemBox"), "Long Item Box", true)
-	registerobj(object_get_name(oBrick), spr_brick, -sprite_get_xoffset(spr_brick), -sprite_get_yoffset(spr_brick), sprite_get_width(spr_brick), sprite_get_height(spr_brick), true, false, OBJECT_MODE, 0, object_get_properties("oBrick"), "Brick", true)
-	registerobj(object_get_name(oCrate), spr_crate, -sprite_get_xoffset(spr_crate), -sprite_get_yoffset(spr_crate), sprite_get_width(spr_crate), sprite_get_height(spr_crate), false, false, OBJECT_MODE, 0, object_get_properties("oCrate"), "Crate", true)
-	registerobj(object_get_name(oMonitor), spr_monitor, -8, -8, 16, 16, false, false, OBJECT_MODE, 0, object_get_properties("oMonitor"), "Monitor", true)
-	registerobj(object_get_name(oHardBlock), spr_hardblock, -sprite_get_xoffset(spr_hardblock), -sprite_get_yoffset(spr_hardblock), sprite_get_width(spr_hardblock), sprite_get_height(spr_hardblock), false, false, OBJECT_MODE, 0, object_get_properties("oHardBlock"), "Hard Block", true)
-	registerobj(object_get_name(oDonutBlock), spr_donutblock, -sprite_get_xoffset(spr_donutblock), -sprite_get_yoffset(spr_donutblock), sprite_get_width(spr_donutblock), sprite_get_height(spr_donutblock), true, false, OBJECT_MODE, 0, object_get_properties("oDonutBlock"), "Donut Block", true)
-	registerobj(object_get_name(oNoteBlock), spr_noteblock, -sprite_get_xoffset(spr_noteblock), -sprite_get_yoffset(spr_noteblock), sprite_get_width(spr_noteblock), sprite_get_height(spr_noteblock), false, false, OBJECT_MODE, 0, object_get_properties("oNoteBlock"), "Note Block", true)
-	registerobj(object_get_name(oFlipblock), spr_flipblock, -sprite_get_xoffset(spr_flipblock), -sprite_get_yoffset(spr_flipblock), sprite_get_width(spr_flipblock), sprite_get_height(spr_flipblock), true, false, OBJECT_MODE, 0, object_get_properties("oFlipBlock"), "Flip Block", true)
-	registerobj(object_get_name(oShootBlock), spr_shootblock, -sprite_get_xoffset(spr_shootblock), -sprite_get_yoffset(spr_shootblock), sprite_get_width(spr_shootblock), sprite_get_height(spr_shootblock), false, false, OBJECT_MODE, 0, object_get_properties("oShootBlock"), "Shoot Block", true)
-	registerobj(object_get_name(oSolidSpike), spr_solidspike, -sprite_get_xoffset(spr_solidspike), -sprite_get_yoffset(spr_solidspike), sprite_get_width(spr_solidspike), sprite_get_height(spr_solidspike), true, true, OBJECT_MODE, 0, object_get_properties("oSolidSpike"), "Solid Spike", true)
-	registerobj(object_get_name(oMovingPlatform), spr_movingplatform, -sprite_get_xoffset(spr_movingplatform), -sprite_get_yoffset(spr_movingplatform), sprite_get_width(spr_movingplatform), sprite_get_height(spr_movingplatform), true, false, OBJECT_MODE, 0, object_get_properties("oMovingPlatform"), "Moving Platform", true)
-	registerobj(object_get_name(oSwingingPlatform), spr_movingplatform, -sprite_get_xoffset(spr_movingplatform), -sprite_get_yoffset(spr_movingplatform), sprite_get_width(spr_movingplatform), sprite_get_height(spr_movingplatform), true, false, OBJECT_MODE, 0, object_get_properties("oSwingingPlatform"), "Swinging Platform", true)
-	registerobj(object_get_name(oChainsaw), spr_chainsaw, -8, -8, 16, 16, false, false, OBJECT_MODE, 0, object_get_properties("oChainsaw"), "Chainsaw", true)
-	registerobj(object_get_name(oGrate), spr_grate, -sprite_get_xoffset(spr_grate), -sprite_get_yoffset(spr_grate), sprite_get_width(spr_grate), sprite_get_height(spr_grate), false, false, OBJECT_MODE, 0, object_get_properties("oGrate"))
-	registerobj(object_get_name(oGrateSemi), spr_gratesemi, -sprite_get_xoffset(spr_gratesemi), -sprite_get_yoffset(spr_gratesemi), sprite_get_width(spr_gratesemi), sprite_get_height(spr_gratesemi), false, false, OBJECT_MODE, 0, object_get_properties("oGrateSemi"))
-	registerobj(object_get_name(oEnemyGround), spr_enemyground, -sprite_get_xoffset(spr_enemyground), -sprite_get_yoffset(spr_enemyground), sprite_get_width(spr_enemyground), sprite_get_height(spr_enemyground), false, false, OBJECT_MODE, 0, object_get_properties("oEnemyGround"))
-	registerobj(object_get_name(oEnemyGroundSemi), spr_enemygroundsemi, -sprite_get_xoffset(spr_enemygroundsemi), -sprite_get_yoffset(spr_enemygroundsemi), sprite_get_width(spr_enemygroundsemi), sprite_get_height(spr_enemygroundsemi), false, false, OBJECT_MODE, 0, object_get_properties("oEnemyGroundsemi"))
-	registerobj(object_get_name(oPollenFlower), spr_pollenflower, -sprite_get_xoffset(spr_pollenflower), -sprite_get_yoffset(spr_pollenflower), sprite_get_width(spr_pollenflower), sprite_get_height(spr_pollenflower), false, false, OBJECT_MODE, 0, object_get_properties("oPollenFlower"))
-	registerobj(object_get_name(oWater), spr_water, 0, 0, 16, 16, true, true, OBJECT_MODE, 0, object_get_properties("oWater"), "Water", false, 0.25, 0.5)
+	list_tabbuttons.add("Object List", function() {
+		properties_tab_active = false;
+	});
+	list_tabbuttons.add("Properties", function() {
+		properties_tab_active = true;
+	});
+	list_tabbuttons.selected_button=0
 	
-	registerobj(object_get_name(oTerrainSpreng), spr_yellowterrainspring, -8, -8, 16, 16, false, false, OBJECT_MODE, 3, object_get_properties("oTerrainSpring"), "Weak Terrain Spring")
-	registerobj(object_get_name(oTerrainSpring), spr_redterrainspring, -8, -8, 16, 16, false, false, OBJECT_MODE, 3, object_get_properties("oTerrainSpring"), "Normal Terrain Spring")
-	registerobj(object_get_name(oTerrainSprong), spr_greenterrainspring, -8, -8, 16, 16, false, false, OBJECT_MODE, 3, object_get_properties("oTerrainSpring"), "Strong Terrain Spring")
-	registerobj(object_get_name(oYellowSwitch), spr_yellowswitch, -sprite_get_xoffset(spr_yellowswitch), -sprite_get_yoffset(spr_yellowswitch), sprite_get_width(spr_yellowswitch), sprite_get_height(spr_yellowswitch), false, false, OBJECT_MODE, 3, object_get_properties("oYellowSwitch"))
-	registerobj(object_get_name(oYellowSwitchBlock), spr_yellowswitchblock, -sprite_get_xoffset(spr_yellowswitchblock), -sprite_get_yoffset(spr_yellowswitchblock), sprite_get_width(spr_yellowswitchblock), sprite_get_height(spr_yellowswitchblock), false, false, OBJECT_MODE, 3, object_get_properties("oYellowSwitchBlock"))
-	registerobj(object_get_name(oYellowSwitchBlockOff), spr_yellowswitchblockoff, -sprite_get_xoffset(spr_yellowswitchblockoff), -sprite_get_yoffset(spr_yellowswitchblockoff), sprite_get_width(spr_yellowswitchblockoff), sprite_get_height(spr_yellowswitchblockoff), false, false, OBJECT_MODE, 3, object_get_properties("oYellowSwitchBlockOff"))
-	registerobj(object_get_name(oYellowSwitchSlope), spr_yellowswitchslope, -sprite_get_xoffset(spr_yellowswitchslope), -sprite_get_yoffset(spr_yellowswitchslope), sprite_get_width(spr_yellowswitchslope), sprite_get_height(spr_yellowswitchslope), false, false, OBJECT_MODE, 3, object_get_properties("oYellowSwitchSlope"))
-	registerobj(object_get_name(oCyanSwitch), spr_cyanswitch, -sprite_get_xoffset(spr_cyanswitch), -sprite_get_yoffset(spr_cyanswitch), sprite_get_width(spr_cyanswitch), sprite_get_height(spr_cyanswitch), false, false, OBJECT_MODE, 3, object_get_properties("oCyanSwitch"))
-	registerobj(object_get_name(oCyanSwitchBlock), spr_cyanswitchblock, -sprite_get_xoffset(spr_cyanswitchblock), -sprite_get_yoffset(spr_cyanswitchblock), sprite_get_width(spr_cyanswitchblock), sprite_get_height(spr_cyanswitchblock), false, false, OBJECT_MODE, 3, object_get_properties("oCyanSwitchBlock"))
-	registerobj(object_get_name(oCyanSwitchBlockOff), spr_cyanswitchblockoff, -sprite_get_xoffset(spr_cyanswitchblockoff), -sprite_get_yoffset(spr_cyanswitchblockoff), sprite_get_width(spr_cyanswitchblockoff), sprite_get_height(spr_cyanswitchblockoff), false, false, OBJECT_MODE, 3, object_get_properties("oCyanSwitchBlockOff"))
-	registerobj(object_get_name(oCyanSwitchSlope), spr_cyanswitchslope, -sprite_get_xoffset(spr_cyanswitchslope), -sprite_get_yoffset(spr_cyanswitchslope), sprite_get_width(spr_cyanswitchslope), sprite_get_height(spr_cyanswitchslope), false, false, OBJECT_MODE, 3, object_get_properties("oCyanSwitchSlope"))
-	registerobj(object_get_name(oMagentaSwitch), spr_magentaswitch, -sprite_get_xoffset(spr_magentaswitch), -sprite_get_yoffset(spr_magentaswitch), sprite_get_width(spr_magentaswitch), sprite_get_height(spr_magentaswitch), false, false, OBJECT_MODE, 3, object_get_properties("oMagentaSwitch"))
-	registerobj(object_get_name(oMagentaSwitchBlock), spr_magentaswitchblock, -sprite_get_xoffset(spr_magentaswitchblock), -sprite_get_yoffset(spr_magentaswitchblock), sprite_get_width(spr_magentaswitchblock), sprite_get_height(spr_magentaswitchblock), false, false, OBJECT_MODE, 3, object_get_properties("oMagentaSwitchBlock"))
-	registerobj(object_get_name(oMagentaSwitchBlockOff), spr_magentaswitchblockoff, -sprite_get_xoffset(spr_magentaswitchblockoff), -sprite_get_yoffset(spr_magentaswitchblockoff), sprite_get_width(spr_magentaswitchblockoff), sprite_get_height(spr_magentaswitchblockoff), false, false, OBJECT_MODE, 3, object_get_properties("oMagentaSwitchBlockOff"))
-	registerobj(object_get_name(oMagentaSwitchSlope), spr_magentaswitchslope, -sprite_get_xoffset(spr_magentaswitchslope), -sprite_get_yoffset(spr_magentaswitchslope), sprite_get_width(spr_magentaswitchslope), sprite_get_height(spr_magentaswitchslope), false, false, OBJECT_MODE, 3, object_get_properties("oMagentaSwitchSlope"))
-	registerobj(object_get_name(oZapper), spr_zapper, -sprite_get_xoffset(spr_zapper), -sprite_get_yoffset(spr_zapper), sprite_get_width(spr_zapper), sprite_get_height(spr_zapper), false, false, OBJECT_MODE, 3, object_get_properties("oZapper"), "Zapper", true)
+	registerobj(oPlayerSpawn, spr_spawner, 8, 8, 16, 16, false, false, objectlist, "Player Spawn")
+	registerobj(oCollider, spr_collider, 0, 0, 16, 16, true, true, objectlist, "Collider")
+	registerobj(oSlopeCollider, spr_slopesolid, 0, 0, 16, 16, true, true, objectlist, "Slope Collider")
 	
-	registerobj(object_get_name(oScript), spr_scripttrigger, 0, 0, 16, 16, true, true, OBJECT_MODE, 3, object_get_properties("oScript"), "Script Block", true)
-	registerobj(object_get_name(oCustomObject), spr_customobject, 0, 0, 16, 16, false, false, OBJECT_MODE, 3, object_get_properties("oCustomObject"), "Custom Object", true)
+	var blockcategory = new JADElistcategory("Blocks")
+	registerobj(oBrick, spr_brick, 8, 8, 16, 16, false, false, blockcategory, "Brick Block")
+	registerobj(oItemBox, spr_itembox, 8, 8, 16, 16, false, false, blockcategory, "Item Box")
+	properties.addDropdown(oItemBox, "Content", "content", "coin", ["Single Coin", "Multiple Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom"], ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"])
+	properties.addNumberInput(oItemBox, "Amount", "amount", 1, true)
+	properties.addCheckbox(oItemBox, "Is Brick", "bricked", false)
+	properties.addCheckbox(oItemBox, "Is Hidden", "hidden", false)
+	properties.addCheckbox(oItemBox, "Is Dispenser", "eject", false)
+	registerobj(oLongItemBox, spr_longitembox, 24, 8, 48, 16, false, false, blockcategory, "Long Item Box")
+	registerobj(oMonitor, spr_monitor, 8, 8, 16, 16, false, false, blockcategory, "Monitor")
 	
-	registerobj(object_get_name(oGoomba), spr_goombawalk, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oGoomba"), "Goomba")
-	registerobj(object_get_name(oGoombrat), spr_goombratwalk, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oGoombrat"), "Goombrat")
-	registerobj(object_get_name(oKoopa), spr_koopawalk_g, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oKoopa"), "Koopa")
-	registerobj(object_get_name(oKoopaRed), spr_koopawalk_r, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oKoopaRed"), "Red Koopa")
-	registerobj(object_get_name(oKoopaYellow), spr_koopawalk_y, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oKoopaYellow"), "Yellow Koopa")
-	registerobj(object_get_name(oKoopaSkating), spr_koopawalk_skate, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oKoopaSkating"), "Skating Koopa")
-	registerobj(object_get_name(oAmp), spr_amp, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oAmp"), "Amp", true)
-	registerobj(object_get_name(oSlime), spr_slime_editor, -65, -85, 130, 85, false, false, OBJECT_MODE, 1, object_get_properties("oSlime"))
-	registerobj(object_get_name(oThwomp), spr_thwomp, 0, -14, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oThwomp"))
-	registerobj(object_get_name(oBobOmb), spr_bobombwalk, -8, -8, 21, 22, false, false, OBJECT_MODE, 1, object_get_properties("oBobOmb"))
-	registerobj(object_get_name(oBillBlaster), spr_billblasterJADE, 0, 0, 16, 32, false, true, OBJECT_MODE, 1, object_get_properties("oBillBlaster"), "Bill Blaster")
-	registerobj(object_get_name(oBanzaiBlaster), spr_banzaiblasterJADE, -32, -32, 64, 64, false, true, OBJECT_MODE, 1, object_get_properties("oBanzaiBlaster"), "Banzai Blaster")
-	registerobj(object_get_name(oPiranhaPlant), spr_piranhaplant, 4, -6, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oPiranhaPlant"), "Piranha Plant")
-	registerobj(object_get_name(oJumpingPiranha), spr_jumpingpiranhafall, -16, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oJumpingPiranha"), "Jumping Piranha")
-	registerobj(object_get_name(oIceSnifit), spr_icesnifit, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oIceSnifit"), "Ice Snifit")
-	registerobj(object_get_name(oPolarBear), spr_polarbear, -8, -8, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oPolarBear"), "Polar Bear")
-	registerobj(object_get_name(oStopbob), spr_stopbob, -8, -16, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oStopbob"), "Stopbob")
-	registerobj(object_get_name(oIcicle), spr_icicle, 0, 0, 16, 16, false, false, OBJECT_MODE, 1, object_get_properties("oIcicle"), "Icicle")
-	registerobj(object_get_name(oBigSteely), spr_bigsteely, -24, -24, 48, 48, false, false, OBJECT_MODE, 1, object_get_properties("oBigSteely"), "Big Steely")
-	
-	registerobj(object_get_name(oCoin), spr_coin, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oCoin"), "Coin", true)
-	registerobj(object_get_name(oDottedCoin), spr_dottedcoin, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oDottedCoin"), "Dotted Coin", true)
-	registerobj(object_get_name(oMushroom), spr_mushroom, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oMushroom"), "Mushroom", true)
-	registerobj(object_get_name(oFireFlower), spr_fireflower, -8, -10, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oFireFlower"), "Fire Flower", true)
-	registerobj(object_get_name(oThunderFlower), spr_thunderflowerJADE, -8, -10, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oThunderFlower"), "Thunder Flower",true)
-	registerobj(object_get_name(oStar), spr_starman, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oStar"), "Star", true)
-    registerobj(object_get_name(o1up), spr_1up, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("o1up"), "1-UP Mushroom", true)
-    registerobj(object_get_name(o3up), spr_3up, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("o3up"), "3-UP Moon", true)
-	registerobj(object_get_name(oPoisonShroom), spr_ugly_poison_shroom_from_sonic_boll, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oPoisonShroom"), "Poison Mushroom", true)
-	registerobj(object_get_name(oFrozenItem), spr_frozenitem, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oFrozenItem"), "Frozen Item", true)
-	registerobj(object_get_name(oMysteryOrb), spr_mysteryorb, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oMysteryOrb"), "Mystery Orb", true)
-	registerobj(object_get_name(oCheckpoint), spr_checkpoint, 21, 28, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oCheckpoint"), "Checkpoint")
-	registerobj(object_get_name(oFlagpole), spr_JADEflagpole, -8, -160, 48, 160, false, false, OBJECT_MODE, 2, object_get_properties("oFlagpole"), "Flagpole")
-	registerobj(object_get_name(oSoccerBall), spr_soccerball, -8, -8, 16, 16, false, false, OBJECT_MODE, 2, object_get_properties("oSoccerBall"), "Soccer Ball", true)
-	
+	objectlist.add(blockcategory) //we added the items to the category, but we still need to apply the category to the main list
 	
 	//NODE MODE
-	registerobj(object_get_name(oCameraRegion), spr_cameraregion, -sprite_get_xoffset(spr_cameraregion), -sprite_get_yoffset(spr_cameraregion), sprite_get_width(spr_cameraregion), sprite_get_height(spr_cameraregion), true, true, NODE_MODE, 0, object_get_properties("oCameraRegion"), "Camera Region")
-	registerobj(object_get_name(oCameraBoundary), spr_cameraboundary, -sprite_get_xoffset(spr_cameraboundary), -sprite_get_yoffset(spr_cameraboundary), sprite_get_width(spr_cameraboundary), sprite_get_height(spr_cameraboundary), true, true, NODE_MODE, 0, object_get_properties("oCameraBoundary"), "Camera Boundary")
-	registerobj(object_get_name(oActivationRegion), spr_activationregion, -sprite_get_xoffset(spr_activationregion), -sprite_get_yoffset(spr_activationregion), sprite_get_width(spr_activationregion), sprite_get_height(spr_activationregion), true, true, NODE_MODE, 0, object_get_properties("oActivationRegion"), "Activation Region")
-	registerobj(object_get_name(oDeactivationRegion), spr_deactivationregion, -sprite_get_xoffset(spr_deactivationregion), -sprite_get_yoffset(spr_deactivationregion), sprite_get_width(spr_deactivationregion), sprite_get_height(spr_deactivationregion), true, true, NODE_MODE, 0, object_get_properties("oDeactivationRegion"), "Deactivation Region")
-	registerobj(object_get_name(oDeathPit), spr_deathpit, -sprite_get_xoffset(spr_deathpit), -sprite_get_yoffset(spr_deathpit), sprite_get_width(spr_deathpit), sprite_get_height(spr_deathpit), true, false, NODE_MODE, 0, object_get_properties("oDeathPit"), "Death Pit")
+	registerobj(oCameraRegion, spr_cameraregion, 0, 0, 16, 16, false, false, gizmolist, "Camera Region")
+	registerobj(oCameraBoundary, spr_cameraboundary, 0, 0, 16, 16, false, false, gizmolist, "Camera Boundary")
+	registerobj(oActivationRegion, spr_activationregion, 0, 0, 16, 16, false, false, gizmolist, "Activation Region")
+	registerobj(oDeactivationRegion, spr_deactivationregion, 0, 0, 16, 16, false, false, gizmolist, "Deactivation Regions")
+	registerobj(oDeathPit, spr_deathpit, 0, 0, 16, 16, false, false, gizmolist, "Death Pit")
+	
+	//ASSETS
+	registerasset(spr_bigwidetree, 8, 16, false, false, decolist, "Big Wide Tree")
+	registerasset(spr_grass2, 0, 16, false, false, decolist, "2-Wide Grass")
+	registerasset(spr_grass3, 8, 16, false, false, decolist, "3-Wide Grass")
+	registerasset(spr_grass4, 0, 16, false, false, decolist, "4-Wide Grass")
+	registerasset(spr_palmtree, 8, 16, false, false, decolist, "Palm Tree")
+	registerasset(spr_palmtree2, 8, 16, false, false, decolist, "Palm Tree (2)")
+	registerasset(spr_bigflower, 8, 16, false, false, decolist, "Big Flower")
+	
+	//BACKGROUNDS
+	registerbackground(spr_plains_bg_hills, 0, 0, bglist,"Plains (Hills)",true,false,25,0,false,true)
+	registerbackground(spr_plains_bg_hills2, 0, 0, bglist,"Plains (Front Hills)",true,false,40,0,false,true)
+	registerbackground(spr_plains_bg_sky, 0, 0, bglist,"Plains (Sky)",true,false,0,0)
+	registerbackground(spr_plains_bg_clouds, 0, 0, bglist,"Plains (Clouds)",true,false,10,0)
 }
 
 function WM_initializeobj() {	
-	obj_data = ds_map_create();
+	/*obj_data = ds_map_create();
 	obj_name = ds_list_create();
 	
 	#region Categories
@@ -165,27 +94,43 @@ function WM_initializeobj() {
 	//NODE MODE
 	registerobj(object_get_name(oCameraRegion), spr_cameraregion, -sprite_get_xoffset(spr_cameraregion), -sprite_get_yoffset(spr_cameraregion), sprite_get_width(spr_cameraregion), sprite_get_height(spr_cameraregion), true, true, NODE_MODE, 0, object_get_properties("oCameraRegion"), "Camera Region")
 	registerobj(object_get_name(oCameraBoundary), spr_cameraboundary, -sprite_get_xoffset(spr_cameraboundary), -sprite_get_yoffset(spr_cameraboundary), sprite_get_width(spr_cameraboundary), sprite_get_height(spr_cameraboundary), true, true, NODE_MODE, 0, object_get_properties("oCameraBoundary"), "Camera Boundary")
+	*/
 }
 
-function register_array(array, category) {
-	var i=0;
-	repeat (array_length(array)) {
-		var _name = object_get_name(array[i])
-		var _sprite = object_get_sprite(array[i])
-		var _properties = object_get_properties(_name)
-	    registerobj(_name, _sprite, -sprite_get_xoffset(_sprite), -sprite_get_yoffset(_sprite), sprite_get_width(_sprite), sprite_get_height(_sprite), true, true, OBJECT_MODE, category, _properties, false)
-		i++;
-	}	
-}
-
-function registerobj(uuid,sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,category,properties,name=uuid,nodeable=false,sizex=1,sizey=1) {
-	if !ds_map_exists(obj_data,uuid) {
-		ds_map_add(obj_data,uuid,[sprite,xoff,yoff,xscale,yscale,can_xscale,can_yscale,mode,properties,nodeable,name,sizex,sizey])
-		ds_list_add(obj_name,uuid)
-		ds_list_add(jade_cats[mode][category],[uuid,name])
-		show_debug_message($"Successfully registered object id: {uuid} in JADE")
+function registerobj(uuid,_sprite,_xoff,_yoff,_width,_height,_can_xscale,_can_yscale,_list,_name,_nodeable=false,_sizex=1,_sizey=1) {
+	var _id=object_get_name(uuid)
+	if is_undefined(obj_data[$ _id]) {
+		obj_data[$ _id]=new JADEobj(_id,_sprite,_xoff,_yoff,_width,_height,_can_xscale,_can_yscale,_name,_nodeable,_sizex,_sizey)
+		properties.initProperties(uuid)
+		_list.add(obj_data[$ _id])
 	} else {
-		show_debug_message($"Object ID: {uuid} is already registered in JADE! ignoring..")
+		show_debug_message($"JADE object {_id} has already been initialized! Ignoring...")
+	}
+}
+
+function registerasset(_sprite,_xoff,_yoff,_can_xscale,_can_yscale,_list,_name,_sizex=1,_sizey=1) {
+	var _id=sprite_get_name(_sprite)
+	if is_undefined(obj_data[$ _id]) {
+		var _width = sprite_get_width(_sprite);
+		var _height = sprite_get_height(_sprite);
+		obj_data[$ _id]=new JADEasset(_id,_sprite,_xoff,_yoff,_width,_height,_can_xscale,_can_yscale,_name,_sizex,_sizey)
+		properties.initProperties(_sprite)
+		_list.add(obj_data[$ _id])
+	} else {
+		show_debug_message($"JADE object {_id} has already been initialized! Ignoring...")
+	}
+}
+
+function registerbackground(_sprite,_xoff,_yoff,_list,_name,_tiled_h=false,_tiled_v=false,_parallax_x=0,_parallax_y=0,_attach_x=false,_attach_y=false) {
+	var _id=sprite_get_name(_sprite)
+	if is_undefined(obj_data[$ _id]) {
+		var _width = sprite_get_width(_sprite);
+		var _height = sprite_get_height(_sprite);
+		obj_data[$ _id]=new JADEbackground(_id,_sprite,_xoff,_yoff,_width,_height,_tiled_h,_tiled_v,_parallax_x,_parallax_y,_attach_x,_attach_y,_name)
+		properties.initProperties(_sprite)
+		_list.add(obj_data[$ _id])
+	} else {
+		show_debug_message($"JADE object {_id} has already been initialized! Ignoring...")
 	}
 }
 
@@ -193,46 +138,66 @@ function JADE_save(file=game_save_id+"\save.jade") {
 	file_delete(file)
 	show_debug_message($"Saving JADE file to: {file}")
 	var struct = {};
-	var g=0;
-	repeat(4) {
-		var arrayObjects=[];
-		var i;
-		i=0;
-		repeat(ds_list_size(object_layer_map[g])) {
-		    array_push(arrayObjects, object_layer_map[g][| i])
-			i++;
-		}
-		var arrayNodeObjects = [];
-		i=0;
-		repeat(ds_list_size(node_layer_map[g])) {
-		    array_push(arrayNodeObjects, node_layer_map[g][| i])
-			i++;
-		}
-		var arrayTiles=[];
-		i=0;
-		repeat(array_length(tile_layer_map[g])) {
-			arrayTiles[i]=[];
-			var j=0;
-		    repeat(ds_list_size(tile_layer_map[g][i])) {
-				array_push(arrayTiles[i], tile_layer_map[g][i][| j])
-				j++;
+	var layers = layerlist.listcontents;
+	var layerarr = [];
+	var i=0;
+	repeat(array_length(layers)) {
+		var _layer = layers[i];
+		if !is_instanceof(_layer, JADElistunselectable) {
+			if (is_instanceof(_layer, JADEtilelayer)) { 
+				var tile_layer_contents = []; //wow!
+				var j=0;
+				repeat(ds_list_size(_layer.tilemap)) {
+					array_push(tile_layer_contents,_layer.tilemap[| j])
+					j++;
+				}
+				var _arr = ["TILE",_layer.tileset,_layer.name,_layer.layerdepth,tile_layer_contents]
+				array_push(layerarr,_arr);
+			} else if (is_instanceof(_layer, JADEassetlayer)) {
+				var asset_layer_contents = []; //wow!
+				var j=0;
+				repeat(ds_list_size(_layer.assetmap)) {
+					var uuid = _layer.assetmap[| j][0]
+					var obj = _layer.assetmap[| j][1]
+					var _x = layer_sprite_get_x(obj);
+					var _y = layer_sprite_get_y(obj);
+					var _xscale = layer_sprite_get_xscale(obj);
+					var _yscale = layer_sprite_get_yscale(obj);
+					var arr = [uuid,_x,_y,_xscale,_yscale]
+					array_push(asset_layer_contents,arr)
+					j++;
+				}
+				var _arr = ["ASSET",_layer.name,_layer.layerdepth,_layer.parallax_x,_layer.parallax_y,asset_layer_contents]
+				array_push(layerarr,_arr);
 			}
-			i++;
+		} else {
+			var _arr = ["MAIN",_layer.name]
+			array_push(layerarr,_arr);
 		}
-		var arrayTileLayers=[];
-		i=0;
-		repeat (array_length(layers[g])) {
-		    array_push(arrayTileLayers, [layer_get_name(layers[g][i]), layer_get_depth(layers[g][i]), tileset_get_name(tilemap_get_tileset(tile_layer[g][i])), arrayTiles[i]])
-			i++;
-		}
-		
-		struct[$ $"region{g}"] = {
-			objects: arrayObjects,
-			node_objects: arrayNodeObjects,
-			tile_layers: arrayTileLayers
-		}
-		g++;
+		i++;
 	}
+	//region count, change later
+	var obj_arr = [];
+	var node_arr = [];
+	i=0
+	repeat(1) {
+		obj_arr[i]=[];
+		var j=0;
+		repeat(ds_list_size(object_layer_map[i])) {
+			array_push(obj_arr[i], object_layer_map[i][| j])
+			j++;
+		}
+		node_arr[i]=[];
+		j=0;
+		repeat(ds_list_size(node_layer_map[i])) {
+			array_push(node_arr[i], node_layer_map[i][| j])
+			j++;
+		}
+		i++;
+	}
+	struct[$ "objects"] = obj_arr;
+	struct[$ "node_objects"] = node_arr;
+	struct[$ "layers"]=layerarr;
 	struct[$ "version"]=JADE_VERSION
 	show_debug_message(struct)
 	var _json=json_stringify(struct); //compile all saved things
@@ -250,178 +215,71 @@ function JADE_load(file=game_save_id+"\save.jade") {
 	var loaded = buffer_load(file)
 	var save_file = buffer_decompress(loaded)
 	var level_data = json_parse(buffer_read(save_file,buffer_string))
-	show_debug_message($"Loading JADE file from: {file}")
-	if !is_array(level_data) && is_struct(level_data) {
-		var jadeversion = level_data[$ "version"]
-		if jadeversion < 3 {
-			var objects = level_data[$ "objects"] //read amount of objects
-			var node_objects = level_data[$ "node_objects"] //read amount of node objects
-			var tile_layers = level_data[$ "tile_layers"]
-			ds_list_clear(object_layer_map[0]) //erase object map beforehand
-			var i;
-			i=0;
-			repeat(array_length(objects)) { //load objects
-		        var data = objects[i]
-				data[5] = 0
-				if array_length(data) >= 13 && array_length(data[12]) < 5 {
-					data[12][5]=true
-				}
-				ds_list_add(object_layer_map[0],data)
-				i++
-			}
-			i=0;
-			repeat (array_length(tile_layers)) {
-				tilemap_tileset(tile_layer[0][i], asset_get_index(tile_layers[i][2]))
-				var tiles=tile_layers[i][3]
-				if array_length(tiles) { // does it actually contain any tiles?
+	if (level_data[$ "version"]==JADE_VERSION) {
+		var layers = level_data[$ "layers"]
+		layerlist.wipe();
+		var len=array_length(layers);
+		var i=0;
+		repeat(len) {
+			var _layer_contents = layers[i];
+			
+			var _layer;
+			
+			if (_layer_contents[0]!="MAIN") {
+				if (_layer_contents[0] == "TILE") {
+					_layer = new JADEtilelayer(_layer_contents[2],_layer_contents[1])
+				
+					var tile_layer_contents = _layer_contents[4]
+				
 					var j=0;
-					repeat (array_length(tiles)) { //loading tiles
-						var data = tiles[j]
-						var tiledata = tilemap_get(tile_layer[0][i], data[1], data[2]);
-						tiledata = tile_set_index(tiledata, data[0])
-						tilemap_set(tile_layer[0][i], tiledata, data[1], data[2]) //set tile at place
-						ds_list_add(tile_layer_map[0][i], [data[0], data[1], data[2]]) //add tile to list at place
+					repeat(array_length(tile_layer_contents)) {
+						ds_list_add(_layer.tilemap, tile_layer_contents[j])
+						tilemap_set(_layer.my_deco_layer, tile_layer_contents[j][0], tile_layer_contents[j][1], tile_layer_contents[j][2]);
 						j++;
 					}
-				}
-				i++;
-			}
-			ds_list_clear(node_layer_map[0])
-			i=0;
-			repeat (array_length(node_objects)) { //load node object
-				var data = node_objects[i]
-				data[5] = 0
-				ds_list_add(node_layer_map[0],data)
-				i++;
-			}
-		} else {
-			var g=0;
-			repeat(4) {
-				var rg=level_data[$ $"region{g}"]
-				show_debug_message(rg)
-				var objects = rg[$ "objects"] //read amount of objects
-				var node_objects = rg[$ "node_objects"] //read amount of node objects
-				var tile_layers = rg[$ "tile_layers"]
-				ds_list_clear(object_layer_map[g]) //erase object map beforehand
-				var i;
-				i=0;
-				repeat(array_length(objects)) { //load objects
-			        var data = objects[i]
-					data[5] = 0
-					if array_length(data) >= 13 && array_length(data[12]) < 5 {
-						data[12][5]=true
+				} else if (_layer_contents[0] == "ASSET") {
+					_layer = new JADEassetlayer(_layer_contents[1])
+				
+					var asset_layer_contents = _layer_contents[5]
+				
+					var j=0;
+					repeat(array_length(asset_layer_contents)) {
+						var obj = asset_layer_contents[j]
+						var data = obj_data[$ obj[0]];
+						asset_place(obj[0],obj[1]-data.xoff,obj[2]-data.yoff,obj[3],obj[4],_layer)
+						j++;
 					}
-					ds_list_add(object_layer_map[g],data)
-					i++
+				} else if (_layer_contents[0] == "BACK") {
+					
 				}
-				i=0;
-				repeat (array_length(tile_layers)) {
-					tilemap_tileset(tile_layer[g][i], asset_get_index(tile_layers[i][2]))
-					var tiles=tile_layers[i][3]
-					if array_length(tiles) { // does it actually contain any tiles?
-						var j=0;
-						repeat (array_length(tiles)) { //loading tiles
-							var data = tiles[j]
-							var tiledata = tilemap_get(tile_layer[g][i], data[1], data[2]);
-							tiledata = tile_set_index(tiledata, data[0])
-							tilemap_set(tile_layer[g][i], tiledata, data[1], data[2]) //set tile at place
-							ds_list_add(tile_layer_map[g][i], [data[0], data[1], data[2]]) //add tile to list at place
-							j++;
-						}
-					}
-					i++;
-				}
-				ds_list_clear(node_layer_map[g])
-				i=0;
-				repeat (array_length(node_objects)) { //load node object
-					var data = node_objects[i]
-					data[5] = 0
-					ds_list_add(node_layer_map[g],data)
-					i++;
-				}
-				g++;
+			} else {
+				_layer = new JADElistunselectable(_layer_contents[1])
 			}
-		}
-	} else { #region Legacy Level Loading
-		var object_arr_index=1;
-		var tile_arr_index=2;
-		var node_arr_index=3;
-		var tile_layer_arr_index=4;
-		var has_version=true;
-		if array_length(level_data) < 5 { //legacy conversion
-			has_version=false;
-			object_arr_index=0;
-			tile_arr_index=1;
-			node_arr_index=2;
-			tile_layer_arr_index=3;
-		}
-		var size = array_length(level_data[object_arr_index]) //read amount of objects
-		var nodesize = array_length(level_data[node_arr_index]) //read amount of objects
-		var tilesize = array_length(level_data[tile_arr_index]) //read amount of tiles
-		var g=0;
-		repeat(4) {
-			ds_list_clear(object_layer_map[g])
-			g++;
-		}
-		var i;
-	
-		i=0;
-		repeat(size) { //load objects
-	        var data = level_data[object_arr_index][i]
-			data[5] = 0
-			if array_length(data) >= 13 && array_length(data[12]) < 5 {
-				data[12][5]=true
-			}
-			ds_list_add(object_layer_map[0],data)
-			i++
-		}
-		if array_length(level_data) >= 4 {
-		    i=0;
-			repeat(tilesize) { //loading tiles
-				tilemap_clear(tile_layer[0][i], 0) //erase tilemap beforehand
-				var g=0;
-				repeat(4) {
-					ds_list_clear(tile_layer_map[g][2]) //erase tile map beforehand
-					g++;
-				}
-				var j=0;
-				tilemap_tileset(tile_layer[0][i], asset_get_index(level_data[tile_layer_arr_index][i][2]))
-				repeat (array_length(level_data[tile_arr_index][i])) {
-					var data = level_data[tile_arr_index][i][j]
-				    tilemap_set(tile_layer[0][i],data[0],data[1],data[2])
-					ds_list_add(tile_layer_map[0][i], [data[0], data[1], data[2]]) //add tile to list at place
-					j++;
-				}
-				i++
-			}
-		} else { //legacy tile conversion
-			tilemap_clear(tile_layer[0][2], 0) //erase tilemap beforehand
-			var g=0;
-			repeat(4) {
-				ds_list_clear(tile_layer_map[g][2]) //erase tile map beforehand
-				g++;
-			}
-			var j=0;
-			repeat (array_length(level_data[tile_arr_index])) {
-				var data = level_data[tile_arr_index][j]
-				tilemap_set(tile_layer[0][2],data[0],data[1],data[2])
-				ds_list_add(tile_layer_map[0][2], [data[0], data[1], data[2]]) //add tile to list at place
-				j++;
-			}
-		}
-		var g=0;
-		repeat(4) {
-			ds_list_clear(node_layer_map[g])
-			g++;
-		}
-		i=0;
-		repeat (nodesize) { //load node objects
-	        var data = level_data[node_arr_index][i]
-			data[5] = 0
-			ds_list_add(node_layer_map[0],data)
+			
+			layerlist.add(_layer);
 			i++;
 		}
-	} #endregion
+		layerlist.update_depths();
+		//region count, change laters
+		var objects = level_data[$ "objects"]
+		var node_objects = level_data[$ "node_objects"]
+		i=0
+		repeat(array_length(objects)) {
+			ds_list_clear(object_layer_map[i])
+			ds_list_clear(node_layer_map[i])
+			var j=0;
+			repeat(array_length(objects[i])) {
+				ds_list_add(object_layer_map[i], objects[i][j])
+				j++;
+			}
+			j=0;
+			repeat(array_length(node_objects[i])) {
+				ds_list_add(node_layer_map[i], node_objects[i][j])
+				j++;
+			}
+			i++;
+		}
+	}
 	buffer_delete(loaded)
 	buffer_delete(save_file)
 	show_debug_message($"Successfully loaded JADE file from: {file}!")
@@ -429,12 +287,7 @@ function JADE_load(file=game_save_id+"\save.jade") {
 
 function tile_layer_alpha_check() {
 	//This makes the tile layer transparent if you arent in tile mode by using layer scripts
-	
-	if !array_contains(oJADEController.layers[oJADEController.selected_region], layer) {
-		shader_set(shd_alpha)
-		var alpha = shader_get_uniform(shd_alpha, "alpha");
-		shader_set_uniform_f(alpha,0)
-	} else if oJADEController.selected_mode!=TILE_MODE || layer!=oJADEController.layers[oJADEController.selected_region][oJADEController.selected_tile_layer] {
+	if (oJADEController.selected_mode!=DECO_MODE || oJADEController.selected_layer == noone || layer!=oJADEController.selected_layer.my_layer) {
 		shader_set(shd_alpha)
 		var alpha = shader_get_uniform(shd_alpha, "alpha");
 		shader_set_uniform_f(alpha,0.33)

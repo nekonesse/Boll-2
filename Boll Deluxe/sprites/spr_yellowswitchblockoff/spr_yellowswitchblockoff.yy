@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_yellowswitchblockoff",
   "bboxMode":0,
   "bbox_bottom":15,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"d0e27c63-b88f-49ab-9cb2-fd6ff223981d","name":"d0e27c63-b88f-49ab-9cb2-fd6ff223981d","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"d0e27c63-b88f-49ab-9cb2-fd6ff223981d","name":"d0e27c63-b88f-49ab-9cb2-fd6ff223981d","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

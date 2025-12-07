@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_jumpingpiranhafly",
   "bboxMode":0,
   "bbox_bottom":20,
@@ -12,8 +12,8 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"ae4bbfb4-0e0f-49a2-837d-d24e74639c7a","name":"ae4bbfb4-0e0f-49a2-837d-d24e74639c7a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"970e5212-fb1e-484a-8166-11b980cd8a6e","name":"970e5212-fb1e-484a-8166-11b980cd8a6e","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"ae4bbfb4-0e0f-49a2-837d-d24e74639c7a","name":"ae4bbfb4-0e0f-49a2-837d-d24e74639c7a","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"970e5212-fb1e-484a-8166-11b980cd8a6e","name":"970e5212-fb1e-484a-8166-11b980cd8a6e","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

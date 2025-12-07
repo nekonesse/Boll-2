@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_poleFromFlag",
   "bboxMode":2,
   "bbox_bottom":159,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"19dc28a4-203c-409e-9567-6ace25f57a42","name":"19dc28a4-203c-409e-9567-6ace25f57a42","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"19dc28a4-203c-409e-9567-6ace25f57a42","name":"19dc28a4-203c-409e-9567-6ace25f57a42","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

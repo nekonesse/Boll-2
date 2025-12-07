@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_enemygroundsemi",
   "bboxMode":0,
   "bbox_bottom":7,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"7cbbcf2d-2da3-4437-97d4-b8a87c10711c","name":"7cbbcf2d-2da3-4437-97d4-b8a87c10711c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"7cbbcf2d-2da3-4437-97d4-b8a87c10711c","name":"7cbbcf2d-2da3-4437-97d4-b8a87c10711c","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

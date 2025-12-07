@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_plains_bg_hills",
   "bboxMode":0,
   "bbox_bottom":117,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"7dfd4cfe-61c4-4b7e-af7a-b31934a0c782","name":"7dfd4cfe-61c4-4b7e-af7a-b31934a0c782","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"7dfd4cfe-61c4-4b7e-af7a-b31934a0c782","name":"7dfd4cfe-61c4-4b7e-af7a-b31934a0c782","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

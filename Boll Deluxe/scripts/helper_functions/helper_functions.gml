@@ -20,9 +20,8 @@
 // ideally, the uncapped FPS should *never* drop below this
 #macro FPS_TARGET 300
 
-globalvar camera_x, camera_y;
-camera_x = 0;
-camera_y = camera_x;
+global.camera_x = 0;
+global.camera_y = 0;
 
 function check_signs_matching(a, b)
 {
@@ -231,8 +230,8 @@ function update_camerapos()
 {
 	if (view_camera[0] != undefined)
 	{
-		camera_x = camera_get_view_x(view_camera[0]) div 1;
-		camera_y = camera_get_view_y(view_camera[0]) div 1;
+		global.camera_x = camera_get_view_x(view_camera[0]) div 1;
+		global.camera_y = camera_get_view_y(view_camera[0]) div 1;
 	}
 }
 

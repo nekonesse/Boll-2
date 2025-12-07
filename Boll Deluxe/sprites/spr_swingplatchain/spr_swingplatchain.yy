@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_swingplatchain",
   "bboxMode":0,
   "bbox_bottom":15,
@@ -12,8 +12,8 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"94568a93-03e7-48c7-8624-05a98cb72a4f","name":"94568a93-03e7-48c7-8624-05a98cb72a4f","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"7c9ac43b-b7d5-41f1-b34d-03d2e80bf2e1","name":"7c9ac43b-b7d5-41f1-b34d-03d2e80bf2e1","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"94568a93-03e7-48c7-8624-05a98cb72a4f","name":"94568a93-03e7-48c7-8624-05a98cb72a4f","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"7c9ac43b-b7d5-41f1-b34d-03d2e80bf2e1","name":"7c9ac43b-b7d5-41f1-b34d-03d2e80bf2e1","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

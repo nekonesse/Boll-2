@@ -1,3 +1,5 @@
+pal_swap_init_system(shd_pal_swapper);
+
 if file_exists(game_save_id+"\keybinds.ini")
 {
 	var opstruct = LoadJSONFromFile(game_save_id+"\keybinds.ini")
@@ -6,10 +8,9 @@ if file_exists(game_save_id+"\keybinds.ini")
 }
 global.roomTimer = 0;
 global.freezeframe = false;
-global.camera_x = 0;
 global.animdat[0]=[];
 
-window_set_size(480*3,270*3);
+window_set_size(432*3,248*3);
 window_center();
 
 //application_surface_draw_enable(false); 

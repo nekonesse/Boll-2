@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_pollenflower",
   "bboxMode":2,
   "bbox_bottom":47,
@@ -12,9 +12,9 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"ce1d72ef-cbab-48fe-8ebd-c925333bcfb6","name":"ce1d72ef-cbab-48fe-8ebd-c925333bcfb6","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"9099f196-7773-4ae0-b07d-8276c9cda1b9","name":"9099f196-7773-4ae0-b07d-8276c9cda1b9","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"d1cc9fe4-89b4-48a4-bbbb-9c5362115200","name":"d1cc9fe4-89b4-48a4-bbbb-9c5362115200","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"ce1d72ef-cbab-48fe-8ebd-c925333bcfb6","name":"ce1d72ef-cbab-48fe-8ebd-c925333bcfb6","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"9099f196-7773-4ae0-b07d-8276c9cda1b9","name":"9099f196-7773-4ae0-b07d-8276c9cda1b9","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"d1cc9fe4-89b4-48a4-bbbb-9c5362115200","name":"d1cc9fe4-89b4-48a4-bbbb-9c5362115200","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

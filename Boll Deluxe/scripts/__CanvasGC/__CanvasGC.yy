@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__CanvasGC",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__CanvasGC",
+  "parent":{
+    "name":"System",
+    "path":"folders/Canvas/System.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

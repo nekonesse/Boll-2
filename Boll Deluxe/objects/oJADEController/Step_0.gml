@@ -1,48 +1,60 @@
-var cam_x = camera_get_view_x(view_camera[0])
-var cam_y = camera_get_view_y(view_camera[0])
-var cam_w = camera_get_view_width(view_camera[0])
-var cam_h = camera_get_view_height(view_camera[0])
+cam_x = camera_get_view_x(view_camera[0])
+cam_y = camera_get_view_y(view_camera[0])
+cam_w = camera_get_view_width(view_camera[0])
+cam_h = camera_get_view_height(view_camera[0])
+guiw = display_get_gui_width();
+guih = display_get_gui_height();
 
-if !surface_exists(object_list_area_surface) {
-	object_list_area_surface = surface_create(object_list_area_width, object_list_area_height)
+if !os_is_paused() && guiw>0 && guih>0 {
+	if !surface_exists(GUIcanvas) {
+		GUIcanvas=surface_create(guiw,guih);
+	} else {
+		if (guiw!=surface_get_width(GUIcanvas) || guih!=surface_get_height(GUIcanvas)) {
+			surface_resize(GUIcanvas,guiw,guih);
+		}
+	}
 }
 
-mbleftpress=mouse_check_button_pressed(mb_left)
-mbleftrel=mouse_check_button_released(mb_left)
-mbleft=mouse_check_button(mb_left)
-mbrightpress=mouse_check_button_pressed(mb_right)
-mbrightrel=mouse_check_button_released(mb_right)
-mbright=mouse_check_button(mb_right)
-mbmiddle = (mouse_check_button(mb_middle) || (keyboard_check(vk_space) && mouse_check_button(mb_left))) //this scroll wheel is Pissing me off... i'm the original        keywalker
+curs_x = window_mouse_get_x()
+curs_y = window_mouse_get_y()
 
-curs_x=(mouse_x-cam_x)/zoom_level
-curs_y=(mouse_y-cam_y)/zoom_level
+gridx = floor(mouse_x/current_grid_size) 
+gridy = floor(mouse_y/current_grid_size)
 
-var guiw=display_get_gui_width()
-var guih=display_get_gui_height()
-var tb_length = array_length(toolbar[selected_mode])
-on_list_top = (point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y-20,object_list_area_x+object_list_area_width/3,object_list_area_y) || point_in_rectangle(curs_x,curs_y,object_list_area_x,object_list_area_y-20,object_list_area_x+object_list_area_width/3,object_list_area_y))
-on_object_list = (point_in_rectangle(curs_x,curs_y,object_list_area_x-2,object_list_area_y-24,object_list_area_x+object_list_area_width/3,object_list_area_y+object_list_area_height/3) && (show_object_list || object_list_active))
-on_tile_picker = (point_in_rectangle(curs_x,curs_y,tileset_picker_x-2,tileset_picker_y-6,tileset_picker_x + (sprite_get_width(tilesets[$ current_tileset][0]) / (3 / tile_zoom)), tileset_picker_y + (sprite_get_height(tilesets[$ current_tileset][0]) / (3 / tile_zoom))) && (show_tileset))
-if (!on_object_list && object_list_active && show_object_list) on_object_list = keyboard_check_direct(vk_alt)
+#region GUI Input Handler
+if (mbleftpress) {
+	topbuttons.update();
+	modebuttons.update();
+	toolbarbuttons.update();
+	list_tabbuttons.update();
+	playtestbutton.update();
+	if selected_mode==DECO_MODE {
+		layeraddbutton.update();
+		layereditbutton.update();
+		layerdeletebutton.update();
+		if (deco_mode_type == "bg") {
+			bgalignbuttons.update();
+		}
+	}
+}
 
-not_on_gui= !point_in_rectangle(curs_x,curs_y,(guiw-16)-(32*14),0,(guiw-16)-(32*14)+(32*tb_length)+4,34)
-&&!point_in_rectangle(curs_x,curs_y,(guiw)-(32*5),0,(guiw)-(32*5)+(32*5)+4,34)
-&&!point_in_rectangle(curs_x,curs_y,0,(guih/4)-10,32,(guih/4)-10+(32*5)+4)
-&&!point_in_rectangle(curs_x,curs_y,guiw-(24*4)-4,guih-32,guiw,guih)
-&&!(((on_object_list && show_object_list) || on_list_top) && (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE))
-&&!(on_tile_picker && selected_mode==TILE_MODE)
+if (selected_mode == DECO_MODE) {
+	switch(deco_mode_type) {
+		case "tile":
+			tilepicker.update();
+		break;
+	}
+}
+#endregion
 
 #region Camera Panning
-if (not_on_gui) && (mbmiddle) {
-	if !(view_grab) { //check position
-		view_grab=1 
-		view_grabx=curs_x
-		view_graby=curs_y
-		initial_viewx = cam_x
-		initial_viewy = cam_y
-	}
-} else {
+if (not_on_gui) && (mouse_check_button_pressed(mb_middle)) {
+	view_grab=1 
+	view_grabx=curs_x
+	view_graby=curs_y
+	initial_viewx = cam_x
+	initial_viewy = cam_y
+} else if !mbmiddle {
 	view_grab=0
 }
 
@@ -56,75 +68,16 @@ if (mwheel == 0) {
 	mwheel = keyboard_check_direct(vk_down) - keyboard_check_direct(vk_up)
 }
 
-var dir = (keyboard_check_pressed(vk_right) || mouse_check_button_pressed(mb_side1)) - (mouse_check_button_pressed(mb_side2) || keyboard_check_pressed(vk_left)) 
-//peopne who dont have a fancy gaming mouse or whatever finally getting a taste of the button Not Existing
-
-if (selected_mode==OBJECT_MODE || selected_mode==NODE_MODE) {
-	#region Object List Scrolling
-	if (mwheel != 0) && (on_object_list) {
-		object_list_scroll_pos[selected_mode][current_cat]+=24*mwheel
-	}
-
-	object_list_scroll_pos[selected_mode][current_cat] = clamp(object_list_scroll_pos[selected_mode][current_cat], 0, (ds_list_size(jade_cats[selected_mode][current_cat])*32)-object_list_area_height)
-	#endregion
-
-	#region Category Switching
-	if (dir != 0) && (on_object_list) {
-		current_cat += dir
-		if (current_cat < 0) {
-			current_cat = (array_length(jade_cats[selected_mode]) - 1)
-		} else if (current_cat >= array_length(jade_cats[selected_mode])) {
-			current_cat = 0	
-		}
-	
-		show_debug_message($"switched to category {current_cat}")
-	}
-	#endregion
-} else if (selected_mode == TILE_MODE) {
-	var layerdir = keyboard_check_pressed(vk_right) - keyboard_check_pressed(vk_left)
-	var tilesetdir = keyboard_check_pressed(vk_down) - keyboard_check_pressed(vk_up)
-	if (layerdir != 0) {
-		ui_opacity = 10;
-		selected_tile_layer += layerdir
-		if (selected_tile_layer < 0) {
-			selected_tile_layer = (array_length(tile_layer[selected_region]) - 1)
-		} else if (selected_tile_layer >= array_length(tile_layer[selected_region])) {
-			selected_tile_layer = 0	
-		}
-		tilemap=tile_layer[selected_region][selected_tile_layer]
-		current_tileset = tileset_get_name(tilemap_get_tileset(tilemap));
-		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
-		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
-	}
-	if (tilesetdir != 0) {
-		ui_opacity = 10;
-		selected_tileset += tilesetdir
-		if (selected_tileset < 0) {
-			selected_tileset = (variable_struct_names_count(tilesets) - 1)
-		} else if (selected_tileset >= variable_struct_names_count(tilesets)) {
-			selected_tileset = 0	
-		}
-		var arr=variable_struct_get_names(tilesets)
-		current_tileset = arr[selected_tileset];
-		
-		tilemap_tileset(tile_layer[selected_region][selected_tile_layer], tilesets[$ current_tileset][1]);
-		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
-		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
-	}
-	if (ui_opacity > 0.4) {ui_opacity -= 0.05}
-}
-
 #region Camera Zooming
 if (mwheel != 0) && keyboard_check(vk_control) && (not_on_gui) {
 	zoom_goto += 0.125*mwheel
-	zoom_x = window_views_mouse_get_x();
-    zoom_y = window_views_mouse_get_y();
+	zoom_x = curs_x
+    zoom_y = curs_y;
 }
 zoom_goto=clamp(zoom_goto,0.125, 5)
 var oldzoom=zoom_level
 zoom_level=approach_val(zoom_level,zoom_goto,0.025)
-
-camera_set_view_size(view_camera[0], floor(480*zoom_level), floor(270*zoom_level))
+camera_set_view_size(camera, floor(1296*zoom_level), floor(744*zoom_level))
 
 if (zoom_level!=oldzoom) {
 	cam_x = camera_get_view_x(view_camera[0])
@@ -132,176 +85,18 @@ if (zoom_level!=oldzoom) {
 	cam_w = camera_get_view_width(view_camera[0])
 	cam_h = camera_get_view_height(view_camera[0])
 	
-	var old_cam_w = floor(480*oldzoom)
-	var old_cam_h = floor(270*oldzoom)
-	cam_x += floor(old_cam_w/2 - cam_w/2)
-	cam_y += floor(old_cam_h/2 - cam_h/2)
+	var old_cam_w = floor(1296*oldzoom)
+	var old_cam_h = floor(744*oldzoom)
+	cam_x += floor(old_cam_w/2 - cam_w/2) //+ ((zoom_x-guiw/2)/(zoom_level/(zoom_goto-zoom_level)))*mwheel
+	cam_y += floor(old_cam_h/2 - cam_h/2) //+ ((zoom_y-guih/2)/(zoom_level/(zoom_goto-zoom_level)))*mwheel
 	
-	camera_set_view_pos(view_camera[0],cam_x,cam_y)
+	camera_set_view_pos(camera,cam_x,cam_y)
 }
 #endregion
 
-gridx = floor(mouse_x/16) 
-gridy = floor(mouse_y/16)
-
-if keyboard_check_pressed(vk_escape) {
-	room_goto(rMainMenu)
-	global.jade_testing=false
-}
-
-//half temp cycling object/tile behavior
-switch(selected_mode) {
-	case TILE_MODE:
-		if keyboard_check_pressed(vk_tab) {
-			show_tileset = !show_tileset
-		}
-
-		selected_tile=current_tile_id[0][0]
-	break;
-	case NODE_MODE:
-	case OBJECT_MODE:
-		if keyboard_check_pressed(vk_tab) {
-			show_object_list = !show_object_list
-		}
-		
-		var switch_obj = 0;
-		
-		if (keyboard_check_pressed(vk_pagedown)) {
-			current_obj_id[selected_mode][current_cat] ++
-			switch_obj = 1;
-		}
-
-		if (keyboard_check_pressed(vk_pageup)) {
-			current_obj_id[selected_mode][current_cat] --
-			switch_obj = 1;
-		}
-
-		current_obj_id[selected_mode][current_cat] = wrap_val(current_obj_id[selected_mode][current_cat], 0, ds_list_size(jade_cats[selected_mode][current_cat])- 1)
-
-		if (switch_obj) { //keeps object through category switch until you scroll through the list for convenience
-			selected_obj = ds_list_find_value(jade_cats[selected_mode][current_cat], current_obj_id[selected_mode][current_cat])
-		}
-		
-		//selection box deleting
-		if keyboard_check_pressed(vk_delete) && selected_tool==SELECT_TOOL {
-			if (selected_mode==OBJECT_MODE) {
-				var i=0;
-				repeat (ds_list_size(object_layer_map[selected_region])) {
-					var obj = ds_list_find_value(object_layer_map[selected_region], i)
-					var sprite = ds_map_find_value(obj_data,obj[0])
-					if (sprite[7]==selected_mode) && (obj[5]) {
-						ds_list_delete(object_layer_map[selected_region], i)
-						i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
-					} 
-					i++;
-				}
-			} else if (selected_mode==NODE_MODE) {
-				repeat(ds_list_size(node_layer_map[selected_region])) {
-					var obj = ds_list_find_value(node_layer_map[selected_region], i)
-					var sprite = ds_map_find_value(obj_data,obj[0])
-					if (sprite[7]==selected_mode) && (obj[5]) {
-						ds_list_delete(node_layer_map[selected_region], i)
-						i-- //since ds lists push all values up when one is deleted, we have to shift accordingly
-					} 
-					i++
-				}
-			}
-		}
-	break;
-}
-
-var i;
-i=0;
-repeat(5)
-{
-	if (mbleftpress) && mouse_in_mode_slot(i) {
-		if selected_mode != i {
-			ui_opacity = 10
-			selected_toolbar=0
-			selected_mode=i
-			selection = false
-			current_cat = 0
-			var size = ds_list_size(object_layer_map[selected_region])
-			var j=0;
-			repeat(size) {
-				var obj = ds_list_find_value(object_layer_map[selected_region], j)
-		
-				if !is_undefined(obj) {
-					obj[5]=0;
-				}
-				j++;
-			}
-			size = ds_list_size(node_layer_map[selected_region])
-			j=0;
-			repeat(size) {
-				var obj = ds_list_find_value(node_layer_map[selected_region], j)
-		
-				if !is_undefined(obj) {
-					obj[5]=0;
-				}
-				j++;
-			}
-		}
-	}
-	i++
-}
-
-//change toolbar 
-var tb_length = array_length(toolbar[selected_mode])
-i=0;
-repeat(tb_length)
-{
-	if (mbleftpress) && mouse_in_toolbar_slot(i) {
-		selected_toolbar=i
-	}
-	i++;
-}
-
-i=0;
-repeat(4) {
-	if (mbleftpress) && mouse_in_region_slot(i) {
-		//deselect previous region
-		var size = ds_list_size(object_layer_map[selected_region])
-		var j=0;
-		repeat(size) {
-			var obj = ds_list_find_value(object_layer_map[selected_region], j)
-		
-			if !is_undefined(obj) {
-				obj[5]=0;
-			}
-			j++;
-		}
-		size = ds_list_size(node_layer_map[selected_region])
-		j=0;
-		repeat(size) {
-			var obj = ds_list_find_value(node_layer_map[selected_region], j)
-		
-			if !is_undefined(obj) {
-				obj[5]=0;
-			}
-			j++;
-		}
-		
-		selected_region=i
-		
-		ui_opacity = 10;
-		selected_tile_layer = 2
-		/*if (selected_tile_layer < 0) {
-			selected_tile_layer = (array_length(tile_layer[selected_region]) - 1)
-		} else if (selected_tile_layer >= array_length(tile_layer[selected_region])) {
-			selected_tile_layer = 0	
-		}*/
-		tilemap=tile_layer[selected_region][selected_tile_layer]
-		current_tileset = tileset_get_name(tilemap_get_tileset(tilemap));
-		tileset_picker_x = (guiw-(sprite_get_width(tilesets[$ current_tileset][0]) / 3))
-		tileset_picker_y = ((guih/2) - (sprite_get_height(tilesets[$ current_tileset][0]) / 3) /2) - 8
-		
-		selection = false
-	}
-	i++;
-}
-
-selected_tool=toolbar[selected_mode][selected_toolbar]
+if keyboard_check(vk_control) && (selected_mode != DECO_MODE || (selected_mode == DECO_MODE && deco_mode_type != "tile")) {
+	current_grid_size=1;
+} else current_grid_size=default_grid_size
 
 droppedfiles=file_dropper_get_files(".jade")
 
@@ -310,626 +105,515 @@ if array_length(droppedfiles) {
 	JADE_load(droppedfiles[0])
 }
 
-if (mbleftpress) {
-	if mouse_in_setting_slot(0) { //exit button
-		JADE_save();
-		room_goto(rMainMenu)
-	}
-	if mouse_in_setting_slot(4) { //new file
-		var j=0;
-		repeat(4) {
-			var i=0;
-			repeat (array_length(tile_layer[j])) {
-				ds_list_clear(tile_layer_map[j][i]);
-				tilemap_clear(tile_layer[j][i],0);
-				i++;
-			}
-			ds_list_clear(object_layer_map[j]);
-			ds_list_clear(node_layer_map[j]);
-			j++;
-		}
-		
-		place_object("oCollider",0,167,30,2)
-		place_object("oPlayerSpawn",3,166)
-		
-		global.save_dir="";
-		savetextdur=0;
-	}
-	if mouse_in_setting_slot(3) { //saving
-		var file = get_save_filename_ext("JADE File|*.jade", "", working_directory, "Save Level");
+if keyboard_check(vk_control) && keyboard_check_pressed(ord("S")) {
+	if (global.save_dir != "") {
+		//savetextdur=60;
+		JADE_save(global.save_dir)
+	} else {
+		var file = get_save_filename_ext("JADE File|*.jade", "", $"{working_directory}\mods\\level\\", "Save Level");
 		if string_length(file) != 0 { 
-			savetextdur=60;
+			//savetextdur=60;
 			global.save_dir=file
 			JADE_save(file)
 		}
 	}
-	if mouse_in_setting_slot(2) { //loading
-		var file = get_open_filename_ext("JADE File|*.jade", "", working_directory, "Load Level");
-		if string_length(file) != 0 {
-			global.save_dir=file
-			JADE_load(file)
-		}
+}
+
+if keyboard_check_pressed(vk_delete) {
+	switch(selected_mode) {
+		case OBJECT_MODE:
+		case NODE_MODE:
+			array_sort(selected_array,false)
+			var i=0;
+			repeat(array_length(selected_array)) {
+				ds_list_delete(object_map, selected_array[i])
+				i++;
+			}
+			selected_array=[];
+		break;
+		case DECO_MODE:
+			if deco_mode_type == "tile" {
+				if !ds_exists(tilemap,ds_type_list) break;
+				
+				array_sort(selected_array,false)
+				var i=0;
+				repeat(array_length(selected_array)) {
+					if !(selection_grab) {
+						var data=tilemap[| selected_array[i]]
+						data[0]=tile_set_empty(data[0])
+						tilemap_set(tilemap_layer,data[0],data[1],data[2])
+					}
+					ds_list_delete(tilemap, selected_array[i])
+					i++;
+				}
+				selected_array=[];
+				tile_update_properties();
+			} else if deco_mode_type == "asset" {
+				if !ds_exists(selected_layer.assetmap,ds_type_list) break;
+				
+				array_sort(selected_array,false)
+				var i=0;
+				repeat(array_length(selected_array)) {
+					if !(selection_grab) {
+						var data=selected_layer.assetmap[| selected_array[i]]
+						layer_sprite_destroy(data[1])
+					}
+					ds_list_delete(selected_layer.assetmap, selected_array[i])
+					i++;
+				}
+				selected_array=[];
+			}
+		break;
 	}
-	if (not_on_gui) {
-		if (selected_tool == PICKER_TOOL) {
+}
+
+if (mbleft && not_on_gui) {
+	switch(selected_tool) {
+		case BRUSH_TOOL:
 			switch(selected_mode) {
 				case OBJECT_MODE:
-					var size = ds_list_size(object_layer_map[selected_region])
-					var i=0;
-					repeat(size) {
-						//is place matching cursor?
-						var obj = ds_list_find_value(object_layer_map[selected_region], i)
-						if !is_undefined(obj) {
-						    if obj[1] == gridx && obj[2] == gridy {
-								selected_obj=obj[0];
-								selected_toolbar=0;
+				case NODE_MODE:
+					if is_struct(selected_obj) && !check_colliding_object(mouse_x,mouse_y) {
+						object_place(selected_obj.uuid,gridx*current_grid_size,gridy*current_grid_size,1,1);
+					}
+				break;
+				case DECO_MODE:
+					switch(deco_mode_type) {
+						case "tile":
+							if !ds_exists(tilemap,ds_type_list) break;
+						
+							var i=0;
+							repeat(tile_sel_width+1) {
+								var j=0;
+								repeat(tile_sel_height+1) {
+									//prevent trying to place out of bounds
+									if ((gridx + i) < tilemap_get_width(tilemap_layer)) && ((gridy + j) < tilemap_get_height(tilemap_layer)) && ((gridx + i) >= 0) && ((gridy + j) >= 0) {
+										var data = tilemap_get_at_pixel(tilemap_layer, mouse_x+(i *16), mouse_y+(j *16)); //set tile at place
+										if tile_get_index(data) != current_tile_id[i][j] {
+											data = tile_set_index(data, current_tile_id[i][j])
+											data = tile_set_flip(data, 0)
+											data = tile_set_mirror(data, 0)
+											data = tile_set_rotate(data, 0)
+											tilemap_set(tilemap_layer, data, gridx + i, gridy + j);
+											ds_list_add(tilemap,[data,gridx+i,gridy+j]) //add tile  to list at place
+										}
+									}
+									j++;
+								}
+								i++;
+							}
+							tile_update_properties();
+						break;
+						case "asset":
+							if (mbleftpress) && is_struct(selected_deco_obj) {
+								asset_place(selected_deco_obj.uuid,gridx*current_grid_size,gridy*current_grid_size,1,1)
+							}
+						break;
+					}
+				break;
+			}
+		break;
+		case ERASE_TOOL:
+			switch(selected_mode) {
+				case OBJECT_MODE:
+				case NODE_MODE:
+					var obj = check_colliding_object(mouse_x,mouse_y)
+					if (obj) {
+						ds_list_delete(object_map, obj-1)
+					}
+				break;
+				case DECO_MODE:
+					switch(deco_mode_type) {
+						case "tile":
+							var obj = check_colliding_tile(mouse_x,mouse_y)
+							if (obj) {
+								var tile = ds_list_find_value(tilemap,obj-1);
+								var data = tilemap_get(tilemap_layer, tile[1], tile[2]);
+								if tile_get_index(data)!= 0 {
+									data = tile_set_empty(data)
+									tilemap_set(tilemap_layer, data,  tile[1], tile[2]); //delete tile at place lol
+								}
+							}
+							tile_update_properties();
+						break;
+						case "asset":
+						var obj = check_colliding_asset(mouse_x,mouse_y)
+						if (obj) {
+							layer_sprite_destroy(selected_layer.assetmap[| obj-1][1])
+							ds_list_delete(selected_layer.assetmap, obj-1)
+						}
+						break;
+					}
+				break;
+			}
+		break;
+		case SELECT_TOOL:
+			if (selected_mode == OBJECT_MODE || selected_mode == NODE_MODE) {
+				#region object selection
+				if (mbleftpress) && !(resizing) {
+					//resizing
+					if array_length(selected_array)==1 {
+						var obj=object_map[| selected_array[0]]
+						var data=obj_data[$ obj[0]]
+						//top left
+						if point_in_rectangle(mouse_x,mouse_y,obj[1]-4,obj[2]-4,obj[1]+2,obj[2]+2) {
+							resizing = 1;
+							resizing_x = mouse_x;
+							resizing_y = mouse_y;
+							resizing_x2 = obj[1]
+							resizing_y2 = obj[2]
+							resizing_initial_w = obj[3];
+							resizing_initial_h = obj[4];
+							break;
+						}
+						//top right
+						if point_in_rectangle(mouse_x,mouse_y,obj[1]+(data.width*obj[3])-2,obj[2]-4,obj[1]+(data.width*obj[3])+4,obj[2]+2) {
+							resizing = 2;
+							resizing_x = mouse_x;
+							resizing_y = mouse_y;
+							resizing_x2 = obj[1]
+							resizing_y2 = obj[2]
+							resizing_initial_w = obj[3];
+							resizing_initial_h = obj[4];
+							break;
+						}
+						//bottom left
+						if point_in_rectangle(mouse_x,mouse_y,obj[1]-4,obj[2]+(data.height*obj[4])-2,obj[1]+4,obj[2]+(data.height*obj[4])+2) {
+							resizing = 3;
+							resizing_x = mouse_x;
+							resizing_y = mouse_y;
+							resizing_x2 = obj[1]
+							resizing_y2 = obj[2]
+							resizing_initial_w = obj[3];
+							resizing_initial_h = obj[4];
+							break;
+						}
+						//bottom right
+						if point_in_rectangle(mouse_x,mouse_y,obj[1]+(data.width*obj[3])-2,obj[2]+(data.height*obj[4])-2,obj[1]+(data.width*obj[3])+4,obj[2]+(data.height*obj[4])+4) {
+							resizing = 4;
+							resizing_x = mouse_x;
+							resizing_y = mouse_y;
+							resizing_x2 = obj[1]
+							resizing_y2 = obj[2]
+							resizing_initial_w = obj[3];
+							resizing_initial_h = obj[4];
+							break;
+						}
+					}
+				
+					var draggingobject=false;
+					//select single object
+					var col = check_colliding_object(mouse_x,mouse_y)
+					if (col) {
+						//TODO: move this to the mbrel section so you can drag select over unselected objects
+						if array_get_index(selected_array,col-1)==-1 {
+							if !keyboard_check(vk_shift) {
+								selected_array=[];
+							}
+							array_push(selected_array,col-1)
+							break;
+						} else if !keyboard_check(vk_shift) {
+							draggingobject = true;
+							selection_grab = true;
+							selection_grab_x = gridx*current_grid_size;
+							selection_grab_y = gridy*current_grid_size;
+							break;
+						}
+					}
+				
+					//unselect all objects unless shift is held
+					if !keyboard_check(vk_shift) && !draggingobject {
+						selected_array=[];
+					}
+					selection_box=true
+					selection_box_x=mouse_x;
+					selection_box_y=mouse_y;
+				}
+			
+				if (selection_grab) {
+					var x_diff = (selection_grab_x-(gridx*current_grid_size));
+					var y_diff = (selection_grab_y-(gridy*current_grid_size));
+					if (x_diff!=0) || (y_diff!=0) {
+						var i=0;
+						repeat(array_length(selected_array)) {
+							var obj = object_map[| selected_array[i]]
+							obj[1]-=x_diff;
+							obj[2]-=y_diff
+							i++;
+						}
+						selection_grab_x = gridx*current_grid_size;
+						selection_grab_y = gridy*current_grid_size;
+					}
+				}
+			
+				if (resizing) {
+					if array_length(selected_array)==1 {
+						var obj = object_map[| selected_array[0]]
+						var data = obj_data[$ obj[0]]
+						var x_diff = (resizing_x-(gridx*current_grid_size));
+						var y_diff = (resizing_y-(gridy*current_grid_size));
+						var scale_diff_x = data.width/current_grid_size;
+						var scale_diff_y = data.height/current_grid_size;
+						if (x_diff!=0) || (y_diff!=0) {
+							switch(resizing) {
+								case 1: //top left
+									obj[3] += floor(x_diff/current_grid_size)/scale_diff_x;
+									obj[4] += floor(y_diff/current_grid_size)/scale_diff_y;
+									obj[3] = max(obj[3],1)
+									obj[4] = max(obj[4],1)
+									obj[1] = resizing_x2+round(((resizing_initial_w-obj[3])*current_grid_size)*scale_diff_x)
+									obj[2] = resizing_y2+round(((resizing_initial_h-obj[4])*current_grid_size)*scale_diff_y)
+									resizing_x = gridx*current_grid_size;
+									resizing_y = gridy*current_grid_size;
 								break;
+								case 2: //top right
+									obj[3] += ceil(-x_diff/current_grid_size)/scale_diff_x;
+									obj[4] += floor(y_diff/current_grid_size)/scale_diff_y;
+									obj[3] = max(obj[3],1)
+									obj[4] = max(obj[4],1)
+									obj[2] = resizing_y2+round(((resizing_initial_h-obj[4])*current_grid_size)*scale_diff_y)
+									resizing_x = gridx*current_grid_size;
+									resizing_y = gridy*current_grid_size;
+								break;
+								case 3: //bottom left
+									obj[3] += floor(x_diff/current_grid_size)/scale_diff_x;
+									obj[4] += ceil(-y_diff/current_grid_size)/scale_diff_y;
+									obj[3] = max(obj[3],1)
+									obj[4] = max(obj[4],1)
+									obj[1] = resizing_x2+round(((resizing_initial_w-obj[3])*current_grid_size)*scale_diff_x)
+									resizing_x = gridx*current_grid_size;
+									resizing_y = gridy*current_grid_size;
+								break; 
+								case 4: //bottom right
+									obj[3] += ceil(-x_diff/current_grid_size)/scale_diff_x;
+									obj[4] += ceil(-y_diff/current_grid_size)/scale_diff_y;
+									obj[3] = max(obj[3],1)
+									obj[4] = max(obj[4],1)
+									resizing_x = gridx*current_grid_size;
+									resizing_y = gridy*current_grid_size;
+								break;
+							}
+						}
+					}
+				}
+			#endregion
+			} else if selected_mode == DECO_MODE {
+				#region tile selection 
+				if (mbleftpress) {
+					switch(deco_mode_type) {
+						case "tile": 
+							var draggingobject=false;
+							//select single object
+							var col = check_colliding_tile(mouse_x,mouse_y)
+							if (col) {
+								//TODO: move this to the mbrel section so you can drag select over unselected objects
+								if array_get_index(selected_array,col-1)==-1 {
+									if !keyboard_check(vk_shift) {
+										selected_array=[];
+									}
+									array_push(selected_array,col-1)
+									break;
+								} else if !keyboard_check(vk_shift) {
+									if !ds_exists(tilemap,ds_type_list) break;
+							
+									draggingobject = true;
+									selection_grab = true;
+									var i=0
+									repeat(array_length(selected_array)) {
+										var tile = ds_list_find_value(tilemap,selected_array[i]);
+										var data = tilemap_get(tilemap_layer, tile[1], tile[2]);
+										if tile_get_index(data)!= 0 {
+											data = tile_set_empty(data)
+											tilemap_set(tilemap_layer, data,  tile[1], tile[2]); //delete tile at place lol
+										}
+										i++;
+									}
+									selection_grab_x = gridx*current_grid_size;
+									selection_grab_y = gridy*current_grid_size;
+									break;
+								}
+							}
+				
+							//unselect all objects unless shift is held
+							if !keyboard_check(vk_shift) && !draggingobject {
+								selected_array=[];
+							}
+							selection_box=true
+							selection_box_x=mouse_x;
+							selection_box_y=mouse_y;
+						break;
+						case "asset":
+							var draggingobject=false;
+							//select single object
+							var col = check_colliding_asset(mouse_x,mouse_y)
+							if (col) {
+								//TODO: move this to the mbrel section so you can drag select over unselected objects
+								if array_get_index(selected_array,col-1)==-1 {
+									if !keyboard_check(vk_shift) {
+										selected_array=[];
+									}
+									array_push(selected_array,col-1)
+									break;
+								} else if !keyboard_check(vk_shift) {
+									if !ds_exists(selected_layer.assetmap,ds_type_list) break;
+							
+									draggingobject = true;
+									selection_grab = true;
+									selection_grab_x = gridx*current_grid_size;
+									selection_grab_y = gridy*current_grid_size;
+									break;
+								}
+							}
+				
+							//unselect all objects unless shift is held
+							if !keyboard_check(vk_shift) && !draggingobject {
+								selected_array=[];
+							}
+							selection_box=true
+							selection_box_x=mouse_x;
+							selection_box_y=mouse_y;
+						break;
+						case "bg":
+							selected_array=[];
+							var draggingobject=false;
+							//select single object
+							var bg = selected_layer.selected_bg;
+							var _sprite = selected_layer.sprite;
+							var _width = sprite_get_width(_sprite);
+							var _height = sprite_get_height(_sprite);
+							var _x = selected_layer.off_x-sprite_get_xoffset(_sprite);
+							var _y = selected_layer.off_y-sprite_get_yoffset(_sprite);
+							if point_in_rectangle(mouse_x,mouse_y,_x,_y,_x+_width,_y+_height) {
+								//TODO: move this to the mbrel section so you can drag select over unselected objects
+								array_push(selected_array,selected_layer)
+								draggingobject = true;
+								selection_grab = true;
+								selection_grab_x = gridx*current_grid_size;
+								selection_grab_y = gridy*current_grid_size;
+							}
+							
+							if !(draggingobject) {
+								selection_box=true
+								selection_box_x=mouse_x;
+								selection_box_y=mouse_y;
+							}
+						break;
+					}
+				}
+				#endregion
+				
+				if (deco_mode_type == "asset") && (selection_grab) {
+					var x_diff = (selection_grab_x-(gridx*current_grid_size));
+					var y_diff = (selection_grab_y-(gridy*current_grid_size));
+					if (x_diff!=0) || (y_diff!=0) {
+						var i=0;
+						repeat(array_length(selected_array)) {
+							var obj = selected_layer.assetmap[| selected_array[i]]
+							var objx = layer_sprite_get_x(obj[1])
+							var objy = layer_sprite_get_y(obj[1])
+							layer_sprite_x(obj[1],objx-x_diff)
+							layer_sprite_y(obj[1],objy-y_diff)
+							i++;
+						}
+						selection_grab_x = gridx*current_grid_size;
+						selection_grab_y = gridy*current_grid_size;
+					}
+				} else if (deco_mode_type == "bg") && (selection_grab) {
+					var x_diff = (selection_grab_x-(gridx*current_grid_size));
+					var y_diff = (selection_grab_y-(gridy*current_grid_size));
+					if (x_diff!=0) || (y_diff!=0) {
+						var obj = selected_layer.my_layer
+						selected_layer.off_x-=x_diff;
+						selected_layer.off_y-=y_diff;
+						layer_x(obj,selected_layer.off_x)
+						layer_y(obj,selected_layer.off_y)
+						selection_grab_x = gridx*current_grid_size;
+						selection_grab_y = gridy*current_grid_size;
+					}
+				}
+			}
+		break;
+		case NODE_TOOL:
+			if (mbleftpress) {
+				if !(drawing_node) {
+					var col = check_colliding_object(mouse_x,mouse_y,object_layer_map[selected_region])
+					if (col) {
+						var obj = object_layer_map[selected_region][| col-1]
+						draw_node_x = obj[1];
+						draw_node_y = obj[2];
+						drawing_node = col;
+					}
+				} else {
+					
+				}
+			}
+		break;
+	}
+}
+
+if (mbleftrel) {
+	if (selected_mode == OBJECT_MODE || selected_mode == NODE_MODE) {
+		if (selection_box) {
+			var box_w = (mouse_x - selection_box_x)
+			var box_h = (mouse_y - selection_box_y)
+			var box_x1 = floor(selection_box_x+min(box_w, 0))
+			var box_y1 = floor(selection_box_y+min(box_h, 0))
+			var box_x2 = floor(selection_box_x+min(box_w, 0)+abs(box_w))
+			var box_y2 = floor(selection_box_y+min(box_h, 0)+abs(box_h))
+			var i=0;
+			repeat(ds_list_size(object_map)) {
+				var obj = object_map[| i]
+				var data = obj_data[$ obj[0]]
+				if rectangle_in_rectangle(box_x1,box_y1,box_x2,box_y2,obj[1],obj[2],obj[1]+data.width*obj[3],obj[2]+data.height*obj[4]) {
+					if array_get_index(selected_array,i)==-1 {
+						array_push(selected_array,i)
+					}
+				}
+				i++;
+			}
+		}
+		selection_box = false;
+		selection_grab = false;
+		resizing = false;
+	} else if selected_mode == DECO_MODE {
+		switch(deco_mode_type) {
+			case "tile":
+				if (selection_box) {
+					if !ds_exists(tilemap,ds_type_list) exit;
+			
+					var box_w = (mouse_x - selection_box_x)
+					var box_h = (mouse_y - selection_box_y)
+					var box_x1 = floor(selection_box_x+min(box_w, 0))
+					var box_y1 = floor(selection_box_y+min(box_h, 0))
+					var box_x2 = floor(selection_box_x+min(box_w, 0)+abs(box_w))
+					var box_y2 = floor(selection_box_y+min(box_h, 0)+abs(box_h))
+					var i=0;
+					repeat(ds_list_size(tilemap)) {
+						var tile = tilemap[| i]
+						if rectangle_in_rectangle(box_x1,box_y1,box_x2,box_y2,tile[1]*16,tile[2]*16,tile[1]*16+16,tile[2]*16+16) {
+							if array_get_index(selected_array,i)==-1 {
+								array_push(selected_array,i)
 							}
 						}
 						i++;
 					}
-				break;
-				case TILE_MODE:
-					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
-					if tile_get_index(data) != current_tile_id[0][0] && not_on_gui {
-						current_tile_id = -1
-						current_tile_id = []
-						current_tile_id[0][0] = tile_get_index(data)
-						tile_sel_height = 0
-						tile_sel_width = 0
-						selected_toolbar = 0
-					}
-				break;
-			}
-		}
-	
-		if (selected_tool == BRUSH_TOOL) {
-			switch(selected_mode) {
-				case OBJECT_MODE:
-				break;
-			}
-		}
-		switch(selected_tool) {
-		case FLIP_TOOL:
-			switch(selected_mode) {
-				case TILE_MODE:
-					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
-					data = tile_set_flip(data, 1 - tile_get_flip(data))
-					tilemap_set(tilemap, data, gridx, gridy);
-					var tiledata = tilemap_get(tilemap, gridx, gridy)
-					ds_list_add(tile_layer_map[selected_region][selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
-					tile_update_properties();
-				break;
-			}
-		break;
-		case MIRROR_TOOL:
-			switch(selected_mode) {
-				case TILE_MODE:
-					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
-					data = tile_set_mirror(data, 1 - tile_get_mirror(data))
-					tilemap_set(tilemap, data, gridx, gridy);
-					var tiledata = tilemap_get(tilemap, gridx, gridy)
-					ds_list_add(tile_layer_map[selected_region][selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
-					tile_update_properties();
-				break;
-			}
-		break;
-		case ROTATE_TOOL:
-			switch(selected_mode) {
-				case TILE_MODE:
-					var data = tilemap_get_at_pixel(tilemap, mouse_x, mouse_y);
-					data = tile_set_rotate(data, 1 - tile_get_rotate(data))
-					tilemap_set(tilemap, data, gridx, gridy);
-					var tiledata = tilemap_get(tilemap, gridx, gridy)
-					ds_list_add(tile_layer_map[selected_region][selected_tile_layer],[tiledata,gridx,gridy]) //add tile  to list at place
-					tile_update_properties();
-				break;
-			}
-		break;
-		}
-	} else if !(not_on_gui) && !((on_object_list && show_object_list) || on_list_top) {
-		drawing_node=-1;
-		drawing_rotator=-1;
-	}
-}
-
-if (selected_tool == SELECT_TOOL && not_on_gui && !keyboard_check(vk_space)) {
-	var overlap = 0
-	
-	if (selected_mode == OBJECT_MODE) { //should probably be using a switch statement but its 3am im too lazy to do that rn
-		var size = ds_list_size(object_layer_map[selected_region])
-		
-		var i=0;
-		repeat(size) {
-			//is place matching cursor?
-			var obj = ds_list_find_value(object_layer_map[selected_region], i)
-		
-			if !is_undefined(obj) {
-				var sprite = ds_map_find_value(obj_data,obj[0])
-				var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-				var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]- 1)
-				overlap=red_box+white_box
+				} else if (selection_grab) {
+					if !ds_exists(tilemap,ds_type_list) exit;
 			
-				if !red_box { 
-					//if not selecting red box
-					if (mbleftpress) && (not_on_gui) {
-						open_dropmenu=0;
-						if white_box{ 
-							//selecting white area (kinda)
-							obj[5] = 1 
-						} else {
-							if !keyboard_check(vk_shift) && (not_on_gui) {
-								obj[5] = 0 //set all others unselected when not holding shift
-							}
+					var i=0
+					var temp_select_array=[];
+					repeat(array_length(selected_array)) {
+						var tile = ds_list_find_value(tilemap,selected_array[i])
+						var x_diff = (tile[1]*16 - selection_grab_x)
+						var y_diff = (tile[2]*16 - selection_grab_y)
+						var new_y = floor((mouse_y+y_diff)/16)
+						var new_x = floor((mouse_x+x_diff)/16)
+						if (new_x < tilemap_get_width(tilemap_layer)) && (new_y < tilemap_get_height(tilemap_layer)) && (new_x >= 0) && (new_y >= 0) {
+							array_push(temp_select_array,[tile[0],new_x,new_y])
+							ds_list_set(tilemap,selected_array[i],[tile[0],new_x,new_y])
+							tilemap_set(tilemap_layer, tile[0], new_x, new_y);
 						}
-					}
-				} else break
-			
-				if !red_box && (selection_box) && (not_on_gui) && (mbleftrel) && !(selection_box_x == mouse_x && selection_box_y == mouse_y) {
-					open_dropmenu=0;
-					if rectangle_in_rectangle((obj[1]*16) , (obj[2]*16) ,(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7] - 1, selection_box_x, selection_box_y, selection_box_x + (mouse_x - selection_box_x), selection_box_y + (mouse_y - selection_box_y)) {
-						obj[5] = 1 
-					} else {
-						if !keyboard_check(vk_shift) {
-							obj[5] = 0 //set all others unselected when not holding shift
-						}
-					}
-				}
-			}
-			i++;
-		}
-	
-		var i=0;
-		repeat(size) {
-			var obj = ds_list_find_value(object_layer_map[selected_region], i)
-			var sprite = ds_map_find_value(obj_data,obj[0])
-			var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-			var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]-1)
-			//is object selected?
-			if obj[5] {
-				#region move
-				if !red_box	{
-					if white_box && mbleftpress && selection = 0 && !selection_box{ 
-						selection = 2
-						selection_id = i
-						break;
-					}
-				}
-				if selection = 2  {
-					selection_x[i] = mouse_x - (obj[1]*16)
-					selection_y[i] = mouse_y - (obj[2]*16)
-				}
-			
-				if selection = 3 {
-					obj[1] = round((mouse_x - selection_x[i]) / 16) 
-					obj[2] = round((mouse_y - selection_y[i]) / 16) 
-				}
-			
-				#endregion
-				#region resize
-					if red_box && mbleftpress && selection = 0 && !selection_box{ //red box selected
-							selection = 1
-							selection_id = i //boxed up
-					}
-			
-					if selection = 1 && i = selection_id {
-							var grabx = mouse_x - (obj[1]*16)
-							var graby = mouse_y - (obj[2]*16)
-							if (sprite[5])
-								obj[6] = abs(grabx) + min(grabx, 0)//box movement
-							if (sprite[6])
-								obj[7] = abs(graby) + min(graby, 0)
-					}
-					if selection = 1 && mbleftrel {
-				
-						obj = ds_list_find_value(object_layer_map[selected_region], selection_id) //object you resized
-						sprite = ds_map_find_value(obj_data, obj[0])
-						var obj_other = ds_list_find_value(object_layer_map[selected_region], i) //every other object selected
-						var sprite_other = ds_map_find_value(obj_data, obj_other[0])
-						
-						
-						if (obj[5]) {
-							obj[6] = round(obj[6] /16) * 16 //rounding box to grid
-							if (sprite_other[5]) {
-								obj_other[3] = (obj[6] / sprite[3]) * sprite[11] //setting scale
-								obj_other[6] = obj[6] 
-								obj_other[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj_other[3] //setting offset
-							}
-						}
-						if (obj[6]) {
-							obj[7] = round(obj[7] /16) * 16
-							if (sprite_other[6]) {
-								obj_other[4] = (obj[7] / sprite[4]) * sprite[12]
-								obj_other[7] = obj[7]	
-								obj_other[9] = (sprite[2] = 0) ? 0 : sprite[2] + (sprite[4]/2) * obj_other[4]
-							}
-						}					
-				
-					}
-				#endregion
-			
-			} 
-
-				if (i = size - 1) && selection > 0 {
-					switch selection {
-						case 2:
-							selection = 3
-						break;
-						default:
-							if mbleftrel {
-								selection = 0
-								selection_id = NaN
-							}
-						break;
-					}
-				}
-			
-				if mbleftrel && selection_box && (i == size - 1) {
-						selection_box = false	
-				}
-			i++;
-		}
-	} else if (selected_mode==NODE_MODE) {
-		var size = ds_list_size(node_layer_map[selected_region])
-		
-		var i=0;
-		repeat(size) {
-			//is place matching cursor?
-			var obj = ds_list_find_value(node_layer_map[selected_region], i)
-		
-			if !is_undefined(obj) {
-				var sprite = ds_map_find_value(obj_data,obj[0])
-				var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-				var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
-				overlap=red_box+white_box
-			
-				if !red_box { 
-					//if not selecting red box
-					if (mbleftpress) && (not_on_gui) {
-						open_dropmenu=0;
-						if white_box{ 
-							//selecting white area (kinda)
-							obj[5] = 1 
-						} else {
-							if !keyboard_check(vk_shift) && (not_on_gui) {
-								obj[5] = 0 //set all others unselected when not holding shift
-							}
-						}
-					}
-				}
-			
-				if (selection_box) && (not_on_gui) {
-					open_dropmenu=0;
-					if rectangle_in_rectangle((obj[1]*16) , (obj[2]*16) ,(obj[1]*16) + obj[6] , (obj[2]*16) + obj[7], selection_box_x, selection_box_y, selection_box_x + (mouse_x - selection_box_x), selection_box_y + (mouse_y - selection_box_y)) {
-						obj[5] = 1 
-					} else {
-						if !keyboard_check(vk_shift) {
-							obj[5] = 0 //set all others unselected when not holding shift
-						}
-					}
-				}
-			}
-			i++;
-		}
-		
-		var i=0;
-		repeat(size) {
-			var obj = ds_list_find_value(node_layer_map[selected_region], i)
-			var sprite = ds_map_find_value(obj_data,obj[0])
-			var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-			var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) - 4, (obj[2]*16) - 4,(obj[1]*16) + obj[6] + 4, (obj[2]*16) + obj[7] + 4 )
-			//is object selected?
-			if obj[5] {
-				#region move
-				if !red_box	{
-					if (white_box && mbleftpress && !selection && !selection_box) { 
-						selection = 2
-						selection_id = i
-						break;
-					}
-				}
-			
-				if (selection == 2) {
-					selection_x[i] = mouse_x - (obj[1]*16)
-					selection_y[i] = mouse_y - (obj[2]*16)
-				}
-			
-				if (selection == 3) {
-					obj[1] = round((mouse_x - selection_x[i]) / 16) 
-					obj[2] = round((mouse_y - selection_y[i]) / 16) 
-				}
-			
-				#endregion
-				#region resize
-					if (red_box && mbleftpress && selection == 0 && !selection_box) { //red box selected
-							selection = 1
-							selection_id = i //boxed up
-					}
-
-			
-					if (selection = 1 && i = selection_id) {
-							var grabx = mouse_x - (obj[1]*16)
-							var graby = mouse_y - (obj[2]*16)
-							obj[6] = abs(grabx) + min(grabx, 0)//box movement
-							obj[7] = abs(graby) + min(graby, 0)
-
-					}
-					if (selection = 1 && mbleftrel) {
-				
-						obj = ds_list_find_value(node_layer_map[selected_region], selection_id) //object you resized
-						var obj_other = ds_list_find_value(node_layer_map[selected_region], i) //every other object selected
-					
-						obj[6] = round(obj[6] /16) * 16 //rounding box to grid
-						obj[7] = round(obj[7] /16) * 16
-				
-
-						obj_other[3] = (obj[6] / sprite[3]) * sprite[11] //setting scale
-						obj_other[4] = (obj[7] / sprite[4]) * sprite[12]
-						obj_other[6] = obj[6] 
-						obj_other[7] = obj[7]	
-						obj_other[8] = (sprite[1] = 0) ? 0 : sprite[1] + (sprite[3]/2) * obj_other[3] //setting offset
-						obj_other[9] = (sprite[2] = 0) ? 0 : sprite[2] + (sprite[4]/2) * obj_other[4]
-					
-				
-					}
-				#endregion
-			
-			} 
-
-				if (i = size - 1) && selection > 0 {
-					switch selection {
-						case 2:
-							selection = 3
-						break;
-						default:
-							if mbleftrel {
-								selection = 0
-								selection_id = NaN
-							}
-						break;
-					}
-				}
-			
-				if mbleftrel && selection_box && (i == size - 1) {
-						selection_box = false	
-				}
-			i++;
-		}
-	}
-	
-	if (!overlap) && mbleftpress && !selection_box && (!selection) && not_on_gui {
-		selection_box = true
-		selection_box_x = mouse_x
-		selection_box_y = mouse_y
-	}
-}
-
-if (mbleftrel && selection_box) {
-	selection_box = false
-}
-
-if show_tileset {
-	
-	if (dir != 0 && keyboard_check(vk_alt)) {
-		tile_zoom = (tile_zoom == 2 ? 1 : 2)
-			
-		tileset_picker_x = (guiw-((sprite_get_width(tilesets[$ current_tileset][0]) / 3) * tile_zoom)) - 8
-		tileset_picker_y = ((guih/2) - ((sprite_get_width(tilesets[$ current_tileset][0]) / 3) * tile_zoom) /2) - 8
-	}
-		
-	
-	if (selected_mode = TILE_MODE && on_tile_picker) {
-		var t_width = sprite_get_width(tilesets[$ current_tileset][0])
-		var t_height  = sprite_get_height(tilesets[$ current_tileset][0])
-		var t_size = 16 * (0.33 * tile_zoom)
-		if (mbleftpress && !tile_drag) {
-			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
-			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
-			//show_debug_message(string(floor(mouse_x / t_size)) + " : "+ string(tilelapmap.width/ 16))
-			current_tile_id = -1
-			current_tile_id = []
-			current_tile_id[0][0] = clamp(floor(sel_x / t_size), 0, t_width/ 16) + (clamp(floor(sel_y / t_size), 0, t_height/ 16) * (t_width/16))
-			tile_sel_height = 0
-			tile_sel_width = 0
-			tile_sel_last_x = clamp(floor(sel_x / t_size), 0, t_width/ 16)
-			tile_sel_last_y = clamp(floor(sel_y / t_size), 0, t_height/ 16)
-			tile_drag = true
-		}
-		if (mbleft && tile_drag) {
-			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
-			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
-			tile_sel_width = max(clamp(floor(sel_x / t_size), 0, t_width/ 16) - tile_sel_last_x, 0 )
-			tile_sel_height = max(clamp(floor(sel_y / t_size), 0, t_height/ 16) - tile_sel_last_y, 0)
-		}
-		
-		if (mbleftrel && tile_drag) {
-			var sel_x = clamp(device_mouse_x_to_gui(0) - tileset_picker_x, 0, t_width)
-			var sel_y = clamp(device_mouse_y_to_gui(0) - tileset_picker_y, 0, t_height)
-			var i=0;
-			repeat(tile_sel_width+1) {
-				var j=0;
-			    repeat(tile_sel_height+1) {
-				    current_tile_id[i][j] = (clamp(floor(sel_x / t_size), 0, t_width/ 16) + i - tile_sel_width) + ((clamp(floor(sel_y / t_size), 0, t_height/ 16) + j - tile_sel_height) * (t_width/16))
-					j++;
-				}
-				i++;
-			}
-			tile_drag = false
-		}
-	}
-}
-	
-if not_on_gui && selected_tool == FILL_TOOL && selected_mode == TILE_MODE {
-	if (mbleftpress && !tile_fill) {
-		fill_circle = false
-		tile_fill_last_x = gridx
-		tile_fill_last_y = gridy
-		tile_fill = true
-	}
-	if (mbleftrel && tile_fill && !fill_circle) {
-		var start_x = tile_fill_last_x 
-		var start_y = tile_fill_last_y 
-		var size_x = (gridx - tile_fill_last_x)
-		var size_y = (gridy - tile_fill_last_y) 
-		
-		if size_x < 0 {
-			start_x = gridx
-			size_x = abs(size_x)
-		}
-		if size_y < 0 {
-			start_y = gridy
-			size_y = abs(size_y)
-		}
-		
-		var i=0;
-		repeat(size_x) {
-			var j=0;
-			repeat (size_y){
-				var data = tilemap_get(tilemap, tile_fill_last_x + (i *16), tile_fill_last_y+ (j *16)); //get tile to change data
-				
-				data = tile_set_index(data, current_tile_id[i mod (tile_sel_width+1)][j mod (tile_sel_height+1)])
-				//set tile to a mosaic of the current tile 'brush'
-				
-				data = tile_set_flip(data, 0)
-				data = tile_set_mirror(data, 0)
-				data = tile_set_rotate(data, 0)
-				tilemap_set(tilemap, data, start_x + i, start_y + j);
-
-				var tiledata = tilemap_get(tilemap, start_x + i, start_y + j)
-				ds_list_add(tile_layer_map[selected_region][selected_tile_layer],[tiledata,start_x + i,start_y + j]) //add tile  to list at place
-				
-				j++;
-			}
-			i++;
-		}
-		tile_update_properties();
-		tile_fill = false
-						
-	}
-	if (mbrightpress && !tile_fill) {
-		fill_circle = true
-		tile_fill_last_x = gridx
-		tile_fill_last_y = gridy
-		show_debug_message("testA")
-		tile_fill = true
-	}
-	if (mbrightrel && tile_fill && fill_circle) {
-		var start_x = tile_fill_last_x 
-		var start_y = tile_fill_last_y 
-		var size_x = (gridx - tile_fill_last_x)
-		var size_y = (gridy - tile_fill_last_y) 
-		
-		if size_x < 0 {
-			start_x = gridx
-			size_x = abs(size_x)
-		}
-		if size_y < 0 {
-			start_y = gridy
-			size_y = abs(size_y)
-		}
-		
-		var i=0;
-		repeat(size_x) {
-			var j=0;
-			repeat (size_y){
-				if !point_in_ellipse(((start_x + i) * 16)+8, ((start_y + j) * 16)+8, (size_x*16)-8, (size_y*16)-8, (start_x + size_x/2) * 16, (start_y + size_y/2) * 16) {
-				
-					var data = tilemap_get(tilemap, tile_fill_last_x + (i *16), tile_fill_last_y+ (j *16)); //get tile to change data
-				
-					data = tile_set_index(data, current_tile_id[i mod (tile_sel_width + 1)][j mod (tile_sel_height + 1)])
-					//set tile to a mosaic of the current tile 'brush'
-				
-					data = tile_set_flip(data, 0)
-					data = tile_set_mirror(data, 0)
-					data = tile_set_rotate(data, 0)
-					tilemap_set(tilemap, data, start_x + i, start_y + j);
-
-					var tiledata = tilemap_get(tilemap, start_x + i, start_y + j)
-					ds_list_add(tile_layer_map[selected_tile_layer],[tiledata,start_x + i,start_y + j]) //add tile  to list at place
-				}
-				j++;	
-			}
-			i++;
-		}
-		tile_fill = false
-	}
-}
-
-if (mbright && not_on_gui) {
-	switch(selected_mode) {
-		case TILE_MODE: {
-			if (selected_tool==BRUSH_TOOL) {
-				var i=0;
-				repeat(tile_sel_width+1) {
-					var j=0;
-					repeat(tile_sel_height+1) {
-						var data = tilemap_get(tilemap, gridx+i, gridy+j);
-						if tile_get_index(data)!= 0 {
-							data = tile_set_empty(data)
-							tilemap_set(tilemap, data, gridx+i, gridy+j); //delete tile at place lol
-						}
-						j++;
-					}
-					i++;
-				}
-				tile_update_properties();
-			}
-		}
-	}
-}
-
-if (mbrightpress && not_on_gui) {
-	switch(selected_tool) {
-		case SELECT_TOOL:
-			switch(selected_mode) {
-				case OBJECT_MODE:
-					if is_string(selected_obj) {
-						var i=0;
-						repeat(ds_list_size(object_layer_map[selected_region])) {
-							//is place matching cursor?
-							var obj = ds_list_find_value(object_layer_map[selected_region], i)
-							if !is_undefined(obj) {
-								var sprite = ds_map_find_value(obj_data,obj[0])
-								var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-								var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]- 1)
-								if !red_box && white_box { 
-									obj[5] = 1
-									temptypingstring=""
-									is_typing=0;
-									open_dropmenu=0;
-									object_list_active = 0
-									properties_tab_active = 1
-									show_object_list = 1
-									break
-								}
-							}
-							i++;
-						}
-					}
-				break;
-				case NODE_MODE:
-					if is_string(selected_obj) {
-						var i=0;
-						repeat(ds_list_size(node_layer_map[selected_region])) {
-							//is place matching cursor?
-							var obj = ds_list_find_value(node_layer_map[selected_region], i)
-							if !is_undefined(obj) {
-								var sprite = ds_map_find_value(obj_data,obj[0])
-								var red_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16) + obj[6] -2, (obj[2]*16) + obj[7] -2,(obj[1]*16) + obj[6] +2, (obj[2]*16) + obj[7] +2)
-								var white_box = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7]- 1)
-								if !red_box && white_box { 
-									obj[5] = 1
-									temptypingstring=""
-									is_typing=0;
-									open_dropmenu=0;
-									object_list_active = 0
-									properties_tab_active = 1
-									show_object_list = 1
-									break
-								}
-							}
-							i++;
-						}
+						i++;
 					}
 				break;
 			}
@@ -947,534 +631,88 @@ if (mbrightpress && not_on_gui) {
 								ds_list_delete(object_layer_map[selected_region], i)//delete first object it finds there (probably bottom top? i don rembr)
 								break;
 							}
-						}
-						i++;
-					}
-				break;
-				case NODE_MODE:
-					var size = ds_list_size(node_layer_map[selected_region])
-					var i=0;
-					repeat(size) {
-						//is place matching cursor?
-						var obj = ds_list_find_value(node_layer_map[selected_region], i)
-						if !is_undefined(obj) {
-						    if obj[1] == gridx && obj[2] == gridy {
-								ds_list_delete(node_layer_map[selected_region], i)//delete first object it finds there (probably bottom top? i don rembr)
-								break;
-							}
-						}
-						i++;
-					}
-				break;
-			}
-		}
-		break;
-	}
-}
-
-if (mbleft && not_on_gui && !keyboard_check(vk_space)) {
-		switch(selected_tool) {
-		case BRUSH_TOOL:
-			switch(selected_mode) {
-				case OBJECT_MODE:
-					if is_string(selected_obj) {
-						var i=0;
-						repeat(ds_list_size(object_layer_map[selected_region])) {
-							//is place matching cursor?
-							var obj = ds_list_find_value(object_layer_map[selected_region], i)
-							if !is_undefined(obj) {
-							    if obj[1] == gridx && obj[2] == gridy {
-									exit;
-								}
-							}
-							i++;
-						}
-						if !is_undefined(selected_obj) {
-							var sprite = ds_map_find_value(obj_data,selected_obj)
-							if sprite[7]!=OBJECT_MODE exit;
-							ds_list_add(object_layer_map[selected_region], [selected_obj, gridx, gridy, sprite[11], sprite[12], 0])//add object to list at place
-							show_debug_message("created object: {0}", selected_obj)
-							var obj = ds_list_find_value(object_layer_map[selected_region], ds_list_size(object_layer_map[selected_region])-1)
-							obj[6] = sprite[3]
-							obj[7] = sprite[4]
-							obj[8] = 0
-							obj[9] = 0	
-							obj[10] = [] //properties
-							obj[11] = [] //node array
-							obj[12] = [2,false,0,false,true,true] //node properties
-							obj[13] = [] //rotator array
-							obj[14] = [2,false,false,false] //rotator properties
-							if is_array(sprite[8]) && array_length(sprite[8]) {
-								var o=0;
-								repeat(array_length(sprite[8])) { //god Damn.
-									if is_array(sprite[8][o]) {
-										obj[10][o] = array_create(1,0)
-										array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
-										if is_array(sprite[8][o][4]) {
-											obj[10][o][4] = array_create(1,0)
-											array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
-										}
-									}
-									o++;
-								}
-							}
-						}
-						
-						/*OBJECT STAT LIST
-						 0: name
-						 1: grid x
-						 2: grid y
-						 3: scale x
-						 4: scale y
-						 5: selected
-						 6: box x
-						 7: box y
-						 8: offset x
-						 9: offset y
-						 10: properties array
-						*/
-						
-						/*SPRITE STAT LIST
-						 just look in JADE_initializeobj() lol
-						*/
-					}
-				break;
-				case NODE_MODE:
-					if is_string(selected_obj) {
-						var i=0;
-						repeat(ds_list_size(node_layer_map[selected_region])) {
-							//is place matching cursor?
-							var obj = ds_list_find_value(node_layer_map[selected_region], i)
-							if !is_undefined(obj) {
-							    if obj[1] == gridx && obj[2] == gridy {
-									exit;
-								}
-							}
-							i++;
-						}
-						if !is_undefined(selected_obj) {
-							var sprite = ds_map_find_value(obj_data,selected_obj)
-							if sprite[7]!=NODE_MODE exit;
-							ds_list_add(node_layer_map[selected_region], [selected_obj, gridx, gridy, 1, 1, 0])//add object to list at place
-							show_debug_message("created object: {0}", selected_obj)
-							var obj = ds_list_find_value(node_layer_map[selected_region], ds_list_size(node_layer_map[selected_region])-1)
-							obj[6] = sprite[3]
-							obj[7] = sprite[4]
-							obj[8] = 0
-							obj[9] = 0	
-							obj[10] = []
-							obj[11] = []
-							obj[12] = []
-							obj[13] = []
-							obj[14] = []
-							if is_array(sprite[8]) && array_length(sprite[8]) {
-								var o=0;
-								repeat(array_length(sprite[8])) { //god Damn.
-									if is_array(sprite[8][o]) {
-										obj[10][o] = array_create(1,0)
-										array_copy(obj[10][o],0,sprite[8][o],0,array_length(sprite[8][o]))
-										if is_array(sprite[8][o][4]) {
-											obj[10][o][4] = array_create(1,0)
-											array_copy(obj[10][o][4],0,sprite[8][o][4],0,array_length(sprite[8][o][4]))	
-										}
-									}
-									o++;
-								}
-							}
-						}
-						
-						/*OBJECT STAT LIST
-						 0: name
-						 1: grid x
-						 2: grid y
-						 3: scale x
-						 4: scale y
-						 5: selected
-						 6: box x
-						 7: box y
-						 8: offset x
-						 9: offset y
-						 10: properties array
-						*/
-						
-						/*SPRITE STAT LIST
-						 just look in JADE_initializeobj() lol
-						*/
-					}
-				break;
-				case TILE_MODE:
-					if show_tileset && on_tile_picker {
-						exit;	
-					}
-					var i=0;
-					repeat(tile_sel_width+1) {
-						var j=0;
-						repeat(tile_sel_height+1) {
-							var data = tilemap_get_at_pixel(tilemap, mouse_x + (i *16), mouse_y+ (j *16)); //set tile at place
-							if tile_get_index(data) != current_tile_id[i][j] { //prevent tile overlapping (mainly a problem with the list)
-								show_debug_message($"Placed tile of index {current_tile_id[i][j]} at {mouse_x + (i *16)} {mouse_y+ (j *16)}")
-								data = tile_set_index(data, current_tile_id[i][j])
-								data = tile_set_flip(data, 0)
-								data = tile_set_mirror(data, 0)
-								data = tile_set_rotate(data, 0)
-								tilemap_set(tilemap, data, gridx + i, gridy + j);
-								show_debug_message(data)
-								var tiledata = tilemap_get(tilemap, gridx + i, gridy + j)
-								ds_list_add(tile_layer_map[selected_region][selected_tile_layer],[tiledata,gridx+i,gridy+j]) //add tile  to list at place
-							}
 							j++;
 						}
 						i++;
 					}
-					tile_update_properties();
-				break;
-			}
-		break;
-		case ERASE_TOOL:
+				}
+			break;
+			case "asset":
+				if (selection_box) {
+					if !ds_exists(selected_layer.assetmap,ds_type_list) exit;
+					
+					var box_w = (mouse_x - selection_box_x)
+					var box_h = (mouse_y - selection_box_y)
+					var box_x1 = floor(selection_box_x+min(box_w, 0))
+					var box_y1 = floor(selection_box_y+min(box_h, 0))
+					var box_x2 = floor(selection_box_x+min(box_w, 0)+abs(box_w))
+					var box_y2 = floor(selection_box_y+min(box_h, 0)+abs(box_h))
+	
+					var i=0;
+					repeat(ds_list_size(selected_layer.assetmap)) {
+						var asset=selected_layer.assetmap[| i]
+						var data = obj_data[$ asset[0]]
+						var _sprite = asset_get_index(asset[0])
+						var _ax = layer_sprite_get_x(asset[1]) - sprite_get_xoffset(_sprite)
+						var _ay = layer_sprite_get_y(asset[1]) - sprite_get_yoffset(_sprite)
+						var _width = data.width
+						var _height = data.height
+						if rectangle_in_rectangle(box_x1,box_y1,box_x2,box_y2,_ax,_ay,_ax+_width,_ay+_height) {
+							if array_get_index(selected_array,i)==-1 {
+								array_push(selected_array,i)
+							}
+						}
+						i++;
+					}
+				}
+				selection_box = false;
+				selection_grab = false;
+				resizing = false;
+			break;
+		}
+		selection_box = false;
+		selection_grab = false;
+	} 
+}
+
+if (mbright) {
+	switch(selected_tool) {
+		case BRUSH_TOOL:
 			switch(selected_mode) {
 				case OBJECT_MODE:
-					var size = ds_list_size(object_layer_map[selected_region])
-					var i=0;
-					repeat(size) {
-						//is place matching cursor?
-						var obj = ds_list_find_value(object_layer_map[selected_region], i)
-						if !is_undefined(obj) {
-						    if obj[1] == gridx && obj[2] == gridy {
-								show_debug_message("deleted object: {0}", obj[0])
-								ds_list_delete(object_layer_map[selected_region], i)//delete first object it finds there (probably bottom top? i don rembr)
-								break;
-							}
-						}
-						i++;
-					}
-				break;
 				case NODE_MODE:
-					var size = ds_list_size(node_layer_map[selected_region])
-					var i=0;
-					repeat(size){
-						//is place matching cursor?
-						var obj = ds_list_find_value(node_layer_map[selected_region], i)
-						if !is_undefined(obj) {
-						    if obj[1] == gridx && obj[2] == gridy {
-								show_debug_message("deleted object: {0}", obj[0])
-								ds_list_delete(node_layer_map[selected_region], i)//delete first object it finds there (probably bottom top? i don rembr)
-								break;
+					var obj = check_colliding_object(mouse_x,mouse_y)
+					if (obj) {
+						ds_list_delete(object_map, obj-1)
+					}
+				break;
+				case DECO_MODE:
+					switch(deco_mode_type) {
+						case "tile":
+							var obj = check_colliding_tile(mouse_x,mouse_y)
+							if (obj) {
+								var tile = ds_list_find_value(tilemap,obj-1);
+								var data = tilemap_get(tilemap_layer, tile[1], tile[2]);
+								if tile_get_index(data)!= 0 {
+									data = tile_set_empty(data)
+									tilemap_set(tilemap_layer, data,  tile[1], tile[2]); //delete tile at place lol
+								}
 							}
-						}
-						i++;
-					}
-				break;
-				case TILE_MODE:
-					var data = tilemap_get(tilemap, gridx, gridy);
-					
-					if tile_get_index(data)!= 0 {
-						show_debug_message($"Deleted tile of index {tile_get_index(data)} at {mouse_x} {mouse_y}")
-						data = tile_set_empty(data)
-						tilemap_set(tilemap, data, gridx, gridy); //delete tile at place lol
-						tile_update_properties();
-					}
-				break;
-			}
-		break;
-		case FILL_TOOL:
-			switch(selected_mode) {
-				case TILE_MODE:
-					
-				break;
-			}
-		}
-	
-}
-	
-if (selected_tool==NODE_TOOL) && (not_on_gui) { //drawing nodes
-	if (mbleftpress) {
-		if (drawing_node==-1) {
-			var size = ds_list_size(object_layer_map[selected_region])
-	
-			var i=0;
-			repeat(size) {
-				//is place matching cursor?
-				var obj = ds_list_find_value(object_layer_map[selected_region], i)
-		
-				if !is_undefined(obj) {
-					var over = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7] - 1)
-					
-					var sprite = ds_map_find_value(obj_data,obj[0])
-					var xoff = -sprite[1];
-					var yoff = -sprite[2];
-					
-					if (over) && (sprite[9]) {
-						drawing_node=i;
-						if !array_length(obj[11]) {
-							draw_node_x=(obj[1]*16)-((obj[6]-16)/2)+xoff-(room_width+64)*selected_region
-							draw_node_y=(obj[2]*16)-((obj[7]-16)/2)+yoff
-						} else {
-							var length = array_length(obj[11])-1;
-							draw_node_x=obj[11][length][0]+((obj[6]-16)/2)-(room_width+64)*selected_region
-							draw_node_y=obj[11][length][1]+((obj[7]-16)/2)
+							tile_update_properties();
+						break;
+						case "asset":
+						var obj = check_colliding_asset(mouse_x,mouse_y)
+						if (obj) {
+							layer_sprite_destroy(selected_layer.assetmap[| obj-1][1])
+							ds_list_delete(selected_layer.assetmap, obj-1)
 						}
 						break;
 					}
-				}
-				i++;
+				break;
 			}
-		} else {
-			var obj = ds_list_find_value(object_layer_map[selected_region], drawing_node)
-			
-			var sprite = ds_map_find_value(obj_data,obj[0])
-			var xoff = -sprite[1];
-			var yoff = -sprite[2];
-			
-			array_push(obj[11], [(gridx*16)-((obj[6]-16)/2)+xoff+(room_width+64)*selected_region,(gridy*16)-((obj[7]-16)/2)+yoff,false])
-			show_debug_message(obj[11])
-			draw_node_x=(gridx*16)+xoff
-			draw_node_y=(gridy*16)+yoff
-		}
-	}
-	
-	if (mbrightpress) {
-		if (drawing_node!=-1) {
-			var obj = ds_list_find_value(object_layer_map[selected_region], drawing_node)
-			var size = array_length(obj[11])
-			if (size) {
-				var sprite = ds_map_find_value(obj_data,obj[0])
-				var xoff = -sprite[1];
-				var yoff = -sprite[2];
-			
-				var deleted=false;
-				var i=0;
-				repeat(size) {
-					//is place matching cursor?
-				
-					var over = point_in_rectangle(mouse_x, mouse_y, obj[11][i][0]+((obj[6]-16)/2)-xoff-(room_width+64)*selected_region, obj[11][i][1]+((obj[7]-16)/2)-yoff, obj[11][i][0]+15+((obj[6]-16)/2)-xoff-(room_width+64)*selected_region, obj[11][i][1]+15+((obj[7]-16)/2)-yoff)
-					
-					if (over) {
-						array_delete(obj[11],i,1)
-						var size = array_length(obj[11])
-						if (size) {
-							draw_node_x=obj[11][size-1][0]+((obj[6]-16)/2)-(room_width+64)*selected_region
-							draw_node_y=obj[11][size-1][1]+((obj[7]-16)/2)
-						}
-						deleted=true;
-						break
-					}
-					i++;
-				}
-				if !(deleted)
-				drawing_node=-1;
-			} else {
-				drawing_node=-1
-			}
-		}
+		break;
+		case NODE_TOOL:
+			drawing_node = -1;
+		break;
 	}
 }
-
-if (selected_tool==ROTATOR_TOOL) && (not_on_gui) { //drawing nodes
-	if (mbleftpress) {
-		if (drawing_rotator==-1) {
-			var size = ds_list_size(object_layer_map[selected_region])
-	
-			var i=0;
-			repeat(size) {
-				//is place matching cursor?
-				var obj = ds_list_find_value(object_layer_map[selected_region], i)
-		
-				if !is_undefined(obj) {
-					var over = point_in_rectangle(mouse_x, mouse_y, (obj[1]*16), (obj[2]*16),(obj[1]*16) + obj[6] - 1, (obj[2]*16) + obj[7] - 1)
-					
-					var sprite = ds_map_find_value(obj_data,obj[0])
-					var xoff = -sprite[1];
-					var yoff = -sprite[2];
-					
-					if (over) && (sprite[9]) {
-						drawing_rotator=i;
-						draw_rotator_x=(obj[1]*16)-((obj[6]-16)/2)+xoff
-						draw_rotator_y=(obj[2]*16)-((obj[7]-16)/2)+yoff
-					}
-				}
-				i++;
-			}
-		} else {
-			var obj = ds_list_find_value(object_layer_map[selected_region], drawing_rotator)
-			
-			var sprite = ds_map_find_value(obj_data,obj[0])
-			var xoff = -sprite[1];
-			var yoff = -sprite[2];
-			
-			obj[13]=[(gridx*16)-((obj[6]-16)/2)+xoff+(room_width+64)*selected_region,(gridy*16)-((obj[7]-16)/2)+yoff,false]
-			show_debug_message(obj[13])
-		}
-	}
-	
-	if (mbrightpress) {
-		if (drawing_rotator!=-1) {
-			var obj = ds_list_find_value(object_layer_map[selected_region], drawing_rotator)
-			var size = array_length(obj[13])
-			if (size) {
-				var sprite = ds_map_find_value(obj_data,obj[0])
-				var xoff = -sprite[1];
-				var yoff = -sprite[2];
-			
-				var deleted=false;
-				var i=0;
-				var over = point_in_rectangle(mouse_x, mouse_y, obj[13][0]+((obj[6]-16)/2)-xoff-(room_width+64)*selected_region, obj[13][1]+((obj[7]-16)/2)-yoff, obj[13][0]+15+((obj[6]-16)/2)-xoff-(room_width+64)*selected_region, obj[13][1]+15+((obj[7]-16)/2)-yoff)
-					
-				if (over) {
-					obj[13]=[];
-					draw_rotator_x=(obj[1]*16)-((obj[6]-16)/2)+xoff
-					draw_rotator_y=(obj[2]*16)-((obj[7]-16)/2)+yoff
-					deleted=true;
-				}
-				if !(deleted)
-				drawing_rotator=-1;
-			} else {
-				drawing_rotator=-1
-			}
-		}
-	}
-}
-
-if keyboard_check_pressed(vk_enter) && !(is_typing) { //PLAYTEST
-	JADE_save();
-	global._playerChars = [oGlobals._charmList[0]]
-
-	var myChar = get_string("Choose your character", oGlobals._charmList[0]) //debug jade charm select. not sure if this is what you meant by "multi-charm loading" but it can "load" "multi" "charm"
-	//gamemaker i don't CARE if its deprecated because of async you cant choose your charm while the charm is already loading
-
-	var i=0;
-	repeat(array_length(oGlobals._charmList)) {
-		if (myChar == oGlobals._charmList[i]) {
-			global._playerChars = [myChar]
-			break;
-		}
-		i++;
-	}
-	
-	global.nextlevel=game_save_id+"\save.jade" //the level the game will load
-	global.jade_testing = true;
-	
-	i = 0;
-	repeat(4) {
-		global.lives[i]=5
-		i++
-	}
-	room_goto(gotoroom)
-}
-
-if (keyboard_check(vk_control)) && keyboard_check_pressed(ord("S")) { //saving
-	if (global.save_dir != "") {
-		savetextdur=60;
-		JADE_save(global.save_dir)
-	} else {
-		var file = get_save_filename_ext("JADE File|*.jade", "", $"{working_directory}\mods\\level\\", "Save Level");
-		if string_length(file) != 0 { 
-			savetextdur=60;
-			global.save_dir=file
-			JADE_save(file)
-		}
-	}
-}
-
-#region Tool Shortcuts
-//probably replace these with keybindable ones later
-
-if !(is_typing) {
-
-if keyboard_check_pressed(ord("1")) || keyboard_check_pressed(vk_numpad1)  {
-	selected_mode=0
-	selected_toolbar=0;
-}
-
-if keyboard_check_pressed(ord("2")) || keyboard_check_pressed(vk_numpad2)  {
-	selected_mode=1
-	selected_toolbar=0;
-}
-
-if keyboard_check_pressed(ord("3")) || keyboard_check_pressed(vk_numpad3)  {
-	selected_mode=2
-	selected_toolbar=0;
-}
-
-if keyboard_check_pressed(ord("4")) || keyboard_check_pressed(vk_numpad4)  {
-	selected_mode=3
-	selected_toolbar=0;
-}
-
-if keyboard_check_pressed(ord("5")) || keyboard_check_pressed(vk_numpad5)  {
-	selected_mode=4
-	selected_toolbar=0;
-}
-
-if keyboard_check_pressed(ord("D")) && !keyboard_check(vk_control) {
-	switch (selected_mode) {
-		case OBJECT_MODE:
-		case BACKGROUND_MODE:
-		case NODE_MODE: {
-			selected_toolbar=1;
-			break;
-		}
-		case TILE_MODE: {
-			selected_toolbar=0;
-			break;
-		}
-	}
-}
-
-if keyboard_check_pressed(ord("S")) && !keyboard_check(vk_control) {
-	switch (selected_mode) {
-		case NODE_MODE:
-		case BACKGROUND_MODE:
-		case OBJECT_MODE: {
-			selected_toolbar=0;
-			break;
-		}
-	}
-}
-
-if keyboard_check_pressed(ord("F")) && !keyboard_check(vk_control) {
-	switch (selected_mode) {
-		case OBJECT_MODE: {
-			selected_toolbar=2;
-			break;
-		}
-		case TILE_MODE: {
-			selected_toolbar=1;
-			break;
-		}
-	}
-}
-
-if keyboard_check_pressed(ord("E")) && !keyboard_check(vk_control) {
-	switch (selected_mode) {
-		case OBJECT_MODE:
-		case NODE_MODE: {
-			selected_toolbar=3;
-			break;
-		}
-		case BACKGROUND_MODE:
-		case TILE_MODE: {
-			selected_toolbar=2;
-			break;
-		}
-	}
-}
-
-if keyboard_check_pressed(ord("I")) && !keyboard_check(vk_control) {
-	switch (selected_mode) {
-		case TILE_MODE:
-		case BACKGROUND_MODE: {
-			selected_toolbar=3;
-			break;
-		}
-		case OBJECT_MODE: {
-			selected_toolbar=4;
-			break;
-		}
-	}
-}
-
-}
-
-#endregion
-
-//keyboard_check

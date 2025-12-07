@@ -30,8 +30,8 @@ if instance_exists(oSlime) {
 	var shinex, shiney, shinediff;
 
 	with(oSlime) {
-		var finy = camera_y;
-		var exceed = max(0, y - camera_y - (CAMERA_MAX_HEIGHT - 8));
+		var finy = global.camera_y;
+		var exceed = max(0, y - global.camera_y - (CAMERA_MAX_HEIGHT - 8));
 
 		finy += exceed;
 	
@@ -39,12 +39,12 @@ if instance_exists(oSlime) {
 
 		draw_sprite(spr_slime_morphcone,0,morph.exceed_x,exceed);
 		
-		shiney = min((CAMERA_MAX_HEIGHT - 8), y - camera_y) - int64(morph.vis_height / 1.37);
+		shiney = min((CAMERA_MAX_HEIGHT - 8), y - global.camera_y) - int64(morph.vis_height / 1.37);
 		
 		shinediff = (morph.shader_data[1][max(0, shiney)] + max(0, shiney) & 0xff) div 2;
 		
 		shinex = (128 - int64(morph.shader_data[0][max(0, shiney)] * 256))
-					+ camera_x + morph.exceed_x;
+					+ global.camera_x + morph.exceed_x;
 		
 		shinex -= (shinediff - int64(shinediff * 0.41));
 		
@@ -60,7 +60,7 @@ if instance_exists(oSlime) {
 	draw_rectangle(0,0,appcoords[0],appcoords[1],false);
 	
 	draw_set_alpha(1);
-	draw_surface(morph_surface, camera_x, camera_y);
+	draw_surface(morph_surface, global.camera_x, global.camera_y);
 	gpu_set_blendenable(true);
 	gpu_set_colorwriteenable(true,true,true,true);
 	
@@ -76,7 +76,7 @@ if instance_exists(oSlime) {
 	repeat (len)
 	{
 		pos = shinecoords[|i];
-		draw_sprite(spr_slime_shine,0,pos[0]-camera_x,pos[1] + pos[2]);
+		draw_sprite(spr_slime_shine,0,pos[0]-global.camera_x,pos[1] + pos[2]);
 		i++;
 	}
 	
@@ -99,7 +99,7 @@ if instance_exists(oSlime) {
 	set_outlinecolor_from_hex(slime_outline_color);
 	
 	draw_set_alpha(0.90);
-	draw_surface(morph_surface, camera_x, camera_y);
+	draw_surface(morph_surface, global.camera_x, global.camera_y);
 	draw_set_alpha(1.0);
 	
 	shader_reset();

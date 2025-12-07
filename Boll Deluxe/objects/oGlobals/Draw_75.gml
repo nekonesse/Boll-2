@@ -10,7 +10,7 @@ if (global.debug)
 	var morph_costs = get_morph_cost();
 
 	if (room == rEditor) && instance_exists(oJADEController) {
-		ext=$"EDITOR OBJECTS: {ds_list_size(oJADEController.object_layer_map[oJADEController.selected_region])+ds_list_size(oJADEController.node_layer_map[oJADEController.selected_region])}\nEDITOR TILES: {ds_list_size(oJADEController.tile_layer_map[oJADEController.selected_region][oJADEController.selected_tile_layer])}"
+		ext=""//$"EDITOR OBJECTS: {ds_list_size(oJADEController.object_layer_map[oJADEController.selected_region])+ds_list_size(oJADEController.node_layer_map[oJADEController.selected_region])}\nEDITOR TILES: {ds_list_size(oJADEController.tilemap)}"
 	}
 	else if (morph_costs[0] >= 0)
 	{
@@ -20,7 +20,7 @@ if (global.debug)
 	var fps_color = c_white;
 
 	// adopt the SRB2 method of coloring the FPS depending on if we're meeting the target
-	if (fps_real < int64(FPS_TARGET * 0.625))
+	if (fps_real < (FPS_TARGET * 0.625))
 	{
 		// severely below target
 		fps_color = c_red;
@@ -51,7 +51,7 @@ else if (global.fps_display)
 	var morph_costs = get_morph_cost();
 
 	// adopt the SRB2 method of coloring the FPS depending on if we're meeting the target
-	if (fps_real < int64(FPS_TARGET * 0.625))
+	if (fps_real < (FPS_TARGET * 0.625))
 	{
 		// severely below target
 		fps_color = c_red;

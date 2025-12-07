@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_stopboblaser",
   "bboxMode":0,
   "bbox_bottom":15,
@@ -12,8 +12,8 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"4233048c-6352-478d-b028-c355fbcf52b4","name":"4233048c-6352-478d-b028-c355fbcf52b4","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
-    {"$GMSpriteFrame":"","%Name":"442aa7a4-6125-4da3-bf9d-f17376ef0cc9","name":"442aa7a4-6125-4da3-bf9d-f17376ef0cc9","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"4233048c-6352-478d-b028-c355fbcf52b4","name":"4233048c-6352-478d-b028-c355fbcf52b4","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"442aa7a4-6125-4da3-bf9d-f17376ef0cc9","name":"442aa7a4-6125-4da3-bf9d-f17376ef0cc9","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

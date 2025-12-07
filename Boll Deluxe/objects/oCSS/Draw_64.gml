@@ -1,6 +1,6 @@
 var _spacing=0, _cardSizeW=sprite_get_width(spr_rostercard);
-var _startX=(480/2),
-	_startY=(270/2);
+var _startX=(RESOLUTION_X/2),
+	_startY=(RESOLUTION_Y/2);
 
 // centering the cards
 _startX -= ((_cardSizeW+_spacing)*((_rowLimit-1)/2));

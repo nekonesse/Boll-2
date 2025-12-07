@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_ugly_poison_shroom_from_sonic_boll",
   "bboxMode":2,
   "bbox_bottom":15,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"0d2525f9-f92a-4a1b-8f1b-7c36c1069b79","name":"0d2525f9-f92a-4a1b-8f1b-7c36c1069b79","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"0d2525f9-f92a-4a1b-8f1b-7c36c1069b79","name":"0d2525f9-f92a-4a1b-8f1b-7c36c1069b79","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,

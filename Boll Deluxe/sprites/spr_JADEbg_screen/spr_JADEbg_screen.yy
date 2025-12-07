@@ -1,10 +1,10 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_JADEbg_screen",
   "bboxMode":0,
-  "bbox_bottom":271,
+  "bbox_bottom":247,
   "bbox_left":0,
-  "bbox_right":479,
+  "bbox_right":431,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -12,11 +12,11 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"53cfbee6-ee95-40dd-8bbe-2b34039e54ac","name":"53cfbee6-ee95-40dd-8bbe-2b34039e54ac","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"53cfbee6-ee95-40dd-8bbe-2b34039e54ac","name":"53cfbee6-ee95-40dd-8bbe-2b34039e54ac","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
-  "height":272,
+  "height":248,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"0f296695-3b6e-4fc3-aee6-c203e67a5667","blendMode":0,"displayName":"default","isLocked":false,"name":"0f296695-3b6e-4fc3-aee6-c203e67a5667","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
@@ -86,5 +86,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":480,
+  "width":432,
 }

@@ -234,7 +234,7 @@ function component_get_ground_friction() {
 	
 	if (grounded) && check_collision_line(x-hit_sizex, y+hit_sizey+1+vsp,x+hit_sizex,y+hit_sizey+1+vsp, COL_BOTTOM, collision_array) {
 		var i = collision_line(x-hit_sizex, y+hit_sizey+1+vsp,x+hit_sizex,y+hit_sizey+1+vsp, collision_array, true, true)
-		if instance_exists(i) && !variable_instance_exists(i, "my_riction") {
+		if instance_exists(i) && variable_instance_exists(i, "my_friction") {
 			friction_mult = i.my_friction;
 		}
 	}

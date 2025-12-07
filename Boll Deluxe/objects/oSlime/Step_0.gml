@@ -41,7 +41,7 @@ if ((global.paused)||(!active)||(!ready))
 // bandaid: set y_rel to where we spawned instead
 if (reset_yrel)
 {
-    y_rel = make_s16(ystart2 - camera_y) + 22;
+    y_rel = make_s16(ystart2 - global.camera_y) + 22;
     reset_yrel--;
 }
 
@@ -134,7 +134,7 @@ y += vsp;
 
 otime++;
 
-morph_exceed = max(0, ((x - camera_x) + ((morph_max_width div 2) + 64)) - 256);
+morph_exceed = max(0, ((x - global.camera_x) + ((morph_max_width div 2) + 64)) - 256);
 
 // handle extra collisions
 var morph_height = abs(y - morph_top);

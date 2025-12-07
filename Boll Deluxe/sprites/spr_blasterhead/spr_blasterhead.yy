@@ -1,5 +1,5 @@
 {
-  "$GMSprite":"",
+  "$GMSprite":"v2",
   "%Name":"spr_blasterhead",
   "bboxMode":0,
   "bbox_bottom":15,
@@ -12,7 +12,7 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"","%Name":"6eea1baf-4f74-4e0b-88a1-f9b1c23c7a90","name":"6eea1baf-4f74-4e0b-88a1-f9b1c23c7a90","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"6eea1baf-4f74-4e0b-88a1-f9b1c23c7a90","name":"6eea1baf-4f74-4e0b-88a1-f9b1c23c7a90","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
