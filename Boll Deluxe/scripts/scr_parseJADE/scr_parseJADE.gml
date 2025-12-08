@@ -34,8 +34,10 @@ function parse_level(dir=game_save_id+"\save.jade") {
 						}
 					} else if (_layer_contents[0] == "ASSET") {
 						_layer = {}
-						_layer[$ "my_layer"] = layer_create(_layer_contents[3],_layer_contents[2])
+						_layer[$ "my_layer"] = layer_create(_layer_contents[1],_layer_contents[2])
 						_layer[$ "my_deco_layer"] = _layer.my_layer
+						_layer.parallax_x = _layer_contents[3]
+						_layer.parallax_y = _layer_contents[4]
 				
 						var asset_layer_contents = _layer_contents[5]
 				
@@ -47,8 +49,31 @@ function parse_level(dir=game_save_id+"\save.jade") {
 							layer_sprite_yscale(inst,obj[4]);
 							j++;
 						}
+						
+						with(oBackgroundManager) {
+							array_push(assetlayers, _layer)
+						}
 					} else if (_layer_contents[0] == "BACK") {
-					
+						_layer = {}
+						var spr = spr_BGtest
+						if (_layer_contents != -1) spr = asset_get_index(_layer_contents[3])
+						_layer[$ "my_layer"] = layer_create(_layer_contents[2],_layer_contents[1])
+						_layer[$ "my_deco_layer"] = layer_background_create(_layer.my_layer,spr)
+						_layer.parallax_x = _layer_contents[4]
+						_layer.parallax_y = _layer_contents[5]
+						_layer.attach_x = _layer_contents[6]
+						_layer.attach_y = _layer_contents[7]
+						_layer.tiled_h = _layer_contents[8]
+						_layer.tiled_v = _layer_contents[9]
+						_layer.off_x = _layer_contents[10]
+						_layer.off_y = _layer_contents[11]
+						layer_x(_layer.my_layer,_layer.off_x);
+						layer_y(_layer.my_layer,_layer.off_y);
+						layer_background_htiled(_layer.my_deco_layer, _layer.tiled_h)
+						layer_background_vtiled(_layer.my_deco_layer, _layer.tiled_v)
+						with(oBackgroundManager) {
+							array_push(bglayers, _layer);
+						}
 					}
 				} else {
 					_layer = new JADElistunselectable(_layer_contents[1])

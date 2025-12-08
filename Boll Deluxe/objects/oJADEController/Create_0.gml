@@ -37,7 +37,7 @@ themehighlight=c_white
 JADE_initializeobj();
 
 current_tileset="tTilesetMain"
-deco_mode_type="tile";
+deco_mode_type="";
 
 GUIcanvas = surface_create(guiw,guih);
 
@@ -47,6 +47,25 @@ topbuttons.add("File", function() {
 		switch(ind) {
 			case 0:
 			//new file
+				instance_destroy(oJADELayerProperties)
+				var i=0;
+				repeat(1) {
+					ds_list_clear(object_layer_map[i])
+					i++;
+				}
+				i=0
+				repeat(1) {
+					ds_list_clear(node_layer_map[i])
+					i++;
+				}
+				
+				current_tileset="tTilesetMain"
+				deco_mode_type="";
+				
+				layerlist.wipe();
+				layerlist.add(new JADElistunselectable("Objects"))
+				layerlist.add(new JADEtilelayer("Main Tiles", current_tileset))
+				layerlist.update_depths();
 			break;
 			case 1:
 			//open file

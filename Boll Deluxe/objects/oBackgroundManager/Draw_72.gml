@@ -1,1 +1,0 @@
-draw_sprite_tiled(spr_BGtest,0,0,0)

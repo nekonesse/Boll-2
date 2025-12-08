@@ -214,10 +214,19 @@ function JADE_initializeobj() {
 	decolist.add(w5deco)
 	
 	//BACKGROUNDS
-	registerbackground(spr_plains_bg_hills, 0, 0, bglist,"Plains (Hills)",true,false,25,0,false,true)
-	registerbackground(spr_plains_bg_hills2, 0, 0, bglist,"Plains (Front Hills)",true,false,40,0,false,true)
-	registerbackground(spr_plains_bg_sky, 0, 0, bglist,"Plains (Sky)",true,false,0,0)
-	registerbackground(spr_plains_bg_clouds, 0, 0, bglist,"Plains (Clouds)",true,false,10,0)
+	var w1bg = new JADElistcategory("Floragrande Gardens")
+	registerbackground(spr_plains_bg_hills, 0, 0, w1bg,"Plains (Hills)",true,false,4,0)
+	registerbackground(spr_plains_bg_hills2, 0, 0, w1bg,"Plains (Front Hills)",true,false,10,0)
+	registerbackground(spr_plains_bg_sky, 0, 0, w1bg,"Plains (Sky)",true,false,0,0,true,true)
+	registerbackground(spr_plains_bg_clouds, 0, 0, w1bg,"Plains (Clouds)",true,false,1,0)
+	bglist.add(w1bg)
+	
+	var w5bg = new JADElistcategory("Frigid Dark")
+	registerbackground(spr_w5mountain_bg_snow, 0, 0, w5bg,"Mountains (Coast)",true,false,10,0)
+	registerbackground(spr_w5mountain_bg_hills, 0, 0, w5bg,"Mountains (Hills)",true,false,5,0)
+	registerbackground(spr_w5mountain_bg_sky, 0, 0, w5bg,"Mountains (Sky)",false,false,0,0,true,true)
+	registerbackground(spr_w5mountain_bg_stars, 0, 0, w5bg,"Mountains (Stars)",false,false,2,0,false,true)
+	bglist.add(w5bg)
 }
 
 function WM_initializeobj() {	
@@ -320,6 +329,12 @@ function JADE_save(file=game_save_id+"\save.jade") {
 				}
 				var _arr = ["ASSET",_layer.name,_layer.layerdepth,_layer.parallax_x,_layer.parallax_y,asset_layer_contents]
 				array_push(layerarr,_arr);
+			} else if (is_instanceof(_layer, JADEbackgroundlayer)) {
+				var saved = -1
+				if (is_struct(_layer.selected_bg))
+				saved = _layer.selected_bg.uuid
+				var _arr = ["BACK",_layer.name,_layer.layerdepth,saved,_layer.parallax_x,_layer.parallax_y,_layer.attach_x,_layer.attach_y,_layer.tiled_h,_layer.tiled_v,_layer.off_x,_layer.off_y]
+				array_push(layerarr,_arr);
 			}
 		} else {
 			var _arr = ["MAIN",_layer.name]
@@ -390,9 +405,11 @@ function JADE_load(file=game_save_id+"\save.jade") {
 					}
 				} else if (_layer_contents[0] == "ASSET") {
 					_layer = new JADEassetlayer(_layer_contents[1])
-				
+					_layer.parallax_x = _layer_contents[3]
+					_layer.parallax_y = _layer_contents[4]
+					
 					var asset_layer_contents = _layer_contents[5]
-				
+					
 					var j=0;
 					repeat(array_length(asset_layer_contents)) {
 						var obj = asset_layer_contents[j]
@@ -401,7 +418,23 @@ function JADE_load(file=game_save_id+"\save.jade") {
 						j++;
 					}
 				} else if (_layer_contents[0] == "BACK") {
-					
+					if (_layer_contents[3] != -1) {
+						var bg = obj_data[$ _layer_contents[3]]
+						_layer = new JADEbackgroundlayer(_layer_contents[1], bg)
+						_layer.selected_bg = bg
+						_layer.sprite = bg.sprite
+					} else {
+						_layer = new JADEbackgroundlayer(_layer_contents[1], -1)
+					}
+					_layer.parallax_x = _layer_contents[4]
+					_layer.parallax_y = _layer_contents[5]
+					_layer.attach_x = _layer_contents[6]
+					_layer.attach_y = _layer_contents[7]
+					_layer.tiled_h = _layer_contents[8]
+					_layer.tiled_v = _layer_contents[9]
+					_layer.off_x = _layer_contents[10]
+					_layer.off_y = _layer_contents[11]
+					_layer.update_settings();
 				}
 			} else {
 				_layer = new JADElistunselectable(_layer_contents[1])

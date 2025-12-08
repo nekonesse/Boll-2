@@ -454,9 +454,8 @@ function JADEbglisthandler(_x, _y, _width, _height) : JADElisthandler(_x, _y, _w
 	
 	static draw = function() {
 		draw_rect(x,y,width,height,oJADEController.themeaccent3,1)
-		var prevarr=[];
 		var currarr=[];
-		var prevind=[];
+		var indarr=[];
 		
 		var curs_x = window_mouse_get_x()
 		var curs_y = window_mouse_get_y()
@@ -476,14 +475,41 @@ function JADEbglisthandler(_x, _y, _width, _height) : JADElisthandler(_x, _y, _w
 		var over = point_in_rectangle(curs_x,curs_y,x,y,x+width,y+height);
 		
 		draw_set_font(global.rulerGold)
-		while(array_length(currarr)) { //this code is a fucking mess Im sorry.
-			var item = currarr[0]
+		while(array_length(currarr) > 0) { //this code is a fucking mess Im sorry.
+			var item = currarr[0];
+			if (array_length(indarr)){
+				indent = array_pop(indarr)	
+			}else {
+				indent = 0;	
+			}
 			array_delete(currarr,0,1);
-			if (is_instanceof(item, JADEbackground)) {
+			if is_instanceof(item, JADElistcategory) {
+				var over_button = point_in_rectangle(curs_x,curs_y,x+indent+scroll_x,y+(24*i)+scroll_y,x+width+indent+scroll_x,y+24+(24*i)+scroll_y) && over
+				if (mbleft) && (over_button) {
+					item.collapsed = !item.collapsed;
+					scroll_x=clamp(scroll_x,-listwidth,0)
+					mbleft=0;
+				}
+				
+				draw_gui(x+4+indent+scroll_x,y+(24*i)+1+scroll_y,width-8,22,oJADEController.themeaccent4,1) //button
+				draw_text(x+8+24+indent+scroll_x,y+8+(24*i)+scroll_y,item.listname) //category name
+				draw_sprite(spr_JADElistarrow,item.collapsed,x+8+indent+scroll_x,y+4+(24*i)+scroll_y) //collapse arrow
+				
+				if !(item.collapsed) {
+
+					var j = array_length(item.listcontents)-1;
+					repeat(array_length(item.listcontents)){
+						array_insert(currarr,0,item.listcontents[j])
+						array_push(indarr,indent + 16)
+						j--;
+					}
+					listwidth+=16;
+				}
+			} else if (is_instanceof(item, JADEbackground)) {
 				var over_button = point_in_rectangle(curs_x,curs_y,x+indent+scroll_x,y+(24*i)+scroll_y,x+width+indent+scroll_x,y+24+(24*i)+scroll_y) && over
 				if (mbleft) && (over_button) {
 					with(oJADEController.selected_layer) {
-						selected_bg = item
+						selected_bg = item;
 						update_background();
 					}
 					mbleft=0
@@ -497,36 +523,7 @@ function JADEbglisthandler(_x, _y, _width, _height) : JADElisthandler(_x, _y, _w
 				draw_rect(x+2+indent+scroll_x,y+24+(24*i)-1+scroll_y,width-4,2,oJADEController.themeaccent2,1) //divider
 				draw_text(x+24+indent+scroll_x,y+8+(24*i)+scroll_y, item.name)
 				
-				if (!array_length(currarr)) && array_length(prevarr) {
-					var temp=array_pop(prevarr)
-					array_copy(currarr,0,temp,0,array_length(temp))
-					indent=array_pop(prevind);
-					
-				}
-			}
-			//} else if is_instanceof(item, JADElistcategory) {
-			//	var over_button = point_in_rectangle(curs_x,curs_y,x+indent+scroll_x,y+(24*i)+scroll_y,x+width+indent+scroll_x,y+24+(24*i)+scroll_y) && over
-			//	if (mbleft) && (over_button) {
-			//		item.collapse();
-			//		scroll_x=clamp(scroll_x,-listwidth,0)
-			//		mbleft=0
-			//	}
-				
-			//	draw_gui(x+4+indent+scroll_x,y+(24*i)+1+scroll_y,width-8,22,oJADEController.themeaccent4,1) //button
-			//	draw_text(x+8+24+indent+scroll_x,y+8+(24*i)+scroll_y,item.listname) //category name
-			//	draw_sprite(spr_JADElistarrow,item.collapsed,x+8+indent+scroll_x,y+4+(24*i)+scroll_y) //collapse arrow
-				
-			//	if !(item.collapsed) {
-			//		if array_length(currarr) {
-			//			array_push(prevarr,variable_clone(currarr))
-			//			array_push(prevind,indent);
-			//		}
-			//		currarr=[];
-			//		array_copy(currarr,0,item.listcontents,0,array_length(item.listcontents))
-			//		indent+=16;
-			//		listwidth+=16;
-			//	}
-			//}
+			} 
 			i++;
 			if i>(height/24) listheight+=24
 		}
@@ -1470,6 +1467,8 @@ function JADEbackgroundlayer(_name, _background) constructor {
 	}
 	
 	static update_settings = function() {
+		layer_x(my_layer,off_x);
+		layer_y(my_layer,off_y);
 		layer_background_sprite(my_deco_layer, sprite)
 		layer_background_htiled(my_deco_layer, tiled_h)
 		layer_background_vtiled(my_deco_layer, tiled_v)
