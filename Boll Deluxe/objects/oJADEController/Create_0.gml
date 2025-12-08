@@ -377,14 +377,17 @@ bg_layers_visible = true;
 
 objectvisibility = new JADEiconbutton(1296-240-96,26+36,spr_JADElayerobjectvisibility, function() {
 	objects_visible = !objects_visible
+	objectvisibility.button_image_index = !objects_visible
 }, true, false, true)
 
 gizmovisibility = new JADEiconbutton(1296-240-78,26+36,spr_JADElayergizmovisibility, function() {
 	gizmos_visible = !gizmos_visible
+	gizmovisibility.button_image_index = !gizmos_visible
 }, true, false, true)
 
 tilelayervisibility = new JADEiconbutton(1296-240-60,26+36,spr_JADElayertilevisibility, function() {
 	tile_layers_visible = !tile_layers_visible
+	tilelayervisibility.button_image_index = !tile_layers_visible
 	with(layerlist) {
 		var i=0;
 		repeat(array_length(listcontents)) {
@@ -399,6 +402,7 @@ tilelayervisibility = new JADEiconbutton(1296-240-60,26+36,spr_JADElayertilevisi
 
 assetlayervisibility = new JADEiconbutton(1296-240-42,26+36,spr_JADElayerassetvisibility, function() {
 	asset_layers_visible = !asset_layers_visible
+	assetlayervisibility.button_image_index = !asset_layers_visible
 	with(layerlist) {
 		var i=0;
 		repeat(array_length(listcontents)) {
@@ -413,6 +417,7 @@ assetlayervisibility = new JADEiconbutton(1296-240-42,26+36,spr_JADElayerassetvi
 
 bglayervisibility = new JADEiconbutton(1296-240-24,26+36,spr_JADElayerbgvisibility, function() {
 	bg_layers_visible = !bg_layers_visible
+	bglayervisibility.button_image_index = !bg_layers_visible
 	with(layerlist) {
 		var i=0;
 		repeat(array_length(listcontents)) {

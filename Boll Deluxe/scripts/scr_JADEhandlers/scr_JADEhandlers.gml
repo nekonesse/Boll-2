@@ -121,6 +121,7 @@ function JADEiconbutton(_x, _y, _sprite, _func, is_toggle=true, inverted=false,_
 	return_func = _return_func;
 	created_gui = noone;
 	over = false;
+	button_image_index = 0;
 	
 	static draw = function() {
 		
@@ -143,7 +144,7 @@ function JADEiconbutton(_x, _y, _sprite, _func, is_toggle=true, inverted=false,_
 		}
 			
 		draw_gui(x-2,y-2,width,height,buttoncolor, 1)
-		draw_sprite(sprite,0,x,y)
+		draw_sprite(sprite,button_image_index,x,y)
 	}
 	
 	static update = function() {
