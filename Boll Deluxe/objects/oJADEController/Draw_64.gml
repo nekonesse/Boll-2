@@ -15,6 +15,11 @@ topbuttons.draw();
 modebuttons.draw();
 toolbarbuttons.draw();
 playtestbutton.draw();
+objectvisibility.draw();
+gizmovisibility.draw();
+tilelayervisibility.draw();
+assetlayervisibility.draw();
+bglayervisibility.draw();
 
 if (selected_mode != DECO_MODE) {
 	list_tabbuttons.draw();

@@ -108,7 +108,7 @@ function JADEsmallbuttons(_x, _y, _width, _height, spacing=8, is_toggle=true, in
 	}
 }
 
-function JADEiconbutton(_x, _y, _sprite, _func, is_toggle=true, inverted=false) constructor {
+function JADEiconbutton(_x, _y, _sprite, _func, is_toggle=true, inverted=false,_return_func=false) constructor {
 	x = _x;
     y = _y;
 	sprite = _sprite
@@ -118,6 +118,7 @@ function JADEiconbutton(_x, _y, _sprite, _func, is_toggle=true, inverted=false) 
 	button_toggle = is_toggle;
 	selected_button=0;
 	color_invert = inverted;
+	return_func = _return_func;
 	created_gui = noone;
 	over = false;
 	
@@ -154,16 +155,25 @@ function JADEiconbutton(_x, _y, _sprite, _func, is_toggle=true, inverted=false) 
 		
 		if over {
 			//if i havent already been selected
-			if !(selected_button) || !(button_toggle) {
-				selected_button=true
-				funcs()
+			if !(return_func) {
+				if !(selected_button) || !(button_toggle) {
+					selected_button=true
+					funcs()
+				} else {
+					//destroy my created gui, if i have one
+					selected_button=false
+					if (instance_exists(created_gui)) {
+						instance_destroy(created_gui);
+					}
+					instance_destroy(oJADEDropDown);
+				}
 			} else {
-				//destroy my created gui, if i have one
-				selected_button=false
 				if (instance_exists(created_gui)) {
 					instance_destroy(created_gui);
 				}
 				instance_destroy(oJADEDropDown);
+				selected_button=!selected_button
+				funcs()
 			}
 			oJADEController.mbleftpress = false;
 			oJADEController.mbleft = false;
@@ -1246,15 +1256,51 @@ function JADElayerlisthandler(_x, _y, _width, _height, _checkvar) constructor {
 								tile_sel_width = 0
 								toolbarbuttons.set(toolbar[1])
 							}
+							var j=0;
+							repeat(array_length(listcontents)) {
+								var item = listcontents[j]
+								if (is_instanceof(item, JADEtilelayer)) {
+									layer_set_visible(item.my_layer, true)
+								} else if (is_instanceof(item, JADEassetlayer)) {
+									layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
+								} else if (is_instanceof(item, JADEtilelayer)) {
+									layer_set_visible(item.my_layer, oJADEController.bg_layers_visible)
+								}
+								j++;
+							}
 						} else if is_instanceof(item, JADEassetlayer) {
 							with(oJADEController) {
 								deco_mode_type = "asset";
 								toolbarbuttons.set(toolbar[3])
 							}
+							var j=0;
+							repeat(array_length(listcontents)) {
+								var item = listcontents[j]
+								if (is_instanceof(item, JADEtilelayer)) {
+									layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
+								} else if (is_instanceof(item, JADEassetlayer)) {
+									layer_set_visible(item.my_layer, true)
+								} else if (is_instanceof(item, JADEtilelayer)) {
+									layer_set_visible(item.my_layer, oJADEController.bg_layers_visible)
+								}
+								j++;
+							}
 						} else if is_instanceof(item, JADEbackgroundlayer) {
 							with(oJADEController) {
 								deco_mode_type = "bg";
 								toolbarbuttons.set(toolbar[2])
+							}
+							var j=0;
+							repeat(array_length(listcontents)) {
+								var item = listcontents[j]
+								if (is_instanceof(item, JADEtilelayer)) {
+									layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
+								} else if (is_instanceof(item, JADEassetlayer)) {
+									layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
+								} else if (is_instanceof(item, JADEtilelayer)) {
+									layer_set_visible(item.my_layer, true)
+								}
+								j++;
 							}
 						}
 						mbleftpress=0

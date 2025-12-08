@@ -42,6 +42,11 @@ if (mbleftpress) {
 	toolbarbuttons.update();
 	list_tabbuttons.update();
 	playtestbutton.update();
+	objectvisibility.update();
+	gizmovisibility.update();
+	tilelayervisibility.update();
+	assetlayervisibility.update();
+	bglayervisibility.update();
 	if selected_mode==DECO_MODE {
 		layeraddbutton.update();
 		layereditbutton.update();

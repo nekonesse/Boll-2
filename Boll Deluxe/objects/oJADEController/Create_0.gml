@@ -117,6 +117,8 @@ topbuttons.add("Region", function() {
 
 });
 
+
+
 selected_layer=noone
 tilemap=-1;
 tilemap_layer=-1;
@@ -151,16 +153,72 @@ modebuttons.add("Object Mode", function() {
 		selected_tool = toolbarbuttons.buttons[0];
 		selected_array = [];
 	}
+	with(layerlist) {
+		var i=0;
+		repeat(array_length(listcontents)) {
+			var item = listcontents[i]
+			if (is_instanceof(item, JADEtilelayer)) {
+				layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
+			} else if (is_instanceof(item, JADEassetlayer)) {
+				layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
+			} else if (is_instanceof(item, JADEtilelayer)) {
+				layer_set_visible(item.my_layer, oJADEController.bg_layers_visible)
+			}
+			i++;
+		}
+	}
 	selected_mode = OBJECT_MODE
 	object_map = object_layer_map[selected_region]
 });
 modebuttons.add("Deco Mode", function() {
 	if is_instanceof(oJADEController.selected_layer,JADEtilelayer) {
 		toolbarbuttons.set(toolbar[1])
+		with(layerlist) {
+			var i=0;
+			repeat(array_length(listcontents)) {
+				var item = listcontents[i]
+				if (is_instanceof(item, JADEtilelayer)) {
+					layer_set_visible(item.my_layer, true)
+				} else if (is_instanceof(item, JADEassetlayer)) {
+					layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
+				} else if (is_instanceof(item, JADEtilelayer)) {
+					layer_set_visible(item.my_layer, oJADEController.bg_layers_visible)
+				}
+				i++;
+			}
+		}
 	} else if is_instanceof(oJADEController.selected_layer,JADEbackgroundlayer) {
 		toolbarbuttons.set(toolbar[2])
+		with(layerlist) {
+			var i=0;
+			repeat(array_length(listcontents)) {
+				var item = listcontents[i]
+				if (is_instanceof(item, JADEtilelayer)) {
+					layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
+				} else if (is_instanceof(item, JADEassetlayer)) {
+					layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
+				} else if (is_instanceof(item, JADEtilelayer)) {
+					layer_set_visible(item.my_layer, true)
+				}
+				i++;
+			}
+		}
 	} else if is_instanceof(oJADEController.selected_layer,JADEassetlayer) {
 		toolbarbuttons.set(toolbar[3])
+		with(layerlist) {
+			var i=0;
+			repeat(array_length(listcontents)) {
+				var item = listcontents[i]
+				if (is_instanceof(item, JADEtilelayer)) {
+					layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
+				} else if (is_instanceof(item, JADEassetlayer)) {
+					layer_set_visible(item.my_layer, true)
+				} else if (is_instanceof(item, JADEtilelayer)) {
+					layer_set_visible(item.my_layer, oJADEController.bg_layers_visible)
+				}
+				i++;
+			}
+		}
 	}
 	if (selected_mode != DECO_MODE) {
 		selected_obj = -1;
@@ -179,9 +237,25 @@ modebuttons.add("Gizmo Mode", function() {
 		selected_tool = toolbarbuttons.buttons[0];
 		selected_array = [];
 	}
+	with(layerlist) {
+		var i=0;
+		repeat(array_length(listcontents)) {
+			var item = listcontents[i]
+			if (is_instanceof(item, JADEtilelayer)) {
+				layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
+			} else if (is_instanceof(item, JADEassetlayer)) {
+				layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
+			} else if (is_instanceof(item, JADEtilelayer)) {
+				layer_set_visible(item.my_layer, oJADEController.bg_layers_visible)
+			}
+			i++;
+		}
+	}
 	selected_mode = NODE_MODE
 	object_map = node_layer_map[selected_region]
 });
+
+modebuttons.selected_button = 0;
 
 layeraddbutton = new JADEiconbutton(layerlist.x,layerlist.y+layerlist.height+16,spr_JADEaddicon,function() {
 	JADEdropdown(layeraddbutton.x,layeraddbutton.y-56,["Add Tile Layer", "Add Asset Layer", "Add Background Layer"], function(optname,ind) {
@@ -294,6 +368,62 @@ bgalignbuttons.add("Align Y", function() {
 	}
 	bgalignbuttons.reset();
 });
+
+objects_visible = true;
+gizmos_visible = true;
+tile_layers_visible = true;
+asset_layers_visible = true;
+bg_layers_visible = true;
+
+objectvisibility = new JADEiconbutton(1296-240-96,36,spr_JADElayerobjectvisibility, function() {
+	objects_visible = !objects_visible
+}, true, false, true)
+
+gizmovisibility = new JADEiconbutton(1296-240-78,36,spr_JADElayergizmovisibility, function() {
+	gizmos_visible = !gizmos_visible
+}, true, false, true)
+
+tilelayervisibility = new JADEiconbutton(1296-240-60,36,spr_JADElayertilevisibility, function() {
+	tile_layers_visible = !tile_layers_visible
+	with(layerlist) {
+		var i=0;
+		repeat(array_length(listcontents)) {
+			var item = listcontents[i]
+			if (is_instanceof(item, JADEtilelayer)) {
+				layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
+			}
+			i++;
+		}
+	}
+}, true, false, true)
+
+assetlayervisibility = new JADEiconbutton(1296-240-42,36,spr_JADElayerassetvisibility, function() {
+	asset_layers_visible = !asset_layers_visible
+	with(layerlist) {
+		var i=0;
+		repeat(array_length(listcontents)) {
+			var item = listcontents[i]
+			if (is_instanceof(item, JADEassetlayer)) {
+				layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
+			}
+			i++;
+		}
+	}
+}, true, false, true)
+
+bglayervisibility = new JADEiconbutton(1296-240-24,36,spr_JADElayerbgvisibility, function() {
+	bg_layers_visible = !bg_layers_visible
+	with(layerlist) {
+		var i=0;
+		repeat(array_length(listcontents)) {
+			var item = listcontents[i]
+			if (is_instanceof(item, JADEbackgroundlayer)) {
+				layer_set_visible(item.my_layer, oJADEController.bg_layers_visible)
+			}
+			i++;
+		}
+	}
+}, true, false, true)
 
 //Modes:
 //1: Objects
