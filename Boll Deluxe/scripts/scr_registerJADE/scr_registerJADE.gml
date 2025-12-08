@@ -167,7 +167,7 @@ function JADE_initializeobj() {
 	registerobj(oChainsaw, spr_chainsaw, 8, 8, 16, 16, false, false, hazards, "Chainsaw")
 	registerobj(oIcicle, spr_icicle, 0, 0, 16, 32, false, false, hazards, "Icicle")
 	properties.addCheckbox(oIcicle, "Can Fall", "can_fall", true)
-	registerobj(oBigSteely, spr_bigsteely, 0, 0, 48, 48, false, false, hazards, "Big Steely")
+	registerobj(oBigSteely, spr_bigsteely, 24, 24, 48, 48, false, false, hazards, "Big Steely")
 	
 	objectlist.add(hazards);
 	
