@@ -676,7 +676,6 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 		if array_length(objarr) {
 			var obj = oJADEController.object_map[| objarr[0]]
 			var arr = oJADEController.properties.property_data[$ obj[0]]
-			var arrvar = oJADEController.properties.property_values[$ obj[0]]
 			var data = oJADEController.obj_data[$ obj[0]]
 			
 			var prevscissor = gpu_get_scissor();
@@ -699,18 +698,66 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 				
 				switch (item[$ "type"]) {
 					case "checkbox": {
+						var prev = obj[5][i][1]
+						
 						obj[5][i][1]=JADEcheckbox(x+16,y+144+32*i, item[$ "name"], obj[5][i][1])
+						
+						if obj[5][i][1] != prev {
+							var j=1;
+							repeat(array_length(objarr)-1) {
+								var obj2 = oJADEController.object_map[| objarr[j]]
+								if (obj2[0] == obj[0])
+								obj2[5][i][1] = obj[5][i][1]
+								j++;
+							}
+						}
 					} break;
 					case "number_input": {
+						var prev = obj[5][i][1]
+						
 						if !item[$ "absolute"]
 						obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i)
 						else obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i,0)
+						
+						if obj[5][i][1] != prev {
+							var j=1;
+							repeat(array_length(objarr)-1) {
+								var obj2 = oJADEController.object_map[| objarr[j]]
+								if (obj2[0] == obj[0])
+								obj2[5][i][1] = obj[5][i][1]
+								j++;
+							}
+						}
 					} break;
 					case "number_range_input": {
+						var prev = obj[5][i][1]
+						
 						obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i,item[$ "minimum"],item[$ "maximum"])
+						
+						if obj[5][i][1] != prev {
+							var j=1;
+							repeat(array_length(objarr)-1) {
+								var obj2 = oJADEController.object_map[| objarr[j]]
+								if (obj2[0] == obj[0])
+								obj2[5][i][1] = obj[5][i][1]
+								j++;
+							}
+						}
 					} break;
 					case "string_input": {
+						var prev = obj[5][i][1]
+						
 						obj[5][i][1]=JADEstringinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i)
+						
+						if obj[5][i][1] != prev {
+							var j=1;
+							repeat(array_length(objarr)-1) {
+								var obj2 = oJADEController.object_map[| objarr[j]]
+								if (obj2[0] == obj[0])
+								obj2[5][i][1] = obj[5][i][1]
+								j++;
+							}
+						}
 					} break;
 					case "dropdown": {
 						JADEdropdownproperty(x+16,y+144+32*i, item[$ "name"], obj[5][i][1], i, objarr[0], item[$ "dropdowndata"], item[$ "dropdownnames"])
@@ -802,6 +849,16 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 		var item = arr[propind]
 		
 		obj[5][oJADEController.property_dropdown_index][1]=item[$ "dropdowndata"][ind]
+		
+		with(oJADEController) {
+			var j=1;
+			repeat(array_length(selected_array)-1) {
+				var obj2 = object_map[| selected_array[j]]
+				if (obj2[0] == obj[0])
+				obj2[5][property_dropdown_index][1] = obj[5][property_dropdown_index][1]
+				j++;
+			}
+		}
 	}
 }
 

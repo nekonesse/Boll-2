@@ -542,6 +542,34 @@ if (mbleft && not_on_gui) {
 				}
 			}
 		break;
+		case MIRROR_TOOL:
+			if (mbleftpress) {
+				switch(deco_mode_type) {
+					case "tile":
+						var data = tilemap_get_at_pixel(tilemap_layer, mouse_x, mouse_y);
+						data = tile_set_mirror(data, 1 - tile_get_mirror(data))
+						tilemap_set(tilemap_layer, data, gridx, gridy);
+						var tiledata = tilemap_get(tilemap_layer, gridx, gridy)
+						ds_list_add(tilemap,[tiledata,gridx,gridy]) //add tile  to list at place
+						tile_update_properties();
+					break;
+				}
+			}
+		break;
+		case FLIP_TOOL:
+			if (mbleftpress) {
+				switch(deco_mode_type) {
+					case "tile":
+						var data = tilemap_get_at_pixel(tilemap_layer, mouse_x, mouse_y);
+						data = tile_set_flip(data, 1 - tile_get_flip(data))
+						tilemap_set(tilemap_layer, data, gridx, gridy);
+						var tiledata = tilemap_get(tilemap_layer, gridx, gridy)
+						ds_list_add(tilemap,[tiledata,gridx,gridy]) //add tile  to list at place
+						tile_update_properties();
+					break;
+				}
+			}
+		break;
 		case NODE_TOOL:
 			if (mbleftpress) {
 				if !(drawing_node) {

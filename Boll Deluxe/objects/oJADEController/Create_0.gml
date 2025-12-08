@@ -445,7 +445,18 @@ check_colliding_asset = function(_x, _y) {
 object_place = function(_uuid, _x, _y, _xscale, _yscale) {
 	var obj = [_uuid, _x, _y, _xscale, _yscale]
 	var data = obj_data[$ obj[0]]
-	obj[5] = properties.getDefaultValues(_uuid);
+	var arr = properties.getDefaultValues(_uuid)
+	obj[5] = [];
+	var o=0;
+	repeat (array_length(arr)) { //god Damn.
+		if is_array(arr[o]) {
+			obj[5][o] = array_create(1,0)
+			array_copy(obj[5][o],0,arr[o],0,array_length(arr[o]))
+		}
+		o++;
+	}
+	show_debug_message(obj[5])
+	show_debug_message(arr)
 	obj[6] = data.xoff;
 	obj[7] = data.yoff;
 	//add other data stuff here later
@@ -459,7 +470,16 @@ asset_place = function(_uuid, _x, _y, _xscale, _yscale, _layer=selected_layer) {
 	layer_sprite_yscale(inst,_yscale);
 	layer_sprite_speed(inst, 0);
 	var obj = [_uuid, inst];
-	obj[2] = properties.getDefaultValues(_uuid);
+	var arr = properties.getDefaultValues(_uuid)
+	obj[2] = [];
+	var o=0;
+	repeat (o < array_length(arr)) { //god Damn.
+		if is_array(arr[o]) {
+			obj[2][o] = array_create(1,0)
+			array_copy(obj[2][o],0,arr[o],0,array_length(arr[o]))
+		}
+		o++;
+	}
 	//add other data stuff here later
 	ds_list_add(_layer.assetmap, obj);
 }

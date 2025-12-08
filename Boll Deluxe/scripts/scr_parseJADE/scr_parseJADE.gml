@@ -109,8 +109,8 @@ function parse_level(dir=game_save_id+"\save.jade") {
 					if instance_exists(obj) {
 						obj.image_xscale=data[3]
 						obj.image_yscale=data[4]
-						obj.xstart+=obj[6]*obj.image_xscale;
-						obj.ystart+=obj[7]*obj.image_yscale;
+						obj.xstart+=data[6]*obj.image_xscale;
+						obj.ystart+=data[7]*obj.image_yscale;
 						obj.x=obj.xstart
 						obj.y=obj.ystart
 						/*if array_length(data[11]) {
