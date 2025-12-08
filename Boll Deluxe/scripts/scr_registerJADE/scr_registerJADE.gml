@@ -38,7 +38,7 @@ function JADE_initializeobj() {
 	properties.addCheckbox(oSlopeCollider, "Flipped", "hflip", false)
 	properties.addCheckbox(oSlopeCollider, "Is Ramp", "ramp", false)
 	properties.addCheckbox(oSlopeCollider, "Is Slippery", "slippery", false)
-	registerobj(oSemilider, spr_semilider, 0, 0, 16, 16, true, true, objectlist, "Semisolid")
+	registerobj(oSemilider, spr_semilider, 0, 0, 16, 16, true, false, objectlist, "Semisolid")
 	properties.addCheckbox(oSemilider, "Is Slippery", "slippery", false)
 	registerobj(oSemiSlope, spr_slopesemi, 0, 0, 16, 16, true, true, objectlist, "Semisolid Slope")
 	properties.addCheckbox(oSemiSlope, "Flipped", "hflip", false)
@@ -73,8 +73,28 @@ function JADE_initializeobj() {
 	registerobj(oDonutBlock, spr_donutblock, 8, 8, 16, 16, false, false, blockcategory, "Donut Block")
 	properties.addCheckbox(oDonutBlock, "Collapsing", "collapsing", false)
 	properties.addCheckbox(oDonutBlock, "Is Icy", "slippery", false)
+	registerobj(oGrate, spr_grate, 0, 0, 16, 16, true, true, blockcategory, "Grate")
+	registerobj(oGrateSemi, spr_gratesemi, 0, 0, 16, 16, true, false, blockcategory, "Grate (Semi)")
+	registerobj(oEnemyGround, spr_enemyground, 0, 0, 16, 16, true, true, blockcategory, "Enemy Ground")
+	registerobj(oEnemyGroundSemi, spr_enemygroundsemi, 0, 0, 16, 16, true, false, blockcategory, "Enemy Ground (Semi)")
 	
 	objectlist.add(blockcategory); //we added the items to the category, but we still need to apply the category to the main list
+	
+	var items = new JADElistcategory("Items")
+	
+	registerobj(oCoin, spr_coin, 8, 8, 16, 16, false, false, items, "Coin")
+	registerobj(oDottedCoin, spr_dottedcoin, 8, 8, 16, 16, false, false, items, "Dotted Coin")
+	registerobj(oMushroom, spr_mushroom, 8, 8, 16, 16, false, false, items, "Super Mushroom")
+	registerobj(oFireFlower, spr_fireflower, 8, 10, 16, 16, false, false, items, "Fire Flower")
+	registerobj(oThunderFlower, spr_thunderflowerJADE, 8, 10, 16, 16, false, false, items, "Thunder Flower")
+	registerobj(oStar, spr_starman, 8, 8, 16, 16, false, false, items, "Starman")
+	registerobj(o1up, spr_1up, 8, 8, 16, 16, false, false, items, "1-UP Mushroom")
+	registerobj(o3up, spr_3up, 8, 8, 16, 16, false, false, items, "3-UP Moon")
+	registerobj(oPoisonShroom, spr_ugly_poison_shroom_from_sonic_boll, 8, 8, 16, 16, false, false, items, "Poison Mushroom")
+	registerobj(oFrozenItem, spr_frozenitem, 8, 8, 16, 16, false, false, items, "Frozen Item")
+	properties.addDropdown(oFrozenItem, "Content", "content", "coin", ["Single Coin", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Mystery Orb"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "mysteryorb"])
+	
+	objectlist.add(items);
 	
 	var gizmos = new JADElistcategory("Gizmos")
 	
@@ -149,7 +169,7 @@ function JADE_initializeobj() {
 	
 	var stagecomp = new JADElistcategory("Stage Components")
 	
-	registerobj(oPipe, spr_pipe, 0, 0, 32, 32, false, false, stagecomp, "Pipe")
+	registerobj(oPipe, spr_pipe, 16, 16, 32, 32, false, false, stagecomp, "Pipe")
 	properties.addDropdown(oPipe, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
 	properties.addStringInput(oPipe, "Warp Name", "warpname", "")
 	properties.addStringInput(oPipe, "Warp Target", "warptarget", "")
@@ -159,22 +179,6 @@ function JADE_initializeobj() {
 	registerobj(oMysteryOrb, spr_mysteryorb, 8, 8, 16, 16, false, false, stagecomp, "Mystery Orb")
 	
 	objectlist.add(stagecomp);
-	
-	var items = new JADElistcategory("Items")
-	
-	registerobj(oCoin, spr_coin, 8, 8, 16, 16, false, false, items, "Coin")
-	registerobj(oDottedCoin, spr_dottedcoin, 8, 8, 16, 16, false, false, items, "Dotted Coin")
-	registerobj(oMushroom, spr_mushroom, 8, 8, 16, 16, false, false, items, "Super Mushroom")
-	registerobj(oFireFlower, spr_fireflower, 8, 10, 16, 16, false, false, items, "Fire Flower")
-	registerobj(oThunderFlower, spr_thunderflowerJADE, 8, 10, 16, 16, false, false, items, "Thunder Flower")
-	registerobj(oStar, spr_starman, 8, 8, 16, 16, false, false, items, "Starman")
-	registerobj(o1up, spr_1up, 8, 8, 16, 16, false, false, items, "1-UP Mushroom")
-	registerobj(o3up, spr_3up, 8, 8, 16, 16, false, false, items, "3-UP Moon")
-	registerobj(oPoisonShroom, spr_ugly_poison_shroom_from_sonic_boll, 8, 8, 16, 16, false, false, items, "Poison Mushroom")
-	registerobj(oFrozenItem, spr_frozenitem, 8, 8, 16, 16, false, false, items, "Frozen Item")
-	properties.addDropdown(oFrozenItem, "Content", "content", "coin", ["Single Coin", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Mystery Orb"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "mysteryorb"])
-	
-	objectlist.add(items);
 	
 	//NODE MODE
 	registerobj(oCameraRegion, spr_cameraregion, 0, 0, 16, 16, false, false, gizmolist, "Camera Region")

@@ -130,6 +130,7 @@ modebuttons.add("Object Mode", function() {
 	if (selected_mode != OBJECT_MODE) {
 		selected_obj = -1;
 		selected_tool = toolbarbuttons.buttons[0];
+		selected_array = [];
 	}
 	selected_mode = OBJECT_MODE
 	object_map = object_layer_map[selected_region]
@@ -145,6 +146,7 @@ modebuttons.add("Deco Mode", function() {
 	if (selected_mode != DECO_MODE) {
 		selected_obj = -1;
 		selected_tool = toolbarbuttons.buttons[0];
+		selected_array = [];
 	}
 	selected_mode = DECO_MODE
 	update_layer(oJADEController.selected_layer)
@@ -156,6 +158,7 @@ modebuttons.add("Gizmo Mode", function() {
 	if (selected_mode != NODE_MODE) {
 		selected_obj = -1;
 		selected_tool = toolbarbuttons.buttons[0];
+		selected_array = [];
 	}
 	selected_mode = NODE_MODE
 	object_map = node_layer_map[selected_region]
