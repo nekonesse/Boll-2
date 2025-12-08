@@ -1166,14 +1166,18 @@ function JADElayerlisthandler(_x, _y, _width, _height, _checkvar) constructor {
 				var over_down_arrow = point_in_rectangle(curs_x,curs_y,x+width-16+scroll_x,y+(24*i)+scroll_y+13,x+width-16+scroll_x+12,y+(24*i)+scroll_y+24) && over_list
 				if (mbleftpress) {
 					if (over_up_arrow) {
-						array_delete(listcontents,i,1)
-						array_insert(listcontents,max(i-1,0),item)
-						update_depths();
+						if (i>0) {
+							array_delete(listcontents,i,1)
+							array_insert(listcontents,max(i-1,0),item)
+							update_depths();
+						}
 						mbleftpress=0
 					} else if (over_down_arrow) {
-						array_delete(listcontents,i,1)
-						array_insert(listcontents,i+1,item)
-						update_depths();
+						if (i<array_length(listcontents)-1) {
+							array_delete(listcontents,i,1)
+							array_insert(listcontents,i+1,item)
+							update_depths();
+						}
 						mbleftpress=0
 					} else if (over_button) {
 						variable_instance_set(oJADEController, checkvar, item)
@@ -1229,6 +1233,7 @@ function JADElayerlisthandler(_x, _y, _width, _height, _checkvar) constructor {
 			}
 			draw_rect(x+2+scroll_x,y+24+(24*i)-1+scroll_y,width-4,2,oJADEController.themeaccent2,1) //divider
 			draw_text(x+24+scroll_x,y+8+(24*i)+scroll_y, item.name)
+			
 			i++;
 			if i>(height/24) listheight+=24
 		}

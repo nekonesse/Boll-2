@@ -407,7 +407,7 @@ if (mbleft && not_on_gui) {
 			#endregion
 			} else if selected_mode == DECO_MODE {
 				#region tile selection 
-				if (mbleftpress) {
+				if (mbleftpress) && (deco_mode_type != "") {
 					switch(deco_mode_type) {
 						case "tile": 
 							var draggingobject=false;
@@ -662,6 +662,7 @@ if (mbleftrel) {
 		}
 		selection_box = false;
 		selection_grab = false;
+		resizing = false;
 	} 
 }
 
@@ -699,6 +700,22 @@ if (mbright) {
 						break;
 					}
 				break;
+			}
+		break;
+		case SELECT_TOOL:
+			if (mbrightpress) && (selected_mode == OBJECT_MODE || selected_mode == NODE_MODE) {
+				selected_array=[];
+				var col = check_colliding_object(mouse_x,mouse_y)
+				if (col) {
+					if array_get_index(selected_array,col-1)==-1 {
+						if !keyboard_check(vk_shift) {
+							selected_array=[];
+						}
+						array_push(selected_array,col-1)
+					}
+				}
+				list_tabbuttons.selected_button=1;
+				properties_tab_active=true;
 			}
 		break;
 		case NODE_TOOL:
