@@ -178,6 +178,7 @@ function parse_level(dir=game_save_id+"\save.jade") {
 			}
 		}
 	}
+	instance_activate_all()
 	with(all) {event_user(15)}
 	buffer_delete(loaded)
 	buffer_delete(save_file)

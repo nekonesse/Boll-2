@@ -215,17 +215,17 @@ function JADE_initializeobj() {
 	
 	//BACKGROUNDS
 	var w1bg = new JADElistcategory("Floragrande Gardens")
-	registerbackground(spr_plains_bg_hills, 0, 0, w1bg,"Plains (Hills)",true,false,4,0)
-	registerbackground(spr_plains_bg_hills2, 0, 0, w1bg,"Plains (Front Hills)",true,false,10,0)
-	registerbackground(spr_plains_bg_sky, 0, 0, w1bg,"Plains (Sky)",true,false,0,0,true,true)
+	registerbackground(spr_plains_bg_hills, 0, 0, w1bg,"Plains (Hills)",true,false,10,0)
+	registerbackground(spr_plains_bg_hills2, 0, 0, w1bg,"Plains (Front Hills)",true,false,4,0)
+	registerbackground(spr_plains_bg_sky, 0, 0, w1bg,"Plains (Sky)",true,false,0,0)
 	registerbackground(spr_plains_bg_clouds, 0, 0, w1bg,"Plains (Clouds)",true,false,1,0)
 	bglist.add(w1bg)
 	
 	var w5bg = new JADElistcategory("Frigid Dark")
 	registerbackground(spr_w5mountain_bg_snow, 0, 0, w5bg,"Mountains (Coast)",true,false,10,0)
-	registerbackground(spr_w5mountain_bg_hills, 0, 0, w5bg,"Mountains (Hills)",true,false,5,0)
-	registerbackground(spr_w5mountain_bg_sky, 0, 0, w5bg,"Mountains (Sky)",false,false,0,0,true,true)
-	registerbackground(spr_w5mountain_bg_stars, 0, 0, w5bg,"Mountains (Stars)",false,false,2,0,false,true)
+	registerbackground(spr_w5mountain_bg_hills, 0, 0, w5bg,"Mountains (Hills)",true,false,7,0)
+	registerbackground(spr_w5mountain_bg_sky, 0, 0, w5bg,"Mountains (Sky)",false,false,0,0)
+	registerbackground(spr_w5mountain_bg_stars, 0, 0, w5bg,"Mountains (Stars)",false,false,0,0)
 	bglist.add(w5bg)
 }
 

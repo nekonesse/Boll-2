@@ -348,15 +348,6 @@ camera_set_view_size(view_camera[0],xb,yb);
 x_final_prev = xx;
 y_final_prev = yy;
 
-if !instance_exists(oTitlecard) {
-	with(oBackgroundManager) {
-		event_user(0);
-	}
-} else {
-	with(oBackgroundManager) {
-		x = camera_get_view_x(view_camera[0])
-		y = camera_get_view_y(view_camera[0])
-		prevx = x;
-		prevy = y;
-	}
+with(oBackgroundManager) {
+	event_user(0);
 }
