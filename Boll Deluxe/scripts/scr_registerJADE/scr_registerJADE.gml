@@ -46,34 +46,135 @@ function JADE_initializeobj() {
 	properties.addCheckbox(oSemiSlope, "Is Slippery", "slippery", false)
 	
 	var blockcategory = new JADElistcategory("Blocks")
-	registerobj(oBrick, spr_brick, 8, 8, 16, 16, false, false, blockcategory, "Brick Block")
 	
-	var hittables = new JADElistcategory("Containers")
-	registerobj(oItemBox, spr_itembox, 8, 8, 16, 16, false, false, hittables, "Item Box")
+	var containers = new JADElistcategory("Containers")
+	registerobj(oItemBox, spr_itembox, 8, 8, 16, 16, false, false, containers, "Item Box")
 	properties.addDropdown(oItemBox, "Content", "content", "coin", ["Single Coin", "Multiple Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom"], ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"])
 	properties.addNumberInput(oItemBox, "Amount", "amount", 1, true)
 	properties.addCheckbox(oItemBox, "Is Brick", "bricked", false)
 	properties.addCheckbox(oItemBox, "Is Hidden", "hidden", false)
 	properties.addCheckbox(oItemBox, "Is Dispenser", "eject", false)
-	registerobj(oLongItemBox, spr_longitembox, 24, 8, 48, 16, false, false, hittables, "Long Item Box")
+	registerobj(oLongItemBox, spr_longitembox, 24, 8, 48, 16, false, false, containers, "Long Item Box")
 	properties.addDropdown(oLongItemBox, "Content", "content", "coin", ["Single Coin", "Multiple Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom"], ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"])
 	properties.addNumberInput(oLongItemBox, "Amount", "amount", 1, true)
 	properties.addCheckbox(oLongItemBox, "Is Hidden", "hidden", false)
 	properties.addCheckbox(oLongItemBox, "Is Dispenser", "eject", false)
-	registerobj(oMonitor, spr_monitor, 8, 8, 16, 16, false, false, hittables, "Monitor")
+	registerobj(oMonitor, spr_monitor, 8, 8, 16, 16, false, false, containers, "Monitor")
 	properties.addDropdown(oMonitor, "Content", "content", "coin", ["10 Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"])
-	blockcategory.add(hittables);
+	registerobj(oCrate, spr_crate, 8, 8, 16, 16, false, false, containers, "Crate")
+	properties.addDropdown(oCrate, "Content", "content", "coin", ["Single Coin", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison"])
+	blockcategory.add(containers);
+	
+	registerobj(oBrick, spr_brick, 8, 8, 16, 16, true, false, blockcategory, "Brick Block")
+	registerobj(oHardBlock, spr_hardblock, 0, 0, 16, 16, false, false, blockcategory, "Hard Block")
+	registerobj(oFlipblock, spr_flipblock, 8, 8, 16, 16, false, false, blockcategory, "Flip Block")
+	registerobj(oNoteBlock, spr_noteblock, 8, 8, 16, 16, false, false, blockcategory, "Note Block")
+	registerobj(oShootBlock, spr_shootblock, 8, 8, 16, 16, false, false, blockcategory, "Shoot Block")
+	registerobj(oDonutBlock, spr_donutblock, 8, 8, 16, 16, false, false, blockcategory, "Donut Block")
+	properties.addCheckbox(oDonutBlock, "Collapsing", "collapsing", false)
+	properties.addCheckbox(oDonutBlock, "Is Icy", "slippery", false)
 	
 	objectlist.add(blockcategory); //we added the items to the category, but we still need to apply the category to the main list
+	
+	var gizmos = new JADElistcategory("Gizmos")
+	
+	var springs = new JADElistcategory("Springs")
+	registerobj(oTerrainSpreng, spr_yellowterrainspring, 8, 8, 16, 16, false, false, springs, "Terrain Spring (Weak)")
+	properties.addDropdown(oTerrainSpreng, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
+	registerobj(oTerrainSpring, spr_redterrainspring, 8, 8, 16, 16, false, false, springs, "Terrain Spring (Normal)")
+	properties.addDropdown(oTerrainSpring, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
+	registerobj(oTerrainSprong, spr_greenterrainspring, 8, 8, 16, 16, false, false, springs, "Terrain Spring (Strong)")
+	properties.addDropdown(oTerrainSprong, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
+	gizmos.add(springs)
+	
+	var switchblocks = new JADElistcategory("Switch Blocks")
+	registerobj(oYellowSwitch, spr_yellowswitch, 8, 8, 16, 16, false, false, switchblocks, "Yellow Switch")
+	registerobj(oYellowSwitchBlock, spr_yellowswitchblock, 0, 0, 16, 16, false, false, switchblocks, "Yellow Switch Block")
+	registerobj(oYellowSwitchBlockOff, spr_yellowswitchblockoff, 0, 0, 16, 16, false, false, switchblocks, "Yellow Switch Block (Off)")
+	registerobj(oYellowSwitchSlope, spr_yellowswitchslope, 0, 0, 16, 16, false, false, switchblocks, "Yellow Switch Slope")
+	registerobj(oCyanSwitch, spr_cyanswitch, 8, 8, 16, 16, false, false, switchblocks, "Cyan Switch")
+	registerobj(oCyanSwitchBlock, spr_cyanswitchblock, 0, 0, 16, 16, false, false, switchblocks, "Cyan Switch Block")
+	registerobj(oCyanSwitchBlockOff, spr_cyanswitchblockoff, 0, 0, 16, 16, false, false, switchblocks, "Cyan Switch Block (Off)")
+	registerobj(oCyanSwitchSlope, spr_cyanswitchslope, 0, 0, 16, 16, false, false, switchblocks, "Cyan Switch Slope")
+	registerobj(oMagentaSwitch, spr_magentaswitch, 8, 8, 16, 16, false, false, switchblocks, "Magenta Switch")
+	registerobj(oMagentaSwitchBlock, spr_magentaswitchblock, 0, 0, 16, 16, false, false, switchblocks, "Magenta Switch Block")
+	registerobj(oMagentaSwitchBlockOff, spr_magentaswitchblockoff, 0, 0, 16, 16, false, false, switchblocks, "Magenta Switch Block (Off)")
+	registerobj(oMagentaSwitchSlope, spr_magentaswitchslope, 0, 0, 16, 16, false, false, switchblocks, "Magenta Switch Slope")
+	gizmos.add(switchblocks)
+	
+	registerobj(oMovingPlatform, spr_movingplatform, 16, 8, 32, 16, true, false, gizmos, "Moving Platform")
+	registerobj(oSwingingPlatform, spr_movingplatform, 16, 8, 32, 16, true, false, gizmos, "Swinging Platform")
+	properties.addNumberInput(oSwingingPlatform, "Chain Length", "chain_length", 4, true)
+	properties.addNumberInput(oSwingingPlatform, "Start Angle", "start_angle", 0, true)
+	properties.addNumberInput(oSwingingPlatform, "End Angle", "end_angle", 0, true)
+	properties.addNumberInput(oSwingingPlatform, "Offset Angle", "offset_angle", 0, true)
+	properties.addNumberInput(oSwingingPlatform, "Swing Speed", "swing_speed", 4, true)
+	properties.addCheckbox(oSwingingPlatform, "Reversed", "reverse", false)
+	properties.addCheckbox(oSwingingPlatform, "Continuous", "continuous", false)
+	properties.addCheckbox(oSwingingPlatform, "Lock X", "lock_x", false)
+	properties.addCheckbox(oSwingingPlatform, "Lock Y", "lock_y", false)
+	registerobj(oZapper, spr_movingplatform, 8, 8, 32, 16, true, false, gizmos, "Zapper")
+	properties.addDropdown(oZapper, "Direction", "dir", "right", ["Up", "Left", "Right", "Down"], ["up","left","right","down"])
+	
+	objectlist.add(gizmos)
+	
+	var enemies = new JADElistcategory("Enemies")
+	
+	registerobj(oGoomba, spr_goombawalk, 8, 8, 16, 16, false, false, enemies, "Goomba")
+	registerobj(oGoombrat, spr_goombratwalk, 8, 8, 16, 16, false, false, enemies, "Goombrat")
+	registerobj(oKoopa, spr_koopawalk_g, 8, 8, 16, 16, false, false, enemies, "Koopa Troopa (Green)")
+	registerobj(oKoopaRed, spr_koopawalk_r, 8, 8, 16, 16, false, false, enemies, "Koopa Troopa (Red)")
+	registerobj(oKoopaYellow, spr_koopawalk_y, 8, 8, 16, 16, false, false, enemies, "Koopa Troopa (Yellow)")
+	registerobj(oKoopaSkating, spr_koopawalk_skate, 8, 12, 16, 16, false, false, enemies, "Koopa Troopa (Skating)")
+	registerobj(oPiranhaPlant, spr_piranhaplant, -4, 8, 16, 16, false, false, enemies, "Piranha Plant")
+	registerobj(oJumpingPiranha, spr_jumpingpiranhafly, 16, 8, 16, 16, false, false, enemies, "Jumping Piranha")
+	registerobj(oBillBlaster, spr_billblasterJADE, 0, 0, 16, 32, false, true, enemies, "Bullet Bill Blaster")
+	registerobj(oBanzaiBlaster, spr_banzaiblasterJADE, 32, 32, 64, 64, false, true, enemies, "Banzai Bill Blaster")
+	registerobj(oIceSnifit, spr_icesnifit, 8, 8, 16, 16, false, false, enemies, "Ice Snifit")
+	registerobj(oPolarBear, spr_polarbear, 8, 8, 16, 16, false, false, enemies, "Polar Bear")
+	registerobj(oStopbob, spr_stopbob, 8, 8, 16, 16, false, false, enemies, "Stopbob")
+	
+	objectlist.add(enemies);
+	
+	var hazards = new JADElistcategory("Hazards")
+	registerobj(oSolidSpike, spr_solidspike, 0, 0, 16, 16, true, true, hazards, "Solid Spike")
+	properties.addDropdown(oSolidSpike, "Direction", "dir", "up", ["Up", "Left", "Right", "Down", "None"], ["up","left","right","down","none"])
+	registerobj(oAmp, spr_amp, 8, 8, 16, 16, false, false, hazards, "Amp")
+	registerobj(oChainsaw, spr_chainsaw, 8, 8, 16, 16, false, false, hazards, "Chainsaw")
+	registerobj(oIcicle, spr_icicle, 0, 0, 16, 32, false, false, hazards, "Icicle")
+	properties.addCheckbox(oIcicle, "Can Fall", "can_fall", true)
+	registerobj(oBigSteely, spr_bigsteely, 0, 0, 48, 48, false, false, hazards, "Big Steely")
+	
+	objectlist.add(hazards);
 	
 	var stagecomp = new JADElistcategory("Stage Components")
 	
 	registerobj(oPipe, spr_pipe, 0, 0, 32, 32, false, false, stagecomp, "Pipe")
+	properties.addDropdown(oPipe, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
+	properties.addStringInput(oPipe, "Warp Name", "warpname", "")
+	properties.addStringInput(oPipe, "Warp Target", "warptarget", "")
 	registerobj(oCheckpoint, spr_checkpoint, -21, -28, 16, 16, false, false, stagecomp, "Checkpoint")
+	properties.addCheckbox(oCheckpoint, "Flip", "dir", false)
 	registerobj(oFlagpole, spr_JADEflagpole, 8, 160, 48, 160, false, false, stagecomp, "Flag Pole")
 	registerobj(oMysteryOrb, spr_mysteryorb, 8, 8, 16, 16, false, false, stagecomp, "Mystery Orb")
 	
 	objectlist.add(stagecomp);
+	
+	var items = new JADElistcategory("Items")
+	
+	registerobj(oCoin, spr_coin, 8, 8, 16, 16, false, false, items, "Coin")
+	registerobj(oDottedCoin, spr_dottedcoin, 8, 8, 16, 16, false, false, items, "Dotted Coin")
+	registerobj(oMushroom, spr_mushroom, 8, 8, 16, 16, false, false, items, "Super Mushroom")
+	registerobj(oFireFlower, spr_fireflower, 8, 10, 16, 16, false, false, items, "Fire Flower")
+	registerobj(oThunderFlower, spr_thunderflowerJADE, 8, 10, 16, 16, false, false, items, "Thunder Flower")
+	registerobj(oStar, spr_starman, 8, 8, 16, 16, false, false, items, "Starman")
+	registerobj(o1up, spr_1up, 8, 8, 16, 16, false, false, items, "1-UP Mushroom")
+	registerobj(o3up, spr_3up, 8, 8, 16, 16, false, false, items, "3-UP Moon")
+	registerobj(oPoisonShroom, spr_ugly_poison_shroom_from_sonic_boll, 8, 8, 16, 16, false, false, items, "Poison Mushroom")
+	registerobj(oFrozenItem, spr_frozenitem, 8, 8, 16, 16, false, false, items, "Frozen Item")
+	properties.addDropdown(oFrozenItem, "Content", "content", "coin", ["Single Coin", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Mystery Orb"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "mysteryorb"])
+	
+	objectlist.add(items);
 	
 	//NODE MODE
 	registerobj(oCameraRegion, spr_cameraregion, 0, 0, 16, 16, false, false, gizmolist, "Camera Region")

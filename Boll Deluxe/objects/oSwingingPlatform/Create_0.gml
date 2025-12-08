@@ -28,8 +28,8 @@ collideactive = 0;		// check if collisions are even possible
 sinedata = 0;
 sinediff = 0;
 
-plat_x = x div 1;       // platform positions
-plat_y = y div 1;
+plat_x = x;       // platform positions
+plat_y = y;
 
 semi=true
 
@@ -40,6 +40,7 @@ newx = 0
 newy = 0
 
 orbit_angle=0;
+offset_angle = 0;
 spawn_orbit = 0;
 lock_x = false;
 lock_y = false;
