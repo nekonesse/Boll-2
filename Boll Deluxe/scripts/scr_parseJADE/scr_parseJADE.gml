@@ -67,8 +67,8 @@ function parse_level(dir=game_save_id+"\save.jade") {
 					var objn = asset_get_index(data[0])
 					var obj = instance_create_depth(data[1], data[2], 0, objn)
 					if instance_exists(obj) {
-						obj.image_xscale=data[3]
-						obj.image_yscale=data[4]
+						obj.image_xscale=data[3]*data[8]
+						obj.image_yscale=data[4]*data[9]
 						obj.xstart+=data[6]*obj.image_xscale;
 						obj.ystart+=data[7]*obj.image_yscale;
 						obj.x=obj.xstart
@@ -106,9 +106,13 @@ function parse_level(dir=game_save_id+"\save.jade") {
 					var data = node_objects[i][j]
 					var objn = asset_get_index(data[0])
 					var obj = instance_create_depth(data[1], data[2], 0, objn)
+					if array_length(data) < 9 {
+						data[8] = 1;
+						data[9] = 1;
+					}
 					if instance_exists(obj) {
-						obj.image_xscale=data[3]
-						obj.image_yscale=data[4]
+						obj.image_xscale=data[3]*data[8]
+						obj.image_yscale=data[4]*data[9]
 						obj.xstart+=data[6]*obj.image_xscale;
 						obj.ystart+=data[7]*obj.image_yscale;
 						obj.x=obj.xstart

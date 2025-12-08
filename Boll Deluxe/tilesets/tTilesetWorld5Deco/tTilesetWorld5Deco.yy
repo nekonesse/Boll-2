@@ -26,7 +26,12 @@
     "name":"Default",
     "path":"texturegroups/Default",
   },
-  "tileAnimationFrames":[],
+  "tileAnimationFrames":[
+    {"$GMTileAnimation":"","%Name":"animation_1","frames":[15,43,],"name":"animation_1","resourceType":"GMTileAnimation","resourceVersion":"2.0",},
+    {"$GMTileAnimation":"","%Name":"animation_2","frames":[16,44,],"name":"animation_2","resourceType":"GMTileAnimation","resourceVersion":"2.0",},
+    {"$GMTileAnimation":"","%Name":"animation_3","frames":[17,45,],"name":"animation_3","resourceType":"GMTileAnimation","resourceVersion":"2.0",},
+    {"$GMTileAnimation":"","%Name":"animation_4","frames":[18,46,],"name":"animation_4","resourceType":"GMTileAnimation","resourceVersion":"2.0",},
+  ],
   "tileAnimationSpeed":15.0,
   "tileHeight":16,
   "tilehsep":0,

@@ -462,6 +462,8 @@ object_place = function(_uuid, _x, _y, _xscale, _yscale) {
 	show_debug_message(arr)
 	obj[6] = data.xoff;
 	obj[7] = data.yoff;
+	obj[8] = data.sizex;
+	obj[9] = data.sizey;
 	//add other data stuff here later
 	ds_list_add(object_map, obj)
 }

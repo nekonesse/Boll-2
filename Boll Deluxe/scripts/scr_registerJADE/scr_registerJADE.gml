@@ -66,7 +66,7 @@ function JADE_initializeobj() {
 	blockcategory.add(containers);
 	
 	var liquids = new JADElistcategory("Liquids")
-	registerobj(oWater, spr_water, 0, 0, 16, 16, true, true, containers, "Water",false,0.25,0.5)
+	registerobj(oWater, spr_water, 0, 0, 16, 16, true, true, liquids, "Water",false,0.25,0.5)
 	blockcategory.add(liquids);
 	
 	registerobj(oBrick, spr_brick, 8, 8, 16, 16, true, false, blockcategory, "Brick Block")
@@ -420,6 +420,10 @@ function JADE_load(file=game_save_id+"\save.jade") {
 			ds_list_clear(node_layer_map[i])
 			var j=0;
 			repeat(array_length(objects[i])) {
+				if array_length(objects[i][j]) < 9 {
+					objects[i][j][8] = 1;
+					objects[i][j][9] = 1;
+				}
 				ds_list_add(object_layer_map[i], objects[i][j])
 				j++;
 			}
