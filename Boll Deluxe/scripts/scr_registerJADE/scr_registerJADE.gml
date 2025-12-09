@@ -153,11 +153,13 @@ function JADE_initializeobj() {
 	registerobj(oPiranhaPlant, spr_piranhaplant, -4, 8, 16, 16, false, false, enemies, "Piranha Plant")
 	registerobj(oJumpingPiranha, spr_jumpingpiranhafly, 16, 8, 16, 16, false, false, enemies, "Jumping Piranha")
 	registerobj(oBillBlaster, spr_billblasterJADE, 0, 0, 16, 32, false, true, enemies, "Bullet Bill Blaster")
+	properties.addNumberInput(oBillBlaster, "Timer Offset", "timer_offset", 0, true)
 	registerobj(oBanzaiBlaster, spr_banzaiblasterJADE, 32, 32, 64, 64, false, true, enemies, "Banzai Bill Blaster")
 	registerobj(oIceSnifit, spr_icesnifit, 8, 8, 16, 16, false, false, enemies, "Ice Snifit")
 	registerobj(oPolarBear, spr_polarbear, 8, 8, 16, 16, false, false, enemies, "Polar Bear")
 	properties.addNumberInput(oPolarBear, "Balloon Height", "bheight", 4, true)
 	registerobj(oStopbob, spr_stopbob, 8, 8, 16, 16, false, false, enemies, "Stopbob")
+	properties.addNumberInput(oStopbob, "Timer Offset", "timer_offset", 0, true)
 	
 	objectlist.add(enemies);
 	
@@ -187,6 +189,10 @@ function JADE_initializeobj() {
 	
 	//NODE MODE
 	registerobj(oCameraRegion, spr_cameraregion, 0, 0, 16, 16, false, false, gizmolist, "Camera Region")
+	properties.addNumberInput(oCameraRegion, "Nudge X", "nudge_x", 0, true)
+	properties.addNumberInput(oCameraRegion, "Nudge Y", "nudge_y", 0, true)
+	properties.addNumberInput(oCameraRegion, "Zoom Level", "zoom", 1, true)
+	properties.addCheckbox(oCameraRegion, "Lock On", "lockon", false)
 	registerobj(oCameraBoundary, spr_cameraboundary, 0, 0, 16, 16, false, false, gizmolist, "Camera Boundary")
 	registerobj(oActivationRegion, spr_activationregion, 0, 0, 16, 16, false, false, gizmolist, "Activation Region")
 	registerobj(oDeactivationRegion, spr_deactivationregion, 0, 0, 16, 16, false, false, gizmolist, "Deactivation Regions")
