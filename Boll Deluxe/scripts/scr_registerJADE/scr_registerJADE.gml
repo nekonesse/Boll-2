@@ -189,8 +189,8 @@ function JADE_initializeobj() {
 	
 	//NODE MODE
 	registerobj(oCameraRegion, spr_cameraregion, 0, 0, 16, 16, false, false, gizmolist, "Camera Region")
-	properties.addNumberInput(oCameraRegion, "Nudge X", "nudge_x", 0, true)
-	properties.addNumberInput(oCameraRegion, "Nudge Y", "nudge_y", 0, true)
+	properties.addNumberInput(oCameraRegion, "Nudge X", "nudge_x", 0, false)
+	properties.addNumberInput(oCameraRegion, "Nudge Y", "nudge_y", 0, false)
 	properties.addNumberInput(oCameraRegion, "Zoom Level", "zoom", 1, true)
 	properties.addCheckbox(oCameraRegion, "Lock On", "lockon", false)
 	registerobj(oCameraBoundary, spr_cameraboundary, 0, 0, 16, 16, false, false, gizmolist, "Camera Boundary")

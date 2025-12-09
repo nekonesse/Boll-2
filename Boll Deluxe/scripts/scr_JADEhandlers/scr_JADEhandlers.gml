@@ -1259,16 +1259,17 @@ function JADElayerlisthandler(_x, _y, _width, _height, _checkvar) constructor {
 							}
 							var j=0;
 							repeat(array_length(listcontents)) {
-								var item = listcontents[j]
-								if (is_instanceof(item, JADEtilelayer)) {
-									layer_set_visible(item.my_layer, true)
-								} else if (is_instanceof(item, JADEassetlayer)) {
-									layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
-								} else if (is_instanceof(item, JADEtilelayer)) {
-									layer_set_visible(item.my_layer, oJADEController.bg_layers_visible)
+								var item2 = listcontents[j]
+								if (is_instanceof(item2, JADEtilelayer)) {
+									layer_set_visible(item2.my_layer, oJADEController.tile_layers_visible)
+								} else if (is_instanceof(item2, JADEassetlayer)) {
+									layer_set_visible(item2.my_layer, oJADEController.asset_layers_visible)
+								} else if (is_instanceof(item2, JADEtilelayer)) {
+									layer_set_visible(item2.my_layer, oJADEController.bg_layers_visible)
 								}
 								j++;
 							}
+							layer_set_visible(item.my_layer, true)
 						} else if is_instanceof(item, JADEassetlayer) {
 							with(oJADEController) {
 								deco_mode_type = "asset";
@@ -1276,16 +1277,17 @@ function JADElayerlisthandler(_x, _y, _width, _height, _checkvar) constructor {
 							}
 							var j=0;
 							repeat(array_length(listcontents)) {
-								var item = listcontents[j]
-								if (is_instanceof(item, JADEtilelayer)) {
-									layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
-								} else if (is_instanceof(item, JADEassetlayer)) {
-									layer_set_visible(item.my_layer, true)
-								} else if (is_instanceof(item, JADEtilelayer)) {
-									layer_set_visible(item.my_layer, oJADEController.bg_layers_visible)
+								var item2 = listcontents[j]
+								if (is_instanceof(item2, JADEtilelayer)) {
+									layer_set_visible(item2.my_layer, oJADEController.tile_layers_visible)
+								} else if (is_instanceof(item2, JADEassetlayer)) {
+									layer_set_visible(item2.my_layer, oJADEController.asset_layers_visible)
+								} else if (is_instanceof(item2, JADEtilelayer)) {
+									layer_set_visible(item2.my_layer, oJADEController.bg_layers_visible)
 								}
 								j++;
 							}
+							layer_set_visible(item.my_layer, true)
 						} else if is_instanceof(item, JADEbackgroundlayer) {
 							with(oJADEController) {
 								deco_mode_type = "bg";
@@ -1293,16 +1295,17 @@ function JADElayerlisthandler(_x, _y, _width, _height, _checkvar) constructor {
 							}
 							var j=0;
 							repeat(array_length(listcontents)) {
-								var item = listcontents[j]
-								if (is_instanceof(item, JADEtilelayer)) {
-									layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
-								} else if (is_instanceof(item, JADEassetlayer)) {
-									layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
-								} else if (is_instanceof(item, JADEtilelayer)) {
-									layer_set_visible(item.my_layer, true)
+								var item2 = listcontents[j]
+								if (is_instanceof(item2, JADEtilelayer)) {
+									layer_set_visible(item2.my_layer, oJADEController.tile_layers_visible)
+								} else if (is_instanceof(item2, JADEassetlayer)) {
+									layer_set_visible(item2.my_layer, oJADEController.asset_layers_visible)
+								} else if (is_instanceof(item2, JADEtilelayer)) {
+									layer_set_visible(item2.my_layer, oJADEController.bg_layers_visible)
 								}
 								j++;
 							}
+							layer_set_visible(item.my_layer, true)
 						}
 						mbleftpress=0
 					}

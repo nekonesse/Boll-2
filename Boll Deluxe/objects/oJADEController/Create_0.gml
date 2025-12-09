@@ -179,14 +179,15 @@ modebuttons.add("Deco Mode", function() {
 			repeat(array_length(listcontents)) {
 				var item = listcontents[i]
 				if (is_instanceof(item, JADEtilelayer)) {
-					layer_set_visible(item.my_layer, true)
+					layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
 				} else if (is_instanceof(item, JADEassetlayer)) {
 					layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
 				} else if (is_instanceof(item, JADEtilelayer)) {
-					layer_set_visible(item.my_layer, oJADEController.bg_layers_visible)
+					layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
 				}
 				i++;
 			}
+			layer_set_visible(oJADEController.selected_layer.my_layer, true)
 		}
 	} else if is_instanceof(oJADEController.selected_layer,JADEbackgroundlayer) {
 		toolbarbuttons.set(toolbar[2])
@@ -199,10 +200,11 @@ modebuttons.add("Deco Mode", function() {
 				} else if (is_instanceof(item, JADEassetlayer)) {
 					layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
 				} else if (is_instanceof(item, JADEtilelayer)) {
-					layer_set_visible(item.my_layer, true)
+					layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
 				}
 				i++;
 			}
+			layer_set_visible(oJADEController.selected_layer.my_layer, true)
 		}
 	} else if is_instanceof(oJADEController.selected_layer,JADEassetlayer) {
 		toolbarbuttons.set(toolbar[3])
@@ -213,12 +215,13 @@ modebuttons.add("Deco Mode", function() {
 				if (is_instanceof(item, JADEtilelayer)) {
 					layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
 				} else if (is_instanceof(item, JADEassetlayer)) {
-					layer_set_visible(item.my_layer, true)
+					layer_set_visible(item.my_layer, oJADEController.asset_layers_visible)
 				} else if (is_instanceof(item, JADEtilelayer)) {
-					layer_set_visible(item.my_layer, oJADEController.bg_layers_visible)
+					layer_set_visible(item.my_layer, oJADEController.tile_layers_visible)
 				}
 				i++;
 			}
+			layer_set_visible(oJADEController.selected_layer.my_layer, true)
 		}
 	}
 	if (selected_mode != DECO_MODE) {
@@ -398,6 +401,8 @@ tilelayervisibility = new JADEiconbutton(1296-240-60,26+36,spr_JADElayertilevisi
 			}
 			i++;
 		}
+		if is_struct(oJADEController.selected_layer) && selected_mode == DECO_MODE
+		layer_set_visible(oJADEController.selected_layer.my_layer, true)
 	}
 }, true, false, true)
 
@@ -413,6 +418,8 @@ assetlayervisibility = new JADEiconbutton(1296-240-42,26+36,spr_JADElayerassetvi
 			}
 			i++;
 		}
+		if is_struct(oJADEController.selected_layer) && selected_mode == DECO_MODE
+		layer_set_visible(oJADEController.selected_layer.my_layer, true)
 	}
 }, true, false, true)
 
@@ -428,6 +435,8 @@ bglayervisibility = new JADEiconbutton(1296-240-24,26+36,spr_JADElayerbgvisibili
 			}
 			i++;
 		}
+		if is_struct(oJADEController.selected_layer) && selected_mode == DECO_MODE
+		layer_set_visible(oJADEController.selected_layer.my_layer, true)
 	}
 }, true, false, true)
 
