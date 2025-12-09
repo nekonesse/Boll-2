@@ -73,7 +73,7 @@ if (not_on_gui) && (mbmiddlepress) {
 	view_graby=curs_y
 	initial_viewx = cam_x
 	initial_viewy = cam_y
-} else if !(mbmiddlerel) {
+} else if (mbmiddlerel) {
 	view_grab=0
 }
 
