@@ -84,7 +84,7 @@ if (view_grab) { //update camera position
 
 var mwheel = mouse_wheel_down() - mouse_wheel_up();
 if (mwheel == 0) {
-	mwheel = keyboard_check_direct(vk_down) - keyboard_check_direct(vk_up)
+	mwheel = keyboard_check(vk_down) - keyboard_check(vk_up)
 }
 
 #region Camera Zooming
