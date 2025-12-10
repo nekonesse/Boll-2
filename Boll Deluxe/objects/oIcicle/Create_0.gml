@@ -6,6 +6,7 @@ my_friction = 0.5;
 semi = true;
 can_fall = true;
 
+hsp = 0;
 vsp = 0;
 
 fall = false;

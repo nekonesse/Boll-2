@@ -581,6 +581,8 @@ if (mbleft && not_on_gui) {
 						ds_list_add(tilemap,[tiledata,gridx,gridy]) //add tile  to list at place
 						tile_update_properties();
 					break;
+					case "asset":
+					
 				}
 			}
 		break;

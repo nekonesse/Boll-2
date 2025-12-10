@@ -43,7 +43,7 @@ if (can_fall) {
 		if (enemy) {
 			enemy.hp=0
 			enemy.killtype="spin";
-			enemy.killhsp = sign(hsp);
+			enemy.killhsp = sign(enemy.x-(x+8));
 			instance_create_depth(enemy.x,enemy.y,2,pImpact)
 		}
 		
