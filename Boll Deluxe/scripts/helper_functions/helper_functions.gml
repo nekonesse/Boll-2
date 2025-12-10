@@ -25,8 +25,8 @@ global.camera_y = 0;
 
 function check_signs_matching(a, b)
 {
-    var fa = abs(a);
-    var fb = abs(b);
+    var fa = intlib_make_fixedpoint(a);
+    var fb = intlib_make_fixedpoint(b);
 
     var asign, bsign;
 

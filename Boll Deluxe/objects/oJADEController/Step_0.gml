@@ -582,7 +582,7 @@ if (mbleft && not_on_gui) {
 						tile_update_properties();
 					break;
 					case "asset":
-					
+					break;
 				}
 			}
 		break;
