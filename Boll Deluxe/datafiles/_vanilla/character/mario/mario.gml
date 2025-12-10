@@ -336,9 +336,6 @@ if (state == "jump" || state == "") && !(grounded) && !piped && !(stun) {
 
 if ((state == "" || state=="crouch") && !hurt && !stun && apress && canjump > 0 && !spinjump) && !piped && !(underwater) {
 	grounded = false
-	if (slopesliding) {
-		crouch = false
-	}
 	state = "jump"
 	vsp = -(4.65+(clamp(abs(hsp)/3.14,0.5,1.7) * 1.2)+(bool(poundjump)+0.5)); //preform the actual jump
 	playsfx(charmName+"jump",1+(bool(poundjump)/4),0,1)
@@ -352,7 +349,10 @@ if ((state == "" || state=="crouch") && !hurt && !stun && apress && canjump > 0 
 		make_particle(pSmoke, x-10, y-8, depth + 5, 1, 0, -1);
 		make_particle(pSmoke, x+8, y-8, depth + 5, 1, 0, -1);
 	}
-	slopesliding = false;
+	if (slopesliding) {
+		crouch = false
+		slopesliding = false;
+	}
 	
 	make_particle(pJumpDust, x, y + hit_sizey, depth + 5, 1, 0, (y-yprevious)/1.5, 0, 0.2);
 }
