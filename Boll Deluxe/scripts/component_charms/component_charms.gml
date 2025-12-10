@@ -83,7 +83,7 @@ function component_mario_start_dive(speedX = 3.5, speedY = -2.7){
 function component_mario_wallslide(slideSpeed = 1, jumpVSpeed = -5, jumpHSpeed = -2.5){
 	
 	vsp=slideSpeed;
-	var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
+	var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-(hit_sizey-2),x+((hit_sizex+1)*xsc),y+(hit_sizey-2),COL_WALL)
 	
 	if (move == 0 || !coll){
 		state = "";

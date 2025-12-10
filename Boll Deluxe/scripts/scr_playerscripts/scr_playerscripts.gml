@@ -267,7 +267,7 @@ function init_sounds() {
 	}
 }
 
-function playsfx(sound,pitch=1,loop=0,gain=1) {
+function playsfx(sound,pitch=1,loop=0,gain=0.5) {
 	if audioExtSoundExists(sound) {
 		var snd=audioExtSoundGet(sound)
 		VinylPlay(audioExtSoundGetSoundID(snd),loop,gain,pitch)
@@ -281,7 +281,7 @@ function stopsfx(sound) {
 	}
 }
 
-function init_player() { //make this load animation data later
+function init_player() {
 	spriteEvents=["idle"];
 	spriteMap={};
 	sound_list=[]; //failsafe

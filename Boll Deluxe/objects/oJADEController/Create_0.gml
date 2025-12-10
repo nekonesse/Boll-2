@@ -1,17 +1,17 @@
 ///@description Intialize
 ///Tools:
 #macro EMPTY_SLOT -1
-#macro SELECT_TOOL 0 //region, object, background, node
-#macro BRUSH_TOOL 1 //object, tile, background
-#macro FILL_TOOL 2 //object, tile
-#macro ERASE_TOOL 3 //object, tile, background, nodet
-#macro PICKER_TOOL 4 //object, tile, background
-#macro REFERENCE_TOOL 5 //object, tile, background, node
-#macro ROTATE_TOOL 6 //tile, background
-#macro MIRROR_TOOL 7 //tile, background
-#macro FLIP_TOOL 8 //tile, background
-#macro NODE_TOOL 9 //node
-#macro ROTATOR_TOOL 10 //node
+#macro SELECT_TOOL 0
+#macro BRUSH_TOOL 1
+#macro FILL_TOOL 2
+#macro ERASE_TOOL 3
+#macro PICKER_TOOL 4
+#macro REFERENCE_TOOL 5
+#macro ROTATE_TOOL 6
+#macro MIRROR_TOOL 7
+#macro FLIP_TOOL 8
+#macro NODE_TOOL 9
+#macro ROTATOR_TOOL 10
 
 selected_mode=OBJECT_MODE;
 selected_toolbar=0;
@@ -455,10 +455,9 @@ bglayervisibility = new JADEiconbutton(1296-240-24,26+36,spr_JADElayerbgvisibili
 //Object
 toolbar[0][0]=SELECT_TOOL
 toolbar[0][1]=BRUSH_TOOL
-toolbar[0][2]=FILL_TOOL
-toolbar[0][3]=ERASE_TOOL
-toolbar[0][4]=PICKER_TOOL
-toolbar[0][5]=REFERENCE_TOOL
+toolbar[0][2]=ERASE_TOOL
+toolbar[0][3]=PICKER_TOOL
+toolbar[0][4]=REFERENCE_TOOL
 //Tile
 toolbar[1][0]=SELECT_TOOL
 toolbar[1][1]=BRUSH_TOOL
@@ -527,7 +526,6 @@ tile_sel_last_y = 0
 tile_fill_last_x = 0
 tile_fill_last_y = 0
 tile_fill = false
-fill_circle = false
 
 selected_region = 0;
 object_layer_map[0] = ds_list_create();

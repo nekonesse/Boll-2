@@ -124,9 +124,7 @@ switch (size) {
 	} break
 }
 
-maxspd = 2 + runvar + ((size != "basic" && !crouch) * 0.5) - (1.25*(crouch && grounded))
-
-//maxspd = 1.5
+maxspd = 2 + runvar - (1.25*(crouch && grounded))
 
 #region PreventMovement
 var no_move_prev = no_move;

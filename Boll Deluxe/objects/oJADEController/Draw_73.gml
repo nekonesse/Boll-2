@@ -72,7 +72,7 @@ if (not_on_gui) {
 		}
 		break;
 		case DECO_MODE:
-		if (selected_tool == BRUSH_TOOL || selected_tool == FILL_TOOL) {
+		if (selected_tool == BRUSH_TOOL || selected_tool == FILL_TOOL) && !tile_fill {
 			switch(deco_mode_type) {
 				case "tile":
 					var t_spr = global.tilesets[$ current_tileset][0]

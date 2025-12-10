@@ -1194,8 +1194,7 @@ function JADElayerlisthandler(_x, _y, _width, _height, _checkvar) constructor {
 		layer_depth(oJADEController.reference_sprite_layer, (i+3)*100)
 		layer_depth(layer_get_id("BG_ScreenGrid"),(i+4)*100)
 		layer_depth(layer_get_id("BG_Grid"),(i+5)*100)
-		layer_depth(layer_get_id("BG_WaveGrid"),(i+6)*100)
-		layer_depth(layer_get_id("BG_Color"),(i+7)*100)
+		layer_depth(layer_get_id("BG_Color"),(i+6)*100)
 	}
 	
 	static wipe = function() {

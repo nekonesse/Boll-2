@@ -105,7 +105,6 @@ tile_sel_last_y = 0
 tile_fill_last_x = 0
 tile_fill_last_y = 0
 tile_fill = false
-fill_circle = false
 
 gotoroom=rWorldMap
 

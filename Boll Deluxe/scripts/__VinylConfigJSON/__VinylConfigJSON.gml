@@ -179,7 +179,7 @@ global.VinylConfigSON = [
 			snd_blockbreak,
 			{
 				sound: snd_blockbreak,
-				gain: 0.8
+				gain: 0.5
 			},
 			snd_hardblockbreak,
 			{

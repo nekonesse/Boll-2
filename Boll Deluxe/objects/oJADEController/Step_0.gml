@@ -598,6 +598,51 @@ if (mbleft && not_on_gui) {
 				}
 			}
 		break;
+		case PICKER_TOOL:
+			if (mbleftpress) {
+				switch(selected_mode) {
+					case OBJECT_MODE:
+					case NODE_MODE:
+						var col = check_colliding_object(mouse_x,mouse_y)
+						if (col) {
+							var obj = object_map[| col-1]
+							selected_obj = obj_data[$ obj[0]]
+							selected_tool = BRUSH_TOOL
+						}
+					break;
+					case DECO_MODE:
+						switch(deco_mode_type) {
+							case "tile":
+								var col = check_colliding_tile(mouse_x,mouse_y)
+								if (col) {
+									var obj = tilemap[| col-1]
+									current_tile_id = -1
+									current_tile_id = []
+									current_tile_id[0][0] = tile_get_index(obj[0])
+									tile_sel_height = 0
+									tile_sel_width = 0
+								}
+							break;
+							case "asset":
+								var col = check_colliding_asset(mouse_x,mouse_y)
+								if (col) {
+									var obj = selected_layer.assetmap[| col-1]
+									selected_deco_obj = obj_data[$ obj[0]]
+									selected_tool = BRUSH_TOOL
+								}
+							break;
+						}
+					break;
+				}
+			}
+		break;
+		case FILL_TOOL:
+			if (mbleftpress && !tile_fill) {
+				tile_fill_last_x = gridx
+				tile_fill_last_y = gridy
+				tile_fill = true
+			}
+		break;
 		case NODE_TOOL:
 			if (mbleftpress) {
 				if !(drawing_node) {
@@ -721,6 +766,45 @@ if (mbleftrel) {
 						}
 						i++;
 					}
+				}
+				
+				if (selected_tool == FILL_TOOL) && (tile_fill) {
+					var start_x = tile_fill_last_x 
+					var start_y = tile_fill_last_y 
+					var size_x = (gridx - tile_fill_last_x)
+					var size_y = (gridy - tile_fill_last_y) 
+		
+					if size_x < 0 {
+						start_x = gridx
+						size_x = abs(size_x)
+					}
+					if size_y < 0 {
+						start_y = gridy
+						size_y = abs(size_y)
+					}
+					
+					var i=0;
+					repeat(size_x) {
+						var j=0;
+						repeat(size_y) {
+							//prevent trying to place out of bounds
+							if ((start_x + i) < tilemap_get_width(tilemap_layer)) && ((start_y + j) < tilemap_get_height(tilemap_layer)) && ((start_x + i) >= 0) && ((start_y + j) >= 0) {
+								var data = tilemap_get(tilemap_layer, start_x+i, start_y+j); //set tile at place
+								data = tile_set_index(data, current_tile_id[i mod (tile_sel_width+1)][j mod (tile_sel_height+1)])
+								data = tile_set_flip(data, 0);
+								data = tile_set_mirror(data, 0);
+								data = tile_set_rotate(data, 0);
+								tilemap_set(tilemap_layer, data, start_x + i, start_y + j);
+								if current_tile_id[i mod (tile_sel_width+1)][j mod (tile_sel_height+1)] != 0
+								ds_list_add(tilemap,[data, start_x+i, start_y+j]) //add tile  to list at place
+							}
+							j++;
+						}
+						i++;
+					}
+					tile_update_properties();
+					show_debug_message(ds_list_size(tilemap))
+					tile_fill = false
 				}
 			break;
 			case "asset":
