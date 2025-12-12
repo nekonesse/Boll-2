@@ -20,6 +20,7 @@ function JADE_initializeobj() {
 	decolist = new JADElisthandler(1296-216-14,56, 216, 640, "selected_deco_obj")
 	bglist = new JADEbglisthandler(1296-216-14,56, 216, 480)
 	propertylist = new JADEpropertylisthandler(1296-216-14,56, 216, 640);
+	nodepropertylist = new JADEnodepropertylisthandler(1296-216-14,56, 216, 640);
 	
 	list_tabbuttons=new JADEsmallbuttons(1296-216-14,38,96,20,8,false, true)
 	
@@ -460,18 +461,18 @@ function JADE_load(file=game_save_id+"\save.jade") {
 			ds_list_clear(node_layer_map[i])
 			var j=0;
 			repeat(array_length(objects[i])) {
-				if array_length(objects[i][j]) < 9 {
-					objects[i][j][8] = 1;
-					objects[i][j][9] = 1;
+				if array_length(objects[i][j]) < 11 {
+					objects[i][j][10] = [];
+					objects[i][j][11] = [2,0,false,false,false,true];
 				}
 				ds_list_add(object_layer_map[i], objects[i][j])
 				j++;
 			}
 			j=0;
 			repeat(array_length(node_objects[i])) {
-				if array_length(node_objects[i][j]) < 9 {
-					node_objects[i][j][8] = 1;
-					node_objects[i][j][9] = 1;
+				if array_length(node_objects[i][j]) < 11 {
+					node_objects[i][j][10] = [];
+					node_objects[i][j][11] = [2,0,false,false,false,true];
 				}
 				ds_list_add(node_layer_map[i], node_objects[i][j])
 				j++;

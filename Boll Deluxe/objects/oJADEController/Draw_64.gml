@@ -31,7 +31,11 @@ if (selected_mode != DECO_MODE) {
 			gizmolist.draw();
 		}
 	} else {
-		propertylist.draw(selected_array);
+		if (drawing_node==-1) {
+			propertylist.draw(selected_array);
+		} else {
+			nodepropertylist.draw(drawing_node);
+		}
 	}
 } else {
 	switch(deco_mode_type) {

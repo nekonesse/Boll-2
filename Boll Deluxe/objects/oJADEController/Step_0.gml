@@ -113,9 +113,13 @@ if (zoom_level!=oldzoom) {
 }
 #endregion
 
+var prevgrid = current_grid_size
+
 if keyboard_check(vk_control) && (selected_mode != DECO_MODE || (selected_mode == DECO_MODE && deco_mode_type != "tile")) {
 	current_grid_size=1;
 } else current_grid_size=default_grid_size
+
+if (current_grid_size!=prevgrid) changed_grid_size=true
 
 droppedfiles=file_dropper_get_files(".jade")
 
@@ -647,16 +651,19 @@ if (mbleft && not_on_gui) {
 		break;
 		case NODE_TOOL:
 			if (mbleftpress) {
-				if !(drawing_node) {
+				if (drawing_node==-1) {
 					var col = check_colliding_object(mouse_x,mouse_y,object_layer_map[selected_region])
 					if (col) {
 						var obj = object_layer_map[selected_region][| col-1]
 						draw_node_x = obj[1];
 						draw_node_y = obj[2];
-						drawing_node = col;
+						drawing_node = col-1;
 					}
 				} else {
-					
+					var obj = object_layer_map[selected_region][| drawing_node]
+					var rounded_x = (ceil((gridx*current_grid_size-8)/current_grid_size)*current_grid_size)+8;
+					var rounded_y = (ceil((gridy*current_grid_size-8)/current_grid_size)*current_grid_size)+8;
+					array_push(obj[10],[rounded_x,rounded_y])
 				}
 			}
 		break;

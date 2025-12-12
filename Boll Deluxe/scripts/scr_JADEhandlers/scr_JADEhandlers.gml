@@ -1682,3 +1682,147 @@ function JADEtilepicker(_x,_y,_width,_height) constructor {
 		}
 	}
 }
+
+function JADEnodepropertylisthandler(_x, _y, _width, _height) : JADEpropertylisthandler(_x, _y, _width, _height) constructor {
+	static draw = function(objarr) {
+		draw_rect(x,y,width,height,oJADEController.themeaccent3,1)
+		var curs_x = window_mouse_get_x()
+		var curs_y = window_mouse_get_y()
+		var mbleft = mouse_check_button_pressed(mb_left);
+		var over = point_in_rectangle(curs_x,curs_y,x,y,x+width,y+height);
+		listwidth = 0;
+		listheight = 0;
+		
+		if (objarr>=0) {
+			var obj = oJADEController.object_layer_map[oJADEController.selected_region][| objarr]
+			var pthspdprop = {};
+			pthspdprop.type = "number_input";
+			pthspdprop.name = "Path Speed";
+			pthspdprop.absolute = true;
+			var startnodeprop = {};
+			startnodeprop.type = "number_input";
+			startnodeprop.name = "Starting Node";
+			startnodeprop.absolute = true;
+			var reverseendprop = {};
+			reverseendprop.type = "checkbox";
+			reverseendprop.name = "Reverse On End";
+			var fallendprop = {};
+			fallendprop.type = "checkbox";
+			fallendprop.name = "Fall On End";
+			var drawtrackprop = {};
+			drawtrackprop.type = "checkbox";
+			drawtrackprop.name = "Draw Track";
+			var autostartprop = {};
+			autostartprop.type = "checkbox";
+			autostartprop.name = "Auto Start";
+			var arr = [pthspdprop,startnodeprop,reverseendprop,fallendprop,drawtrackprop,autostartprop]
+			var data = oJADEController.obj_data[$ obj[0]]
+			
+			var prevscissor = gpu_get_scissor();
+			gpu_set_scissor(x,y,width,height);
+			
+			draw_set_font(global.rulerGold)
+			
+			draw_rect(x+15,y+15,66,66,c_white,1,true)
+			draw_text(x+16,y+96,data.name)
+			
+			draw_rect(x+8,y+128,width-16,2,oJADEController.themeaccent2,1)
+			
+			var i=0;
+			repeat(array_length(arr)) { 
+				var item = arr[i]
+				
+				switch (item[$ "type"]) {
+					case "checkbox": {
+						obj[11][i]=JADEcheckbox(x+16,y+144+32*i, item[$ "name"], obj[11][i])
+					} break;
+					case "number_input": {
+						if !item[$ "absolute"]
+						obj[11][i]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[11][i],102+i)
+						else obj[11][i]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[11][i],102+i,0)
+					} break;
+					case "number_range_input": {
+						obj[11][i]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[11][i],102+i,item[$ "minimum"],item[$ "maximum"])
+					} break;
+					case "string_input": {
+						obj[11][i]=JADEstringinput(x+16,y+144+32*i, item[$ "name"], obj[11][i],102+i)
+					} break;
+				}
+				
+				i++;
+				if i>(height/32) listheight+=32
+			}
+			gpu_set_scissor(prevscissor);
+		}
+		
+		//Scrollbars
+		#region Scrolling
+		var total_height=height+listheight
+		var total_width=width+listwidth
+		
+		var over_vert_scrollbar = point_in_rectangle(curs_x,curs_y,x+width,y,x+width+4+8,y+height);
+		var bar_height = max(6,(height/total_height)*height)
+		
+		var over_horizontal_scrollbar = point_in_rectangle(curs_x,curs_y,x,y+height,x+width,y+height+4+8);
+		var bar_width = max(6,(width/total_width)*width)
+		
+		draw_gui(x+width+4,y,6,height,oJADEController.themeaccent2,1) //vertical scrollbar bg
+		draw_gui(x+width+4,y+handle_y,6,bar_height,oJADEController.themeaccent4,1) //vertical scrollbar handle
+		
+		draw_gui(x,y+height+4,width,6,oJADEController.themeaccent2,1) //horizontal scrollbar bg
+		draw_gui(x+handle_x,y+height+4,bar_width,6,oJADEController.themeaccent4,1) //horizontal scrollbar handle
+		
+		var mwheel = mouse_wheel_down() - mouse_wheel_up();
+		if (mwheel == 0) {
+			mwheel = keyboard_check(vk_down) - keyboard_check(vk_up)
+		}
+		
+		if (over) && (mwheel != 0) {
+			if !keyboard_check(vk_control) {
+				scroll_y+=12*-mwheel
+				scroll_y=clamp(scroll_y,-listheight,0)
+				
+				if (listheight)
+				handle_y = -((height - bar_height) * scroll_y / (listheight))
+			} else {
+				scroll_x+=8*mwheel
+				scroll_x=clamp(scroll_x,-listwidth,0)
+				
+				if (listwidth)
+				handle_x = -((width - bar_width) * scroll_x / (listwidth))
+			}
+		}
+		
+		if (mbleft) {
+			if (over_vert_scrollbar) && (height/total_height != 1) {
+				if !is_scrolling_y {
+					mouse_offset_y = (curs_y - (y + handle_y))	
+				}
+				is_scrolling_y=true
+			} else if (over_horizontal_scrollbar) && (width/total_width != 1) {
+				if !is_scrolling_x {
+					mouse_offset_x = (curs_x - (x + handle_x))	
+				}
+				is_scrolling_x=true
+			}
+		}
+		
+		if (mouse_check_button_released(mb_left)) {
+			is_scrolling_x=0
+			is_scrolling_y=0
+		}
+		
+		if (is_scrolling_y) {
+			handle_y = curs_y - y - mouse_offset_y;
+			handle_y = clamp( handle_y, 0, height - bar_height);
+			
+			scroll_y = -((listheight) * handle_y / (height - bar_height));
+		} else if (is_scrolling_x) {
+			handle_x = curs_x - x - mouse_offset_x;
+			handle_x = clamp(handle_x, 0, width - bar_width);
+			
+			scroll_x = -((listwidth) * handle_x / (width - bar_width));
+		}
+		#endregion
+	}
+}

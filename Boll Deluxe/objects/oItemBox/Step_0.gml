@@ -19,7 +19,7 @@ if (going) {
 		image_index = 1
 	}
 } else {
-	if (amount) {
+	if (amount) && (bricked) {
 		image_index=floor(global.roomTimer/4)
 	}
 }

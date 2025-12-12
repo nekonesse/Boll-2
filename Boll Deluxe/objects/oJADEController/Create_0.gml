@@ -12,6 +12,7 @@
 #macro FLIP_TOOL 8
 #macro NODE_TOOL 9
 #macro ROTATOR_TOOL 10
+#macro LINK_TOOL 11
 
 selected_mode=OBJECT_MODE;
 selected_toolbar=0;
@@ -501,6 +502,7 @@ is_typing = -1;
 
 default_grid_size = 16;
 current_grid_size = default_grid_size;
+changed_grid_size = false;
 
 selection_grab = false;
 selection_grab_x = 0;
@@ -633,6 +635,8 @@ object_place = function(_uuid, _x, _y, _xscale, _yscale) {
 	obj[7] = data.yoff;
 	obj[8] = data.sizex;
 	obj[9] = data.sizey;
+	obj[10] = []; //nodes arr
+	obj[11] = [2,0,false,false,false,true]; //node property arr
 	//add other data stuff here later
 	ds_list_add(object_map, obj)
 }

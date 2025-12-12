@@ -91,10 +91,6 @@ function parse_level(dir=game_save_id+"\save.jade") {
 					var data = objects[i][j]
 					var objn = asset_get_index(data[0])
 					var obj = instance_create_depth(data[1], data[2], 0, objn)
-					if array_length(data) < 9 {
-						data[8] = 1;
-						data[9] = 1;
-					}
 					if instance_exists(obj) {
 						obj.image_xscale=data[3]*data[8]
 						obj.image_yscale=data[4]*data[9]
@@ -102,21 +98,22 @@ function parse_level(dir=game_save_id+"\save.jade") {
 						obj.ystart+=data[7]*obj.image_yscale;
 						obj.x=obj.xstart
 						obj.y=obj.ystart
-						/*if array_length(data[11]) {
-							var temparr = []
-							array_copy(temparr,0,data[11],0,array_length(data[11]))
-							variable_instance_set(obj, "pathing", temparr);
-							if is_array(data[12]) {
-								variable_instance_set(obj, "pathspd", data[12][0]);
-								variable_instance_set(obj, "pathcanrev", data[12][1]);
-								variable_instance_set(obj, "pathnum", data[12][2]);
-								variable_instance_set(obj, "pathcanfall", data[12][3]);
-								variable_instance_set(obj, "pathdraw", data[12][4]);
-								if array_length(data[12]) > 5
-								variable_instance_set(obj, "pathstarted", data[12][5]);
-								else variable_instance_set(obj, "pathstarted", true);
-							}	
-						}*/
+						
+						if (array_length(data)) > 10 {
+							if array_length(data[10]) {
+								var temparr = []
+								array_copy(temparr,0,data[10],0,array_length(data[11]))
+								variable_instance_set(obj, "pathing", temparr);
+								if is_array(data[11]) {
+									variable_instance_set(obj, "pathspd", data[11][0]);
+									variable_instance_set(obj, "pathnum", data[11][1]);
+									variable_instance_set(obj, "pathcanrev", data[11][2]);
+									variable_instance_set(obj, "pathcanfall", data[11][3]);
+									variable_instance_set(obj, "pathdraw", data[11][4]);
+									variable_instance_set(obj, "pathstarted", data[11][5]);
+								}	
+							}
+						}
 						
 						//object variables
 						var g=0
