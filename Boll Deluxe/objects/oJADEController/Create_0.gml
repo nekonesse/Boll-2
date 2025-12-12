@@ -155,6 +155,7 @@ update_layer = function(_layer) {
 modebuttons = new JADEsmallbuttons(272,4,86,16,8,false)
 modebuttons.add("Object Mode", function() {
 	selected_deco_obj = -1;
+	drawing_node = -1;
 	toolbarbuttons.set(toolbar[0])
 	if (selected_mode != OBJECT_MODE) {
 		selected_obj = -1;
@@ -179,6 +180,7 @@ modebuttons.add("Object Mode", function() {
 	object_map = object_layer_map[selected_region]
 });
 modebuttons.add("Deco Mode", function() {
+	drawing_node = -1;
 	if is_instanceof(oJADEController.selected_layer,JADEtilelayer) {
 		toolbarbuttons.set(toolbar[1])
 		with(layerlist) {

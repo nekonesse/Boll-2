@@ -921,7 +921,23 @@ if (mbright) {
 			}
 		break;
 		case NODE_TOOL:
-			drawing_node = -1;
+			if (mbrightpress) && (drawing_node!=-1) {
+				var obj = object_layer_map[selected_region][| drawing_node]
+				var i=0;
+				var len = array_length(obj[10])
+				var deleted_node = false;
+				repeat(len) {
+					var node = obj[10][i]
+					if point_in_rectangle(mouse_x,mouse_y,node[0]-8,node[1]-8,node[0]+8,node[1]+8) {
+						array_delete(obj[10],i,1);
+						deleted_node = true;
+					}
+					i++;
+				}
+				
+				if !(deleted_node)
+				drawing_node = -1;
+			}
 		break;
 		case REFERENCE_TOOL:
 			if (layer_sprite_exists(reference_sprite_layer,reference_sprite_element)) layer_sprite_destroy(reference_sprite_element);

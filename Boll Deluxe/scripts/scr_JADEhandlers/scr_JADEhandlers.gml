@@ -246,6 +246,7 @@ function JADEtoolbar(_x, _y) constructor {
 		
 			if over {
 				oJADEController.selected_tool=buttons[i]
+				drawing_node=-1;
 				break;
 			}
 			i++;
