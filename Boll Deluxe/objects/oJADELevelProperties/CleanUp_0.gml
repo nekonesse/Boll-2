@@ -1,0 +1,2 @@
+delete exitbutton;
+delete tilesetselector;

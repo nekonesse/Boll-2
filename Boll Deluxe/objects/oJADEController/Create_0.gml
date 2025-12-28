@@ -120,8 +120,12 @@ topbuttons.add("Edit", function() {
 topbuttons.add("View", function() {
 
 });
-topbuttons.add("Region", function() {
-
+topbuttons.add("Level", function() {
+	with(oJADEGUIpar) {
+		instance_destroy();
+	}
+	var inst = instance_create_depth(guiw/2,guih/2,oJADEController.depth-2,oJADELevelProperties)
+	topbuttons.created_gui = inst;
 });
 
 
@@ -338,6 +342,9 @@ layereditbutton = new JADEiconbutton(layerlist.x+40,layerlist.y+layerlist.height
 		exit;
 	}
 	
+	with(oJADEGUIpar) {
+		instance_destroy();
+	}
 	var inst = instance_create_depth(guiw/2,guih/2,oJADEController.depth-2,oJADELayerProperties)
 	inst.selected_layer = selected_layer
 	layereditbutton.created_gui = inst;
@@ -631,14 +638,14 @@ object_place = function(_uuid, _x, _y, _xscale, _yscale) {
 		}
 		o++;
 	}
-	show_debug_message(obj[5])
-	show_debug_message(arr)
 	obj[6] = data.xoff;
 	obj[7] = data.yoff;
 	obj[8] = data.sizex;
 	obj[9] = data.sizey;
 	obj[10] = []; //nodes arr
 	obj[11] = [2,0,false,false,false,true]; //node property arr
+	obj[12] = []; //rotator arr
+	obj[13] = [0,0,180,0,4,true,false,false]
 	//add other data stuff here later
 	ds_list_add(object_map, obj)
 }

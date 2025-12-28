@@ -667,6 +667,24 @@ if (mbleft && not_on_gui) {
 				}
 			}
 		break;
+		case ROTATOR_TOOL:
+			if (mbleftpress) {
+				if (drawing_rotator==-1) {
+					var col = check_colliding_object(mouse_x,mouse_y,object_layer_map[selected_region])
+					if (col) {
+						var obj = object_layer_map[selected_region][| col-1]
+						draw_node_x = obj[1];
+						draw_node_y = obj[2];
+						drawing_rotator = col-1;
+					}
+				} else {
+					var obj = object_layer_map[selected_region][| drawing_rotator]
+					var rounded_x = (ceil((gridx*current_grid_size-8)/current_grid_size)*current_grid_size)+8;
+					var rounded_y = (ceil((gridy*current_grid_size-8)/current_grid_size)*current_grid_size)+8;
+					array_push(obj[12],[rounded_x,rounded_y])
+				}
+			}
+		break;
 		case REFERENCE_TOOL:
 			if (mbleftpress) {
 				if (reference_sprite == -1) {

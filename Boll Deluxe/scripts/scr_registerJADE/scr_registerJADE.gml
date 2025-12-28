@@ -12,6 +12,18 @@ global.tilesets[$ "tTilesetWorld5"]=[spr_TilesetWorld5, tTilesetWorld5, "Frigid 
 global.tilesets[$ "tTilesetWorld5Deco"]=[spr_TilesetWorld5Deco, tTilesetWorld5Deco, "Frigid Dark Decoration"]
 global.tilesets[$ "tTilesetBowserLand"]=[spr_TilesetBowserLand, tTilesetBowserLand, "Bowser Land Tiles"]
 
+global.musiclist={}
+
+global.musiclist[$ "floragrande"]={
+	leadmix: "overworld bgm FG",
+	backmix: "overworld bgm BG"
+}
+global.musiclist[$ "frigiddark"]={
+	leadmix: "frigid dark bgm",
+	backmix: undefined
+}
+
+
 function JADE_initializeobj() {
 	obj_data = {};
 	properties = new JADEproperties()
@@ -21,8 +33,9 @@ function JADE_initializeobj() {
 	bglist = new JADEbglisthandler(1296-216-14,56, 216, 480)
 	propertylist = new JADEpropertylisthandler(1296-216-14,56, 216, 640);
 	nodepropertylist = new JADEnodepropertylisthandler(1296-216-14,56, 216, 640);
+	rotatorpropertylist = new JADErotatorpropertylisthandler(1296-216-14,56, 216, 640);
 	
-	list_tabbuttons=new JADEsmallbuttons(1296-216-14,38,96,20,8,false, true)
+	list_tabbuttons = new JADEsmallbuttons(1296-216-14,38,96,20,8,false, true)
 	
 	list_tabbuttons.add("Object List", function() {
 		properties_tab_active = false;
@@ -131,7 +144,7 @@ function JADE_initializeobj() {
 	registerobj(oSwingingPlatform, spr_movingplatform, 16, 8, 32, 16, true, false, gizmos, "Swinging Platform")
 	properties.addNumberInput(oSwingingPlatform, "Chain Length", "chain_length", 4, true)
 	properties.addNumberInput(oSwingingPlatform, "Start Angle", "start_angle", 0, true)
-	properties.addNumberInput(oSwingingPlatform, "End Angle", "end_angle", 0, true)
+	properties.addNumberInput(oSwingingPlatform, "End Angle", "end_angle", 180, true)
 	properties.addNumberInput(oSwingingPlatform, "Offset Angle", "offset_angle", 0, true)
 	properties.addNumberInput(oSwingingPlatform, "Swing Speed", "swing_speed", 4, true)
 	properties.addCheckbox(oSwingingPlatform, "Reversed", "reverse", false)

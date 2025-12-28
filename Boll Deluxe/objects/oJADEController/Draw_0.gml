@@ -79,6 +79,9 @@ if (drawing_node != -1) {
 		draw_circle_color(node[0],node[1],6,$505050,$505050,false);
 		draw_circle_color(node[0],node[1],5,$54b9fb,$54b9fb,false);
 		draw_text(node[0],node[1],i);
+		if point_in_rectangle(mouse_x,mouse_y,node[0]-8,node[1]-8,node[0]+8,node[1]+8) {
+			draw_circle_color(node[0],node[1],8,$54b9fb,$54b9fb,true);
+		}
 		i++;
 	}
 	

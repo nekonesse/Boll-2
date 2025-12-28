@@ -488,7 +488,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.2.212",
+    "IDEVersion":"2024.14.2.213",
   },
   "name":"Boll Deluxe",
   "resources":[
@@ -573,6 +573,7 @@
     {"id":{"name":"oJADEDropDown","path":"objects/oJADEDropDown/oJADEDropDown.yy",},},
     {"id":{"name":"oJADEGUIpar","path":"objects/oJADEGUIpar/oJADEGUIpar.yy",},},
     {"id":{"name":"oJADELayerProperties","path":"objects/oJADELayerProperties/oJADELayerProperties.yy",},},
+    {"id":{"name":"oJADELevelProperties","path":"objects/oJADELevelProperties/oJADELevelProperties.yy",},},
     {"id":{"name":"oJumpingPiranha","path":"objects/oJumpingPiranha/oJumpingPiranha.yy",},},
     {"id":{"name":"oKoopa","path":"objects/oKoopa/oKoopa.yy",},},
     {"id":{"name":"oKoopaRed","path":"objects/oKoopaRed/oKoopaRed.yy",},},

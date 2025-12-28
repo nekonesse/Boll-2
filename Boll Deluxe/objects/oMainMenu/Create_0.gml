@@ -6,24 +6,36 @@ suboptMAX=3;
 optionLock=0;
 startLock = 10;
 
+menusurface=surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
+
+selectArrowYtrans = room_height/2;
+selectArrowY = room_height/2;
+selectArrowWidth = 0;
+selectArrowWidthtrans = 0;
+
 // General
 OptionMover = function () {
-	option	=wrap_val(option,0,optMAX);
 	if (up)
 	option-=1
 	else if (down)
 	option+=1
+	
+	option	=wrap_val(option,0,optMAX);
 }
 subOptMover = function () {
-	subopt	=wrap_val(subopt,0,suboptMAX);
 	if (up)
 	subopt-=1
 	else if (down)
 	subopt+=1
+	
+	subopt	=wrap_val(subopt,0,suboptMAX);
 }
 backAmenu = function (_goback) {
 	crMenu=_goback
 	option=0
+	
+	selectArrowYtrans = room_height/2;
+	selectArrowY = room_height/2;
 }
 
 //Rebind Menu

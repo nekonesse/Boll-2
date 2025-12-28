@@ -256,6 +256,7 @@
     {"name":"oJADEDropDown","order":3,"path":"objects/oJADEDropDown/oJADEDropDown.yy",},
     {"name":"oJADEGUIpar","order":2,"path":"objects/oJADEGUIpar/oJADEGUIpar.yy",},
     {"name":"oJADELayerProperties","order":4,"path":"objects/oJADELayerProperties/oJADELayerProperties.yy",},
+    {"name":"oJADELevelProperties","order":5,"path":"objects/oJADELevelProperties/oJADELevelProperties.yy",},
     {"name":"oJumpingPiranha","order":1,"path":"objects/oJumpingPiranha/oJumpingPiranha.yy",},
     {"name":"oKoopaRed","order":1,"path":"objects/oKoopaRed/oKoopaRed.yy",},
     {"name":"oKoopaSkating","order":3,"path":"objects/oKoopaSkating/oKoopaSkating.yy",},
