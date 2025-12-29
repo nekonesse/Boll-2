@@ -1,9 +1,9 @@
-cam_x = camera_get_view_x(view_camera[0])
-cam_y = camera_get_view_y(view_camera[0])
-cam_w = camera_get_view_width(view_camera[0])
-cam_h = camera_get_view_height(view_camera[0])
-guiw = display_get_gui_width();
-guih = display_get_gui_height();
+cam_x = camera_get_view_x(camera)
+cam_y = camera_get_view_y(camera)
+cam_w = camera_get_view_width(camera)
+cam_h = camera_get_view_height(camera)
+guiw = window_get_width();
+guih = window_get_height();
 
 if !os_is_paused() && guiw>0 && guih>0 {
 	if !surface_exists(GUIcanvas) {
@@ -78,7 +78,7 @@ if (not_on_gui) && (mbmiddlepress) {
 }
 
 if (view_grab) { //update camera position
-    camera_set_view_pos(view_camera[0],floor(initial_viewx+(view_grabx-curs_x)*zoom_level),floor(initial_viewy+(view_graby-curs_y)*zoom_level))
+    camera_set_view_pos(camera,floor(initial_viewx+(view_grabx-curs_x)*zoom_level),floor(initial_viewy+(view_graby-curs_y)*zoom_level))
 }
 #endregion
 
@@ -96,16 +96,16 @@ if (mwheel != 0) && keyboard_check(vk_control) && (not_on_gui) {
 zoom_goto=clamp(zoom_goto,0.125, 5)
 var oldzoom=zoom_level
 zoom_level=approach_val(zoom_level,zoom_goto,0.025)
-camera_set_view_size(camera, floor(1296*zoom_level), floor(744*zoom_level))
+camera_set_view_size(camera, floor(guiw*zoom_level), floor(guih*zoom_level))
 
 if (zoom_level!=oldzoom) {
-	cam_x = camera_get_view_x(view_camera[0])
-	cam_y = camera_get_view_y(view_camera[0])
-	cam_w = camera_get_view_width(view_camera[0])
-	cam_h = camera_get_view_height(view_camera[0])
+	cam_x = camera_get_view_x(camera)
+	cam_y = camera_get_view_y(camera)
+	cam_w = camera_get_view_width(camera)
+	cam_h = camera_get_view_height(camera)
 	
-	var old_cam_w = floor(1296*oldzoom)
-	var old_cam_h = floor(744*oldzoom)
+	var old_cam_w = floor(guiw*oldzoom)
+	var old_cam_h = floor(guih*oldzoom)
 	cam_x += floor(old_cam_w/2 - cam_w/2) //+ ((zoom_x-guiw/2)/(zoom_level/(zoom_goto-zoom_level)))*mwheel
 	cam_y += floor(old_cam_h/2 - cam_h/2) //+ ((zoom_y-guih/2)/(zoom_level/(zoom_goto-zoom_level)))*mwheel
 	

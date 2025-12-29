@@ -25,17 +25,20 @@ global.musiclist[$ "frigiddark"]={
 
 
 function JADE_initializeobj() {
+	guiw = window_get_width();
+	guih = window_get_height();
+	
 	obj_data = {};
 	properties = new JADEproperties()
-	objectlist = new JADElisthandler(1296-216-14,56, 216, 640, "selected_obj")
-	gizmolist = new JADElisthandler(1296-216-14,56, 216, 640, "selected_obj")
-	decolist = new JADElisthandler(1296-216-14,56, 216, 640, "selected_deco_obj")
-	bglist = new JADEbglisthandler(1296-216-14,56, 216, 480)
-	propertylist = new JADEpropertylisthandler(1296-216-14,56, 216, 640);
-	nodepropertylist = new JADEnodepropertylisthandler(1296-216-14,56, 216, 640);
-	rotatorpropertylist = new JADErotatorpropertylisthandler(1296-216-14,56, 216, 640);
+	objectlist = new JADElisthandler(guiw-216-14,56, 216, 640, "selected_obj")
+	gizmolist = new JADElisthandler(guiw-216-14,56, 216, 640, "selected_obj")
+	decolist = new JADElisthandler(guiw-216-14,56, 216, 640, "selected_deco_obj")
+	bglist = new JADEbglisthandler(guiw-216-14,56, 216, 480)
+	propertylist = new JADEpropertylisthandler(guiw-216-14,56, 216, 640);
+	nodepropertylist = new JADEnodepropertylisthandler(guiw-216-14,56, 216, 640);
+	rotatorpropertylist = new JADErotatorpropertylisthandler(guiw-216-14,56, 216, 640);
 	
-	list_tabbuttons = new JADEsmallbuttons(1296-216-14,38,96,20,8,false, true)
+	list_tabbuttons = new JADEsmallbuttons(guiw-216-14,38,96,20,8,false, true)
 	
 	list_tabbuttons.add("Object List", function() {
 		properties_tab_active = false;

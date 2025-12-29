@@ -25,15 +25,20 @@ reference_sprite_y = 0;
 reference_sprite_layer = layer_create(1000,"__JADEreferencesprite");
 
 camera = view_camera[0]
+guiw = window_get_width();
+guih = window_get_height();
+cursor_scale = max(min(floor(guiw/RESOLUTION_X),floor(guih/RESOLUTION_Y))/3,1)
+
+camera_set_view_size(camera,guiw,guih);
+view_set_wport(0,guiw)
+view_set_hport(0,guih)
 
 camera_set_view_pos(camera,0,room_height-camera_get_view_height(camera))
 
-cam_x = camera_get_view_x(view_camera[0])
-cam_y = camera_get_view_y(view_camera[0])
-cam_w = camera_get_view_width(view_camera[0])
-cam_h = camera_get_view_height(view_camera[0])
-guiw = display_get_gui_width();
-guih = display_get_gui_height();
+cam_x = camera_get_view_x(camera)
+cam_y = camera_get_view_y(camera)
+cam_w = camera_get_view_width(camera)
+cam_h = camera_get_view_height(camera)
 
 themeaccent1=scribble_rgb_to_bgr($0d1128)
 themeaccent2=scribble_rgb_to_bgr($1c2348)
@@ -370,9 +375,9 @@ playtestbutton = new JADEiconbutton(196,26+36,spr_JADEplaytestbutton,function() 
 	})
 });
 
-tilepicker = new JADEtilepicker(1296-216-14,56, 220, 320)
+tilepicker = new JADEtilepicker(guiw-216-14,56, 220, 320)
 
-bgalignbuttons = new JADEsmallbuttons(1296-216-14,550,52,16,8,false,false,true)
+bgalignbuttons = new JADEsmallbuttons(guiw-216-14,550,52,16,8,false,false,true)
 bgalignbuttons.add("Align X", function() {
 	with(selected_layer) {
 		off_x = other.cam_x+(other.cam_w/2)-(selected_bg.width/2);
@@ -395,17 +400,17 @@ tile_layers_visible = true;
 asset_layers_visible = true;
 bg_layers_visible = true;
 
-objectvisibility = new JADEiconbutton(1296-240-96,26+36,spr_JADElayerobjectvisibility, function() {
+objectvisibility = new JADEiconbutton(guiw-240-96,26+36,spr_JADElayerobjectvisibility, function() {
 	objects_visible = !objects_visible
 	objectvisibility.button_image_index = !objects_visible
 }, true, false, true)
 
-gizmovisibility = new JADEiconbutton(1296-240-78,26+36,spr_JADElayergizmovisibility, function() {
+gizmovisibility = new JADEiconbutton(guiw-240-78,26+36,spr_JADElayergizmovisibility, function() {
 	gizmos_visible = !gizmos_visible
 	gizmovisibility.button_image_index = !gizmos_visible
 }, true, false, true)
 
-tilelayervisibility = new JADEiconbutton(1296-240-60,26+36,spr_JADElayertilevisibility, function() {
+tilelayervisibility = new JADEiconbutton(guiw-240-60,26+36,spr_JADElayertilevisibility, function() {
 	tile_layers_visible = !tile_layers_visible
 	tilelayervisibility.button_image_index = !tile_layers_visible
 	with(layerlist) {
@@ -422,7 +427,7 @@ tilelayervisibility = new JADEiconbutton(1296-240-60,26+36,spr_JADElayertilevisi
 	}
 }, true, false, true)
 
-assetlayervisibility = new JADEiconbutton(1296-240-42,26+36,spr_JADElayerassetvisibility, function() {
+assetlayervisibility = new JADEiconbutton(guiw-240-42,26+36,spr_JADElayerassetvisibility, function() {
 	asset_layers_visible = !asset_layers_visible
 	assetlayervisibility.button_image_index = !asset_layers_visible
 	with(layerlist) {
@@ -439,7 +444,7 @@ assetlayervisibility = new JADEiconbutton(1296-240-42,26+36,spr_JADElayerassetvi
 	}
 }, true, false, true)
 
-bglayervisibility = new JADEiconbutton(1296-240-24,26+36,spr_JADElayerbgvisibility, function() {
+bglayervisibility = new JADEiconbutton(guiw-240-24,26+36,spr_JADElayerbgvisibility, function() {
 	bg_layers_visible = !bg_layers_visible
 	bglayervisibility.button_image_index = !bg_layers_visible
 	with(layerlist) {

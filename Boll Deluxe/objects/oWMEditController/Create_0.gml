@@ -129,8 +129,8 @@ draw_rotator_x=0;
 draw_rotator_y=0;
 
 #region tileset picker variables
-var guiw=display_get_gui_width()
-var guih=display_get_gui_height()
+var guiw=window_get_width()
+var guih=window_get_height()
 
 show_tileset = false
 on_tile_picker = false
@@ -167,19 +167,19 @@ current_cat = 0
 #endregion
 
 mouse_in_setting_slot = function(numb) {
-	var guiw=display_get_gui_width();
+	var guiw=window_get_width();
 	return point_in_rectangle(curs_x,curs_y,(guiw-28)-(32*numb),4,(guiw-28)-(32*numb)+24,28)
 }
 
 mouse_in_toolbar_slot = function(numb) {
-	var guiw=display_get_gui_width();
+	var guiw=window_get_width();
 	if toolbar[selected_mode][numb] != EMPTY_SLOT
 	return point_in_rectangle(curs_x,curs_y,(guiw-12)-(32*14)+(32*numb),4,(guiw-12)-(32*14)+(32*numb)+32,28)
 	else return 0
 }
 
 mouse_in_mode_slot = function(numb) {
-	var guih=display_get_gui_height();
+	var guih=window_get_height();
 	return point_in_rectangle(curs_x,curs_y,4,((guih/4)-4)+32*numb,28,(((guih/4)-4)+32*numb)+24)
 }
 
