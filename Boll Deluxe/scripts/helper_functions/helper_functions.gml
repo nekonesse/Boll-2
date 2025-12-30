@@ -200,12 +200,6 @@ function esign(val,_default){
 	return sign(val)
 }
 
-function inview(obj = undefined) {
-	show_debug_message(self)
-	show_debug_message("DONT USE THIS FUNCTION!!!")
-	return false
-}
-
 function is_range_onscreen_horizontal(left, right, wport = undefined)
 {
 	if (view_camera[0] != undefined)

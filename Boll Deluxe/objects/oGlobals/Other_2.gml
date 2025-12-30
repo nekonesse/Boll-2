@@ -16,9 +16,15 @@ global.settings[$ "keybinds"] = input_player_export()
 
 if file_exists(game_save_id+"\settings.ini")
 {
-	global.settings = LoadJSONFromFile(game_save_id+"\settings.ini")
-	var opstruct = global.settings[$ "keybinds"]
-	if input_player_verify(opstruct) input_player_import(opstruct);
+	var loaded = buffer_load(game_save_id+"\settings.ini")
+	if (loaded != -1) {
+		var save_file = buffer_decompress(loaded)
+		global.settings = json_parse(buffer_read(save_file,buffer_string))
+		var opstruct = global.settings[$ "keybinds"]
+		if input_player_verify(opstruct) input_player_import(opstruct);
+		buffer_delete(loaded)
+		buffer_delete(save_file)
+	}
 }
 
 if (!global.settings[$ "fullscreen_type"]) {

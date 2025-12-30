@@ -34,9 +34,9 @@ if check_collision_line(x+(hit_sizex+1)*-xsc, y+(hit_sizey-2),x+(hit_sizex+1)*-x
 if (enemycoll) {
 	var coll = check_rectangle_in_hitbox(x+(hit_sizex+1)*-xsc,y+hit_sizey-3,x+(hit_sizex+1)*-xsc,y-hit_sizey+3,oEnemy)
 	
-	if (coll) {
+	if (coll) && !(coll.in_shell) && !(coll.enemycoll) {
 		enemyTurnAround.Emit();
-		with(coll) if xsc!=other.xsc enemyTurnAround.Emit();
+		with(coll) if (xsc!=other.xsc) enemyTurnAround.Emit();
 	}
 }
 
@@ -46,7 +46,7 @@ if (turning) {
 }
 event_user(0); //animation controller
 
-if !place_meeting(x+hsp,y, [oEnemy, oCollider]) {
+if !check_rectangle_in_hitbox(x+(hit_sizex+1)*-xsc,y+hit_sizey-3,x+(hit_sizex+1)*-xsc,y-hit_sizey+3,oEnemy) && !check_collision_line(x+(hit_sizex+1)*-xsc,y+hit_sizey-3,x+(hit_sizex+1)*-xsc,y-hit_sizey+3,COL_WALL) {
 	flipped = 0;
 }
 
