@@ -41,7 +41,6 @@ if (global.debug)
 	if instance_exists(oPlayer) {
 		draw_text(2,72,$"Player Stuff: {oPlayer.x},{oPlayer.y}\nSprite: {oPlayer.spriteEvent}\nState: {oPlayer.state}\nHsp: {oPlayer.hsp}\nVsp: {oPlayer.vsp}\nGsp: {oPlayer.gsp}\nSlopeAngle: {oPlayer.colangle}\nSlope: {oPlayer.colslope}\nXsc: {oPlayer.xsc}\nMove Var: {oPlayer.move}\nno_move: {oPlayer.no_move}\npiped: {oPlayer.piped}\ndown: {oPlayer.down}\nsteep: {oPlayer.steep_slope}\ndepth: {oPlayer.depth}\nCam Zoom: {oPlayer.my_camera.zoom}\nPolygon timer: {oPlayer.polyfloor[1]}\nElectrocuted: {oPlayer.electrocuted}\nElecocution Timer: {oPlayer.electrocution_timer}\nMove: {oPlayer.move}\nFriction: {oPlayer.fric}\nFric mult: {oPlayer.friction_mult}\nInvincibility Type: {oPlayer.invincible_type}\nInvincibility Timer: {oPlayer.invincible_timer}")
 	}
-	draw_set_font(basicPlaceholderF)
 }
 else if (global.fps_display)
 {

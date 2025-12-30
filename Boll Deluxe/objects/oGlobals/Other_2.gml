@@ -33,9 +33,8 @@ if (!global.settings[$ "fullscreen_type"]) {
 	window_set_size(432*global.settings[$ "resolution_scale"],248*global.settings[$ "resolution_scale"]);
 	window_center();
 } else {
-	if (global.settings[$ "fullscreen_type"] == 1) window_enable_borderless_fullscreen(true);
-	else window_enable_borderless_fullscreen(false);
-	window_set_fullscreen(true);
+	//fullscreen setting has to be delayed or else it causes a weird bug where it doesnt show up in the taskbar
+	alarm[0]=2;
 }
 						
 VinylMasterSetGain(global.settings[$ "master_vol"])

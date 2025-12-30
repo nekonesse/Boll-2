@@ -25,15 +25,18 @@ global.camera_y = 0;
 
 function check_signs_matching(a, b)
 {
-    var fa = intlib_make_fixedpoint(a);
-    var fb = intlib_make_fixedpoint(b);
+    return (sign(a) == sign(b));
+}
 
-    var asign, bsign;
-
-    asign = ((fa >= 0) ? 1 : 0);
-    bsign = ((fb >= 0) ? 1 : 0);
-
-    return (asign == bsign);
+function draw_sprite_circle(sprite,subimg,xdraw,ydraw,xscale,yscale,radius,quantity,circleAngle){
+	var tempReal=0;
+	repeat(quantity){
+		draw_sprite_ext(sprite,subimg,
+		((radius)*sin(tempReal+(circleAngle)))+xdraw,
+		((radius)*cos(tempReal+(circleAngle)))+ydraw,
+		xscale,yscale,0,#FFFFFF,1)
+		tempReal+=(pi*2)/quantity
+	}
 }
 
 function check_signs_matching_zero(a, b)
