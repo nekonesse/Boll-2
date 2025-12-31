@@ -7,6 +7,7 @@ blowing=false;
 blowtimer=0;
 cooldowntimer=0;
 fireballflash=0;
+didstun=false;
 		
 uni_r = shader_get_uniform(shd_flatcolor, "red");
 
@@ -14,6 +15,7 @@ blowingPart=-1;
 
 enemyStomped.Connect( self, function(hit_p) {
 	stun=180;
+	didstun=false;
 	blowing=0;
 	blowtimer=0;
 	revtimer=0;

@@ -12,8 +12,8 @@ if (turning) {
 	sprite_index=spr_icesnifit_blow
 } else if (revving) {
 	sprite_index=spr_icesnifit_rev
-	if image_index>image_number-1 {
-		image_index=image_number-3;
+	if image_index>=image_number-1 {
+		image_index=image_number-1;
 	}
 } else {
 	sprite_index=spr_icesnifit_walk

@@ -21,7 +21,9 @@ if (revving) {
 	}
 }
 
-if !(stun) && !(revving) && !(blowing) && (hsp==0) {
+if !(stun) && !(revving) && !(blowing) && (!didstun) {
 	constantspd=0.5
 	hp=2
+	cooldowntimer=60
+	didstun=true;
 }
