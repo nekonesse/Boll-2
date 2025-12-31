@@ -1,7 +1,20 @@
 ///@description Animation Controller
-if !(grounded) sprite_index=spr_goombafall
-else if (turning) {
+
+if (turning) {
 	sprite_index=spr_icesnifit_turn
 } else if (stun) {
-	sprite_index=spr_icesnifit
-} else sprite_index=spr_icesnifit_walk
+	if (stun > 30) {
+		sprite_index=spr_icesnifit_stun
+	} else {
+		sprite_index=spr_icesnifit_getup
+	}
+} else if (blowing) {
+	sprite_index=spr_icesnifit_blow
+} else if (revving) {
+	sprite_index=spr_icesnifit_rev
+	if image_index>image_number-1 {
+		image_index=image_number-3;
+	}
+} else {
+	sprite_index=spr_icesnifit_walk
+}
