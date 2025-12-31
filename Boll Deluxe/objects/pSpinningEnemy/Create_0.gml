@@ -1,2 +1,2 @@
-depth=10;
+depth=-1;
 gravity=0.2;

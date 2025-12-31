@@ -940,6 +940,75 @@ function JADEproperties() constructor {
 	}
 }
 
+function JADEthemes() constructor {
+	property_data = {};
+	property_values = {};
+	static initThemes = function(obj) {
+		var objn;
+		if (object_exists(obj)) {
+			objn = object_get_name(obj)
+		} else if (sprite_exists(obj)) {
+			objn = sprite_get_name(obj)
+		}
+		property_data[$ objn]=[]
+		property_values[$ objn]=[];
+	}
+	
+	static addCheckbox = function(obj, name, variable_name, default_val) {
+		var objn = object_get_name(obj)
+		var struct = {};
+		struct[$ "type"]="checkbox"
+		struct[$ "name"]=name
+		array_push(property_data[$ objn], struct)
+		array_push(property_values[$ objn], [variable_name, default_val])
+	}
+	
+	static addStringInput = function(obj, name, variable_name, default_val) {
+		var objn = object_get_name(obj)
+		var struct = {};
+		struct[$ "type"]="string_input"
+		struct[$ "name"]=name
+		array_push(property_data[$ objn], struct)
+		array_push(property_values[$ objn], [variable_name, default_val])
+	}
+	
+	static addNumberInput = function(obj, name, variable_name, default_val, is_absolute=false) {
+		var objn = object_get_name(obj)
+		var struct = {};
+		struct[$ "type"]="number_input"
+		struct[$ "name"]=name
+		struct[$ "absolute"]=is_absolute
+		array_push(property_data[$ objn], struct)
+		array_push(property_values[$ objn], [variable_name, default_val])
+	}
+	
+	static addNumberRangeInput = function(obj, name, variable_name, default_val, _min, _max) {
+		var objn = object_get_name(obj)
+		var struct = {};
+		struct[$ "type"]="number_range_input"
+		struct[$ "name"]=name
+		struct[$ "minimum"]=_min
+		struct[$ "maximum"]=_max
+		array_push(property_data[$ objn], struct)
+		array_push(property_values[$ objn], [variable_name, default_val])
+	}
+	
+	static addDropdown = function(obj, name, variable_name, default_val, options_name, options_data) {
+		var objn = object_get_name(obj)
+		var struct = {};
+		struct[$ "type"]="dropdown"
+		struct[$ "name"]=name
+		struct[$ "dropdownnames"]=options_name
+		struct[$ "dropdowndata"]=options_data
+		array_push(property_data[$ objn], struct)
+		array_push(property_values[$ objn], [variable_name, default_val])
+	}
+	
+	static getDefaultValues = function(obj) {
+		return property_values[$ obj]
+	}
+}
+
 function JADEnumberinput(_x, _y, _name, _var, _type_index, _min=NaN, _max=NaN) {
 	
 	var curs_x = window_mouse_get_x()

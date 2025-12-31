@@ -29,11 +29,12 @@ function JADE_initializeobj() {
 	guih = window_get_height();
 	
 	obj_data = {};
-	properties = new JADEproperties()
-	objectlist = new JADElisthandler(guiw-216-14,56, 216, 640, "selected_obj")
-	gizmolist = new JADElisthandler(guiw-216-14,56, 216, 640, "selected_obj")
-	decolist = new JADElisthandler(guiw-216-14,56, 216, 640, "selected_deco_obj")
-	bglist = new JADEbglisthandler(guiw-216-14,56, 216, 480)
+	properties = new JADEproperties();
+	objectthemes = new JADEproperties();
+	objectlist = new JADElisthandler(guiw-216-14,56, 216, 640, "selected_obj");
+	gizmolist = new JADElisthandler(guiw-216-14,56, 216, 640, "selected_obj");
+	decolist = new JADElisthandler(guiw-216-14,56, 216, 640, "selected_deco_obj");
+	bglist = new JADEbglisthandler(guiw-216-14,56, 216, 480);
 	propertylist = new JADEpropertylisthandler(guiw-216-14,56, 216, 640);
 	nodepropertylist = new JADEnodepropertylisthandler(guiw-216-14,56, 216, 640);
 	rotatorpropertylist = new JADErotatorpropertylisthandler(guiw-216-14,56, 216, 640);

@@ -514,3 +514,13 @@ function make_particle(obj,_x,_y,_depth=depth+5,xsc=1,hsp=0,vsp=0,grav=0,fric=0,
 	
 	return i
 }
+
+function increase_combo(_x,_y) {
+	stompCombo=min(stompCombo+1,8)
+	VinylPlay(snd_enemykick,false,1,0.9+(stompCombo/10))
+			
+	if (stompCombo>=8)
+	give_lives(pNum, x, y)
+	else
+	instance_create_depth(x,y,5,pScoreText,{image_index : stompCombo})
+}

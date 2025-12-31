@@ -82,6 +82,7 @@ GMLspeak.interface.compileFlags.checkForVariables = true;
 		GMLspeak.interface.exposeFunction("finish_death", finish_death);
 		GMLspeak.interface.exposeFunction("hit_block", hit_block);
 		GMLspeak.interface.exposeFunction("make_particle", make_particle);
+		GMLspeak.interface.exposeFunction("increase_combo", increase_combo);
 		
 		GMLspeak.interface.exposeFunction("component_common_timer_values", component_common_timer_values);
 		GMLspeak.interface.exposeFunction("component_get_ground_friction", component_get_ground_friction);
@@ -144,6 +145,8 @@ GMLspeak.interface.compileFlags.checkForVariables = true;
 		GMLspeak.interface.exposeFunction("VinylStopAll", VinylStopAll);
 		GMLspeak.interface.exposeFunction("VinylWillStop", VinylWillStop);
 		GMLspeak.interface.exposeFunction("VinylSetupSound", VinylSetupSound);
+		GMLspeak.interface.exposeFunction("VinylSetupExternal", VinylSetupExternal);
+		GMLspeak.interface.exposeFunction("VinylUnloadExternal", VinylUnloadExternal);
 		
 		GMLspeak.interface.exposeConstant("VINYL_DEFAULT_FADE_IN_RATE", VINYL_DEFAULT_FADE_IN_RATE);
 		GMLspeak.interface.exposeConstant("VINYL_DEFAULT_FADE_OUT_RATE", VINYL_DEFAULT_FADE_OUT_RATE);

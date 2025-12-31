@@ -841,7 +841,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 		grow = 60;
 	} else if (coll) && (!(invincible_type) || (invincible_type == 2)) {
 		make_particle(pImpact,coll.x+coll.xsc,coll.y,2)
-		VinylPlay(snd_enemykick)
+		increase_combo(coll.x,coll.y);
 		signal_emit(coll.enemyRolledInto, id);
 	}
 }

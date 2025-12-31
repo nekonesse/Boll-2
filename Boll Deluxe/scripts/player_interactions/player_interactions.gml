@@ -16,15 +16,11 @@ function player_interactions(){
 		var enemy=check_hitbox_on_hitbox(id, oEnemy)
 		if (enemy) && (enemy.phaseid==noone || enemy.phaseid.id!=id) && !(hurt) && !(dead) {
 			if !(enemy.unshellable) {
+				enemy.enemyRolledInto.Emit(id);
+				
 				make_particle(pImpact,enemy.x+enemy.xsc,enemy.y,2)
-				VinylPlay(snd_enemykick)
-				enemy.hp-=1
-				enemy.phaseid=id
-				enemy.killdir= esign(enemy.x-x,1)
-				enemy.killhsp= max(abs(hsp)/1.75,2)
-				enemy.xsc= esign(hsp,xsc)
-				enemy.killvsp= -max(2,abs(hsp)/1.5)
-				enemy.killtype="spin"
+				
+				increase_combo(_x,_y);
 			}
 		}
 	}
@@ -201,28 +197,15 @@ function player_interactions(){
 		item.itemCollected.Emit(id);
 	}
 	
-	var icicle=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey-2-max(0,vsp),oIcicle,true,true)
+	var icicle=collision_rectangle(x-hit_sizex+hsp,y-hit_sizey,x+hit_sizex+hsp,y+hit_sizey-2-max(0,vsp),oIcicle,true,true)
 	if (icicle) && !(icicle.no_collide) && !(hurt) && !(dead) {
-		if !(invincible_type && invincible_timer) {
+		if !(invincible_type && invincible_timer) && (state != "frozen") {
 			sig.Emit("hurt_by_spike")
 		}
 		
-		if !(icicle.can_fall) || (invincible_type == 2) && (invincible_type != 1) {
+		if !(icicle.can_fall) && (invincible_type != 1) || (invincible_type == 2) || (state == "frozen") {
 			with(icicle) {
-				var j=noone
-				j = instance_create(x+4,y+24,pDestruction) with(j){image_index=10 hspeed=-1 vspeed=-2} //bottom left
-				j = instance_create(x+4,y+20,pDestruction) with(j){image_index=10 hspeed=1 vspeed=-2} //bottom right
-				j = instance_create(x+8,y+24,pDestruction) with(j){image_index=10 hspeed=-1 vspeed=-4} //top left
-				j = instance_create(x+8,y+20,pDestruction) with(j){image_index=10 hspeed=1 vspeed=-4} //top right
-				VinylPlay(snd_iceshatter)
-				y=ystart
-				visible=0;
-				respawn_timer=120;
-				no_collide = true;
-				fallgo=false;
-				fall=false;
-				vsp=0;
-				alarm[0]=-1;
+				breakIcicle();
 			}
 		}
 	}
