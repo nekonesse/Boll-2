@@ -9,6 +9,8 @@ can_break_bricks = true
 kickedplayer = noone;
 kickCombo = 0;
 
+koopaEscapeShell = new Signal();
+
 delete enemyStomped;
 enemyStomped = new Signal();
 
@@ -32,6 +34,8 @@ enemyStomped.Connect( self, function(hit_p) {
 				phaseid=hit_p
 				phase_leeway=7;
 			}
+			hit_sizex = 6;
+			hit_sizey = 6;
 			event_user(0);
 		}
 		with(hit_p) {
@@ -72,4 +76,9 @@ enemyTurnAround.Connect( self, function() {
 	if (in_shell) && (shell_move) {
 		VinylPlay(snd_blockbump)
 	}
+});
+
+koopaEscapeShell.Connect( self, function() {
+	hit_sizex = 10;
+	hit_sizey = 10;
 });
