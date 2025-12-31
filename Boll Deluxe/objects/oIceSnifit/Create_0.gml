@@ -6,8 +6,6 @@ blowing=false;
 blowtimer=0;
 cooldowntimer=0;
 
-blowingPart=-1;
-
 enemyStomped.Connect( self, function(hit_p) {
 	blowing=0;
 	blowtimer=0;
