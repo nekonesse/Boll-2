@@ -43,9 +43,9 @@ function player_movement_sonic(){
 		if (grounded) {
 		
 			if (sign(gsp) = -1){
-				gsp = min(0, gsp + fric)
+				gsp = min(0, gsp + fric*friction_mult)
 			}else{
-				gsp = max(0, gsp - fric)
+				gsp = max(0, gsp - fric*friction_mult)
 			}
 		}
 	}
