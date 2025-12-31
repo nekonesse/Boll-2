@@ -15,7 +15,7 @@ function player_movement(){
 		if grounded {
 			var signmatch = check_signs_matching_zero(gsp, move);
 			var accel_real = ((skidding) ? skid_accel : ((signmatch) ? accel : fastaccel));
-			gsp += (move * accel_real);
+			gsp += (move * (accel_real*friction_mult));
 		}else {
 			var signmatch = check_signs_matching(hsp, move);
 			var accel_real = ((signmatch) ? accel : fastaccel);

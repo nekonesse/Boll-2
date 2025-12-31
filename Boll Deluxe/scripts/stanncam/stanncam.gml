@@ -304,7 +304,7 @@ function stanncam(_x=0, _y=0, _width=global.game_w, _height=global.game_h, _surf
 	/// @param {Real} _y
 	/// @param {Real} [_duration=0]
 	/// @ignore
-	static move = function(_x, _y, _duration=0){
+	/*static move = function(_x, _y, _duration=0){
 		if(_duration == 0 && !instance_exists(follow)){
 			//view position is updated immediately
 			x = _x;
@@ -320,7 +320,7 @@ function stanncam(_x=0, _y=0, _width=global.game_w, _height=global.game_h, _surf
 			__yTo = _y;
 			__duration = _duration;
 		}
-	}
+	}*/
 	
 	/// @function set_size
 	/// @description sets the camera dimensions

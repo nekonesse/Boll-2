@@ -14,18 +14,8 @@ function player_movement_sonic(){
 		
 		if grounded {
 			var signmatch = check_signs_matching_zero(gsp, move);
-			//var accel_real = ((signmatch) ? accel : fastaccel);
-			if signmatch {
-				if (abs(gsp) < topspd) && accel != 0 {
-					gsp += (move * accel);
-					//if (abs(gsp) > topspd) {
-						//gsp = topspd * sign(gsp);
-					//}
-				} 
-            } else {
-				gsp += (move * fastaccel); 
-            }
-			
+			var accel_real = ((skidding) ? skid_accel : ((signmatch) ? accel : fastaccel));
+			gsp += (move * (accel_real*friction_mult));
 		}else {
 			//var signmatch = check_signs_matching(hsp, move);
 			//var accel_real = ((signmatch) ? accel : fastaccel);
