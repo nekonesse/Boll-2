@@ -2,9 +2,9 @@
   "$GMSprite":"v2",
   "%Name":"spr_JADEplaytestbutton",
   "bboxMode":0,
-  "bbox_bottom":11,
-  "bbox_left":3,
-  "bbox_right":9,
+  "bbox_bottom":23,
+  "bbox_left":7,
+  "bbox_right":19,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"f9c1b45b-ca6f-42f4-8e54-20f2e2be265b","name":"f9c1b45b-ca6f-42f4-8e54-20f2e2be265b","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"d2733d56-489c-4516-a2a6-2fed6415a812","name":"d2733d56-489c-4516-a2a6-2fed6415a812","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
-  "height":12,
+  "height":24,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"91d19b49-6bf4-4457-992c-14499edf7ad8","blendMode":0,"displayName":"default","isLocked":false,"name":"91d19b49-6bf4-4457-992c-14499edf7ad8","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"734f8605-94a2-4837-b1bc-d08216077c61","blendMode":0,"displayName":"default","isLocked":false,"name":"734f8605-94a2-4837-b1bc-d08216077c61","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_JADEplaytestbutton",
   "nineSlice":null,
@@ -70,7 +70,9 @@
     "timeUnits":1,
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
-            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{"0":{"$SpriteFrameKeyframe":"","Id":{"name":"f9c1b45b-ca6f-42f4-8e54-20f2e2be265b","path":"sprites/spr_JADEplaytestbutton/spr_JADEplaytestbutton.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},},"Disabled":false,"id":"5f711ee5-2a23-4415-973b-9d3a284a25f5","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"d2733d56-489c-4516-a2a6-2fed6415a812","path":"sprites/spr_JADEplaytestbutton/spr_JADEplaytestbutton.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"5d97497c-e22c-4e2c-9a13-34842c192619","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
@@ -86,5 +88,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":12,
+  "width":24,
 }

@@ -2,24 +2,24 @@
   "$GMSprite":"v2",
   "%Name":"spr_JADEediticon",
   "bboxMode":0,
-  "bbox_bottom":10,
+  "bbox_bottom":21,
   "bbox_left":0,
-  "bbox_right":11,
-  "bbox_top":1,
+  "bbox_right":23,
+  "bbox_top":2,
   "collisionKind":1,
   "collisionTolerance":0,
   "DynamicTexturePage":false,
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"007449ed-f616-4a6c-86a1-a13300194ca9","name":"007449ed-f616-4a6c-86a1-a13300194ca9","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"3bcac0e5-2986-4b83-9e32-ddd0958b6546","name":"3bcac0e5-2986-4b83-9e32-ddd0958b6546","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
-  "height":12,
+  "height":24,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"e154806b-4d1d-44f7-bf0b-12871715d270","blendMode":0,"displayName":"default","isLocked":false,"name":"e154806b-4d1d-44f7-bf0b-12871715d270","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"dac34466-8f93-4773-895c-f8620c8f2d95","blendMode":0,"displayName":"default","isLocked":false,"name":"dac34466-8f93-4773-895c-f8620c8f2d95","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_JADEediticon",
   "nineSlice":null,
@@ -71,8 +71,8 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"007449ed-f616-4a6c-86a1-a13300194ca9","path":"sprites/spr_JADEediticon/spr_JADEediticon.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"9562a8bf-3add-42da-a371-caaad373376f","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"3bcac0e5-2986-4b83-9e32-ddd0958b6546","path":"sprites/spr_JADEediticon/spr_JADEediticon.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"46a20365-aed8-4739-ad10-c4a7bb22beca","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
@@ -88,5 +88,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":12,
+  "width":24,
 }

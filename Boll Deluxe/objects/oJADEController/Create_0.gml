@@ -78,6 +78,7 @@ topbuttons.add("File", function() {
 				layerlist.wipe();
 				layerlist.add(new JADElistunselectable("Objects"))
 				layerlist.add(new JADEtilelayer("Main Tiles", current_tileset))
+				layerlist.add(new JADEbackgroundlayer("Main Tiles", obj_data[$ "spr_plains_bg_sky"]))
 				layerlist.update_depths();
 			break;
 			case 1:
@@ -131,6 +132,7 @@ topbuttons.add("File", function() {
 			case 5:
 			//exit editor
 			room_goto(rMainMenu);
+			global.jade_testing = false;
 			break;
 		}
 		with(oJADEController) topbuttons.reset();
@@ -158,6 +160,7 @@ tilemap_layer=-1;
 layerlist = new JADElayerlisthandler(8,56,192-24,640, "selected_layer") 
 layerlist.add(new JADElistunselectable("Objects"))
 layerlist.add(new JADEtilelayer("Main Tiles", current_tileset))
+layerlist.add(new JADEbackgroundlayer("Sky", obj_data[$ "spr_plains_bg_sky"]))
 layerlist.update_depths();
 
 update_layer = function(_layer) {
@@ -342,7 +345,7 @@ layeraddbutton = new JADEiconbutton(layerlist.x,layerlist.y+layerlist.height+16,
 	})
 });
 
-layerdeletebutton = new JADEiconbutton(layerlist.x+20,layerlist.y+layerlist.height+16,spr_JADEdeleteicon,function() {
+layerdeletebutton = new JADEiconbutton(layerlist.x+32,layerlist.y+layerlist.height+16,spr_JADEdeleteicon,function() {
 	if !(is_struct(selected_layer)) {
 		layerdeletebutton.reset();
 		exit;
@@ -358,7 +361,7 @@ layerdeletebutton = new JADEiconbutton(layerlist.x+20,layerlist.y+layerlist.heig
 	deco_mode_type="";
 });
 
-layereditbutton = new JADEiconbutton(layerlist.x+40,layerlist.y+layerlist.height+16,spr_JADEediticon,function() {
+layereditbutton = new JADEiconbutton(layerlist.x+64,layerlist.y+layerlist.height+16,spr_JADEediticon,function() {
 	if !(is_struct(selected_layer)) {
 		layereditbutton.reset();
 		exit;
@@ -417,17 +420,17 @@ tile_layers_visible = true;
 asset_layers_visible = true;
 bg_layers_visible = true;
 
-objectvisibility = new JADEiconbutton(guiw-240-96,26+36,spr_JADElayerobjectvisibility, function() {
+objectvisibility = new JADEiconbutton(guiw-240-160,26+36,spr_JADElayerobjectvisibility, function() {
 	objects_visible = !objects_visible
 	objectvisibility.button_image_index = !objects_visible
 }, true, false, true)
 
-gizmovisibility = new JADEiconbutton(guiw-240-78,26+36,spr_JADElayergizmovisibility, function() {
+gizmovisibility = new JADEiconbutton(guiw-240-128,26+36,spr_JADElayergizmovisibility, function() {
 	gizmos_visible = !gizmos_visible
 	gizmovisibility.button_image_index = !gizmos_visible
 }, true, false, true)
 
-tilelayervisibility = new JADEiconbutton(guiw-240-60,26+36,spr_JADElayertilevisibility, function() {
+tilelayervisibility = new JADEiconbutton(guiw-240-96,26+36,spr_JADElayertilevisibility, function() {
 	tile_layers_visible = !tile_layers_visible
 	tilelayervisibility.button_image_index = !tile_layers_visible
 	with(layerlist) {
@@ -444,7 +447,7 @@ tilelayervisibility = new JADEiconbutton(guiw-240-60,26+36,spr_JADElayertilevisi
 	}
 }, true, false, true)
 
-assetlayervisibility = new JADEiconbutton(guiw-240-42,26+36,spr_JADElayerassetvisibility, function() {
+assetlayervisibility = new JADEiconbutton(guiw-240-64,26+36,spr_JADElayerassetvisibility, function() {
 	asset_layers_visible = !asset_layers_visible
 	assetlayervisibility.button_image_index = !asset_layers_visible
 	with(layerlist) {
@@ -461,7 +464,7 @@ assetlayervisibility = new JADEiconbutton(guiw-240-42,26+36,spr_JADElayerassetvi
 	}
 }, true, false, true)
 
-bglayervisibility = new JADEiconbutton(guiw-240-24,26+36,spr_JADElayerbgvisibility, function() {
+bglayervisibility = new JADEiconbutton(guiw-240-32,26+36,spr_JADElayerbgvisibility, function() {
 	bg_layers_visible = !bg_layers_visible
 	bglayervisibility.button_image_index = !bg_layers_visible
 	with(layerlist) {
@@ -726,7 +729,7 @@ tile_update_properties = function() {
 }
 
 
-//object_place("oCollider",0,167*16,30*16,2)
-//object_place("oPlayerSpawn",3*16,166*16)
+object_place("oCollider",0,169*16,30,2)
+object_place("oPlayerSpawn",3*16,168*16,1,1)
 
 JADE_load();

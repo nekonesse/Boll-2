@@ -8,7 +8,7 @@ if (oJADEController.mbleftpress) {
 		
 		var i=0;
 		repeat(array_length(names)) {
-			var over = point_in_rectangle(curs_x,curs_y,x,y+(16*i),x+sprite_width,y+15+(16*i))
+			var over = point_in_rectangle(curs_x,curs_y,x,y+(20*i),x+sprite_width,y+19+(20*i))
 		
 			if over {
 				oJADEController.selected_button=[-1,-1]

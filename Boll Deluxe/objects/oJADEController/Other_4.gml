@@ -1,3 +1,5 @@
+global.jade_testing = false;
+
 guiw = window_get_width();
 guih = window_get_height();
 

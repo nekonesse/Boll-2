@@ -267,7 +267,7 @@ function JADEdropdown(_x,_y, names, func) {
 		i++;
 	}
 	inst.image_xscale=max(96,maxwidth)
-	inst.image_yscale=(16*array_length(names))
+	inst.image_yscale=(20*array_length(names))
 	inst.names=names
 	inst.func=func
 	
@@ -1570,6 +1570,10 @@ function JADEbackgroundlayer(_name, _background) constructor {
 	layerdepth = 0;
 	my_layer = layer_create(layerdepth,name)
 	my_deco_layer = layer_background_create(my_layer,sprite)
+	if is_struct(selected_bg) {
+		layer_background_htiled(my_deco_layer, tiled_h)
+		layer_background_vtiled(my_deco_layer, tiled_v)
+	}
 	off_x = 0;
 	off_y = 0;
 	var height = sprite_get_height(sprite)
