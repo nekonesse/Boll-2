@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_properties",
+  "%Name":"scr_JADEobjectdraw",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_properties",
+  "name":"scr_JADEobjectdraw",
   "parent":{
     "name":"JADE",
     "path":"folders/Scripts/JADE.yy",

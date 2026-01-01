@@ -115,6 +115,8 @@ function parse_level(dir=game_save_id+"\save.jade") {
 							}
 						}
 						
+						
+						
 						//object variables
 						var g=0
 						repeat(array_length(data[5])) {

@@ -344,17 +344,20 @@ switch (state) {
 					make_particle(part, x - (1 * xsc), y + hit_sizey, depth + 5, xsc, (2.25 - skidding) * -xsc, -0.1, -0.02, 0.2);
 				}
 			}
+			
 			if (spriteEvent != "brake"){
+				//icy slippy
+				var speed_mult = 1;
+				if (friction_mult>0) && (grounded) {
+					speed_mult = 1/(friction_mult);
+				}
 			
 				if (ceil(abs(gsp))>=topspd) {
-					frspd=abs(gsp)/4
+					frspd=(abs(gsp)/4)*speed_mult
 					spriteEvent="run"
 				}
 				else {
-					frspd=abs(gsp)/4
-					if (frspd < 0.3) {
-						frspd = 0.3;
-					}
+					frspd=max(0.3, abs(gsp)/4)*speed_mult
 					spriteEvent="walk"
 				}
 			}

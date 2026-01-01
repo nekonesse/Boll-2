@@ -430,6 +430,12 @@ grow = max(0, (grow - 1));
 frspd=1
 
 if (state == "") {
+	//icy slippy
+	var speed_mult = 1;
+	if (friction_mult>0) && (grounded) {
+		speed_mult = 1/(friction_mult);
+	}
+	
 	if !(crouch) {
 		if !(is_grabbing) {
 			if (abs(gsp) == 0) {
@@ -447,7 +453,7 @@ if (state == "") {
 				if (ceil(abs(gsp))>3.25) {
 					spriteEvent="run"
 				} else {
-					frspd=max(abs(hsp)/4,0.3)
+					frspd=max(abs(hsp)/4,0.3)*speed_mult
 					spriteEvent="walk"
 				}
 			}
@@ -464,7 +470,7 @@ if (state == "") {
 				if (ceil(abs(gsp))>3.25) {
 					spriteEvent="carryRun"
 				} else {
-					frspd=max(abs(hsp)/4,0.3)
+					frspd=max(abs(hsp)/4,0.3)*speed_mult
 					spriteEvent="carryWalk"
 				}
 			}

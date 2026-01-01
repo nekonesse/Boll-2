@@ -105,7 +105,7 @@ enemyRolledInto.Connect( self, function(hit_p) {
 	hp-= 1
 	vsp=-4;
 	phaseid=id
-	phase_leeway=7;
+	phase_leeway=15;
 	killdir= esign(x-x,1)
 	killhsp= max(abs(hit_p.hsp)/1.75,2)
 	xsc= esign(hit_p.hsp,hit_p.xsc)

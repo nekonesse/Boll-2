@@ -368,13 +368,9 @@ function animate_player() {
 	}
 	
 	if spri!=-1 {
-		var speed_mult = 1;
-		if (friction_mult>0) {
-			speed_mult = 1/(friction_mult);
-		}
 		frn=frames_list[spri] //frame number
 		var times=times_list[spri]
-		frs=(frspd*animf*((speed_list[spri])*speed_mult))/max(1,times[floor(frame)]) //(game speed * percent * sprite speed) / frame time
+		frs=(frspd*animf*(speed_list[spri]))/max(1,times[floor(frame)]) //(game speed * percent * sprite speed) / frame time
 		if in_water() {
 			frs*=0.45
 		}
