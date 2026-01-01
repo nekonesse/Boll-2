@@ -823,6 +823,7 @@ if (state != "groundpound") {
 var coll=check_hitbox_on_hitbox(id, oEnemy)
 if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 	if (coll) && (!(slopesliding) || coll.damage_on_contact) && !(invincible_type && invincible_timer) {
+		stopsfx(charmName+"skid")
 		stopsfx(charmName+"damage")
 		hurt=1
 		hsp= -2.25 * xsc
@@ -853,6 +854,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 }
 
 #define hurt_by_spike
+	stopsfx(charmName+"skid")
 	stopsfx(charmName+"damage")
 	hurt=1
 	hsp= -2.25 * xsc
@@ -885,6 +887,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 
 
 #define hurt_by_electrocution
+	stopsfx(charmName+"skid")
 	stopsfx(charmName+"damage")
 	electrocuted = false;
 	hurt=1
@@ -910,4 +913,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 	grow = 60;
 
 #define enter_pipe
+stopsfx(charmName+"skid")
+
+#define on_freeze
 stopsfx(charmName+"skid")
