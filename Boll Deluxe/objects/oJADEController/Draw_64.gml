@@ -4,8 +4,6 @@ if !surface_exists(GUIcanvas) exit;
 surface_set_target(GUIcanvas)
 draw_clear_alpha(c_black, 0)
 
-draw_set_font(global.omiFont)
-
 draw_rect(0,0,guiw,24,themeaccent1,1) //top bar
 draw_rect(0,24,guiw,32,themeaccent2,1) //tool top bar
 draw_rect(guiw-240,24,240,guih-24,themeaccent1,1) //right side
@@ -60,6 +58,16 @@ if (selected_mode != DECO_MODE) {
 with(oJADELayerProperties) {
 	event_perform(ev_draw,ev_draw_normal);
 }*/
+
+if (displaytextdur) && (displaytext!="") {
+	displaytextdur=max(0,displaytextdur-1)
+	draw_set_halign(fa_center)
+	draw_set_alpha(displaytextdur/60)
+	draw_set_font(global.rulerGold)
+	draw_text_outline(guiw/2,guih-24,displaytext, 1, c_black, 8, 1, 1, 0)
+	draw_set_alpha(1)
+	draw_set_halign(fa_left)
+}
 
 surface_reset_target();
 

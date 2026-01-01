@@ -55,10 +55,11 @@ GUIcanvas = surface_create(guiw,guih);
 
 topbuttons = new JADEsmallbuttons(4,4,52,16)
 topbuttons.add("File", function() {
-	JADEdropdown(4,4+16,["New", "Open", "Open Recent", "Save", "Save As", "Exit"], function(name,ind) {
+	JADEdropdown(4,4+16,["New", "Open", "Open Autosave", "Save", "Save As", "Exit"], function(name,ind) {
 		switch(ind) {
 			case 0:
 			//new file
+				global.save_dir=""
 				instance_destroy(oJADELayerProperties)
 				var i=0;
 				repeat(1) {
@@ -85,30 +86,46 @@ topbuttons.add("File", function() {
 				if string_length(file) != 0 && (filename_ext(file) == ".jade") {
 					global.save_dir=file
 					JADE_load(file)
+					displaytextdur=120;
+					displaytext=$"Successfully open JADE file {filename_name(global.save_dir)}!"
+					autosave_time = (60*30)
 				}
 			break;
 			case 2:
-			//open recent file
+			//open autosave file
+				if (file_exists(game_save_id+"\\autosave.jade")) {
+					global.save_dir=""
+					JADE_load(game_save_id+"\\autosave.jade")
+					displaytextdur=120;
+					displaytext=$"Successfully opened autosave!"
+					autosave_time = (60*30)
+				} else {
+					displaytextdur=120;
+					displaytext=$"Autosave file not found."
+				}
 			break;
 			case 3:
 				if (global.save_dir != "") {
-					//savetextdur=60;
+					displaytextdur=120;
 					JADE_save(global.save_dir)
+					displaytext=$"Successfully saved JADE file!"
 				} else {
 					var file = get_save_filename_ext("JADE File|*.jade", "", $"{working_directory}\mods\\level\\", "Save Level");
 					if string_length(file) != 0 { 
-						//savetextdur=60;
+						displaytextdur=120;
 						global.save_dir=file
 						JADE_save(file)
+						displaytext=$"Successfully saved JADE file as {filename_name(global.save_dir)}!"
 					}
 				}
 			break;
 			case 4:
 				var file = get_save_filename_ext("JADE File|*.jade", "", $"{working_directory}\mods\\level\\", "Save Level");
 				if string_length(file) != 0 { 
-					//savetextdur=60;
+					displaytextdur=120;
 					global.save_dir=file
 					JADE_save(file)
+					displaytext=$"Successfully saved JADE file as {filename_name(global.save_dir)}!"
 				}
 			break;
 			case 5:
@@ -510,9 +527,13 @@ selected_tile_layer=2;
 
 not_on_gui = false
 
-savetextdur=0;
+displaytext="";
+displaytextdur=0;
 
 is_typing = -1;
+autosave_time = (60*30);
+
+disable_tool = false;
 
 default_grid_size = 16;
 current_grid_size = default_grid_size;

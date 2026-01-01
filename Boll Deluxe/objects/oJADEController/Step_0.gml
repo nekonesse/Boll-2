@@ -21,6 +21,15 @@ curs_y = window_mouse_get_y()
 gridx = floor(mouse_x/current_grid_size) 
 gridy = floor(mouse_y/current_grid_size)
 
+autosave_time = max(autosave_time-1,0);
+	
+if (!autosave_time) {
+	autosave_time = (60*30)
+	JADE_save(game_save_id+"\\autosave.jade");
+	displaytextdur=120;
+	displaytext="Successfully autosaved!";
+}
+
 #region GUI Input Handler
 var on_dropdown = false;
 with(oJADEGUIpar) {
@@ -127,19 +136,22 @@ if array_length(droppedfiles) {
 	if ((filename_ext(droppedfiles[0]) == ".jade") ) {
 		global.save_dir=droppedfiles[0]
 		JADE_load(droppedfiles[0])
+		autosave_time = (60*30)
 	}
 }
 
 if keyboard_check(vk_control) && keyboard_check_pressed(ord("S")) {
 	if (global.save_dir != "") {
-		//savetextdur=60;
+		displaytextdur=120;
 		JADE_save(global.save_dir)
+		displaytext=$"Successfully saved JADE file!"
 	} else {
 		var file = get_save_filename_ext("JADE File|*.jade", "", $"{working_directory}\mods\\level\\", "Save Level");
 		if string_length(file) != 0 { 
-			//savetextdur=60;
+			displaytextdur=120;
 			global.save_dir=file
 			JADE_save(file)
+			displaytext=$"Successfully saved JADE file as {filename_name(global.save_dir)}!"
 		}
 	}
 }
@@ -193,7 +205,7 @@ if keyboard_check_pressed(vk_delete) {
 	}
 }
 
-if (mbleft && not_on_gui) {
+if (mbleft && not_on_gui && !disable_tool) {
 	switch(selected_tool) {
 		case BRUSH_TOOL:
 			switch(selected_mode) {

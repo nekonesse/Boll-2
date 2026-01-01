@@ -1706,6 +1706,7 @@ function JADEtilepicker(_x,_y,_width,_height) constructor {
 					current_tile_id[0][0] = pos_x + (pos_y * (t_width/16))
 					tile_sel_height = 0
 					tile_sel_width = 0
+					disable_tool = true;
 				}
 				tile_sel_last_x = pos_x
 				tile_sel_last_y = pos_y
@@ -1747,6 +1748,7 @@ function JADEtilepicker(_x,_y,_width,_height) constructor {
 					}
 					i++;
 				}
+				disable_tool = false;
 			}
 			tile_drag = false
 		}

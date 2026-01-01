@@ -20,7 +20,7 @@ function player_movement_sonic(){
 			//var signmatch = check_signs_matching(hsp, move);
 			//var accel_real = ((signmatch) ? accel : fastaccel);
             if (abs(hsp) < topspd) && accel != 0 {  
-                hsp += (move * accel);
+                hsp += (move * (accel*friction_mult));
             }
 		}
 		
@@ -31,10 +31,9 @@ function player_movement_sonic(){
 		// chearii: mhomentunmnm
 		
 		if (grounded) {
-		
-			if (sign(gsp) = -1){
+			if (sign(gsp) == -1) {
 				gsp = min(0, gsp + fric*friction_mult)
-			}else{
+			} else {
 				gsp = max(0, gsp - fric*friction_mult)
 			}
 		}

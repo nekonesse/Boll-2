@@ -11,3 +11,8 @@ if !os_is_paused() && guiw>0 && guih>0 {
 }
 VinylStopAll();
 editorMusic=VinylPlay("editor bgm", true, 0.2);
+
+if (global.save_dir=="") && file_exists(game_save_id+"\\autosave.jade") {
+	displaytextdur=180;
+	displaytext="You have an autosave available!"
+}

@@ -58,7 +58,7 @@ if (selected_mode == DECO_MODE && array_length(selected_array)) {
 
 #region Cursor Drawing
 //Draw object
-if (not_on_gui) {
+if (not_on_gui && !disable_tool) {
 	switch(selected_mode) {
 		case OBJECT_MODE:
 		case NODE_MODE:
