@@ -4,7 +4,7 @@ warptarget="" //name of other pipe to warp to
 warplevel="" //Level warping for stuff like warp zones.
 
 assist = noone;
-content = noone;
+content = "nothing";
 spawn_timer = 120;
 
 depth = 168;

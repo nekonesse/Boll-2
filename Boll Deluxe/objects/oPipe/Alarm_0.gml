@@ -7,7 +7,6 @@ if collision_rectangle(x-24,0,x+24,room_height + 255,oPlayer,false,true) {
 
 alarm[0] = -1;
 
-show_debug_message("creating " + content);
 switch content {
 	case "piranha plant": {
 		j = oPiranhaPlant;
