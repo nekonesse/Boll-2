@@ -39,7 +39,9 @@ blockHit.Connect( self, function(hit_p, obj) {
 	event_user(2);
 	hidden = false;
 	visible = 1;
-	
+	if (content != "multicoins") {
+		no_hit = true;
+	}
 	if !(amount) {
 		sprite_index = image_hit
 	}

@@ -201,6 +201,8 @@ function JADE_initializeobj() {
 	properties.addDropdown(oPipe, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
 	properties.addStringInput(oPipe, "Warp Name", "warpname", "")
 	properties.addStringInput(oPipe, "Warp Target", "warptarget", "")
+	properties.addDropdown(oPipe, "Content", "content", "nothing", ["Nothing", "Piranha Plant", "Jumping Piranha"], ["nothing", "piranha plant", "jumping piranha"])
+	properties.addNumberInput(oPipe, "Spawn Timer", "spawn_timer", 120, true)
 	registerobj(oCheckpoint, spr_checkpoint, -21, -28, 16, 16, false, false, stagecomp, "Checkpoint")
 	properties.addCheckbox(oCheckpoint, "Flip", "dir", false)
 	registerobj(oFlagpole, spr_JADEflagpole, 8, 160, 48, 160, false, false, stagecomp, "Flag Pole")

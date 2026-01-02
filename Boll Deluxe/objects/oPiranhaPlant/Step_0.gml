@@ -1,3 +1,5 @@
+//we need to recode this i think.....
+
 if (parent_pipe == noone) {
 	player_collision();
 	var col = instance_place(x, y + hit_sizey + 2, oPipe)
@@ -23,6 +25,11 @@ if (parent_pipe == noone) {
 	exit;
 }
 
+depth = parent_pipe.depth + 1; // else if !(exposed) {
+//	instance_destroy(self);
+//	//using the new system
+//}
+
 var nearplayer=instance_nearest(x,y,oPlayer)
 if (go == 0) {
 	timer = clamp(timer - 1,0,120)
@@ -40,18 +47,22 @@ if (go != 0) {
 	travel += go;//approach_val(travel, 32 * esign(go, 1), go)
 	travel = clamp(travel,-32,32); //i genuinely dont know why this is nessecary considering approach_val should already clamp
 	
-	if !place_meeting(x,y,parent_pipe) && y - hit_sizey < parent_pipe.bbox_top && !(exposed) {
+	if !place_meeting(x,y,parent_pipe) && !(exposed) /*&& y - hit_sizey < parent_pipe.bbox_top*/ {
 		exposed = true;
-		y = parent_pipe.bbox_top;
+		//y = parent_pipe.bbox_top;
 		timer = 90;
 		go = 0;
-	} else if y >= parent_pipe.bbox_top + 20 && (exposed) {
-		y = parent_pipe.bbox_top + 20;
-		exposed = false;
-		timer = 120;
-		go = 0;
+	} else if /*y >= parent_pipe.bbox_top + 20 &&*/ travel <= 0 && (exposed) {
+		instance_destroy(self);
+		//y = parent_pipe.bbox_top + 20;
+		//exposed = false;
+		//timer = 120;
+		//go = 0;
 	}
 }
 
-y = floor(parent_pipe.bbox_bottom-1) - travel - 12
-x = parent_pipe.x
+y = ystart + (dsin(rot-90) *  travel);
+x = xstart + (dcos(rot-90) * -travel);
+
+//y = floor(parent_pipe.bbox_bottom-1) - travel - 12
+//x = parent_pipe.x

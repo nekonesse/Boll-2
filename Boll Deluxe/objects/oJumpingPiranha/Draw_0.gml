@@ -1,5 +1,8 @@
 // Inherit the parent event
-event_inherited();
+if (parent_pipe != noone) {
+	rot = parent_pipe.image_angle
+}
+event_inherited()
 
 if (global.debug) {
 	draw_text(x-8,y-16,timer)

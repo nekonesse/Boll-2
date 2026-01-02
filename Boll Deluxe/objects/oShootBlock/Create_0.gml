@@ -8,6 +8,8 @@ goDirection = 0; //direction of shoot
 
 blockHit.Connect(self, function() {
 	image_index = ternary(hit, 1, 2);
+	no_collide=true;
+	no_path_follow=true;
 });
 
 blockBumpFinished.Connect(self, function(){
