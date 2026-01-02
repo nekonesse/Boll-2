@@ -15,10 +15,11 @@ if !on_screen(32,32) {
 
 var checkside=hit_sizex*sign(hsp)
 
-var coll=collision_line(x+checkside,y-hit_sizey,x+checkside,y+hit_sizey+vsp,oFrozenItem,false,true)
+var coll=collision_line(x+checkside,y-hit_sizey,x+checkside,y+hit_sizey+vsp,[oFrozenItem,oFrozenEnemy],false,true)
 if (coll) {
 	with(coll) {
 		event_user(0);
+		show_debug_message("triggered user event 0")
 	}
 	if (owner!=-1) {
 		owner.has_fired-=1;
