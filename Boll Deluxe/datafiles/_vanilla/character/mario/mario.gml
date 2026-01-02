@@ -1,6 +1,6 @@
 #define datalist
 spriteEvents=split_string("idle,walk,run,wait,lookUp,crouchIdle,crouchWalk,crouchJump,crouchFall,crouchFireToss,crouchBonk,crouchFireToss,victory,hurt,dead,brake,jump,fall,bonk,runJump,runJumpFall,doubleJump,doubleJumpFall,doubleJumpBonk,wallSlide,wallJump,groundPound,groundPoundFall,slopeSlide,carryIdle,carryWalk,carryRun,carryLookUp,carryJump,carryFall,carryBonk,carrySpinJump,carrySpinJumpFall,carryCrouchIdle,carryCrouchWalk,carryCrouchJump,carryCrouchFall,carryCrouchBonk,carryKick,carryAirKick,roll,swim,swimPaddle,carrySwim,carryPaddle,spinJump,spinJumpFall,pushing,balancing,dive,bellySlide,fireToss,electrocute,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
-sound_list=split_string("die,dive,fireball,flip,jump,kick,pound,rollout,select,skid,spin,spinbounce,spinjump,stomp,swim,wallkick",",");
+sound_list=split_string("damage,die,dive,fireball,flip,jump,kick,pound,rollout,select,skid,spin,spinbounce,spinjump,stomp,swim,wallkick",",");
 
 #define create
 slopesliding = 0;

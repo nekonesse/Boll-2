@@ -92,6 +92,8 @@ if (counter < 180){
 	}
 }
 
+/*
+
 asset_x[2] = (asset_x[2] - 1) % string_width(charm_text)
 
 draw_sprite_ext(spr_titlecard_checkerboard, 0,floor(asset_x[4]),0,1,1,0,c_white,0.4)
