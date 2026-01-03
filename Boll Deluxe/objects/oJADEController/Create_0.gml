@@ -77,9 +77,13 @@ topbuttons.add("File", function() {
 				
 				layerlist.wipe();
 				layerlist.add(new JADElistunselectable("Objects"))
+				layerlist.add(new JADElistunselectable("Piping Objects"))
 				layerlist.add(new JADEtilelayer("Main Tiles", current_tileset))
 				layerlist.add(new JADEbackgroundlayer("Main Tiles", obj_data[$ "spr_plains_bg_sky"]))
 				layerlist.update_depths();
+				
+				object_place("oCollider",0,169*16,30,2)
+				object_place("oPlayerSpawn",3*16,168*16,1,1)
 			break;
 			case 1:
 			//open file
@@ -159,6 +163,7 @@ tilemap=-1;
 tilemap_layer=-1;
 layerlist = new JADElayerlisthandler(8,56,192-24,640, "selected_layer") 
 layerlist.add(new JADElistunselectable("Objects"))
+layerlist.add(new JADElistunselectable("Piping Objects"))
 layerlist.add(new JADEtilelayer("Main Tiles", current_tileset))
 layerlist.add(new JADEbackgroundlayer("Sky", obj_data[$ "spr_plains_bg_sky"]))
 layerlist.update_depths();

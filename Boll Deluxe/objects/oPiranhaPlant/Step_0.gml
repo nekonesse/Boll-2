@@ -2,41 +2,35 @@
 
 if (parent_pipe == noone) {
 	player_collision();
-	var col = instance_place(x, y + hit_sizey + 2, oPipe)
-	if (col != noone) {
-		parent_pipe = col;
-		exposed = true;
-		y = parent_pipe.bbox_top;
-		vsp = 0;
-		go = -4;
-		travel = 32;
-		exit;
-	}
 	
 	x += hsp
 	y += vsp
 	
-	if grounded {
-		vsp = 0;
-		hsp /= 2;
-	} else {
-		vsp = clamp(vsp + 0.15,-8,8)
+	if !grounded {
+		vsp = clamp(vsp + grav,-8,8)
 	}
 	exit;
 }
 
-depth = parent_pipe.depth + 1; // else if !(exposed) {
-//	instance_destroy(self);
-//	//using the new system
-//}
-
-var nearplayer=instance_nearest(x,y,oPlayer)
 if (go == 0) {
-	timer = clamp(timer - 1,0,120)
-	if (timer == 0) {
+	var shycheck = true;
+	if (is_shy) {
+		var nearplayer=instance_nearest(x,y,oPlayer)
+		
+		if (rot mod 180 == 0) {
+			shycheck=(abs(nearplayer.x-x) > 24)
+		} else {
+			shycheck=(abs(nearplayer.y-y) > 24)
+		}
+	}
+	
+	if (!(exposed) && shycheck) || (exposed)
+	timer = max(timer - 1)
+	
+	if !(timer) {
 		if (exposed) {
 			go = -0.5
-		} else if (point_distance(x,0,nearplayer.x,0)) > 12 {
+		} else {
 			go = 0.5
 		}
 		exit;
@@ -44,25 +38,21 @@ if (go == 0) {
 }
 
 if (go != 0) {
-	travel += go;//approach_val(travel, 32 * esign(go, 1), go)
-	travel = clamp(travel,-32,32); //i genuinely dont know why this is nessecary considering approach_val should already clamp
+	travel += go;
+	travel = clamp(travel,-32,32);
+	visible=true;
 	
-	if !place_meeting(x,y,parent_pipe) && !(exposed) /*&& y - hit_sizey < parent_pipe.bbox_top*/ {
+	if !collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey,parent_pipe,false,false) && !(exposed) {
 		exposed = true;
-		//y = parent_pipe.bbox_top;
 		timer = 90;
 		go = 0;
-	} else if /*y >= parent_pipe.bbox_top + 20 &&*/ travel <= 0 && (exposed) {
-		instance_destroy(self);
-		//y = parent_pipe.bbox_top + 20;
-		//exposed = false;
-		//timer = 120;
-		//go = 0;
+	} else if travel <= 0 && (exposed) {
+		visible=false;
+		go = 0;
+		timer = 120;
+		exposed = false;
 	}
 }
 
 y = ystart + (dsin(rot-90) *  travel);
 x = xstart + (dcos(rot-90) * -travel);
-
-//y = floor(parent_pipe.bbox_bottom-1) - travel - 12
-//x = parent_pipe.x

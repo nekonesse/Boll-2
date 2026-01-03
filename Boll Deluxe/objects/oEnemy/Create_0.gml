@@ -43,6 +43,8 @@ hit_sizey = 6
 activation_region_width=32;
 activation_region_height=32;
 
+parent_pipe = noone;
+
 image_xscale=1;
 image_yscale=1;
 depth=4;

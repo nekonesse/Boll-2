@@ -1,1 +1,0 @@
-alarm[0] = spawn_timer - 1;

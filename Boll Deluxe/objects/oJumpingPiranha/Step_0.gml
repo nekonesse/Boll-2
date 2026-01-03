@@ -33,41 +33,50 @@ if (parent_pipe == noone) {
 	exit
 }
 
-if (travel <= 0) && (vsp > 0) {
-	instance_destroy();
+if (travel <= 0) && (vsp > 0) && (dojump) {
+	visible = false;
+	timer=90;
+	vsp=0;
+	y=parent_pipe.y;
+	x=parent_pipe.x;
+	dojump=false;
 }
 
-depth = parent_pipe.depth + 1;
-
-if (vsp == 0) {
-	timer=max(0,timer-1)
-
-	if !(timer) {
-		if !(collision_rectangle(x-24,0,x+24,room_height,oPlayer,false,true)) {
-			vsp=-5
-			y-=1
-			timer=90;
-		}
+if (dojump) {
+	if round(vsp) < 0 {
+		sprite_index=fly_sprite
+		vsp=lerp(vsp,0,0.04)
+	} else	{
+		if sprite_index!=fall_sprite image_index*=2
+		sprite_index=fall_sprite
+		vsp=lerp(vsp,0.75,0.025)
 	}
 } else {
-	timer = 90
-};
-
-if round(vsp) < 0 {
-	sprite_index=fly_sprite
-	vsp=lerp(vsp,0,0.04)
-} else	{
-	if sprite_index!=fall_sprite image_index*=2
-	sprite_index=fall_sprite
-	vsp=lerp(vsp,0.75,0.025)
+	var shycheck = true;
+	if (is_shy) {
+		var nearplayer=instance_nearest(x,y,oPlayer)
+		
+		if (rot mod 180 == 0) {
+			shycheck=(abs(nearplayer.x-x) > 24)
+		} else {
+			shycheck=(abs(nearplayer.y-y) > 24)
+		}
+	}
+	
+	if (shycheck) {
+		timer=max(0,timer-1)
+	}
+	
+	if !(timer) { //jump
+		vsp=-4
+		grounded=false;
+		timer=90;
+		visible=true;
+		dojump=true;
+	}
 }
-
-//y=min(y,parent_pipe.y)
 
 travel -= vsp;
 
 y = ystart + (dsin(rot-90) *  travel);
 x = xstart + (dcos(rot-90) * -travel);
-
-//y+=vsp
-//x=parent_pipe.x

@@ -5,7 +5,7 @@ if !is_array(pathing) {
 		if instance_exists(parentblock) {
 			x+=parentblock.x_diff
 			y+=parentblock.y_diff
-			if !place_meeting(x,y-1*going,parentblock) {
+			if !collision_rectangle(x-hit_sizex,y-hit_sizey-(1*going),x+hit_sizex,y+hit_sizey-(1*going),parentblock,false,false) {
 				going=0
 				hsp = 0.75*((nearestplayer().x > x) ? -1 : 1);
 			}
@@ -25,11 +25,11 @@ if !is_array(pathing) {
 
 	player_collision()
 
-	if hsp != 0 xsc=-esign(hsp,-1)
+	if hsp != 0 xsc=esign(hsp,1)
 } else {
 	node_path_movement();
 }
 
-if place_meeting(x,y,oDeactivationRegion) && !on_screen(sprite_width,sprite_height) {
+if collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey,oDeactivationRegion,false,false) && !on_screen(sprite_width,sprite_height) {
 	instance_destroy();
 }

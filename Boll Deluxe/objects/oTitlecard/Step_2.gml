@@ -25,6 +25,5 @@ if (formated_text == false) {
 		text += arr[i] + " "
 		i++
 	}
-	show_debug_message(text)
 	formated_text = true
 }

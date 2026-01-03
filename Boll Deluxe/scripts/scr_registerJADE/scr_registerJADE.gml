@@ -417,6 +417,7 @@ function JADE_load(file=game_save_id+"\save.jade") {
 		layerlist.wipe();
 		var len=array_length(layers);
 		var i=0;
+		var foundpipinglayer = false;
 		repeat(len) {
 			var _layer_contents = layers[i];
 			
@@ -468,11 +469,19 @@ function JADE_load(file=game_save_id+"\save.jade") {
 					_layer.update_settings();
 				}
 			} else {
+				if _layer_contents[1]=="Piping Objects"
+				foundpipinglayer = true;
+				
 				_layer = new JADElistunselectable(_layer_contents[1])
 			}
 			
 			layerlist.add(_layer);
 			i++;
+		}
+		
+		if !(foundpipinglayer) {
+			var _layer = new JADElistunselectable("Piping Objects")
+			layerlist.add(_layer);
 		}
 		layerlist.update_depths();
 		//region count, change laters

@@ -24,7 +24,7 @@ function parse_level(dir=game_save_id+"\save.jade") {
 						_layer = {}
 						_layer[$ "my_layer"] = layer_create(_layer_contents[3],_layer_contents[2])
 						_layer[$ "my_deco_layer"] = layer_tilemap_create(_layer.my_layer,0,0,global.tilesets[$ _layer_contents[1]][1],ceil(room_width/16),ceil(room_height/16))
-				
+						
 						var tile_layer_contents = _layer_contents[4]
 				
 						var j=0;
@@ -76,7 +76,11 @@ function parse_level(dir=game_save_id+"\save.jade") {
 						}
 					}
 				} else {
-					_layer = new JADElistunselectable(_layer_contents[1])
+					switch(_layer_contents[1]) {
+						case "Piping Objects":
+							oGameManager.piping_object_depth = 100*(i+2)
+						break;
+					}
 				}
 				i++;
 			}

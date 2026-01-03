@@ -2,7 +2,11 @@ if (assist != noone) {
 	instance_activate_object(assist);
 }
 
-if ((assist == noone) || !(instance_exists(assist))) && (alarm[0] == -1) {
-	alarm[0] = spawn_timer;
-	assist = noone;
+if (content != "nothing") && !(stop_spawning)  {
+	spawning=max(spawning-1,0);
+		
+	if !(spawning) {
+		spawnObject();
+		spawning=spawn_timer;
+	}
 }

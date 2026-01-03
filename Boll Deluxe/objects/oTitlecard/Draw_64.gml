@@ -37,7 +37,6 @@ if (counter < 180){
 			case 0:
 			asset_y[6] = abs(dcos((counter_ball)*4)) * 256
 			if counter_ball*4 >= 90 {
-				show_debug_message(counter_ball * 4)
 				bounce_stages += 1	
 				//counter_ball = 90 
 			}
@@ -45,7 +44,6 @@ if (counter < 180){
 			case 1:
 			asset_y[6] = abs(dcos((counter_ball)*4)) * 75
 			if counter_ball*4 >= 270 {
-				show_debug_message(counter_ball * 4)
 				bounce_stages += 1	
 			}
 			break;
@@ -72,12 +70,10 @@ if (counter < 180){
 	}
 	
 	counter_ball--
-	show_debug_message(counter_ball * 4)
 	switch bounce_stages {
 		case 0:
 		asset_y[6] = abs(dcos((counter_ball)*4)) * 256
 		if counter_ball*4 <= 0 {
-			show_debug_message(counter_ball * 5)
 			bounce_stages--	
 			//counter_ball = 90 
 		}
@@ -85,7 +81,6 @@ if (counter < 180){
 		case 1:
 		asset_y[6] = abs(dcos((counter_ball)*4)) * 75
 		if counter_ball*4 <= 90 {
-			show_debug_message(counter_ball * 3)
 			bounce_stages-- 	
 		}
 		break;
