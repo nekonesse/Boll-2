@@ -1,6 +1,8 @@
 #macro gametitle "Boll 2"
 #macro version "0.1"
 
+windowfocused=true;
+
 global.save_dir=""
 
 global.smallBoldFont=font_add_sprite_ext(spr_smallboldfont,"0123456789abcdefghijklmnopqrstuvwxyz,.'"+chr(34)+":;/"+chr(92)+"[]><*!?_-=+{}#$@%^&|`~",true,1)
