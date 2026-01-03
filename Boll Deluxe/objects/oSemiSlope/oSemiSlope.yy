@@ -3,8 +3,6 @@
   "%Name":"oSemiSlope",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":25,"eventType":7,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
   "name":"oSemiSlope",
@@ -14,8 +12,8 @@
     "path":"folders/Objects/Objects/Collision.yy",
   },
   "parentObjectId":{
-    "name":"oCollider",
-    "path":"objects/oCollider/oCollider.yy",
+    "name":"oSlopeCollider",
+    "path":"objects/oSlopeCollider/oSlopeCollider.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

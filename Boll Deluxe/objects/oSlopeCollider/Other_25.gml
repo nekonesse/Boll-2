@@ -1,4 +1,6 @@
 ///@description JADE variable reload
+event_inherited();
+
 if hflip = true {
 	image_xscale *= -1;
 	x -= sprite_width
