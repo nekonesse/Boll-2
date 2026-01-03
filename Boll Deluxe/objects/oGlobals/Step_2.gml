@@ -22,11 +22,13 @@ if global.debug {
 	}
 }
 
-if (!windowfocused && window_has_focus()) { // if it didn't have focus the previous step but now it does, that means the app was restored to the foreground
-    window_set_fullscreen(false);
-    window_set_fullscreen(true);
-    // toggling fullscreen off then on is required to regain exclusive fullscreen mode
+if (window_get_fullscreen()) {
+	if (!windowfocused && window_has_focus()) { // if it didn't have focus the previous step but now it does, that means the app was restored to the foreground
+	    window_set_fullscreen(false);
+	    window_set_fullscreen(true);
+	    // toggling fullscreen off then on is required to regain exclusive fullscreen mode
+	}
+	windowfocused = window_has_focus();
 }
-windowfocused = window_has_focus();
 
 file_dropper_flush()
