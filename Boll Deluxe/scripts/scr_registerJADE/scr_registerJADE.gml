@@ -112,7 +112,7 @@ function JADE_initializeobj() {
 	registerobj(oStar, spr_starman, 8, 8, 16, 16, false, false, items, "Starman")
 	registerobj(o1up, spr_1up, 8, 8, 16, 16, false, false, items, "1-UP Mushroom")
 	registerobj(o3up, spr_3up, 8, 8, 16, 16, false, false, items, "3-UP Moon")
-	registerobj(oPoisonShroom, spr_ugly_poison_shroom_from_sonic_boll, 8, 8, 16, 16, false, false, items, "Poison Mushroom")
+	registerobj(oPoisonShroom, spr_poisonmushroom, 8, 8, 16, 16, false, false, items, "Poison Mushroom")
 	registerobj(oFrozenItem, spr_frozenitem, 8, 8, 16, 16, false, false, items, "Frozen Item")
 	properties.addDropdown(oFrozenItem, "Content", "content", "coin", ["Single Coin", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Mystery Orb"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "mysteryorb"])
 	
