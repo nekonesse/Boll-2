@@ -5,9 +5,11 @@ if !is_array(pathing) {
 		if instance_exists(parentblock) {
 			x+=parentblock.x_diff
 			y+=parentblock.y_diff
+			depth=oGameManager.piping_object_depth
 			if !collision_rectangle(x-hit_sizex,y-hit_sizey-(1*going),x+hit_sizex,y+hit_sizey-(1*going),parentblock,false,false) {
 				going=0
-				hsp = 0.75*((nearestplayer().x > x) ? -1 : 1);
+				depth=2;
+				escapeItemBox.Emit();
 			}
 		}
 	}

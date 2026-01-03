@@ -26,10 +26,13 @@ node_init_vars()
 itemType="mushroom"
 
 itemCollected = new Signal();
+escapeItemBox = new Signal();
 
 itemCollected.Connect( self, function(hit_p, obj) {
 	oPlayer.sig.Emit(itemType)
 	instance_destroy();
 });
 
-setup_box_poly(id);
+escapeItemBox.Connect( self, function(hit_p, obj) {
+	hsp = 0.75*((nearestplayer().x > x) ? -1 : 1);
+});

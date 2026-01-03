@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_ugly_poison_shroom_from_sonic_boll",
-    "path":"sprites/spr_ugly_poison_shroom_from_sonic_boll/spr_ugly_poison_shroom_from_sonic_boll.yy",
+    "name":"spr_poisonmushroom",
+    "path":"sprites/spr_poisonmushroom/spr_poisonmushroom.yy",
   },
   "spriteMaskId":null,
   "visible":true,

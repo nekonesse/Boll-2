@@ -25,7 +25,7 @@ if (go == 0) {
 	}
 	
 	if (!(exposed) && shycheck) || (exposed)
-	timer = max(timer - 1)
+	timer = max(timer - 1, 0)
 	
 	if !(timer) {
 		if (exposed) {
