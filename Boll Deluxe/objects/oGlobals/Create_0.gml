@@ -20,7 +20,8 @@ ScribblejrAttachSpritefont(global.matosseFont,true,1)
 global.titlelivesFont = font_add_sprite_ext(spr_livesfont,"x1234567890",true,0)
 ScribblejrAttachSpritefont(global.titlelivesFont,true,1)
 
-global.debug=0
+global.debug = false;
+global.show_collision = false;
 global.fps_display = 0;
 global.netgame = false; // top 10 boll deluxe things that will never happen:
 global.nextlevel = game_save_id+"\save.jade"

@@ -10,7 +10,6 @@ sig.Connect( self, function(str_var) {
 //palette=0
 //palette_index=0
 
-greenmode=0
 grabbed_obj = noone;
 is_grabbing = false;
 input_enable = false

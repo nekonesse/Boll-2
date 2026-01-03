@@ -1,7 +1,5 @@
 // this just makes sure that vsp and hsp actually work while in a pipe lol
 
-if keyboard_check_pressed(vk_f4) greenmode=!greenmode
-
 //updateBox.Emit()
 
 if collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey,oDeathPit,false,true) && !dead {
