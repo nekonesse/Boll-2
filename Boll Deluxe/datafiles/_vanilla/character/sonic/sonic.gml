@@ -13,18 +13,18 @@ friction_mult = 1;
 skidding = 0;
 skiddir = 0;
 storedxsc = 1;
-grav=0.25;
-defaultgrav = grav;
 //spindash = 0;
 wait_timer = 0;
 dusttimer = 0;
 spindashTotal = 0;
-topspd = 4.5;
+//topspd = 3.5;
+grav = 0.15
+defaultgrav = grav
 grow = 0;
 state = "";
 control_lock = 0;
-dropdash_spd = 6;
-max_dropdash_spd = 9;
+dropdash_spd = 4;
+max_dropdash_spd = 7;
 dropdash = 0;
 dropdash_timer = 0;
 real_sprite_angle = 0;
@@ -97,8 +97,8 @@ if (state == "jump" || state == "roll" || state == "spindash") && (size != "mini
 	hit_sizey = 6
 }
 
-topspd = 4 + ((size != "basic" || size != "mini") * 0.5);
-maxspd = 12.5;
+topspd = 3 + ((size != "basic" || size != "mini") * 0.5);
+maxspd = 10;
 
 if !(control_lock > 0 || state == "wallrun" || electrocuted || walljump) {
 	no_move = false
@@ -121,8 +121,12 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 		
 		// Switch direction
 		//add more checks here to prevent left/right changing direction
+		var _move = 0
+		if !(no_move) {
+			_move = (right - left);
+		}
 		if (left || right) && !(piped) {
-			xsc = esign(move, xsc)
+			xsc = esign(_move, xsc)
 		}
 	} else {
 		walljump = false
@@ -131,6 +135,17 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 		
 		if !(hurt) {
 			canstopjump = false
+		}
+		
+		if (state == "") {
+			component_sonic_skid()
+			if (skidding) {
+				dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
+				if (dusttimer == 1) {
+					var part = pSkidDust
+					make_particle(part, x - (1 * xsc), y + hit_sizey, depth + 5, xsc, (1.25) * -xsc, -0.1, -0.02, 0.2);
+				}
+			}
 		}
 		
 		//add more checks here to prevent left/right changing direction
@@ -161,7 +176,7 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 		
 		//handles slope influence
 		if (state == "roll") && !(piped) {
-			player_slide_sonic(0.125, true, 0.078125, 0.3125);
+			player_slide_sonic(0.125, true, 0.078125 / 2, 0.3125 / 2);
 		}
 		
 		if (steep_slope) && (state == "" || state == "crouch" || state == "spindash") { //slide down steep slopes
@@ -174,8 +189,8 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 #region Jumping
 if (state == "jump") && !(piped) {
 	slopesliding = 0
-	if (!akey && vsp < -2 && !canstopjump) { //Make player jump lower when jump is released
-		vsp *= 0.6;
+	if (!akey && vsp < -2 && !canstopjump) {//Make player jump lower when jump is released
+		vsp = -2;
 	}
 	
 	if (cpress && dropdash == 0) {
@@ -197,7 +212,7 @@ if (state == "jump") && !(piped) {
 }
 
 if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped) {
-	component_sonic_start_jump()
+	component_sonic_start_jump(4.7)
 }
 #endregion
 
@@ -248,13 +263,13 @@ if (state == "wallrun") && !piped {
 
 #region Rolling
 if (state != "roll" || !grounded) && !(piped) {
-	accel = 0.07
+	accel = 0.046875
+	fastaccel = 0.4 //deaccel
+	fric = 0.046875
 	if (!grounded) {
 		accel = 0.09375
 		fastaccel = 0.09375
 	}
-	fastaccel = 0.5 //deaccel
-	fric = 0.046875
 }
 
 
@@ -266,8 +281,12 @@ if (state == "" || state == "crouch" || state == "spindash") && (grounded && dow
 
 if (state == "roll" && grounded) && !(piped) {
 	component_sonic_roll()
+} else {
+	component_sonic_standing()
 }
 #endregion
+
+
 
 fric = fric * friction_mult;
 	
@@ -276,22 +295,20 @@ basic_step_move();
 post_wall();
 
 component_get_ground_friction()
-
-if ((ceil(abs(hsp))>3 && grounded && state == "")) {
-	dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
-	if (dusttimer == 1) {
-		var part = pRunDust
-		if (skidding) {
-			part = pSkidDust
+if (!skidding) {
+	if ((ceil(abs(hsp))>3 && grounded && state == "")) {
+		dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
+		if (dusttimer == 1) {
+			var part = pRunDust
+	
+			var i=instance_create_depth(x - (1 * xsc), y + hit_sizey, 0, part);
+			i.depth = (depth + 5);
+			i.image_xscale = xsc;
+			i.hspeed = -2.25 * xsc;
+			i.friction =0.2;
+			i.vspeed = -0.1;
+			i.gravity = -0.02;
 		}
-
-		var i=instance_create_depth(x - (1 * xsc), y + hit_sizey, 0, part);
-		i.depth = (depth + 5);
-		i.image_xscale = xsc;
-		i.hspeed = -2.25 * xsc;
-		i.friction =0.2;
-		i.vspeed = -0.1;
-		i.gravity = -0.02;
 	}
 }
 
@@ -326,26 +343,8 @@ switch (state) {
 			}
 		} else {
 			wait_timer = 0;
-			if ((abs(gsp) > 1.5) && (move == -sign(gsp)) && grounded) {
-				if (spriteEvent != "brake"){
-					playsfx(charmName+"skid",1,0,1)
-				}
-				spriteEvent="brake"
-			}
 			
-			if (spriteEvent=="brake") {
-				if (move == sign(gsp)) {
-					spriteEvent = "walk"
-				}
-				
-				dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
-				if (dusttimer == 1) {
-					var part = pSkidDust
-					make_particle(part, x - (1 * xsc), y + hit_sizey, depth + 5, xsc, (2.25 - skidding) * -xsc, -0.1, -0.02, 0.2);
-				}
-			}
-			
-			if (spriteEvent != "brake"){
+			if (!skidding){
 				//icy slippy
 				var speed_mult = 1;
 				if (friction_mult>0) && (grounded) {
@@ -360,6 +359,8 @@ switch (state) {
 					frspd=max(0.3, abs(gsp)/4)*speed_mult
 					spriteEvent="walk"
 				}
+			} else {
+				spriteEvent="brake"
 			}
 		}
 	} break;

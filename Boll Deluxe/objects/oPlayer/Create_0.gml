@@ -53,6 +53,7 @@ ysc=1
 rot=0
 fr=0
 frame=0
+fhaslooped=0
 dy=0
 
 cantslowanim=0

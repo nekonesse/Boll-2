@@ -40,6 +40,8 @@ function component_mario_skid(){
 	}	
 }
 
+
+
 function component_mario_skidding_fx(){
 	
 	if ((ceil(abs(hsp))>3 || skidding) && grounded && state == "") {
@@ -139,6 +141,34 @@ function component_mario_groundpound(fallSpeed = 7){
 	}
 }
 
+function component_sonic_skid(){
+	var _move = 0
+	if !(no_move) {
+		_move = (right - left);
+	}
+	
+	if (skidding) {
+		if ((_move != -sign(gsp)) && _move != 0 && grounded){
+			skidding = 0
+		}
+		if (fhaslooped) {
+			skidding = 0
+		}
+		if (gsp == 0 || state != "") {
+			skidding = 0
+		}
+	}
+	else{
+		show_debug_message(_move)
+		show_debug_message(-sign(gsp))
+		if ((abs(gsp) > 2.24) && (_move == -sign(gsp)) && grounded) {
+			skidding=1
+			skiddir=sign(gsp)
+			playsfx(charmName+"skid",1,0,0.75)
+		}
+	}		
+}
+
 function component_sonic_start_spindash(){
 	
 	state = "spindash"
@@ -203,18 +233,43 @@ function component_sonic_start_jump(startingJumpValue = 6) {
 function component_sonic_roll(){
 	
 	accel = 0
-	if (sign(gsp) == move) {
-		if (sign(gsp) == -1){
-			gsp = min(0, gsp + fric)
-		}else{
-			gsp = max(0, gsp - fric)
-		}
-	}
 	fastaccel = 0.125
 	fric = 0.0234375
+
+	if (sign(gsp) == -1){
+		gsp = min(0, gsp + fric)
+	}else{
+		gsp = max(0, gsp - fric)
+	}
+	
+	
+	var _move = 0
+	if !(no_move) {
+		_move = (right - left);
+	}
+	
+	if (_move != 0) && !(steep_slope || no_move || move_lock)
+	{	
+		
+		if grounded {
+			var signmatch = (sign(gsp) == sign(_move))
+			var accel_real = ((signmatch) ? accel : fastaccel)
+			show_debug_message(accel_real);
+			gsp += (_move * accel_real);
+		}else {
+			var signmatch = (sign(hsp) == sign(_move))
+			var accel_real = ((signmatch) ? accel : fastaccel);
+			hsp += (_move * accel_real);
+		}
+		
+	}
+	
+	
 	//taken from the sonic physics guide
 	if abs(gsp) < 0.5 {
+		if (!check_collision_line(x-hit_sizex,y-hit_sizey-8,x+hit_sizex,y-hit_sizey-8,COL_TOP))
 		state = ""
+		else state = "crouch"
 	}
 	
 	var blocklist=ds_list_create();
@@ -232,6 +287,46 @@ function component_sonic_roll(){
 	}
 	
 	ds_list_destroy(blocklist)
+}
+
+function component_sonic_standing(){
+	
+	var _move = 0
+	if !(no_move) {
+		_move = (right - left);
+	}
+	
+	if (_move != 0) && !(steep_slope || no_move || move_lock)
+	{	
+		
+		if grounded {
+			var signmatch = (sign(gsp) == sign(_move))
+			var accel_real = ((signmatch) ? accel : fastaccel)
+			if ((signmatch && abs(gsp) < topspd) || !signmatch) {
+				gsp += (_move * accel_real);
+			}
+		}else {
+			var signmatch = (sign(hsp) == sign(_move))
+			var accel_real = ((signmatch) ? accel : fastaccel);
+			if ((signmatch && abs(hsp) < topspd) || !signmatch) {
+				hsp += (_move * accel_real);
+			}
+		}
+		
+	}
+	else
+	{
+		//move=0 //just in case
+		// chearii: mhomentunmnm
+		if (grounded) {
+		
+			if (sign(gsp) = -1){
+				gsp = min(0, gsp + fric)
+			}else{
+				gsp = max(0, gsp - fric)
+			}
+		}
+	}
 }
 
 function component_get_ground_friction() {

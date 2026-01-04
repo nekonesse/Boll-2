@@ -363,9 +363,11 @@ function animate_player() {
 	
 	if (myspr!=oldspr) {
 		frame=0
+		fhaslooped = 0
 	}
 	
 	if spri!=-1 {
+		fhaslooped = 0
 		frn=frames_list[spri] //frame number
 		var times=times_list[spri]
 		frs=(frspd*animf*(speed_list[spri]))/max(1,times[floor(frame)]) //(game speed * percent * sprite speed) / frame time
@@ -376,7 +378,12 @@ function animate_player() {
 		//if (water && !cantslowanim) frs*=wf                       
 		if (piped!=2) frame+=frs
 		if (frame<0) frame+=frn
-		if (frame>=frn) {frame=frame-frn if (frl<frn) frame=frl}
+		if (frame>=frn) {
+			frame=frame-frn; 
+			fhaslooped = 1;
+			if (frl<frn) frame=frl;
+			
+		}
 		frame=modulo(frame,0,frn)
 		var sizeNum = array_get_index(global.powerups, get_size()); //not sure why this was a loop before. theres literally this same method above to get spri LOL
 		offset_x=offset_x_list[sizeNum]

@@ -5,40 +5,6 @@ function player_movement_sonic(){
 	
 	if (piped) || (electrocuted) || (electrocution_timer) exit
 	
-	if !(no_move)
-	move = (right - left);
-	
-	if (move != 0) && !(steep_slope || no_move || move_lock)
-	{	
-		//dont walk up a slope if its too steep to walk on!
-		
-		if grounded {
-			var signmatch = check_signs_matching_zero(gsp, move);
-			var accel_real = ((skidding) ? skid_accel : ((signmatch) ? accel : fastaccel));
-			gsp += (move * (accel_real*friction_mult));
-		}else {
-			//var signmatch = check_signs_matching(hsp, move);
-			//var accel_real = ((signmatch) ? accel : fastaccel);
-            if (abs(hsp) < topspd) && accel != 0 {  
-                hsp += (move * (accel*friction_mult));
-            }
-		}
-		
-	}
-	else
-	{
-		//move=0 //just in case
-		// chearii: mhomentunmnm
-		
-		if (grounded) {
-			if (sign(gsp) == -1) {
-				gsp = min(0, gsp + fric*friction_mult)
-			} else {
-				gsp = max(0, gsp - fric*friction_mult)
-			}
-		}
-	}
-	
 	if !grounded && vsp > -2.5 && vsp < 0 {
 		hsp -= (floor(hsp / 0.125) / 512)
 	}
