@@ -46,6 +46,10 @@ themeaccent3=scribble_rgb_to_bgr($3a4466)
 themeaccent4=scribble_rgb_to_bgr($67739a)
 themehighlight=c_white
 
+clipboard = {};
+clipboard.type = "none";
+clipboard.contents = [];
+
 JADE_initializeobj();
 
 current_tileset="tTilesetMain"

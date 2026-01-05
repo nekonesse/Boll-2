@@ -10,7 +10,6 @@ times_hit = 0;
 image_hit = spr_emptybox
 image_exausted = spr_emptybox
 image_speed=0;
-depth=1
 flash=0
 reduce_timer=0;
 
