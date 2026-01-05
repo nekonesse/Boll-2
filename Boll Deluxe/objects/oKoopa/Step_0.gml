@@ -2,6 +2,15 @@ if global.paused exit
 
 no_dam = false
 
+//make sure the player isnt overlaping when the kick delay ends
+if (kick_delay <= 1) {
+	if check_hitbox_on_hitbox(oPlayer, self){
+		kick_delay++	
+	}
+}
+
+kick_delay = max(kick_delay -1, 0)
+
 if (in_shell) {
 	if (!shell_move) {
 		no_dam = true
