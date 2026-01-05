@@ -1,5 +1,6 @@
 /// @description Jumping from ledges
 if (global.paused) exit;
+event_inherited();
 
 if !(in_shell) && (grounded)
 {

@@ -12,7 +12,6 @@ shell_move = true
 can_break_bricks = true
 kickedplayer = noone;
 kickCombo = 0;
-kick_delay = 0
 
 koopaEscapeShell = new Signal();
 
@@ -21,7 +20,7 @@ enemyStomped = new Signal();
 
 enemyStomped.Connect( self, function(hit_p) {
 	if (phaseid!=hit_p) {
-		if (!no_stomping && kick_delay == 0) {
+		if (!no_stomping) {
 			if !in_shell {
 				constantspd = 0;
 				enemycoll=true;
@@ -29,7 +28,6 @@ enemyStomped.Connect( self, function(hit_p) {
 				in_shell = shell_time;
 				no_stomping = true
 				shell_move = false
-				kick_delay = 7
 			}
 			if (in_shell) && (shell_move) {
 				constantspd = 0;
@@ -38,8 +36,7 @@ enemyStomped.Connect( self, function(hit_p) {
 				no_stomping = true
 				shell_move = false
 				phaseid=hit_p
-				phase_leeway=7;
-				kick_delay = 7
+				phase_leeway=10;
 			}
 			hit_sizex = 6;
 			hit_sizey = 6;
@@ -51,8 +48,6 @@ enemyStomped.Connect( self, function(hit_p) {
 			sig.Emit("enemy_stomped")
 			instance_create_depth(x,y+hit_sizey,2,pImpact)
 		}
-		phaseid=hit_p
-		phase_leeway=7;
 		kickedplayer = noone;
 		kickCombo = 0;
 	}
@@ -60,9 +55,7 @@ enemyStomped.Connect( self, function(hit_p) {
 });
 
 enemyCollidePlayer.Connect( self, function(hit_p) {
-	phaseid=hit_p
-	phase_leeway=7;
-	if (no_stomping && kick_delay == 0) {
+	if (no_stomping) {
 		if (in_shell) && !(shell_move) {
 			VinylPlay(snd_enemykick)
 			with (hit_p) {
@@ -75,6 +68,8 @@ enemyCollidePlayer.Connect( self, function(hit_p) {
 			no_stomping = false
 			kickedplayer = hit_p
 			enemycoll=false;
+			phaseid=hit_p
+			phase_leeway=10;
 		}
 	}
 });

@@ -1,6 +1,4 @@
 ///@description Empty Contents on break
-show_debug_message("responded");
-
 var j = noone;
 switch (content) {
 	case "goomba": {
