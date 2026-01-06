@@ -2,7 +2,7 @@
   "$GMSprite":"v2",
   "%Name":"spr_TilesetWorld5Deco",
   "bboxMode":0,
-  "bbox_bottom":79,
+  "bbox_bottom":255,
   "bbox_left":0,
   "bbox_right":447,
   "bbox_top":0,
@@ -12,14 +12,14 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"4ac4270d-526b-4418-a192-2f0ef26ee6a1","name":"4ac4270d-526b-4418-a192-2f0ef26ee6a1","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"675771a9-d08b-472e-ad3e-fa1bbd008faf","name":"675771a9-d08b-472e-ad3e-fa1bbd008faf","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":272,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"c4188e12-c689-4288-abed-b429f4e836db","blendMode":0,"displayName":"default","isLocked":false,"name":"c4188e12-c689-4288-abed-b429f4e836db","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"42b2008d-0a65-4e71-b065-26d2ba903d81","blendMode":0,"displayName":"default","isLocked":false,"name":"42b2008d-0a65-4e71-b065-26d2ba903d81","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_TilesetWorld5Deco",
   "nineSlice":null,
@@ -71,8 +71,8 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"4ac4270d-526b-4418-a192-2f0ef26ee6a1","path":"sprites/spr_TilesetWorld5Deco/spr_TilesetWorld5Deco.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"8c9cbd3a-7aa6-4f8f-9092-00947b24c5e9","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"675771a9-d08b-472e-ad3e-fa1bbd008faf","path":"sprites/spr_TilesetWorld5Deco/spr_TilesetWorld5Deco.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"a24eb973-c225-4a32-be36-7dd43f9a7002","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,
