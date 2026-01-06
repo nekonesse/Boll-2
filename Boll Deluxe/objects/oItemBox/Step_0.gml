@@ -18,7 +18,7 @@ if (going) {
 	} else {
 		image_index = 1
 	}
-}
+} else image_index = 0
 
 reduce_timer=max(reduce_timer-1,0)
 

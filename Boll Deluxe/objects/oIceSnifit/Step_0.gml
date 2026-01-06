@@ -5,7 +5,7 @@ cooldowntimer=max(cooldowntimer-1,0);
 
 if !(stun) && !(blowing) && !(cooldowntimer) && check_rectangle_in_hitbox(x-((hit_sizex+90)*xsc),y-hit_sizey-16,x,y+hit_sizey,oPlayer) && !(revving) {
 	revving=true;
-	revtimer=60;
+	revtimer=50;
 	constantspd=0;
 }
 

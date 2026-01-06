@@ -44,4 +44,5 @@ blockHit.Connect( self, function(hit_p, obj) {
 	if !(amount) {
 		sprite_index = image_hit
 	}
+	image_index = 0;
 });
