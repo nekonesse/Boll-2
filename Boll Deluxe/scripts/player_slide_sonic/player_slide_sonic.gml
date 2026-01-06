@@ -9,7 +9,7 @@ function player_slide_sonic(slope_influence, rolling, roll_up_influence = 0, rol
 		if !rolling {
 			slope = slope_influence
 			var factor = slope * dsin(colangle)
-			if (gsp != 0 && abs(factor) >= 0.0201) {
+			if (gsp != 0 && abs(factor) >= 0.03) {
 				gsp -= factor
 			}
 			

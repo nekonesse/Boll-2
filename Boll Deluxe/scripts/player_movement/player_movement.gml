@@ -12,13 +12,13 @@ function player_movement(){
 		//dont walk up a slope if its too steep to walk on
 		
 		if grounded {
-			var signmatch = (sign(gsp) == sign(move))
+			var signmatch = (check_signs_matching_zero(gsp, move))
 			var accel_real = ((skidding) ? skid_accel : ((signmatch) ? accel : fastaccel));
 			if ((signmatch && abs(gsp) < topspd) || !signmatch) {
 				gsp += (move * accel_real);
 			}
 		}else {
-			var signmatch = (sign(hsp) == sign(move))
+			var signmatch = (check_signs_matching(hsp, move))
 			var accel_real = ((signmatch) ? accel : fastaccel);
 			if ((signmatch && abs(hsp) < topspd) || !signmatch) {
 				hsp += (move * accel_real);

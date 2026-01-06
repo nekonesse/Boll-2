@@ -17,3 +17,12 @@ blockHit.Connect( self, function(hit_p, obj) {
 		j = instance_create(x+4,y-4,pDestruction) with(j){image_index=0 hspeed=1 vspeed=-4} //top right
 	}
 });
+
+brickBreak = function() {
+	VinylPlay(snd_blockbreak)
+	instance_destroy();
+	j = instance_create(x-4,y+4,pDestruction) with(j){image_index=0 hspeed=-1 vspeed=-2} //bottom left
+	j = instance_create(x-4,y-4,pDestruction) with(j){image_index=0 hspeed=1 vspeed=-2} //bottom right
+	j = instance_create(x+4,y+4,pDestruction) with(j){image_index=0 hspeed=-1 vspeed=-4} //top left
+	j = instance_create(x+4,y-4,pDestruction) with(j){image_index=0 hspeed=1 vspeed=-4} //top right
+}

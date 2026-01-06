@@ -298,13 +298,13 @@ function component_sonic_standing(){
 	{	
 		
 		if grounded {
-			var signmatch = (sign(gsp) == sign(_move))
+			var signmatch = (check_signs_matching(gsp, _move))
 			var accel_real = ((signmatch) ? accel : fastaccel)
 			if ((signmatch && abs(gsp) < topspd) || !signmatch) {
 				gsp += (_move * accel_real);
 			}
 		}else {
-			var signmatch = (sign(hsp) == sign(_move))
+			var signmatch = (check_signs_matching_zero(hsp, _move))
 			var accel_real = ((signmatch) ? accel : fastaccel);
 			if ((signmatch && abs(hsp) < topspd) || !signmatch) {
 				hsp += (_move * accel_real);
