@@ -34,7 +34,7 @@ if (blowing) {
 	ds_list_destroy(list)
 	
 	if blowtimer mod 4 == 0 {
-		var i=make_particle(pSmoke,x-8*xsc,y,depth-1,1,-2.5*xsc,irandom_range(0.25,-0.25))
+		var i=make_particle(pSmoke,x-8*xsc,y,depth-1,1,-2.5*xsc,random_range(0.5,-0.5))
 		i.image_speed/=2
 	}
 	

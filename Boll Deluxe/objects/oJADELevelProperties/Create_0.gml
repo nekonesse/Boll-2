@@ -15,8 +15,8 @@ tilesetlist=[
 ]
 
 exitbutton = new JADEiconbutton(x+image_xscale-16,y+1,spr_JADEexiticon, function() {
-	instance_destroy(oJADELayerProperties);
-	oJADEController.layereditbutton.reset();
+	instance_destroy(oJADELevelProperties);
+	oJADEController.topbuttons.reset();
 });
 
 //auto generation the list of names for dropdown, dont touch!
