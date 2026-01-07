@@ -3,14 +3,23 @@ function player_interactions(){
 	
 	if (state != "frozen") {
 		var enemystomp=check_rectangle_in_hitbox(x-hit_sizex,y+hit_sizey+vsp,x+hit_sizex,y+hit_sizey+vsp, oEnemy)
-		if (enemystomp) && (enemystomp.phaseid==noone || enemystomp.phaseid.id!=id) && !(enemystomp.damage_on_contact) && !(enemystomp.no_stomping) && !(grounded) && (vsp > 0) && (y+hit_sizey+vsp < enemystomp.y){
+		if (enemystomp) && (enemystomp.phaseid==noone || enemystomp.phaseid.id!=id) && !(enemystomp.damage_on_contact) && !(enemystomp.no_stomping) && !(grounded) && (vsp > 0) && (y+hit_sizey+vsp < enemystomp.y) && (invincible_type != 2) {
 			enemystomp.enemyStomped.Emit(id);
 			enemystomp.phaseid=id;
 			enemystomp.phase_leeway=3;
 		} else {
 			var enemy=check_hitbox_on_hitbox(id, oEnemy)
 			if (enemy) && (enemy.phaseid==noone || enemy.phaseid.id!=id) {
-				enemy.enemyCollidePlayer.Emit(id);
+				if (invincible_type != 2) {
+					enemy.enemyCollidePlayer.Emit(id);
+				} else {
+					make_particle(pImpact,enemy.x+enemy.xsc,enemy.y,2)
+					increase_combo(enemy.x,enemy.y);
+					with(enemy) {
+						hp=0
+					}
+				}
+				
 			}
 		}
 	} else {
