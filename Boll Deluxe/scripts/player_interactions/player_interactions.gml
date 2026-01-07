@@ -2,8 +2,8 @@ function player_interactions(){
 	if (piped) || (hurt) || (dead)  exit
 	
 	if (state != "frozen") {
-		var enemystomp=check_rectangle_in_hitbox(x-hit_sizex,y,x+hit_sizex,y+hit_sizey+vsp, oEnemy)
-		if (enemystomp) && (enemystomp.phaseid==noone || enemystomp.phaseid.id!=id) && !(enemystomp.damage_on_contact) && !(enemystomp.no_stomping) && !(grounded) && (vsp > 0) && (within(y+hit_sizey+vsp,(enemystomp.y-hit_sizey)-1,(enemystomp.y-hit_sizey)+2)) {
+		var enemystomp=check_rectangle_in_hitbox(x-hit_sizex,y+hit_sizey+vsp,x+hit_sizex,y+hit_sizey+vsp, oEnemy)
+		if (enemystomp) && (enemystomp.phaseid==noone || enemystomp.phaseid.id!=id) && !(enemystomp.damage_on_contact) && !(enemystomp.no_stomping) && !(grounded) && (vsp > 0) && (y+hit_sizey+vsp < enemystomp.y){
 			enemystomp.enemyStomped.Emit(id);
 			enemystomp.phaseid=id;
 			enemystomp.phase_leeway=3;

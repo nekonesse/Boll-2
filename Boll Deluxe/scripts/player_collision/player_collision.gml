@@ -170,42 +170,66 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 	
 	//hitting the ceiling
 	if !grounded && vsp < 0 {
-		if (check_collision_line(posx+right, posy+top, posx+left, posy+top, COL_TOP)){
-			//push out
-				
-			while (check_collision_line(posx+right, posy+top, posx+left, posy+top, COL_TOP)) {
-				y++
-				posy = y
-				loop_count+=1;
-				if (loop_count > 100000) {
-					show_debug_message("too many loops at line 177, aborting")
-					break;
-				}
-			}
-			loop_count=0
-			
-			//bonking
-			if object_index == oPlayer{
-				//Hitting / Bumping blocks
-				VinylPlay(snd_blockbump)
-				sig.Emit("ceil_bonk")
-				var _list = ds_list_create();
-				var _num = collision_line_list(posx+left, posy+top-1+vsp, posx+right, posy+top-1+vsp, oHittable, false, true, _list, true);
-				if (_num > 0) {
-					var i=0;
-					repeat (_num) {
-						with(_list[| i]) if !(no_hit) {
-							dummyTimer = dummyTimerReset;
-							blockHit.Emit(-1, other.id)
-						}
-						i++;
+		if (check_collision_line(posx+right, posy+top, posx+left, posy+top, COL_TOP)) {
+			//corner clipping
+			if !check_collision_line(posx+(right/2)-1, posy+top, posx+(left*2), posy+top-2, COL_TOP) { //left push
+				while(check_collision_line(posx+right, posy+top, posx+left, posy+top-2, COL_TOP)) {
+					x--;
+					posx=x;
+					loop_count+=1;
+					if (loop_count > 100000) {
+						break;
 					}
 				}
-				ds_list_destroy(_list);
-			}
+				loop_count=0
+				nobonk=true;
+			} else if !check_collision_line(posx+(left/2)+1, posy+top, posx+(right*2), posy+top-2, COL_TOP) { //right push
+				while(check_collision_line(posx+left, posy+top, posx+right, posy+top-2, COL_TOP)) {
+					x++;
+					posx=x;
+					loop_count+=1;
+					if (loop_count > 100000) {
+						break;
+					}
+				}
+				loop_count=0
+				nobonk=true;
+			} else {
+				//push out
+				while (check_collision_line(posx+right, posy+top, posx+left, posy+top, COL_TOP)) {
+					y++
+					posy = y
+					loop_count+=1;
+					if (loop_count > 100000) {
+						show_debug_message("too many loops at line 177, aborting")
+						break;
+					}
+				}
+				loop_count=0
 			
-			colflags |= COL_CEILI;
-			vsp = 2
+				//bonking
+				if object_index == oPlayer {
+						//Hitting / Bumping blocks
+						VinylPlay(snd_blockbump)
+						sig.Emit("ceil_bonk")
+						var _list = ds_list_create();
+						var _num = collision_line_list(posx+left, posy+top-1+vsp, posx+right, posy+top-1+vsp, oHittable, false, true, _list, true);
+						if (_num > 0) {
+							var i=0;
+							repeat (_num) {
+								with(_list[| i]) if !(no_hit) {
+									dummyTimer = dummyTimerReset;
+									blockHit.Emit(-1, other.id)
+								}
+								i++;
+							}
+						}
+						ds_list_destroy(_list);
+			
+					colflags |= COL_CEILI;
+					vsp = 2
+				}
+			}
 		}
 	}
 	
