@@ -141,8 +141,10 @@ topbuttons.add("File", function() {
 			break;
 			case 5:
 			//exit editor
-			room_goto(rMainMenu);
-			global.jade_testing = false;
+			//if show_question("JADE file not saved! Are you sure you want to exit?") {
+				room_goto(rMainMenu);
+				global.jade_testing = false;
+			//}
 			break;
 		}
 		with(oJADEController) topbuttons.reset();

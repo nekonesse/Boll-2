@@ -4,7 +4,7 @@ if (!optionLock) {
 	up		=input_check_pressed("up");
 	down	=input_check_pressed("down");
 	akey	=(input_check_pressed("a") || input_check_pressed("enter"));
-	bkey	=input_check_pressed("b");
+	bkey	=input_check_pressed("b") || input_check_pressed("pause");
 	ckey	=input_check_pressed("c");
 	
 	if (startLock) { //discard inputs when first created to prevent immediately being booted to the level select sometimes

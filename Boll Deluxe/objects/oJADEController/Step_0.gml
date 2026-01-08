@@ -978,3 +978,8 @@ if (mbright) {
 		break;
 	}
 }
+
+if (keyboard_check_pressed(vk_escape)) {
+	room_goto(rMainMenu);
+	global.jade_testing = false;
+}
