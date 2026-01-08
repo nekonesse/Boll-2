@@ -95,6 +95,9 @@ enemyTurnAround.Connect( self, function() {
 	_direction *= -1;
 	turning = 10;
 	prevsprite_index=sprite_index
+	if (walker && !grounded) {
+		hsp=-hsp;
+	}
 });
 
 enemyShelled.Connect( self, function(hit_obj, kick_p) {
