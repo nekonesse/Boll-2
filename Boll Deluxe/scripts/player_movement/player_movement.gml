@@ -20,7 +20,7 @@ function player_movement(){
 		}else {
 			var signmatch = (check_signs_matching(hsp, move))
 			var accel_real = accel;
-			if ((signmatch && abs(gsp) < topspd) || !signmatch) {
+			if ((signmatch && abs(hsp) < topspd) || !signmatch) {
 				hsp += (move * accel_real);
 			}
 		}
