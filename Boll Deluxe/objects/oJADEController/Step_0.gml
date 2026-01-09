@@ -574,7 +574,7 @@ if (mbleft && not_on_gui && !disable_tool) {
 			}
 		break;
 		case MIRROR_TOOL:
-			if (mbleftpress) {
+			if (mbleftpress) || (prevgridx!=gridx || prevgridy!=gridy) {
 				switch(deco_mode_type) {
 					case "tile":
 						var data = tilemap_get_at_pixel(tilemap_layer, mouse_x, mouse_y);
@@ -588,7 +588,7 @@ if (mbleft && not_on_gui && !disable_tool) {
 			}
 		break;
 		case FLIP_TOOL:
-			if (mbleftpress) {
+			if (mbleftpress) || (prevgridx!=gridx || prevgridy!=gridy) {
 				switch(deco_mode_type) {
 					case "tile":
 						var data = tilemap_get_at_pixel(tilemap_layer, mouse_x, mouse_y);
@@ -604,7 +604,7 @@ if (mbleft && not_on_gui && !disable_tool) {
 			}
 		break;
 		case ROTATE_TOOL:
-			if (mbleftpress) {
+			if (mbleftpress) || (prevgridx!=gridx || prevgridy!=gridy) {
 				switch(deco_mode_type) {
 					case "tile":
 						var data = tilemap_get_at_pixel(tilemap_layer, mouse_x, mouse_y);

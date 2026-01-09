@@ -1397,10 +1397,74 @@ function JADElayerlisthandler(_x, _y, _width, _height, _checkvar) constructor {
 					}
 				}
 				
-				if (mbrightpress) {
-					if (over_button) {
-						grabbed_layer = i;
+				if (mbrightpress) && (over_button) {
+					grabbed_layer=i;
+					variable_instance_set(oJADEController, checkvar, item)
+					oJADEController.update_layer(item);
+					oJADEController.selected_array = [];
+					if is_instanceof(item, JADEtilelayer) {
+						with(oJADEController) {
+							deco_mode_type = "tile";
+							tilepicker.pan_x = 0;
+							tilepicker.pan_y = 0;
+							current_tile_id = -1
+							current_tile_id = []
+							current_tile_id[0][0] = 0
+							tile_sel_height = 0
+							tile_sel_width = 0
+							toolbarbuttons.set(toolbar[1])
+						}
+						var j=0;
+						repeat(array_length(listcontents)) {
+							var item2 = listcontents[j]
+							if (is_instanceof(item2, JADEtilelayer)) {
+								layer_set_visible(item2.my_layer, oJADEController.tile_layers_visible)
+							} else if (is_instanceof(item2, JADEassetlayer)) {
+								layer_set_visible(item2.my_layer, oJADEController.asset_layers_visible)
+							} else if (is_instanceof(item2, JADEtilelayer)) {
+								layer_set_visible(item2.my_layer, oJADEController.bg_layers_visible)
+							}
+							j++;
+						}
+						layer_set_visible(item.my_layer, true)
+					} else if is_instanceof(item, JADEassetlayer) {
+						with(oJADEController) {
+							deco_mode_type = "asset";
+							toolbarbuttons.set(toolbar[3])
+						}
+						var j=0;
+						repeat(array_length(listcontents)) {
+							var item2 = listcontents[j]
+							if (is_instanceof(item2, JADEtilelayer)) {
+								layer_set_visible(item2.my_layer, oJADEController.tile_layers_visible)
+							} else if (is_instanceof(item2, JADEassetlayer)) {
+								layer_set_visible(item2.my_layer, oJADEController.asset_layers_visible)
+							} else if (is_instanceof(item2, JADEtilelayer)) {
+								layer_set_visible(item2.my_layer, oJADEController.bg_layers_visible)
+							}
+							j++;
+						}
+						layer_set_visible(item.my_layer, true)
+					} else if is_instanceof(item, JADEbackgroundlayer) {
+						with(oJADEController) {
+							deco_mode_type = "bg";
+							toolbarbuttons.set(toolbar[2])
+						}
+						var j=0;
+						repeat(array_length(listcontents)) {
+							var item2 = listcontents[j]
+							if (is_instanceof(item2, JADEtilelayer)) {
+								layer_set_visible(item2.my_layer, oJADEController.tile_layers_visible)
+							} else if (is_instanceof(item2, JADEassetlayer)) {
+								layer_set_visible(item2.my_layer, oJADEController.asset_layers_visible)
+							} else if (is_instanceof(item2, JADEtilelayer)) {
+								layer_set_visible(item2.my_layer, oJADEController.bg_layers_visible)
+							}
+							j++;
+						}
+						layer_set_visible(item.my_layer, true)
 					}
+					mbrightpress=0;
 				}
 				
 				var layer_selected = (checkervalue!=noone) && (checkervalue.name == item.name)

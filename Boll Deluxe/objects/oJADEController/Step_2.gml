@@ -1,0 +1,2 @@
+prevgridx = gridx
+prevgridy = gridy

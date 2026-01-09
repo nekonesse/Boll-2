@@ -14,6 +14,11 @@
 #macro ROTATOR_TOOL 10
 #macro LINK_TOOL 11
 
+gridx=0;
+gridy=0;
+prevgridx=0;
+prevgridy=0;
+
 selected_mode=OBJECT_MODE;
 selected_toolbar=0;
 selected_tool=SELECT_TOOL;
