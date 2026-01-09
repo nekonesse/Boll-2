@@ -311,22 +311,21 @@ function init_player() {
 	init_sounds();
 }
 
-function draw_player() {
+function draw_player(spr, _frame, _x = x, _y = y, _xsc = xsc, _ysc = ysc, _angle = sprite_angle*xsc, _alpha = alpha, _col = col) {
 	//if (flash) exit
 	var yoff=(12-hit_sizey);
 	
-	var spr=oGameManager.PlayerColl.GetImageInfo(get_spriteindex())
 	if CollageImageExists(spr) {
 		CollageDrawImageExt(
 			spr, 
-			floor(frame),
-			floor(x) - (lengthdir_x(offset_x,(sprite_angle-90)*xsc)) * -xsc, 
-			floor(y) - (lengthdir_y(offset_y,(sprite_angle-90)*ysc) - dy - (6) - yoff) * -ysc,
-			xsc,
-			ysc,
-			sprite_angle*xsc,
-			col,
-			alpha
+			floor(_frame),
+			floor(_x) - (lengthdir_x(offset_x,(sprite_angle-90)*_xsc)) * -_xsc, 
+			floor(_y) - (lengthdir_y(offset_y,(sprite_angle-90)*_ysc) - dy - (6) - yoff) * -_ysc,
+			_xsc,
+			_ysc,
+			_angle,
+			_col,
+			_alpha
 		)
 	}
 }
@@ -351,10 +350,9 @@ function animate_player() {
 	catspeak_execute(global.scripts[? $"{charmName}_draw"]);
 	 
 	//Growing and hurting size changes.
-	var spritedat = global.animdat[pNum][0]
-	var sprite_yank = size
-	if !is_undefined(spritedat[$ $"{size} override"])
-	sprite_yank = spritedat[$ $"{size} override"]
+	var spritedat = global.animdat[pNum][0];
+	var sprite_yank = size;
+	if !is_undefined(spritedat[$ $"{size} override"]) sprite_yank = spritedat[$ $"{size} override"];
 
 	var spri=array_get_index(global.player_spritelists[pNum], spriteMap[$ $"{sprite_yank} {spriteEvent}"])
 	

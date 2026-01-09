@@ -1,6 +1,6 @@
 #define datalist
 spriteEvents=split_string("idle,wait,lookUp,victory,crouch,hurt,dead,walk,run,runMax,wallRun,airWalk,brake,spring,springFall,jump,bonk,roll,spinDash,spinCharge,dropDash,carryIdle,carryWalk,carryRun,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,roll,carrySwim,pushing,balancing,dive,fireToss,electrocute,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
-sound_list=split_string("airdash,damage,die,dropdash,jump,release,skid,spin,spindash",",");
+sound_list=split_string("airdash,damage,die,dropdash,jump,release,skid,spin,spindash,bounce",",");
 
 #define create
 jump = 0;
@@ -29,6 +29,9 @@ dropdash = 0;
 dropdash_timer = 0;
 real_sprite_angle = 0;
 walljump = false;
+dashed = false;
+boundjump = 0;
+activebound = false;
 
 // wallrun junk
 wallrunstored_hsp = 0;
@@ -103,6 +106,20 @@ if (state == "jump" || state == "roll" || state == "spindash") && (size != "mini
 }
 
 topspd = 3 + ((size != "mini") * 0.5);
+if (dashed){
+	afterimage = true
+	if (grounded) {
+		if (size != "mini") {
+			topspd = 6.5
+		}
+		else {
+			topspd = 5.45
+		}
+	}
+} else {
+	afterimage = false
+}
+
 maxspd = 11;
 if (state == "roll"){
 	maxspd = 9;
@@ -119,9 +136,26 @@ if (hurt) {
 control_lock = max(0,control_lock - 1)
 
 if !(piped) && !(electrocuted) && !(electrocution_timer) {
-	// Fall off platform
+	
+	#region Fire Projectile
+	
+	if (bpress) && (size=="fire") && (has_fired < 2) && (state != "roll") && (state != "wallrun"){
+		var proj=instance_create_depth(x+(hit_sizex+3)*xsc,y+hit_sizey-12,2,oFireball)
+		proj.hsp=3.75*xsc
+		proj.vsp=2
+		proj.owner=id
+		VinylPlay(asset_get_index("snd_fireball"))
+		
+		has_fired+=1;
+		frame=0;
+		firing=15;
+	}
+	
+	#endregion
+	
 	if (!grounded) {
 		component_gravity_coneyor()
+		skidding = 0;
 		// Switch direction
 		//add more checks here to prevent left/right changing direction
 		var _move = 0
@@ -136,6 +170,10 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 		hurt = false
 		canjump = 5;  // Coyote frames
 		
+		if (abs(gsp) < 3.5 && dashed) {
+			dashed = false
+		}
+		
 		if !(hurt) {
 			canstopjump = false
 		}
@@ -143,7 +181,7 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 		if (state == "") {
 			component_sonic_skid()
 			if (skidding) {
-				dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
+				dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 7);
 				if (dusttimer == 1) {
 					var part = pSkidDust
 					make_particle(part, x - (1 * xsc), y + hit_sizey, depth + 5, xsc, (1.25) * -xsc, -0.1, -0.02, 0.2);
@@ -197,31 +235,41 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 #region Jumping
 if (state == "jump") && !(piped) {
 	slopesliding = 0
+	
+	if (apress && vsp >= -2.6 && !activebound) {
+		boundjump = min(3, boundjump + 1);
+		activebound = true;
+		vsp = 4.5
+		stopsfx("sonicbounce")
+		playsfx("sonicbounce")
+	}
+	
 	if (!akey && vsp < -2.6 && !canstopjump) {//Make player jump lower when jump is released
 		vsp = -2.6;
 	}
 	
+	//ok im too lazy to change the variable because 
+	//gmedit is being stupid
 	if (cpress && dropdash == 0) {
-		dropdash = 1
-	}
-
-	if (dropdash == 1) {
-		if (ckey) {
-			dropdash_timer += 1
-			if (dropdash_timer == 18) {
-				playsfx("sonicdropdash")
-			}
-		} else {
-			stopsfx("sonicdropdash")
-			dropdash = 2
-			dropdash_timer = 0
+		if (vsp < -2.6) {
+			vsp = -2.6;
 		}
+		dropdash = 1
+		playsfx("sonicairdash")
+		dashed = true;
+		var _move = (right-left)
+		if (_move == 0) {
+			_move = xsc	
+		}
+		var dash_speed = 2.44
+		hsp += (dash_speed *_move) - clamp(hsp,-dash_speed,dash_speed) + (0.44 * _move)
 	}
 }
 
 if (state == "" || state == "roll") && (apress) && (canjump > 0) && !(piped) {
 	var speed_bonus = min((abs(hsp) / 5) * 0.3, 1.3)
 	component_sonic_start_jump(5.2 + speed_bonus)
+	dashed = false;
 }
 #endregion
 
@@ -271,6 +319,7 @@ if (state == "wallrun") && !piped {
 
 
 #region Rolling
+//not rolling stats
 if (state != "roll" || !grounded) && !(piped) {
 	accel = 0.046875
 	fastaccel = 0.4 //deaccel
@@ -278,6 +327,9 @@ if (state != "roll" || !grounded) && !(piped) {
 	if (!grounded) {
 		accel = 0.09375
 		fastaccel = 0.09375
+	}
+	if (dashed && abs(gsp) > 3.5 && grounded) {
+		accel = (accel / 3)
 	}
 }
 
@@ -306,7 +358,7 @@ post_wall();
 component_get_ground_friction()
 if (!skidding) {
 	if ((ceil(abs(hsp))>3 && grounded && state == "")) {
-		dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 10);
+		dusttimer = min(dusttimer + 1, (dusttimer + 1) mod (10 - floor(abs(gsp)-3)));
 		if (dusttimer == 1) {
 			var part = pRunDust
 	
@@ -360,9 +412,13 @@ switch (state) {
 					speed_mult = 1/(friction_mult);
 				}
 			
-				if (ceil(abs(gsp))>=topspd) {
+				if (ceil(abs(gsp))>=3.4) {
 					frspd=(abs(gsp)/4)*speed_mult
 					spriteEvent="run"
+				}
+				else if (ceil(abs(gsp))>=5.9){
+					frspd=max(0.3, abs(gsp)/4)*speed_mult
+					spriteEvent="maxrun"
 				}
 				else {
 					frspd=max(0.3, abs(gsp)/4)*speed_mult
@@ -553,8 +609,19 @@ if (dropdash && dropdash_timer >= 18) {
 }
 dropdash_timer = 0
 dropdash = 0
-	
+
 vsp = 0
+
+if (activebound){
+	var heights = [0,3.7,4.75,6.45]
+	vsp -= heights[boundjump] * dcos(colangle);	
+	hsp -= heights[boundjump] * dsin(colangle);
+	activebound = false;
+	grounded = false;
+	state = "jump"
+} else {
+	boundjump = 0;
+}
 
 #define sprung
 canstopjump = true;
@@ -562,6 +629,7 @@ crouch = false;
 if state != "frozen" {
 	state = "";
 }
+boundactive = false;
 
 #define enemy_stomped
 vsp= -(4+akey*1.5)
@@ -577,6 +645,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 		canstopjump=true
 		state=""
 		grounded=false
+		boundactive = false;
 		oldsize = size;
 		switch (size) {
 			case "basic": {
@@ -597,6 +666,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 		VinylPlay(snd_enemykick)
 		signal_emit(coll.enemyRolledInto, id);
 		increase_combo(coll.x,coll.y);
+		boundactive = false;
 	}
 }
 
@@ -609,6 +679,7 @@ hsp= -2.25 * xsc
 vsp= -4
 canstopjump=true
 state=""
+boundactive = false;
 grounded=false
 oldsize = size;
 switch (size) {
@@ -635,6 +706,7 @@ electrocution_timer=60;
 
 
 #define hurt_by_electrocution
+boundactive = false;
 stopsfx(charmName+"damage")
 electrocuted = false;
 hurt=1

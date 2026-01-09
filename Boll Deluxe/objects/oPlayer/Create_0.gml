@@ -13,7 +13,11 @@ sig.Connect( self, function(str_var) {
 grabbed_obj = noone;
 is_grabbing = false;
 input_enable = true;
+
 ///// GENERAL /////
+
+afterimage = false
+player_recorder_setup()
 
 pNum = 0; //player number (P1, P2, etc.)
 charmName = global._playerChars[pNum]; //what charm this player character is using

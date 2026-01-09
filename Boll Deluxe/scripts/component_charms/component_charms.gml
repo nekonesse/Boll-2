@@ -230,14 +230,15 @@ function component_sonic_start_jump(startingJumpValue = 6) {
 
 function component_sonic_roll(){
 	
+	//rolling specific stats
 	accel = 0
 	fastaccel = 0.125
 	fric = 0.0234375
 
 	if (sign(gsp) == -1){
-		gsp = min(0, gsp + (fric* friction_mult))
+		gsp = min(0, gsp + fric)
 	}else{
-		gsp = max(0, gsp - (fric* friction_mult))
+		gsp = max(0, gsp - fric)
 	}
 	
 	
@@ -319,9 +320,9 @@ function component_sonic_standing(){
 		if (grounded) {
 		
 			if (sign(gsp) = -1){
-				gsp = min(0, gsp + (fric * friction_mult) )
+				gsp = min(0, gsp + fric )
 			}else{
-				gsp = max(0, gsp - (fric * friction_mult) )
+				gsp = max(0, gsp - fric )
 			}
 		}
 	}
