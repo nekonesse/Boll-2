@@ -156,6 +156,11 @@ if keyboard_check(vk_control) && keyboard_check_pressed(ord("S")) {
 	}
 }
 
+if (keyboard_check_pressed(vk_escape)) {
+	room_goto(rMainMenu);
+	global.jade_testing = false;
+}
+
 if keyboard_check_pressed(vk_delete) {
 	switch(selected_mode) {
 		case OBJECT_MODE:
@@ -204,6 +209,61 @@ if keyboard_check_pressed(vk_delete) {
 		break;
 	}
 }
+
+if keyboard_check(vk_control) && keyboard_check_pressed(ord("C")) {
+	switch(selected_mode) {
+		case OBJECT_MODE:
+		case NODE_MODE:
+			array_sort(selected_array,false)
+			var i=0;
+			repeat(array_length(selected_array)) {
+				var temparr = [];
+				array_push(temparr,object_layer_map[selected_region][| i])
+				i++;
+			}
+			clipboard.contents = temparr;
+			if (selected_mode == OBJECT_MODE)
+			clipboard.type = "obj"
+			else clipboard.type = "gizmo"
+			selected_array=[];
+		break;
+		case DECO_MODE:
+			if deco_mode_type == "tile" {
+				if !ds_exists(tilemap,ds_type_list) break;
+				
+				array_sort(selected_array,false)
+				var i=0;
+				repeat(array_length(selected_array)) {
+					if !(selection_grab) {
+						var data=tilemap[| selected_array[i]]
+						data[0]=tile_set_empty(data[0])
+						tilemap_set(tilemap_layer,data[0],data[1],data[2])
+					}
+					ds_list_delete(tilemap, selected_array[i])
+					i++;
+				}
+				selected_array=[];
+				tile_update_properties();
+			} else if deco_mode_type == "asset" {
+				if selected_layer == noone break;
+				if !ds_exists(selected_layer.assetmap,ds_type_list) break;
+				
+				array_sort(selected_array,false)
+				var i=0;
+				repeat(array_length(selected_array)) {
+					if !(selection_grab) {
+						var data=selected_layer.assetmap[| selected_array[i]]
+						layer_sprite_destroy(data[1])
+					}
+					ds_list_delete(selected_layer.assetmap, selected_array[i])
+					i++;
+				}
+				selected_array=[];
+			}
+		break;
+	}
+}
+
 
 if (mbleft && not_on_gui && !disable_tool) {
 	switch(selected_tool) {
@@ -977,9 +1037,4 @@ if (mbright) {
 			selection_grab = false;
 		break;
 	}
-}
-
-if (keyboard_check_pressed(vk_escape)) {
-	room_goto(rMainMenu);
-	global.jade_testing = false;
 }

@@ -1,6 +1,6 @@
 #define datalist
 spriteEvents=split_string("idle,wait,lookUp,victory,crouch,hurt,dead,walk,run,runMax,wallRun,airWalk,brake,spring,springFall,jump,bonk,roll,spinDash,spinCharge,dropDash,carryIdle,carryWalk,carryRun,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,roll,carrySwim,pushing,balancing,dive,fireToss,electrocute,gateClimbing,flagPole,hang,monkeyBars,boarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
-sound_list=split_string("airdash,damage,die,dropdash,jump,release,skid,spin,spindash,bounce",",");
+sound_list=split_string("airdash,damage,die,jump,release,skid,spin,spindash,bounce",",");
 
 #define create
 jump = 0;
@@ -23,15 +23,12 @@ defaultgrav = grav
 grow = 0;
 state = "";
 control_lock = 0;
-dropdash_spd = 4.75;
-max_dropdash_spd = 8;
-dropdash = 0;
-dropdash_timer = 0;
 real_sprite_angle = 0;
 walljump = false;
 dashed = false;
 boundjump = 0;
 activebound = false;
+base_terminal_vel = terminal_vel;
 
 // wallrun junk
 wallrunstored_hsp = 0;
@@ -85,6 +82,8 @@ if (_move!=0) && (vsp < 0) && (state!="wallrun") && (abs(wallrunstored_gsp) > 1)
 #endregion
 
 #define step
+terminal_vel = base_terminal_vel
+
 hit_sizex = 6
 switch (size) {
 	case "basic": {
@@ -109,19 +108,14 @@ topspd = 3 + ((size != "mini") * 0.5);
 if (dashed){
 	afterimage = true
 	if (grounded) {
-		if (size != "mini") {
-			topspd = 6.5
-		}
-		else {
-			topspd = 5.45
-		}
+		topspd = 6.5
 	}
 } else {
 	afterimage = false
 }
 
 maxspd = 11;
-if (state == "roll"){
+if (state == "roll") {
 	maxspd = 9;
 }
 
@@ -154,7 +148,11 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 	#endregion
 	
 	if (!grounded) {
+		if (activebound) {
+			terminal_vel = 8;
+		}
 		component_gravity_coneyor()
+		show_debug_message(terminal_vel)
 		skidding = 0;
 		// Switch direction
 		//add more checks here to prevent left/right changing direction
@@ -184,7 +182,7 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 				dusttimer = min(dusttimer + 1, (dusttimer + 1) mod 7);
 				if (dusttimer == 1) {
 					var part = pSkidDust
-					make_particle(part, x - (1 * xsc), y + hit_sizey, depth + 5, xsc, (1.25) * -xsc, -0.1, -0.02, 0.2);
+					make_particle(part, x - (1 * xsc), y + hit_sizey, depth + 5, xsc, (1.25) * -xsc, -0.1, -0.02, 0.2); 
 				}
 			}
 		}
@@ -237,9 +235,9 @@ if (state == "jump") && !(piped) {
 	slopesliding = 0
 	
 	if (apress && vsp >= -2.6 && !activebound) {
-		boundjump = min(3, boundjump + 1);
+		boundjump = min(2, boundjump + 1);
 		activebound = true;
-		vsp = 4.5
+		vsp = 8;
 		stopsfx("sonicbounce")
 		playsfx("sonicbounce")
 	}
@@ -248,21 +246,23 @@ if (state == "jump") && !(piped) {
 		vsp = -2.6;
 	}
 	
-	//ok im too lazy to change the variable because 
-	//gmedit is being stupid
-	if (cpress && dropdash == 0) {
+	if (cpress) && !(dashed) {
 		if (vsp < -2.6) {
 			vsp = -2.6;
 		}
-		dropdash = 1
 		playsfx("sonicairdash")
 		dashed = true;
 		var _move = (right-left)
 		if (_move == 0) {
 			_move = xsc	
 		}
-		var dash_speed = 2.44
-		hsp += (dash_speed *_move) - clamp(hsp,-dash_speed,dash_speed) + (0.44 * _move)
+		var dash_speed = 3
+		var max_dash_speed = 8;
+		if (sign(hsp) == _move) {
+			hsp = clamp(hsp + (dash_speed *_move), -max_dash_speed, max_dash_speed)  + (0.33 * _move);
+		} else {
+			hsp += (dash_speed * _move)*1.33;
+		}
 	}
 }
 
@@ -457,10 +457,6 @@ if (state != "") {
 	wait_timer = 0;
 }
 
-if (dropdash && dropdash_timer >= 18) {
-	spriteEvent="dropDash"
-}
-
 if (hurt || state == "frozen") {
 	spriteEvent="hurt"
 	if (dead) {
@@ -591,30 +587,12 @@ if (abs(colangle) >= 24 && abs(colangle) <= 90)
 	gsp = min(abs(gsp), 5.25) * sign(gsp)
 }
 
-if (dropdash && dropdash_timer >= 18) {
-	stopsfx("sonicdropdash")
-	playsfx("sonicrelease")
-	if (sign(hsp) == move) {
-		gsp = (gsp / 4) + (dropdash_spd * xsc)
-	} else {
-		if (colangle == 0) {
-			gsp = dropdash_spd * xsc
-		} else {
-			gsp = (gsp / 2) + (dropdash_spd * xsc)
-		}
-	}
-	state = "roll";
-	gsp = clamp(gsp,-max_dropdash_spd, max_dropdash_spd)
-	
-}
-dropdash_timer = 0
-dropdash = 0
-
 vsp = 0
 
-if (activebound){
-	var heights = [0,3.7,4.75,6.45]
+if (activebound) {
+	var heights = [3.7,4.75,6.45]
 	vsp -= heights[boundjump] * dcos(colangle);	
+	show_debug_message(vsp)
 	hsp -= heights[boundjump] * dsin(colangle);
 	activebound = false;
 	grounded = false;
@@ -623,7 +601,7 @@ if (activebound){
 	boundjump = 0;
 }
 
-#define sprung
+#define sprung_up
 canstopjump = true;
 crouch = false;
 if state != "frozen" {

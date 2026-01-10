@@ -91,6 +91,7 @@ wait_timer=0;	//wait animation
 was_frozen=false;
 frozen_health=5;
 sprung=0;
+terminal_vel=5.75;
 
 pollenated=false;
 pollenPart=-1;

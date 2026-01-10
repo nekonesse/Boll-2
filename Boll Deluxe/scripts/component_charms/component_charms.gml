@@ -1,6 +1,6 @@
 function component_gravity_coneyor(){
 	
-	vsp = min(5.75, vsp + grav);
+	vsp = min(terminal_vel, vsp + grav);
 	canjump = max(0, canjump-1);
 		
 	// chearii: coneyor speed management
