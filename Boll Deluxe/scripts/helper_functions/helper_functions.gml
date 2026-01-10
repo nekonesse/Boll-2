@@ -29,13 +29,13 @@ function check_signs_matching(a, b)
     return (sign(a) == sign(b));
 }
 
-function draw_sprite_circle(sprite,subimg,xdraw,ydraw,xscale,yscale,radius,quantity,circleAngle){
+function draw_sprite_circle(sprite,subimg,xdraw,ydraw,xscale,yscale,radius,quantity,circleAngle,sRot=0,blend=$FFFFFF,alpha=1){
 	var tempReal=0;
 	repeat(quantity){
 		draw_sprite_ext(sprite,subimg,
 		((radius)*sin(tempReal+(circleAngle)))+xdraw,
 		((radius)*cos(tempReal+(circleAngle)))+ydraw,
-		xscale,yscale,0,#FFFFFF,1)
+		xscale,yscale,sRot,blend,alpha)
 		tempReal+=(pi*2)/quantity
 	}
 }

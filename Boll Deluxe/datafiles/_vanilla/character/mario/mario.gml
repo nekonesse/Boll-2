@@ -802,6 +802,7 @@ bonk = 12
 if (state == "dive") {
 	VinylPlay(asset_get_index("snd_blockbump"))
 	make_particle(pImpact, x + hit_sizex*xsc, y)
+	make_particle(pBonkStars, x + hit_sizex*xsc, y)
 	hit_block(x+(hit_sizex+1)*xsc,y-hit_sizey+2,x+(hit_sizex+1)*xsc,y+hit_sizey-2)
 	hsp= -1 * xsc
 	vsp= -2
