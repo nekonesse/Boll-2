@@ -238,6 +238,7 @@ if (state == "jump") && !(piped) {
 		boundjump = min(2, boundjump + 1);
 		activebound = true;
 		vsp = 8;
+		hsp = (hsp / 2);
 		stopsfx("sonicbounce")
 		playsfx("sonicbounce")
 	}
