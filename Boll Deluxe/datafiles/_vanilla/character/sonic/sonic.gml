@@ -256,12 +256,12 @@ if (state == "jump") && !(piped) {
 		if (_move == 0) {
 			_move = xsc	
 		}
-		var dash_speed = 3
-		var max_dash_speed = 8;
+		var dash_speed = 1.5;
+		var max_dash_speed = 7;
 		if (sign(hsp) == _move) {
 			hsp = clamp(hsp + (dash_speed *_move), -max_dash_speed, max_dash_speed)  + (0.33 * _move);
 		} else {
-			hsp += (dash_speed * _move)*1.33;
+			hsp += ((dash_speed * 2) * _move)*dash_speed;
 		}
 	}
 }
