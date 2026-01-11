@@ -104,11 +104,11 @@ if (state == "jump" || state == "roll" || state == "spindash" || state == "crouc
 	hit_sizey = 6
 }
 
-topspd = 3 + ((size != "mini") * 0.5);
+topspd = 3 + ((size != "mini") * 0.5) + ((invincible_type == 2) / 1.25);
 if (dashed){
 	afterimage = true
 	if (grounded) {
-		topspd = 6.5
+		topspd = 6.5 + ((invincible_type == 2) / 1.25);
 	}
 } else {
 	afterimage = false
@@ -518,6 +518,9 @@ grow = 60;
 
 #define star
 VinylPlay(asset_get_index("snd_powerup"));
+with (oGameManager) {
+	event_user(2);
+}
 invincible_type = 2;                                                                               
 invincible_timer = 510;
 
