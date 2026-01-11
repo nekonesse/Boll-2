@@ -58,7 +58,7 @@ function component_mario_skidding_fx(){
 function component_mario_start_spinjump(startingJumpValue = 5.2){
 	
 	grounded=false;
-	spinjump=1
+	spinjump=true;
 	crouch=0
 	playsfx(charmName+"spinjump")
 	vsp=-(startingJumpValue+min(1,abs(hsp)/10))
@@ -86,7 +86,7 @@ function component_mario_start_dive(speedX = 3.5, speedY = -2.7){
 	canstopjump=false	
 }
 
-function component_mario_wallslide(slideSpeed = 1, jumpVSpeed = -5, jumpHSpeed = -2.5){
+function component_mario_wallslide(slideSpeed = 1, jumpVSpeed = 5, jumpHSpeed = 2.5, canSpinjump = true){
 	
 	vsp=slideSpeed;
 	var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-(hit_sizey-2),x+((hit_sizex+1)*xsc),y+(hit_sizey-2),COL_WALL)
@@ -96,9 +96,9 @@ function component_mario_wallslide(slideSpeed = 1, jumpVSpeed = -5, jumpHSpeed =
 	}
 	
 	if (apress) {
-		hsp=esign(move,xsc)*jumpHSpeed
+		hsp=esign(move,xsc)*-jumpHSpeed
 		frame=0;
-		vsp=jumpVSpeed
+		vsp=-jumpVSpeed
 		move=-move
 		xsc=esign(hsp,xsc)
 		no_move=true;
@@ -107,6 +107,16 @@ function component_mario_wallslide(slideSpeed = 1, jumpVSpeed = -5, jumpHSpeed =
 		state = "jump";
 		wallkick = true;
 	}	
+	
+	if (canSpinjump) && (cpress) {
+		hsp=esign(move,xsc)*-jumpHSpeed
+		frame=0;
+		move=-move
+		xsc=esign(hsp,xsc)
+		no_move=true;
+		alarm_set(2,12);
+		component_mario_start_spinjump(jumpVSpeed);
+	}
 }
 
 function component_mario_start_groundpound(){

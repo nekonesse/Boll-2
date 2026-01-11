@@ -136,7 +136,11 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 	if (bpress) && (size=="fire") && (has_fired < 2) && (state != "roll") && (state != "wallrun"){
 		var proj=instance_create_depth(x+(hit_sizex+3)*xsc,y+hit_sizey-12,2,oFireball)
 		proj.hsp=3.75*xsc
-		proj.vsp=2
+		if !(up) {
+			proj.vsp = 2
+		} else {
+			proj.vsp = -4;
+		}
 		proj.owner=id
 		VinylPlay(asset_get_index("snd_fireball"))
 		
@@ -231,7 +235,7 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 }
 	
 #region Jumping
-if (state == "jump") && !(piped) {
+if (state == "jump") && !(piped) && !(hurt) && (state!="frozen") {
 	slopesliding = 0
 	
 	if (apress && vsp >= -2.6 && !activebound) {
@@ -554,6 +558,10 @@ if !(invincible_type && invincible_timer) {
 bonk = 12
 
 #define floor_land
+if (invincible_type != 2) && (state != "roll") && (state != "spindash") {
+	stompCombo = 0;
+}
+
 canstopjump = false;
 if state!="wallrun" && state!="frozen" {
 	state = "";

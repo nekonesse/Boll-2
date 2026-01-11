@@ -55,7 +55,6 @@ function player_poly_collision()
 			// landed on a polygon, do the usual landing routine
 			if self.object_index = oPlayer{
 				sig.Emit("floor_land")
-				stompCombo = 0;
 			} else {
 				gsp = hsp
 				vsp = 0	
@@ -160,7 +159,6 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 					posy = y 
 				}
 				sig.Emit("floor_land")
-				stompCombo = 0;
 			} else {
 				gsp = hsp
 				vsp = 0	

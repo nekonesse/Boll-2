@@ -13,18 +13,16 @@ if (blowing) {
 				if !(dead) && !(hurt) && !(state == "frozen") && !(piped) && !(invincible_type == 2) {
 					hsp=-3*other.xsc
 					gsp=-3*other.xsc
-				
-					if (state!="frozen") {
-						foundplayer=true
-						state = "frozen"
-						sig.Emit("on_freeze")
-						while (check_collision_line(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey,COL_BOTTOM)) {
-							y-=1
-						}
-						frozen_health = 5
-						other.phaseid = id;
-						other.phase_leeway = 5;
+					foundplayer=true
+					state = "frozen"
+					sig.Emit("on_freeze")
+					while (check_collision_line(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey,COL_BOTTOM)) {
+						y-=1
 					}
+					frozen_health = 5
+					other.phaseid = id;
+					other.phase_leeway = 5;
+					vsp = 0;
 				}
 			}
 			i++;

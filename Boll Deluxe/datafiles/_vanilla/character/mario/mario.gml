@@ -9,6 +9,7 @@ fric = 0.07;
 friction_mult = 1;
 runvar = 0;
 runjump = false;
+starmanjump = false;
 dusttimer = 1;
 skidding = 0;
 skiddir = 0;
@@ -221,8 +222,12 @@ if (state == "" || state == "jump" || state == "dive") && !piped && !electrocute
 	
 	if (bpress) && (size=="fire") && state != "dive"&& (has_fired < 2) && !(slopesliding) {
 		var proj=instance_create_depth(x+(hit_sizex+3)*xsc,y+hit_sizey-12,2,oFireball)
-		proj.hsp=2.5*xsc
-		proj.vsp=2
+		proj.hsp=3.75*xsc
+		if !(up) {
+			proj.vsp = 2
+		} else {
+			proj.vsp = -4;
+		}
 		proj.owner=id
 		VinylPlay(asset_get_index("snd_fireball"))
 		
@@ -355,7 +360,7 @@ if (state == "jump" || state == "") && !(grounded) && !piped && !(stun) {
 		steep_slope = false;
 	}
 	
-	if (move != 0) && !(crouch) {
+	if (move != 0) && !(crouch) && !(spinjump) {
 		//wall sliding
 		var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
 		if (!grounded) && !(stun) && !(hurt) && (coll) && (vsp > 0) {
@@ -368,11 +373,18 @@ if ((state == "" || state=="crouch") && !hurt && !stun && apress && canjump > 0 
 	grounded = false
 	state = "jump"
 	vsp = -(4.65+(clamp(abs(hsp)/3.14,0.5,1.7) * 1.2)+(bool(poundjump)+0.5)); //preform the actual jump
+	
 	playsfx(charmName+"jump",1+(bool(poundjump)/4),0,1)
 	if (run && abs(hsp)>3) && !(is_grabbing) {
 		//visual maxspeed jump
-		runjump=1
+		runjump=true
 	}
+	
+	if (invincible_type) == 2 {
+		starmanjump = true;
+		runjump = false;
+	}
+	
 	canjump = 0;
 	//Jump Particles
 	if (poundjump) {
@@ -393,6 +405,7 @@ if ((state == "" || state=="crouch") && !hurt && !stun && apress && canjump > 0 
 if (state == "wallslide") && !piped && !(stun) {
 	component_mario_wallslide()
 }
+
 #endregion
 
 #region Spinjumping & Diving
@@ -587,7 +600,7 @@ if (state == "jump") {
 	if (vsp>0) {
 		if !(crouch) {
 			if !(is_grabbing) {
-				spriteEvent="fall"
+				spriteEvent="jump"
 			} else {
 				spriteEvent="carryFall"
 			}
@@ -600,7 +613,9 @@ if (state == "jump") {
 		}
 	}
 	
-	if (runjump) && !(crouch) && !(is_grabbing) {
+	if (starmanjump) {
+		spriteEvent="roll"
+	} else if (runjump) && !(crouch) && !(is_grabbing) && (invincible_type != 2) {
 		spriteEvent="runJump"
 	}
 	
@@ -813,6 +828,10 @@ if (state == "dive") {
 }
 
 #define floor_land
+if (invincible_type != 2) && !(slopesliding) {
+	stompCombo = 0;
+}
+
 gsp = hsp
 
 make_particle(pSkidDust, x - 1, y + hit_sizey, depth + 5, 1, -2.25, -0.1, -0.02, 0.2);

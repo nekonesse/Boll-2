@@ -19,7 +19,6 @@ var coll=collision_line(x+checkside,y-hit_sizey,x+checkside,y+hit_sizey+vsp,[oFr
 if (coll) {
 	with(coll) {
 		event_user(0);
-		show_debug_message("triggered user event 0")
 	}
 	if (owner!=-1) {
 		owner.has_fired-=1;
