@@ -32,7 +32,7 @@
     {"$GMTileAnimation":"","%Name":"animation_3","frames":[17,45,],"name":"animation_3","resourceType":"GMTileAnimation","resourceVersion":"2.0",},
     {"$GMTileAnimation":"","%Name":"animation_4","frames":[18,46,],"name":"animation_4","resourceType":"GMTileAnimation","resourceVersion":"2.0",},
   ],
-  "tileAnimationSpeed":15.0,
+  "tileAnimationSpeed":5.0,
   "tileHeight":16,
   "tilehsep":0,
   "tilevsep":0,

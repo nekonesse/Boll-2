@@ -1508,6 +1508,7 @@ function JADElayerlisthandler(_x, _y, _width, _height, _checkvar) constructor {
 						if (i>grabbed_layer) insertion-=1
 						array_insert(listcontents,clamp(insertion,0,array_length(listcontents)),item)
 						grabbed_layer=-1;
+						update_depths();
 						break;
 					}
 					
