@@ -602,7 +602,7 @@ if (abs(colangle) >= 24 && abs(colangle) <= 90)
 vsp = 0
 
 if (activebound) {
-	var heights = [4.5,5.33,6.25]
+	var heights = [5.33,5.8,6.25]
 	vsp -= heights[boundjump] * dcos(colangle);
 	hsp -= heights[boundjump] * dsin(colangle);
 	activebound = false;
