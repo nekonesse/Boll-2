@@ -238,7 +238,7 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 if (state == "jump") && !(piped) && !(hurt) && (state!="frozen") {
 	slopesliding = 0
 	
-	if (apress && vsp >= -2.6 && !activebound) {
+	if (cpress && vsp >= -2.6 && !activebound) {
 		activebound = true;
 		vsp = 8;
 		hsp = (hsp / 2);
@@ -250,7 +250,7 @@ if (state == "jump") && !(piped) && !(hurt) && (state!="frozen") {
 		vsp = -2.6;
 	}
 	
-	if (cpress) && !(dashed) {
+	if (apress) && !(dashed) {
 		if (vsp < -2.6) {
 			vsp = -2.6;
 		}
