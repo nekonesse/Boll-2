@@ -31,6 +31,9 @@ function node_path_movement(movePlayer=true) {
 				rotorgx=median(rotorgx,pathing[pathprenum][0],arr[0]); //prevent overshooting
 				rotorgy=median(rotorgy,pathing[pathprenum][1],arr[1]);
 			}
+		} else {
+			vsp = min(3,vsp+grav);
+			y += vsp;
 		}
 	
 		var checkx=x;

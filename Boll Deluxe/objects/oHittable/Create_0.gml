@@ -65,5 +65,3 @@ blockHit.Connect( self, function(hit_p, obj) {
 
 	ds_list_destroy(_list);
 });
-
-node_init_vars()

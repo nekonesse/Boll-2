@@ -1,4 +1,5 @@
 ///@description update JADE variables
+event_inherited();
 switch (dir) {
 	case "up": image_index=0 break;
 	case "down": image_index=1 break;
@@ -6,4 +7,3 @@ switch (dir) {
 	case "right": image_index=3 break;
 	case "none": image_index=4 break;
 }
-node_init_post()

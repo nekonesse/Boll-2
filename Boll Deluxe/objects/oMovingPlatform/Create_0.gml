@@ -16,7 +16,3 @@ spd=0.5;
 image_speed=0;
 depth=5;
 fr=0
-
-image_yscale=1;
-
-node_init_vars()
