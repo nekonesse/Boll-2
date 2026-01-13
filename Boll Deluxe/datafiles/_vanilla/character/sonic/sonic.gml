@@ -156,7 +156,6 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 			terminal_vel = 8;
 		}
 		component_gravity_coneyor()
-		show_debug_message(terminal_vel)
 		skidding = 0;
 		// Switch direction
 		//add more checks here to prevent left/right changing direction
@@ -246,7 +245,9 @@ if (state == "jump") && !(piped) && !(hurt) && (state!="frozen") {
 		playsfx("sonicbounce")
 	}
 	
-	if (!akey && vsp < -2.6 && !canstopjump) {//Make player jump lower when jump is released
+	show_debug_message(boundjump)
+	
+	if (((!akey && !boundjump) || (!ckey && boundjump)) && vsp < -2.6 && !canstopjump) { //Make player jump lower when jump is released
 		vsp = -2.6;
 	}
 	
@@ -602,15 +603,14 @@ vsp = 0
 
 if (activebound) {
 	var heights = [4.5,5.33,6.25]
-	vsp -= heights[boundjump] * dcos(colangle);	
-	show_debug_message(vsp)
+	vsp -= heights[boundjump] * dcos(colangle);
 	hsp -= heights[boundjump] * dsin(colangle);
 	activebound = false;
 	grounded = false;
 	state = "jump"
 	boundjump = min(2, boundjump + 1);
 } else {
-	boundjump = 0;
+	boundjump = false;
 }
 
 #define sprung_up
@@ -619,7 +619,7 @@ crouch = false;
 if state != "frozen" {
 	state = "";
 }
-boundactive = false;
+activebound = false;
 
 #define enemy_stomped
 vsp= -(4+akey*1.5)
@@ -635,7 +635,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 		canstopjump=true
 		state=""
 		grounded=false
-		boundactive = false;
+		activebound = false;
 		oldsize = size;
 		switch (size) {
 			case "basic": {
@@ -656,7 +656,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 		VinylPlay(snd_enemykick)
 		signal_emit(coll.enemyRolledInto, id);
 		increase_combo(coll.x,coll.y);
-		boundactive = false;
+		activebound = false;
 	}
 }
 
@@ -669,7 +669,7 @@ hsp= -2.25 * xsc
 vsp= -4
 canstopjump=true
 state=""
-boundactive = false;
+activebound = false;
 grounded=false
 oldsize = size;
 switch (size) {
@@ -696,7 +696,7 @@ electrocution_timer=60;
 
 
 #define hurt_by_electrocution
-boundactive = false;
+activebound = false;
 stopsfx(charmName+"damage")
 electrocuted = false;
 hurt=1
