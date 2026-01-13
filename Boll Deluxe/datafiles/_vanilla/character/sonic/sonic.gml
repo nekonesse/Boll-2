@@ -610,7 +610,7 @@ if (activebound) {
 	state = "jump"
 	boundjump = min(2, boundjump + 1);
 } else {
-	boundjump = false;
+	boundjump = 0;
 }
 
 #define sprung_up
