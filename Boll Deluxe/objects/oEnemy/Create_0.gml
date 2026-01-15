@@ -111,7 +111,7 @@ enemyShelled.Connect( self, function(hit_obj, kick_p) {
 enemyRolledInto.Connect( self, function(hit_p) {
 	hp-= 1
 	vsp=-4;
-	phaseid=id
+	phaseid=hit_p
 	phase_leeway=15;
 	killdir= esign(x-x,1)
 	killhsp= max(abs(hit_p.hsp)/1.75,2)

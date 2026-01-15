@@ -935,6 +935,15 @@ function JADEproperties() constructor {
 		array_push(property_values[$ objn], [variable_name, default_val])
 	}
 	
+	static addTylerPicker = function(obj, name, variable_name) {
+		var objn = object_get_name(obj)
+		var struct = {};
+		struct[$ "type"]="tylerpicker"
+		struct[$ "name"]=name
+		array_push(property_data[$ objn], struct)
+		array_push(property_values[$ objn], [variable_name, [0,0,1,1]])
+	}
+	
 	static getDefaultValues = function(obj) {
 		return property_values[$ obj]
 	}

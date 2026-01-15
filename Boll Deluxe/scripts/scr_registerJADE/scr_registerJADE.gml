@@ -215,6 +215,13 @@ function JADE_initializeobj() {
 	
 	objectlist.add(stagecomp);
 	
+	var technical = new JADElistcategory("Technical")
+	
+	registerobj(oTyler, spr_tyler, 0, 0, 16, 16, false, false, technical, "Tyler")
+	properties.addTylerPicker(oTyler,"UV","uv")
+	
+	objectlist.add(technical);
+	
 	var npcs = new JADElistcategory("NPCs")
 	
 	registerobj(oNPCparent, spr_collider_poly, 0, 0, 16, 16, false, false, npcs, "Blank NPC")

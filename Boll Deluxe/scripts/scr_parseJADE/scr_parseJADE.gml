@@ -82,6 +82,7 @@ function parse_level(dir=game_save_id+"\save.jade") {
 						layer_background_vtiled(_layer.my_deco_layer, _layer.tiled_v)
 						with(oBackgroundManager) {
 							array_push(bglayers, _layer);
+							array_push(layers, _layer);
 						}
 					}
 				} else {

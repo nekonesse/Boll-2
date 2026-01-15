@@ -29,6 +29,7 @@ function player_interactions(){
 				enemy.enemyRolledInto.Emit(id);
 				
 				make_particle(pImpact,enemy.x+enemy.xsc,enemy.y,2)
+				show_debug_message("test!");
 				
 				increase_combo(enemy.x,enemy.y);
 			}
