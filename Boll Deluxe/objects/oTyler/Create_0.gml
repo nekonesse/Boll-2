@@ -1,0 +1,11 @@
+uv = [];
+tileset = "tTilesetMain"
+off_x = 0;
+off_y = 0;
+my_depth = 0;
+offset_depth = 0;
+repeat_x = 0;
+repeat_y = 0;
+mirror = false;
+flip = false;
+rotate = false;

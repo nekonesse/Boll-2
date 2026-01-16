@@ -632,6 +632,7 @@ properties_tab_active = false;
 property_dropdown_index = -1;
 property_object_index = -1;
 
+
 pressed_dropdown = false;
 
 check_colliding_object = function(_x,_y,_map=object_map) {

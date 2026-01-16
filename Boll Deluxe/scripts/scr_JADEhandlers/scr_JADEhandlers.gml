@@ -77,7 +77,7 @@ function JADEsmallbuttons(_x, _y, _width, _height, spacing=8, is_toggle=true, in
 				_x2 = x+width+(width+button_spacing)*i
 				_y2 = y+height
 			} else {
-				_x1 = x
+				_x1 = xjade
 				_y1 = y+(height+button_spacing)*i
 				_x2 = x+width
 				_y2 = y+height+(height+button_spacing)*i
@@ -771,6 +771,9 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 					case "dropdown": {
 						JADEdropdownproperty(x+16,y+144+32*i, item[$ "name"], obj[5][i][1], i, objarr[0], item[$ "dropdowndata"], item[$ "dropdownnames"])
 					} break;
+					case "tylerpicker": {
+						JADEtylerpicker(x+16,y+144+32*i, item[$ "name"], obj[5][i][1], i, objarr[0])
+					} break;
 				}
 				
 				i++;
@@ -1200,6 +1203,54 @@ function JADEdropdownproperty(_x, _y, _name, _var, _index, obj_ind, _options, _n
 			instance_destroy(inst,false)
 			oJADEController.property_dropdown_index=-1;
 			oJADEController.property_object_index = -1;
+		}
+	}
+}
+
+function JADEtylerpicker(_x, _y, _name, _var, _index, obj_ind) {
+	
+	static inst = noone;
+	
+	var curs_x = window_mouse_get_x()
+	var curs_y = window_mouse_get_y()
+	
+	var mbleft = mouse_check_button_pressed(mb_left);
+	
+	draw_set_font(global.rulerGold)
+	draw_text(_x,_y+6, $"{_name}:")
+	var spacing = string_width($"{_name}:")+8
+	
+	var width = 64;
+	var height = 16;
+	
+	var buttoncolor;
+	var overinp = point_in_rectangle(curs_x,curs_y,_x+spacing,_y+2,_x+width+spacing,_y+height);
+	if (instance_exists(oJADETylerPicker)) {
+		buttoncolor = oJADEController.themeaccent2
+	} else {
+		if !(overinp) {
+			buttoncolor = oJADEController.themeaccent4
+		} else {
+			buttoncolor = oJADEController.themeaccent2
+		}
+	}
+			
+	draw_gui(_x+spacing,_y+2,width,height,buttoncolor, 1)
+	var halign = draw_get_halign();
+	var valign = draw_get_valign();
+	draw_set_halign(0);
+	draw_set_valign(fa_middle);
+	draw_text(_x+spacing+2,_y+height/2+5,"Edit UVs")
+	draw_set_halign(halign);
+	draw_set_valign(valign);
+	
+	if (mbleft) && (overinp) {
+ 		if !instance_exists(inst){
+			inst=instance_create_depth(oJADEController.guiw/2,oJADEController.guih/2,oJADEController.depth-1,oJADETylerPicker)
+			inst.picker_property_index = _index
+			inst.picker_object_index = obj_ind
+		} else {
+			instance_destroy(inst,false)
 		}
 	}
 }

@@ -1,0 +1,1 @@
+depth = (my_depth*100) + offset_depth

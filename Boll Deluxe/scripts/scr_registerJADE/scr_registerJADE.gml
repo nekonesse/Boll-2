@@ -50,6 +50,25 @@ function JADE_initializeobj() {
 	});
 	list_tabbuttons.selected_button=0
 	
+	
+	var tilesetlist=[
+	"tTilesetMain",
+	"tTilesetPipes",
+	"tTilesetMainDeco",
+	"tTilesetWorld5",
+	"tTilesetPipesW5",
+	"tTilesetWorld5Deco",
+	"tTilesetBowserLand",
+	]
+
+	//auto generation the list of names for dropdown, dont touch!
+	var tilesetnames=[];
+	var i=0;
+	repeat(array_length(tilesetlist)) {
+		array_push(tilesetnames, global.tilesets[$ tilesetlist[i]][2])
+		i++;
+	}
+	
 	//registerobj(oPlayerSpawn, spr_spawner, 8, 8, 16, 16, false, false, objectlist, "Player Spawn") //Replaced with spawn tool
 	registerobj(oCollider, spr_collider, 0, 0, 16, 16, true, true, objectlist, "Collider", true)
 	properties.addCheckbox(oCollider, "Is Slippery", "slippery", false)
@@ -219,6 +238,16 @@ function JADE_initializeobj() {
 	
 	registerobj(oTyler, spr_tyler, 0, 0, 16, 16, false, false, technical, "Tyler")
 	properties.addTylerPicker(oTyler,"UV","uv")
+	properties.addDropdown(oTyler,"Tileset","tileset",tilesetlist[0],tilesetnames,tilesetlist)
+	properties.addNumberInput(oTyler,"Offset X","off_x", 0)
+	properties.addNumberInput(oTyler,"Offset Y","off_y", 0)
+	properties.addNumberInput(oTyler,"Layer Depth","my_depth", 0)
+	properties.addNumberInput(oTyler,"Offset Depth","offset_depth", 0)
+	properties.addNumberInput(oTyler,"Repeat X","repeat_x", 0)
+	properties.addNumberInput(oTyler,"Repeat Y","repeat_y", 0)
+	properties.addCheckbox(oTyler,"Mirror","mirror", false)
+	properties.addCheckbox(oTyler,"Flip","flip", false)
+	properties.addCheckbox(oTyler,"Rotate","rotate", false)
 	
 	objectlist.add(technical);
 	

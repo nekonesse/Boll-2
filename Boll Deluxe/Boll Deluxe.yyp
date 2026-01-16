@@ -594,6 +594,7 @@
     {"id":{"name":"oJADEGUIpar","path":"objects/oJADEGUIpar/oJADEGUIpar.yy",},},
     {"id":{"name":"oJADELayerProperties","path":"objects/oJADELayerProperties/oJADELayerProperties.yy",},},
     {"id":{"name":"oJADELevelProperties","path":"objects/oJADELevelProperties/oJADELevelProperties.yy",},},
+    {"id":{"name":"oJADETylerPicker","path":"objects/oJADETylerPicker/oJADETylerPicker.yy",},},
     {"id":{"name":"oJumpingPiranha","path":"objects/oJumpingPiranha/oJumpingPiranha.yy",},},
     {"id":{"name":"oKoopa","path":"objects/oKoopa/oKoopa.yy",},},
     {"id":{"name":"oKoopaRed","path":"objects/oKoopaRed/oKoopaRed.yy",},},
