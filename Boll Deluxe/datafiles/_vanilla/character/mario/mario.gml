@@ -601,7 +601,7 @@ if (state == "jump") {
 	if (vsp>0) {
 		if !(crouch) {
 			if !(is_grabbing) {
-				spriteEvent="jump"
+				spriteEvent="fall"
 			} else {
 				spriteEvent="carryFall"
 			}
