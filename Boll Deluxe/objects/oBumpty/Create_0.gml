@@ -5,8 +5,8 @@ bumpPower = 4;
 deal_dam = false;
 
 timer = 0;
-slidetimer = 0;
-directiontimer = 0;
+
+state = 0;
 
 sliding = false;
 

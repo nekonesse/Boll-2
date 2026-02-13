@@ -200,7 +200,7 @@ function JADE_initializeobj() {
 	registerobj(oPolarBear, spr_polarbear, 8, 9, 16, 16, false, false, enemies, "Polar Bear")
 	properties.addNumberInput(oPolarBear, "Balloon Height", "bheight", 4, true)
 	registerobj(oBumpty, spr_bumpty, 8, 9, 16, 16, false, false, enemies, "Bumpty")
-	properties.addDropdown(oBumpty, "Behavior", "behavior_mode", bumptyBehaviors.wander_mode, ["Wander", "Jumping", "Flying"], [bumptyBehaviors.wander_mode, bumptyBehaviors.jumping_mode, bumptyBehaviors.flying_mode])
+	properties.addDropdown(oBumpty, "Behavior", "behavior_mode", bumptyBehaviors.wander_mode, ["Wander", "Chasing", "Flying"], [bumptyBehaviors.wander_mode, bumptyBehaviors.jumping_mode, bumptyBehaviors.flying_mode])
 	registerobj(oStopbob, spr_stopbob, 8, 8, 16, 16, false, false, enemies, "Stopbob")
 	properties.addNumberInput(oStopbob, "Timer Offset", "timer_offset", 0, true)
 	registerobj(oFrozenEnemy, spr_frozenenemy, 16, 16, 32, 32, false, false, enemies, "Frozen Enemy")

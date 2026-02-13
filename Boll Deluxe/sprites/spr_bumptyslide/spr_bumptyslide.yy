@@ -72,7 +72,7 @@
     },
     "name":"spr_bumptyslide",
     "playback":1,
-    "playbackSpeed":33.0,
+    "playbackSpeed":40.0,
     "playbackSpeedType":0,
     "resourceType":"GMSequence",
     "resourceVersion":"2.0",

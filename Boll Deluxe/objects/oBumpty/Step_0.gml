@@ -49,43 +49,47 @@ switch(behavior_mode) {
 	break;
 	case bumptyBehaviors.jumping_mode:
 		if !(sliding) && !(bumped) {
-			if (grounded) {
-				timer = max(timer-1,0);
-				if !(timer) {
-					if !(looking_around) {
-						if chance(0.66) {
-							vsp = -4; //jump
-							grounded = false;
-						} else {
-							looking_around = true //wait
-							hsp = 0;
-							slidetimer = irandom_range(60,120);
-						}
-					} else {
+			timer = max(timer-1,0);
+			if !(timer) && (grounded) {
+				switch(state) {
+					case 0:
+						timer = 8;
+						vsp = -4; //jump
+						constantspd = 2.5;
+						grounded = false;
+						state++;
+					break;
+					case 1:
+						sliding = true;
+						walker = false;
+					break;
+					case 2:
+						overridexsc = true;
+						xsc=-xsc;
+						_direction=-_direction;
+						hsp = 0;
+						constantspd = 0;
+						vsp = -4;
+						grounded = false;
+						timer = 0;
+						state++;
+					break;
+					case 3:
+						overridexsc = false;
+						timer=20;
+						looking_around = true;
+						state++;
+					break;
+					case 4:
 						looking_around = false;
-					}
-					timer = irandom_range(30,90);
-				}
-				
-				directiontimer=max(directiontimer-1, 0);
-				if !(directiontimer) {
-					var player = nearestplayer();
-					if (_direction != sign(player.x-x)) {
-						enemyTurnAround.Emit();
-					}
-					directiontimer = irandom_range(20,40);
-				}
-			}
-			
-			if !(looking_around) {
-				var speedcap = 1.5;
-				if !(grounded) speedcap = 2.5;
-				hsp = approach_val(hsp, speedcap*_direction, 0.1);				
-				
-				slidetimer = max(slidetimer-1,0);
-				if !(slidetimer) {
-					sliding = true;
-					hsp = 3*_direction;
+						var player = nearestplayer();
+						if (_direction != sign(player.x-x)) {
+							enemyTurnAround.Emit();
+						}
+						timer=30;
+						constantspd = 1.5;
+						state=0;
+					break;
 				}
 			}
 		}
@@ -94,14 +98,19 @@ switch(behavior_mode) {
 
 if (sliding) {
 	walker = false;
-	hsp = approach_val(hsp, 0, 0.025);
-	
-	if (grounded) && (abs(hsp) <= 0.2) {
-		if (behavior_mode == bumptyBehaviors.wander_mode) {
+	no_turn_anim = true;
+	if (grounded) {
+		hsp = approach_val(hsp, 0, 0.01);
+		if (abs(hsp) <= 0.2) {
+			no_turn_anim = false;
 			walker = true;
+			if (behavior_mode == bumptyBehaviors.jumping_mode) {
+				state++;
+				constantspd = 1.5;
+				timer=0;
+			}
+			sliding = false;
 		}
-		sliding = false;
-		slidetimer = irandom_range(60,120);
 	}
 }
 

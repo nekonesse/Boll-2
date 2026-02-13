@@ -4,6 +4,7 @@ event_inherited();
 switch(behavior_mode) {
 	case bumptyBehaviors.wander_mode:
 		timer = irandom_range(60,120);
+		edgeturn = true;
 	break;
 	case bumptyBehaviors.flying_mode:
 		timer = 180;
@@ -12,8 +13,7 @@ switch(behavior_mode) {
 		gsp=0;
 	break;
 	case bumptyBehaviors.jumping_mode:
-		walker = false;
-		timer = irandom_range(30,90);
-		slidetimer = irandom_range(60,120);
+		timer = 15;
+		constantspd = 1.5;
 	break;
 }
