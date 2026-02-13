@@ -37,6 +37,7 @@ killvsp=-3;
 piped = false
 grounded = false
 overridexsc = false
+no_turn_anim = false;
 turnxsc = 1;
 
 hit_sizex = 6

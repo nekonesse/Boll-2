@@ -13,7 +13,7 @@ if (in_shell) {
 		}
 	} else {
 		var blocklist=ds_list_create();
-		var num=collision_line_list(x+(hit_sizex*-xsc)+hsp,y-(hit_sizey-2),x+(hit_sizex*-xsc)+hsp,y+(hit_sizey-2),oHittable, false, true, blocklist, true)
+		var num=collision_line_list(x+(hit_sizex*_direction)+hsp,y-(hit_sizey-2),x+(hit_sizex*_direction)+hsp,y+(hit_sizey-2),oHittable, false, true, blocklist, true)
 
 		var found_block=false;
 		if (num > 0) {

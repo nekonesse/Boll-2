@@ -105,7 +105,7 @@ if (sprite_index!=prevsprite_index) {
 	event_user(1); //reset frame
 }
 
-if (turning) && !(in_shell) {
+if (turning) && !(in_shell) && !(no_turn_anim) {
 	flipped = 0;
 	turning=max(0,turning-1);
 	xsc = -turnxsc;

@@ -1581,6 +1581,7 @@
     {"id":{"name":"spr_bumptyfly","path":"sprites/spr_bumptyfly/spr_bumptyfly.yy",},},
     {"id":{"name":"spr_bumptyflyturn","path":"sprites/spr_bumptyflyturn/spr_bumptyflyturn.yy",},},
     {"id":{"name":"spr_bumptyhoverfall","path":"sprites/spr_bumptyhoverfall/spr_bumptyhoverfall.yy",},},
+    {"id":{"name":"spr_bumptylooking","path":"sprites/spr_bumptylooking/spr_bumptylooking.yy",},},
     {"id":{"name":"spr_bumptyslide","path":"sprites/spr_bumptyslide/spr_bumptyslide.yy",},},
     {"id":{"name":"spr_bumptyspin","path":"sprites/spr_bumptyspin/spr_bumptyspin.yy",},},
     {"id":{"name":"spr_bumptyturn","path":"sprites/spr_bumptyturn/spr_bumptyturn.yy",},},
