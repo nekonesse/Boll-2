@@ -627,7 +627,7 @@ vsp= -(4+akey*1.5)
 #define collide_with_enemy
 var coll=check_hitbox_on_hitbox(id, oEnemy)
 if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
-	if ((state != "roll") && (state != "jump") && (state != "spindash") || coll.damage_on_contact) && !(invincible_type && invincible_timer){
+	if ((state != "roll") && (state != "jump") && (state != "spindash") || coll.damage_on_contact) && !(invincible_type && invincible_timer) && (coll.deal_dam) {
 		stopsfx(charmName+"damage")
 		hurt=1
 		hsp = -2.25 * xsc
@@ -651,7 +651,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 			} break
 		}
 		grow = 60;
-	} else if !(invincible_type) || (state == "spindash") {
+	} else if (invincible_type == 2) || (state == "spindash") {
 		make_particle(pImpact,coll.x+coll.xsc,coll.y,2)
 		VinylPlay(snd_enemykick)
 		signal_emit(coll.enemyRolledInto, id);

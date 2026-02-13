@@ -35,8 +35,7 @@ onStunRecover.Connect( self, function() {
 	overridexsc=false;
 });
 
-delete enemyCollidePlayer; //override
-enemyCollidePlayer = new Signal();
+enemyCollidePlayer.Destroy(); //override
 
 enemyCollidePlayer.Connect( self, function(hit_p) {
 	if !(stun) {

@@ -10,7 +10,7 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":0.37950113,
+  "duration":0.0,
   "exportDir":"",
   "name":"snd_enemyexplode",
   "parent":{

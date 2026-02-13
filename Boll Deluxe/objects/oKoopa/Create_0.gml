@@ -18,8 +18,7 @@ getup_timer = 0;
 
 koopaEscapeShell = new Signal();
 
-delete enemyStomped;
-enemyStomped = new Signal();
+enemyStomped.Destroy();
 
 enemyStomped.Connect( self, function(hit_p) {
 	if (phaseid!=hit_p) {

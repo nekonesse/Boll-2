@@ -15,8 +15,7 @@ monitor_frame = 0;
 sprite_index = spr_monitorstatic;
 image_speed = 1;
 
-delete blockHit;
-blockHit = new Signal();
+blockHit.Destroy();
 
 blockHit.Connect( self, function(hit_p, obj) {
 	var i=instance_create_depth(x,y,0,oMonitorPopup)

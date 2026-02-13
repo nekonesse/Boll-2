@@ -16,6 +16,7 @@ vsp = 0
 gsp = 0
 spawn_object=noone
 no_dam = false;
+deal_dam = true;
 colangle = 0
 phase_leeway = 0;
 

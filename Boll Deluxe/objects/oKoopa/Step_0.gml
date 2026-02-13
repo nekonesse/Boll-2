@@ -7,6 +7,7 @@ if (in_shell) {
 		no_dam = true
 		in_shell--; //Decreases the time for the koopa to get up
 		if !(in_shell) {
+			image_index=0;
 			getup_timer = getup_timer_max;
 			no_stomping = false;
 		}

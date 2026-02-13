@@ -67,7 +67,7 @@ function Signal() constructor {
         var len = array_length(remove);
 		var i=0;
         repeat(len) {
-			remove[i].Remove() 
+			remove[i].Remove()
 			delete remove[i] 
 			i++
 		}

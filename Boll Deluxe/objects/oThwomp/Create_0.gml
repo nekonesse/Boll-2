@@ -1,7 +1,6 @@
 event_inherited();
 
-delete enemyFireballed
-enemyFireballed = new Signal();
+enemyFireballed.Destroy();
 
 state = 0;
 frame = 0;

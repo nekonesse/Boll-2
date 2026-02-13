@@ -1,8 +1,7 @@
 // Inherit the parent event
 event_inherited();
 content="coin"
-delete blockHit;
-blockHit = new Signal();
+blockHit.Destroy();
 
 blockHit.Connect( self, function(hit_p, obj) {
 	event_user(1);

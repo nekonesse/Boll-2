@@ -14,7 +14,7 @@ onceiling = check_collision_line(x-hit_sizex+hsp,y-hit_sizey-6,x+hit_sizex+hsp,y
 if !(in_shell) && (edgeturn) && (grounded)
 {
 	if !(attach_to_ceiling) {
-		if !check_collision_rectangle(x + (-xsc * (hit_sizex+1)),y,x + (-xsc * (hit_sizex-4)),y+hit_sizey+16, COL_BOTTOM) {
+		if !check_collision_rectangle(x + (_direction * (hit_sizex+1)),y,x + (_direction * (hit_sizex-4)),y+hit_sizey+16, COL_BOTTOM) {
 			if !(turned) {
 				turned=1
 				enemyTurnAround.Emit();
@@ -23,7 +23,7 @@ if !(in_shell) && (edgeturn) && (grounded)
 			turned=0
 		}
 	} else {
-		if !check_collision_rectangle(x + (-xsc * (hit_sizex+1)),y,x + (-xsc * (hit_sizex-4)),y-hit_sizey-16, COL_TOP) {
+		if !check_collision_rectangle(x + (_direction * (hit_sizex+1)),y,x + (_direction * (hit_sizex-4)),y-hit_sizey-16, COL_TOP) {
 			if !(turned) {
 				turned=1
 				enemyTurnAround.Emit();
@@ -40,16 +40,16 @@ if (steely) && (abs(steely.hsp)>0) {
 	hp=0
 }
 
-if check_collision_line(x+(hit_sizex+1)*-xsc, y+(hit_sizey-2),x+(hit_sizex+1)*-xsc, y-(hit_sizey-2), COL_WALL) {
+if check_collision_line(x+(hit_sizex+1)*_direction, y+(hit_sizey-2),x+(hit_sizex+1)*_direction, y-(hit_sizey-2), COL_WALL) {
 	enemyTurnAround.Emit();
 }
 
 if (enemycoll) {
-	var coll = check_rectangle_in_hitbox(x+(hit_sizex+1)*-xsc,y+hit_sizey-3,x+(hit_sizex+1)*-xsc,y-hit_sizey+3,oEnemy)
+	var coll = check_rectangle_in_hitbox(x+(hit_sizex+1)*_direction,y+hit_sizey-3,x+(hit_sizex+1)*_direction,y-hit_sizey+3,oEnemy)
 	
 	if (coll) && (coll.enemycoll) {
 		enemyTurnAround.Emit();
-		with(coll) if (xsc!=other.xsc) enemyTurnAround.Emit();
+		with(coll) if (_direction!=other._direction) enemyTurnAround.Emit();
 	}
 }
 
@@ -95,23 +95,30 @@ y += vsp
 
 player_collision();
 
-if !(overridexsc)
+if !(overridexsc) && !(in_shell)
 if gsp != 0 && (hp > 0) xsc=-esign(gsp,-1)
 
-
+prevsprite_index = sprite_index
 event_user(0); //animation controller
-if (turning) {
+
+if (sprite_index!=prevsprite_index) {
+	event_user(1); //reset frame
+}
+
+if (turning) && !(in_shell) {
+	flipped = 0;
+	turning=max(0,turning-1);
+	xsc = -turnxsc;
 	image_speed = 0;
-	turning=max(0,turning-1)
 	if !(turning) {
 		image_speed = 1
 	}
-	flipped = 0;
-	xsc = -turnxsc;
 	
 	image_index = (turning > 5)
+} else if (in_shell) {
+	turning = 0;
 }
 
-if !check_rectangle_in_hitbox(x+(hit_sizex+1)*-xsc,y+hit_sizey-3,x+(hit_sizex+1)*-xsc,y-hit_sizey+3,oEnemy) && !check_collision_line(x+(hit_sizex+1)*-xsc,y+hit_sizey-3,x+(hit_sizex+1)*-xsc,y-hit_sizey+3,COL_WALL) {
+if !check_rectangle_in_hitbox(x+(hit_sizex+1)*_direction,y+hit_sizey-3,x+(hit_sizex+1)*_direction,y-hit_sizey+3,oEnemy) && !check_collision_line(x+(hit_sizex+1)*_direction,y+hit_sizey-3,x+(hit_sizex+1)*_direction,y-hit_sizey+3,COL_WALL) {
 	flipped = 0;
 }

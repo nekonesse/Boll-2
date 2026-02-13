@@ -13,8 +13,7 @@ dashduration=0;
 hurt=false;
 upset_walk=true;
 LOStimer=0;
-delete enemyCollidePlayer;
-enemyCollidePlayer = new Signal();
+enemyCollidePlayer.Destroy();
 
 enemyStomped.Connect( self, function(hit_p) {
 	if instance_exists(myBalloon) {

@@ -878,7 +878,7 @@ if (state != "groundpound") {
 #define collide_with_enemy
 var coll=check_hitbox_on_hitbox(id, oEnemy)
 if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
-	if (coll) && (!(slopesliding) || coll.damage_on_contact) && !(invincible_type && invincible_timer) {
+	if (coll) && (!(slopesliding) || coll.damage_on_contact) && !(invincible_type && invincible_timer) && (coll.deal_dam) {
 		stopsfx(charmName+"skid")
 		stopsfx(charmName+"damage")
 		hurt=1
@@ -902,7 +902,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 			} break
 		}
 		grow = 60;
-	} else if (coll) && (!(invincible_type) || (invincible_type == 2)) {
+	} else if (coll) && (invincible_type == 2) {
 		make_particle(pImpact,coll.x+coll.xsc,coll.y,2)
 		increase_combo(coll.x,coll.y);
 		signal_emit(coll.enemyRolledInto, id);

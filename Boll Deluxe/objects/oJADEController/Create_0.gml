@@ -770,7 +770,7 @@ jade_redo = function() {
 	}
 }
 
-object_place("oCollider",0,169*16,30,2)
+object_place("oCollider",0,169*16,27,2)
 //object_place("oPlayerSpawn",3*16,168*16,1,1) //Don't do that. (turned into spawn tool)
 spawnpoint_x = 3 * 16;
 spawnpoint_y = 168 * 16;
