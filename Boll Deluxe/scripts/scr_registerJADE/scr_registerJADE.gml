@@ -204,7 +204,7 @@ function JADE_initializeobj() {
 	registerobj(oStopbob, spr_stopbob, 8, 8, 16, 16, false, false, enemies, "Stopbob")
 	properties.addNumberInput(oStopbob, "Timer Offset", "timer_offset", 0, true)
 	registerobj(oFrozenEnemy, spr_frozenenemy, 16, 16, 32, 32, false, false, enemies, "Frozen Enemy")
-	properties.addDropdown(oFrozenEnemy, "Content", "content", "nothing", ["Nothing", "Goomba"], ["nothing", "goomba"])
+	properties.addDropdown(oFrozenEnemy, "Content", "content", "nothing", ["Nothing", "Goomba", "Goombrat", "Green Koopa", "Red Koopa", "Buzzy Beetle", "Bumpty", "Shy Guy", "Ice Snifit"], ["nothing", "goomba", "goombrat", "gkoopa", "rkoopa", "beetle", "bumpty", "shyguy", "icesnifit"])
 	
 	objectlist.add(enemies);
 	
