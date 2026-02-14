@@ -6,7 +6,7 @@ var pl = nearestplayer();
 if (pl && attach_to_ceiling) {
 	var dist = abs(pl.x-x);
 	
-	if (dist <= 32) {
+	if (dist <= 64) {
 		attach_to_ceiling = false;
 		grav = defaultgrav;
 		in_shell = shell_time;

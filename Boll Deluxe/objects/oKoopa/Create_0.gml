@@ -86,6 +86,7 @@ koopaEscapeShell.Connect( self, function() {
 	hit_sizex = start_hit_sizex;
 	hit_sizey = start_hit_sizey;
 	y -= (start_hit_sizey-6);
+	no_dam = false;
 	if (grabbed) {
 		if instance_exists(carry_player) {
 			x=carry_player.x;
@@ -115,5 +116,6 @@ onThrown.Connect( self, function(thrown_p) {
 		enemycoll=false;
 		phaseid=thrown_p
 		phase_leeway=10;
-    }
+		can_grab=false;
+	}
 });

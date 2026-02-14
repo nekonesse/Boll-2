@@ -9,17 +9,18 @@ function player_interactions(){
 			enemystomp.phase_leeway=3;
 		} else {
 			var enemy=check_hitbox_on_hitbox(id, oEnemy)
-			if (enemy) && (enemy.phaseid==noone || enemy.phaseid.id!=id) && !(enemy.grabbed) {
-				if (invincible_type != 2) {
-					enemy.enemyCollidePlayer.Emit(id);
-				} else {
-					make_particle(pImpact,enemy.x+enemy.xsc,enemy.y,2)
-					increase_combo(enemy.x,enemy.y);
-					with(enemy) {
-						hp=0
+			if (enemy) {
+				if (enemy.phaseid==noone || enemy.phaseid.id!=id) && !(enemy.grabbed) && !(can_grab && enemy.can_grab && bkey && !is_grabbing) {
+					if (invincible_type != 2) {
+						enemy.enemyCollidePlayer.Emit(id);
+					} else {
+						make_particle(pImpact,enemy.x+enemy.xsc,enemy.y,2)
+						increase_combo(enemy.x,enemy.y);
+						with(enemy) {
+							hp=0
+						}
 					}
 				}
-				
 			}
 		}
 	} else {

@@ -81,7 +81,7 @@ onThrown.Connect( self, function(thrown_p) {
 	
 	carry_player = thrown_p;
 	if (carry_player.up) {
-        vsp = -6
+        vsp = -8
         hsp = carry_player.hsp
 		grounded=false;
 		make_particle(pImpact,x,y,2)

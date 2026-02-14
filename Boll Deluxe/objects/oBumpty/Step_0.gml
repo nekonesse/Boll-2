@@ -70,7 +70,8 @@ switch(behavior_mode) {
 						_direction=-_direction;
 						hsp = 0;
 						constantspd = 0;
-						vsp = -4;
+						vsp = -4; //jump again
+						jumped = true;
 						grounded = false;
 						timer = 0;
 						state++;

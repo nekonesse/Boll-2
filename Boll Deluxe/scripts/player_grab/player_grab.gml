@@ -1,5 +1,5 @@
 function player_grab(){
-    if (bkey && grabbed_obj == noone) {
+    if (bkey && grabbed_obj == noone && can_grab) {
 		var graby = y-hit_sizey+2;
 		var graby2 = y+hit_sizey-2;
 		var grabx = x + (hit_sizex*xsc)+hsp+(2*move);
@@ -17,8 +17,8 @@ function player_grab(){
 			grabbing = check_rectangle_in_hitbox(grabx, graby, grabx2, graby2, oEnemy);
 		}
         if (grabbing) {
-			var can_grab = (object_is_ancestor(grabbing.object_index,oGrabbable) && !grabbing.grab_delay) || (object_is_ancestor(grabbing.object_index,oEnemy) && grabbing.phaseid!=id && grabbing.can_grab) 
-			if (can_grab) {
+			var can_grab_obj = (object_is_ancestor(grabbing.object_index,oGrabbable) && !grabbing.grab_delay) || (object_is_ancestor(grabbing.object_index,oEnemy) && grabbing.phaseid!=id && grabbing.can_grab) 
+			if (can_grab_obj) {
 	            grabbed_obj = grabbing
 				is_grabbing = true
 	            grabbing.grabbed = true

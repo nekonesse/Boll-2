@@ -35,7 +35,7 @@ onThrown.Connect( self, function(thrown_p) {
 	}
 	
 	if (carry_player.up) {
-        vsp = -6
+        vsp = -8
         hsp = carry_player.hsp
     } else if (carry_player.down) {
         vsp = 0
