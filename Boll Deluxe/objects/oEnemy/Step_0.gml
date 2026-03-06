@@ -49,7 +49,7 @@ if check_collision_line(x+(hit_sizex+1)*_direction, y+(hit_sizey-2),x+(hit_sizex
 if (enemycoll) {
 	var coll = check_rectangle_in_hitbox(x+hsp+(hit_sizex+1)*_direction,y+hit_sizey-3,x+hsp+(hit_sizex+1)*_direction,y-hit_sizey+3,oEnemy)
 	
-	if (coll) && (coll.enemycoll) && !(turning) {
+	if (coll) && (coll.enemycoll) && !(coll.grabbed) && !(turning) {
 		enemyTurnAround.Emit();
 	}
 }
@@ -108,6 +108,30 @@ if gsp != 0 && (hp > 0) xsc=-esign(gsp,-1)
 } else {
 	if instance_exists(carry_player) {
 		xsc=-carry_player.xsc;
+	}
+		
+	var enemy=check_hitbox_on_hitbox(id,oEnemy)
+
+	if (enemy) { //make sure shell is actually colliding with an enemy before trying to kill the enemy it collided with???
+		if !(enemy.unshellable) {
+			if (enemy.phaseid==noone || enemy.phaseid.id!=id) {
+				instance_create_depth(x+hit_sizex*xsc,y,2,pImpact)
+			
+				enemy.hp=0;
+				enemy.killtype="spin";
+				
+				VinylPlay(snd_enemykick,false,1,1);
+			}
+		}
+		
+		with(carry_player) {
+			is_grabbing = false;
+			grabbed_obj = noone;
+		}
+		instance_destroy();
+		killtype="spin";
+		killvsp=-1;
+		killhsp=carry_player.xsc;
 	}
 }
 

@@ -3,7 +3,7 @@ if global.paused exit
 no_dam = false
 
 if (in_shell) {
-	if (!shell_move) {
+	if !(shell_move) {
 		can_grab = true;
 		in_shell--; //Decreases the time for the koopa to get up
 		if !(in_shell) {
@@ -56,33 +56,83 @@ if (in_shell) {
 		var enemy=check_hitbox_on_hitbox(id,oEnemy)
 
 		if (enemy) { //make sure shell is actually colliding with an enemy before trying to kill the enemy it collided with???
-			if (in_shell) && (abs(hsp)) {
-				if !(enemy.unshellable) {
-					if (enemy.phaseid==noone || enemy.phaseid.id!=id) {
-						instance_create_depth(x+hit_sizex*xsc,y,2,pImpact)
+			if !(enemy.unshellable) {
+				if (enemy.phaseid==noone || enemy.phaseid.id!=id) {
+					instance_create_depth(x+hit_sizex*xsc,y,2,pImpact)
 			
-						enemy.enemyShelled.Emit(id, kickedplayer);
+					enemy.enemyShelled.Emit(id, kickedplayer);
 			
-						if (kickedplayer==noone) || (kickedplayer.object_index != oPlayer) 
-						kickedplayer=nearestplayer()
+					if (kickedplayer==noone) || (kickedplayer.object_index != oPlayer) 
+					kickedplayer=nearestplayer()
 			
-						kickCombo=min(kickCombo+1,8)
-						VinylPlay(snd_enemykick,false,1,0.9+(kickCombo/10))
+					kickCombo=min(kickCombo+1,8)
+					VinylPlay(snd_enemykick,false,1,0.9+(kickCombo/10))
 			
-						if (kickCombo==8)
-						give_lives(kickedplayer.pNum, x + (hit_sizex / 2), y - 8)
-						else
-						instance_create_depth(enemy.x,enemy.y,5,pScoreText,{image_index : kickCombo})
-					}
-				} else {
-					instance_destroy();
-					killtype="spin";
+					if (kickCombo==8)
+					give_lives(kickedplayer.pNum, enemy.x, enemy.y)
+					else
+					instance_create_depth(enemy.x,enemy.y,5,pScoreText,{image_index : kickCombo})
 				}
+			} else {
+				instance_destroy();
+				killtype="spin";
 			}
 		}
 	}
 } else {
 	can_grab = false;
+}
+
+if (thrown) {
+	var blocklist=ds_list_create();
+	var num=collision_line_list(x-(hit_sizex-2),y-hit_sizey+min(0,vsp),x+(hit_sizex),y-hit_sizey+min(0,vsp),oHittable, false, true, blocklist, true)
+
+	var found_block=false;
+	if (num > 0) {
+		var i=0;
+		repeat (num) {
+			var blockcoll=ds_list_find_value(blocklist, i)
+			if !(blockcoll.no_hit) && (blockcoll.amount != 0) {
+				if (blockcoll.hit == 0) {
+					found_block=true;
+					blockcoll.blockHit.Emit(-1, id)
+				}
+			}
+			i++;
+		}
+		if (found_block) {
+			make_particle(pImpact,x,y-hit_sizey+min(0,vsp),2)
+			vsp = 2;
+		}
+	}
+		
+	ds_list_destroy(blocklist);
+	
+	var enemy=check_hitbox_on_hitbox(id,oEnemy)
+
+	if (enemy) { //make sure shell is actually colliding with an enemy before trying to kill the enemy it collided with???
+		if !(enemy.unshellable) {
+			if (enemy.phaseid==noone || enemy.phaseid.id!=id) {
+				instance_create_depth(x+hit_sizex*xsc,y,2,pImpact)
+			
+				enemy.enemyShelled.Emit(id, kickedplayer);
+			
+				if (kickedplayer==noone) || (kickedplayer.object_index != oPlayer) 
+				kickedplayer=nearestplayer()
+			
+				kickCombo=min(kickCombo+1,8)
+				VinylPlay(snd_enemykick,false,1,0.9+(kickCombo/10))
+			
+				if (kickCombo==8)
+				give_lives(kickedplayer.pNum, enemy.x, enemy.y)
+				else
+				instance_create_depth(enemy.x,enemy.y,5,pScoreText,{image_index : kickCombo})
+			}
+		} else {
+			instance_destroy();
+			killtype="spin";
+		}
+	}
 }
 
 if (getup_timer) {

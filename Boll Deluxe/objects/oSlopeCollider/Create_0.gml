@@ -5,3 +5,4 @@ hflip = false;
 slope = true;
 influence = true;
 ramp = false;
+angle = 45;

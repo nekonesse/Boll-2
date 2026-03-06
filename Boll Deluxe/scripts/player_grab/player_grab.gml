@@ -27,19 +27,23 @@ function player_grab(){
         }
     }
     
-    if (grabbed_obj != noone) {
+    if (instance_exists(grabbed_obj)) {
         grabbed_obj.x = x + (12 * xsc)
         grabbed_obj.y = y
         grabbed_obj.grabbed = true
 		is_grabbing = true
         
         if (!bkey) {
-			grabbed_obj.x = x;
+			if !(down) && !(up) {
+				grabbed_obj.x = x;
+			}
             grabbed_obj.onThrown.Emit(id);
 			sig.Emit("throw_object");
             
             grabbed_obj = noone
 			is_grabbing = false
         }
-    }
+    } else {
+		grabbed_obj = noone;
+	}
 }

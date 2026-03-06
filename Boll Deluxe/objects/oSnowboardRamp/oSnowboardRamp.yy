@@ -37,8 +37,8 @@
     "path":"sprites/spr_snowboardramp/spr_snowboardramp.yy",
   },
   "spriteMaskId":{
-    "name":"spr_snowboardmask",
-    "path":"sprites/spr_snowboardmask/spr_snowboardmask.yy",
+    "name":"spr_snowboardrampmask",
+    "path":"sprites/spr_snowboardrampmask/spr_snowboardrampmask.yy",
   },
   "visible":true,
 }

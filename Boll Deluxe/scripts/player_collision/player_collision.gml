@@ -226,8 +226,8 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 						ds_list_destroy(_list);
 			
 					colflags |= COL_CEILI;
-					vsp = 2
 				}
+				vsp = 2
 			}
 		}
 	}

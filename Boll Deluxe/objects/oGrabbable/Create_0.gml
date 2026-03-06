@@ -13,9 +13,11 @@ thrown = false;
 carry_player = noone;
 grabbed = false;
 grab_delay = 0;
+kickCombo = 0;
 
 onThrown = new Signal();
 onPickup = new Signal();
+onBreak = new Signal();
 
 onPickup.Connect( self, function(carry_p) {
 	no_collide = true;
@@ -37,20 +39,24 @@ onThrown.Connect( self, function(thrown_p) {
 	if (carry_player.up) {
         vsp = -8
         hsp = carry_player.hsp
-    } else if (carry_player.down) {
+		make_particle(pImpact,x,y,2)
+		VinylPlay(snd_enemykick)
+	} else if (carry_player.down) {
         vsp = 0
         hsp = 0
 		bounce = false
     } else {
         vsp = -1
 		hsp = (carry_player.xsc * 3)
+		make_particle(pImpact,x,y,2)
+		VinylPlay(snd_enemykick)
     }
-	
-	make_particle(pImpact,x,y,2)
-	VinylPlay(snd_enemykick)
 	
 	grabbed = false;
 	thrown = true;
+});
+
+onBreak.Connect( self, function() {
 });
 
 node_init_vars()
