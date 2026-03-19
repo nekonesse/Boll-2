@@ -690,6 +690,11 @@ object_place = function(_uuid, _x, _y, _xscale, _yscale) {
 		if is_array(arr[o]) {
 			obj[5][o] = array_create(1,0)
 			array_copy(obj[5][o],0,arr[o],0,array_length(arr[o]))
+			if is_array(obj[5][o][1]) {
+				var temparr = obj[5][o][1];
+				obj[5][o][1] = [];
+				array_copy(obj[5][o][1],0,temparr,0,array_length(temparr));
+			}
 		}
 		o++;
 	}
