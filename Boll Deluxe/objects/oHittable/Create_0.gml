@@ -27,7 +27,8 @@ blockBumpFinished = new Signal();
 blockFinished = new Signal();
 
 blockHit.Connect( self, function(hit_p, obj) {
-
+	var _list, _num;
+	
 	if (going) {
 		blockBumpFinished.Emit();
 	}
@@ -47,21 +48,57 @@ blockHit.Connect( self, function(hit_p, obj) {
 		}
 	}
 	
-	var _list = ds_list_create();
-	var _num = check_rectangle_in_hitbox_list(bbox_left,bbox_top-bumpMax,bbox_right-1,bbox_top, oEnemy, _list) ;
+	
+	///Block bumping interactions
+	if (hit==-1) {
+		_list = ds_list_create();
+	
+		var coin = collision_rectangle(bbox_left,bbox_top-bumpMax,bbox_right-1,bbox_top, oCoin, false, true);
+	
+		if (coin) {
+			global.coins_collected++;
+			VinylPlay(snd_itemcoin);
+			var i=instance_create_depth(coin.x,coin.y,0,pCoinCollected);
+			i.vspeed=-3
+			i.gravity=0.15*-sign(i.vspeed)
+			instance_destroy(coin);
+		}
+	
+		_num = check_rectangle_in_hitbox_list(bbox_left,bbox_top-bumpMax,bbox_right-1,bbox_top, oMushroom, _list);
+	
+		if (_num > 0) {
+			var i=0;
+		    repeat(_num) {
+				var powerup = _list[| i];
+				if (powerup.grounded) {
+					powerup.vsp=-3;
+					powerup.grounded=false;
+				}
+				i++;
+		    }
+		}
 
-	if (_num > 0) {
-		var i=0;
-	    repeat(_num) {
-			var enemy = _list[| i];
-			if (enemy.grounded) {
-				enemy.hp -= 1;
-				enemy.killtype="bump";
-				enemy.xsc=sign(enemy.x-x) 
-			}
-			i++;
-	    }
+		ds_list_clear(_list);
+	
+		_num = check_rectangle_in_hitbox_list(bbox_left,bbox_top-bumpMax,bbox_right-1,bbox_top, oEnemy, _list);
+
+		if (_num > 0) {
+			var i=0;
+		    repeat(_num) {
+				var enemy = _list[| i];
+				if (enemy.grounded) {
+					enemy.hp -= 1;
+					if (enemy.hp) {
+						enemy.vsp=-3;
+						enemy.grounded=false;
+					}
+					enemy.killtype="bump";
+					enemy.xsc=sign(enemy.x-x) 
+				}
+				i++;
+		    }
+		}
+
+		ds_list_destroy(_list);
 	}
-
-	ds_list_destroy(_list);
 });
