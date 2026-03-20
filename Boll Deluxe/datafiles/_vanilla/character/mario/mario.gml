@@ -373,7 +373,7 @@ if (state == "jump" || state == "") && !(grounded) && !piped && !(stun) {
 	
 	if (move != 0) && !(crouch) && !(spinjump) {
 		//wall sliding
-		var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
+		var coll=check_valid_wall(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc))
 		if (!grounded) && (!is_grabbing) && !(stun) && !(hurt) && (coll) && (vsp > 0) {
 			state = "wallslide"
 		}

@@ -90,7 +90,7 @@ function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_
 	return false;
 }
 
- function get_angle_rect(x1, y1, x2, y2){
+function get_angle_rect(x1, y1, x2, y2){
 	//var found = noone
 	
 	var object = collision_array
@@ -137,6 +137,30 @@ function check_collision_rectangle(x1, y1, x2, y2, type = 0, object = collision_
 	return false;
 }
 
+function check_collision_rectangle_obj(x1, y1, x2, y2, type = 0, object = collision_array){
+	
+	if collision_rectangle(floor(x1) ,floor(y1),floor(x2),floor( y2), object,true,false)    {
+	    var found_list = ds_list_create()
+	    var found_size = collision_rectangle_list(floor(x1),floor(y1),floor(x2), floor(y2), object,true,true, found_list, false)
+		
+		var i=0;
+	    repeat (found_size) {     
+	        var found = found_list[| i];
+	        if (!found.no_collide) { 
+				if (type == COL_TOP || !found.ceiling_only) {
+			        if (type != COL_BOTTOM && !found.semi)|| (type == COL_BOTTOM) {
+						ds_list_destroy(found_list) 
+		                return found.id;
+					}
+				}
+			}
+			i++;
+	    }
+        ds_list_destroy(found_list)
+    }
+	
+	return noone;
+}
 
 function check_hitbox_on_hitbox(object1, object2){
 	//var found = noone

@@ -64,7 +64,7 @@ if (grounded) {
 var _move = (right-left) 
 if (_move!=0) && (vsp < 0) && (state!="wallrun") && !(is_grabbing) && (abs(wallrunstored_gsp) > 1) {
 	//wall sliding
-	var coll=check_collision_line(x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),COL_WALL)
+	var coll=check_valid_wall(x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc))
 	if (!grounded)
 	{
 		if (coll)

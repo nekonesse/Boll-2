@@ -86,6 +86,7 @@ GMLspeak.interface.compileFlags.checkForVariables = true;
 		GMLspeak.interface.exposeFunction("hit_block", hit_block);
 		GMLspeak.interface.exposeFunction("make_particle", make_particle);
 		GMLspeak.interface.exposeFunction("increase_combo", increase_combo);
+		GMLspeak.interface.exposeFunction("check_valid_wall", check_valid_wall);
 		
 		GMLspeak.interface.exposeFunction("component_get_ground_friction", component_get_ground_friction);
 		GMLspeak.interface.exposeFunction("component_gravity_coneyor", component_gravity_coneyor);

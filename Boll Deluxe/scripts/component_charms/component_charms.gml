@@ -13,6 +13,14 @@ function component_gravity_coneyor(){
 	}
 }
 
+function check_valid_wall(x1,y1,x2,y2) {
+	var coll = check_collision_rectangle_obj(x1,y1,x2,y2,COL_WALL)
+	if (coll) && (coll.object_index != oBarrier && coll.object_index != oLevelBorder) {
+		return true;
+	}
+	return false;
+}
+
 function component_mario_crouch(){
 	
 	if (state == "") && (down) && !(piped) && !(skidding) {
@@ -89,7 +97,7 @@ function component_mario_start_dive(speedX = 3.5, speedY = -2.7){
 function component_mario_wallslide(slideSpeed = 1, jumpVSpeed = 5, jumpHSpeed = 2.5, canSpinjump = true){
 	
 	vsp=slideSpeed;
-	var coll=check_collision_line(x+((hit_sizex+1)*xsc),y-(hit_sizey-2),x+((hit_sizex+1)*xsc),y+(hit_sizey-2),COL_WALL)
+	var coll=check_valid_wall(x+((hit_sizex+1)*xsc),y-(hit_sizey-2),x+((hit_sizex+1)*xsc),y+(hit_sizey-2))
 	
 	if (move == 0 || !coll){
 		state = "";

@@ -32,7 +32,7 @@ turning=0;
 in_shell=false;
 attach_to_ceiling=false;
 onceiling=false;
-collision_array=[oCollider, oEnemyGround];
+collision_array=[oCollider, oEnemyGround, oBarrier];
 
 killtype="";
 killdir=0;

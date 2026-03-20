@@ -82,6 +82,7 @@ function JADE_initializeobj() {
 	properties.addCheckbox(oSemiSlope, "Flipped", "hflip", false)
 	properties.addCheckbox(oSemiSlope, "Is Ramp", "ramp", false)
 	properties.addCheckbox(oSemiSlope, "Is Slippery", "slippery", false)
+	registerobj(oBarrier, spr_barrier, 0, 0, 16, 16, true, true, objectlist, "Barrier", true)
 	
 	var blockcategory = new JADElistcategory("Blocks")
 	
@@ -269,8 +270,9 @@ function JADE_initializeobj() {
 	properties.addCheckbox(oCameraRegion, "Lock On", "lockon", false)
 	registerobj(oCameraBoundary, spr_cameraboundary, 0, 0, 16, 16, false, false, gizmolist, "Camera Boundary")
 	registerobj(oActivationRegion, spr_activationregion, 0, 0, 16, 16, false, false, gizmolist, "Activation Region")
-	registerobj(oDeactivationRegion, spr_deactivationregion, 0, 0, 16, 16, false, false, gizmolist, "Deactivation Regions")
-	registerobj(oDeathPit, spr_deathpit, 0, 0, 16, 16, false, false, gizmolist, "Death Pit")
+	registerobj(oDeactivationRegion, spr_deactivationregion, 0, 0, 16, 16, false, false, gizmolist, "Deactivation Region")
+	registerobj(oDeathPit, spr_deathpit, 0, 0, 16, 16, true, false, gizmolist, "Death Pit")
+	registerobj(oLevelBorder, spr_barrier, 0, 0, 16, 16, false, true, gizmolist, "Level Border")
 	
 	//ASSETS
 	var w1deco = new JADElistcategory("Floragrande Gardens")

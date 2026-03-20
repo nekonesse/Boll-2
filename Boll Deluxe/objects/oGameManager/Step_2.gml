@@ -38,6 +38,7 @@ instance_activate_object(oCameraBoundary)
 instance_activate_object(pSmoke)
 instance_activate_object(oDeactivationRegion)
 instance_activate_object(oMonitorPopup)
+instance_activate_object(oLevelBorder)
 with(oActivationRegion) {
 	instance_activate_region(x,y,sprite_width,sprite_height,true)
 }

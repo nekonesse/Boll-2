@@ -18,6 +18,14 @@ with(oCollider) {
 	}
 }
 
+with(oBarrier) {
+	visible=(global.debug || global.show_collision)
+}
+
+with(oLevelBorder) {
+	visible=(global.debug || global.show_collision)
+}
+
 if global.debug {
 	if keyboard_check_pressed(vk_f1) && (room_speed > 10) {
 		room_speed-=10

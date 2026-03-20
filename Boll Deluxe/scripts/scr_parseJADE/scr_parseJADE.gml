@@ -209,6 +209,10 @@ function parse_level(dir=game_save_id+"\save.jade") {
 		}
 							
 	}
+	var border=instance_create_depth(-16,-128,0,oLevelBorder)
+	border.image_yscale=ceil(room_height/16)+16
+	var border=instance_create_depth(room_width,-128,oLevelBorder)
+	border.image_yscale=ceil(room_height/16)+16
 	instance_activate_all()
 	with(all) {event_user(15)}
 	buffer_delete(loaded)
