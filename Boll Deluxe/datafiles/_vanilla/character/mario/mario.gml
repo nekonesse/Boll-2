@@ -726,8 +726,6 @@ if (electrocuted) {
 #endregion
 
 
-
-
 #define upd_frame
 //this is because the crouch animation has a transition frame, and if we reset back to idle the transition frame will play again, we dont want that
 if (spriteEvent=="crouchIdle") {

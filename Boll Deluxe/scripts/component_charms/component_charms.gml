@@ -14,7 +14,7 @@ function component_gravity_coneyor(){
 }
 
 function check_valid_wall(x1,y1,x2,y2) {
-	var coll = check_collision_rectangle_obj(x1,y1,x2,y2,COL_WALL)
+	var coll = check_collision_line_obj(x1,y1,x2,y2,COL_WALL)
 	if (coll) && (coll.object_index != oBarrier && coll.object_index != oLevelBorder) {
 		return true;
 	}
