@@ -13,7 +13,7 @@ if !on_screen(32,32) && !origin_on_screen(xstart,ystart,32,32) {
 
 onceiling = check_collision_line(x-hit_sizex+hsp,y-hit_sizey-6,x+hit_sizex+hsp,y-hit_sizey-6,COL_TOP)
 
-if !(in_shell) && (edgeturn) && (grounded)
+if !(in_shell) && (edgeturn) && (grounded || attach_to_ceiling)
 {
 	if !(attach_to_ceiling) {
 		if !check_collision_rectangle(x + (_direction * (hit_sizex+1)),y,x + (_direction * (hit_sizex-4)),y+hit_sizey+16, COL_BOTTOM) {
