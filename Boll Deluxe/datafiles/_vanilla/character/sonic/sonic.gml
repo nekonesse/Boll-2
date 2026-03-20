@@ -492,6 +492,14 @@ switch (state) {
 	}
 }
 
+if (kick) {
+	if (grounded) {
+		spriteEvent="carryKick"
+	} else {
+		spriteEvent="carryAirKick"
+	}
+}
+
 if (state != "") {
 	wait_timer = 0;
 }
@@ -757,3 +765,8 @@ grow = 60;
 
 #define enter_pipe
 stopsfx(charmName+"skid")
+
+#define throw_object
+if !(down) {
+	kick=12;
+}
