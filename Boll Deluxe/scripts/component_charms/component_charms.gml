@@ -142,7 +142,7 @@ function component_mario_groundpound(fallSpeed = 7){
 	slopesliding = 0
 	pound_timer = max(0,pound_timer-1);
 	
-	if (up) {
+	if (uppress) {
 		state = "";
 		pound_timer = 0;
 	}

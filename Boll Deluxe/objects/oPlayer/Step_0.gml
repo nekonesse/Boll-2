@@ -12,8 +12,11 @@ if collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey,oDeathPit
 // chearii: guessing these are a buncha quickvars
 if (input_enable) {
 	right = input_check("right");
+	rightpress = input_check_pressed("right");
 	left = input_check("left");
+	leftpress = input_check_pressed("left");
 	up = input_check("up");
+	uppress = input_check_pressed("up");
 	down = input_check("down");
 	downpress = input_check_pressed("down");
 	if !finish {
