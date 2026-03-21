@@ -669,10 +669,10 @@ check_colliding_asset = function(_x, _y) {
 		var asset=selected_layer.assetmap[| i]
 		var data = obj_data[$ asset[0]]
 		var _sprite = asset_get_index(asset[0])
-		var _ax = layer_sprite_get_x(asset[1]) - sprite_get_xoffset(_sprite)
-		var _ay = layer_sprite_get_y(asset[1]) - sprite_get_yoffset(_sprite)
-		var _width = data.width
-		var _height = data.height
+		var _ax = layer_sprite_get_x(asset[1]) - (sprite_get_xoffset(_sprite) * layer_sprite_get_xscale(asset[1]))
+		var _ay = layer_sprite_get_y(asset[1]) - (sprite_get_yoffset(_sprite) * layer_sprite_get_yscale(asset[1]))
+		var _width = data.width * layer_sprite_get_xscale(asset[1])
+		var _height = data.height * layer_sprite_get_yscale(asset[1])
 		if point_in_rectangle(_x,_y,_ax,_ay,_ax+_width,_ay+_height) {
 			return i+1
 		}
@@ -751,6 +751,7 @@ tile_update_properties = function() {
 
 jade_undo = function() {
 	if !array_length(undoarray) exit;
+	selected_array = [];
 	
 	var undo = array_pop(undoarray)
 	switch(typeof(undo[0])) {
@@ -771,6 +772,7 @@ jade_undo = function() {
 
 jade_redo = function() {
 	if !array_length(redoarray) exit;
+	selected_array = [];
 	
 	var redo = array_pop(redoarray)
 	if ds_exists(redo[0], ds_type_list) {

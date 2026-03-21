@@ -23,7 +23,7 @@ draw_text(26,12,$"*{_coins}")
 
 surface_reset_target();
 
-if enable_app_surf_redraw {
+/*if enable_app_surf_redraw {
 	shader_set(shd_bluefade)
 	shader_set_uniform_f(bluefadeprog, fadeprog);
 	shader_set_uniform_i(bluefadeinflag, fadein)

@@ -19,6 +19,8 @@ if !os_is_paused() && guiw>0 && guih>0 {
 	}
 }
 
+update_camerapos();
+
 instance_deactivate_all(true)
 var camx=camera_get_view_x(view_camera[0])-64
 var camy=camera_get_view_y(view_camera[0])-64
@@ -48,6 +50,3 @@ with(oPlayer) {
 with(oWMPlayer) {
 	instance_activate_region(floor(x)-hit_sizex-32,floor(y)-hit_sizey-32, hit_sizex+64, hit_sizey+64, true)
 }
-
-
-update_camerapos();

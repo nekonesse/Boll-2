@@ -1,7 +1,7 @@
 text="";
 temptext="";
 textcount=1;
-depth=0;
+depth=1;
 
 is_talking = false;
 text_leftover=0;
