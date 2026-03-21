@@ -226,11 +226,9 @@ function is_range_onscreen_horizontal(left, right, wport = undefined)
 
 function update_camerapos()
 {
-	if (view_camera[0] != undefined)
-	{
-		global.camera_x = camera_get_view_x(view_camera[0]) div 1;
-		global.camera_y = camera_get_view_y(view_camera[0]) div 1;
-	}
+	global.camera_x = floor(camera_get_view_x(view_camera[0]));
+	global.camera_y = floor(camera_get_view_y(view_camera[0]));
+	show_debug_message("test")
 }
 
 function chance(percent){

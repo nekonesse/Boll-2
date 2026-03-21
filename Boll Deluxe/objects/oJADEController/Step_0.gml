@@ -520,7 +520,7 @@ if (mbleft && not_on_gui && !disable_tool) {
 			#endregion
 			} else if selected_mode == DECO_MODE {
 				#region tile selection 
-				if (mbleftpress) && (deco_mode_type != "") {
+				if (mbleftpress) && (deco_mode_type != "") && !(resizing) {
 					switch(deco_mode_type) {
 						case "tile": 
 							var draggingobject=false;
@@ -564,6 +564,62 @@ if (mbleft && not_on_gui && !disable_tool) {
 							selection_box_y=mouse_y;
 						break;
 						case "asset":
+							if array_length(selected_array)==1 {
+								var asset=selected_layer.assetmap[| selected_array[0]]
+								var data = obj_data[$ asset[0]]
+								var _sprite = asset_get_index(asset[0])
+								var _xsc = layer_sprite_get_xscale(asset[1]);
+								var _ysc = layer_sprite_get_yscale(asset[1]);
+								var _ax = layer_sprite_get_x(asset[1]) - (sprite_get_xoffset(_sprite) * _xsc);
+								var _ay = layer_sprite_get_y(asset[1]) - (sprite_get_yoffset(_sprite) * _ysc);
+								var _width = data.width * _xsc
+								var _height = data.height * _ysc
+								//top left
+								if point_in_rectangle(mouse_x,mouse_y,_ax-4,_ay-4,_ax+2,_ay+2) {
+									resizing = 1;
+									resizing_x = mouse_x;
+									resizing_y = mouse_y;
+									resizing_x2 = layer_sprite_get_x(asset[1])
+									resizing_y2 = layer_sprite_get_y(asset[1])
+									resizing_initial_w = layer_sprite_get_xscale(asset[1]);
+									resizing_initial_h = layer_sprite_get_yscale(asset[1]);
+									break;
+								}
+								//top right
+								if point_in_rectangle(mouse_x,mouse_y,_ax+_width-2,_ay-4,_ax+_width+4,_ay+2) {
+									resizing = 2;
+									resizing_x = mouse_x;
+									resizing_y = mouse_y;
+									resizing_x2 = layer_sprite_get_x(asset[1])
+									resizing_y2 = layer_sprite_get_y(asset[1])
+									resizing_initial_w = layer_sprite_get_xscale(asset[1]);
+									resizing_initial_h = layer_sprite_get_yscale(asset[1]);
+									break;
+								}
+								//bottom left
+								if point_in_rectangle(mouse_x,mouse_y,_ax-4,_ay+_height-2,_ax+4,_ay+_height+2) {
+									resizing = 3;
+									resizing_x = mouse_x;
+									resizing_y = mouse_y;
+									resizing_x2 = layer_sprite_get_x(asset[1])
+									resizing_y2 = layer_sprite_get_y(asset[1])
+									resizing_initial_w = layer_sprite_get_xscale(asset[1]);
+									resizing_initial_h = layer_sprite_get_yscale(asset[1]);
+									break;
+								}
+								//bottom right
+								if point_in_rectangle(mouse_x,mouse_y,_ax+_width-2,_ay+_height-2,_ax+_width+4,_ay+_height+4) {
+									resizing = 4;
+									resizing_x = mouse_x;
+									resizing_y = mouse_y;
+									resizing_x2 = layer_sprite_get_x(asset[1])
+									resizing_y2 = layer_sprite_get_y(asset[1])
+									resizing_initial_w = layer_sprite_get_xscale(asset[1]);
+									resizing_initial_h = layer_sprite_get_yscale(asset[1]);
+									break;
+								}
+							}
+						
 							var draggingobject=false;
 							//select single object
 							var col = check_colliding_asset(mouse_x,mouse_y)
@@ -624,21 +680,81 @@ if (mbleft && not_on_gui && !disable_tool) {
 				}
 				#endregion
 				
-				if (deco_mode_type == "asset") && (selection_grab) {
-					var x_diff = (selection_grab_x-(gridx*current_grid_size));
-					var y_diff = (selection_grab_y-(gridy*current_grid_size));
-					if (x_diff!=0) || (y_diff!=0) {
-						var i=0;
-						repeat(array_length(selected_array)) {
-							var obj = selected_layer.assetmap[| selected_array[i]]
-							var objx = layer_sprite_get_x(obj[1])
-							var objy = layer_sprite_get_y(obj[1])
-							layer_sprite_x(obj[1],objx-x_diff)
-							layer_sprite_y(obj[1],objy-y_diff)
-							i++;
+				if (deco_mode_type == "asset") {
+					if (resizing) {
+						if array_length(selected_array)==1 {
+							var asset=selected_layer.assetmap[| selected_array[0]]
+							var data = obj_data[$ asset[0]]
+							var _sprite = asset_get_index(asset[0])
+							var _xsc = layer_sprite_get_xscale(asset[1]);
+							var _ysc = layer_sprite_get_yscale(asset[1]);
+							var _ax = layer_sprite_get_x(asset[1]) - (sprite_get_xoffset(_sprite) * _xsc);
+							var _ay = layer_sprite_get_y(asset[1]) - (sprite_get_yoffset(_sprite) * _ysc);
+							var _width = _xsc
+							var _height = _ysc
+							var x_diff = (resizing_x-(gridx*current_grid_size));
+							var y_diff = (resizing_y-(gridy*current_grid_size));
+							var scale_diff_x = data.width/current_grid_size;
+							var scale_diff_y = data.height/current_grid_size;
+							if (x_diff!=0) || (y_diff!=0) {
+								switch(resizing) {
+									case 1: //top left
+										layer_sprite_xscale(asset[1],max(_width+floor(x_diff/current_grid_size)/scale_diff_x,1));
+										layer_sprite_yscale(asset[1],max(_height+floor(y_diff/current_grid_size)/scale_diff_y,1));
+										_width = sprite_get_width(_sprite);
+										_height = sprite_get_height(_sprite);
+										//layer_sprite_x(asset[1],resizing_x2+round(((resizing_initial_w-_width)*current_grid_size)*scale_diff_x))
+										//layer_sprite_y(asset[1],resizing_y2+round(((resizing_initial_h-_height)*current_grid_size)*scale_diff_y))
+										resizing_x = gridx*current_grid_size;
+										resizing_y = gridy*current_grid_size;
+									break;
+									case 2: //top right
+										layer_sprite_xscale(asset[1],max(_width+ceil(-x_diff/current_grid_size)/scale_diff_x,1));
+										layer_sprite_yscale(asset[1],max(_height+floor(y_diff/current_grid_size)/scale_diff_y,1));
+										_width = sprite_get_width(_sprite);
+										_height = sprite_get_height(_sprite);
+										//layer_sprite_y(asset[1],resizing_y2+round(((resizing_initial_h-_height)*current_grid_size)*scale_diff_y))
+										resizing_x = gridx*current_grid_size;
+										resizing_y = gridy*current_grid_size;
+									break;
+									case 3: //bottom left
+										layer_sprite_xscale(asset[1],max(_width+floor(x_diff/current_grid_size)/scale_diff_x,1));
+										layer_sprite_yscale(asset[1],max(_height+ceil(-y_diff/current_grid_size)/scale_diff_y,1));
+										_width = sprite_get_width(_sprite);
+										_height = sprite_get_height(_sprite);
+										//layer_sprite_x(asset[1],resizing_x2+round(((resizing_initial_w-_width)*current_grid_size)*scale_diff_x))
+										resizing_x = gridx*current_grid_size;
+										resizing_y = gridy*current_grid_size;
+									break; 
+									case 4: //bottom right
+										layer_sprite_xscale(asset[1],max(_width+ceil(-x_diff/current_grid_size)/scale_diff_x,1));
+										layer_sprite_yscale(asset[1],max(_height+ceil(-y_diff/current_grid_size)/scale_diff_y,1));
+										_width = sprite_get_width(_sprite);
+										_height = sprite_get_height(_sprite);
+										resizing_x = gridx*current_grid_size;
+										resizing_y = gridy*current_grid_size;
+									break;
+								}
+							}
 						}
-						selection_grab_x = gridx*current_grid_size;
-						selection_grab_y = gridy*current_grid_size;
+					}
+					
+					if (selection_grab) {
+						var x_diff = (selection_grab_x-(gridx*current_grid_size));
+						var y_diff = (selection_grab_y-(gridy*current_grid_size));
+						if (x_diff!=0) || (y_diff!=0) {
+							var i=0;
+							repeat(array_length(selected_array)) {
+								var obj = selected_layer.assetmap[| selected_array[i]]
+								var objx = layer_sprite_get_x(obj[1])
+								var objy = layer_sprite_get_y(obj[1])
+								layer_sprite_x(obj[1],objx-x_diff)
+								layer_sprite_y(obj[1],objy-y_diff)
+								i++;
+							}
+							selection_grab_x = gridx*current_grid_size;
+							selection_grab_y = gridy*current_grid_size;
+						}
 					}
 				} else if (deco_mode_type == "bg") && (selection_grab) {
 					var x_diff = (selection_grab_x-(gridx*current_grid_size));
@@ -955,10 +1071,12 @@ if (mbleftrel) {
 						var asset=selected_layer.assetmap[| i]
 						var data = obj_data[$ asset[0]]
 						var _sprite = asset_get_index(asset[0])
-						var _ax = layer_sprite_get_x(asset[1]) - sprite_get_xoffset(_sprite)
-						var _ay = layer_sprite_get_y(asset[1]) - sprite_get_yoffset(_sprite)
-						var _width = data.width
-						var _height = data.height
+						var _xsc = layer_sprite_get_xscale(asset[1]);
+						var _ysc = layer_sprite_get_yscale(asset[1]);
+						var _ax = layer_sprite_get_x(asset[1]) - (sprite_get_xoffset(_sprite) * _xsc);
+						var _ay = layer_sprite_get_y(asset[1]) - (sprite_get_yoffset(_sprite) * _ysc);
+						var _width = data.width * _xsc
+						var _height = data.height * _ysc
 						if rectangle_in_rectangle(box_x1,box_y1,box_x2,box_y2,_ax,_ay,_ax+_width,_ay+_height) {
 							if array_get_index(selected_array,i)==-1 {
 								array_push(selected_array,i)
@@ -983,6 +1101,7 @@ if (mbleftrel) {
 }
 
 if (mbright) {
+	selected_array = [];
 	switch(selected_tool) {
 		case BRUSH_TOOL:
 			switch(selected_mode) {

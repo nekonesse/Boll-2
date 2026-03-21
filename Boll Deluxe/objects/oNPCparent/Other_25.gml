@@ -1,0 +1,1 @@
+text=string_hash_to_newline(text);
