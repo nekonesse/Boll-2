@@ -904,7 +904,7 @@ if (state != "pound") {
 #define collide_with_enemy
 var coll=check_hitbox_on_hitbox(id, oEnemy)
 if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
-	if (coll) && ((!slopesliding && state != "pound") || coll.damage_on_contact) && !(invincible_type && invincible_timer) && (coll.deal_dam) {
+	if (coll) && ((!slopesliding && state != "pound") || coll.damage_on_contact) && !(invincible_type && invincible_timer) {
 		stopsfx(charmName+"skid")
 		stopsfx(charmName+"damage")
 		hurt=1

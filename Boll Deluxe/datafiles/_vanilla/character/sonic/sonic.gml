@@ -174,8 +174,15 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 		}
 	} else {
 		walljump = false
-		hurt = false
 		canjump = 5;  // Coyote frames
+		
+		if (hurt) {
+			hurt = false;
+			if !(was_frozen) {
+				invincible_type = 1;
+				invincible_timer = 75;
+			}
+		}
 		
 		if (abs(gsp) < 3.5 && dashed) {
 			dashed = false
@@ -674,7 +681,7 @@ vsp= -(4+akey*1.5)
 #define collide_with_enemy
 var coll=check_hitbox_on_hitbox(id, oEnemy)
 if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
-	if (state != "jump") && ((state != "roll" && state != "spindash") || coll.damage_on_contact) && !(invincible_type && invincible_timer) && (coll.deal_dam) {
+	if ((state != "roll" && state != "spindash" && state != "jump") || coll.damage_on_contact) && !(invincible_type && invincible_timer) {
 		stopsfx(charmName+"damage")
 		hurt=1
 		hsp = -2.25 * xsc
@@ -698,7 +705,7 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 			} break
 		}
 		grow = 60;
-	} else if (invincible_type == 2) || (state == "spindash") || (state == "roll") {
+	} else if (invincible_type == 2) || (state == "spindash") || (state == "roll") || (state == "jump") {
 		make_particle(pImpact,coll.x+coll.xsc,coll.y,2)
 		VinylPlay(snd_enemykick)
 		signal_emit(coll.enemyRolledInto, id);
