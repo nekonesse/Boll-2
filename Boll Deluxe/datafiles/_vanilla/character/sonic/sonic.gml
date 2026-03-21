@@ -105,11 +105,6 @@ if (state == "jump" || state == "roll" || state == "spindash" || state == "crouc
 	hit_sizey = 6
 }
 
-can_grab = true;
-if (state == "wallrun") || (state == "roll") || (state == "spindash") || (dashed) || (activebound) || (hurt) || (finish && posed && no_move_prev) {
-	can_grab = false;
-}
-
 topspd = 3 + ((size != "mini") * 0.5) + ((invincible_type == 2) / 1.25);
 if (dashed){
 	afterimage = true
@@ -125,12 +120,18 @@ if (state == "roll") {
 	maxspd = 9;
 }
 
+var no_move_prev = no_move;
 if !(control_lock > 0 || state == "wallrun" || electrocuted || walljump || steep_slope) {
 	no_move = false
 }
 
 if (hurt) {
 	no_move = true;
+}
+
+can_grab = true;
+if (state == "wallrun") || (state == "roll") || (state == "spindash") || (dashed) || (activebound) || (hurt) || (finish && posed && no_move_prev) {
+	can_grab = false;
 }
 
 control_lock = max(0,control_lock - 1)
