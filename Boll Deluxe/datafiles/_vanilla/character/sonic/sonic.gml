@@ -29,6 +29,7 @@ dashed = false;
 boundjump = 0;
 activebound = false;
 base_terminal_vel = terminal_vel;
+kick = 0;
 
 // wallrun junk
 wallrunstored_hsp = 0;
@@ -392,7 +393,8 @@ if (sprindex_prev != sprite_index) {
 }
 
 bonk=max(0,bonk-1)	
-grow = max(0, (grow - 1));
+grow=max(0,grow-1);
+kick=max(0,kick-1);
 
 #define draw
 #region Sprite Manager
