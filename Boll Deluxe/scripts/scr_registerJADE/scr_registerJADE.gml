@@ -235,6 +235,7 @@ function JADE_initializeobj() {
 	registerobj(oMysteryOrb, spr_mysteryorb, 8, 8, 16, 16, false, false, stagecomp, "Mystery Orb")
 	registerobj(oSnowboardRamp, spr_snowboardramp, 0, 0, 64, 32, false, false, stagecomp, "Snowboard Ramp")
 	properties.addCheckbox(oSnowboardRamp, "Flipped", "hflip", false)
+	registerobj(oSnowboardGiver, spr_collider_poly, 0, 0, 16, 16, false, true, stagecomp, "Snowboard Giver")
 	
 	objectlist.add(stagecomp);
 	

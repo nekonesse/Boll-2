@@ -311,6 +311,7 @@
     {"name":"oShootBlock","order":6,"path":"objects/oShootBlock/oShootBlock.yy",},
     {"name":"oSlimeEyes","order":1,"path":"objects/oSlimeEyes/oSlimeEyes.yy",},
     {"name":"oSlopeCollider","order":1,"path":"objects/oSlopeCollider/oSlopeCollider.yy",},
+    {"name":"oSnowboardGiver","order":16,"path":"objects/oSnowboardGiver/oSnowboardGiver.yy",},
     {"name":"oSnowboardRamp","order":31,"path":"objects/oSnowboardRamp/oSnowboardRamp.yy",},
     {"name":"oSoccerBall","order":15,"path":"objects/oSoccerBall/oSoccerBall.yy",},
     {"name":"oSolidSpike","order":23,"path":"objects/oSolidSpike/oSolidSpike.yy",},

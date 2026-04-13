@@ -315,6 +315,8 @@ function draw_player(spr, _frame, _x = x, _y = y, _xsc = xsc, _ysc = ysc, _angle
 	//if (flash) exit
 	var yoff=(12-hit_sizey);
 	
+	if (state == "boarding") yoff += 3;
+	
 	if CollageImageExists(spr) {
 		CollageDrawImageExt(
 			spr, 

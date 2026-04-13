@@ -39,57 +39,103 @@ if (abs(colangle) > 60) {
 //	steep_slope = true	
 //}
 
-if (state != "frozen") {
-	if !dead && !no_step {
-		catspeak_execute(global.scripts[? $"{charmName}_step"]);
-	} else if (dead) {
-		catspeak_execute(global.scripts[? $"{charmName}_death"]);
-	}
-} else {
-	state = "frozen"
-	can_grab = false;
+switch(state) {
+	case "frozen":
+		state = "frozen"
+		can_grab = false;
 	
-	hit_sizex=15;
-	hit_sizey=15;
+		hit_sizex=15;
+		hit_sizey=15;
 	
-	gsp -= (0.25 * dsin(colangle)) //regular slope speed
+		gsp -= (0.25 * dsin(colangle)) //regular slope speed
 	
-	no_move = true
+		no_move = true
 	
-	if in_water() {
-		grav=defaultgrav/4
-	} else {
-		grav=defaultgrav
-	}
-	
-	fric = 0
-	
-	maxspd = 10
-	
-	component_gravity_coneyor();
-	
-	player_movement();
-	basic_step_move();
-	post_wall();
-	
-	if (apress) {
-		frozen_health-=1
-		var j=noone
-		j = instance_create(x-8,y+8,pDestruction) with(j){image_index=10 hspeed=-1+other.hsp/2 vspeed=-2} //bottom left
-		j = instance_create(x-8,y-8,pDestruction) with(j){image_index=10 hspeed=1+other.hsp/2 vspeed=-2} //bottom right
-		j = instance_create(x+8,y+8,pDestruction) with(j){image_index=10 hspeed=-1+other.hsp/2 vspeed=-4} //top left
-		j = instance_create(x+8,y-8,pDestruction) with(j){image_index=10 hspeed=1+other.hsp/2 vspeed=-4} //top right
-		if !(frozen_health) {
-			state="jump"
-			vsp=-2;
-			grounded=false;
-			was_frozen = true;
-			y-=8
-			VinylPlay(snd_iceshatter)
-			exit
+		if in_water() {
+			grav=defaultgrav/4
+		} else {
+			grav=defaultgrav
 		}
-		VinylPlay(snd_icestruggle)
-	}
+	
+		fric = 0
+	
+		maxspd = 10;
+		topspd = 3.5;
+	
+		component_gravity_coneyor();
+	
+		player_movement();
+		basic_step_move();
+		post_wall();
+	
+		if (apress) {
+			frozen_health-=1
+			var j=noone
+			j = instance_create(x-8,y+8,pDestruction) with(j){image_index=10 hspeed=-1+other.hsp/2 vspeed=-2} //bottom left
+			j = instance_create(x-8,y-8,pDestruction) with(j){image_index=10 hspeed=1+other.hsp/2 vspeed=-2} //bottom right
+			j = instance_create(x+8,y+8,pDestruction) with(j){image_index=10 hspeed=-1+other.hsp/2 vspeed=-4} //top left
+			j = instance_create(x+8,y-8,pDestruction) with(j){image_index=10 hspeed=1+other.hsp/2 vspeed=-4} //top right
+			if !(frozen_health) {
+				state="jump"
+				vsp=-2;
+				grounded=false;
+				was_frozen = true;
+				y-=8
+				VinylPlay(snd_iceshatter)
+				exit
+			}
+			VinylPlay(snd_icestruggle)
+		}
+	break;
+	case "boarding":
+		state = "boarding";
+		can_grab = false;
+		
+		defaultgrav = 0.25;
+		
+		hsp = (3 * xsc);
+		if (grounded) gsp = hsp;
+	
+		gsp -= (0.25 * dsin(colangle)) //regular slope speed
+	
+		no_move = true
+	
+		if in_water() {
+			grav=defaultgrav/4
+		} else {
+			grav=defaultgrav
+		}
+		
+		if (!akey && vsp < -2.6 && !canstopjump) { 
+			vsp = -2.6;
+		}
+		
+		if (apress) && (grounded) {
+			vsp = -5.5;
+			grounded = false;
+			if (collision_line(x,y,x,y+hit_sizey+4,oSnowboardRamp,true,false)) {
+				vsp -= 2;
+			}
+		}
+	
+		fric = 0;
+	
+		maxspd = 10;
+		topspd = 3.5;
+	
+		component_gravity_coneyor();
+	
+		player_movement();
+		basic_step_move();
+		post_wall();
+	break;
+	default:
+		if !dead && !no_step {
+			catspeak_execute(global.scripts[? $"{charmName}_step"]);
+		} else if (dead) {
+			catspeak_execute(global.scripts[? $"{charmName}_death"]);
+		}
+	break;
 }
 
 if (electrocuted) {

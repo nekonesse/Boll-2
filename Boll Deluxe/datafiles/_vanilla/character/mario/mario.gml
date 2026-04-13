@@ -721,6 +721,10 @@ if (electrocuted) {
 	frspd=1;
 	spriteEvent="electrocute"
 }
+
+if (state == "boarding") {
+	spriteEvent="boarding";
+}
 #endregion
 
 
@@ -868,7 +872,7 @@ if (state == "pound") {
 		gsp = (-6 * dsin(colangle)) 
 	}
 	playsfx(charmName+"stomp");
-} else if state != "frozen"{
+} else if (state != "frozen") && (state != "boarding") {
 	state = ""
 	make_particle(pSkidDust, x - 1, y + hit_sizey, depth + 5, 1, -2.25, -0.1, -0.02, 0.2);
 	make_particle(pSkidDust, x + 1, y + hit_sizey, depth + 5, -1, 2.25, -0.1, -0.02, 0.2);
@@ -883,7 +887,7 @@ wallkick = false;
 starmanjump = false;
 
 #define sprung_up
-if state != "frozen" {
+if (state != "frozen") && (state != "boarding") {
 	state = "jump";
 }
 runjump = 0;
@@ -999,6 +1003,9 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 stopsfx(charmName+"skid")
 
 #define on_freeze
+stopsfx(charmName+"skid")
+
+#define start_boarding
 stopsfx(charmName+"skid")
 
 #define throw_object

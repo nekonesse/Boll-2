@@ -1,7 +1,7 @@
 function player_interactions(){
 	if (piped) || (hurt) || (dead)  exit
 	
-	if (state != "frozen") {
+	if (state != "frozen") && (state != "boarding") {
 		var enemystomp=check_rectangle_in_hitbox(x-hit_sizex,y+hit_sizey+vsp,x+hit_sizex,y+hit_sizey+vsp, oEnemy)
 		if (enemystomp) && (enemystomp.phaseid==noone || enemystomp.phaseid.id!=id) && !(enemystomp.damage_on_contact) && !(enemystomp.no_stomping) && !(enemystomp.grabbed) && !(grounded) && (vsp > 0) && (can_stomp) && (y+hit_sizey+vsp < enemystomp.y) && (invincible_type != 2) {
 			enemystomp.enemyStomped.Emit(id);
@@ -229,5 +229,22 @@ function player_interactions(){
 				breakIcicle();
 			}
 		}
+	}
+	
+	if (collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey,oSnowboardGiver,false,true)) && (state != "boarding") {
+		state = "boarding";
+		sig.Emit("start_boarding");
+		if (is_grabbing) {
+			up=false;
+			down=true;
+			instance_destroy(grabbed_obj);
+			grabbed_obj = noone;
+			is_grabbing = false;
+		}
+		while (check_collision_line(x-hit_sizex,y+hit_sizey,x+hit_sizex,y+hit_sizey,COL_BOTTOM)) {
+			y-=1
+		}
+		hsp = 0;
+		vsp = 0;
 	}
 }

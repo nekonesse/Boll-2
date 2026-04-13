@@ -22,6 +22,10 @@ with(oBarrier) {
 	visible=(global.debug || global.show_collision)
 }
 
+with(oSnowboardGiver) {
+	visible=(global.debug || global.show_collision)
+}
+
 with(oLevelBorder) {
 	visible=(global.debug || global.show_collision)
 }

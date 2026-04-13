@@ -7,7 +7,7 @@ if (CollageImageExists(oGameManager.PlayerColl.GetImageInfo(get_spriteindex())))
 		pal_swap_set(oGameManager.playerPalettes[pNum],palette,false)
 	}
 	
-	if(afterimage)
+	if (afterimage)
 	{
 		for (var i = 0; i < 3; ++i) 
 		{
@@ -28,6 +28,9 @@ if (CollageImageExists(oGameManager.PlayerColl.GetImageInfo(get_spriteindex())))
 				}
 			}
 		}
+	}
+	if (state == "boarding") {
+		draw_sprite(spr_snowboard,0,floor(x),floor(y)+hit_sizey-3)
 	}
 	var normal_spr = oGameManager.PlayerColl.GetImageInfo(get_spriteindex())
 	draw_player(normal_spr, frame);
