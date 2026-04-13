@@ -5,6 +5,7 @@
 if collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey,oDeathPit,false,true) && !dead {
 	hurt = 1
 	invincible_type = 0
+	state = "";
 	sig.Emit("on_kill")
 }
 
