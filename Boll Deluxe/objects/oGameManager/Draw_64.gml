@@ -70,9 +70,9 @@ if surface_exists(HUDsurface) {
 			pal_swap_set(spr_thunderflowerpal,1,false);
 		}
 
-		var scale = 0.5*reserve_timer;
+		var scale = (1*reserve_timer);
 		
-		draw_sprite_ext(sprite,0,xx-4,yy,1+scale,1+scale,0,c_white,1);
+		draw_sprite_ext(sprite,0,xx-4,yy,1-scale,1-scale,0,c_white,1);
 		
 		if (reserved_item == oThunderFlower) {
 			pal_swap_reset();

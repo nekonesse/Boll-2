@@ -1,5 +1,5 @@
 if _owner!=noone {
-	instance_activate_region(x-16,y-16,32,(lineheight+4)*16, true)
+	instance_activate_region(x-16,y-16,32,32+(lineheight+4)*16, true)
 }
 
 if instance_exists(_owner) {

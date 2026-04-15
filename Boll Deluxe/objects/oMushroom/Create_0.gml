@@ -33,6 +33,14 @@ escapeItemBox = new Signal();
 itemCollected.Connect( self, function(hit_p) {
 	hit_p.sig.Emit(itemType)
 	
+	instance_create_depth(x,y,depth,pGlowRing);
+	
+	var dir = 30;
+	repeat(3) {
+		make_particle(pGlitter,x,y,depth-1,1,lengthdir_x(2,dir),lengthdir_y(2,dir),0,0);
+		dir+=120;
+	}
+	
 	instance_destroy();
 });
 
