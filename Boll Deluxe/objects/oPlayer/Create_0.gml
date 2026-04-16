@@ -132,7 +132,7 @@ setup_box_poly(id);
 // camera
 my_camera=instance_create(x,y,oCamera)
 
-my_camera.target = self;
+my_camera.follow = self;
 
 if (!global.zoom_on_start)
 {

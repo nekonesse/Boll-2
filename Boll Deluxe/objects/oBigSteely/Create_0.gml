@@ -92,7 +92,7 @@ function ball_movement() {
 			vsp *= 0.5
 			
 			with(oCamera) {
-				shakeoffset=4
+				shake_screen(2,10);
 			}
 			
 			VinylPlay(snd_enemyexplode)

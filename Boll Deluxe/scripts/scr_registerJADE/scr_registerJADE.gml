@@ -267,9 +267,12 @@ function JADE_initializeobj() {
 	registerobj(oCameraRegion, spr_cameraregion, 0, 0, 16, 16, false, false, gizmolist, "Camera Region")
 	properties.addNumberInput(oCameraRegion, "Nudge X", "nudge_x", 0, false)
 	properties.addNumberInput(oCameraRegion, "Nudge Y", "nudge_y", 0, false)
-	properties.addNumberInput(oCameraRegion, "Zoom Level", "zoom", 1, true)
-	properties.addCheckbox(oCameraRegion, "Lock On", "lockon", false)
-	registerobj(oCameraBoundary, spr_cameraboundary, 0, 0, 16, 16, false, false, gizmolist, "Camera Boundary")
+	//properties.addNumberInput(oCameraRegion, "Zoom Level", "zoom", 1, true)
+	properties.addCheckbox(oCameraRegion, "Constrain Left", "left", false)
+	properties.addCheckbox(oCameraRegion, "Constrain Right", "right", false)
+	properties.addCheckbox(oCameraRegion, "Constrain Top", "top", false)
+	properties.addCheckbox(oCameraRegion, "Constrain Bottom", "bottom", false)
+	//registerobj(oCameraBoundary, spr_cameraboundary, 0, 0, 16, 16, false, false, gizmolist, "Camera Boundary")
 	registerobj(oActivationRegion, spr_activationregion, 0, 0, 16, 16, false, false, gizmolist, "Activation Region")
 	registerobj(oDeactivationRegion, spr_deactivationregion, 0, 0, 16, 16, false, false, gizmolist, "Deactivation Region")
 	registerobj(oDeathPit, spr_deathpit, 0, 0, 16, 16, true, false, gizmolist, "Death Pit")
@@ -575,28 +578,44 @@ function JADE_load(file=game_save_id+"\save.jade") {
 		i=0
 		var j=0;
 		repeat(array_length(objects[i])) {
-			if array_length(objects[i][j]) < 11 {
-				objects[i][j][10] = [];
-				objects[i][j][11] = [2,0,false,false,false,true];
+			var dont_load = false;
+			if (is_undefined(obj_data[$ objects[i][j][0]])) {
+				dont_load = true;
 			}
-			if (objects[i][j][0] == "oPlayerSpawn") { //lame conversion to spawn tool
-				spawnpoints = [
-					objects[i][j][1],
-					objects[i][j][2],
-					objects[i][j][1],
-					objects[i][j][2]
-				]
-			} else
-				ds_list_add(object_layer_map, objects[i][j])
+			
+			if !(dont_load) {
+				if array_length(objects[i][j]) < 11 {
+					objects[i][j][10] = [];
+					objects[i][j][11] = [2,0,false,false,false,true];
+				}
+			
+				if (objects[i][j][0] == "oPlayerSpawn") { //lame conversion to spawn tool
+					spawnpoints = [
+						objects[i][j][1],
+						objects[i][j][2],
+						objects[i][j][1],
+						objects[i][j][2]
+					]
+				} else {
+					ds_list_add(object_layer_map, objects[i][j])
+				}
+			}
 			j++;
 		}
 		j=0;
 		repeat(array_length(node_objects[i])) {
-			if array_length(node_objects[i][j]) < 11 {
-				node_objects[i][j][10] = [];
-				node_objects[i][j][11] = [2,0,false,false,false,true];
+			var dont_load = false;
+			if (is_undefined(obj_data[$ objects[i][j][0]])) {
+				dont_load = true;
 			}
-			ds_list_add(node_layer_map, node_objects[i][j])
+			
+			if !(dont_load) {
+				if array_length(node_objects[i][j]) < 11 {
+					node_objects[i][j][10] = [];
+					node_objects[i][j][11] = [2,0,false,false,false,true];
+				}
+				ds_list_add(node_layer_map, node_objects[i][j])
+			}
 			j++;
 		}
 		

@@ -1,4 +1,5 @@
 ///@description Game HUD
+
 var guiw = window_get_width();
 var guih = window_get_height();
 if !os_is_paused() && guiw>0 && guih>0 {
