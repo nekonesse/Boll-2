@@ -14,8 +14,7 @@ static_frame = 0;
 monitor_frame = 0;
 
 sprite_index = spr_monitorstatic;
-image_speed = 0;
-alarm[0] = 6 + irandom(72);
+image_speed = 0.25;
 true_img_index = 0;
 
 blockHit.Destroy();

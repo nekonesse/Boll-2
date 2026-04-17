@@ -16,5 +16,5 @@ if (image_index >= 4) {
 	true_img_index = 0;
 	image_index = 0;
 	image_speed = 0;
-	alarm[0] = 6 + irandom(72);
+	alarm[0] = 150;
 }
