@@ -192,7 +192,7 @@ function player_interactions(){
 		instance_destroy(bearballoon);
 	}
 	
-	var crate=collision_line(x-(hit_sizex-1),y+hit_sizey+vsp,x+(hit_sizex-1),y+hit_sizey+vsp, oCrate, false, true) 
+	var crate=collision_line(x-(hit_sizex-1)-hsp,y+hit_sizey+vsp,x+(hit_sizex-1)-hsp,y+hit_sizey+vsp, oCrate, false, true) 
 	if (crate) && (vsp>=0) && !(hurt) && !(dead) {
 		vsp = -(2.5+akey*1.5);
 		sig.Emit("sprung");
