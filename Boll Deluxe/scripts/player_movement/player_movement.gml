@@ -41,8 +41,13 @@ function player_movement(){
 	
 	if (grounded) {
 		pollenated = false;
-		vsp = gsp * -dsin(colangle)
-		hsp = gsp * dcos(colangle)
+		if sign(gsp)!=sign(colslope){
+			vsp = gsp * -dsin(colangle)
+			hsp = gsp * dcos(colangle)
+		} else if dsin(colangle)!=0 && dcos(colangle)!=0 && dcos(colangle)<1 && (abs(colslope) == 1) {
+			vsp = gsp / -(dsin(colangle) * 1.25)
+			hsp = gsp / (dcos(colangle) * 1.25)
+		}
 	} else {
 		if (abs(hsp) > topspd) {
 			if (vsp < 0 && vsp > -2 ) {
