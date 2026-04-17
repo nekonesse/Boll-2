@@ -160,9 +160,9 @@ function player_warping(){
 			my_camera.move(x,y,30);
 		}
 	}
-	pipecoll=collision_line(x-hit_sizex,y-hit_sizey-1,x+hit_sizex,y-hit_sizey-1,oPipe,false,true)
+	pipecoll=collision_rectangle(x-hit_sizex,y-hit_sizey-3,x+hit_sizex,y-hit_sizey-1,oPipe,false,true)
 	if (pipecoll && pipecoll.image_angle==180 && pipecoll.warptarget!="") { //WARPING UP PIPE
-		if (up) && !(piped) && !(grounded) && !(warp_coll) {
+		if (up) && !(piped) && !(warp_coll) {
 			piped=true
 			warp_type="enter_pipe_up"
 			warp_timer=120;
