@@ -1,4 +1,4 @@
-if(instance_exists(follow)){
+if(instance_exists(follow) && !get_paused()){
 	if (follow.object_index == oPlayer) {
 		if (follow.dead || follow.finish) exit;
 	}
@@ -58,7 +58,7 @@ x = floor(x);
 y = floor(y);
 		
 #region zone constrain
-if(instance_exists(follow)){
+if(instance_exists(follow) && !get_paused()){
 	if (follow.object_index == oPlayer) {
 		if (follow.dead || follow.finish) exit;
 	}

@@ -145,6 +145,8 @@ switch(state) {
 			catspeak_execute(global.scripts[? $"{charmName}_death"]);
 		}
 		
+		player_warping();
+		
 		if (vpress) && (oGameManager.reserved_item!=noone) {
 			var i=instance_create_depth(x,y,0,oGameManager.reserved_item)
 			i.vsp=-2;

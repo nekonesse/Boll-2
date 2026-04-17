@@ -605,7 +605,7 @@ function JADE_load(file=game_save_id+"\save.jade") {
 		j=0;
 		repeat(array_length(node_objects[i])) {
 			var dont_load = false;
-			if (is_undefined(obj_data[$ objects[i][j][0]])) {
+			if (is_undefined(obj_data[$ node_objects[i][j][0]])) {
 				dont_load = true;
 			}
 			

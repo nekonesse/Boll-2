@@ -528,6 +528,30 @@ if (hurt || state == "frozen") {
 if (electrocuted) {
 	spriteEvent="electrocute"
 }
+
+if (piped) {
+	switch(warp_type) {
+		case "enter_pipe_down":
+			spriteEvent="downPipeEnter";
+		break;
+		case "exit_pipe_down":
+			spriteEvent="downPipeExit";
+		break;
+		case "enter_pipe_up":
+			spriteEvent="upPipeEnter";
+		break;
+		case "exit_pipe_up":
+			spriteEvent="upPipeExit";
+		break;
+		case "enter_pipe_side":
+			spriteEvent="sidePipeEnter";
+		break;
+		case "exit_pipe_side":
+			spriteEvent="sidePipeExit";
+		break;
+	}
+}
+
 #endregion
 
 //chopp: to handle any signals, make sure you define the code here with the same name 
