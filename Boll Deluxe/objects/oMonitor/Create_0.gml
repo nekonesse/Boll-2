@@ -27,14 +27,9 @@ blockHit.Connect( self, function(hit_p, obj) {
 	i.itemfr = monitor_frame
 	if (obj.object_index == oPlayer) {
 		i.player = obj
-		if (obj.bbox_top > (y + 8) && obj.vsp < 0 && !obj.grounded) {
-			with (obj) {
-				vsp = 2;
-				
-				VinylPlay(snd_blockbump);
-				sig.Emit("ceil_bonk");
-				colflags |= COL_CEILI;
-			}
+		if ((obj.y-hit_sizey) > (bbox_bottom) && obj.vsp < 0 && !obj.grounded) {
+			//ok so the problem is this cant work for now under semisolids,
+			//as its an issue with the general collision system so it will never work until thats fixed
 			brkvsp = -1.2;
 		}
 	} else if (obj.object_index == oKoopa) || object_is_ancestor(obj.object_index,oKoopa) {

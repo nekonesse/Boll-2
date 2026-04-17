@@ -1,4 +1,4 @@
-if (physics_enabled) {
+if (physics_enabled) && !(is_array(pathing) && array_length(pathing)) {
 	if !grounded { 
 		vsp=min(vsp+grav,6);
 	}
@@ -6,7 +6,9 @@ if (physics_enabled) {
 	x += hsp
 	y += vsp
 
-	player_collision(true, false, (-sprite_width/2)+1,sprite_width/2,(-sprite_height/2)+1,(sprite_height/2)-1);
+	
+	
+	player_collision(true, false, (bbox_left-x),bbox_right-x,(bbox_top-y)+1,(bbox_bottom-y)-1);
 }
 
 true_img_index += image_speed;

@@ -208,22 +208,22 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 			
 				//bonking
 				if object_index == oPlayer {
-						//Hitting / Bumping blocks
-						VinylPlay(snd_blockbump)
-						sig.Emit("ceil_bonk")
-						var _list = ds_list_create();
-						var _num = collision_line_list(posx+left, posy+top-1+vsp, posx+right, posy+top-1+vsp, oHittable, false, true, _list, true);
-						if (_num > 0) {
-							var i=0;
-							repeat (_num) {
-								with(_list[| i]) if !(no_hit) {
-									dummyTimer = dummyTimerReset;
-									blockHit.Emit(-1, other.id)
-								}
-								i++;
+					//Hitting / Bumping blocks
+					VinylPlay(snd_blockbump)
+					sig.Emit("ceil_bonk")
+					var _list = ds_list_create();
+					var _num = collision_line_list(posx+left, posy+top-1+vsp, posx+right, posy+top-1+vsp, oHittable, false, true, _list, true);
+					if (_num > 0) {
+						var i=0;
+						repeat (_num) {
+							with(_list[| i]) if !(no_hit) {
+								dummyTimer = dummyTimerReset;
+								blockHit.Emit(-1, other.id)
 							}
+							i++;
 						}
-						ds_list_destroy(_list);
+					}
+					ds_list_destroy(_list);
 			
 					colflags |= COL_CEILI;
 				}

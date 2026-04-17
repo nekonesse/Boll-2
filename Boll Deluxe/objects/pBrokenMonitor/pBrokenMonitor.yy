@@ -34,6 +34,9 @@
     "name":"spr_monitor",
     "path":"sprites/spr_monitor/spr_monitor.yy",
   },
-  "spriteMaskId":null,
+  "spriteMaskId":{
+    "name":"spr_monitor",
+    "path":"sprites/spr_monitor/spr_monitor.yy",
+  },
   "visible":true,
 }

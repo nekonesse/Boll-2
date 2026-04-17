@@ -1,4 +1,4 @@
-if !is_array(pathing) {
+if (is_array(pathing) && array_length(pathing)) {
 	if (going!=0) {
 		image_index=0
 		y+=0.33*(going)
