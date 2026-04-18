@@ -1504,6 +1504,7 @@
     {"id":{"name":"shd_alpha","path":"shaders/shd_alpha/shd_alpha.yy",},},
     {"id":{"name":"shd_bluefade","path":"shaders/shd_bluefade/shd_bluefade.yy",},},
     {"id":{"name":"shd_cleanEdge","path":"shaders/shd_cleanEdge/shd_cleanEdge.yy",},},
+    {"id":{"name":"shd_colormod","path":"shaders/shd_colormod/shd_colormod.yy",},},
     {"id":{"name":"shd_flatcolor","path":"shaders/shd_flatcolor/shd_flatcolor.yy",},},
     {"id":{"name":"shd_mode7","path":"shaders/shd_mode7/shd_mode7.yy",},},
     {"id":{"name":"shd_mode7Ceiling","path":"shaders/shd_mode7Ceiling/shd_mode7Ceiling.yy",},},

@@ -1067,6 +1067,7 @@
     {"name":"shd_alpha","order":1,"path":"shaders/shd_alpha/shd_alpha.yy",},
     {"name":"shd_bluefade","order":9,"path":"shaders/shd_bluefade/shd_bluefade.yy",},
     {"name":"shd_cleanEdge","order":6,"path":"shaders/shd_cleanEdge/shd_cleanEdge.yy",},
+    {"name":"shd_colormod","order":10,"path":"shaders/shd_colormod/shd_colormod.yy",},
     {"name":"shd_mode7","order":5,"path":"shaders/shd_mode7/shd_mode7.yy",},
     {"name":"shd_mode7Ceiling","order":4,"path":"shaders/shd_mode7Ceiling/shd_mode7Ceiling.yy",},
     {"name":"shd_mode7Infinite","order":3,"path":"shaders/shd_mode7Infinite/shd_mode7Infinite.yy",},

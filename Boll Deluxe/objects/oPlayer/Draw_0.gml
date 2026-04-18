@@ -7,6 +7,11 @@ if (CollageImageExists(oGameManager.PlayerColl.GetImageInfo(get_spriteindex())))
 		pal_swap_set(oGameManager.playerPalettes[pNum],palette,false)
 	}
 	
+	if (invincible_type == 2) {
+		shader_set(shd_colormod)
+		var unitime = shader_get_uniform(shd_colormod,"time")
+		shader_set_uniform_f(unitime, global.roomTimer / game_get_speed(gamespeed_fps));
+	}
 	if (afterimage)
 	{
 		for (var i = 0; i < 3; ++i) 
@@ -29,6 +34,7 @@ if (CollageImageExists(oGameManager.PlayerColl.GetImageInfo(get_spriteindex())))
 			}
 		}
 	}
+	
 	if (state == "boarding") {
 		draw_sprite_ext(spr_snowboard,0,floor(x)-lengthdir_x(3,sprite_angle-90),floor(y)+hit_sizey-lengthdir_y(3,sprite_angle-90),1,1,sprite_angle,c_white,1);
 	}
