@@ -1,1 +1,2 @@
-draw_sprite(sprite_index, timer div 3, x, y);
+var _angle = (((global.roomTimer * 20) + creation_time_snap) / 360) * (pi * 2);
+draw_sprite_circle(spr_pShineStarman, timer div 2, xstart,ystart,1,1,(owner.bbox_bottom - owner.bbox_top) - ((timer / 23) * 8),2,_angle)

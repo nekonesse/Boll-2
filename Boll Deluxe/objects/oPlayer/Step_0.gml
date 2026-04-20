@@ -190,7 +190,7 @@ if (invincible_timer) {
 			
 			if (global.roomTimer & 0b11 == 2) {
 				instance_create(random_range(bbox_left - 4,bbox_right + 4),random_range(bbox_top-8,bbox_bottom),pShine)
-			} else if !(global.roomTimer & 0b1) {
+			} else if !(global.roomTimer & 0b11) {
 				with (instance_create(x, y, pShineStarman)) {
 					owner = other;
 				}

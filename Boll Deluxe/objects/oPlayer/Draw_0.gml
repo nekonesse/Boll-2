@@ -49,8 +49,9 @@ if (CollageImageExists(oGameManager.PlayerColl.GetImageInfo(get_spriteindex())))
 	}
 	
 	if (invincible_type == 2) {
-		var star_shine_offset = ((global.roomTimer / 3) mod 5);
-		draw_sprite_circle(spr_pShineStarman,star_shine_offset,floor(x),floor(y),1,1, (bbox_bottom - bbox_top) + 4 ,2,(((global.roomTimer * 1.5) + (star_shine_offset * 16)) / 360) * (pi * 4))
+		var _star_shine_offset = ((global.roomTimer / 3) mod 5);
+		var _final_angle = ((global.roomTimer + ((global.roomTimer & 1) * 90)) * 1.5) + ((_star_shine_offset) * 16)
+		draw_sprite_circle(spr_pShineStarman,_star_shine_offset,floor(x),floor(y),1,1, (bbox_bottom - bbox_top) + 2, 2, (_final_angle / 360) * (pi * 4))
 	}
 }
 
