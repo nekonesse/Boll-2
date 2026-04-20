@@ -1,6 +1,6 @@
 {
   "$GMSound":"v2",
-  "%Name":"snd_itemcoin",
+  "%Name":"snd_itemshard",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -10,9 +10,9 @@
   "compression":0,
   "compressionQuality":4,
   "conversionMode":0,
-  "duration":0.41909298,
+  "duration":0.6928798,
   "exportDir":"",
-  "name":"snd_itemcoin",
+  "name":"snd_itemshard",
   "parent":{
     "name":"Items",
     "path":"folders/Sounds/Items.yy",
@@ -21,6 +21,6 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"snd_itemcoin.wav",
-  "volume":1.0,
+  "soundFile":"snd_itemshard.wav",
+  "volume":0.5,
 }
