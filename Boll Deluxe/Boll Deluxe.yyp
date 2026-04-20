@@ -1864,6 +1864,7 @@
     {"id":{"name":"spr_scoretext","path":"sprites/spr_scoretext/spr_scoretext.yy",},},
     {"id":{"name":"spr_scripttrigger","path":"sprites/spr_scripttrigger/spr_scripttrigger.yy",},},
     {"id":{"name":"spr_semilider","path":"sprites/spr_semilider/spr_semilider.yy",},},
+    {"id":{"name":"spr_shard","path":"sprites/spr_shard/spr_shard.yy",},},
     {"id":{"name":"spr_shardJADE","path":"sprites/spr_shardJADE/spr_shardJADE.yy",},},
     {"id":{"name":"spr_shellhitbox","path":"sprites/spr_shellhitbox/spr_shellhitbox.yy",},},
     {"id":{"name":"spr_shootblock","path":"sprites/spr_shootblock/spr_shootblock.yy",},},

@@ -32,8 +32,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_shardJADE",
-    "path":"sprites/spr_shardJADE/spr_shardJADE.yy",
+    "name":"spr_shard",
+    "path":"sprites/spr_shard/spr_shard.yy",
   },
   "spriteMaskId":{
     "name":"spr_20x20hitbox",

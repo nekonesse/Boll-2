@@ -2,7 +2,7 @@ offset = random(64);
 other_angle = 0;
 draw_angle = 0;
 col_timer = 0;
-image_blend = #4527CE;
+//image_blend = #4527CE;
 
 //TODO:
 //make the shard change color according to the angle of the triangle

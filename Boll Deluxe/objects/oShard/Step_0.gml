@@ -3,6 +3,7 @@ other_angle += (offset / 64) + col_timer;
 
 if (col_timer != 0) {
 	col_timer += 0.25;
+	image_speed += 0.07
 } else if place_meeting(x,y,oPlayer) {
 	col_timer += 0.25;
 	
