@@ -130,10 +130,11 @@ function get_spriteindex() { //returns the sprite name of the player's current s
 	
 	var spritedat = global.animdat[pNum][0]
 	
-	var sprite_yank = size
-	if !is_undefined(spritedat[$ $"{size} override"])
-	sprite_yank = spritedat[$ $"{size} override"]
-	var _getspr=spritedat[$ $"{sprite_yank} {spriteEvent}"]
+	var sprite_yank = spritedat[$ $"{size} override"];
+	if (is_undefined(sprite_yank)) {
+		sprite_yank = size;
+	}
+	var _getspr=spriteMap[$ $"{sprite_yank} {spriteEvent}"]
 	var spr=$"spr_{charmName}_{sprite_yank}_{_getspr}"
 	
 	if (size != mem) {
@@ -158,30 +159,34 @@ function skin_animationdata(slot,name,list) {
 
 	var j=0;
 	repeat (array_length(global.powerups)) {
-		var sprite_yank = global.powerups[j]
 		var spritedat = global.animdat[pNum][0]
 		var animdat = global.animdat[pNum][1]
-		if spritedat[$ $"{global.powerups[j]} override"] != undefined {
-			sprite_yank = spritedat[$ $"{global.powerups[j]} override"]
+		var sprite_yank = spritedat[$ $"{global.powerups[j]} override"];
+		if (is_undefined(sprite_yank)) {
+			sprite_yank = spritedat[$ $"{global.powerups[j]} copy"];
+			if (is_undefined(sprite_yank)) {
+				sprite_yank = global.powerups[j];
+			}
 		}
 		var g=0;
 		repeat (array_length(spriteEvents)) {
-			var _getspr=spritedat[$ $"{sprite_yank} {spriteEvents[g]}"]
-			if is_undefined(_getspr) {
-				_getspr=spritedat[$ $"{spriteEvents[g]}"]
+			var _getspr=spritedat[$ $"{global.powerups[j]} {spriteEvents[g]}"]
+			if (is_undefined(_getspr)) {
+				_getspr=spritedat[$ $"{sprite_yank} {spriteEvents[g]}"]
+				if (is_undefined(_getspr)) {
+					_getspr=spritedat[$ $"{spriteEvents[g]}"]
+				}
 			}
-			if !is_undefined(_getspr) {
-				show_debug_message(_getspr)
-				spriteMap[$ $"{global.powerups[j]} {spriteEvents[g]}"]=_getspr
-			}
+			spriteMap[$ $"{global.powerups[j]} {spriteEvents[g]}"]=_getspr
 			g++;
 		}
+		
 		var i=0;
 		repeat (array_length(list)) {
 		    spr=list[i]
 		    //read frame count list
 		    //the below code was mega simplified since we don't have to deal with the commas for different sizes.
-		    //I'm utilizing the defaults of nozerounreal here so that in the case that it doesn't actually find the tag it just goes for a non size specific version. i.e, one without a tag.s  ||  lazy 8am moster here Thank You.		
+		    //the json system is being heavily abused here so that in the case that it doesn't actually find the tag it just goes for a non size specific version. i.e, one without a tag.s  ||  lazy 8am moster here Thank You.		
 			if !is_undefined(animdat[$ $"{global.powerups[j]} {spr} frames"])
 			frames_list[i]=animdat[$ $"{global.powerups[j]} {spr} frames"]
 			else if !is_undefined(animdat[$ $"{spr} frames"])

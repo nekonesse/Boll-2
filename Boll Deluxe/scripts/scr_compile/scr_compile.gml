@@ -115,15 +115,42 @@ function import_sheets() {
 		
 		repeat(array_length(global.powerups)) {
 			var sprite_yank = global.powerups[j]
-			if spritedat[$ $"{global.powerups[j]} override"] != undefined {
-					sprite_yank = spritedat[$ $"{global.powerups[j]} override"]
+			if !is_undefined(spritedat[$ $"{global.powerups[j]} override"]) {
+				sprite_yank = spritedat[$ $"{global.powerups[j]} override"]
 			}
 			var g=0;
 			repeat (array_length(array)) {
 				if (array[g]!="_HUDicon") && file_exists($"{dir}\\sprites\\{sprite_yank}\\{array[g]}.png") { //make sure they arent trying to overwrite our HUD icon that we imported
-					var frames=nozerounreal(framedat[$ $"{sprite_yank} {array[g]} frames"], framedat[$ $"{array[g]} frames"])
-					var org_x=nozerounreal(framedat[$ $"{sprite_yank} {array[g]} orgx"],nozerounreal(framedat[$ $"{array[g]} origx"], nozerounreal(framedat[$ $"{sprite_yank} orgin x"],nozerounreal(framedat[$ "origin x"], CollageOrigin.CENTER))))
-					var org_y=nozerounreal(framedat[$ $"{sprite_yank} {array[g]} orgy"],nozerounreal(framedat[$ $"{array[g]} origy"], nozerounreal(framedat[$ $"{sprite_yank} orgin y"],nozerounreal(framedat[$ "origin y"], CollageOrigin.BOTTOM))))
+					var frames = framedat[$ $"{sprite_yank} {array[g]} frames"];
+					if (is_undefined(frames)) {
+						frames = framedat[$ $"{array[g]} frames"];
+					}
+					var org_x = framedat[$ $"{sprite_yank} {array[g]} orgx"];
+					if (is_undefined(org_x)) {
+						org_x = framedat[$ $"{array[g]} orgx"];
+						if (is_undefined(org_x)) {
+							org_x = framedat[$ $"{sprite_yank} orgx"];
+							if (is_undefined(org_x)) {
+								org_x = framedat[$ $"orgin x"];
+								if (is_undefined(org_x)) {
+									org_x = CollageOrigin.CENTER;
+								}
+							}
+						}
+					}
+					var org_y = framedat[$ $"{sprite_yank} {array[g]} orgy"];
+					if (is_undefined(org_y)) {
+						org_y = framedat[$ $"{array[g]} orgy"];
+						if (is_undefined(org_y)) {
+							org_y = framedat[$ $"{sprite_yank} orgy"];
+							if (is_undefined(org_y)) {
+								org_y = framedat[$ $"orgin y"];
+								if (is_undefined(org_y)) {
+									org_y = CollageOrigin.BOTTOM;
+								}
+							}
+						}
+					}
 					oGameManager.PlayerColl.AddFile($"{dir}\\sprites\\{sprite_yank}\\{array[g]}.png",$"spr_{_name}_{global.powerups[j]}_{array[g]}",frames,false,false,org_x,org_y)
 				}
 				show_debug_message($"adding sprite {array[g]}")
@@ -131,7 +158,6 @@ function import_sheets() {
 			}
 			j++;
 		}
-		show_debug_message(global.player_spritelists[i])
 		i++;
 		
 	}
