@@ -1930,10 +1930,10 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
-    {"roomId":{"name":"rIntro","path":"rooms/rIntro/rIntro.yy",},},
     {"roomId":{"name":"rMainMenu","path":"rooms/rMainMenu/rMainMenu.yy",},},
     {"roomId":{"name":"rEditor","path":"rooms/rEditor/rEditor.yy",},},
     {"roomId":{"name":"rGame","path":"rooms/rGame/rGame.yy",},},
+    {"roomId":{"name":"rIntro","path":"rooms/rIntro/rIntro.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
