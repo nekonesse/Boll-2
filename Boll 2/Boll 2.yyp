@@ -667,6 +667,7 @@
     {"id":{"name":"pStompedEnemy","path":"objects/pStompedEnemy/pStompedEnemy.yy",},},
     {"id":{"name":"pMysteryOrbParticles","path":"particles/pMysteryOrbParticles/pMysteryOrbParticles.yy",},},
     {"id":{"name":"pPollenParticles","path":"particles/pPollenParticles/pPollenParticles.yy",},},
+    {"id":{"name":"rBoot","path":"rooms/rBoot/rBoot.yy",},},
     {"id":{"name":"rEditor","path":"rooms/rEditor/rEditor.yy",},},
     {"id":{"name":"rGame","path":"rooms/rGame/rGame.yy",},},
     {"id":{"name":"rIntro","path":"rooms/rIntro/rIntro.yy",},},
@@ -1934,6 +1935,7 @@
     {"roomId":{"name":"rEditor","path":"rooms/rEditor/rEditor.yy",},},
     {"roomId":{"name":"rGame","path":"rooms/rGame/rGame.yy",},},
     {"roomId":{"name":"rIntro","path":"rooms/rIntro/rIntro.yy",},},
+    {"roomId":{"name":"rBoot","path":"rooms/rBoot/rBoot.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[

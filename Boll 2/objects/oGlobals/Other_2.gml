@@ -112,8 +112,6 @@ global.scripts = compile_code();
 global.scripts_level = compile_level_scripts();
 global.scripts_object = compile_object_scripts();
 
-global.animatePrincess=1
-
 var p_count = parameter_count();
 if (p_count > 0) {
 	var i=1;
@@ -128,3 +126,5 @@ if (p_count > 0) {
 		i++;
 	}
 }
+
+room_goto(rMainMenu);

@@ -1,4 +1,5 @@
-//we need to recode this i think.....
+//its fine
+event_inherited();
 
 if (parent_pipe == noone) {
 	player_collision();

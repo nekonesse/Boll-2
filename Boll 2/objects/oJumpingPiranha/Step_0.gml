@@ -1,10 +1,4 @@
-if !on_screen(32,32) && !origin_on_screen(xstart,ystart,32,32) {
-	instance_destroy();
-	//x = xstart
-	//y = ystart
-} else if on_screen(32,32) {
-	instance_activate_region(x-activation_region_width, y-activation_region_width, activation_region_width*2, activation_region_height*2, true)
-}
+event_inherited();
 
 if (parent_pipe == noone) {
 	player_collision();
