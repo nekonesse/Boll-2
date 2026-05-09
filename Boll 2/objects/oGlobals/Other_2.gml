@@ -12,6 +12,7 @@ global.settings[$ "fullscreen_type"] = 0
 global.settings[$ "master_vol"] = 1
 global.settings[$ "music_vol"] = 1
 global.settings[$ "sound_vol"] = 1
+global.settings[$ "alternate_hud"] = 0
 global.settings[$ "keybinds"] = input_player_export()
 
 if file_exists(game_save_id+"\settings.ini")
@@ -20,6 +21,9 @@ if file_exists(game_save_id+"\settings.ini")
 	if (loaded != -1) {
 		var save_file = buffer_decompress(loaded)
 		global.settings = json_parse(buffer_read(save_file,buffer_string))
+		if (!struct_exists(global.settings, "alternate_hud")) {
+			global.settings[$ "alternate_hud"] = 0;
+		}
 		var opstruct = global.settings[$ "keybinds"]
 		if input_player_verify(opstruct) input_player_import(opstruct);
 		buffer_delete(loaded)

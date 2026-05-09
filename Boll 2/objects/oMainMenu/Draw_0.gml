@@ -56,7 +56,13 @@ switch (crMenu) {
 		var mastervol = $"Master Volume:\n{round(temp_settings.master_vol*100)}%"
 		var musicvol = $"Music Volume:\n{round(temp_settings.music_vol*100)}%"
 		var soundvol = $"Sound Volume:\n{round(temp_settings.sound_vol*100)}%"
-		_displayOPS = [scalestr, fullscr, mastervol, musicvol, soundvol, "Keybinds", "Apply Changes"];
+		var alternatehud;
+		switch(temp_settings.alternate_hud) {
+			case 0: alternatehud = "Off" break;
+			case 1: alternatehud = "On" break;
+		}
+		var althud = $"Alternate HUD:\n{alternatehud}"
+		_displayOPS = [scalestr, fullscr, mastervol, musicvol, soundvol, althud, "Keybinds", "Apply Changes"];
 		var _yPos = (_rmHei/2)-(32*(array_length(_displayOPS)-1)/2)+24;
 		var i=0;
 		repeat (array_length(_displayOPS)) { // Looping through options to draw them on screen
