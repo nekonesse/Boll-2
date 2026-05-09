@@ -6,6 +6,7 @@ function JADE_draw_object(obj,alpha) {
 	var voffx = 0;
 	var voffy = 0;
 	var frame = 0;
+	var rot = 0;
 	var property = obj[5]
 	var spr = data.sprite
 	switch(obj[0]) {
@@ -84,9 +85,12 @@ function JADE_draw_object(obj,alpha) {
 				default: frame = 0;
 			}
 		break;
+		case "oPipe":
+			rot = property[0][1];
+		break;
 		default: break;
 	}
-	draw_sprite_ext(spr,frame,obj[1]+(data.xoff*obj[3])+voffx,obj[2]+(data.yoff*obj[4]),(obj[3]*data.sizex)*vxsc,(obj[4]*data.sizey)*vysc,0,c_white,alpha);
+	draw_sprite_ext(spr,frame,obj[1]+(data.xoff*obj[3])+voffx,obj[2]+(data.yoff*obj[4]),(obj[3]*data.sizex)*vxsc,(obj[4]*data.sizey)*vysc,rot,c_white,alpha);
 	
 	//overlay
 	switch(obj[0]) {
