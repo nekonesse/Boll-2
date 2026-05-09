@@ -477,6 +477,7 @@
     {"$GMIncludedFile":"","%Name":"iceskatefreeze.jade","CopyToMask":-1,"filePath":"datafiles/mods/level","name":"iceskatefreeze.jade","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"nekonessetiletest.jade","CopyToMask":-1,"filePath":"datafiles/mods/level","name":"nekonessetiletest.jade","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"UpHighInTheNightSky.jade","CopyToMask":-1,"filePath":"datafiles/mods/level","name":"UpHighInTheNightSky.jade","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"W5template.jade","CopyToMask":-1,"filePath":"datafiles/mods/level","name":"W5template.jade","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"customobject.gml","CopyToMask":-1,"filePath":"datafiles/mods/objects/customobject","name":"customobject.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"customobject2.gml","CopyToMask":-1,"filePath":"datafiles/mods/objects/customobject2","name":"customobject2.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"test_functions.gml","CopyToMask":-1,"filePath":"datafiles/mods/scripts","name":"test_functions.gml","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
