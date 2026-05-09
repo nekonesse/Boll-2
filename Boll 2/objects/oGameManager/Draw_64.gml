@@ -22,8 +22,11 @@ if surface_exists(HUDsurface) {
 	var xx = 26;
 	
 	var yoff = 4*(HUDcoinflash/2)
-	
-	draw_set_font(global.hudFont);
+	if (global.settings[$ "alternate_hud"]) {
+		draw_set_font(global.rulerGold);
+	} else {
+		draw_set_font(global.hudFont);
+	}
 	draw_set_valign(fa_center);
 	
 	//Coins
