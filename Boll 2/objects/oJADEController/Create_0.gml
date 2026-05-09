@@ -157,6 +157,7 @@ topbuttons.add("File", function() {
 			//if show_question("JADE file not saved! Are you sure you want to exit?") {
 				room_goto(rMainMenu);
 				global.jade_testing = false;
+				global.save_dir = "";
 			//}
 			break;
 		}
@@ -788,4 +789,8 @@ spawnpoint_y = 168 * 16;
 testpoint_x = 2 * 16;
 testpoint_y = 168 * 16;
 
-JADE_load();
+if (global.save_dir=="") {
+	JADE_load();
+} else {
+	JADE_load(global.save_dir);
+}

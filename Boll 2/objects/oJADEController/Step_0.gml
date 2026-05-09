@@ -169,6 +169,7 @@ if keyboard_check(vk_control) {
 if (keyboard_check_pressed(vk_escape)) {
 	room_goto(rMainMenu);
 	global.jade_testing = false;
+	global.save_dir = "";
 }
 
 if keyboard_check_pressed(vk_delete) {
