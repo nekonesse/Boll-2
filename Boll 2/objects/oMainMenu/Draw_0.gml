@@ -63,7 +63,7 @@ switch (crMenu) {
 		}
 		var althud = $"Alternate HUD:\n{alternatehud}"
 		_displayOPS = [scalestr, fullscr, mastervol, musicvol, soundvol, althud, "Keybinds", "Apply Changes"];
-		var _yPos = (_rmHei/2)-(32*(array_length(_displayOPS)-1)/2)+24;
+		var _yPos = 24;
 		var i=0;
 		repeat (array_length(_displayOPS)) { // Looping through options to draw them on screen
 			var color = "[c_white]"
@@ -73,13 +73,13 @@ switch (crMenu) {
 				color = "[c_yellow]"
 			}
 			
-			draw_text_scribble(_xPos,_yPos,$"{_startStr}{color}{_displayOPS[i]}");
+			draw_text_scribble(_xPos,_yPos,$"[spr_rulergold][fa_center]{color}{_displayOPS[i]}");
 			
 			i++;
-			if (i<5) {
+			if (i<=6) {
 				_yPos+=32;
 			} else {
-				_yPos+=24;
+				_yPos+=16;
 			}
 		}
 		
@@ -88,8 +88,8 @@ switch (crMenu) {
 		selectArrowWidth = string_width(_displayOPS[option])/2
 		selectArrowWidthtrans = lerp(selectArrowWidthtrans,selectArrowWidth,0.25);
 		
-		draw_text_scribble(_xPos-selectArrowWidthtrans-2,round(selectArrowYtrans),"[spr_rulergold][c_yellow][fa_middle][fa_right]>>");
-		draw_text_scribble(_xPos+selectArrowWidthtrans+2,round(selectArrowYtrans),"[spr_rulergold][c_yellow][fa_middle][fa_left]<<");
+		draw_text_scribble(_xPos-selectArrowWidthtrans-2,round(selectArrowYtrans),"[spr_rulergold][c_yellow][fa_right]>>");
+		draw_text_scribble(_xPos+selectArrowWidthtrans+2,round(selectArrowYtrans),"[spr_rulergold][c_yellow][fa_left]<<");
 	break;
 	
 	case "levelselectm":
