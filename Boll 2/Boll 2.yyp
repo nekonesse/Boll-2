@@ -1931,11 +1931,11 @@
   "resourceType":"GMProject",
   "resourceVersion":"2.0",
   "RoomOrderNodes":[
+    {"roomId":{"name":"rBoot","path":"rooms/rBoot/rBoot.yy",},},
     {"roomId":{"name":"rMainMenu","path":"rooms/rMainMenu/rMainMenu.yy",},},
     {"roomId":{"name":"rEditor","path":"rooms/rEditor/rEditor.yy",},},
     {"roomId":{"name":"rGame","path":"rooms/rGame/rGame.yy",},},
     {"roomId":{"name":"rIntro","path":"rooms/rIntro/rIntro.yy",},},
-    {"roomId":{"name":"rBoot","path":"rooms/rBoot/rBoot.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
