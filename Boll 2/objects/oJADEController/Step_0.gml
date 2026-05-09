@@ -338,6 +338,7 @@ if (mbleft && not_on_gui && !disable_tool) {
 					var obj = check_colliding_object(mouse_x,mouse_y)
 					if (obj) {
 						ds_list_delete(object_map, obj-1)
+						selected_array = [];
 						i_did_a_thing = true;
 					}
 				break;
