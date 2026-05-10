@@ -650,10 +650,10 @@ check_colliding_object = function(_x,_y,_map=object_map) {
 check_colliding_tile = function(_x, _y) {
 	if !ds_exists(tilemap,ds_type_list) exit;
 	
+	var tilesetinf = tileset_get_info(selected_layer.tileset_info[1])
 	var i=0;
 	repeat(ds_list_size(tilemap)) {
 		var tile=tilemap[| i]
-		var tilesetinf = tileset_get_info(selected_layer.tileset_info[1])
 		if point_in_rectangle(_x,_y,tile[1]*16,tile[2]*16,tile[1]*16+tilesetinf.tile_width,tile[2]*16+tilesetinf.tile_height) {
 			return i+1
 		}

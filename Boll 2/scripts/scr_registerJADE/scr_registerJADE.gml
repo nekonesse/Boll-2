@@ -584,18 +584,15 @@ function JADE_load(file=game_save_id+"\save.jade") {
 		i=0
 		var j=0;
 		repeat(array_length(objects[i])) {
+			var obj = objects[i][j]
+			
 			var dont_load = false;
-			if (is_undefined(obj_data[$ objects[i][j][0]])) {
+			if (is_undefined(obj_data[$ obj[0]])) {
 				dont_load = true;
 			}
 			
 			if !(dont_load) {
-				if array_length(objects[i][j]) < 11 {
-					objects[i][j][10] = [];
-					objects[i][j][11] = [2,0,false,false,false,true];
-				}
-			
-				if (objects[i][j][0] == "oPlayerSpawn") { //lame conversion to spawn tool
+				if (obj[0] == "oPlayerSpawn") { //lame conversion to spawn tool
 					spawnpoints = [
 						objects[i][j][1],
 						objects[i][j][2],
@@ -603,26 +600,70 @@ function JADE_load(file=game_save_id+"\save.jade") {
 						objects[i][j][2]
 					]
 				} else {
-					ds_list_add(object_layer_map, objects[i][j])
+					var props = properties.getDefaultValues(obj[0])
+					
+					if array_length(obj) < 11 {
+						obj[10] = [];
+						obj[11] = [2,0,false,false,false,true];
+					}
+					
+					if (array_length(obj[5]) != array_length(props)) {
+						var o=0;
+						repeat (array_length(props)) { //god Damn.
+							if (array_length(obj[5])-1 < o) && is_array(props[o]){
+								obj[5][o] = array_create(1,0)
+								array_copy(obj[5][o],0,props[o],0,array_length(props[o]))
+								if is_array(obj[5][o][1]) {
+									var temparr = obj[5][o][1];
+									obj[5][o][1] = [];
+									array_copy(obj[5][o][1],0,temparr,0,array_length(temparr));
+								}
+							}
+							o++;
+						}
+					}
+					
+					ds_list_add(object_layer_map, obj)
 				}
 			}
 			j++;
 		}
 		j=0;
 		repeat(array_length(node_objects[i])) {
+			var obj = node_objects[i][j]
+			
 			var dont_load = false;
-			if (is_undefined(obj_data[$ node_objects[i][j][0]])) {
+			if (is_undefined(obj_data[$ obj[0]])) {
 				dont_load = true;
 			}
 			
 			if !(dont_load) {
-				if array_length(node_objects[i][j]) < 11 {
-					node_objects[i][j][10] = [];
-					node_objects[i][j][11] = [2,0,false,false,false,true];
+				if array_length(obj) < 11 {
+					obj[10] = [];
+					obj[11] = [2,0,false,false,false,true];
 				}
 				
+				if (node_objects[i][j][0] == "oCameraRegion") {
+					var props = properties.getDefaultValues(obj[0])
+					
+					if (array_length(obj[5]) != array_length(props)) {
+						var o=0;
+						repeat (array_length(props)) { //god Damn.
+							if (array_length(obj[5])-1 < o) && is_array(props[o]){
+								obj[5][o] = array_create(1,0)
+								array_copy(obj[5][o],0,props[o],0,array_length(props[o]))
+								if is_array(obj[5][o][1]) {
+									var temparr = obj[5][o][1];
+									obj[5][o][1] = [];
+									array_copy(obj[5][o][1],0,temparr,0,array_length(temparr));
+								}
+							}
+							o++;
+						}
+					}
+				}
 				
-				ds_list_add(node_layer_map, node_objects[i][j])
+				ds_list_add(node_layer_map, obj)
 			}
 			j++;
 		}

@@ -702,7 +702,7 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 			draw_rect(x+8,y+128,width-16,2,oJADEController.themeaccent2,1)
 			
 			var i=0;
-			repeat(array_length(arr)) { 
+			repeat(array_length(obj[5])) { 
 				var item = arr[i]
 				
 				switch (item[$ "type"]) {
