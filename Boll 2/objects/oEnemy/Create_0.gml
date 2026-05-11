@@ -193,4 +193,9 @@ enemyPounded.Connect( self, function(hit_p) {
 	xsc= esign(hit_p.hsp,hit_p.xsc)
 	killvsp= -max(2,abs(hit_p.hsp)/1.5)
 	killtype= "spin"
+	with(hit_p) {
+		make_particle(pImpact,other.x,y,2)
+		increase_combo(other.x,other.y);
+	}
+	VinylPlay(snd_enemykick);
 });

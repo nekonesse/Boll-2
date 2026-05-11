@@ -986,8 +986,6 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 			grow = 60;
 		}
 	} else if (state == "pound") {
-		make_particle(pImpact,coll.x,coll.y,2)
-		increase_combo(coll.x,coll.y);
 		signal_emit(coll.enemyPounded, id);
 	} else if (slopesliding) {
 		signal_emit(coll.enemyRolledInto, id);
