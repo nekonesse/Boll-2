@@ -220,7 +220,8 @@ function component_sonic_spindash(){
 		
 	if (!down || !(abs(gsp) <= 0.5)) {
 		state = "roll"
-		gsp = (4 + (floor(spindashTotal) / 2.5)) * xsc
+		hsp = (4 + (floor(spindashTotal) / 2.5)) * xsc
+		if (grounded) gsp=hsp
 		//apply spindash speed based off amount of spindash presses
 		stopsfx(charmName+"spindash")
 		playsfx(charmName+"release")
