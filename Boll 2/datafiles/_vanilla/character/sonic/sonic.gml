@@ -308,9 +308,9 @@ if (state == "wallrun") && !piped {
 		wallrunstored_hsp *= 0.75;
 		hsp = -3.5*esign(storeddir,xsc)
 		vsp = -5.5
-		move=-move
+		move = -move
 		canstopjump=true;
-		xsc=esign(hsp,xsc)
+		xsc = esign(hsp,xsc)
 		no_move=true;
 		alarm_set(2,15);
 		playsfx(charmName+"jump",1,0,1)
