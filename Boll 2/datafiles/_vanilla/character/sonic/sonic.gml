@@ -56,20 +56,15 @@ sprite_angle = real_sprite_angle;
 // get the distance in total of the horizontal speed
 wallrunstored_hsp = hsp;
 
-//ground speed
-if (grounded) {
-	wallrunstored_gsp = gsp;
-}
-
 #region Start Wallrunning
 var _move = (right-left) 
-if (_move!=0) && !(grounded) && ((vsp <= 0) || airdash) && (state!="wallrun") && !(is_grabbing) && (abs(wallrunstored_gsp) > 1) {
-	var coll=check_valid_wall(x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc))
+if (_move!=0 || walljump) && !(grounded) && (vsp <= 0 || airdash) && (state!="wallrun") && !(activebound) && !(is_grabbing) && (abs(wallrunstored_hsp) > 1.5) {
+	var coll=check_valid_wall(x+((hit_sizex+1)*xsc)+hsp,y-((hit_sizey-2)*ysc)+vsp,x+((hit_sizex+1)*xsc)+hsp,y-((hit_sizey-2)*ysc)+vsp)
 	if (coll) {
-		storeddir=_move;
+		storeddir=esign(_move,xsc);
 		var maxsp = 8;
 		var minsp = 4;
-		yvol=clamp(abs(wallrunstored_hsp), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
+		yvol=clamp(abs(max(wallrunstored_hsp,vsp)), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
 		if (airdash) {
 			vsp = -yvol;
 		}
@@ -245,6 +240,7 @@ if (state == "jump") && !(piped) && !(hurt) && (state!="spindash") {
 	if (cpress && vsp >= -2.6 && !activebound) && !(is_grabbing) && !(airdash) {
 		activebound = true;
 		afterimage = true;
+		walljump = false;
 		vsp = 8;
 		hsp = (hsp / 2);
 		stopsfx("sonicbounce")
@@ -297,7 +293,9 @@ if (state == "wallrun") && !piped {
 		vsp= -yvol
 	}
 	
-	if !(check_collision_dot(x+(hit_sizex+3)*xsc,y,COL_WALL)) || (grounded) || !(wallrunperiod) {
+	var coll=check_valid_wall(x+((hit_sizex+1)*xsc)+hsp,y-((hit_sizey-2)*ysc)+vsp,x+((hit_sizex+1)*xsc)+hsp,y-((hit_sizey-2)*ysc)+vsp)
+	
+	if !(coll) || (grounded) || !(wallrunperiod) {
 		state = "";
 		storedvsp=0;
 		storeddir=0;
@@ -308,15 +306,16 @@ if (state == "wallrun") && !piped {
 		walljump=true;
 		control_lock=15;
 		wallrunstored_hsp *= 0.75;
-		hsp = -3.5*esign(move,xsc)
+		hsp = -3.5*esign(storeddir,xsc)
 		vsp = -5.5
-		move=  -move
+		move=-move
 		canstopjump=true;
 		xsc=esign(hsp,xsc)
 		no_move=true;
 		alarm_set(2,15);
 		playsfx(charmName+"jump",1,0,1)
 		state = "jump";
+		airdash = false;
 		storedvsp=0;
 		storeddir=0;
 		wallrunperiod=5;
