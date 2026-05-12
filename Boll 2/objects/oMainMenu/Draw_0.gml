@@ -95,28 +95,30 @@ switch (crMenu) {
 	case "levelselectm":
 		var _startStr = "[spr_omifont][fa_middle][fa_left]";
 		draw_text_scribble(_rmWid/2,16,$"[spr_rulergold][fa_center][fa_middle]SELECT LEVEL")
-	
-		_displayOPS = global.levellist;
-		if (array_length(_displayOPS)) {
+		
+		if (array_length(global.levellist)) {
 			var _xPos = 56,
-				_yPos = (_rmHei/2)-max((array_length(_displayOPS)-1)/2,option)*16;
+				_yPos = (_rmHei/2)-max((array_length(global.levellist)-1)/2,option)*16;
+			var selected_opt = "";
 			var i=0;
-			repeat (array_length(_displayOPS)) { // Looping through options to draw them on screen
+			repeat (array_length(global.levellist)) { // Looping through options to draw them on screen
 				var color = "[c_white]"
+				var struct = global.levellist[i];
 			
 				if (option=i) {
 					selectArrowY = _yPos
 					color = "[c_yellow]"
+					selected_opt = struct.name;
 				}
 				
-				draw_text_scribble(_xPos,_yPos,$"{_startStr}{color}{_displayOPS[i]}");
+				draw_text_scribble(_xPos,_yPos,$"{_startStr}{color}{struct.name}");
 				_yPos+=16;
 				i++;
 			}
 		
 			selectArrowYtrans = lerp(selectArrowYtrans,selectArrowY,0.25);
 			
-			selectArrowWidth = string_width(_displayOPS[option])/2
+			selectArrowWidth = string_width(selected_opt)/2
 			selectArrowWidthtrans = lerp(selectArrowWidthtrans,selectArrowWidth,0.25);
 		
 			draw_text_scribble(_xPos-2,round(selectArrowYtrans)+2,"[spr_rulergold][c_yellow][fa_middle][fa_right]>>");

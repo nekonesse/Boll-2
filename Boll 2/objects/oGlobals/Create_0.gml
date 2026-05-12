@@ -299,7 +299,7 @@ _moddedCharms = []; //Which charms are modded
 global._playerChars = [];
 
 //// Level Loading ////
-global.levellist=0;
+global.levellist=[];
 global.sounds=ds_map_create();
 load_levels();
 global.zoom_on_start = false; // does this level have the starting zoom-in?

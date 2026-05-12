@@ -306,3 +306,37 @@ function compile_object_scripts(){
 	
 	return _compiled
 }
+
+function load_levels(){
+	var files = [];
+	var file_name = file_find_first(working_directory+"\\_vanilla\\level\\*.jade", fa_none);
+
+	while (file_name != "")
+	{
+		var struct = {}; 
+		struct.name = string_trim(file_name,[".jade"]);
+		struct.dir = $"\\_vanilla\\level\\{file_name}";
+		struct.modded = false;
+		array_push(files, struct);
+		
+		show_debug_message($"Found Level {struct.name}!");
+		file_name = file_find_next();
+	}
+	file_find_close();
+	
+	file_name = file_find_first(working_directory+"\mods\\level\\*.jade", fa_none);
+
+	while (file_name != "")
+	{
+		var struct = {}; 
+		struct.name = string_trim(file_name,[".jade"]);
+		struct.dir = $"\mods\\level\\{file_name}";
+		struct.modded = true;
+		array_push(files, struct);
+		
+		show_debug_message($"Found Level {struct.name}!");
+		file_name = file_find_next();
+	}
+	file_find_close();
+	global.levellist=files
+}

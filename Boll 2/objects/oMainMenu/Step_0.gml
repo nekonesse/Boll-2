@@ -100,8 +100,8 @@ if (!optionLock) {
 			optMAX = array_length(global.levellist)-1;
 			if (akey) {
 				crMenu="cssm";
-				//option=0;
-				global.nextlevel=$"{working_directory}\mods\\level\\{global.levellist[option]}"
+				var struct = global.levellist[option];
+				global.nextlevel=$"{working_directory}{struct.dir}"
 				optionLock=1;
 				instance_create_depth(x,y,depth,oCSS);
 			}
