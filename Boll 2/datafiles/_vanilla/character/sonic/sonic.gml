@@ -244,7 +244,7 @@ if (state == "jump") && !(piped) && !(hurt) && (state!="spindash") {
 	slopesliding = 0
 	
 	#region Bound Jump
-	if (cpress && vsp >= -2.6 && !activebound) && !(is_grabbing) {
+	if (cpress && vsp >= -2.6 && !activebound) && !(is_grabbing) && !(airdash) {
 		activebound = true;
 		afterimage = true;
 		vsp = 8;
