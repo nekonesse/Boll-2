@@ -17,8 +17,7 @@ if (CollageImageExists(oGameManager.PlayerColl.GetImageInfo(get_spriteindex())))
 		gpu_set_blendmode(bm_add);
 		var i=0;
 		repeat(5) {
-			if((global.roomTimer mod 3) == i)
-			{
+			if ((global.roomTimer mod 3) == i) {
 				if(hsp != 0 || vsp != 0)
 				{
 					var gap = 5 - i;

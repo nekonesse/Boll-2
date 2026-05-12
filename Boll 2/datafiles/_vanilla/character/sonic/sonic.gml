@@ -63,25 +63,23 @@ if (grounded) {
 
 #region Start Wallrunning
 var _move = (right-left) 
-if (_move!=0) && ((vsp < 0) || airdash) && (state!="wallrun") && !(is_grabbing) && (abs(wallrunstored_gsp) > 1) {
-	//wall sliding
+if (_move!=0) && !(grounded) && ((vsp <= 0) || airdash) && (state!="wallrun") && !(is_grabbing) && (abs(wallrunstored_gsp) > 1) {
 	var coll=check_valid_wall(x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+4)*xsc),y-((hit_sizey-2)*ysc))
-	if (!grounded)
-	{
-		if (coll)
-		{
-			storeddir=_move;
-			var maxsp = 8;
-			var minsp = 4;
-			yvol=clamp(abs(wallrunstored_hsp), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
-			if (airdash) {
-				vsp = -yvol;
-			}
-			state = "wallrun"
-			walljump = false;
-			no_move=true;
-			wallrunperiod=5;
+	if (coll) {
+		storeddir=_move;
+		var maxsp = 8;
+		var minsp = 4;
+		yvol=clamp(abs(wallrunstored_hsp), minsp, maxsp) //get amount of upward velocity calculated from horizontal AND vertical speed
+		if (airdash) {
+			vsp = -yvol;
 		}
+		wallrunstored_gsp = 0;
+		wallrunstored_hsp = 0;
+		airdahs = false;
+		state = "wallrun"
+		walljump = false;
+		no_move=true;
+		wallrunperiod=5;
 	}
 }
 #endregion
