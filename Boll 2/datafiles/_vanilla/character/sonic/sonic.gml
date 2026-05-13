@@ -263,7 +263,7 @@ if (state == "jump") && !(piped) && !(hurt) && (state!="spindash") {
 		if (_move == 0) {
 			_move = xsc	
 		}
-		var divisi = max(1,abs(hsp)/3)
+		var divisi = max(1,abs(hsp)/2.5)
 		var dash_speed = 3/divisi;
 		hsp += (dash_speed * _move);
 	}
