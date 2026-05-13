@@ -32,6 +32,7 @@ activebound = false;
 base_terminal_vel = terminal_vel;
 kick = 0;
 spindashdust_fr = 0;
+spincharge_time = 0;
 
 // wallrun junk
 wallrunstored_hsp = 0;
@@ -214,9 +215,14 @@ if !(piped) && !(electrocuted) && !(electrocution_timer) {
 		
 		if (state == "spindash") && !(piped) {
 			if (apress || bpress || cpress) {
-				spindashdust_fr = restart_charm_sprite("spindashdust",spindashdust_fr);
+				spincharge_time = 20;
+				//spindashdust_fr = restart_charm_sprite("spindashdust",spindashdust_fr);
 			}
 			component_sonic_spindash()
+			
+			spincharge_time=max(spincharge_time-1,0);
+		} else {
+			spincharge_time=0;
 		}
 		#endregion
 		
@@ -302,9 +308,10 @@ if (state == "wallrun") && !piped {
 	
 	if !(coll) || (grounded) || !(wallrunperiod) {
 		state = "";
-		storedvsp=0;
-		storeddir=0;
-		walljump=false;
+		storedvsp = 0;
+		storeddir = 0;
+		walljump = false;
+		airdash = false;
 	}
 	
 	if (apress) {
@@ -491,7 +498,11 @@ switch (state) {
 		}
 	} break;
 	case "spindash": {
-		spriteEvent="spinDash";
+		if (spincharge_time) {
+			spriteEvent="spinCharge";
+		} else {
+			spriteEvent="spinDash";
+		}
 	} break;
 	case "wallrun": {
 		frspd=abs(vsp)/4;
@@ -557,7 +568,7 @@ if (piped) {
 if (state == "spindash") {
 	spindashdust_fr = animate_charm_sprite("spindashdust",spindashdust_fr);
 	
-	draw_charm_sprite("spindashdust",spindashdust_fr,x-16*xsc,y-2,xsc);
+	draw_charm_sprite("spindashdust",spindashdust_fr,x-hit_sizex*xsc,y+hit_sizey,xsc);
 }
 
 #define on_kill
