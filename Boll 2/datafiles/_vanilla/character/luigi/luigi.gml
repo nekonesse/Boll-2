@@ -141,7 +141,7 @@ if (!grounded || steep_slope || slopesliding) {
 	slope_value = 0
 }
 
-var base_top = 2
+var base_top = 1.75
 if (crouch && grounded) {
 	base_top = 0.5
 }
