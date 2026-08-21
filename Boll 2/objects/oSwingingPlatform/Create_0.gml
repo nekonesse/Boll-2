@@ -70,7 +70,7 @@ if (abs(orbit_angle))
 	spawn_orbit = orbit_angle;
 }
 
-targetx=x;
-targety=y;
+targetx=bbox_left+8;
+targety=bbox_top+8;
 
 depth=50;

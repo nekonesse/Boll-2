@@ -114,7 +114,7 @@ function component_mario_wallslide(slideSpeed = 1, jumpVSpeed = 5, jumpHSpeed = 
 		xsc=esign(hsp,xsc)
 		no_move=true;
 		alarm_set(2,12);
-		playsfx(charmName+"jump",1,0,1)
+		playsfx(charmName+"wallkick",1,0,1)
 		state = "jump";
 		wallkick = true;
 	}	
