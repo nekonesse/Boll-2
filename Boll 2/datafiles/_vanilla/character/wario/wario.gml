@@ -1,7 +1,7 @@
 #define datalist
-spriteEvents=split_string("idle,walk,run,wait,lookUp,crouchIdle,crouchWalk,crouchJump,crouchFall,crouchFireToss,crouchBonk,crouchFireToss,victory,hurt,dead,brake,jump,fall,bonk,runJump,runJumpFall,doubleJump,doubleJumpFall,doubleJumpBonk,wallSlide,wallJump,groundPound,groundPoundFall,slopeSlide,carryIdle,carryWalk,carryRun,carryLookUp,carryJump,carryFall,carryBonk,carrySpinJump,carrySpinJumpFall,carryCrouchIdle,carryCrouchWalk,carryCrouchJump,carryCrouchFall,carryCrouchBonk,carryKick,carryAirKick,roll,swim,swimPaddle,carrySwim,carryPaddle,spinJump,spinJumpFall,pushing,balancing,dive,bellySlide,fireToss,electrocute,gateClimbing,flagPole,hang,monkeyBars,boarding,snowboarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
+spriteEvents=split_string("idle,walk,run,runMax,wait,lookUp,crouchIdle,crouchWalk,crouchJump,crouchFall,crouchFireToss,crouchBonk,crouchFireToss,victory,hurt,dead,brake,jump,fall,bonk,runJump,runJumpFall,wallSlide,wallJump,groundPound,groundPoundLand,slopeSlide,carryIdle,carryWalk,carryRun,carryLookUp,carryJump,carryFall,carryBonk,carryCrouchIdle,carryCrouchWalk,carryCrouchJump,carryCrouchFall,carryCrouchBonk,carryKick,carryAirKick,roll,swim,swimPaddle,carrySwim,carryPaddle,shoulderBash,shoulderBashJump,shoulderBashHit,pushing,balancing,fireToss,electrocute,gateClimbing,flagPole,hang,monkeyBars,boarding,snowboarding,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
 miscSprites=split_string("shield",",");
-sound_list=split_string("damage,shielddamage,die,dive,fireball,flip,jump,kick,pound,rollout,select,skid,spin,spinbounce,spinjump,stomp,swim,wallkick",",");
+sound_list=split_string("damage,shielddamage,die,bash,bashkill,fireball,flip,jump,kick,pound,select,skid,spin,stomp,swim,wallkick,dive",",");
 
 #define create
 slopesliding = 0;
@@ -30,7 +30,6 @@ topspd = 0;
 invincible_type = 0; //0 is off, 1 is hurt frames and 2 is invincibility
 invincible_timer = 0;
 found_block = false;
-spinjump = false;
 stun = false;
 wallkick = false;
 was_in_water = false;
@@ -40,8 +39,9 @@ deadtimer=0;
 deadgo=0;
 swim=0;
 kick=0;
-spinjumpfiretimer=0;
-spinjumpfiredir = 1;
+bashjump=0;
+bashhit=0;
+bashduration=0;
 
 //we do this in create because its a function, and we only need to do it once
 #region Water Handling Setup
@@ -139,9 +139,9 @@ if (!grounded || steep_slope || slopesliding) {
 	slope_value = 0
 }
 
-var base_top = 2
+var base_top = 1.75
 if (crouch && grounded) {
-	base_top = 0.5
+	base_top = 1
 }
 
 topspd = base_top + runvar + (base_top * slope_value) + ((invincible_type == 2) / 1.25);
@@ -151,12 +151,12 @@ maxspd = 9
 var no_move_prev = no_move;
 no_move = 0;
 //add more checks here
-if (state == "pound") || (state=="dive") || (alarm_get(2)) || (hurt) || (stun) || (finish && posed && no_move_prev) {
+if (state == "pound") || (state == "bash") || (state=="dive") || (alarm_get(2)) || (hurt) || (stun) || (finish && posed && no_move_prev) {
 	no_move = true;
 }
 
 can_grab = true;
-if (state == "pound") || (state == "dive") || (spinjump) || (hurt) || (stun) || (finish && posed && no_move_prev) {
+if (state == "pound") || (state == "bash") || (state=="dive") || (hurt) || (stun) || (finish && posed && no_move_prev) {
 	can_grab = false;
 }
 
@@ -181,7 +181,7 @@ if in_water(){
 } else {
 	if (was_in_water) {
 		//if we are at the TOP of the water, not the bottom or side
-		if collision_line(x,y,x,y+hit_sizey+abs(vsp),asset_get_index("oWater"),false,true) {
+		if collision_line(x,y,x,y+hit_sizey+abs(vsp),oWater,false,true) {
 			if (!grounded) {
 				state = "jump"
 				if (up) {
@@ -234,7 +234,7 @@ if (state == "" || state == "jump" || state == "dive") && !piped && !electrocute
 	
 	#region Fire Projectile
 	
-	if (bpress) && (size=="fire") && state != "dive" && (has_fired < 2) && !(slopesliding) {
+	if (bpress) && (size=="fire") && (has_fired < 2) && !(slopesliding) {
 		var proj=instance_create_depth(x+(hit_sizex+3)*xsc,y+hit_sizey-12,2,oFireball)
 		proj.hsp=3.75*xsc
 		if !(up) {
@@ -356,14 +356,8 @@ if (state == "jump" || state == "") && !(grounded) && !piped && !(stun) {
 		state=""
 	}
 	
-	if !(spinjump) {
-		if (!akey && vsp < -2.6 && !canstopjump) {//Make player jump lower when jump is released
-			vsp = -2.6;
-		}
-	} else {
-		if (!ckey && vsp < -2.6 && !canstopjump) { //Make player jump lower when jump is released
-			vsp = -2.6;
-		}
+	if (!akey && vsp < -2.6 && !canstopjump) { //Make player jump lower when jump is released
+		vsp = -2.6;
 	}
 	
 	if (downpress && !is_grabbing) && !(hurt) && !(stun) {
@@ -375,7 +369,7 @@ if (state == "jump" || state == "") && !(grounded) && !piped && !(stun) {
 	}
 	
 	#region Wallsliding
-	if (move != 0) && !(crouch) && !(spinjump) && (state != "pound"){
+	if (move != 0) && !(crouch) && (state != "pound") && (state != "bash") && (state != "dive") {
 		//wall sliding
 		var coll=check_valid_wall(x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc),x+((hit_sizex+1)*xsc),y-((hit_sizey-2)*ysc))
 		if (!grounded) && (!is_grabbing) && !(stun) && !(hurt) && (coll) && (vsp > 0) {
@@ -385,13 +379,19 @@ if (state == "jump" || state == "") && !(grounded) && !piped && !(stun) {
 	#endregion
 }
 
-if ((state == "" || state=="crouch") && !hurt && !stun && apress && canjump > 0 && !spinjump) && !piped && !(underwater) {
+if ((state == "" || state == "bash") && !hurt && !stun && apress && canjump > 0) && !piped && !(underwater) {
 	sample_footstep_material();
 	play_footstep_jump();
 	grounded = false;
 	starmanjump = false;
-	state = "jump"
-	vsp = -(4.65+(clamp(abs(hsp)/3.14,0.5,1.7) * 1.2)+(bool(poundjump)+0.5)); //preform the actual jump
+	if (state != "bash") {
+		state = "jump"
+	} else {
+		bashjump = true;
+		hsp += 1*xsc;
+	}
+	
+	vsp = -(4.5+(clamp(abs(hsp)/3.14,0.5,1.7) * 1.2)+(bool(poundjump)+0.5)); //preform the actual jump
 	
 	playsfx(charmName+"jump",1+(bool(poundjump)/4),0,1)
 	if (run && abs(hsp)>3) && !(is_grabbing) {
@@ -423,38 +423,49 @@ if (state == "wallslide") && !piped && !(stun) {
 	component_mario_wallslide()
 }
 
-#region Spinjumping & Diving
+#region Shoulderbash & Diving
 
-if (cpress && !is_grabbing) && !(stun) {
+if (cpress && !is_grabbing) && !(stun) && (state != "bash") && (state != "dive") {
 	if (grounded) {
-		component_mario_start_spinjump();
-		if (size == "fire") && (has_fired < 2) {
-			spinjumpfiretimer = 15;
-			var proj=instance_create_depth(x+(hit_sizex+3)*xsc,y,2,oFireball)
-			proj.hsp=3.75*xsc
-			proj.vsp = -4;
-			proj.owner=id
-			VinylPlay(snd_fireball)
-			spinjumpfiredir = -xsc;
-			has_fired+=1;
-		}
-	} else if (state != "dive" && !stun && !hurt && !spinjump && !up && (!crouch || state == "pound")) {
-		component_mario_start_dive();
+		//Shoulderbash
+		state = "bash";
+		hsp = 4*xsc;
+		gsp = hsp;
+		playsfx(charmName+"bash")
+		bashdur = 60;
+		afterimage = true;
+	} else if (state != "pound") && !(hurt) && !(crouch) {
+		component_mario_start_dive(4.5,-0.5);
 	}
 }
 
-if (spinjump) && (size == "fire") {
-	spinjumpfiretimer = max(spinjumpfiretimer-1,0);
+if (state == "bash") {
+	component_gravity_coneyor()
 	
-	if !(spinjumpfiretimer) && (has_fired < 2) {
-		spinjumpfiretimer = 15;
-		var proj=instance_create_depth(x+(hit_sizex+3)*spinjumpfiredir,y,2,oFireball)
-		proj.hsp=3.75*spinjumpfiredir
-		proj.vsp = 2;
-		proj.owner=id
-		VinylPlay(snd_fireball)
-		spinjumpfiredir = -spinjumpfiredir;
-		has_fired+=1;
+	if (grounded) {
+		hsp = 4*xsc;
+		gsp = hsp;
+		canjump = 5;
+	} else if (bashjump) {
+		if (!akey && vsp < -2.6 && !canstopjump) {//Make player jump lower when jump is released
+			vsp = -2.6;
+		}
+		
+		if (!alarm_get(2)) {
+			steep_slope = false;
+		}
+	}
+
+	if (skidding) {
+		stopsfx(charmName+"skid")
+		skidding=0
+	}
+	
+	bashdur=max(0,bashdur-1);
+	
+	if !(bashdur) {
+		state = "";
+		afterimage = false;
 	}
 }
 
@@ -479,12 +490,6 @@ post_wall();
 
 component_mario_skidding_fx()
 
-// check to see if we need to update the polybox
-if (sprindex_prev != sprite_index) {
-	//obj_update_poly_from_bounding(self);
-	sprindex_prev = sprite_index;
-}
-
 // Switch direction
 //add more checks here to prevent left/right changing direction
 if (left || right) && (state == "" || state == "jump") && !slopesliding && !piped {
@@ -500,11 +505,6 @@ damagespecial = max(0, pound_severity);
 bonk=max(0,bonk-1);
 grow=max(0,grow-1);
 kick=max(0,kick-1);
-
-#define step_end
-
-//player_grab();
-
 
 #define draw
 
@@ -694,24 +694,16 @@ if (state == "jump") {
 		}
 	}
 	
-	if (spinjump) {
-		if !(vsp>1) {
-			if !(is_grabbing) {
-				spriteEvent="spinJump"
-			} else {
-				spriteEvent="carrySpinJump"
-			}
-		} else {
-			if !(is_grabbing) {
-				spriteEvent="spinJumpFall"
-			} else {
-				spriteEvent="carrySpinJumpFall"
-			}
-		}
-	}
-	
 	if (wallkick){
 		spriteEvent="wallJump"
+	}
+}
+
+if (state == "bash") {
+	if (grounded) {
+		spriteEvent = "shoulderBash";
+	} else {
+		spriteEvent = "shoulderBashJump";
 	}
 }
 
@@ -950,7 +942,16 @@ VinylPlay(snd_shield);
 bonk = 12
 
 #define wall_hit
-if (state == "dive") {
+if (state == "bash") {
+	state = "";
+	hsp = (-0.5 * xsc)
+	vsp = -3;
+	grounded = false;
+	afterimage = false;
+	canstopjump = true;
+	playsfx(charmName+"bashkill");
+	bashdur = 0;
+} else if (state == "dive") {
 	VinylPlay(snd_blockbump)
 	make_particle(pImpact, x + hit_sizex*xsc, y)
 	make_particle(pBonkStars, x + hit_sizex*xsc, y)
@@ -980,7 +981,9 @@ if (state == "pound") {
 	}
 	playsfx(charmName+"stomp");
 } else if (state != "frozen") && (state != "boarding") {
-	state = ""
+	if (state != "bash") {
+		state = ""
+	}
 	make_particle(pSkidDust, x - 1, y + hit_sizey, depth + 5, 1, -2.25, -0.1, -0.02, 0.2);
 	make_particle(pSkidDust, x + 1, y + hit_sizey, depth + 5, -1, 2.25, -0.1, -0.02, 0.2);
 }
@@ -988,13 +991,14 @@ if (state == "pound") {
 vsp = 0
 
 canstopjump = false
-spinjump = false
 stun = false;
 wallkick = false;
 starmanjump = false;
+runjump = false;
+bashjump = false;
 
 #define sprung_up
-if (state != "frozen") && (state != "boarding") {
+if (state != "frozen") && (state != "boarding") && (state != "bash")  {
 	state = "jump";
 }
 runjump = 0;
@@ -1009,13 +1013,10 @@ if (state != "pound") {
 	vsp= -(4+akey*1.5)
 }
 
-#define enemy_spinjumped
-vsp= -(2+ckey*2.5)
-
 #define collide_with_enemy
 var coll=check_hitbox_on_hitbox(id, oEnemy)
 if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
-	if (coll) && ((!slopesliding && state != "pound") || coll.damage_on_contact) && !(invincible_type && invincible_timer) {
+	if (coll) && ((!slopesliding && state != "pound" && state != "bash") || coll.damage_on_contact) && !(invincible_type && invincible_timer) {
 		if (coll.deal_dam) {
 			if !(shielded) {
 				stopsfx(charmName+"skid")
@@ -1055,6 +1056,16 @@ if (coll) && !(coll.no_dam) && (coll.phaseid!=id) {
 		}
 	} else if (state == "pound") {
 		signal_emit(coll.enemyPounded, id);
+	} else if (state == "bash") {
+		signal_emit(coll.enemyBashed, id);
+		state = "";
+		hsp = (-2 * xsc)
+		vsp = -2;
+		canstopjump = true;
+		grounded = false;
+		afterimage = false;
+		playsfx(charmName+"bashkill")
+		bashdur = 0;
 	} else if (slopesliding) {
 		signal_emit(coll.enemyRolledInto, id);
 	}
@@ -1188,6 +1199,7 @@ stopsfx(charmName+"skid")
 
 #define on_freeze
 stopsfx(charmName+"skid")
+afterimage = false;
 
 #define start_boarding
 stopsfx(charmName+"skid")
