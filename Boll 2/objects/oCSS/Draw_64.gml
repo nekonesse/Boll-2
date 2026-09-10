@@ -1,7 +1,36 @@
 if (demo_build) {
-    draw_sprite(spr_TECHDEMO_css_portraits, _select, (RESOLUTION_X/2), (RESOLUTION_Y/2))
+    draw_rect(0, 0, RESOLUTION_X, RESOLUTION_Y, c_black, 0.5, 0)
     
-    draw_sprite(spr_TECHDEMO_css_nametags, _select, (RESOLUTION_X/2) + ((RESOLUTION_X/4) * (((1 - _select) * 2) - 1)), (RESOLUTION_Y/2))
+    if (surf_l == -1 || !surface_exists(surf_l))
+        surf_l = surface_create(RESOLUTION_X div 2, RESOLUTION_Y);
+    {
+        surface_set_target(surf_l);
+        draw_sprite_tiled(spr_TECHDEMO_css_bg, 5, scrollen, scrollen)
+        surface_reset_target();
+    }
+    if (surf_r == -1 || !surface_exists(surf_r))
+        surf_r = surface_create(RESOLUTION_X div 2, RESOLUTION_Y); 
+    {
+        surface_set_target(surf_r);
+        draw_sprite_tiled(spr_TECHDEMO_css_bg, 4, scrollen, scrollen)
+        surface_reset_target();
+    }
+    
+    draw_set_colour(c_gray)
+    
+    draw_surface(surf_l, 0, 0)
+    draw_surface(surf_r, RESOLUTION_X div 2, 0)
+    
+    draw_set_colour(c_white)
+    
+    var i = 0; repeat (2) {
+        var slide;
+        slide = demo_char_slide_l if (i) slide = demo_char_slide_r
+        draw_sprite(spr_TECHDEMO_css_portraits, i, (RESOLUTION_X/2), (sprite_get_yoffset(spr_TECHDEMO_css_portraits) * 2) - slide)
+        i++;
+    }
+    
+    draw_sprite(spr_TECHDEMO_css_nametags, _select, (RESOLUTION_X/2) + ((RESOLUTION_X/4) * ((((1 - _select) * 2) - 1) * 1)), (RESOLUTION_Y/2))
     exit;
 }
 

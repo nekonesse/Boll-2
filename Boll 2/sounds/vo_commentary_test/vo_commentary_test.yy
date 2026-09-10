@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"vo_commentary_test",
+  "audioGroupId":{
+    "name":"commentary_audio",
+    "path":"audiogroups/commentary_audio",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":51.710476,
+  "exportDir":"",
+  "name":"vo_commentary_test",
+  "parent":{
+    "name":"Developer Commentary",
+    "path":"folders/Sounds/Developer Commentary.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":22050,
+  "soundFile":"vo_commentary_test.ogg",
+  "volume":1.0,
+}

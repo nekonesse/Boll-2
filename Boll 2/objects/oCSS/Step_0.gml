@@ -7,34 +7,64 @@ bkey	=InputPressed(INPUT_VERB.B)
 ckey	=InputPressed(INPUT_VERB.C)
 
 if (demo_build) {
-    if (left) {
+    scrollen = (scrollen + 0.25) mod sprite_get_width(spr_TECHDEMO_css_bg);
+    
+    haltensie = clamp(haltensie - 1, 0, 28)
+    
+    if (haltensie) exit;
+    
+    if (left && _select) {
+        demo_char_slide_l = 1
+        demo_char_slide_lm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
+        demo_char_slide_rm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
 	   _select = 0; VinylPlay(test_ui_highlight)
     }
     
-    if (right) {
+    if (right && !_select) {
+        demo_char_slide_r = 1
+        demo_char_slide_rm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
+        demo_char_slide_lm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
     	_select = 1; VinylPlay(test_ui_highlight)
     }
     
+    if (!_select) {
+        demo_char_slide_l = clamp(demo_char_slide_l + demo_char_slide_lm, 0, sprite_get_yoffset(spr_TECHDEMO_css_portraits) * 2)
+        
+        demo_char_slide_lm *= 0.666
+        
+        demo_char_slide_r = clamp(demo_char_slide_r - demo_char_slide_rm, 0, sprite_get_yoffset(spr_TECHDEMO_css_portraits) * 2)
+        
+        if (demo_char_slide_rm)
+            demo_char_slide_rm *= 0.666
+    } else if (_select) {
+        demo_char_slide_l = clamp(demo_char_slide_l - demo_char_slide_lm, 0, sprite_get_yoffset(spr_TECHDEMO_css_portraits) * 2)
+        
+        demo_char_slide_lm *= 0.666
+        
+        demo_char_slide_r = clamp(demo_char_slide_r + demo_char_slide_rm, 0, sprite_get_yoffset(spr_TECHDEMO_css_portraits) * 2)
+        
+        demo_char_slide_rm *= 0.666
+    }
+    
     if (akey) {
-    	if (instance_exists(oMainMenu))
-    		var i;
-            VinylPlay(test_ui_select)
-            i = 0;
-    		repeat(4) {
-    		    global.lives[i]=5
-    			i++
-    		}
-    		
-    		FadeTransition(0.5, function() {
-    			room_goto(rGame);
-    		});
-    		global._playerChars = [demo_char[_select]];
+        var i;
+        VinylPlay(test_ui_select)
+        i = 0;
+        repeat(4) {
+            global.lives[i]=5
+            i++
+        }
+        
+        FadeTransition(0.5, function() {
+            room_goto(rGame);
+        });
+        global._playerChars = [demo_char[_select]];
     	instance_destroy();
     }
     
     if (bkey) {
-    	if (instance_exists(oMainMenu)) {
-    		with (oMainMenu) {
+    	if (instance_exists(oTECHDEMO_TitleMenu)) {
+    		with (oTECHDEMO_TitleMenu) {
     			backAmenu("levelselectm");
     			optionLock=0;
     		}

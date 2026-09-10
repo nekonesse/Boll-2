@@ -167,7 +167,8 @@ if (!optionLock) {
 				global.nextlevel=$"{working_directory}{struct.dir}"
 				level_preparse(global.nextlevel);
 				optionLock=1;
-				instance_create_depth(x,y,depth,oCSS);
+				alarm[7] = 30
+                instance_create(0, 0, oTECHDEMO_MenuTrans)
 			}
 			if (bkey) {
 				backAmenu("mainmenu");
