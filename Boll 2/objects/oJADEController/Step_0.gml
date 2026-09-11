@@ -174,7 +174,9 @@ if keyboard_check(vk_control) {
 }
 
 if (keyboard_check_pressed(vk_escape)) {
-	room_goto(rMainMenu);
+	if (demo_build)
+        room_goto(rTECHDEMO_Disclaimer);
+    else room_goto(rMainMenu);
 	global.jade_testing = false;
 	global.save_dir = "";
 }

@@ -2,7 +2,9 @@ function parse_level(dir=game_save_id+"\save.jade") {
 	var file = dir
 	if !file_exists(file) {
 		show_message($"Level does not exist at {dir}! make sure you've saved first!")
-		room_goto(rMainMenu)
+		if (demo_build)
+             room_goto(rTECHDEMO_Disclaimer);
+        else room_goto(rMainMenu);
 	}
 	var loaded = buffer_load(file)
 	var save_file = buffer_decompress(loaded)
@@ -228,7 +230,9 @@ function level_preparse(dir=game_save_id+"\save.jade") {
 	var file = dir
 	if !file_exists(file) {
 		show_message($"Level does not exist at {dir}! make sure you've saved first!")
-		room_goto(rMainMenu)
+		if (demo_build)
+             room_goto(rTECHDEMO_Disclaimer);
+        else room_goto(rMainMenu);
 	}
 	var loaded = buffer_load(file)
 	var save_file = buffer_decompress(loaded)

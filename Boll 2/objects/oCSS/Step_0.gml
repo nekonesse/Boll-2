@@ -6,6 +6,89 @@ akey	=(InputPressed(INPUT_VERB.A) || InputPressed(INPUT_VERB.ENTER));
 bkey	=InputPressed(INPUT_VERB.B)
 ckey	=InputPressed(INPUT_VERB.C)
 
+if (demo_build) {
+    scrollen = (scrollen + 0.25) mod sprite_get_width(spr_TECHDEMO_css_bg);
+    
+    haltensie = clamp(haltensie - 1, 0, 28)
+    
+    if (haltensie) exit;
+        
+    if (!daiditeuzhe) {
+        if (left && _select) {
+            demo_char_slide_l = 1
+            demo_char_slide_lm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
+            demo_char_slide_rm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
+    	   _select = 0; VinylPlay(test_ui_highlight)
+        }
+        
+        if (right && !_select) {
+            demo_char_slide_r = 1
+            demo_char_slide_rm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
+            demo_char_slide_lm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
+        	_select = 1; VinylPlay(test_ui_highlight)
+        }
+    }
+    
+    if (!_select) {
+        demo_char_slide_l = clamp(demo_char_slide_l + demo_char_slide_lm, 0, sprite_get_yoffset(spr_TECHDEMO_css_portraits) * 2)
+        
+        demo_char_slide_lm *= 0.666
+        
+        demo_char_slide_r = clamp(demo_char_slide_r - demo_char_slide_rm, 0, sprite_get_yoffset(spr_TECHDEMO_css_portraits) * 2)
+        
+        if (demo_char_slide_rm)
+            demo_char_slide_rm *= 0.666
+    } else if (_select) {
+        demo_char_slide_l = clamp(demo_char_slide_l - demo_char_slide_lm, 0, sprite_get_yoffset(spr_TECHDEMO_css_portraits) * 2)
+        
+        demo_char_slide_lm *= 0.666
+        
+        demo_char_slide_r = clamp(demo_char_slide_r + demo_char_slide_rm, 0, sprite_get_yoffset(spr_TECHDEMO_css_portraits) * 2)
+        
+        demo_char_slide_rm *= 0.666
+    }
+    
+    if (akey && !daiditeuzhe) {
+        daiditeuzhe = 60
+        VinylPlay(test_ui_select)
+    }
+    
+    if (daiditeuzhe == 34)
+        instance_create(0, 0, oTECHDEMO_MenuTrans);
+    
+    if (daiditeuzhe) daiditeuzhe--;
+    
+    if (daiditeuzhe == 1) {
+        var i;
+        i = 0;
+        repeat(4) {
+            global.lives[i]=5
+            i++
+        }
+        
+        FadeTransition(0.5, function() {
+            room_goto(rGame);
+        });
+        global._playerChars = [demo_char[_select]];
+    	instance_destroy();
+    }
+    
+    if (bkey) {
+        if (daiditeuzhe == 0) {
+        	if (instance_exists(oTECHDEMO_TitleMenu)) {
+        		with (oTECHDEMO_TitleMenu) {
+        			backAmenu("levelselectm");
+        			optionLock=0;
+        		}
+        	}
+        	instance_destroy();
+        } else if (daiditeuzhe >= 48) {
+            daiditeuzhe = 0 VinylPlay(test_ui_cancel)
+        }
+    }
+    exit
+}
+
 // vars so you don't copy and paste the same shit over and over
 var _RowCount=_charCount div _rowLimit, // number of rows
 	_curRow=_select div _rowLimit, // current row (y)
@@ -15,7 +98,9 @@ var _RowCount=_charCount div _rowLimit, // number of rows
 
 if (akey) {
 	if (instance_exists(oMainMenu))
-		var i = 0;
+		var i;
+        
+        i = 0;
 		repeat(4) {
 		    global.lives[i]=5
 			i++
@@ -31,7 +116,7 @@ if (akey) {
 if (bkey) {
 	if (instance_exists(oMainMenu)) {
 		with (oMainMenu) {
-			//backAmenu("levelselectm");
+			backAmenu("levelselectm");
 			optionLock=0;
 		}
 	}

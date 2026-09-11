@@ -289,6 +289,7 @@ function JADE_initializeobj() {
 	
 	registerobj(oNPCparent, spr_collider_poly, 0, 0, 16, 16, false, false, npcs, "Blank NPC")
 	properties.addStringInput(oNPCparent, "Text", "text", "Hello World!");
+    registerobj(oCommentary, spr_commentary, 16, 16, 32, 32, false, false, npcs, "Commentary Node", true)
 	
 	objectlist.add(npcs)
 	

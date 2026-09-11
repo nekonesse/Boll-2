@@ -236,6 +236,8 @@ if death_time {
 			VinylStopAll();
 			VinylPlay(mus_gameover, 0, 0.4);
 			var goto = rMainMenu;
+            if (demo_build)
+                goto = rTECHDEMO_Disclaimer;
 			if (global.jade_testing) goto = rEditor;
 			
 			global.checkpointX = no_checkpoint;

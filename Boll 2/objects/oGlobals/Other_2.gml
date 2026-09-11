@@ -125,7 +125,9 @@ global.scripts_object = compile_object_scripts();
 
 load_levels();
 
-room_goto(rMainMenu);
+if (demo_build)
+    room_goto(rTECHDEMO_Disclaimer);
+else room_goto(rMainMenu);
 
 var p_count = parameter_count();
 if (p_count > 0) {

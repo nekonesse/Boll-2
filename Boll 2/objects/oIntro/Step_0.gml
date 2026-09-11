@@ -37,5 +37,7 @@ if flash {flash -= 1}
 
 if (!global.debug && keyboard_check_pressed(vk_anykey))||(keyboard_check_pressed(vk_enter) || mouse_check_button_pressed(mb_left)) {
 	game_set_speed(60,gamespeed_fps)
-	room_goto(rMainMenu)
+	if (demo_build)
+        room_goto(rTECHDEMO_Disclaimer);
+    else room_goto(rMainMenu);
 }

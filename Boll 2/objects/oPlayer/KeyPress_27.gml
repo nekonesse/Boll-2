@@ -1,7 +1,9 @@
 if (global.jade_testing) {
 	room_goto(rEditor)
 } else {
-	room_goto(rMainMenu)
+	if (demo_build)
+         room_goto(rTECHDEMO_Disclaimer);
+    else room_goto(rMainMenu);
 }
 
 global.checkpointX = no_checkpoint;

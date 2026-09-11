@@ -138,6 +138,8 @@ global.VinylConfigSON = [
 			mus_gameover,
 			mus_editor_head,
 			mus_editor_loop,
+            mus_techtest_menu_head,
+            mus_techtest_menu_tail,
 			{
 				sound: mus_menu,
 				gain: 0.2
@@ -145,6 +147,16 @@ global.VinylConfigSON = [
 			mus_starman_head,
 			mus_starman_tail,
         ],
+    },
+    {
+        hlt: "editor bgm",
+        head: mus_editor_head,
+        loop: mus_editor_loop,
+    },
+    {
+        hlt: "test menu bgm",
+        head: mus_techtest_menu_head,
+        loop: mus_techtest_menu_tail,
     },
 	{
         hlt: "overworld bgm FG",

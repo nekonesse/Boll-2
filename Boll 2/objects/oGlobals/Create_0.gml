@@ -1,6 +1,8 @@
 #macro gametitle "Boll 2"
 #macro version "0.1"
 
+#macro demo_build true
+
 audio_group_load(footstep_audio);
 
 windowfocused=true;

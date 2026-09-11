@@ -2,8 +2,8 @@
   "$GMSound":"v2",
   "%Name":"footstep_ice_walk_l",
   "audioGroupId":{
-    "name":"audiogroup_default",
-    "path":"audiogroups/audiogroup_default",
+    "name":"footstep_audio",
+    "path":"audiogroups/footstep_audio",
   },
   "bitDepth":1,
   "channelFormat":0,

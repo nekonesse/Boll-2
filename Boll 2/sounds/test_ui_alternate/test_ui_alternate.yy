@@ -1,0 +1,26 @@
+{
+  "$GMSound":"v2",
+  "%Name":"test_ui_alternate",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
+  },
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":1.0306576,
+  "exportDir":"",
+  "name":"test_ui_alternate",
+  "parent":{
+    "name":"TechDemo Temp",
+    "path":"folders/Sounds/Game UI/TechDemo Temp.yy",
+  },
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"test_ui_alternate.wav",
+  "volume":1.0,
+}

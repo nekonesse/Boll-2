@@ -162,7 +162,9 @@ topbuttons.add("File", function() {
 			case 5:
 			//exit editor
 			//if show_question("JADE file not saved! Are you sure you want to exit?") {
-				room_goto(rMainMenu);
+				if (demo_build)
+                    room_goto(rTECHDEMO_Disclaimer);
+                else room_goto(rMainMenu);
 				global.jade_testing = false;
 				global.save_dir = "";
 			//}
