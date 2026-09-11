@@ -11,6 +11,8 @@ demo_char_slide_rm = 0
 
 haltensie = 22
 
+daiditeuzhe = 0
+
 surf_l = -1
 surf_r = -1
 

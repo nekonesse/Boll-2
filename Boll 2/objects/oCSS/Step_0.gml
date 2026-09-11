@@ -12,19 +12,21 @@ if (demo_build) {
     haltensie = clamp(haltensie - 1, 0, 28)
     
     if (haltensie) exit;
-    
-    if (left && _select) {
-        demo_char_slide_l = 1
-        demo_char_slide_lm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
-        demo_char_slide_rm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
-	   _select = 0; VinylPlay(test_ui_highlight)
-    }
-    
-    if (right && !_select) {
-        demo_char_slide_r = 1
-        demo_char_slide_rm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
-        demo_char_slide_lm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
-    	_select = 1; VinylPlay(test_ui_highlight)
+        
+    if (!daiditeuzhe) {
+        if (left && _select) {
+            demo_char_slide_l = 1
+            demo_char_slide_lm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
+            demo_char_slide_rm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
+    	   _select = 0; VinylPlay(test_ui_highlight)
+        }
+        
+        if (right && !_select) {
+            demo_char_slide_r = 1
+            demo_char_slide_rm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
+            demo_char_slide_lm = sprite_get_yoffset(spr_TECHDEMO_css_portraits) / 2
+        	_select = 1; VinylPlay(test_ui_highlight)
+        }
     }
     
     if (!_select) {
@@ -46,9 +48,18 @@ if (demo_build) {
         demo_char_slide_rm *= 0.666
     }
     
-    if (akey) {
-        var i;
+    if (akey && !daiditeuzhe) {
+        daiditeuzhe = 60
         VinylPlay(test_ui_select)
+    }
+    
+    if (daiditeuzhe == 34)
+        instance_create(0, 0, oTECHDEMO_MenuTrans);
+    
+    if (daiditeuzhe) daiditeuzhe--;
+    
+    if (daiditeuzhe == 1) {
+        var i;
         i = 0;
         repeat(4) {
             global.lives[i]=5
@@ -63,13 +74,17 @@ if (demo_build) {
     }
     
     if (bkey) {
-    	if (instance_exists(oTECHDEMO_TitleMenu)) {
-    		with (oTECHDEMO_TitleMenu) {
-    			backAmenu("levelselectm");
-    			optionLock=0;
-    		}
-    	}
-    	instance_destroy();
+        if (daiditeuzhe == 0) {
+        	if (instance_exists(oTECHDEMO_TitleMenu)) {
+        		with (oTECHDEMO_TitleMenu) {
+        			backAmenu("levelselectm");
+        			optionLock=0;
+        		}
+        	}
+        	instance_destroy();
+        } else if (daiditeuzhe >= 48) {
+            daiditeuzhe = 0 VinylPlay(test_ui_cancel)
+        }
     }
     exit
 }

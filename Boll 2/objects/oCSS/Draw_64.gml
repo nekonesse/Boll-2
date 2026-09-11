@@ -16,19 +16,29 @@ if (demo_build) {
         surface_reset_target();
     }
     
-    draw_set_colour(c_gray)
+    var col1, col2;
     
-    draw_surface(surf_l, 0, 0)
-    draw_surface(surf_r, RESOLUTION_X div 2, 0)
+    col1 = c_white if (_select == 0) col1 = c_grey 
+    col2 = c_white if (_select == 1) col2 = c_grey
     
-    draw_set_colour(c_white)
+    draw_surface_ext(surf_l, 0, 0, 1, 1, 0, col1, 1)
+    draw_surface_ext(surf_r, RESOLUTION_X div 2, 0, 1, 1, 0, col2, 1)
     
     var i = 0; repeat (2) {
-        var slide;
+        var slide, sprite_7up;
         slide = demo_char_slide_l if (i) slide = demo_char_slide_r
-        draw_sprite(spr_TECHDEMO_css_portraits, i, (RESOLUTION_X/2), (sprite_get_yoffset(spr_TECHDEMO_css_portraits) * 2) - slide)
+        sprite_7up = i;
+        if (daiditeuzhe) {
+            if (daiditeuzhe <= 40)
+                sprite_7up += 2 
+            else sprite_7up += (2) * ((daiditeuzhe mod 4) div 2)}
+        draw_sprite(spr_TECHDEMO_css_portraits, sprite_7up, (RESOLUTION_X/2), (sprite_get_yoffset(spr_TECHDEMO_css_portraits) * 2) - slide)
         i++;
     }
+    
+    draw_text_scribble(RESOLUTION_X div 2, 16, $"[spr_rulergold][fa_center][fa_middle]CHARACTER SELECT")
+    
+    draw_text_scribble(RESOLUTION_X div 2, RESOLUTION_Y - 16, $"[spr_rulergold][fa_center][fa_middle]CHARACTER SELECT")
     
     draw_sprite(spr_TECHDEMO_css_nametags, _select, (RESOLUTION_X/2) + ((RESOLUTION_X/4) * ((((1 - _select) * 2) - 1) * 1)), (RESOLUTION_Y/2))
     exit;

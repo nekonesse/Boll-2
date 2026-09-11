@@ -178,9 +178,9 @@ if (!optionLock) {
 		case "cssm":
 			//if (!instance_exists(oCSS)) instance_create_depth(x,y,depth,oCSS);
 			//optMAX = 0;
-			if (bkey) {
-				backAmenu("levelselectm");
-			}
+			//if (bkey) {
+			//	backAmenu("levelselectm");
+			//}
 		break
 	
 		case "keybindsm":

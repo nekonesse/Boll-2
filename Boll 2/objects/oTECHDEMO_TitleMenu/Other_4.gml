@@ -1,1 +1,1 @@
-menumus=VinylPlay("test menu bgm", true)
+menumus=VinylPlay("test menu bgm", true, MUSIC_GAIN * VinylMixGetGain("music"))

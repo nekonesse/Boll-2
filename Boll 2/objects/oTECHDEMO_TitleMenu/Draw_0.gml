@@ -201,7 +201,7 @@ if (on_title) {
     	break;
     	
     	case "cssm":
-    		draw_text_scribble(_rmWid/2,16,$"[spr_rulergold][fa_center][fa_middle]CHARACTER SELECT")
+    		
     	break;
     	
     	case "keybindsm":
