@@ -59,7 +59,7 @@ function JADEsmallbuttons(_x, _y, _width, _height, spacing=8, is_toggle=true, in
 			}
 			
 			draw_gui(_x1,_y1,width,height,buttoncolor, 1)
-			drawstruct[i].Draw(_x1+2,_y1+height/2+3)
+			drawstruct[i].Draw(floor(_x1+2),floor(_y1+height/2+3))
 			i++;
 		}
 	}
@@ -363,7 +363,7 @@ function JADElisthandler(_x, _y, _width, _height, _checkvar) constructor {
 				}
 				
 				draw_gui(x+4+indent+scroll_x,y+(24*i)+1+scroll_y,width-8,22,oJADEController.themeaccent4,1) //button
-				draw_text(x+8+24+indent+scroll_x,y+8+(24*i)+scroll_y,item.listname) //category name
+				draw_text(floor(x+8+24+indent+scroll_x),floor(y+8+(24*i)+scroll_y),item.listname) //category name
 				draw_sprite(spr_JADElistarrow,item.collapsed,x+8+indent+scroll_x,y+4+(24*i)+scroll_y) //collapse arrow
 				
 				if !(item.collapsed) {
@@ -1061,10 +1061,10 @@ function JADEnumberinput(_x, _y, _name, _var, _type_index, _min=NaN, _max=NaN) {
 	draw_sprite(spr_JADEinputscroll, 0, _x+48+spacing,_y)
 	
 	if (oJADEController.is_typing != _type_index) {
-		ScribblejrFitExt(_var,fa_left,fa_top,global.rulerGold,1,40,20).Draw(_x+4+spacing,_y+6)
+		ScribblejrFitExt(_var,fa_left,fa_top,global.rulerGold,1,40,20).Draw(floor(_x+4+spacing),floor(_y+6))
 	} else {
 		var shrink = ScribblejrShrinkExt(keyboard_string,fa_left,fa_top,global.rulerGold,1,40,20)
-		shrink.Draw(_x+4+spacing,_y+6)
+		shrink.Draw(floor(_x+4+spacing),floor(_y+6))
 		if (global.roomTimer mod 30 >= 15) {
 			var stringwidth = shrink.GetWidth();
 			draw_rect(_x+4+spacing+stringwidth,_y+8,1,8,c_white,1);
@@ -1167,16 +1167,16 @@ function JADEstringinput(_x, _y, _name, _var, _type_index, _width=64) {
 	var valign=draw_get_valign();
 	var font=draw_get_font();
 	draw_set_font(global.rulerGold)
-	draw_text(_x,_y+6, $"{_name}:")
+	draw_text(floor(_x),floor(_y+6), $"{_name}:")
 	var spacing = string_width($"{_name}:")+8
 	
 	draw_sprite_stretched(spr_JADEinputbox, 0,_x+spacing,_y,_width,24)
 	
 	if oJADEController.is_typing != _type_index {
-		ScribblejrShrinkExt(_var,fa_left,fa_middle,global.omiFont,1,_width-8,20).Draw(_x+4+spacing,_y+12)
+		ScribblejrShrinkExt(_var,fa_left,fa_middle,global.omiFont,1,_width-8,20).Draw(floor(_x+4+spacing),floor(_y+12))
 	} else {
 		var shrink = ScribblejrShrinkExt(keyboard_string,fa_left,fa_middle,global.omiFont,1,_width-8,20)
-		shrink.Draw(_x+4+spacing,_y+12)
+		shrink.Draw(floor(_x+4+spacing),floor(_y+12))
 		if (global.roomTimer mod 30 >= 15) {
 			var stringwidth = shrink.GetWidth();
 			draw_rect(_x+4+spacing+stringwidth,_y+8,1,8,c_white,1);
@@ -1222,7 +1222,7 @@ function JADEcheckbox(_x, _y, _name, _var) {
 	var mbleft = mouse_check_button_pressed(mb_left) && !oJADEController.pressed_dropdown;
 	
 	draw_set_font(global.rulerGold)
-	draw_text(_x,_y+6, $"{_name}:")
+	draw_text(floor(_x),floor(_y+6), $"{_name}:")
 	var spacing = string_width($"{_name}:")+8
 	
 	draw_sprite(spr_JADEcheckbox, bool( _var),_x+spacing,_y)
@@ -1250,7 +1250,7 @@ function JADEdropdownproperty(_x, _y, _name, _var, _index, obj_ind, _options, _n
 	var spacing = string_width($"{_name}:")+8
 	
 	draw_sprite_stretched(spr_JADEdropdownbox, 0,_x+spacing,_y,128,24)
-	ScribblejrFitExt(_names[max(0,array_get_index(_options,_var))],fa_left,fa_middle,global.omiFont,1,94,16).Draw(_x+4+spacing,_y+12)
+	ScribblejrFitExt(_names[max(0,array_get_index(_options,_var))],fa_left,fa_middle,global.omiFont,1,94,16).Draw(floor(_x+4+spacing),floor(_y+12))
 	
 	var overinp = point_in_rectangle(curs_x,curs_y,_x+spacing,_y,_x+128+spacing,_y+24);
 	
@@ -1291,7 +1291,7 @@ function JADEnodedropdownproperty(_x, _y, _name, _var, _index, obj_ind, _options
 	var spacing = string_width($"{_name}:")+8
 	
 	draw_sprite_stretched(spr_JADEdropdownbox, 0,_x+spacing,_y,128,24)
-	ScribblejrFitExt(_names[max(0,array_get_index(_options,_var))],fa_left,fa_middle,global.omiFont,1,94,16).Draw(_x+4+spacing,_y+12)
+	ScribblejrFitExt(_names[max(0,array_get_index(_options,_var))],fa_left,fa_middle,global.omiFont,1,94,16).Draw(floor(_x+4+spacing),floor(_y+12))
 	
 	var overinp = point_in_rectangle(curs_x,curs_y,_x+spacing,_y,_x+128+spacing,_y+24);
 	
