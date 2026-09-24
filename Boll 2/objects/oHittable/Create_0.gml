@@ -18,16 +18,29 @@ no_path_follow=false;
 lose_amount=false;
 eject_pause=30;
 
+onhit_link = [];
+
 image_normal = sprite_index
 image_hit = sprite_index
 image_exausted = sprite_index
 
+activateLink = new Signal();
 blockHit = new Signal();
 blockBumpFinished = new Signal();
 blockFinished = new Signal();
 
+activateLink.Connect(self, function(index, obj) {
+	switch(index) {
+		case 0:
+			blockHit.Emit(-1, obj)
+		break;
+	}
+});
+
 blockHit.Connect( self, function(hit_p, obj) {
 	var _list, _num;
+	
+	trigger_links(onhit_link);
 	
 	if (going) {
 		blockBumpFinished.Emit();

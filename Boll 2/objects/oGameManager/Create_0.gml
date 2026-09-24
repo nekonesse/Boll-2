@@ -29,6 +29,10 @@ level_properties =
     desc : ""
 };
 
+object_uuids = {
+	
+};
+
 piping_object_depth = [];
 music_tracks = [];
 region_widths = [];

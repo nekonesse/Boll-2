@@ -103,6 +103,7 @@ function JADE_initializeobj() {
 	properties.addCheckbox(oItemBox, "Is Brick", "bricked", false)
 	properties.addCheckbox(oItemBox, "Is Hidden", "hidden", false)
 	properties.addCheckbox(oItemBox, "Is Dispenser", "eject", false)
+	properties.addLink(oItemBox, new basicLink("On Hit", "onhit_link"));
 	registerobj(oLongItemBox, spr_longitemboxJADE, 24, 8, 48, 16, false, false, containers, "Long Item Box", true)
 	properties.addDropdown(oLongItemBox, "Content", "content", "coin", ["Single Coin", "Multiple Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom", "Shield Mushroom", "P-Switch"], ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison", "shield", "pswitch"])
 	properties.addNumberInput(oLongItemBox, "Amount", "amount", 1, true)
@@ -507,12 +508,28 @@ function JADE_save(file=game_save_id+"\save.jade") {
 		var node_arr = [];
 		var j=0;
 		repeat(ds_list_size(region.object_layer_map)) {
-			array_push(obj_arr, region.object_layer_map[| j])
+			var temp_obj = variable_clone(region.object_layer_map[| j]);
+			temp_obj[15] = [];
+			var l=0;
+			repeat(array_length(region.object_layer_map[| j][15])) {
+				var link = region.object_layer_map[| j][15][l];
+				array_push(temp_obj[15],link.export_contents());
+				l++;
+			}
+			array_push(obj_arr, temp_obj);
 			j++;
 		}
 		j=0;
 		repeat(ds_list_size(region.node_layer_map)) {
-			array_push(node_arr, region.node_layer_map[| j])
+			var temp_obj = variable_clone(region.node_layer_map[| j]);
+			temp_obj[15] = [];
+			var l=0;
+			repeat(array_length(region.object_layer_map[| j][15])) {
+				var link = region.object_layer_map[| j][15][l];
+				array_push(temp_obj[15],link.export_contents());
+				l++;
+			}
+			array_push(node_arr, temp_obj);
 			j++;
 		}
 		
@@ -547,6 +564,8 @@ function JADE_load(file=game_save_id+"\save.jade") {
 	var loaded = buffer_load(file)
 	var save_file = buffer_decompress(loaded)
 	var level_data = json_parse(buffer_read(save_file,buffer_string))
+	
+	object_uuids = {};
 	
 	if (string_starts_with(string(level_data[$ "version"]),"4")) {
 		buffer_delete(loaded);
@@ -664,17 +683,31 @@ function JADE_load(file=game_save_id+"\save.jade") {
 					
 					if (array_length(obj[5]) != array_length(props)) {
 						var o=0;
-						repeat (array_length(props)) { //god Damn.
+						repeat (array_length(props)) {
 							if (array_length(obj[5])-1 < o) && is_array(props[o]){
-								obj[5][o] = array_create(1,0)
-								array_copy(obj[5][o],0,props[o],0,array_length(props[o]))
-								if is_array(obj[5][o][1]) {
-									var temparr = obj[5][o][1];
-									obj[5][o][1] = [];
-									array_copy(obj[5][o][1],0,temparr,0,array_length(temparr));
-								}
+								obj[5][o] = variable_clone(props[o]);
 							}
 							o++;
+						}
+					}
+					
+					var linkdata = obj[15];
+					obj[15] = variable_clone(properties.getDefaultLinks(obj[0]));
+					
+					if (array_length(obj)<15) {
+						var oid = generate_jadeuuid();
+						while struct_exists(object_uuids,oid) {
+							oid = generate_jadeuuid();
+						}
+						object_uuids[$ oid] = [ds_list_size(newregion.object_layer_map), 0, i];
+						obj[14] = oid;
+					} else {
+						object_uuids[$ obj[14]] = j;
+						
+						var l=0;
+						repeat(array_length(obj[15])) {
+							obj[15][l].import_contents(linkdata[l]);
+							l++;
 						}
 					}
 					
@@ -696,17 +729,31 @@ function JADE_load(file=game_save_id+"\save.jade") {
 					
 					if (array_length(obj[5]) != array_length(props)) {
 						var o=0;
-						repeat (array_length(props)) { //god Damn.
+						repeat (array_length(props)) {
 							if (array_length(obj[5])-1 < o) && is_array(props[o]) {
-								obj[5][o] = array_create(1,0)
-								array_copy(obj[5][o],0,props[o],0,array_length(props[o]))
-								if is_array(obj[5][o][1]) {
-									var temparr = obj[5][o][1];
-									obj[5][o][1] = [];
-									array_copy(obj[5][o][1],0,temparr,0,array_length(temparr));
-								}
+								obj[5][o] = variable_clone(props[o]);
 							}
 							o++;
+						}
+					}
+					
+					var linkdata = obj[15];
+					obj[15] = variable_clone(properties.getDefaultLinks(obj[0]));
+					
+					if (array_length(obj)<15) {
+						var oid = generate_jadeuuid();
+						while struct_exists(object_uuids,oid) {
+							oid = generate_jadeuuid();
+						}
+						object_uuids[$ oid] = [ds_list_size(newregion.node_layer_map), 1, i];
+						obj[14] = oid;
+					} else {
+						object_uuids[$ obj[14]] = j;
+						
+						var l=0;
+						repeat(array_length(obj[15])) {
+							obj[15][l].import_contents(linkdata[l]);
+							l++;
 						}
 					}
 				
@@ -868,15 +915,9 @@ function JADE_load_legacy(file=game_save_id+"\save.jade") {
 					
 					if (array_length(obj[5]) != array_length(props)) {
 						var o=0;
-						repeat (array_length(props)) { //god Damn.
-							if (array_length(obj[5])-1 < o) && is_array(props[o]){
-								obj[5][o] = array_create(1,0)
-								array_copy(obj[5][o],0,props[o],0,array_length(props[o]))
-								if is_array(obj[5][o][1]) {
-									var temparr = obj[5][o][1];
-									obj[5][o][1] = [];
-									array_copy(obj[5][o][1],0,temparr,0,array_length(temparr));
-								}
+						repeat (array_length(props)) { 
+							if (array_length(obj[5])-1 < o) && is_array(props[o]) {
+								obj[5][o] = variable_clone(props[o]);
 							}
 							o++;
 						}
@@ -907,15 +948,9 @@ function JADE_load_legacy(file=game_save_id+"\save.jade") {
 					
 					if (array_length(obj[5]) != array_length(props)) {
 						var o=0;
-						repeat (array_length(props)) { //god Damn.
-							if (array_length(obj[5])-1 < o) && is_array(props[o]){
-								obj[5][o] = array_create(1,0)
-								array_copy(obj[5][o],0,props[o],0,array_length(props[o]))
-								if is_array(obj[5][o][1]) {
-									var temparr = obj[5][o][1];
-									obj[5][o][1] = [];
-									array_copy(obj[5][o][1],0,temparr,0,array_length(temparr));
-								}
+						repeat (array_length(props)) { 
+							if (array_length(obj[5])-1 < o) && is_array(props[o]) {
+								obj[5][o] = variable_clone(props[o]);
 							}
 							o++;
 						}
@@ -970,6 +1005,27 @@ function JADE_load_properties(file=game_save_id+"\save.jade") {
 	}
 	
 	return level_data[$ "level_properties"];
+}
+
+function generate_jadeuuid() {
+    static hex = "0123456789abcdef";
+    static variant = "jade5";
+    static str = "xyxxxyyxxy";
+    var uuid = "";
+    var i=0;
+	repeat (string_length(str)) {
+        var c = string_char_at(str,i);
+        if (c == "x") {
+            uuid += string_char_at(hex,irandom_range(1,string_length(hex)));
+        } else if (c == "y") {
+            uuid += string_char_at(variant,irandom_range(1,string_length(variant)));
+        } else {
+            uuid += c;
+        }
+		
+		i++;
+    }
+    return uuid;
 }
 
 function tile_layer_alpha_check() {

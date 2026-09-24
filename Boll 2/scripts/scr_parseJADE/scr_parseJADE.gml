@@ -154,6 +154,17 @@ function parse_level(dir=game_save_id+"\save.jade") {
 							}
 						}
 						
+						if (array_length(data)>=15) {
+							object_uuids[$ data[14]] = obj;
+						
+							var l=0;
+							repeat(array_length(data[15])) {
+								var linkdata = data[15][l];
+								variable_instance_set(obj, linkdata[$ "var"], linkdata[$ "outputs"]);
+								l++;
+							}
+						}
+						
 						//object variables
 						var g=0
 						repeat(array_length(data[5])) {
@@ -187,6 +198,17 @@ function parse_level(dir=game_save_id+"\save.jade") {
 								variable_instance_set(obj, propertydata[0], propertydata[1])
 							}
 							g++;
+						}
+						
+						if (array_length(data)>=15) {
+							object_uuids[$ data[14]] = obj;
+						
+							var l=0;
+							repeat(array_length(data[15])) {
+								var linkdata = data[15][l];
+								variable_instance_set(obj, linkdata[$ "var"], linkdata[$ "outputs"]);
+								l++;
+							}
 						}
 					}
 					j++;

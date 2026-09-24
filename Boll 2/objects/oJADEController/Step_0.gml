@@ -391,6 +391,46 @@ if (mbleft && not_on_gui && !disable_tool) {
 			resizing_x = mouse_x;
 			resizing_y = mouse_y;
 		}
+		
+		if (choosing_link) {
+			var obj = check_colliding_object(mouse_x,mouse_y)
+			if (obj) {
+				if (array_length(object_map[| obj-1][15])) {
+					var dropdownnames = [];
+					var l=0;
+					repeat(array_length(object_map[| obj-1][15])) {
+						var link = object_map[| obj-1][15][l];
+						if (link.can_input) {
+							array_push(dropdownnames,link.name);
+						}
+						l++;
+					}
+					
+					property_dropdown_index = obj-1;
+					JADEdropdown(curs_x,curs_y,dropdownnames,function(_name,_ind) {
+						with(oJADEController) {
+							var l=0;
+							var i=-1;
+							repeat(array_length(object_map[| property_dropdown_index][15])) {
+								var link = object_map[| property_dropdown_index][15][l];
+								if (link.can_input) {
+									i++;
+									if (_ind == i) {
+										var array = [object_map[| property_dropdown_index][14], _ind];
+										array_push(choosing_link.outputs,array);
+										break;
+									}
+								}
+								l++;
+							}
+							choosing_link = noone;
+						}
+					});
+					mbleftpress = false;
+				}
+			}
+			exit;
+		}
 	}
 	
 	if (resizing_region) {
@@ -1248,6 +1288,11 @@ if (mbleftrel) {
 }
 
 if (mbright) {
+	if (choosing_link != noone) {
+		choosing_link = noone;
+		exit;
+	}
+	
 	selected_array = [];
 	switch(selected_tool) {
 		case BRUSH_TOOL:

@@ -58,6 +58,8 @@ level_properties =
     desc : ""
 };
 
+object_uuids = {};
+
 current_tileset="tTilesetMain"
 deco_mode_type="";
 
@@ -78,6 +80,7 @@ topbuttons.add("File", function() {
 				
 				current_tileset="tTilesetMain"
 				deco_mode_type="";
+				object_uuids = {};
 				
 				var i=0;
 				repeat(array_length(regions)) {
@@ -271,6 +274,7 @@ update_region = function() {
 	selected_deco_obj = -1;
 	selected_obj = -1;
 	drawing_node = -1;
+	choosing_link=noone;
 }
 
 modebuttons = new JADEsmallbuttons(324,4,86,16,8,false)
@@ -278,6 +282,7 @@ modebuttons.add("Object Mode", function() {
 	selected_deco_obj = -1;
 	drawing_node = -1;
 	selected_node = -1;
+	choosing_link=noone;
 	toolbarbuttons.set(toolbar[0])
 	if (selected_mode != OBJECT_MODE) {
 		selected_obj = -1;
@@ -304,6 +309,7 @@ modebuttons.add("Object Mode", function() {
 modebuttons.add("Deco Mode", function() {
 	drawing_node = -1;
 	selected_node = -1;
+	choosing_link=noone;
 	if is_instanceof(oJADEController.selected_layer,JADEtilelayer) {
 		toolbarbuttons.set(toolbar[1])
 		with(layerlist) {
@@ -369,6 +375,7 @@ modebuttons.add("Deco Mode", function() {
 });
 modebuttons.add("Gizmo Mode", function() {
 	selected_deco_obj = -1;
+	choosing_link=noone;
 	toolbarbuttons.set(toolbar[4])
 	if (selected_mode != NODE_MODE) {
 		selected_obj = -1;
@@ -692,6 +699,8 @@ drawing_rotator=-1;
 draw_rotator_x=0;
 draw_rotator_y=0;
 
+choosing_link=noone;
+
 selection_box_fr=0
 
 properties_tab_active = false;
@@ -751,21 +760,7 @@ check_colliding_asset = function(_x, _y) {
 object_place = function(_uuid, _x, _y, _xscale, _yscale) {
 	var obj = [_uuid, _x, _y, _xscale, _yscale]
 	var data = obj_data[$ obj[0]]
-	var arr = properties.getDefaultValues(_uuid)
-	obj[5] = [];
-	var o=0;
-	repeat (array_length(arr)) { //god Damn.
-		if is_array(arr[o]) {
-			obj[5][o] = array_create(1,0)
-			array_copy(obj[5][o],0,arr[o],0,array_length(arr[o]))
-			if is_array(obj[5][o][1]) {
-				var temparr = obj[5][o][1];
-				obj[5][o][1] = [];
-				array_copy(obj[5][o][1],0,temparr,0,array_length(temparr));
-			}
-		}
-		o++;
-	}
+	obj[5] = variable_clone(properties.getDefaultValues(_uuid));
 	obj[6] = data.xoff;
 	obj[7] = data.yoff;
 	obj[8] = data.sizex;
@@ -774,6 +769,13 @@ object_place = function(_uuid, _x, _y, _xscale, _yscale) {
 	obj[11] = [0,"auto","continue",false]; //node property arr
 	obj[12] = []; //rotator arr
 	obj[13] = [0,0,180,0,4,true,false,false]
+	var oid = generate_jadeuuid();
+	while struct_exists(object_uuids,oid) {
+		oid = generate_jadeuuid();
+	}
+	obj[14] = oid;
+	obj[15] = variable_clone(properties.getDefaultLinks(_uuid));
+	object_uuids[$ oid] = [ds_list_size(object_map), (selected_mode == OBJECT_MODE) ? 0 : 1, selected_region];
 	//add other data stuff here later
 	ds_list_add(object_map, obj)
 }

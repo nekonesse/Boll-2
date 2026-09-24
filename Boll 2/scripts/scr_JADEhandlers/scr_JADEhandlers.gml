@@ -2,7 +2,7 @@ function draw_gui(_x, _y, w, h, color, alpha, outline=false){
 	draw_sprite_stretched_ext(spr_JADEguibevel,outline,_x,_y,w,h,color,alpha)
 }
 
-function JADEsmallbuttons(_x, _y, _width, _height, spacing=8, is_toggle=true, inverted=false, _vertical=false) constructor {
+function JADEsmallbuttons(_x, _y, _width, _height, spacing=8, is_toggle=true, inverted=false, _vertical=false, _lighter=false) constructor {
 	x = _x;
     y = _y;
 	width = _width;
@@ -16,10 +16,16 @@ function JADEsmallbuttons(_x, _y, _width, _height, spacing=8, is_toggle=true, in
 	color_invert = inverted;
 	vertical = _vertical;
 	created_gui = noone;
+	lighter = _lighter;
 	
 	static add = function(name, func) {
 		array_push(buttons, name)
-		array_push(drawstruct,ScribblejrFitExt(name,fa_left,fa_center,global.rulerGold,1,width-4,height));
+		
+		var font = global.rulerGold;
+		if (height < 16) {
+			font = global.omiFont
+		}
+		array_push(drawstruct,ScribblejrFitExt(name,fa_left,fa_center,font,1,width-4,height));
 		array_push(funcs,func);
 	}	
 	
@@ -44,22 +50,43 @@ function JADEsmallbuttons(_x, _y, _width, _height, spacing=8, is_toggle=true, in
 			}
 			
 			var over = point_in_rectangle(curs_x,curs_y,_x1,_y1,_x2,_y2)
-			
-			if !color_invert
+
 			var buttoncolor = oJADEController.themeaccent3
-			else buttoncolor=oJADEController.themeaccent2
+			if !(lighter) {
+				if (color_invert) buttoncolor=oJADEController.themeaccent2
+			} else {
+				if (color_invert) buttoncolor=oJADEController.themeaccent4
+				else buttoncolor=oJADEController.themeaccent2
+			}
 			
 			if (selected_button == i) {
-				if !color_invert
-				buttoncolor = oJADEController.themeaccent2
-				else
-				buttoncolor = oJADEController.themeaccent3
-			} else if (over) {
-				buttoncolor = oJADEController.themeaccent4
+				if !(lighter) {
+					if !color_invert
+					buttoncolor = oJADEController.themeaccent2
+					else
+					buttoncolor = oJADEController.themeaccent3
+				} else {
+					if !color_invert
+					buttoncolor = oJADEController.themeaccent4
+					else
+					buttoncolor = oJADEController.themeaccent2
+				}
+			}
+
+			if (over) {
+				if !(color_invert) {
+					buttoncolor = oJADEController.themeaccent4
+				} else {
+					buttoncolor = oJADEController.themeaccent1
+				}
 			}
 			
 			draw_gui(_x1,_y1,width,height,buttoncolor, 1)
-			drawstruct[i].Draw(floor(_x1+2),floor(_y1+height/2+3))
+			var yoff = 3;
+			if (height < 16) {
+				yoff = 1;
+			}
+			drawstruct[i].Draw(floor(_x1+2),floor(_y1+height/2+yoff))
 			i++;
 		}
 	}
@@ -252,6 +279,7 @@ function JADEtoolbar(_x, _y) constructor {
 			if over {
 				oJADEController.selected_tool=buttons[i]
 				drawing_node=-1;
+				choosing_link=-1;
 				break;
 			}
 			i++;
@@ -332,6 +360,9 @@ function JADElisthandler(_x, _y, _width, _height, _checkvar) constructor {
 		var curs_y = window_mouse_get_y()
 		var mbleft = mouse_check_button_pressed(mb_left);
 		
+		
+		draw_set_valign(fa_top);
+		draw_set_halign(fa_left);
 		array_copy(currarr,0,listcontents,0,array_length(listcontents));
 		var indent=0;
 		var i=0;
@@ -694,6 +725,16 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 	is_scrolling_x=0;
 	is_scrolling_y=0;
 	typing_box=0;
+	tabbuttons = new JADEsmallbuttons(x+8,y+114,64,14,8,false,true,false,true)
+	show_links = false;
+	
+	tabbuttons.add("Variables", function() {
+		show_links = false;
+	});
+	tabbuttons.add("Links", function() {
+		show_links = true;
+	});
+	tabbuttons.selected_button=0;
 	
 	static draw = function(objarr) {
 		draw_rect(x,y,width,height,oJADEController.themeaccent3,1)
@@ -721,85 +762,119 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 			
 			obj[2]=JADEnumberinput(x+96, y+56, "Y", obj[2], 101)
 			
-			draw_rect(x+8,y+128,width-16,2,oJADEController.themeaccent2,1)
+			tabbuttons.x = x+8;
+			tabbuttons.y = y+114;
 			
-			var i=0;
-			repeat(array_length(obj[5])) { 
-				var item = arr[i]
+			if (oJADEController.mbleftpress) {
+				tabbuttons.update();
+			}
+			
+			tabbuttons.draw();
+			
+			draw_rect(x+8,y+132,width-16,2,oJADEController.themeaccent2,1)
+			
+			if !(show_links) {
+				#region Object Properties
+				var i=0;
+				repeat(array_length(obj[5])) { 
+					var item = arr[i]
 				
-				switch (item[$ "type"]) {
-					case "checkbox": {
-						var prev = obj[5][i][1]
+					switch (item[$ "type"]) {
+						case "checkbox": {
+							var prev = obj[5][i][1]
 						
-						obj[5][i][1]=JADEcheckbox(x+16,y+144+32*i, item[$ "name"], obj[5][i][1])
+							obj[5][i][1]=JADEcheckbox(x+16,y+144+32*i, item[$ "name"], obj[5][i][1])
 						
-						if obj[5][i][1] != prev {
-							var j=1;
-							repeat(array_length(objarr)-1) {
-								var obj2 = oJADEController.object_map[| objarr[j]]
-								if (obj2[0] == obj[0])
-								obj2[5][i][1] = obj[5][i][1]
-								j++;
+							if obj[5][i][1] != prev {
+								var j=1;
+								repeat(array_length(objarr)-1) {
+									var obj2 = oJADEController.object_map[| objarr[j]]
+									if (obj2[0] == obj[0])
+									obj2[5][i][1] = obj[5][i][1]
+									j++;
+								}
 							}
-						}
-					} break;
-					case "number_input": {
-						var prev = obj[5][i][1]
+						} break;
+						case "number_input": {
+							var prev = obj[5][i][1]
 						
-						if !item[$ "absolute"]
-						obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i)
-						else obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i,0)
+							if !item[$ "absolute"]
+							obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i)
+							else obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i,0)
 						
-						if obj[5][i][1] != prev {
-							var j=1;
-							repeat(array_length(objarr)-1) {
-								var obj2 = oJADEController.object_map[| objarr[j]]
-								if (obj2[0] == obj[0])
-								obj2[5][i][1] = obj[5][i][1]
-								j++;
+							if obj[5][i][1] != prev {
+								var j=1;
+								repeat(array_length(objarr)-1) {
+									var obj2 = oJADEController.object_map[| objarr[j]]
+									if (obj2[0] == obj[0])
+									obj2[5][i][1] = obj[5][i][1]
+									j++;
+								}
 							}
-						}
-					} break;
-					case "number_range_input": {
-						var prev = obj[5][i][1]
+						} break;
+						case "number_range_input": {
+							var prev = obj[5][i][1]
 						
-						obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i,item[$ "minimum"],item[$ "maximum"])
+							obj[5][i][1]=JADEnumberinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i,item[$ "minimum"],item[$ "maximum"])
 						
-						if obj[5][i][1] != prev {
-							var j=1;
-							repeat(array_length(objarr)-1) {
-								var obj2 = oJADEController.object_map[| objarr[j]]
-								if (obj2[0] == obj[0])
-								obj2[5][i][1] = obj[5][i][1]
-								j++;
+							if obj[5][i][1] != prev {
+								var j=1;
+								repeat(array_length(objarr)-1) {
+									var obj2 = oJADEController.object_map[| objarr[j]]
+									if (obj2[0] == obj[0])
+									obj2[5][i][1] = obj[5][i][1]
+									j++;
+								}
 							}
-						}
-					} break;
-					case "string_input": {
-						var prev = obj[5][i][1]
+						} break;
+						case "string_input": {
+							var prev = obj[5][i][1]
 						
-						obj[5][i][1]=JADEstringinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i)
+							obj[5][i][1]=JADEstringinput(x+16,y+144+32*i, item[$ "name"], obj[5][i][1],102+i)
 						
-						if obj[5][i][1] != prev {
-							var j=1;
-							repeat(array_length(objarr)-1) {
-								var obj2 = oJADEController.object_map[| objarr[j]]
-								if (obj2[0] == obj[0])
-								obj2[5][i][1] = obj[5][i][1]
-								j++;
+							if obj[5][i][1] != prev {
+								var j=1;
+								repeat(array_length(objarr)-1) {
+									var obj2 = oJADEController.object_map[| objarr[j]]
+									if (obj2[0] == obj[0])
+									obj2[5][i][1] = obj[5][i][1]
+									j++;
+								}
 							}
-						}
-					} break;
-					case "dropdown": {
-						JADEdropdownproperty(x+16,y+144+32*i, item[$ "name"], obj[5][i][1], i, objarr[0], item[$ "dropdowndata"], item[$ "dropdownnames"])
-					} break;
-					case "tylerpicker": {
-						JADEtylerpicker(x+16,y+144+32*i, item[$ "name"], obj[5][i][1], i, objarr[0])
-					} break;
+						} break;
+						case "dropdown": {
+							JADEdropdownproperty(x+16,y+144+32*i, item[$ "name"], obj[5][i][1], i, objarr[0], item[$ "dropdowndata"], item[$ "dropdownnames"])
+						} break;
+						case "tylerpicker": {
+							JADEtylerpicker(x+16,y+144+32*i, item[$ "name"], obj[5][i][1], i, objarr[0])
+						} break;
+					}
+				
+					i++;
+					if i>(height/32) listheight+=32
 				}
+				#endregion
+			} else {
+				var scissor = gpu_get_scissor();
+				var height2 = height-136-8;
+				gpu_set_scissor(x+8,y+136,width-16,height2);
 				
-				i++;
-				if i>(height/32) listheight+=32
+				draw_rect(x+8,y+136,width-16,height2, oJADEController.themeaccent1,1);
+				
+				var i=0;
+				var yy=y+140;
+				repeat(array_length(obj[15])) {
+					obj[15][i].draw(x+10,yy);
+					
+					yy+=obj[15][i].height
+					if (i<array_length(obj[15])-1) {
+						listheight+=obj[15][i].height
+					}
+					i++;
+				}
+				listheight=max(listheight-height2,0);
+				
+				gpu_set_scissor(scissor);
 			}
 			gpu_set_scissor(prevscissor);
 		}
@@ -899,6 +974,7 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 function JADEproperties() constructor {
 	property_data = {};
 	property_values = {};
+	property_links = {};
 	static initProperties = function(obj) {
 		var objn;
 		if (object_exists(obj)) {
@@ -908,6 +984,7 @@ function JADEproperties() constructor {
 		}
 		property_data[$ objn]=[]
 		property_values[$ objn]=[];
+		property_links[$ objn]=[];
 	}
 	
 	static addCheckbox = function(obj, name, variable_name, default_val) {
@@ -969,8 +1046,17 @@ function JADEproperties() constructor {
 		array_push(property_values[$ objn], [variable_name, [0,0,1,1]])
 	}
 	
+	static addLink = function(obj, link) {
+		var objn = object_get_name(obj)
+		array_push(property_links[$ objn], link);
+	}
+	
 	static getDefaultValues = function(obj) {
 		return property_values[$ obj]
+	}
+	
+	static getDefaultLinks = function(obj) {
+		return property_links[$ obj]
 	}
 }
 
