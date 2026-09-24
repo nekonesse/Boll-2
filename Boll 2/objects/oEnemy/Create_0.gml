@@ -2,6 +2,7 @@
 enemyStomped = new Signal();
 enemySpinjumped = new Signal();
 enemyCollidePlayer = new Signal();
+enemyBumped = new Signal();
 enemyFireballed = new Signal();
 enemyKilled = new Signal();
 enemyTurnAround = new Signal();
@@ -76,6 +77,17 @@ thrown = false;
 carry_player = noone;
 grabbed = false;
 can_grab = false;
+
+enemyBumped.Connect( self, function() {
+	hp -= 1;
+	if (hp) {
+		vsp=-3;
+		grounded=false;
+	}
+	killtype="bump";
+	make_particle(pImpact,x,y+hit_sizey,-3);
+	VinylPlay(snd_enemykick);
+});
 
 onPickup.Connect( self, function(carry_p) {
 	carry_player = carry_p;

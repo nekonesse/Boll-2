@@ -23,6 +23,17 @@ looking_around = false;
 
 behavior_mode = bumptyBehaviors.wander_mode;
 
+enemyBumped.Destroy();
+
+enemyBumped.Connect( self, function() {
+	hp = 1;
+	jumped = true;
+	grounded = false;
+	vsp = -3;
+	killtype="bump";
+	VinylPlay(snd_bumptybounce);
+});
+
 enemyStomped.Destroy();
 
 enemyStomped.Connect( self, function(hit_p) {

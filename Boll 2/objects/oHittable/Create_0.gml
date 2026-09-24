@@ -93,7 +93,7 @@ blockHit.Connect( self, function(hit_p, obj) {
 		}
 
 		ds_list_clear(_list);
-	
+		
 		_num = check_rectangle_in_hitbox_list(bbox_left,bbox_top-bumpMax,bbox_right-1,bbox_top, oEnemy, _list);
 
 		if (_num > 0) {
@@ -101,13 +101,7 @@ blockHit.Connect( self, function(hit_p, obj) {
 		    repeat(_num) {
 				var enemy = _list[| i];
 				if (enemy.grounded) {
-					enemy.hp -= 1;
-					if (enemy.hp) {
-						enemy.vsp=-3;
-						enemy.grounded=false;
-					}
-					enemy.killtype="bump";
-					enemy.xsc=sign(enemy.x-x) 
+					enemy.enemyBumped.Emit();
 				}
 				i++;
 		    }

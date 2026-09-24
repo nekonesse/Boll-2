@@ -16,6 +16,22 @@ uni_r = shader_get_uniform(shd_flatcolor, "red");
 
 blowingPart=-1;
 
+enemyBumped.Destroy();
+
+enemyBumped.Connect( self, function() {
+	stun=60*7.5;
+	didstun=false;
+	hsp=0;
+	constantspd=0;
+	overridexsc=true;
+	
+	grounded = false;
+	vsp = -3;
+	killtype="bump";
+	make_particle(pImpact,x,y+hit_sizey,-3);
+	VinylPlay(snd_enemykick);
+});
+
 enemyStomped.Connect( self, function(hit_p) {
 	stun=60*7.5;
 	didstun=false;

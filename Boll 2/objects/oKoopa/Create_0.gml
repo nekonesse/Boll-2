@@ -18,6 +18,35 @@ getup_timer = 0;
 
 koopaEscapeShell = new Signal();
 
+enemyBumped.Destroy();
+
+enemyBumped.Connect( self, function() {
+	hp = 1;
+	if !(in_shell) {
+		constantspd = 0;
+		enemycoll=true;
+		y += (start_hit_sizey-6); //Pulling the shell to the ground
+		in_shell = shell_time;
+		no_stomping = true
+		shell_move = false
+	}
+	if (in_shell) && (shell_move) {
+		constantspd = 0;
+		enemycoll=true;
+		in_shell = shell_time;
+		no_stomping = true
+		shell_move = false
+		phaseid=hit_p
+		phase_leeway=10;
+	}
+	
+	grounded = false;
+	vsp = -3;
+	killtype="bump";
+	make_particle(pImpact,x,y+hit_sizey,-3);
+	VinylPlay(snd_enemykick);
+});
+
 enemyStomped.Destroy();
 
 enemyStomped.Connect( self, function(hit_p) {

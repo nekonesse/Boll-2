@@ -7,6 +7,8 @@ exposed = false; //when it has fully exited the pipe
 is_shy = true;
 visible = true;
 
+enemyBumped.Destroy();
+
 mybite = undefined;
 bitedelay = 0;
 playbite = true;
