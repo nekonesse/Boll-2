@@ -60,11 +60,15 @@ function basicLink(_name, _var, _can_input=true, _minoutputs=1, _maxoutputs=NaN)
 	}
 };
 
-function trigger_links(_arr) {
-	var l=0;
-	repeat(array_length(_arr)) {
-		var ob = oGameManager.object_uuids[$ _arr[l][0]];
-		ob.activateLink.Emit(_arr[l][1], id);
-		l++;
+function trigger_links(_arr, _obj=id) {
+	if !(activated_by_link) {
+		var l=0;
+		repeat(array_length(_arr)) {
+			var ob = oGameManager.object_uuids[$ _arr[l][0]];
+			if (instance_exists(ob)) {
+				ob.activateLink.Emit(_arr[l][1], _obj);
+			}
+			l++;
+		}
 	}
 }

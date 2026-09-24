@@ -394,7 +394,7 @@ if (mbleft && not_on_gui && !disable_tool) {
 		
 		if (choosing_link) {
 			var obj = check_colliding_object(mouse_x,mouse_y)
-			if (obj) {
+			if (obj) && (obj-1 != selected_array[0] ){
 				if (array_length(object_map[| obj-1][15])) {
 					var dropdownnames = [];
 					var l=0;
@@ -417,7 +417,17 @@ if (mbleft && not_on_gui && !disable_tool) {
 									i++;
 									if (_ind == i) {
 										var array = [object_map[| property_dropdown_index][14], _ind];
-										array_push(choosing_link.outputs,array);
+										var dont_add = false;
+										var g=0;
+										repeat(array_length(choosing_link.outputs)) {
+											if (choosing_link.outputs[g][0] == object_map[| property_dropdown_index][14]) && (choosing_link.outputs[g][1] == _ind)
+											dont_add = true;
+											break;
+											g++;
+										}
+										if !(dont_add) {
+											array_push(choosing_link.outputs,array);
+										}
 										break;
 									}
 								}

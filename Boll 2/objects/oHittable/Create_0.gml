@@ -17,6 +17,7 @@ amount=1; // the amount of items to hold
 no_path_follow=false;
 lose_amount=false;
 eject_pause=30;
+activated_by_link = false;
 
 onhit_link = [];
 
@@ -30,6 +31,7 @@ blockBumpFinished = new Signal();
 blockFinished = new Signal();
 
 activateLink.Connect(self, function(index, obj) {
+	activated_by_link = true;
 	switch(index) {
 		case 0:
 			blockHit.Emit(-1, obj)
@@ -40,7 +42,7 @@ activateLink.Connect(self, function(index, obj) {
 blockHit.Connect( self, function(hit_p, obj) {
 	var _list, _num;
 	
-	trigger_links(onhit_link);
+	trigger_links(onhit_link, obj);
 	
 	if (going) {
 		blockBumpFinished.Emit();

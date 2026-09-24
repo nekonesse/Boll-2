@@ -109,12 +109,15 @@ function JADE_initializeobj() {
 	properties.addNumberInput(oLongItemBox, "Amount", "amount", 1, true)
 	properties.addCheckbox(oLongItemBox, "Is Hidden", "hidden", false)
 	properties.addCheckbox(oLongItemBox, "Is Dispenser", "eject", false)
+	properties.addLink(oLongItemBox, new basicLink("On Hit", "onhit_link"));
 	registerobj(oMonitor, spr_monitor, 8, 8, 16, 16, false, false, containers, "Monitor", true)
 	properties.addDropdown(oMonitor, "Content", "content", "coin", ["10 Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom", "Shield Mushroom"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison", "shield"])
 	properties.addCheckbox(oMonitor, "Has Gravity", "physics_enabled", false)
 	properties.addCheckbox(oMonitor, "Bump From Below", "bumpable", false)
+	properties.addLink(oMonitor, new basicLink("On Hit", "onhit_link"));
 	registerobj(oCrate, spr_crate, 8, 8, 16, 16, false, false, containers, "Crate", true)
 	properties.addDropdown(oCrate, "Content", "content", "coin", ["Single Coin", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom", "Shield Mushroom", "P-Switch"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison", "shield", "pswitch"])
+	properties.addLink(oCrate, new basicLink("On Hit", "onhit_link"));
 	blockcategory.add(containers);
 	
 	var liquids = new JADElistcategory("Liquids")
@@ -122,11 +125,15 @@ function JADE_initializeobj() {
 	blockcategory.add(liquids);
 	
 	registerobj(oBrick, spr_brick, 8, 8, 16, 16, true, false, blockcategory, "Brick Block", true)
+	properties.addLink(oBrick, new basicLink("On Hit", "onhit_link"));
 	registerobj(oHardBlock, spr_hardblock, 0, 0, 16, 16, false, false, blockcategory, "Hard Block", true)
 	registerobj(oBigHardBlock, spr_bighardblock, 0, 0, 32, 32, false, false, blockcategory, "Big Hard Block", true)
 	registerobj(oFlipblock, spr_flipblock, 8, 8, 16, 16, false, false, blockcategory, "Flip Block", true)
+	properties.addLink(oFlipblock, new basicLink("On Hit", "onhit_link"));
 	registerobj(oNoteBlock, spr_noteblock, 8, 8, 16, 16, false, false, blockcategory, "Note Block", true)
+	properties.addLink(oNoteBlock, new basicLink("On Hit", "onhit_link"));
 	registerobj(oShootBlock, spr_shootblock, 8, 8, 16, 16, false, false, blockcategory, "Shoot Block", true)
+	properties.addLink(oShootBlock, new basicLink("On Hit", "onhit_link"));
 	registerobj(oDonutBlock, spr_donutblock, 0, 0, 16, 16, false, false, blockcategory, "Donut Block")
 	properties.addCheckbox(oDonutBlock, "Collapsing", "collapsing", false)
 	properties.addCheckbox(oDonutBlock, "Is Icy", "slippery", false)

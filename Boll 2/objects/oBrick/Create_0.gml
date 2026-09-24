@@ -8,7 +8,7 @@ blockHit.Connect( self, function(hit_p, obj) {
 	going = true;
 	var j = noone;
 	
-	if (obj.object_index!=oPlayer) || (obj.object_index==oPlayer && obj.can_break_bricks) {
+	if (object_is_ancestor(obj.object_index,oEnemy)) || (obj.object_index==oPlayer && obj.can_break_bricks) {
 		VinylPlay(snd_blockbreak)
 		instance_destroy();
 		j = instance_create(x-4,y+4,pDestruction) with(j){image_index=0 hspeed=-1 vspeed=-2} //bottom left
