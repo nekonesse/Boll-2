@@ -758,6 +758,11 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 			draw_rect(x+15,y+15,66,66,c_white,1,true)
 			draw_text(x+16,y+96,data.name)
 			
+			draw_set_font(global.omiFont);
+			draw_text(x+20,y+86,obj[14]);
+			
+			draw_set_font(global.rulerGold)
+			
 			obj[1]=JADEnumberinput(x+96, y+16, "X", obj[1], 100)
 			
 			obj[2]=JADEnumberinput(x+96, y+56, "Y", obj[2], 101)

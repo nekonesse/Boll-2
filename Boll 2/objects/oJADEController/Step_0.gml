@@ -191,6 +191,7 @@ if keyboard_check_pressed(vk_delete) {
 				ds_list_delete(object_map, selected_array[i])
 				i++;
 			}
+			refresh_uuids();
 			selected_array=[];
 		break;
 		case DECO_MODE:
@@ -326,6 +327,14 @@ if keyboard_check(vk_control) {
 						var drawy = (obj[2]-copyy)+(gridy*current_grid_size)
 						obj[1] = drawx;
 						obj[2] = drawy;
+						var oid = generate_jadeuuid();
+						while struct_exists(object_uuids,oid) {
+							oid = generate_jadeuuid();
+						}
+						obj[14] = oid;
+						var old15 = obj[15]
+						obj[15] = variable_clone(old15);
+						object_uuids[$ oid] = [ds_list_size(object_map), (selected_mode == OBJECT_MODE) ? 0 : 1, selected_region];
 						ds_list_add(object_map, obj)
 						array_push(selected_array,ds_list_find_index(object_map, obj));
 						i++;
@@ -511,6 +520,7 @@ if (mbleft && not_on_gui && !disable_tool) {
 					if (obj) {
 						ds_list_delete(object_map, obj-1)
 						selected_array = [];
+						refresh_uuids();
 						i_did_a_thing = true;
 					}
 				break;
@@ -1312,6 +1322,7 @@ if (mbright) {
 					var obj = check_colliding_object(mouse_x,mouse_y)
 					if (obj) {
 						ds_list_delete(object_map, obj-1)
+						refresh_uuids();
 					}
 				break;
 				case DECO_MODE:

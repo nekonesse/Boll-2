@@ -819,6 +819,28 @@ tile_update_properties = function() {
 	}
 }
 
+refresh_uuids = function(_uuid) {
+	object_uuids = {};
+	
+	var i=0;
+	repeat(array_length(regions)) {
+		var j=0;
+		repeat(ds_list_size(regions[i].object_layer_map)) {
+			var obj=regions[i].object_layer_map[| i]
+			object_uuids[$ obj[14]] = [j, 0, i];
+			j++;
+		}
+		
+		j=0;
+		repeat(ds_list_size(regions[i].node_layer_map)) {
+			var obj=regions[i].node_layer_map[| i]
+			object_uuids[$ obj[14]] = [j, 1, i];
+			j++;	
+		}
+		i++;
+	}
+}
+
 jade_undo = function() {
 	if !array_length(undoarray) exit;
 	selected_array = [];

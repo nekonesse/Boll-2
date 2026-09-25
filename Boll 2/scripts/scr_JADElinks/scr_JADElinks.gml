@@ -19,14 +19,19 @@ function basicLink(_name, _var, _can_input=true, _minoutputs=1, _maxoutputs=NaN)
 		
 		var i=0;
 		var offset = 0;
-		repeat(array_length(outputs)) {
-			if (mbleft) && (point_in_rectangle(curs_x, curs_y, _x+8+188-16,_y+24+6+offset,_x+8+188+4,_y+24+6+12+offset)) {
+		var i=0;
+		while (i < array_length(outputs)) {
+			if !struct_exists(oJADEController.object_uuids,outputs[i][0]) {
 				array_delete(outputs,i,1);
-				break;
+			} else {
+				if (mbleft) && (point_in_rectangle(curs_x, curs_y, _x+8+188-16,_y+24+6+offset,_x+8+188+4,_y+24+6+12+offset)) {
+					array_delete(outputs,i,1);
+					break;
+				}
+				
+				offset += 24;
+				i++;
 			}
-			
-			offset += 24;
-			i++;
 		}
 		
 		i=0;
@@ -51,6 +56,15 @@ function basicLink(_name, _var, _can_input=true, _minoutputs=1, _maxoutputs=NaN)
 	
 	static export_contents = function() {
 		var struct = {};
+		var i=0;
+		while (i < array_length(outputs)) {
+			if !struct_exists(oJADEController.object_uuids,outputs[i][0]) {
+				array_delete(outputs,i,1);
+			} else {
+				i++;
+			}
+		}
+		
 		struct[$ "outputs"] = outputs;
 		struct[$ "var"] = myvar;
 		
