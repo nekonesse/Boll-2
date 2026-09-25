@@ -34,8 +34,7 @@ if (in_shell) {
 		can_grab = false;
 		var blocklist=ds_list_create();
 		var num=collision_line_list(x+(hit_sizex*_direction)+hsp,y-(hit_sizey-2),x+(hit_sizex*_direction)+hsp,y+(hit_sizey-2),oHittable, false, true, blocklist, true)
-
-		var found_block=false;
+		
 		if (num > 0) {
 			var i=0;
 			repeat (num) {
@@ -48,12 +47,19 @@ if (in_shell) {
 				}
 				i++;
 			}
-			if (found_block) {
-				enemyTurnAround.Emit();
-			}
+			enemyTurnAround.Emit();
 		}
-		
 		ds_list_destroy(blocklist);
+		
+		
+		var pswitch=collision_line(x+(hit_sizex*_direction)+hsp,y-(hit_sizey-2),x+(hit_sizex*_direction)+hsp,y+(hit_sizey-2),oPSwitch, false, true)
+
+		if (pswitch) && ((pswitch.image_angle == 90 && _direction == 1) || (pswitch.image_angle == 270 && _direction == -1)) {
+			pswitch.hitSwitch.Emit();
+			
+			enemyTurnAround.Emit();
+		}
+
 		
 		var enemy=check_hitbox_on_hitbox(id,oEnemy)
 

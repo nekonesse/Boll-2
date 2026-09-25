@@ -28,8 +28,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Switch Blocks",
-    "path":"folders/Sprites/Objects/Switch Blocks.yy",
+    "name":"Heart",
+    "path":"folders/Sprites/Objects/Switch Blocks/Heart.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

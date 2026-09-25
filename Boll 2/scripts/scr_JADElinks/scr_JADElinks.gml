@@ -65,6 +65,7 @@ function trigger_links(_arr, _obj=id) {
 		var l=0;
 		repeat(array_length(_arr)) {
 			var ob = oGameManager.object_uuids[$ _arr[l][0]];
+			instance_activate_object(ob);
 			if (instance_exists(ob)) {
 				ob.activateLink.Emit(_arr[l][1], _obj);
 			}

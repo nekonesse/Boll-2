@@ -2,7 +2,9 @@ event_inherited();
 
 if (goDirection != 0) {
 	y += goDirection*3;
-	image_index = ternary(goDirection, 1, 2);
+	if !(disguised) {
+		image_index = ternary(goDirection, 1, 2);
+	}
 	
 	if !on_screen_xy(32,32) && !place_meeting(x,y,oActivationRegion) {
 		instance_destroy();
@@ -25,6 +27,8 @@ if (goDirection != 0) {
 		}
 		
 		ds_list_destroy(blocklist);
+		
+		onBreak();
 		
 		instance_create(x,y+(sprite_height/2)*goDirection,pImpact)
 		instance_destroy();

@@ -9,8 +9,8 @@
   "name":"oMagentaSwitchBlock",
   "overriddenProperties":[],
   "parent":{
-    "name":"Switch Blocks",
-    "path":"folders/Objects/Objects/Switch Blocks.yy",
+    "name":"Magenta",
+    "path":"folders/Objects/Objects/Switch Blocks/Magenta.yy",
   },
   "parentObjectId":{
     "name":"oCollider",

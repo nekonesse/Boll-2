@@ -133,6 +133,7 @@ function JADE_initializeobj() {
 	registerobj(oNoteBlock, spr_noteblock, 8, 8, 16, 16, false, false, blockcategory, "Note Block", true)
 	properties.addLink(oNoteBlock, new basicLink("On Hit", "onhit_link"));
 	registerobj(oShootBlock, spr_shootblock, 8, 8, 16, 16, false, false, blockcategory, "Shoot Block", true)
+	properties.addCheckbox(oShootBlock, "Is Disguised", "disguised", false)
 	properties.addLink(oShootBlock, new basicLink("On Hit", "onhit_link"));
 	registerobj(oDonutBlock, spr_donutblock, 0, 0, 16, 16, false, false, blockcategory, "Donut Block")
 	properties.addCheckbox(oDonutBlock, "Collapsing", "collapsing", false)
@@ -176,15 +177,28 @@ function JADE_initializeobj() {
 	gizmos.add(springs)
 	
 	var switchblocks = new JADElistcategory("Switch Blocks")
+	registerobj(oONOFFSwitch, spr_onoffswitch_red, 8, 8, 16, 16, false, false, switchblocks, "ON/OFF Switch", true)
+	properties.addLink(oONOFFSwitch, new basicLink("On Hit", "onhit_link"));
+	registerobj(oONOFFBlock, spr_onoffblockon_red, 0, 0, 16, 16, false, false, switchblocks, "ON/OFF Block", true)
+	registerobj(oONOFFBlockOff, spr_onoffblockoff_blue, 0, 0, 16, 16, false, false, switchblocks, "ON/OFF Block (Off)", true)
+	registerobj(oONOFFSingleSwitchRed, spr_onoffsingleswitchon_red, 8, 8, 16, 16, false, false, switchblocks, "ON/OFF Single Switch (On)", true)
+	properties.addDropdown(oONOFFSingleSwitchRed, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
+	properties.addLink(oONOFFSingleSwitchRed, new basicLink("On Trigger", "ontrigger_link"));
+	registerobj(oONOFFSingleSwitchBlue, spr_onoffsingleswitchon_blue, 8, 8, 16, 16, false, false, switchblocks, "ON/OFF Single Switch (Off)", true)
+	properties.addDropdown(oONOFFSingleSwitchBlue, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
+	properties.addLink(oONOFFSingleSwitchBlue, new basicLink("On Trigger", "ontrigger_link"));
 	registerobj(oYellowSwitch, spr_yellowswitch, 8, 8, 16, 16, false, false, switchblocks, "Yellow Switch", true)
+	properties.addLink(oYellowSwitch, new basicLink("On Hit", "onhit_link"));
 	registerobj(oYellowSwitchBlock, spr_yellowswitchblock, 0, 0, 16, 16, false, false, switchblocks, "Yellow Switch Block", true)
 	registerobj(oYellowSwitchBlockOff, spr_yellowswitchblockoff, 0, 0, 16, 16, false, false, switchblocks, "Yellow Switch Block (Off)", true)
 	registerobj(oYellowSwitchSlope, spr_yellowswitchslope, 0, 0, 16, 16, false, false, switchblocks, "Yellow Switch Slope", true)
 	registerobj(oCyanSwitch, spr_cyanswitch, 8, 8, 16, 16, false, false, switchblocks, "Cyan Switch", true)
+	properties.addLink(oCyanSwitch, new basicLink("On Hit", "onhit_link"));
 	registerobj(oCyanSwitchBlock, spr_cyanswitchblock, 0, 0, 16, 16, false, false, switchblocks, "Cyan Switch Block", true)
 	registerobj(oCyanSwitchBlockOff, spr_cyanswitchblockoff, 0, 0, 16, 16, false, false, switchblocks, "Cyan Switch Block (Off)", true)
 	registerobj(oCyanSwitchSlope, spr_cyanswitchslope, 0, 0, 16, 16, false, false, switchblocks, "Cyan Switch Slope", true)
 	registerobj(oMagentaSwitch, spr_magentaswitch, 8, 8, 16, 16, false, false, switchblocks, "Magenta Switch", true)
+	properties.addLink(oMagentaSwitch, new basicLink("On Hit", "onhit_link"));
 	registerobj(oMagentaSwitchBlock, spr_magentaswitchblock, 0, 0, 16, 16, false, false, switchblocks, "Magenta Switch Block", true)
 	registerobj(oMagentaSwitchBlockOff, spr_magentaswitchblockoff, 0, 0, 16, 16, false, false, switchblocks, "Magenta Switch Block (Off)", true)
 	registerobj(oMagentaSwitchSlope, spr_magentaswitchslope, 0, 0, 16, 16, false, false, switchblocks, "Magenta Switch Slope", true)
@@ -273,6 +287,8 @@ function JADE_initializeobj() {
 	properties.addCheckbox(oSnowboardRamp, "Flipped", "hflip", false)
 	registerobj(oSnowboardGiver, spr_collider_poly, 0, 0, 16, 16, false, true, stagecomp, "Snowboard Giver")
 	registerobj(oPSwitch, spr_pswitch, 8, 8, 16, 16, false, false, stagecomp, "P-Switch", true)
+	properties.addDropdown(oPSwitch, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
+	properties.addLink(oPSwitch, new basicLink("On Trigger", "ontrigger_link"));
 	
 	objectlist.add(stagecomp);
 	

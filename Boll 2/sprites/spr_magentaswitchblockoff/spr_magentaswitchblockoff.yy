@@ -12,14 +12,16 @@
   "edgeFiltering":false,
   "For3D":false,
   "frames":[
-    {"$GMSpriteFrame":"v1","%Name":"b43ade45-853a-4c9f-ade2-e2694971d672","name":"b43ade45-853a-4c9f-ade2-e2694971d672","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"73f2b413-fd81-4bc4-83f6-e5769f543b79","name":"73f2b413-fd81-4bc4-83f6-e5769f543b79","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"b60c60ce-8279-4659-a34d-ad80a2ecae74","name":"b60c60ce-8279-4659-a34d-ad80a2ecae74","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
+    {"$GMSpriteFrame":"v1","%Name":"5983ebab-139f-42e0-979b-7b54e104d067","name":"5983ebab-139f-42e0-979b-7b54e104d067","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
   "gridX":0,
   "gridY":0,
   "height":16,
   "HTile":false,
   "layers":[
-    {"$GMImageLayer":"","%Name":"5d3b5f22-9db1-4768-87cc-ebc09ce134ac","blendMode":0,"displayName":"default","isLocked":false,"name":"5d3b5f22-9db1-4768-87cc-ebc09ce134ac","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
+    {"$GMImageLayer":"","%Name":"ed59b341-045b-4aa0-8649-708458310036","blendMode":0,"displayName":"default","isLocked":false,"name":"ed59b341-045b-4aa0-8649-708458310036","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"spr_magentaswitchblockoff",
   "nineSlice":{
@@ -44,8 +46,8 @@
   },
   "origin":0,
   "parent":{
-    "name":"Switch Blocks",
-    "path":"folders/Sprites/Objects/Switch Blocks.yy",
+    "name":"Heart",
+    "path":"folders/Sprites/Objects/Switch Blocks/Heart.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
@@ -68,7 +70,7 @@
     },
     "eventStubScript":null,
     "eventToFunction":{},
-    "length":1.0,
+    "length":3.0,
     "lockOrigin":false,
     "moments":{
       "$KeyframeStore<MomentsEventKeyframe>":"",
@@ -78,7 +80,7 @@
     },
     "name":"spr_magentaswitchblockoff",
     "playback":1,
-    "playbackSpeed":30.0,
+    "playbackSpeed":10.0,
     "playbackSpeedType":0,
     "resourceType":"GMSequence",
     "resourceVersion":"2.0",
@@ -88,8 +90,14 @@
     "tracks":[
       {"$GMSpriteFramesTrack":"","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"$KeyframeStore<SpriteFrameKeyframe>":"","Keyframes":[
             {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
-                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"b43ade45-853a-4c9f-ade2-e2694971d672","path":"sprites/spr_magentaswitchblockoff/spr_magentaswitchblockoff.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
-              },"Disabled":false,"id":"1cccadf7-4258-4f6f-affd-f34780699865","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"73f2b413-fd81-4bc4-83f6-e5769f543b79","path":"sprites/spr_magentaswitchblockoff/spr_magentaswitchblockoff.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"48bacf9a-f855-4fbf-9b76-45ae3d20faca","IsCreationKey":false,"Key":0.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"b60c60ce-8279-4659-a34d-ad80a2ecae74","path":"sprites/spr_magentaswitchblockoff/spr_magentaswitchblockoff.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"dc78892f-7d7b-40ab-a932-9ef5025e0bdd","IsCreationKey":false,"Key":1.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
+            {"$Keyframe<SpriteFrameKeyframe>":"","Channels":{
+                "0":{"$SpriteFrameKeyframe":"","Id":{"name":"5983ebab-139f-42e0-979b-7b54e104d067","path":"sprites/spr_magentaswitchblockoff/spr_magentaswitchblockoff.yy",},"resourceType":"SpriteFrameKeyframe","resourceVersion":"2.0",},
+              },"Disabled":false,"id":"7a6b99c4-43bf-4773-b30e-9c6aa8277e42","IsCreationKey":false,"Key":2.0,"Length":1.0,"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"2.0","Stretch":false,},
           ],"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"2.0",},"modifiers":[],"name":"frames","resourceType":"GMSpriteFramesTrack","resourceVersion":"2.0","spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange":null,

@@ -12,8 +12,8 @@
   "name":"oCommentary",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects/Objects.yy",
+    "name":"Technical",
+    "path":"folders/Objects/Objects/Technical.yy",
   },
   "parentObjectId":null,
   "persistent":false,

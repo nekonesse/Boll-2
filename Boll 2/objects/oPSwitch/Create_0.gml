@@ -1,30 +1,32 @@
-hsp = 0
-vsp = 0
-gsp = 0
-grav = 0.2
-grounded = 0;
-bounce = false;
-hit_sizex = 8;
-hit_sizey = 8;
-bounce_speed = vsp;
-myregion=0;
+event_inherited();
 going=0;
 collision_array=[oCollider, oBarrier];
 parentblock = noone;
+activated_by_link = false;
+ontrigger_link = [];
 
-depth = 5;
-
-node_init_vars();
-
-physics_enabled = false;
 bumpable = false;
 
-blockHit = new Signal();
+hitSwitch = new Signal();
 
-blockHit.Connect( self, function(hit_p, obj) {
+activateLink = new Signal();
+
+activateLink.Connect(self, function(index, obj) {
+	activated_by_link = true;
+	switch(index) {
+		case 0:
+			hitSwitch.Emit();
+		break;
+	}
+});
+
+hitSwitch.Connect( self, function() {
 	oGameManager.pswitch_timer = 60 * 10;
 	
-	instance_create_depth(x,y,depth, oPSwitchDead)
+	trigger_links(ontrigger_link);
+	
+	var i=instance_create_depth(x,y,depth, oPSwitchDead)
+	i.image_angle = image_angle;
 	
 	instance_activate_object(oBrick);
 	instance_activate_object(oCoin);

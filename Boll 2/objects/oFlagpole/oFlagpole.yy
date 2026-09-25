@@ -9,8 +9,8 @@
   "name":"oFlagpole",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects/Objects.yy",
+    "name":"Stage Components",
+    "path":"folders/Objects/Objects/Stage Components.yy",
   },
   "parentObjectId":null,
   "persistent":false,

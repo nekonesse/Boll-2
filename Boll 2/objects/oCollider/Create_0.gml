@@ -10,4 +10,6 @@ grabbed = false;
 slippery = false;
 footstep_material = footstepMaterial.Default;
 
+depth=10;
+
 node_init_vars()

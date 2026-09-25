@@ -2,11 +2,12 @@
 #macro MUSIC_GAIN_INACTIVE_MUFFLED 0.1
 #macro MUSIC_GAIN_INACTIVE 0.225
 
-global.yellow_switch=0;
-global.cyan_switch=0;
-global.magenta_switch=0;
+global.onoff_state=false;
+global.yellow_switch=false;
+global.cyan_switch=false;
+global.magenta_switch=false;
 global.coins_collected=0;
-global.paused=0;
+global.paused=false;
 global.conductive_array=[oAmp];
 
 shard_count = 0;
@@ -29,9 +30,7 @@ level_properties =
     desc : ""
 };
 
-object_uuids = {
-	
-};
+object_uuids = {};
 
 piping_object_depth = [];
 music_tracks = [];

@@ -109,18 +109,18 @@ function player_interactions(){
 	}
 	
 	var list=ds_list_create();
-	var num=collision_line_list(x-(hit_sizex),y+hit_sizey+1,x+(hit_sizex),y+hit_sizey+1, oHittable, false, true, list, true)
+	var num=collision_line_list(x-(hit_sizex)-hsp,y+hit_sizey+1,x+(hit_sizex)-hsp,y+hit_sizey+1, oHittable, false, true, list, true)
 	if (num > 0) {
 		var totaldy=0;
 		var i=0;
 		repeat (num) {
 			var hittable=list[| i]
-			if !(hurt) && !(dead)  {
+			if !(hurt) && !(dead) {
 				if(abs(hittable.dy) > abs(totaldy)) {
 					totaldy=hittable.dy //get the greatest block's dy
 				}
 		
-				if (hittable.object_index == oNoteBlock) {
+				if (hittable.object_index == oNoteBlock) && (vsp<=0) {
 					if !(hittable.do_bump) {
 						hittable.blockHit.Emit(1, id);
 						grounded=false;
@@ -204,16 +204,21 @@ function player_interactions(){
 		instance_destroy(bearballoon);
 	}
 	
-	var crate=collision_line(x-(hit_sizex-1)-hsp,y+hit_sizey+vsp,x+(hit_sizex-1)-hsp,y+hit_sizey+vsp, oCrate, false, true) 
+	var crate=collision_line(x-hit_sizex,y+hit_sizey+vsp+1,x+hit_sizex,y+hit_sizey+vsp+1, oCrate, false, true) 
 	if (crate) && (vsp>=0) {
 		vsp = -(2.5+akey*1.5);
 		sig.Emit("bounced");
 		crate.blockHit.Emit(-1, id);
 	}
 	
-	var pswitch=collision_line(x-(hit_sizex-1)-hsp,y+hit_sizey+vsp,x+(hit_sizex-1)-hsp,y+hit_sizey+vsp, oPSwitch, false, true) 
-	if (pswitch) && (vsp>=0) {
-		pswitch.blockHit.Emit(1, id);
+	var pswitch=collision_line(x-hit_sizex,y+hit_sizey+vsp+1,x+hit_sizex,y+hit_sizey+vsp+1, oPSwitch, false, true) 
+	if (pswitch) && (pswitch.image_angle == 0) && (vsp>=0) {
+		pswitch.hitSwitch.Emit(1, id);
+	}
+	
+	pswitch=collision_line(x-hit_sizex,y-(hit_sizey+1)+vsp,x+hit_sizex,y-(hit_sizey+1)+vsp, oPSwitch, false, true) 
+	if (pswitch) && (pswitch.image_angle == 180) && (vsp<0) {
+		pswitch.hitSwitch.Emit(1, id);
 	}
 	
 	var coin=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oCoin, false, true)

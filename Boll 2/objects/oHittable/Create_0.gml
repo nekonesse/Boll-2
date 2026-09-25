@@ -11,8 +11,7 @@ dummyTimer = dummyTimerReset;
 bumpMax = 10; //highest "up" pos for bumping
 hitNegative = false; //used for the bumping "overshoot" anim end-bounce
 no_hit = false;
-default_depth = 4;
-depth = default_depth;
+default_depth = depth;
 amount=1; // the amount of items to hold
 no_path_follow=false;
 lose_amount=false;
@@ -34,7 +33,9 @@ activateLink.Connect(self, function(index, obj) {
 	activated_by_link = true;
 	switch(index) {
 		case 0:
-			blockHit.Emit(-1, obj)
+			if (hit == 0) && (amount != 0) && !(no_hit) {
+				blockHit.Emit(-1, obj)
+			}
 		break;
 	}
 });

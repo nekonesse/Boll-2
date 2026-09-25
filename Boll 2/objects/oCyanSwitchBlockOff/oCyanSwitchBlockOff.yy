@@ -8,8 +8,8 @@
   "name":"oCyanSwitchBlockOff",
   "overriddenProperties":[],
   "parent":{
-    "name":"Switch Blocks",
-    "path":"folders/Objects/Objects/Switch Blocks.yy",
+    "name":"Diamond",
+    "path":"folders/Objects/Objects/Switch Blocks/Diamond.yy",
   },
   "parentObjectId":{
     "name":"oCyanSwitchBlock",

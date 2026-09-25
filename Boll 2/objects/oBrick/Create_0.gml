@@ -8,13 +8,8 @@ blockHit.Connect( self, function(hit_p, obj) {
 	going = true;
 	var j = noone;
 	
-	if (object_is_ancestor(obj.object_index,oEnemy)) || (obj.object_index==oPlayer && obj.can_break_bricks) {
-		VinylPlay(snd_blockbreak)
-		instance_destroy();
-		j = instance_create(x-4,y+4,pDestruction) with(j){image_index=0 hspeed=-1 vspeed=-2} //bottom left
-		j = instance_create(x-4,y-4,pDestruction) with(j){image_index=0 hspeed=1 vspeed=-2} //bottom right
-		j = instance_create(x+4,y+4,pDestruction) with(j){image_index=0 hspeed=-1 vspeed=-4} //top left
-		j = instance_create(x+4,y-4,pDestruction) with(j){image_index=0 hspeed=1 vspeed=-4} //top right
+	if (object_is_ancestor(obj.object_index,oEnemy)) || (variable_instance_exists(obj,"can_break_bricks") && bool(variable_instance_get(obj,"can_break_bricks"))) {
+		brickBreak();
 	}
 });
 

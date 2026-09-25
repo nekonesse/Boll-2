@@ -28,8 +28,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Switch Blocks",
-    "path":"folders/Sprites/Objects/Switch Blocks.yy",
+    "name":"Spade",
+    "path":"folders/Sprites/Objects/Switch Blocks/Spade.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

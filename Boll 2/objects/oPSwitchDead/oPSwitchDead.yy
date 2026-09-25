@@ -9,8 +9,8 @@
   "name":"oPSwitchDead",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects/Objects.yy",
+    "name":"Switch Blocks",
+    "path":"folders/Objects/Objects/Switch Blocks.yy",
   },
   "parentObjectId":{
     "name":"oCollider",

@@ -11,8 +11,8 @@
   "name":"oYellowSwitchSlope",
   "overriddenProperties":[],
   "parent":{
-    "name":"Switch Blocks",
-    "path":"folders/Objects/Objects/Switch Blocks.yy",
+    "name":"Spade",
+    "path":"folders/Objects/Objects/Switch Blocks/Spade.yy",
   },
   "parentObjectId":{
     "name":"oYellowSwitchBlock",
