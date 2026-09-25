@@ -3,14 +3,14 @@ function basicLink(_name, _var, _can_input=true, _minoutputs=1, _maxoutputs=NaN)
 	myvar = _var;
 	can_input = _can_input;
 	outputs = [];
-	width = 64;
-	height = 24;
+	width = 196;
+	height = 48;
 	
 	static draw = function(_x,_y) {
 		var color = oJADEController.themeaccent3;
 		
 		draw_gui(_x,_y,196,24,color,1);
-		ScribblejrShrinkExt(name,fa_left,fa_top,global.rulerGold,1,60,20).Draw(_x+2,_y+6);
+		ScribblejrShrinkExt(name,fa_left,fa_top,global.rulerGold,1,190,20).Draw(_x+2,_y+6);
 		
 		var curs_x = window_mouse_get_x();
 		var	curs_y = window_mouse_get_y();
@@ -39,6 +39,8 @@ function basicLink(_name, _var, _can_input=true, _minoutputs=1, _maxoutputs=NaN)
 			offset += 24;
 			i++;
 		}
+		
+		height = 48+offset;
 		
 		draw_gui(_x+8,_y+24+offset,188,24,color,1,true);
 		draw_sprite(spr_JADEaddiconsmall,0,_x+16,_y+24+6+offset);

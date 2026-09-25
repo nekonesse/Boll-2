@@ -177,6 +177,11 @@ function JADE_initializeobj() {
 	gizmos.add(springs)
 	
 	var switchblocks = new JADElistcategory("Switch Blocks")
+	registerobj(oMysterySwitch, spr_mysteryswitchon, 8, 8, 16, 16, false, false, switchblocks, "? Switch", true)
+	properties.addDropdown(oMysterySwitch, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
+	properties.addCheckbox(oMysterySwitch, "Inverted", "switch_state", false)
+	properties.addLink(oMysterySwitch, new basicLink("On Trigger", "ontrigger_link"));
+	properties.addLink(oMysterySwitch, new basicLink("On Reset", "onreactivate_link"));
 	registerobj(oONOFFSwitch, spr_onoffswitch_red, 8, 8, 16, 16, false, false, switchblocks, "ON/OFF Switch", true)
 	properties.addLink(oONOFFSwitch, new basicLink("On Hit", "onhit_link"));
 	registerobj(oONOFFBlock, spr_onoffblockon_red, 0, 0, 16, 16, false, false, switchblocks, "ON/OFF Block", true)
