@@ -37,6 +37,9 @@ activateLink.Connect(self, function(index, obj) {
 				blockHit.Emit(-1, obj)
 			}
 		break;
+		case 1:
+			nodeReverse.Emit();
+		break;
 	}
 });
 

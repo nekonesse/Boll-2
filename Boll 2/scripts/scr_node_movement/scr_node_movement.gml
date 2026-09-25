@@ -53,7 +53,7 @@ function node_path_movement(movePlayer=true) {
 						case "continue":
 							pathnum = 0;
 							var arr2=pathing[pathnum];
-					pathspd = arr2[2];
+							pathspd = arr2[2];
 						break;
 						case "reverse":
 							pathisrev=true;
@@ -84,15 +84,42 @@ function node_path_movement(movePlayer=true) {
 					}
 				}
 			} else if (pathisrev) {
-				if (pathnum==0) { //if we have reached the beginning
-					pathisrev=false;
-					pathnum++; //we have reversed direction, go forwards in our pathing
-					var arr2=pathing[pathnum];
-					pathspd = arr2[2];
-				} else { //if not, then continue
+				if (pathnum < array_length(pathing)-1) {
 					pathnum--;
 					var arr2=pathing[pathnum];
 					pathspd = arr2[2];
+				} else {
+					switch(pathendtype) {
+						case "continue":
+							pathnum = array_length(pathing)-1;
+							var arr2=pathing[pathnum];
+							pathspd = arr2[2];
+						break;
+						case "reverse":
+							pathisrev=false;
+							pathnum++;
+							var arr2=pathing[pathnum];
+							pathspd = arr2[2];
+						break;
+						case "fall":
+							pathfallen=1
+							var dir=point_direction(pathing[max(pathprenum-1,0)][0],pathing[max(pathprenum-1,0)][1],arr[0],arr[1]);
+							hspeed=lengthdir_x(pathspd,dir)
+							vspeed=lengthdir_y(pathspd,dir)
+							gravity=0.15;
+						break;
+						case "reset":
+							pathnum = array_length(pathing)-1;
+							var arr2=pathing[pathnum];
+							if !(rotating) {
+								x=arr2[0];
+								y=arr2[1];
+							} else {
+								rotorgx=arr2[0];
+								rotorgy=arr2[1];
+							}
+						break;
+					}
 				}
 			}
 		}
@@ -137,6 +164,28 @@ function node_init_vars() {
 	rotorgy=0;
 	rotspd=2;
 	rotating=false;
+	nodeReverse = new Signal();
+	
+	nodeReverse.Connect(self, function(index, obj) {
+		pathisrev = !pathisrev;
+		pathprenum=pathnum;
+		
+		if !(pathisrev) {
+			pathnum++;
+			var arr2=pathing[pathnum];
+			pathspd = arr2[2];
+		} else {
+			if (pathnum != 0) {
+				pathnum--;
+				var arr2=pathing[pathnum];
+				pathspd = arr2[2];
+			} else {
+				pathnum=array_length(pathing)-1;
+				var arr2=pathing[pathnum];
+				pathspd = arr2[2];
+			}
+		}
+	});
 }
 
 function getnodevars() {

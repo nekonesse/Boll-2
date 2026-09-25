@@ -1056,7 +1056,7 @@ if (mbleft && not_on_gui && !disable_tool) {
 						drawing_node = col-1;
 					}
 				} else {
-					if (altleft) {
+					if (keyboard_check(vk_shift)) {
 						var obj = object_layer_map[| drawing_node]
 						var rounded_x = (ceil((gridx*current_grid_size-8)/current_grid_size)*current_grid_size)+8;
 						var rounded_y = (ceil((gridy*current_grid_size-8)/current_grid_size)*current_grid_size)+8;

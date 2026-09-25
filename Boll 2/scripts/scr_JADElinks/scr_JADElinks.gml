@@ -76,6 +76,29 @@ function basicLink(_name, _var, _can_input=true, _minoutputs=1, _maxoutputs=NaN)
 	}
 };
 
+function inputLink(_name) constructor {
+	name = _name;
+	can_input = true;
+	outputs = [];
+	width = 196;
+	height = 24;
+	
+	static draw = function(_x,_y) {
+		var color = oJADEController.themeaccent3;
+		
+		draw_gui(_x,_y,196,24,color,1);
+		ScribblejrShrinkExt(name,fa_left,fa_top,global.rulerGold,1,190,20).Draw(_x+2,_y+6);
+	}
+	
+	static export_contents = function() {
+		return {};
+	}
+	
+	static import_contents = function(struct) {
+		//
+	}
+};
+
 function trigger_links(_arr, _obj=id) {
 	if !(activated_by_link) {
 		var l=0;

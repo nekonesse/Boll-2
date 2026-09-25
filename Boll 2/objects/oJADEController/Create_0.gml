@@ -826,14 +826,15 @@ refresh_uuids = function(_uuid) {
 	repeat(array_length(regions)) {
 		var j=0;
 		repeat(ds_list_size(regions[i].object_layer_map)) {
-			var obj=regions[i].object_layer_map[| i]
+			var obj=regions[i].object_layer_map[| j]
 			object_uuids[$ obj[14]] = [j, 0, i];
+			
 			j++;
 		}
 		
 		j=0;
 		repeat(ds_list_size(regions[i].node_layer_map)) {
-			var obj=regions[i].node_layer_map[| i]
+			var obj=regions[i].node_layer_map[| j]
 			object_uuids[$ obj[14]] = [j, 1, i];
 			j++;	
 		}

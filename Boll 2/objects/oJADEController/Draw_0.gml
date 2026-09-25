@@ -62,7 +62,7 @@ if (drawing_node != -1) {
 	draw_circle_color(obj[1]+8,obj[2]+8,4,$505050,$505050,false);
 	draw_circle_color(obj[1]+8,obj[2]+8,3,$54b9fb,$54b9fb,false);
 	
-	if (len) && !(changed_grid_size) && (altleft) {
+	if (len) && !(changed_grid_size) && (keyboard_check(vk_shift)) {
 		var nodeend = obj[10][len-1]
 		if (nodeend[3]==0) {
 			var dist = point_distance(nodeend[0],nodeend[1],rounded_x,rounded_y)
@@ -113,7 +113,7 @@ if (drawing_node != -1) {
 		i++;
 	}
 	
-	if !(changed_grid_size) && (altleft) {
+	if !(changed_grid_size) && (vk_shift) {
 		draw_set_alpha(0.5)
 		draw_circle_color(rounded_x,rounded_y,6,$505050,$505050,false);
 		draw_circle_color(rounded_x,rounded_y,5,$54b9fb,$54b9fb,false);

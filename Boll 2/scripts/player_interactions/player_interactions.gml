@@ -213,12 +213,12 @@ function player_interactions(){
 	
 	var pswitch=collision_line(x-hit_sizex,y+hit_sizey+vsp+1,x+hit_sizex,y+hit_sizey+vsp+1, oPSwitch, false, true) 
 	if (pswitch) && (pswitch.image_angle == 0) && (vsp>=0) {
-		pswitch.hitSwitch.Emit(1, id);
+		pswitch.hitSwitch.Emit(id);
 	}
 	
 	pswitch=collision_line(x-hit_sizex,y-(hit_sizey+1)+vsp,x+hit_sizex,y-(hit_sizey+1)+vsp, oPSwitch, false, true) 
 	if (pswitch) && (pswitch.image_angle == 180) && (vsp<0) {
-		pswitch.hitSwitch.Emit(1, id);
+		pswitch.hitSwitch.Emit(id);
 	}
 	
 	var coin=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oCoin, false, true)

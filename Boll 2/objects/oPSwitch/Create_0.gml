@@ -20,8 +20,12 @@ activateLink.Connect(self, function(index, obj) {
 	}
 });
 
-hitSwitch.Connect( self, function() {
+hitSwitch.Connect( self, function(_obj) {
 	oGameManager.pswitch_timer = 60 * 10;
+	
+	if (_obj.object_index == oPlayer) || object_is_ancestor(_obj.object_index,oEnemy) && (image_angle == 0) {
+		_obj.vsp=0;
+	}
 	
 	trigger_links(ontrigger_link);
 	

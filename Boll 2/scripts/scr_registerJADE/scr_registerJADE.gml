@@ -104,6 +104,7 @@ function JADE_initializeobj() {
 	properties.addCheckbox(oItemBox, "Is Hidden", "hidden", false)
 	properties.addCheckbox(oItemBox, "Is Dispenser", "eject", false)
 	properties.addLink(oItemBox, new basicLink("On Hit", "onhit_link"));
+	properties.addLink(oItemBox, new inputLink("Node Reverse"));
 	registerobj(oLongItemBox, spr_longitemboxJADE, 24, 8, 48, 16, false, false, containers, "Long Item Box", true)
 	properties.addDropdown(oLongItemBox, "Content", "content", "coin", ["Single Coin", "Multiple Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom", "Shield Mushroom", "P-Switch"], ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison", "shield", "pswitch"])
 	properties.addNumberInput(oLongItemBox, "Amount", "amount", 1, true)
@@ -184,6 +185,7 @@ function JADE_initializeobj() {
 	properties.addLink(oMysterySwitch, new basicLink("On Reset", "onreactivate_link"));
 	registerobj(oONOFFSwitch, spr_onoffswitch_red, 8, 8, 16, 16, false, false, switchblocks, "ON/OFF Switch", true)
 	properties.addLink(oONOFFSwitch, new basicLink("On Hit", "onhit_link"));
+	properties.addLink(oONOFFSwitch, new inputLink("Node Reverse"));
 	registerobj(oONOFFBlock, spr_onoffblockon_red, 0, 0, 16, 16, false, false, switchblocks, "ON/OFF Block", true)
 	registerobj(oONOFFBlockOff, spr_onoffblockoff_blue, 0, 0, 16, 16, false, false, switchblocks, "ON/OFF Block (Off)", true)
 	registerobj(oONOFFSingleSwitchRed, spr_onoffsingleswitchon_red, 8, 8, 16, 16, false, false, switchblocks, "ON/OFF Single Switch (On)", true)
@@ -733,7 +735,7 @@ function JADE_load(file=game_save_id+"\save.jade") {
 						object_uuids[$ obj[14]] = j;
 						
 						var l=0;
-						repeat(array_length(obj[15])) {
+						repeat(array_length(linkdata)) {
 							obj[15][l].import_contents(linkdata[l]);
 							l++;
 						}
@@ -779,7 +781,7 @@ function JADE_load(file=game_save_id+"\save.jade") {
 						object_uuids[$ obj[14]] = j;
 						
 						var l=0;
-						repeat(array_length(obj[15])) {
+						repeat(array_length(linkdata)) {
 							obj[15][l].import_contents(linkdata[l]);
 							l++;
 						}
@@ -816,6 +818,7 @@ function JADE_load(file=game_save_id+"\save.jade") {
 	
 	selected_region = 0;
 	update_region();
+	refresh_uuids();
 	show_debug_message($"Successfully loaded JADE file from: {file}!")
 }
 
