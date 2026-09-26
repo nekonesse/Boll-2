@@ -664,7 +664,7 @@ function JADEbglisthandler(_x, _y, _width, _height) : JADElisthandler(_x, _y, _w
 	}
 }
 
-function JADEobj(_uuid, _sprite,_xoff,_yoff,_width,_height,_can_xscale,_can_yscale,_name,_nodeable,_sizex,_sizey) constructor {
+function JADEobj(_uuid, _sprite,_xoff,_yoff,_width,_height,_can_xscale,_can_yscale,_name,_nodeable,_bindable,_sizex,_sizey) constructor {
 	uuid = _uuid;
 	sprite = _sprite;
 	xoff = _xoff;
@@ -675,6 +675,7 @@ function JADEobj(_uuid, _sprite,_xoff,_yoff,_width,_height,_can_xscale,_can_ysca
 	can_yscale = _can_yscale;
 	name = _name;
 	nodeable = _nodeable;
+	bindable = _bindable;
 	sizex = _sizex;
 	sizey = _sizey;
 }
@@ -861,10 +862,10 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 				#endregion
 			} else {
 				var scissor = gpu_get_scissor();
-				var height2 = height-136-8;
-				gpu_set_scissor(x+8,y+136,width-16,height2);
+				var height2 = height-136;
+				gpu_set_scissor(x+8,y+height,width-16,height2);
 				
-				draw_rect(x+8,y+136,width-16,height2, oJADEController.themeaccent1,1);
+				draw_rect(x+8,y+height,width-16,height2, oJADEController.themeaccent1,1);
 				
 				var i=0;
 				var yy=y+140;

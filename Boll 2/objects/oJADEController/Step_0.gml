@@ -405,47 +405,66 @@ if (mbleft && not_on_gui && !disable_tool) {
 			var obj = check_colliding_object(mouse_x,mouse_y)
 			if (obj) && (obj-1 != selected_array[0] ){
 				if (array_length(object_map[| obj-1][15])) {
-					var dropdownnames = [];
-					var l=0;
-					repeat(array_length(object_map[| obj-1][15])) {
-						var link = object_map[| obj-1][15][l];
-						if (link.can_input) {
-							array_push(dropdownnames,link.name);
-						}
-						l++;
-					}
 					
-					property_dropdown_index = obj-1;
-					JADEdropdown(curs_x,curs_y,dropdownnames,function(_name,_ind) {
-						with(oJADEController) {
-							var l=0;
-							var i=-1;
-							repeat(array_length(object_map[| property_dropdown_index][15])) {
-								var link = object_map[| property_dropdown_index][15][l];
-								if (link.can_input) {
-									i++;
-									if (_ind == i) {
-										var array = [object_map[| property_dropdown_index][14], _ind];
-										var dont_add = false;
-										var g=0;
-										repeat(array_length(choosing_link.outputs)) {
-											if (choosing_link.outputs[g][0] == object_map[| property_dropdown_index][14]) && (choosing_link.outputs[g][1] == _ind)
-											dont_add = true;
-											break;
-											g++;
-										}
-										if !(dont_add) {
-											array_push(choosing_link.outputs,array);
-										}
-										break;
-									}
-								}
-								l++;
+					if (is_instanceof(choosing_link, inputLink)) {
+						var dropdownnames = [];
+						var l=0;
+						repeat(array_length(object_map[| obj-1][15])) {
+							var link = object_map[| obj-1][15][l];
+							if (link.can_input) {
+								array_push(dropdownnames,link.name);
 							}
+							l++;
+						}
+					
+						property_object_index = keyboard_check(vk_shift);
+						property_dropdown_index = obj-1;
+						JADEdropdown(curs_x,curs_y,dropdownnames,function(_name,_ind) {
+							with(oJADEController) {
+								var l=0;
+								var i=-1;
+								repeat(array_length(object_map[| property_dropdown_index][15])) {
+									var link = object_map[| property_dropdown_index][15][l];
+									if (link.can_input) {
+										i++;
+										if (_ind == i) {
+											var array = [object_map[| property_dropdown_index][14], _ind];
+											var dont_add = false;
+											var g=0;
+											repeat(array_length(choosing_link.outputs)) {
+												if (choosing_link.outputs[g][0] == object_map[| property_dropdown_index][14]) && (choosing_link.outputs[g][1] == _ind)
+												dont_add = true;
+												break;
+												g++;
+											}
+											if !(dont_add) {
+												array_push(choosing_link.outputs,array);
+											}
+											break;
+										}
+									}
+									l++;
+								}
+								if !(property_object_index) {
+									choosing_link = noone;
+								}
+							}
+						});
+					} else if (is_instanceof(choosing_link, bindingLink)){
+						var oid = object_map[| obj-1][14];
+						if !(array_contains(choosing_link.outputs, oid)) {
+							array_push(choosing_link.outputs,oid);
+						}
+						
+						if !(keyboard_check(vk_shift)) {
 							choosing_link = noone;
 						}
-					});
+					}
 					mbleftpress = false;
+				}
+			} else {
+				if !(keyboard_check(vk_shift)) {
+					choosing_link = noone;
 				}
 			}
 			exit;

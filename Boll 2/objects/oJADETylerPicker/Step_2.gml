@@ -21,14 +21,14 @@ var mbrightpress = mouse_check_button_pressed(mb_right);
 var mbmiddlepress = (mouse_check_button_pressed(mb_middle) || (keyboard_check(vk_space) && mouse_check_button_pressed(mb_left)))
 var mbmiddlerel = (mouse_check_button_released(mb_middle) || (keyboard_check(vk_space) && mouse_check_button_released(mb_left)) || (keyboard_check_released(vk_space) && mouse_check_button(mb_left)))
 		
-var tileset = global.tilesets[$ oJADEController.current_tileset]
+var tileset = global.tilesets[$ obj[5][picker_property_index+1][1]]
 var t_size = 16 * tile_zoom
 var t_width = sprite_get_width(tileset[0])
 var t_height = sprite_get_height(tileset[0])
 var sel_x = curs_x - x - pan_x
 var sel_y = curs_y - y - pan_y
 var pos_x = clamp(floor(sel_x / t_size),0,(t_width/16)-1)
-var pos_y = clamp(floor(sel_y / t_size),0,(t_height/16)-1)
+var pos_y = clamp(floor((sel_y-19) / t_size),0,(t_height/16)-1)
 		
 //select single tile/start tile dragging
 if (over) {
@@ -59,7 +59,7 @@ if (mbmiddlerel) {
 }
 		
 if (panning) {
-	pan_x = clamp(initial_pan_x+curs_x-start_pan_x,-(t_width-image_xscale),19);
+	pan_x = clamp(initial_pan_x+curs_x-start_pan_x,-(t_width-image_xscale),0);
 	pan_y = clamp(initial_pan_y+curs_y-start_pan_y,-(t_height-image_yscale),0);
 }
 

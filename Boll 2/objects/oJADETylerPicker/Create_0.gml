@@ -13,7 +13,7 @@ exitbutton = new JADEiconbutton(x+image_xscale-16,y+1,spr_JADEexiticon, function
 
 tile_zoom = 1;
 pan_x = 0;
-pan_y = 19;
+pan_y = 0;
 start_pan_x = 0;
 start_pan_y = 0;
 initial_pan_x = 0;

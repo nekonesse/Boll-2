@@ -12,10 +12,23 @@ function node_path_movement(movePlayer=true) {
 		if !(pathfallen) {
 			if !(rotating) {
 				var dir=point_direction(x,y,arr[0],arr[1]);
+				var xprev = x;
+				var yprev = y;
+				
 				x+=lengthdir_x(pathspd,dir); //move towards the next node
 				y+=lengthdir_y(pathspd,dir);
-				x=median(x,pathing[pathprenum][0],arr[0]); //prevent overshooting
-				y=median(y,pathing[pathprenum][1],arr[1]);
+				x=median(x,pathing[pathprenum][0]-8+pathoffx,arr[0]); //prevent overshooting
+				y=median(y,pathing[pathprenum][1]-8+pathoffy,arr[1]);
+				
+				var xdiff = x-xprev;
+				var ydiff = y-yprev;
+				var l=0
+				repeat(array_length(binding_link)) {
+					var ob = oGameManager.object_uuids[$ binding_link[l]];
+					ob.x += xdiff;
+					ob.y += ydiff;
+					l++;
+				}
 			} else {
 				var dir=point_direction(rotorgx,rotorgy,arr[0],arr[1]);
 				rotorgx+=lengthdir_x(pathspd,dir); //move towards the next node
@@ -36,8 +49,8 @@ function node_path_movement(movePlayer=true) {
 		}
 		if !floor(point_distance(checkx,checky,arr[0],arr[1])) && !(pathfallen) { //check if we've reached our destination
 			if !(rotating) {
-				x=arr[0]; //snap to our destination just in case we misalign by a margin
-				y=arr[1];
+				x=arr[0]-8+pathoffx; //snap to our destination just in case we misalign by a margin
+				y=arr[1]-8+pathoffy;
 			} else {
 				rotorgx=arr[0]; //snap to our destination just in case we misalign by a margin
 				rotorgy=arr[1];
@@ -74,8 +87,8 @@ function node_path_movement(movePlayer=true) {
 							pathnum = 0;
 							var arr2=pathing[pathnum];
 							if !(rotating) {
-								x=arr2[0];
-								y=arr2[1];
+								x=arr2[0]-8+pathoffx;
+								y=arr2[1]-8+pathoffy;
 							} else {
 								rotorgx=arr2[0];
 								rotorgy=arr2[1];
@@ -112,8 +125,8 @@ function node_path_movement(movePlayer=true) {
 							pathnum = array_length(pathing)-1;
 							var arr2=pathing[pathnum];
 							if !(rotating) {
-								x=arr2[0];
-								y=arr2[1];
+								x=arr2[0]-8+pathoffx;
+								y=arr2[1]-8+pathoffy;
 							} else {
 								rotorgx=arr2[0];
 								rotorgy=arr2[1];
@@ -164,6 +177,9 @@ function node_init_vars() {
 	rotorgy=0;
 	rotspd=2;
 	rotating=false;
+	pathoffx = sprite_get_xoffset(sprite_index);
+	pathoffy = sprite_get_yoffset(sprite_index);
+	binding_link = [];
 	nodeReverse = new Signal();
 	
 	nodeReverse.Connect(self, function(index, obj) {
