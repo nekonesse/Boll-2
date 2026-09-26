@@ -47,7 +47,7 @@ function node_path_movement(movePlayer=true) {
 			checkx=rotorgx;
 			checky=rotorgy;
 		}
-		if !floor(point_distance(checkx,checky,arr[0],arr[1])) && !(pathfallen) { //check if we've reached our destination
+		if !floor(point_distance(checkx,checky,arr[0]-8+pathoffx,arr[1]-8+pathoffy)) && !(pathfallen) { //check if we've reached our destination
 			if !(rotating) {
 				x=arr[0]-8+pathoffx; //snap to our destination just in case we misalign by a margin
 				y=arr[1]-8+pathoffy;
@@ -77,9 +77,7 @@ function node_path_movement(movePlayer=true) {
 						case "fall":
 							pathfallen=1
 							var dir=point_direction(pathing[max(pathprenum-1,0)][0],pathing[max(pathprenum-1,0)][1],arr[0],arr[1]);
-							show_debug_message(dir)
 							hspeed=lengthdir_x(pathspd,dir)
-							show_debug_message(hspeed)
 							vspeed=lengthdir_y(pathspd,dir)
 							gravity=0.15;
 						break;
