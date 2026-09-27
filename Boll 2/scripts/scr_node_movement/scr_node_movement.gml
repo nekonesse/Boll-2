@@ -11,14 +11,14 @@ function node_path_movement(movePlayer=true) {
 		
 		if !(pathfallen) {
 			if !(rotating) {
-				var dir=point_direction(x,y,arr[0],arr[1]);
+				var dir=point_direction(x,y,arr[0]-8+pathoffx,arr[1]-8+pathoffy);
 				var xprev = x;
 				var yprev = y;
 				
 				x+=lengthdir_x(pathspd,dir); //move towards the next node
 				y+=lengthdir_y(pathspd,dir);
-				x=median(x,pathing[pathprenum][0]-8+pathoffx,arr[0]); //prevent overshooting
-				y=median(y,pathing[pathprenum][1]-8+pathoffy,arr[1]);
+				x=median(x,pathing[pathprenum][0]-8+pathoffx,arr[0]-8+pathoffx); //prevent overshooting
+				y=median(y,pathing[pathprenum][1]-8+pathoffy,arr[1]-8+pathoffy);
 				
 				var xdiff = x-xprev;
 				var ydiff = y-yprev;
@@ -175,8 +175,8 @@ function node_init_vars() {
 	rotorgy=0;
 	rotspd=2;
 	rotating=false;
-	pathoffx = sprite_get_xoffset(sprite_index);
-	pathoffy = sprite_get_yoffset(sprite_index);
+	pathoffx = sprite_get_xoffset(sprite_index)*image_xscale;
+	pathoffy = sprite_get_yoffset(sprite_index)*image_yscale;
 	binding_link = [];
 	nodeReverse = new Signal();
 	

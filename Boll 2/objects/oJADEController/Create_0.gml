@@ -879,7 +879,7 @@ spawnpoint_y = 137 * 16;
 testpoint_x = 2 * 16;
 testpoint_y = 137 * 16;
 
-if (global.save_dir=="") {
+if (global.save_dir=="") && !(file_exists(game_save_id+"\save.jade")) {
 	JADE_load();
 } else {
 	JADE_load(global.save_dir);
