@@ -863,9 +863,9 @@ function JADEpropertylisthandler(_x, _y, _width, _height) constructor {
 			} else {
 				var scissor = gpu_get_scissor();
 				var height2 = height-136;
-				gpu_set_scissor(x+8,y+height,width-16,height2);
+				gpu_set_scissor(x+8,y+136,width-16,height2);
 				
-				draw_rect(x+8,y+height,width-16,height2, oJADEController.themeaccent1,1);
+				draw_rect(x+8,y+136,width-16,height2, oJADEController.themeaccent1,1);
 				
 				var i=0;
 				var yy=y+140;

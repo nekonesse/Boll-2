@@ -95,7 +95,7 @@ function node_path_movement(movePlayer=true) {
 					}
 				}
 			} else if (pathisrev) {
-				if (pathnum < array_length(pathing)-1) {
+				if (pathnum > 0) {
 					pathnum--;
 					var arr2=pathing[pathnum];
 					pathspd = arr2[2];

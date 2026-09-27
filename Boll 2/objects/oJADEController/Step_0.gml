@@ -406,7 +406,7 @@ if (mbleft && not_on_gui && !disable_tool) {
 			if (obj) && (obj-1 != selected_array[0] ){
 				if (array_length(object_map[| obj-1][15])) {
 					
-					if (is_instanceof(choosing_link, inputLink)) {
+					if (is_instanceof(choosing_link, basicLink) || is_instanceof(choosing_link, inputLink)) {
 						var dropdownnames = [];
 						var l=0;
 						repeat(array_length(object_map[| obj-1][15])) {
@@ -450,17 +450,19 @@ if (mbleft && not_on_gui && !disable_tool) {
 								}
 							}
 						});
+						mbleftpress = false;
 					} else if (is_instanceof(choosing_link, bindingLink)){
 						var oid = object_map[| obj-1][14];
-						if !(array_contains(choosing_link.outputs, oid)) {
+						var data = obj_data[$ object_map[| obj-1][0]];
+						if !(array_contains(choosing_link.outputs, oid)) && (data.bindable) {
 							array_push(choosing_link.outputs,oid);
 						}
 						
 						if !(keyboard_check(vk_shift)) {
 							choosing_link = noone;
 						}
+						mbleftpress = false;
 					}
-					mbleftpress = false;
 				}
 			} else {
 				if !(keyboard_check(vk_shift)) {

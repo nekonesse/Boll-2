@@ -79,21 +79,28 @@ function JADE_initializeobj() {
 	registerobj(oCollider, spr_collider, 0, 0, 16, 16, true, true, objectlist, "Collider", true)
 	properties.addCheckbox(oCollider, "Is Slippery", "slippery", false)
 	properties.addDropdown(oCollider, "Footstep Material", "footstep_material", footstepMaterial.Default, ["Default", "Grass", "Stone", "Snow", "Wood", "Plastic", "Metal", "Ice","Crunchy"], [footstepMaterial.Default,footstepMaterial.Grass,footstepMaterial.Stone,footstepMaterial.Snow,footstepMaterial.Wood,footstepMaterial.Plastic,footstepMaterial.Metal,footstepMaterial.Ice,footstepMaterial.Crunchy])
+	properties.addLink(oCollider, new inputLink("Node Reverse"));
 	properties.addLink(oCollider, new bindingLink("Bind", "binding_link"));
 	registerobj(oSlopeCollider, spr_slopesolid, 0, 0, 16, 16, true, true, objectlist, "Slope Collider", true)
 	properties.addCheckbox(oSlopeCollider, "Flipped", "hflip", false)
 	properties.addCheckbox(oSlopeCollider, "Is Ramp", "ramp", false)
 	properties.addCheckbox(oSlopeCollider, "Is Slippery", "slippery", false)
 	properties.addDropdown(oSlopeCollider, "Footstep Material", "footstep_material", footstepMaterial.Default, ["Default", "Grass", "Stone", "Snow", "Wood", "Plastic", "Metal", "Ice","Crunchy"], [footstepMaterial.Default,footstepMaterial.Grass,footstepMaterial.Stone,footstepMaterial.Snow,footstepMaterial.Wood,footstepMaterial.Plastic,footstepMaterial.Metal,footstepMaterial.Ice,footstepMaterial.Crunchy])
+	properties.addLink(oSlopeCollider, new inputLink("Node Reverse"));
+	properties.addLink(oSlopeCollider, new bindingLink("Bind", "binding_link"));
 	registerobj(oSemilider, spr_semilider, 0, 0, 16, 16, true, false, objectlist, "Semisolid", true)
 	properties.addCheckbox(oSemilider, "Is Slippery", "slippery", false)
 	properties.addDropdown(oSemilider, "Footstep Material", "footstep_material", footstepMaterial.Default, ["Default", "Grass", "Stone", "Snow", "Wood", "Plastic", "Metal", "Ice","Crunchy"], [footstepMaterial.Default,footstepMaterial.Grass,footstepMaterial.Stone,footstepMaterial.Snow,footstepMaterial.Wood,footstepMaterial.Plastic,footstepMaterial.Metal,footstepMaterial.Ice,footstepMaterial.Crunchy])
+	properties.addLink(oSemilider, new inputLink("Node Reverse"));
+	properties.addLink(oSemilider, new bindingLink("Bind", "binding_link"));
 	registerobj(oSemiSlope, spr_slopesemi, 0, 0, 16, 16, true, true, objectlist, "Semisolid Slope", true)
 	properties.addCheckbox(oSemiSlope, "Flipped", "hflip", false)
 	properties.addCheckbox(oSemiSlope, "Is Ramp", "ramp", false)
 	properties.addCheckbox(oSemiSlope, "Is Slippery", "slippery", false)
 	properties.addDropdown(oSemiSlope, "Footstep Material", "footstep_material", footstepMaterial.Default, ["Default", "Grass", "Stone", "Snow", "Wood", "Plastic", "Metal", "Ice","Crunchy"], [footstepMaterial.Default,footstepMaterial.Grass,footstepMaterial.Stone,footstepMaterial.Snow,footstepMaterial.Wood,footstepMaterial.Plastic,footstepMaterial.Metal,footstepMaterial.Ice,footstepMaterial.Crunchy])
-	registerobj(oBarrier, spr_barrier, 0, 0, 16, 16, true, true, objectlist, "Barrier", true)
+	properties.addLink(oSemiSlope, new inputLink("Node Reverse"));
+	properties.addLink(oSemiSlope, new bindingLink("Bind", "binding_link"));
+	registerobj(oBarrier, spr_barrier, 0, 0, 16, 16, true, true, objectlist, "Barrier")
 	
 	var blockcategory = new JADElistcategory("Blocks")
 	
@@ -106,6 +113,7 @@ function JADE_initializeobj() {
 	properties.addCheckbox(oItemBox, "Is Dispenser", "eject", false)
 	properties.addLink(oItemBox, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oItemBox, new inputLink("Node Reverse"));
+	properties.addLink(oItemBox, new bindingLink("Bind", "binding_link"));
 	registerobj(oLongItemBox, spr_longitemboxJADE, 24, 8, 48, 16, false, false, containers, "Long Item Box", true)
 	properties.addDropdown(oLongItemBox, "Content", "content", "coin", ["Single Coin", "Multiple Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom", "Shield Mushroom", "P-Switch"], ["coin", "multicoins", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison", "shield", "pswitch"])
 	properties.addNumberInput(oLongItemBox, "Amount", "amount", 1, true)
@@ -113,16 +121,19 @@ function JADE_initializeobj() {
 	properties.addCheckbox(oLongItemBox, "Is Dispenser", "eject", false)
 	properties.addLink(oLongItemBox, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oLongItemBox, new inputLink("Node Reverse"));
+	properties.addLink(oLongItemBox, new bindingLink("Bind", "binding_link"));
 	registerobj(oMonitor, spr_monitor, 8, 8, 16, 16, false, false, containers, "Monitor", true)
 	properties.addDropdown(oMonitor, "Content", "content", "coin", ["10 Coins", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom", "Shield Mushroom"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison", "shield"])
 	properties.addCheckbox(oMonitor, "Has Gravity", "physics_enabled", false)
 	properties.addCheckbox(oMonitor, "Bump From Below", "bumpable", false)
 	properties.addLink(oMonitor, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oMonitor, new inputLink("Node Reverse"));
-	registerobj(oCrate, spr_crate, 8, 8, 16, 16, false, false, containers, "Crate", true)
+	properties.addLink(oMonitor, new bindingLink("Bind", "binding_link"));
+	registerobj(oCrate, spr_crate, 8, 8, 16, 16, false, false, containers, "Crate", true, true)
 	properties.addDropdown(oCrate, "Content", "content", "coin", ["Single Coin", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Poison Mushroom", "Shield Mushroom", "P-Switch"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "poison", "shield", "pswitch"])
 	properties.addLink(oCrate, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oCrate, new inputLink("Node Reverse"));
+	properties.addLink(oCrate, new bindingLink("Bind", "binding_link"));
 	blockcategory.add(containers);
 	
 	var liquids = new JADElistcategory("Liquids")
@@ -132,24 +143,31 @@ function JADE_initializeobj() {
 	registerobj(oBrick, spr_brick, 8, 8, 16, 16, true, false, blockcategory, "Brick Block", true, true)
 	properties.addLink(oBrick, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oBrick, new inputLink("Node Reverse"));
+	properties.addLink(oBrick, new bindingLink("Bind", "binding_link"));
 	registerobj(oHardBlock, spr_hardblock, 0, 0, 16, 16, false, false, blockcategory, "Hard Block", true, true)
 	properties.addLink(oHardBlock, new inputLink("Node Reverse"));
+	properties.addLink(oHardBlock, new bindingLink("Bind", "binding_link"));
 	registerobj(oBigHardBlock, spr_bighardblock, 0, 0, 32, 32, false, false, blockcategory, "Big Hard Block", true, true)
 	properties.addLink(oBigHardBlock, new inputLink("Node Reverse"));
+	properties.addLink(oBigHardBlock, new bindingLink("Bind", "binding_link"));
 	registerobj(oFlipblock, spr_flipblock, 8, 8, 16, 16, false, false, blockcategory, "Flip Block", true, true)
 	properties.addLink(oFlipblock, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oFlipblock, new inputLink("Node Reverse"));
+	properties.addLink(oFlipblock, new bindingLink("Bind", "binding_link"));
 	registerobj(oNoteBlock, spr_noteblock, 8, 8, 16, 16, false, false, blockcategory, "Note Block", true, true)
 	properties.addLink(oNoteBlock, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oNoteBlock, new inputLink("Node Reverse"));
+	properties.addLink(oNoteBlock, new bindingLink("Bind", "binding_link"));
 	registerobj(oShootBlock, spr_shootblock, 8, 8, 16, 16, false, false, blockcategory, "Shoot Block", true, true)
 	properties.addCheckbox(oShootBlock, "Is Disguised", "disguised", false)
 	properties.addLink(oShootBlock, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oShootBlock, new inputLink("Node Reverse"));
+	properties.addLink(oShootBlock, new bindingLink("Bind", "binding_link"));
 	registerobj(oDonutBlock, spr_donutblock, 0, 0, 16, 16, false, false, blockcategory, "Donut Block")
 	properties.addCheckbox(oDonutBlock, "Collapsing", "collapsing", false)
 	properties.addCheckbox(oDonutBlock, "Is Icy", "slippery", false)
 	properties.addLink(oDonutBlock, new inputLink("Node Reverse"));
+	properties.addLink(oDonutBlock, new bindingLink("Bind", "binding_link"));
 	registerobj(oGrate, spr_grate, 0, 0, 16, 16, true, true, blockcategory, "Grate")
 	registerobj(oGrateSemi, spr_gratesemi, 0, 0, 16, 16, true, false, blockcategory, "Grate (Semi)")
 	registerobj(oEnemyGround, spr_enemyground, 0, 0, 16, 16, true, true, blockcategory, "Enemy Ground")
@@ -162,41 +180,53 @@ function JADE_initializeobj() {
 	registerobj(oCoin, spr_coin, 8, 8, 16, 16, false, false, items, "Coin", true, true)
 	properties.addLink(oCoin, new basicLink("On Collect", "oncollect_link", false));
 	properties.addLink(oCoin, new inputLink("Node Reverse"));
+	properties.addLink(oCoin, new bindingLink("Bind", "binding_link"));
 	registerobj(oDottedCoin, spr_dottedcoin, 8, 8, 16, 16, false, false, items, "Dotted Coin", true, true)
 	properties.addLink(oDottedCoin, new basicLink("On Collect", "oncollect_link", false));
 	properties.addLink(oDottedCoin, new inputLink("Node Reverse"));
+	properties.addLink(oDottedCoin, new bindingLink("Bind", "binding_link"));
 	registerobj(oMushroom, spr_mushroom, 8, 8, 16, 16, false, false, items, "Super Mushroom", true, true)
 	properties.addLink(oMushroom, new basicLink("On Collect", "oncollect_link", false));
 	properties.addLink(oMushroom, new inputLink("Node Reverse"));
+	properties.addLink(oMushroom, new bindingLink("Bind", "binding_link"));
 	registerobj(oFireFlower, spr_fireflower, 8, 10, 16, 16, false, false, items, "Fire Flower", true, true)
 	properties.addLink(oFireFlower, new basicLink("On Collect", "oncollect_link", false));
 	properties.addLink(oFireFlower, new inputLink("Node Reverse"));
+	properties.addLink(oFireFlower, new bindingLink("Bind", "binding_link"));
 	registerobj(oThunderFlower, spr_thunderflowerJADE, 8, 10, 16, 16, false, false, items, "Thunder Flower", true, true)
 	properties.addLink(oThunderFlower, new basicLink("On Collect", "oncollect_link", false));
 	properties.addLink(oThunderFlower, new inputLink("Node Reverse"));
+	properties.addLink(oThunderFlower, new bindingLink("Bind", "binding_link"));
 	registerobj(oStar, spr_starman, 8, 8, 16, 16, false, false, items, "Starman", true, true)
 	properties.addLink(oStar, new basicLink("On Collect", "oncollect_link", false));
 	properties.addLink(oStar, new inputLink("Node Reverse"));
+	properties.addLink(oStar, new bindingLink("Bind", "binding_link"));
 	registerobj(o1up, spr_1up, 8, 8, 16, 16, false, false, items, "1-UP Mushroom", true, true)
 	properties.addLink(o1up, new basicLink("On Collect", "oncollect_link", false));
 	properties.addLink(o1up, new inputLink("Node Reverse"));
+	properties.addLink(o1up, new bindingLink("Bind", "binding_link"));
 	registerobj(o3up, spr_3up, 8, 8, 16, 16, false, false, items, "3-UP Moon", true, true)
 	properties.addLink(o3up, new basicLink("On Collect", "oncollect_link", false));
 	properties.addLink(o3up, new inputLink("Node Reverse"));
+	properties.addLink(o3up, new bindingLink("Bind", "binding_link"));
 	registerobj(oPoisonShroom, spr_poisonmushroom, 8, 8, 16, 16, false, false, items, "Poison Mushroom", true, true)
 	properties.addLink(oPoisonShroom, new basicLink("On Collect", "oncollect_link", false));
 	properties.addLink(oPoisonShroom, new inputLink("Node Reverse"));
+	properties.addLink(oPoisonShroom, new bindingLink("Bind", "binding_link"));
 	registerobj(oShieldShroom, spr_shieldmushroom, 8, 8, 16, 16, false, false, items, "Shield Mushroom", true, true)
 	properties.addLink(oShieldShroom, new basicLink("On Collect", "oncollect_link", false));
 	properties.addLink(oShieldShroom, new inputLink("Node Reverse"));
+	properties.addLink(oShieldShroom, new bindingLink("Bind", "binding_link"));
 	registerobj(oShard, spr_shard, 8, 8, 16, 16, false, false, items, "Boll Shard", true, true)
 	properties.addNumberInput(oShard, "Shard ID", "shardid", 0, true);
 	properties.addLink(oShard, new basicLink("On Collect", "oncollect_link", false));
 	properties.addLink(oShard, new inputLink("Node Reverse"));
+	properties.addLink(oShard, new bindingLink("Bind", "binding_link"));
 	registerobj(oFrozenItem, spr_frozenitem, 8, 8, 16, 16, false, false, items, "Frozen Item")
 	properties.addDropdown(oFrozenItem, "Content", "content", "coin", ["Single Coin", "Super Mushroom", "Fire Flower", "Thunder Flower", "Starman", "1UP Mushroom", "3UP Moon", "Mystery Orb"], ["coin", "mushroom", "fireflower", "thunderflower", "star", "1up", "3up", "mysteryorb"])
 	registerobj(oGrabBlock, spr_grabblock, 8, 8, 16, 16, true, false, items, "Grab Block", true, true)
 	properties.addLink(oGrabBlock, new inputLink("Node Reverse"));
+	properties.addLink(oGrabBlock, new bindingLink("Bind", "binding_link"));
 	
 	objectlist.add(items);
 	
@@ -218,55 +248,74 @@ function JADE_initializeobj() {
 	properties.addLink(oMysterySwitch, new basicLink("On Trigger", "ontrigger_link"));
 	properties.addLink(oMysterySwitch, new basicLink("On Reset", "onreactivate_link"));
 	properties.addLink(oMysterySwitch, new inputLink("Node Reverse"));
+	properties.addLink(oMysterySwitch, new bindingLink("Bind", "binding_link"));
 	registerobj(oONOFFSwitch, spr_onoffswitch_red, 8, 8, 16, 16, false, false, switchblocks, "ON/OFF Switch", true, true)
 	properties.addLink(oONOFFSwitch, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oONOFFSwitch, new inputLink("Node Reverse"));
+	properties.addLink(oONOFFSwitch, new bindingLink("Bind", "binding_link"));
 	registerobj(oONOFFBlock, spr_onoffblockon_red, 0, 0, 16, 16, false, false, switchblocks, "ON/OFF Block", true, true)
 	properties.addLink(oONOFFBlock, new inputLink("Node Reverse"));
+	properties.addLink(oONOFFBlock, new bindingLink("Bind", "binding_link"));
 	registerobj(oONOFFBlockOff, spr_onoffblockoff_blue, 0, 0, 16, 16, false, false, switchblocks, "ON/OFF Block (Off)", true, true)
 	properties.addLink(oONOFFBlockOff, new inputLink("Node Reverse"));
+	properties.addLink(oONOFFBlockOff, new bindingLink("Bind", "binding_link"));
 	registerobj(oONOFFSingleSwitchRed, spr_onoffsingleswitchon_red, 8, 8, 16, 16, false, false, switchblocks, "ON/OFF Single Switch (On)", true, true)
 	properties.addDropdown(oONOFFSingleSwitchRed, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
 	properties.addLink(oONOFFSingleSwitchRed, new basicLink("On Trigger", "ontrigger_link"));
 	properties.addLink(oONOFFSingleSwitchRed, new inputLink("Node Reverse"));
+	properties.addLink(oONOFFSingleSwitchRed, new bindingLink("Bind", "binding_link"));
 	registerobj(oONOFFSingleSwitchBlue, spr_onoffsingleswitchon_blue, 8, 8, 16, 16, false, false, switchblocks, "ON/OFF Single Switch (Off)", true, true)
 	properties.addDropdown(oONOFFSingleSwitchBlue, "Direction", "image_angle", 0, ["Up", "Left", "Right", "Down"], [0,90,270,180])
 	properties.addLink(oONOFFSingleSwitchBlue, new basicLink("On Trigger", "ontrigger_link"));
 	properties.addLink(oONOFFSingleSwitchBlue, new inputLink("Node Reverse"));
+	properties.addLink(oONOFFSingleSwitchBlue, new bindingLink("Bind", "binding_link"));
 	registerobj(oYellowSwitch, spr_yellowswitch, 8, 8, 16, 16, false, false, switchblocks, "Yellow Switch", true, true)
 	properties.addLink(oYellowSwitch, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oYellowSwitch, new inputLink("Node Reverse"));
+	properties.addLink(oYellowSwitch, new bindingLink("Bind", "binding_link"));
 	registerobj(oYellowSwitchBlock, spr_yellowswitchblock, 0, 0, 16, 16, false, false, switchblocks, "Yellow Switch Block", true, true)
 	properties.addLink(oYellowSwitchBlock, new inputLink("Node Reverse"));
+	properties.addLink(oYellowSwitchBlock, new bindingLink("Bind", "binding_link"));
 	registerobj(oYellowSwitchBlockOff, spr_yellowswitchblockoff, 0, 0, 16, 16, false, false, switchblocks, "Yellow Switch Block (Off)", true, true)
 	properties.addLink(oYellowSwitchBlockOff, new inputLink("Node Reverse"));
+	properties.addLink(oYellowSwitchBlockOff, new bindingLink("Bind", "binding_link"));
 	registerobj(oYellowSwitchSlope, spr_yellowswitchslope, 0, 0, 16, 16, false, false, switchblocks, "Yellow Switch Slope", true, true)
 	properties.addCheckbox(oYellowSwitchSlope, "Flipped", "hflip", false)
 	properties.addLink(oYellowSwitchSlope, new inputLink("Node Reverse"));
+	properties.addLink(oYellowSwitchSlope, new bindingLink("Bind", "binding_link"));
 	registerobj(oCyanSwitch, spr_cyanswitch, 8, 8, 16, 16, false, false, switchblocks, "Cyan Switch", true, true)
 	properties.addLink(oCyanSwitch, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oCyanSwitch, new inputLink("Node Reverse"));
+	properties.addLink(oCyanSwitch, new bindingLink("Bind", "binding_link"));
 	registerobj(oCyanSwitchBlock, spr_cyanswitchblock, 0, 0, 16, 16, false, false, switchblocks, "Cyan Switch Block", true, true)
 	properties.addLink(oCyanSwitchBlock, new inputLink("Node Reverse"));
+	properties.addLink(oCyanSwitchBlock, new bindingLink("Bind", "binding_link"));
 	registerobj(oCyanSwitchBlockOff, spr_cyanswitchblockoff, 0, 0, 16, 16, false, false, switchblocks, "Cyan Switch Block (Off)", true, true)
 	properties.addLink(oCyanSwitchBlockOff, new inputLink("Node Reverse"));
+	properties.addLink(oCyanSwitchBlockOff, new bindingLink("Bind", "binding_link"));
 	registerobj(oCyanSwitchSlope, spr_cyanswitchslope, 0, 0, 16, 16, false, false, switchblocks, "Cyan Switch Slope", true, true)
 	properties.addCheckbox(oCyanSwitchSlope, "Flipped", "hflip", false)
 	properties.addLink(oCyanSwitchSlope, new inputLink("Node Reverse"));
+	properties.addLink(oCyanSwitchSlope, new bindingLink("Bind", "binding_link"));
 	registerobj(oMagentaSwitch, spr_magentaswitch, 8, 8, 16, 16, false, false, switchblocks, "Magenta Switch", true, true)
 	properties.addLink(oMagentaSwitch, new basicLink("On Hit", "onhit_link"));
 	properties.addLink(oMagentaSwitch, new inputLink("Node Reverse"));
+	properties.addLink(oMagentaSwitch, new bindingLink("Bind", "binding_link"));
 	registerobj(oMagentaSwitchBlock, spr_magentaswitchblock, 0, 0, 16, 16, false, false, switchblocks, "Magenta Switch Block", true, true)
 	properties.addLink(oMagentaSwitchBlock, new inputLink("Node Reverse"));
+	properties.addLink(oMagentaSwitchBlock, new bindingLink("Bind", "binding_link"));
 	registerobj(oMagentaSwitchBlockOff, spr_magentaswitchblockoff, 0, 0, 16, 16, false, false, switchblocks, "Magenta Switch Block (Off)", true, true)
 	properties.addLink(oMagentaSwitchBlockOff, new inputLink("Node Reverse"));
+	properties.addLink(oMagentaSwitchBlockOff, new bindingLink("Bind", "binding_link"));
 	registerobj(oMagentaSwitchSlope, spr_magentaswitchslope, 0, 0, 16, 16, false, false, switchblocks, "Magenta Switch Slope", true, true)
 	properties.addCheckbox(oMagentaSwitchSlope, "Flipped", "hflip", false)
 	properties.addLink(oMagentaSwitchSlope, new inputLink("Node Reverse"));
+	properties.addLink(oMagentaSwitchSlope, new bindingLink("Bind", "binding_link"));
 	gizmos.add(switchblocks)
 	
 	registerobj(oMovingPlatform, spr_movingplatform, 16, 8, 32, 16, true, false, gizmos, "Moving Platform", true, true)
-	properties.addLink(oGrabBlock, new inputLink("Node Reverse"));
+	properties.addLink(oMovingPlatform, new inputLink("Node Reverse"));
+	properties.addLink(oMovingPlatform, new bindingLink("Bind", "binding_link"));
 	registerobj(oSwingingPlatform, spr_movingplatform, 16, 8, 32, 16, true, false, gizmos, "Swinging Platform")
 	properties.addNumberInput(oSwingingPlatform, "Chain Length", "chain_length", 4, true)
 	properties.addNumberInput(oSwingingPlatform, "Start Angle", "start_angle", 0, true)
@@ -280,6 +329,7 @@ function JADE_initializeobj() {
 	registerobj(oZapper, spr_zapper, 8, 8, 32, 16, true, false, gizmos, "Zapper", true, true)
 	properties.addDropdown(oZapper, "Direction", "dir", "right", ["Up", "Left", "Right", "Down"], ["up","left","right","down"])
 	properties.addLink(oZapper, new inputLink("Node Reverse"));
+	properties.addLink(oZapper, new bindingLink("Bind", "binding_link"));
 	
 	objectlist.add(gizmos)
 	
@@ -320,8 +370,10 @@ function JADE_initializeobj() {
 	registerobj(oSolidSpike, spr_solidspike, 0, 0, 16, 16, true, true, hazards, "Solid Spike", true, true)
 	properties.addDropdown(oSolidSpike, "Direction", "dir", "up", ["Up", "Left", "Right", "Down", "None"], ["up","left","right","down","none"])
 	properties.addLink(oSolidSpike, new inputLink("Node Reverse"));
+	properties.addLink(oSolidSpike, new bindingLink("Bind", "binding_link"));
 	registerobj(oAmp, spr_amp, 8, 8, 16, 16, false, false, hazards, "Amp", true, true)
 	properties.addLink(oAmp, new inputLink("Node Reverse"));
+	properties.addLink(oAmp, new bindingLink("Bind", "binding_link"));
 	registerobj(oChainsaw, spr_chainsaw, 8, 8, 16, 16, false, false, hazards, "Chainsaw", true, true)
 	properties.addLink(oChainsaw, new inputLink("Node Reverse"));
 	registerobj(oIcicle, spr_icicle, 0, 0, 16, 32, false, false, hazards, "Icicle")
@@ -374,6 +426,7 @@ function JADE_initializeobj() {
 	properties.addCheckbox(oTyler,"Flip","flip", false)
 	properties.addCheckbox(oTyler,"Rotate","rotate", false)
 	properties.addLink(oTyler, new inputLink("Node Reverse"));
+	properties.addLink(oTyler, new bindingLink("Bind", "binding_link"));
 	
 	objectlist.add(technical);
 	
