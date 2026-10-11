@@ -175,6 +175,9 @@ function player_interactions(){
 	
 	var mysteryorb=collision_rectangle(x-hit_sizex,y-hit_sizey,x+hit_sizex,y+hit_sizey, oMysteryOrb, false, true)
 	if (mysteryorb) && !(finish) {
+		with(mysteryorb) {
+			trigger_links(oncollect_link);
+		}
 		instance_destroy(mysteryorb);
 		finish=1;
 	}
@@ -225,6 +228,9 @@ function player_interactions(){
 	if (coin) {
 		collect_coins(1);
 		instance_create_depth(coin.x,coin.y,0,pGlitter);
+		with(coin) {
+			trigger_links(oncollect_link);
+		}
 		instance_destroy(coin);
 	}
 	

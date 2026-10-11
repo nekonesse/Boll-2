@@ -166,8 +166,6 @@ function JADE_initializeobj() {
 	registerobj(oDonutBlock, spr_donutblock, 0, 0, 16, 16, false, false, blockcategory, "Donut Block")
 	properties.addCheckbox(oDonutBlock, "Collapsing", "collapsing", false)
 	properties.addCheckbox(oDonutBlock, "Is Icy", "slippery", false)
-	properties.addLink(oDonutBlock, new inputLink("Node Reverse"));
-	properties.addLink(oDonutBlock, new bindingLink("Bind", "binding_link"));
 	registerobj(oGrate, spr_grate, 0, 0, 16, 16, true, true, blockcategory, "Grate")
 	registerobj(oGrateSemi, spr_gratesemi, 0, 0, 16, 16, true, false, blockcategory, "Grate (Semi)")
 	registerobj(oEnemyGround, spr_enemyground, 0, 0, 16, 16, true, true, blockcategory, "Enemy Ground")
@@ -835,9 +833,6 @@ function JADE_load(file=game_save_id+"\save.jade") {
 						}
 					}
 					
-					var linkdata = obj[15];
-					obj[15] = variable_clone(properties.getDefaultLinks(obj[0]));
-					
 					if (array_length(obj)<15) {
 						var oid = generate_jadeuuid();
 						while struct_exists(object_uuids,oid) {
@@ -845,13 +840,21 @@ function JADE_load(file=game_save_id+"\save.jade") {
 						}
 						object_uuids[$ oid] = [ds_list_size(newregion.object_layer_map), 0, i];
 						obj[14] = oid;
+						obj[15] = variable_clone(properties.getDefaultLinks(obj[0]));
 					} else {
+						var linkdata = obj[15];
+						obj[15] = variable_clone(properties.getDefaultLinks(obj[0]));
+						
 						object_uuids[$ obj[14]] = j;
 						
-						var l=0;
-						repeat(array_length(linkdata)) {
-							obj[15][l].import_contents(linkdata[l]);
-							l++;
+						if (array_length(linkdata)) {
+							var l=0;
+							repeat(array_length(obj[15])) {
+								if (l < array_length(linkdata)) {
+									obj[15][l].import_contents(linkdata[l]);
+								}
+								l++;
+							}
 						}
 					}
 					
@@ -881,9 +884,6 @@ function JADE_load(file=game_save_id+"\save.jade") {
 						}
 					}
 					
-					var linkdata = obj[15];
-					obj[15] = variable_clone(properties.getDefaultLinks(obj[0]));
-					
 					if (array_length(obj)<15) {
 						var oid = generate_jadeuuid();
 						while struct_exists(object_uuids,oid) {
@@ -891,13 +891,21 @@ function JADE_load(file=game_save_id+"\save.jade") {
 						}
 						object_uuids[$ oid] = [ds_list_size(newregion.node_layer_map), 1, i];
 						obj[14] = oid;
+						obj[15] = variable_clone(properties.getDefaultLinks(obj[0]));
 					} else {
 						object_uuids[$ obj[14]] = j;
 						
-						var l=0;
-						repeat(array_length(linkdata)) {
-							obj[15][l].import_contents(linkdata[l]);
-							l++;
+						var linkdata = obj[15];
+						obj[15] = variable_clone(properties.getDefaultLinks(obj[0]));
+						
+						if (array_length(linkdata)) {
+							var l=0;
+							repeat(array_length(obj[15])) {
+								if (l < array_length(linkdata)) {
+									obj[15][l].import_contents(linkdata[l]);
+								}
+								l++;
+							}
 						}
 					}
 				

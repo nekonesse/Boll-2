@@ -245,12 +245,17 @@ function node_init_post() {
 		var i=0;
 		var counted_segments = 0;
 		repeat(array_length(pathing)) {
-			if (pathing[i][3]!=0) && (i < array_length(pathing)-1) {
+			if (pathing[i][3]!=0) && ((i < array_length(pathing)-1) || pathendtype == "continue") {
 				var j = 0;
 				var x1 = pathing[i][0];
 				var y1 = pathing[i][1];
-				var x2 = pathing[i+1][0];
-				var y2 = pathing[i+1][1];
+				if (pathendtype != "continue") || (i < array_length(pathing)-1) {
+					var x2 = pathing[i+1][0];
+					var y2 = pathing[i+1][1];
+				} else if (pathendtype == "continue") && (i == array_length(pathing)-1) {
+					var x2 = pathing[0][0];
+					var y2 = pathing[0][1];
+				}
 				var curvature = pathing[i][3]/22.5;
 				var segments = max(8,floor(abs(pathing[i][3])/2));
 				var px = x1;

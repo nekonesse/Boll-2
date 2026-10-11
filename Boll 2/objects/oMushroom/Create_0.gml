@@ -15,6 +15,9 @@ phase_leeway = 0;
 phaseid = noone;
 colangle = 0;
 
+oncollect_link = [];
+activated_by_link = false;
+
 fric = 0;
 
 collision_array=[oCollider, oEnemyGround];
@@ -33,6 +36,8 @@ escapeItemBox = new Signal();
 
 itemCollected.Connect( self, function(hit_p) {
 	hit_p.sig.Emit(itemType)
+	
+	trigger_links(oncollect_link, hit_p);
 	
 	instance_create_depth(x,y,depth,pGlowRing);
 	

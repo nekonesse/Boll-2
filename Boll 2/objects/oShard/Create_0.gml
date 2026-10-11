@@ -1,8 +1,9 @@
 collect_timer = 0;
 shardid = 0;
+activated_by_link = false;
+oncollect_link = [];
 
 //lifted from github's issues
-// Boll Shard HUD Element
 // Boll Shard Saving
 
 onCollect = function() {
@@ -19,6 +20,8 @@ onCollect = function() {
 	collect_timer = 1;
 	
 	oGameManager.collect_shard(shardid)
+	
+	trigger_links(oncollect_link);
 	
 	image_speed=10;
 	

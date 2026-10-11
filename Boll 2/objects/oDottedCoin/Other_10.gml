@@ -1,3 +1,3 @@
-alarm[0]=15;
+timer=15;
 visible=0;
 triggered=true;

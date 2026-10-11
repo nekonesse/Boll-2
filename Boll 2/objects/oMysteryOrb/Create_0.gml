@@ -4,4 +4,7 @@ part_system_depth(myPart,19)
 part_system_global_space(myPart,true)
 alarm[0]=1;
 
+activated_by_link = false;
+oncollect_link = [];
+
 node_init_vars()

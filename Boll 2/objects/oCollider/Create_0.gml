@@ -12,4 +12,15 @@ footstep_material = footstepMaterial.Default;
 
 depth=10;
 
+activateLink = new Signal();
+
+activateLink.Connect(self, function(index, obj) {
+	activated_by_link = true;
+	switch(index) {
+		case 0:
+			nodeReverse.Emit();
+		break;
+	}
+});
+
 node_init_vars()

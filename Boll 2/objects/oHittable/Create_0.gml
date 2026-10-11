@@ -24,10 +24,11 @@ image_normal = sprite_index
 image_hit = sprite_index
 image_exausted = sprite_index
 
-activateLink = new Signal();
 blockHit = new Signal();
 blockBumpFinished = new Signal();
 blockFinished = new Signal();
+
+activateLink.Destroy();
 
 activateLink.Connect(self, function(index, obj) {
 	activated_by_link = true;
