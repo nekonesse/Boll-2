@@ -55,7 +55,7 @@ if (in_shell) {
 		var pswitch=collision_line(x+(hit_sizex*_direction)+hsp,y-(hit_sizey-2),x+(hit_sizex*_direction)+hsp,y+(hit_sizey-2),oPSwitch, false, true)
 
 		if (pswitch) && ((pswitch.image_angle == 90 && _direction == 1) || (pswitch.image_angle == 270 && _direction == -1)) {
-			pswitch.hitSwitch.Emit();
+			pswitch.hitSwitch.Emit(id);
 			
 			enemyTurnAround.Emit();
 		}

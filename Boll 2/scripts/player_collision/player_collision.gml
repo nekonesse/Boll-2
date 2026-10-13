@@ -106,6 +106,17 @@ function player_collision(shoveOutOfWalls=true,auto_coords=true,l=0,r=0,t=0,b=0,
 	posx = x
 	posy = y
 	
+	var pswitch=collision_line(posx+left,y+bottom+vsp+1,x+hit_sizex,y+bottom+vsp+1, oPSwitch, false, true) 
+	if (pswitch) && (pswitch.image_angle == 0) && (vsp>=0) {
+		pswitch.hitSwitch.Emit(id);
+	}
+	
+	pswitch=collision_line(posx+left,y+top-1+vsp,x+hit_sizex,y+top-1+vsp, oPSwitch, false, true) 
+	if (pswitch) && (pswitch.image_angle == 180) && (vsp<0) {
+		pswitch.hitSwitch.Emit(id);
+	}
+	
+	
 	if (shoveOutOfWalls) {
 		//left wall
 		while check_collision_line(posx+left, posy-sign(vsp)+c+top+3,posx+left,posy-sign(vsp)+c,COL_WALL){

@@ -25,6 +25,7 @@ function node_path_movement(movePlayer=true) {
 				var l=0
 				repeat(array_length(binding_link)) {
 					var ob = oGameManager.object_uuids[$ binding_link[l]];
+					instance_activate_object(ob);
 					ob.x += xdiff;
 					ob.y += ydiff;
 					l++;
