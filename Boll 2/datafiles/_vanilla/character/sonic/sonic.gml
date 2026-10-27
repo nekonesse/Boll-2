@@ -1,5 +1,5 @@
 #define datalist
-spriteEvents=split_string("idle,wait,lookUp,victory,crouch,hurt,dead,walk,run,runMax,wallRun,wallJump,airWalk,brake,spring,springFall,jump,bonk,roll,spinDash,spinCharge,dropDash,airDash,carryIdle,carryWalk,carryRun,carryRunMax,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,slidekick,carrySlidekick,roll,carrySwim,pushing,balancing,dive,fireToss,electrocute,gateClimbing,poleGrab,hang,monkeyBars,boarding,snowBoarding,frozen,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
+spriteEvents=split_string("idle,wait,lookUp,victory,crouch,hurt,dead,walk,run,runMax,airWalk,wallRun,wallJump,brake,spring,springFall,jump,bonk,roll,spinDash,spinCharge,dropDash,airDash,carryIdle,carryWalk,carryRun,carryRunMax,carryAirWalk,carryLookUp,carryCrouch,carryJump,carryFall,carryBonk,carryKick,carryAirKick,slidekick,carrySlidekick,roll,carrySwim,pushing,balancing,dive,fireToss,electrocute,gateClimbing,poleGrab,hang,monkeyBars,boarding,snowBoarding,frozen,downPipeEnter,downPipeExit,upPipeEnter,upPipeExit,sidePipeEnter,sidePipeExit,doorEnter,doorExit",",");
 miscSprites=split_string("shield,spindashdust",",");
 sound_list=split_string("airdash,damage,shielddamage,die,jump,release,skid,spin,spindash,bounce",",");
 
@@ -47,6 +47,8 @@ wallrunperiod=0;
 
 dead=0;
 deadtimer=0;
+
+firing=0;
 
 rollup_factor = (0.078125 / 2)
 rolldown_factor = (0.3125 / 2)
@@ -482,6 +484,39 @@ switch (state) {
 			if !(is_grabbing) {
 				if (!skidding) {
 					//icy slippy
+					if (grounded) {
+						var speed_mult = 1;
+						if (friction_mult>0) && (grounded) {
+							speed_mult = 1/(friction_mult);
+						}
+						
+						if (ceil(abs(gsp))>=maxspd) && (grounded) {
+							frspd=1;
+							footstep_run = true;
+							footstep_freq = 2;
+							spriteEvent="runMax";
+						} else if (ceil(abs(gsp))>=3.4) {
+							frspd=(abs(gsp)/4)*speed_mult;
+							footstep_run = true;
+							footstep_freq = 4;
+							footstep_offset = -1;
+							spriteEvent="run";
+						} else {
+							frspd=max(0.3, abs(gsp)/4)*speed_mult;
+							spriteEvent="walk";
+							footstep_freq = 4;
+							footstep_offset = -1;
+						}
+					} else {
+						frspd=max(0.3, abs(hsp)/4);
+						spriteEvent="airWalk";
+					}
+				} else {
+					spriteEvent="brake";
+				}
+			} else {
+				if (grounded) {
+					//ice slippy
 					var speed_mult = 1;
 					if (friction_mult>0) && (grounded) {
 						speed_mult = 1/(friction_mult);
@@ -489,45 +524,23 @@ switch (state) {
 					
 					if (ceil(abs(gsp))>=maxspd) && (grounded) {
 						frspd=1;
-						footstep_run = true;
+						spriteEvent="carryRunMax";
 						footstep_freq = 2;
-						spriteEvent="runMax";
+						footstep_run = true;
 					} else if (ceil(abs(gsp))>=3.4) {
 						frspd=(abs(gsp)/4)*speed_mult;
-						footstep_run = true;
+						spriteEvent="carryRun";
 						footstep_freq = 4;
 						footstep_offset = -1;
-						spriteEvent="run";
 					} else {
 						frspd=max(0.3, abs(gsp)/4)*speed_mult;
-						spriteEvent="walk";
+						spriteEvent="carryWalk";
 						footstep_freq = 4;
 						footstep_offset = -1;
 					}
 				} else {
-					spriteEvent="brake";
-				}
-			} else {
-				var speed_mult = 1;
-				if (friction_mult>0) && (grounded) {
-					speed_mult = 1/(friction_mult);
-				}
-				
-				if (ceil(abs(gsp))>=maxspd) && (grounded) {
-					frspd=1;
-					spriteEvent="carryRunMax";
-					footstep_freq = 2;
-					footstep_run = true;
-				} else if (ceil(abs(gsp))>=3.4) {
-					frspd=(abs(gsp)/4)*speed_mult;
-					spriteEvent="carryRun";
-					footstep_freq = 4;
-					footstep_offset = -1;
-				} else {
-					frspd=max(0.3, abs(gsp)/4)*speed_mult;
-					spriteEvent="carryWalk";
-					footstep_freq = 4;
-					footstep_offset = -1;
+					frspd=max(0.3, abs(hsp)/4);
+					spriteEvent="carryAirWalk";
 				}
 			}
 		}
@@ -623,6 +636,11 @@ if (kick) {
 
 if (state != "") {
 	wait_timer = 0;
+}
+
+if (firing) && !(is_grabbing) {
+	spriteEvent="fireToss"
+	frspd=1;
 }
 
 if (hurt) {
