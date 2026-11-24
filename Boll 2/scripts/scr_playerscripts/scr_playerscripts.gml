@@ -411,7 +411,15 @@ function restart_charm_sprite(_name,_frame) {
 function finish_death() {
 	oGameManager.enable_app_surf_redraw = true
 	death_time = true
-}	
+	if (variable_global_exists("lives")) {
+		var _lv = global.lives[0];
+		var _msg = "You died.";
+		if (_lv > 0) _msg = _msg + " Lives left: " + string(_lv);
+		a11y_speak(_msg, true);
+	} else {
+		a11y_speak("You died.", true);
+	}
+}
 
 function player_castlewalk() {
 	if (finish && !dead) {
@@ -511,6 +519,9 @@ function give_lives(player = 0, _x = x, _y = y, amount = 1, part = p1UP, sound =
 	}
 	
 	global.lives[player]+=amount
+	if (amount != 0) {
+		a11y_speak("Lives: " + string(global.lives[player]));
+	}
 }
 
 function hit_block(x1, y1, x2, y2, dir=-1, _id=id) {
@@ -551,6 +562,7 @@ function collect_coins(_amount,_playsound=true) {
 	with(oGameManager) {
 		HUDcoinflash = 2;
 	}
+	a11y_speak("Coins: " + string(global.coins_collected));
 }
 
 function reserve_item(_object) {
@@ -559,4 +571,9 @@ function reserve_item(_object) {
 		reserved_item = _object;
 	}
 	VinylPlay(snd_itemreserve,0,3);
+	var _n = object_get_name(_object);
+	if (string_length(_n) > 1 && string_char_at(_n, 1) == "o") {
+		_n = string_delete(_n, 1, 1);
+	}
+	a11y_speak("Reserved item: " + _n);
 }

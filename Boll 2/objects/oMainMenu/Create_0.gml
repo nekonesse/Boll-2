@@ -9,6 +9,8 @@ lemmebind = -1;
 
 temp_settings = global.settings
 
+a11y_prev_menu = "";
+a11y_prev_label = "";
 menusurface=surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
 
 selectArrowYtrans = room_height/2;

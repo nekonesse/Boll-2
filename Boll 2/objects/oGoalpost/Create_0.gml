@@ -56,4 +56,5 @@ onFinish.Connect( self, function() {
 		finish = 1;
 	}
 	VinylPlay(snd_signpost);
+	a11y_speak("Level complete!", true);
 });

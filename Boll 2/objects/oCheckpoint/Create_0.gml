@@ -31,6 +31,7 @@ activate.Connect(self, function(hit_p) {
 		}
 	
 		VinylPlay(snd_checkpoint)
+		a11y_speak("Checkpoint.");
 	}
 
 	if !(spinning) {

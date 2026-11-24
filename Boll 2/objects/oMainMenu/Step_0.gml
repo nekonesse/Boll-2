@@ -98,15 +98,16 @@ if (!optionLock) {
 		break
 		
 		case "accessibility":
-			optMAX = 3;
+			optMAX = 4;
 			if (akey) {
 				switch option {
-					case 3:
+					case 4:
 						crMenu="settings" option=0
 					break;
-					case 2: 
+					case 3: 
 						global.settings[$ "alternate_hud"] = temp_settings.alternate_hud
 						global.settings[$ "sensitive_sound"] = temp_settings.sensitive_sound
+						a11y_speak("Changes applied.")
 					break;
 				}
 				safe = 1
@@ -115,6 +116,10 @@ if (!optionLock) {
 				switch (option) {
 					case 0: temp_settings.alternate_hud = !temp_settings.alternate_hud break;
 					case 1: temp_settings.sensitive_sound = !temp_settings.sensitive_sound break;
+					case 2:
+						temp_settings.screen_reader = clamp(temp_settings.screen_reader + floor(right - left), -1, 1);
+						a11y_apply_setting(temp_settings.screen_reader);
+					break;
 				}
 			}
 			if (bkey) {
@@ -163,6 +168,7 @@ if (!optionLock) {
 				        //Make sure we turn off rebinding once a binding has been found
 				        InputDeviceSetRebinding(_device, false);
 						lemmebind=-1;
+						a11y_speak("Binding set.")
 				    }
 				} else {
 					lemmebind=-1;
@@ -171,9 +177,12 @@ if (!optionLock) {
 				if (akey) {
 					if (option!=8) {
 						rebindKey(_binds[option])
+						var _kbLabels = a11y_menu_options(id);
+						a11y_speak("Press a key or button for " + string(_kbLabels[option]) + ".")
 					} else {
 						InputBindingsReset(false);
 						InputBindingsReset(true);
+						a11y_speak("Bindings reset.")
 					}
 				}
 				if (bkey) {
@@ -182,4 +191,19 @@ if (!optionLock) {
 			}
 		break
 	}
+}
+
+// Screen reader menu announcements
+if (a11y_enabled()) {
+	var _a11y_labels = a11y_menu_options(id);
+	var _a11y_label = "";
+	if (option >= 0 && option < array_length(_a11y_labels)) _a11y_label = _a11y_labels[option];
+	if (crMenu != a11y_prev_menu) {
+		var _a11y_title = a11y_menu_title(crMenu);
+		if (_a11y_label != "") a11y_speak(_a11y_title + ". " + _a11y_label); else a11y_speak(_a11y_title);
+	} else if (_a11y_label != a11y_prev_label) {
+		a11y_speak(_a11y_label);
+	}
+	a11y_prev_menu = crMenu;
+	a11y_prev_label = _a11y_label;
 }

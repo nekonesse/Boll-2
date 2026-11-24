@@ -13,6 +13,9 @@ title_offset = 0;
 
 temp_settings = global.settings
 
+a11y_prev_menu = "";
+a11y_prev_label = "";
+if (on_title) a11y_speak("Press any button.");
 menusurface=surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
 
 selectArrowYtrans = room_height/2;
