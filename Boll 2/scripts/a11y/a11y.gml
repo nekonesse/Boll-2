@@ -17,6 +17,7 @@ function a11y_init() {
 	global.a11y_speaking = false;
 	global.a11y_speak_min = 0;
 	global.a11y_speak_hard = 0;
+	global.a11y_speak_idle = 0;
 
 	TolkFallbackSet(false);
 	if (!TolkPowerOn()) {
@@ -76,6 +77,13 @@ function a11y_speak(_text, _interrupt = true) {
 	return a11y_queue_push(_text);
 }
 
+/// Estimated speech length in frames (~15 chars/sec at 60fps + latency buffer).
+/// Used as the queue's completion gate so follow-ups cannot cut off long text
+/// when TolkIsSpeaking() reports idle early (common with NVDA).
+function a11y_speech_frames(_text) {
+	return max(90, ceil(string_length(_text) * 4) + 90);
+}
+
 /// Speak immediately (clears any in-flight speech first). Used by a11y_speak(interrupt).
 function a11y_speak_now(_text) {
 	if (!a11y_enabled()) return false;
@@ -86,10 +94,11 @@ function a11y_speak_now(_text) {
 		return false;
 	}
 	global.a11y_speaking = true;
-	// Min frames before trusting TolkIsSpeaking (speech start latency),
-	// then a hard cap ~6 frames/char + buffer so a stuck backend can't wedge the queue.
-	global.a11y_speak_min = 15;
-	global.a11y_speak_hard = ceil(string_length(_text) * 6) + 120;
+	// Full length estimate before the queue may advance; TolkIsSpeaking only
+	// allows an early finish after that (with a consecutive-idle debounce).
+	global.a11y_speak_min = a11y_speech_frames(_text);
+	global.a11y_speak_hard = global.a11y_speak_min * 2;
+	global.a11y_speak_idle = 0;
 	return true;
 }
 
@@ -102,6 +111,7 @@ function a11y_queue_push(_text) {
 		global.a11y_speaking = false;
 		global.a11y_speak_min = 0;
 		global.a11y_speak_hard = 0;
+		global.a11y_speak_idle = 0;
 	}
 	array_push(global.a11y_queue, _text);
 	// Cap so a runaway enqueue can't grow unbounded; drop oldest.
@@ -117,12 +127,14 @@ function a11y_queue_clear() {
 	if (!variable_global_exists("a11y_queue")) {
 		global.a11y_queue = [];
 		global.a11y_speaking = false;
+		global.a11y_speak_idle = 0;
 		return;
 	}
 	global.a11y_queue = [];
 	global.a11y_speaking = false;
 	global.a11y_speak_min = 0;
 	global.a11y_speak_hard = 0;
+	global.a11y_speak_idle = 0;
 }
 
 /// Pump the sequential speech queue. Called every frame from oGlobals End Step.
@@ -141,16 +153,24 @@ function a11y_queue_update() {
 	}
 
 	if (global.a11y_speaking) {
+		// Hard gate: never advance before the estimated speech duration.
+		// (TolkIsSpeaking alone is unreliable — NVDA often reports idle while still talking.)
 		if (global.a11y_speak_min > 0) {
 			global.a11y_speak_min--;
 			if (global.a11y_speak_hard > 0) global.a11y_speak_hard--;
 			return;
 		}
+		// Past estimate: finish early only after Tolk reports idle for several
+		// consecutive frames, or when the hard cap expires.
 		if (TolkIsSpeaking() && global.a11y_speak_hard > 0) {
+			global.a11y_speak_idle = 0;
 			global.a11y_speak_hard--;
 			return;
 		}
+		global.a11y_speak_idle++;
+		if (global.a11y_speak_idle < 12 && global.a11y_speak_hard > 0) return;
 		global.a11y_speaking = false;
+		global.a11y_speak_idle = 0;
 	}
 
 	if (array_length(global.a11y_queue) > 0) {
@@ -159,8 +179,9 @@ function a11y_queue_update() {
 		TolkSilence();
 		if (TolkSpeak(_t) != 0) {
 			global.a11y_speaking = true;
-			global.a11y_speak_min = 15;
-			global.a11y_speak_hard = ceil(string_length(_t) * 6) + 120;
+			global.a11y_speak_min = a11y_speech_frames(_t);
+			global.a11y_speak_hard = global.a11y_speak_min * 2;
+			global.a11y_speak_idle = 0;
 		} else {
 			global.a11y_speaking = false;
 		}
