@@ -103,7 +103,16 @@ switch (crMenu) {
 		}
 		var sensitivesnd = $"Sensitive Sounds:\n{sensitivesounds}"
 		
-		_displayOPS = [althud, sensitivesnd, "Apply Changes", "Back"];
+		var screenreadertext;
+		switch(temp_settings.screen_reader) {
+			case -1: screenreadertext = "Auto" break;
+			case 0: screenreadertext = "Off" break;
+			case 1: screenreadertext = "On" break;
+			default: screenreadertext = "Auto" break;
+		}
+		var screenreader = $"Screen Reader:\n{screenreadertext}"
+		
+		_displayOPS = [althud, sensitivesnd, screenreader, "Apply Changes", "Back"];
 		var _yPos = 24;
 		var i=0;
 		repeat (array_length(_displayOPS)) { // Looping through options to draw them on screen

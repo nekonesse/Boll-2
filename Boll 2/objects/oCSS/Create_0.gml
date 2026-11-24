@@ -17,3 +17,14 @@ surf_l = -1
 surf_r = -1
 
 scrollen = 0
+
+a11y_prev_select = -1;
+if (instance_exists(oTECHDEMO_TitleMenu)) {
+	var _n = demo_char[0];
+	a11y_speak("Character select. " + string_upper(string_char_at(_n,1)) + string_delete(_n,1,1));
+	a11y_prev_select = 0;
+} else if (instance_exists(oMainMenu) && array_length(oGlobals._charmList) > 0) {
+	var _n2 = oGlobals._charmList[0];
+	a11y_speak("Character select. " + string(_n2));
+	a11y_prev_select = 0;
+}

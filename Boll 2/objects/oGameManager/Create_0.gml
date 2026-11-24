@@ -125,4 +125,11 @@ collect_shard = function(_id) {
 	shard_scales[_id] = 3;
 	shard_gui_goto = 16;
 	shard_gui_timer = 180;
+	var _got = 0;
+	var _i = 0;
+	repeat (array_length(collected_shards)) {
+		if (collected_shards[_i]) _got++;
+		_i++;
+	}
+	a11y_speak("Shard " + string(_got) + " of " + string(shard_count) + " collected.");
 }

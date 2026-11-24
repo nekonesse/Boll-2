@@ -130,10 +130,20 @@ if (on_title) {
     		}
     		var sensitivesnd = $"Sensitive Sounds: {sensitivesounds}"
     		
-    		_displayOPS = [althud, sensitivesnd, "Apply Changes", "Back"];
+    		var screenreadertext;
+    		switch(temp_settings.screen_reader) {
+    			case -1: screenreadertext = "Auto" break;
+    			case 0: screenreadertext = "Off" break;
+    			case 1: screenreadertext = "On" break;
+    			default: screenreadertext = "Auto" break;
+    		}
+    		var screendreader = $"Screen Reader: {screenreadertext}"
+    		
+    		_displayOPS = [althud, sensitivesnd, screendreader, "Apply Changes", "Back"];
             _displayDesc =
             ["Uses an alternate HUD font\nfor players that struggle\nwith reading the original HUD.",
              "Removes specific sounds that\nmay potentially trigger or\notherwise cause discomfort\nin certain players.",
+             "Reads menus and UI aloud\nusing your screen reader.\nAuto follows the running\nscreen reader.",
              "Save and apply any\nsettings changes."];
     		var _yPos = 80;
     		var i=0;

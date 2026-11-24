@@ -39,6 +39,12 @@ if (global.settings[$ "fullscreen_type"]==1) {
 }
 
 parse_level(global.nextlevel)
+
+// Announce level name once parsed
+if (a11y_enabled() && variable_struct_exists(level_properties, "name") && level_properties.name != "") {
+	a11y_speak("Level: " + level_properties.name, true);
+}
+
 instance_activate_object(oShard)
 var maxid = -1;
 var shardids = [];

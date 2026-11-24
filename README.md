@@ -24,3 +24,15 @@ F2: Raise Game Speed
 F3: Debug Display
 F4: Toggle Show Collision Mode
 F5: FPS Display
+F6: Read HUD Status (coins, lives, time, reserved item) via screen reader
+
+## Accessibility
+
+Menu, UI, and gameplay screen-reader speech is provided by [GMSTolkTalk](https://github.com/Gannio/GMSTolkTalk), which wraps [Tolk](https://github.com/ndarilek/tolk).
+
+- Tolk is distributed under the GNU Lesser General Public License version 3 (LGPLv3).
+- NVDA client libraries are distributed under the GNU Lesser General Public License version 2.1 (LGPLv2.1).
+
+Speech follows the active screen reader (e.g. NVDA) when detected. A Screen Reader option is available under Settings > Accessibility (Auto / On / Off).
+
+On the boot disclaimer screen, speech is sequential: the disclaimer finishes, then "Press any button to continue." is spoken. All other speech interrupts the current utterance (menus, level name, death, coins, checkpoints, etc.).

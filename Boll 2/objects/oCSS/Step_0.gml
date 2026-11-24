@@ -158,3 +158,14 @@ if (up) {
 		}
 	}
 }
+
+// Announce selected character when it changes
+if (a11y_enabled() && _select != a11y_prev_select) {
+	if (instance_exists(oTECHDEMO_TitleMenu)) {
+		var _n = demo_char[_select];
+		a11y_speak(string_upper(string_char_at(_n,1)) + string_delete(_n,1,1));
+	} else if (array_length(oGlobals._charmList) > _select) {
+		a11y_speak(oGlobals._charmList[_select]);
+	}
+	a11y_prev_select = _select;
+}

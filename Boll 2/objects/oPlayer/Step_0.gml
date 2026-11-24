@@ -235,6 +235,7 @@ if death_time {
 		if (global.lives[0] < 1) { //game over. couldnt care less if player 2 has -4 lives You. Are. Not. Implemented!!
 			VinylStopAll();
 			VinylPlay(mus_gameover, 0, 0.4);
+			a11y_speak("Game over.", true);
 			var goto = rMainMenu;
             if (demo_build)
                 goto = rTECHDEMO_Disclaimer;

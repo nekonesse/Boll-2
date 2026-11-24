@@ -16,6 +16,7 @@ global.settings[$ "alternate_hud"] = 0
 global.settings[$ "keybinds_kb"] = InputBindingsExport(false)
 global.settings[$ "keybinds_gp"] = InputBindingsExport(true)
 global.settings[$ "sensitive_sound"] = 0
+global.settings[$ "screen_reader"] = -1
 
 if file_exists(game_save_id+"\settings.ini")
 {
@@ -28,6 +29,9 @@ if file_exists(game_save_id+"\settings.ini")
 		}
 		if (!struct_exists(global.settings, "sensitive_sound")) {
 			global.settings[$ "sensitive_sound"] = 0;
+		}
+		if (!struct_exists(global.settings, "screen_reader")) {
+			global.settings[$ "screen_reader"] = -1;
 		}
 		var opstruct = global.settings[$ "keybinds_kb"]
 		if !(is_undefined(opstruct)) {
@@ -55,6 +59,8 @@ if (!global.settings[$ "fullscreen_type"]) {
 VinylMasterSetGain(global.settings[$ "master_vol"])
 VinylMixSetGain("music", global.settings[$ "music_vol"])
 VinylMixSetGain("sound effects", global.settings[$ "sound_vol"])
+
+a11y_init();
 
 global.roomTimer = 0;
 global.freezeframe = false;

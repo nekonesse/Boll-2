@@ -52,8 +52,8 @@ function parse_level(dir=game_save_id+"\save.jade") {
 					if (_layer_contents[0]!="MAIN") {
 						if (_layer_contents[0] == "TILE") {
 							_layer = {}
-							_layer[$ "my_layer"] = layer_create(_layer_contents[3],_layer_contents[2])
-							_layer[$ "my_deco_layer"] = layer_tilemap_create(_layer.my_layer,0,0,global.tilesets[$ _layer_contents[1]][1],region[$ "width"],region[$ "height"]);
+							_layer[$ "my_layer"] = layer_create(floor(_layer_contents[3]),_layer_contents[2])
+							_layer[$ "my_deco_layer"] = layer_tilemap_create(_layer.my_layer,0,0,global.tilesets[$ _layer_contents[1]][1],floor(region[$ "width"]),floor(region[$ "height"]));
 							layer_x(_layer[$ "my_layer"],roomwidth);
 							_layer[$ "my_alpha"] = 1;
 							_layer[$ "touched"] = false;
@@ -68,14 +68,14 @@ function parse_level(dir=game_save_id+"\save.jade") {
 				
 							var j=0;
 							repeat(array_length(tile_layer_contents)) {
-								tilemap_set(_layer.my_deco_layer, tile_layer_contents[j][0], tile_layer_contents[j][1], tile_layer_contents[j][2]);
+								tilemap_set(_layer.my_deco_layer, floor(tile_layer_contents[j][0]), floor(tile_layer_contents[j][1]), floor(tile_layer_contents[j][2]));
 								j++;
 							}
 							
 							array_push(oGameManager.all_layers[r],_layer);
 						} else if (_layer_contents[0] == "ASSET") {
 							_layer = {}
-							_layer[$ "my_layer"] = layer_create(_layer_contents[2],_layer_contents[1])
+							_layer[$ "my_layer"] = layer_create(floor(_layer_contents[2]),_layer_contents[1])
 							layer_x(_layer[$ "my_layer"],roomwidth);
 							_layer[$ "my_deco_layer"] = _layer.my_layer
 							_layer.parallax_x = _layer_contents[3]
@@ -98,7 +98,7 @@ function parse_level(dir=game_save_id+"\save.jade") {
 							_layer = {}
 							var spr = spr_BGtest
 							if (_layer_contents != -1) spr = asset_get_index(_layer_contents[3])
-							_layer[$ "my_layer"] = layer_create(_layer_contents[2],_layer_contents[1])
+							_layer[$ "my_layer"] = layer_create(floor(_layer_contents[2]),_layer_contents[1])
 							_layer[$ "my_deco_layer"] = layer_background_create(_layer.my_layer,spr)
 							_layer.parallax_x = _layer_contents[4]
 							_layer.parallax_y = _layer_contents[5]
